@@ -1,0 +1,19 @@
+#create entry
+touchdown.#{siyang}
+build/
+tmp/
+*.sublime*
+.idea
+*.log
+*.pyc
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+src/.elasticbeanstalk/*
+!.elasticbeanstalk/config.yml
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+
+# static file (managed by Django through collectstatic command)
+src/static/
