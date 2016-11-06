@@ -1,0 +1,16 @@
+branch-defaults:
+  default:
+    environment: ceedman
+  master:
+    environment: ceedman
+  upgrid_demo:
+    environment: upgrid-env
+deploy:
+  artifact: deploy/package.zip
+global:
+  application_name: jstest
+  default_ec2_keyname: universal
+  default_platform: Python 3.4
+  default_region: us-east-1
+  profile: null
+  sc: git

@@ -1,0 +1,2642 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+		</script>
+
+	    <!-- <link rel="stylesheet" id="css-main" href="file://oneui.css"> -->
+
+
+		<style>
+		@page {
+
+			size:A4;
+			margin: 0;
+		}
+
+		body {
+			    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
+
+		@media print{@page {size:landscape;}}
+		table {
+			border-collapse: collapse; 
+		}
+
+		table.one{
+			
+			border: 1px solid #f8f8f8;
+		}
+			th {text-align: left; border:2px solid #ccc;padding:30px 15px;}
+			td {text-align: center;  border:2px solid #ccc;}
+
+
+			table th {
+				background:#337ab7;
+				color:white;
+				
+				padding-top:15px;
+				padding-bottom:15px;
+			}
+
+			table td:first-child {
+				font-weight: bold;
+				background-color: #f4f4f4;
+			}
+
+			table tr, table td{
+				padding: 8px;
+			}
+
+			table .section {
+				padding:20px 25px;
+				font-size:18px;
+			}
+
+			table td:empty:nth-child(2) {
+				background-color:#F7F286;
+			}
+
+			table td:empty:not(:nth-child(2)) {
+				background-color:#f4f4f4;
+			}
+
+
+
+			
+		</style>
+	</head>
+	<body>
+		<table class="one" width="100%" >
+
+
+			<tr>
+				<th colspan="6"; style="padding:30px 25px;font-size:25px;">Enhancement Report</th>
+			</tr>
+			<tr>
+				<td>University School</td>
+				<td>{{p.university_school.university}}</td>
+				<td>{{p2.university_school.university}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{p3.university_school.university}}</td>
+				{% endif %}
+				  
+				{% if length < 4 %}
+				{% else %}
+				<td>{{p4.university_school.university}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{p5.university_school.university}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>School Name</td>
+				<td>{{p.university_school.school}}</td>
+				<td>{{p2.university_school.school}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{p3.university_school.school}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{p4.university_school.school}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{p5.university_school.school}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Program Name</td>
+				<td>{{p.program_name}}</td>
+				<td>{{p2.program_name}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{p3.program_name}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{p4.program_name}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{p5.program_name}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Degree</td>
+				<td>{{p.degree.name}}</td>
+				<td>{{p2.degree.name}}</td>
+				{% if length < 3 %}
+				{% else %}
+				<td>{{p3.degree.name}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{p4.degree.name}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{p5.degree.name}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Department</td>
+				<td>{{p.department|default:"N/A"}}</td>
+				<td>{{p2.department|default:"N/A"}}</td>
+				{% if length < 3 %}
+				{% else %}
+				<td>{{p3.department|default:"N/A"}}</td>
+				{% endif %}
+				 
+				{% if length < 4 %}
+				{% else %}
+				<td>{{p4.department|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{p5.department|default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Specialization</td>
+				<td>{{p.specialization|default:"N/A"}}</td>
+				<td>{{p2.specialization|default:"N/A"}}</td>
+				{% if length < 3 %}
+				{% else %}
+				<td>{{p3.specialization|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{p4.specialization|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{p5.specialization|default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Highlights</td>
+				<td>{{p.highlights|default:"N/A"}}</td>
+				<td>{{p2.highlights|default:"N/A"}}</td>
+				{% if length < 3 %}
+				{% else %}
+				<td>{{p3.highlights|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{p4.highlights|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{p5.highlights|default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Audience</td>
+				<td>{{p.audience|default:"N/A"}}</td>
+				<td>{{p2.audience|default:"N/A"}}</td>
+				{% if length < 3 %}
+				{% else %}
+				<td>{{p3.audience|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{p4.audience|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{p5.audience|default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Job Placement</td>
+				<td>{{p.job_placement|default:"N/A"}}</td>
+
+				<td>{{p2.job_placement|default:"N/A"}}</td>
+
+
+				{% if length < 3 %}
+				{% else %}
+					<td>{{p3.job_placement|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					<td>{{p4.job_placement|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					<td>{{p5.job_placement|default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<th colspan="6"; align="left" class="section"> 1. PROGRAM DETAILS</th>
+			</tr>
+
+			<tr>
+				<td>Full Time</td>
+				{% if dura.full_part_time == "F" %}
+				<td>&#10004;</td>
+				{% elif dura.full_part_time == "P" %}
+				<td>&#10008;</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if dura2.full_part_time == "F" %}
+				<td>&#10004;</td>
+				{% elif dura2.full_part_time == "P" %}
+				<td>&#10008;</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if dura3.full_part_time == "F" %}
+					<td>&#10004;</td>
+					{% elif dura3.full_part_time == "P" %}
+					<td>&#10008;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if dura4.full_part_time == "F" %}
+					<td>&#10004;</td>
+					{% elif dura4.full_part_time == "P" %}
+					<td>&#10008;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if dura5.full_part_time == "F" %}
+					<td>&#10004;</td>
+					{% elif dura5.full_part_time == "P" %}
+					<td>&#10008;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+			</tr>
+			<tr>
+				<td>Part Time</td>
+				{% if dura.full_part_time == "P" %}
+				<td>&#10004;</td>
+				{% elif dura.full_part_time == "F" %}
+				<td>&#10008;</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif%}
+
+				{% if dura2.full_part_time == "P" %}
+				<td>&#10004;</td>
+				{% elif dura2.full_part_time == "F" %}
+				<td>&#10008;</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif%}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if dura3.full_part_time == "P" %}
+					<td>&#10004;</td>
+					{% elif dura3.full_part_time == "F" %}
+					<td>&#10008;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif%}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if dura4.full_part_time == "P" %}
+					<td>&#10004;</td>
+					{% elif dura4.full_part_time == "F" %}
+					<td>&#10008;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif%}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if dura5.full_part_time == "P" %}
+					<td>&#10004;</td>
+					{% elif dura5.full_part_time == "F" %}
+					<td>&#10008;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif%}
+				{% endif %}
+			</tr>
+
+			<tr>
+				<td>Program Duration</td>
+				<td>{% if dura.duration_min == null or dura.duration_max == null or dura.duration_unit == null %}N/A
+				{% elif dura.duration_min == dura.duration_max %}
+					{% ifequal dura.duration_max 1 %}
+						{{dura.duration_max}} {{dura.duration_unit}}
+					{% else %}
+						{{dura.duration_max}} {{dura.duration_unit}}s
+					{% endifequal %}
+				{% else %}{{dura.duration_min}} to {{dura.duration_max}} {{dura.duration_unit}}s{% endif %}</td>
+
+				<td>{% if dura2.duration_min == null or dura2.duration_max == null or dura2.duration_unit == null %}N/A
+				{% elif dura2.duration_min == dura2.duration_max %}
+					{% ifequal dura2.duration_max 1 %}
+						{{dura2.duration_max}} {{dura2.duration_unit}}
+					{% else %}
+						{{dura2.duration_max}} {{dura2.duration_unit}}s
+					{% endifequal %}
+				{% else %}{{dura2.duration_min}} to {{dura2.duration_max}} {{dura2.duration_unit}}s {% endif %}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{% if dura3.duration_min == null or dura3.duration_max == null or dura3.duration_unit == null %}N/A
+				{% elif dura3.duration_min == dura3.duration_max %}
+					{% ifequal dura3.duration_max 1 %}
+						{{dura3.duration_max}} {{dura3.duration_unit}}
+					{% else %}
+						{{dura3.duration_max}} {{dura3.duration_unit}}s
+					{% endifequal %}
+				{% else %}{{dura3.duration_min}} to {{dura3.duration_max}} {{dura3.duration_unit}}s {% endif %}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{% if dura4.duration_min == null or dura4.duration_max == null or dura4.duration_unit == null %}N/A
+				{% elif dura4.duration_min == dura4.duration_max %}
+					{% ifequal dura4.duration_max 1 %}
+						{{dura4.duration_max}} {{dura4.duration_unit}}
+					{% else %}
+						{{dura4.duration_max}} {{dura4.duration_unit}}s
+					{% endifequal %}
+				{% else %}{{dura4.duration_min}} to {{dura4.duration_max}} {{dura4.duration_unit}}s {% endif %}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{% if dura5.duration_min == null or dura5.duration_max == null or dura5.duration_unit == null %}N/A
+				{% elif dura5.duration_min == dura5.duration_max %}
+					{% ifequal dura5.duration_max 1 %}
+						{{dura5.duration_max}} {{dura5.duration_unit}}
+					{% else %}
+						{{dura5.duration_max}} {{dura5.duration_unit}}s
+					{% endifequal %}
+				{% else %}{{dura5.duration_min}} to {{dura5.duration_max}}{{dura5.duration_unit}}s {% endif %}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Duration Time Limit</td>
+				{% if not dura.durationtime_limit %}
+				<td>N/A</td>
+				{% else %}
+				<td>{{dura.durationtime_limit|default:"N/A"}} {{dura.duration_unit|default:""}}</td>
+				{% endif %}
+
+				{% if not dura2.durationtime_limit %}
+				<td>N/A</td>
+				{% else %}
+				<td>{{dura2.durationtime_limit|default:"N/A"}} {{dura2.duration_unit|default:""}}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{%if not dura3.durationtime_limit %}
+					<td>N/A</td>>
+					{% else %}
+					<td>{{dura3.durationtime_limit|default:"N/A"}} {{dura3.duration_unit|default:""}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{%if not dura4.durationtime_limit %}
+					<td>N/A</td>>
+					{% else %}
+					<td>{{dura4.durationtime_limit|default:"N/A"}} {{dura4.duration_unit|default:""}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{%if not dura5.durationtime_limit %}
+					<td>N/A</td>>
+					{% else %}
+					<td>{{dura5.durationtime_limit|default:"N/A"}} {{dura5.duration_unit|default:""}}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<th colspan="6"; align="left" class="section"> 2. CURRICULUMS</th>
+			</tr>
+			<tr>
+				<td>Required Curriculum Units</td>
+				{% if c.min_total_unit|length == 0 %}
+				<td>N/A</td>
+				{% else %}
+				<td>{{c.min_total_unit}}<br>{{c.curriculum_unit.name}}</td>
+				{% endif %}
+
+				{% if c2.min_total_unit|length == 0 %}
+				<td>N/A</td>
+				{% else %}
+				<td>{{c2.min_total_unit}}<br>{{c2.curriculum_unit.name}}</td>
+				{% endif %}
+
+
+				{% if length < 3 %}
+				{% else %}
+					{% if c3.min_total_unit|length == 0 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{{c3.min_total_unit}}<br>{{c3.curriculum_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if c4.min_total_unit|length == 0 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{{c4.min_total_unit}}<br>{{c4.curriculum_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else%}
+					{% if c5.min_total_unit|length == 0 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{{c5.min_total_unit}}<br>{{c5.curriculum_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Max Transfer Unit</td>
+				{% if c.max_transfer_unit == null or c.curriculum_unit.name == null%}
+				<td>N/A</td>
+				{% else %}
+				<td>{{c.max_transfer_unit}}  {{c.curriculum_unit.name}}</td>
+				{% endif %}
+
+				{% if c2.max_transfer_unit == null or c2.curriculum_unit.name == null%}
+				<td>N/A</td>
+				{% else %}
+				<td>{{c2.max_transfer_unit}}  {{c2.curriculum_unit.name}}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if c3.max_transfer_unit == null or c3.curriculum_unit.name == null%}
+					<td>N/A</td>
+					{% else %}
+					<td>{{c3.max_transfer_unit}}  {{c3.curriculum_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if c4.max_transfer_unit == null or c4.curriculum_unit.name == null%}
+					<td>N/A</td>
+					{% else %}
+					<td>{{c4.max_transfer_unit}}  {{c4.curriculum_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if c5.max_transfer_unit == null or c5.curriculum_unit.name == null%}
+					<td>N/A</td>
+					{% else %}
+					<td>{{c5.max_transfer_unit}}  {{c5.curriculum_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+			</tr>			
+			<tr>
+				<td>Master Thesis or Equivalent</td>
+				{% if c.master_thesis_or_equivalent == "N" %}
+				<td>&#10008;</td>
+				{% elif c.master_thesis_or_equivalent == "Y" %}
+				<td>&#10004;</td>
+				{% elif c.master_thesis_or_equivalent == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if c2.master_thesis_or_equivalent == "N" %}
+				<td>&#10008;</td>
+				{% elif c2.master_thesis_or_equivalent == "Y" %}
+				<td>&#10004;</td>
+				{% elif c2.master_thesis_or_equivalent == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if c3.master_thesis_or_equivalent == "N" %}
+					<td>&#10008;</td>
+					{% elif c3.master_thesis_or_equivalent == "Y" %}
+					<td>&#10004;</td>
+					{% elif c3.master_thesis_or_equivalent == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if c4.master_thesis_or_equivalent == "N" %}
+					<td>&#10008;</td>
+					{% elif c4.master_thesis_or_equivalent == "Y" %}
+					<td>&#10004;</td>
+					{% elif c4.master_thesis_or_equivalent == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if c5.master_thesis_or_equivalent == "N" %}
+					<td>&#10008;</td>
+					{% elif c5.master_thesis_or_equivalent == "Y" %}
+					<td>&#10004;</td>
+					{% elif c5.master_thesis_or_equivalent == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+			</tr>
+			<tr>
+				<td>Doctorate Dissertation or Equivalent</td>
+				{% if c.doctorate_dissertation_or_equivalent == "N" %}
+				<td>&#10008;</td>
+				{% elif c.doctorate_dissertation_or_equivalent == "Y" %}
+				<td>&#10004;</td>
+				{% elif c.doctorate_dissertation_or_equivalent == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if c2.doctorate_dissertation_or_equivalent == "N" %}
+				<td>&#10008;</td>
+				{% elif c2.doctorate_dissertation_or_equivalent == "Y" %}
+				<td>&#10004;</td>
+				{% elif c2.doctorate_dissertation_or_equivalent == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if c3.doctorate_dissertation_or_equivalent == "N" %}
+					<td>&#10008;</td>
+					{% elif c3.doctorate_dissertation_or_equivalent == "Y" %}
+					<td>&#10004;</td>
+					{% elif c3.doctorate_dissertation_or_equivalent == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if c4.doctorate_dissertation_or_equivalent == "N" %}
+					<td>&#10008;</td>
+					{% elif c4.doctorate_dissertation_or_equivalent == "Y" %}
+					<td>&#10004;</td>
+					{% elif c4.doctorate_dissertation_or_equivalent == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if c5.doctorate_dissertation_or_equivalent == "N" %}
+					<td>&#10008;</td>
+					{% elif c5.doctorate_dissertation_or_equivalent == "Y" %}
+					<td>&#10004;</td>
+					{% elif c5.doctorate_dissertation_or_equivalent == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<th colspan="6"; align="left" class="section"> 3. TUITION</th>
+			</tr>
+			<tr>
+				<td>Tuition In State</td>
+				{% if t.tuition_per_unit == null %}
+				<td>N/A</td>
+				{% else %}
+				<td>${{t.tuition_per_unit}}<br>{{t.tuition_unit.name}}</td>
+				{% endif %}
+
+				{% if t2.tuition_per_unit == null %}
+				<td>N/A</td>
+				{% else %}
+				<td>${{t2.tuition_per_unit}}<br>{{t2.tuition_unit.name}}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if t3.tuition_per_unit == null %}
+					<td>N/A</td>
+					{% else %}
+					<td>${{t3.tuition_per_unit}}<br>{{t3.tuition_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if t4.tuition_per_unit == null %}
+					<td>N/A</td>
+					{% else %}
+					<td>${{t4.tuition_per_unit}}<br>{{t4.tuition_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if t5.tuition_per_unit == null %}
+					<td>N/A</td>
+					{% else %}
+					<td>${{t5.tuition_per_unit}}<br>{{t5.tuition_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Tuition out of State</td>
+				{% if t.tuition_per_unit_out_state == null %}
+				<td>N/A</td>
+				{% else %}
+				<td>${{t.tuition_per_unit_out_state}}<br>{{t.tuition_unit.name}}</td>
+				{% endif %}
+
+				{% if t2.tuition_per_unit_out_state == null %}
+				<td>N/A</td>
+				{% else %}
+				<td>${{t2.tuition_per_unit_out_state}}<br>{{t2.tuition_unit.name}}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if t3.tuition_per_unit_out_state == null %}
+					<td>N/A</td>
+					{% else %}
+					<td>${{t3.tuition_per_unit_out_state}}<br>{{t3.tuition_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if t4.tuition_per_unit_out_state == null %}
+					<td>N/A</td>
+					{% else %}
+					<td>${{t4.tuition_per_unit_out_state}}<br>{{t4.tuition_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if t5.tuition_per_unit_out_state == null %}
+					<td>N/A</td>
+					{% else %}
+					<td>${{t5.tuition_per_unit_out_state}}<br>{{t5.tuition_unit.name}}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Other Fee Included</td>
+				{% if t.fee_included == True %}
+				<td>&#10004;</td>
+				{% elif t.fee_included == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if t2.fee_included == True %}
+				<td>&#10004;</td>
+				{% elif t2.fee_included == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if t3.fee_included == True %}
+					<td>&#10004;</td>
+					{% elif t3.fee_included == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if t4.fee_included == True %}
+					<td>&#10004;</td>
+					{% elif t4.fee_included == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if t5.fee_included == True %}
+					<td>&#10004;</td>
+					{% elif t5.fee_included == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+
+			<tr>
+				<th colspan="6" class="section"> 4. ADMISSION DEADLINES</th>
+			</tr>
+
+			<tr>
+				<td>Deadline Fall Early</td>
+				{% if d.deadline_fall_early_month == null %}
+				<td>N/A</td>
+				{% elif d.deadline_fall_early_day == null %}
+				<td>{{d.get_deadline_fall_early_month_display}}</td>
+				{% else%}
+				<td>{{d.get_deadline_fall_early_month_display}} {{d.get_deadline_fall_early_day_display}}</td>
+				{% endif %}
+
+				{% if d2.deadline_fall_early_month == null %}
+				<td>N/A</td>
+				{% elif d2.deadline_fall_early_day == null %}
+				<td>{{d2.get_deadline_fall_early_month_display}}</td>
+				{% else%}
+				<td>{{d2.get_deadline_fall_early_month_display}} {{d2.get_deadline_fall_early_day_display}}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if d3.deadline_fall_early_month == null %}
+					<td>N/A</td>
+					{% elif d3.deadline_fall_early_day == null %}
+					<td>{{d3.get_deadline_fall_early_month_display}}</td>
+					{% else%}
+					<td>{{d3.get_deadline_fall_early_month_display}} {{d3.get_deadline_fall_early_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if d4.deadline_fall_early_month == null %}
+					<td>N/A</td>
+					{% elif d4.deadline_fall_early_day == null %}
+					<td>{{d4.get_deadline_fall_early_month_display}}</td>
+					{% else%}
+					<td>{{d4.get_deadline_fall_early_month_display}} {{d4.get_deadline_fall_early_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if d5.deadline_fall_early_month == null %}
+					<td>N/A</td>
+					{% elif d5.deadline_fall_early_day == null %}
+					<td>{{d5.get_deadline_fall_early_month_display}}</td>
+					{% else%}
+					<td>{{d5.get_deadline_fall_early_month_display}} {{d5.get_deadline_fall_early_day_display}}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Deadline Fall Late</td>
+				{% if d.deadline_fall_late_month == null %}
+				<td>N/A</td>
+				{% elif d.deadline_fall_late_day == null %}
+				<td>{{d.get_deadline_fall_late_month_display}}</td>
+				{% else %}
+				<td>{{d.get_deadline_fall_late_month_display}} {{d.get_deadline_fall_late_day_display}}</td>
+				{% endif %}
+
+				{% if d2.deadline_fall_late_month == null %}
+				<td>N/A</td>
+				{% elif d2.deadline_fall_late_day == null %}
+				<td>{{d2.get_deadline_fall_late_month_display}}</td>
+				{% else %}
+				<td>{{d2.get_deadline_fall_late_month_display}} {{d2.get_deadline_fall_late_day_display}}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if d3.deadline_fall_late_month == null %}
+					<td>N/A</td>
+					{% elif d.deadline_fall_late_day == null %}
+					<td>{{d3.get_deadline_fall_late_month_display}}</td>
+					{% else %}
+					<td>{{d3.get_deadline_fall_late_month_display}} {{d3.get_deadline_fall_late_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if d4.deadline_fall_late_month == null %}
+					<td>N/A</td>
+					{% elif d4.deadline_fall_late_day == null %}
+					<td>{{d4.get_deadline_fall_late_month_display}}</td>
+					{% else %}
+					<td>{{d4.get_deadline_fall_late_month_display}} {{d4.get_deadline_fall_late_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if d5.deadline_fall_late_month == null %}
+					<td>N/A</td>
+					{% elif d5.deadline_fall_late_day == null %}
+					<td>{{d5.get_deadline_fall_late_month_display}}</td>
+					{% else %}
+					<td>{{d5.get_deadline_fall_late_month_display}} {{d5.get_deadline_fall_late_day_display}}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Deadline Spring Early</td>
+				{% if d.deadline_spring_early_month == null %}
+				<td>N/A</td>
+				{% elif d.deadline_spring_early_day == null %}
+				<td>{{d.get_deadline_spring_early_month_display}}</td>
+				{% else %}
+				<td>{{d.get_deadline_spring_early_month_display}} {{d.get_deadline_spring_early_day_display}}</td>
+				{% endif %}
+
+				{% if d2.deadline_spring_early_month == null %}
+				<td>N/A</td>
+				{% elif d2.deadline_spring_early_day == null %}
+				<td>{{d2.get_deadline_spring_early_month_display}}</td>
+				{% else %}
+				<td>{{d2.get_deadline_spring_early_month_display}} {{d2.get_deadline_spring_early_day_display}}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if d3.deadline_spring_early_month == null %}
+					<td>N/A</td>
+					{% elif d3.deadline_spring_early_day == null %}
+					<td>{{d3.get_deadline_spring_early_month_display}}</td>
+					{% else %}
+					<td>{{d3.get_deadline_spring_early_month_display}} {{d3.get_deadline_spring_early_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if d4.deadline_spring_early_month == null %}
+					<td>N/A</td>
+					{% elif d4.deadline_spring_early_day == null %}
+					<td>{{d4.get_deadline_spring_early_month_display}}</td>
+					{% else %}
+					<td>{{d4.get_deadline_spring_early_month_display}}{{d4.get_deadline_spring_early_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if d5.deadline_spring_early_month == null %}
+					<td>N/A</td>
+					{% elif d5.deadline_spring_early_day == null %}
+					<td>{{d5.get_deadline_spring_early_month_display}}</td>
+					{% else %}
+					<td>{{d5.get_deadline_spring_early_month_display}} {{d5.get_deadline_spring_early_day_display}}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Deadline Spring Late</td>
+				{% if d.deadline_spring_late_month == null %}
+				<td>N/A</td>
+				{% elif d.deadline_spring_late_day == null %}
+				<td>{{d.get_deadline_spring_late_month_display}}</td>
+				{% else %}
+				<td>{{d.get_deadline_spring_late_month_display}} {{d.get_deadline_spring_late_day_display}}</td>
+				{% endif %}
+
+				{% if d2.deadline_spring_late_month == null %}
+				<td>N/A</td>
+				{% elif d2.deadline_spring_late_day == null %}
+				<td>{{d2.get_deadline_spring_late_month_display}}</td>
+				{% else %}
+				<td>{{d2.get_deadline_spring_late_month_display}} / {{d2.get_deadline_spring_late_day_display}}</td>
+				{% endif %}
+
+
+				{% if length < 3 %}
+				{% else %}
+					{% if d3.deadline_spring_late_month == null %}
+					<td>N/A</td>
+					{% elif d3.deadline_spring_late_day == null %}
+					<td>{{d3.get_deadline_spring_late_month_display}}</td>
+					{% else %}
+					<td>{{d3.get_deadline_spring_late_month_display}} {{d3.get_deadline_spring_late_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if d4.deadline_spring_late_month == null %}
+					<td>N/A</td>
+					{% elif d4.deadline_spring_late_day == null %}
+					<td>{{d4.get_deadline_spring_late_month_display}}</td>
+					{% else %}
+					<td>{{d4.get_deadline_spring_late_month_display}} {{d4.get_deadline_spring_late_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if d5.deadline_spring_late_month == null %}
+					<td>N/A</td>
+					{% elif d5.deadline_spring_late_day == null %}
+					<td>{{d5.get_deadline_spring_late_month_display}}</td>
+					{% else %}
+					<td>{{d5.get_deadline_spring_late_month_display}} {{d5.get_deadline_spring_late_day_display}}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Deadline Summer Early</td>
+				{% if d.deadline_summer_early_month == null %}
+				<td>N/A</td>
+				{% elif d.deadline_summer_early_day == null %}
+				<td>{{d.get_deadline_summer_early_month_display}}</td>
+				{% else %}
+				<td>{{d.get_deadline_summer_early_month_display}} {{d.get_deadline_summer_early_day_display}}</td>
+				{% endif %}
+
+				{% if d2.deadline_summer_early_month == null %}
+				<td>N/A</td>
+				{% elif d2.deadline_summer_early_day == null %}
+				<td>{{d2.get_deadline_summer_early_month_display}}</td>
+				{% else %}
+				<td>{{d2.get_deadline_summer_early_month_display}} {{d2.get_deadline_summer_early_day_display}}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if d3.deadline_summer_early_month == null %}
+					<td>N/A</td>
+					{% elif d3.deadline_summer_early_day == null %}
+					<td>{{d3.get_deadline_summer_early_month_display}}</td>
+					{% else %}
+					<td>{{d3.get_deadline_summer_early_month_display}} {{d3.get_deadline_summer_early_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if d4.deadline_summer_early_month == null %}
+					<td>N/A</td>
+					{% elif d4.deadline_summer_early_day == null %}
+					<td>{{d4.get_deadline_summer_early_month_display}}</td>
+					{% else %}
+					<td>{{d4.get_deadline_summer_early_month_display}} {{d4.get_deadline_summer_early_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if d5.deadline_summer_early_month == null %}
+					<td>N/A</td>
+					{% elif d5.deadline_summer_early_day == null %}
+					<td>{{d5.get_deadline_summer_early_month_display}}</td>
+					{% else %}
+					<td>{{d5.get_deadline_summer_early_month_display}} {{d5.get_deadline_summer_early_day_display}}</td>
+					{% endif %}
+				{% endif%}
+
+			</tr>
+			<tr>
+				<td>Deadline Summer Late</td>
+				{% if d.deadline_summer_late_month == null %}
+				<td>N/A</td>
+				{% elif d.deadline_summer_late_day == null %}
+				<td>{{d.get_deadline_summer_late_month_display}}</td>
+				{% else %}
+				<td>{{d.get_deadline_summer_late_month_display}} {{d.get_deadline_summer_late_day_display}}</td>
+				{% endif %}
+
+				{% if d2.deadline_summer_late_month == null %}
+				<td>N/A</td>
+				{% elif d2.deadline_summer_late_day == null %}
+				<td>{{d2.get_deadline_summer_late_month_display}}</td>
+				{% else %}
+				<td>{{d2.get_deadline_summer_late_month_display}} {{d2.get_deadline_summer_late_day_display}}</td>
+				{% endif %}
+
+
+				{% if length < 3 %}
+				{% else %}
+					{% if d3.deadline_summer_late_month == null %}
+					<td>N/A</td>
+					{% elif d3.deadline_summer_late_day == null %}
+					<td>{{d3.get_deadline_summer_late_month_display}}</td>
+					{% else %}
+					<td>{{d3.get_deadline_summer_late_month_display}} {{d3.get_deadline_summer_late_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if d4.deadline_summer_late_month == null %}
+					<td>N/A</td>
+					{% elif d4.deadline_summer_late_day == null %}
+					<td>{{d4.get_deadline_summer_late_month_display}}</td>
+					{% else %}
+					<td>{{d4.get_deadline_summer_late_month_display}} {{d4.get_deadline_summer_late_day_display}}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if d5.deadline_summer_late_month == null %}
+					<td>N/A</td>
+					{% elif d5.deadline_summer_late_day == null %}
+					<td>{{d5.get_deadline_summer_late_month_display}}</td>
+					{% else %}
+					<td>{{d5.get_deadline_summer_late_month_display}} {{d5.get_deadline_summer_late_day_display}}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Deadline Rolling</td>
+				{% if d.deadline_rolling == True %}
+				<td>&#10004;</td>
+				{% elif d.deadline_rolling == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if d2.deadline_rolling == True %}
+				<td>&#10004;</td>
+				{% elif d2.deadline_rolling == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if d3.deadline_rolling == True %}
+					<td>&#10004;</td>
+					{% elif d3.deadline_rolling == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if d4.deadline_rolling == True %}
+					<td>&#10004;</td>
+					{% elif d4.deadline_rolling == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if d5.deadline_rolling == True %}
+					<td>&#10004;</td>
+					{% elif d5.deadline_rolling == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Scholarship Deadline</td>
+				<td>{% if d.scholarship_deadline_month == null %}N/A{% elif d.scholarship_deadline_day == null %}{{d.scholarship_deadline_month}} / -{% else %}{{d.scholarship_deadline_month}} / {{d.scholarship_deadline_day}}{% endif %}</td>
+
+				<td>{% if d2.scholarship_deadline_month == null %}N/A{% elif d2.scholarship_deadline_day == null %}{{d2.scholarship_deadline_month}} / -{% else %}{{d2.scholarship_deadline_month}} / {{d2.scholarship_deadline_day}}{% endif %}</td>
+
+				{% if length < 3 %}
+				{% else %}
+					<td>{% if d3.scholarship_deadline_month == null %}N/A{% elif d3.scholarship_deadline_day == null %}{{d3.scholarship_deadline_month}} / -{% else %}{{d3.scholarship_deadline_month}} / {{d3.scholarship_deadline_day}}{% endif %}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					<td>{% if d4.scholarship_deadline_month == null %}N/A{% elif d4.scholarship_deadline_day == null %}{{d4.scholarship_deadline_month}} / -{% else %}{{d4.scholarship_deadline_month}} / {{d4.scholarship_deadline_day}}{% endif %}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{% if d5.scholarship_deadline_month == null %}N/A{% elif d5.scholarship_deadline_day == null %}{{d5.scholarship_deadline_month}} / -{% else %}{{d5.scholarship_deadline_month}} / {{d5.scholarship_deadline_day}} {% endif %}</td>
+				{% endif %}
+			</tr>
+			
+			<tr>
+				<th colspan="6" class="section"> 5. ADMISSION REQUIREMENTS</th>
+			</tr>
+
+			<tr>
+				<td>Special Requirements</td>
+				<td>{{r.special_reqs|default:"N/A"}}</td>
+				<td>{{r2.special_reqs|default:"N/A"}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.special_reqs|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.special_reqs|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.special_reqs|default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Apply Online</td>
+				{% if r.apply_online == True %}
+				<td>&#10004;</td>
+				{% elif r.apply_online == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.apply_online == True %}
+				<td>&#10004;</td>
+				{% elif r2.apply_online == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.apply_online == True %}
+					<td>&#10004;</td>
+					{% elif r3.apply_online == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.apply_online == True %}
+					<td>&#10004;</td>
+					{% elif r4.apply_online == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.apply_online == True %}
+					<td>&#10004;</td>
+					{% elif r5.apply_online == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Application Fee</td>
+				<td>{{r.application_fee|default:"N/A"}}</td>
+				<td>{{r2.application_fee|default:"N/A"}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.application_fee|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.application_fee|default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.application_fee|default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Application Fee Waiver</td>
+				{% if r.application_fee_waiver == True %}
+				<td>&#10004;</td>
+				{% elif r.application_fee_waiver == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.application_fee_waiver == True %}
+				<td>&#10004;</td>
+				{% elif r2.application_fee_waiver == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.application_fee_waiver == True %}
+					<td>&#10004;</td>
+					{% elif r3.application_fee_waiver == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.application_fee_waiver == True %}
+					<td>&#10004;</td>
+					{% elif r4.application_fee_waiver == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.application_fee_waiver == True %}
+					<td>&#10004;</td>
+					{% elif r5.application_fee_waiver == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Transcript for Application</td>
+				{% if r.transcript_for_application == "N" %}
+				<td>&#10008;</td>
+				{% elif r.transcript_for_application == "Y" %}
+				<td>&#10004;</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.transcript_for_application == "N" %}
+				<td>&#10008;</td>
+				{% elif r2.transcript_for_application == "Y" %}
+				<td>&#10004;</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.transcript_for_application == "N" %}
+					<td>&#10008;</td>
+					{% elif r3.transcript_for_application == "Y" %}
+					<td>&#10004;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.transcript_for_application == "N" %}
+					<td>&#10008;</td>
+					{% elif r4.transcript_for_application == "Y" %}
+					<td>&#10004;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.transcript_for_application == "N" %}
+					<td>&#10008;</td>
+					{% elif r5.transcript_for_application == "Y" %}
+					<td>&#10004;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Official Transcript</td>
+				{% if r.transcript_post_admin == True %}
+				<td>&#10004;</td>
+				{% elif r.transcript_post_admin == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.transcript_post_admin == True %}
+				<td>&#10004;</td>
+				{% elif r2.transcript_post_admin == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.transcript_post_admin == True %}
+					<td>&#10004;</td>
+					{% elif r3.transcript_post_admin == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.transcript_post_admin == True %}
+					<td>&#10004;</td>
+					{% elif r4.transcript_post_admin == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.transcript_post_admin == True %}
+					<td>&#10004;</td>
+					{% elif r5.transcript_post_admin == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Transcript for Enrollment</td>
+				{% if r.official_transcript_for_enrollment == "N" %}
+				<td>&#10008;</td>
+				{% elif r.official_transcript_for_enrollment == "Y" %}
+				<td>&#10004;</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.official_transcript_for_enrollment == "N" %}
+				<td>&#10008;</td>
+				{% elif r2.official_transcript_for_enrollment == "Y" %}
+				<td>&#10004;</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.official_transcript_for_enrollment == "N" %}
+					<td>&#10008;</td>
+					{% elif r3.official_transcript_for_enrollment == "Y" %}
+					<td>&#10004;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.official_transcript_for_enrollment == "N" %}
+					<td>&#10008;</td>
+					{% elif r4.official_transcript_for_enrollment == "Y" %}
+					<td>&#10004;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.official_transcript_for_enrollment == "N" %}
+					<td>&#10008;</td>
+					{% elif r5.official_transcript_for_enrollment == "Y" %}
+					<td>&#10004;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Required Exam</td>
+				{% if not ex %}
+				<td>N/A</td>
+				{% else %}
+				<td>{% for exam in ex %}{{ exam.name }}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
+				{% endif %}
+
+				{% if not ex2 %}
+				<td>N/A</td>
+				{% else %}
+				<!-- not exam use exam.name instead -->
+				<td>{% for exam in ex2 %}{{ exam.name }}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if not ex3 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{% for exam in ex3 %}{{ exam.name }}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if not ex4 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{% for exam in ex4 %}{{ exam.name }}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if not ex5 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{% for exam in ex5 %}{{ exam.name }}{% if not forloop.last %} / {% endif %}{% endfor %}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Personal Statement or Equivalent</td>
+				<td>{{r.essays |default:"N/A"}}</td>
+				<td>{{r2.essays |default:"N/A"}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.essays |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.essays |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.essays |default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Letters of Recommendation</td>
+				<td>{{r.recommendation |default:"N/A"}}</td>
+
+				<td>{{r2.recommendation |default:"N/A"}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.recommendation |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.recommendation |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.recommendation |default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>GPA Minimum</td>
+				{% if r.gpa_minimum %}
+					{% if r.gpa_minimum_letter %}
+					<td>{{r.gpa_minimum}} / {{r.gpa_minimum_letter}}</td>
+					{% else %}
+					<td>{{r.gpa_minimum}}</td>
+					{% endif%}
+				{% elif r.gpa_minimum_letter %}
+					<td>{{r.gpa_minimum_letter}}</td>
+				{% else %}
+					<td>N/A</td>
+				{% endif %}
+
+				{% if r2.gpa_minimum %}
+					{% if r2.gpa_minimum_letter %}
+					<td>{{r2.gpa_minimum}} / {{r2.gpa_minimum_letter}}</td>
+					{% else %}
+					<td>{{r2.gpa_minimum}}</td>
+					{% endif%}
+				{% elif r2.gpa_minimum_letter %}
+					<td>{{r2.gpa_minimum_letter}}</td>
+				{% else %}
+					<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.gpa_minimum %}
+						{% if r3.gpa_minimum_letter %}
+						<td>{{r3.gpa_minimum}} / {{r3.gpa_minimum_letter}}</td>
+						{% else %}
+						<td>{{r3.gpa_minimum}}</td>
+						{% endif%}
+					{% elif r3.gpa_minimum_letter %}
+						<td>{{r3.gpa_minimum_letter}}</td>
+					{% else %}
+						<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.gpa_minimum %}
+						{% if r4.gpa_minimum_letter %}
+						<td>{{r4.gpa_minimum}} / {{r4.gpa_minimum_letter}}</td>
+						{% else %}
+						<td>{{r4.gpa_minimum}}</td>
+						{% endif%}
+					{% elif r4.gpa_minimum_letter %}
+						<td>{{r4.gpa_minimum_letter}}</td>
+					{% else %}
+						<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}	
+					{% if r5.gpa_minimum %}
+						{% if r5.gpa_minimum_letter %}
+						<td>{{r5.gpa_minimum}} / {{r5.gpa_minimum_letter}}</td>
+						{% else %}
+						<td>{{r5.gpa_minimum}}</td>
+						{% endif%}
+					{% elif r5.gpa_minimum_letter %}
+						<td>{{r5.gpa_minimum_letter}}</td>
+					{% else %}
+						<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>GPA Average</td>
+				{% if r.gpa_average %}
+					{% if r.gpa_average_letter %}
+					<td>{{r.gpa_average}} / {{r.gpa_average_letter}}</td>
+					{% else %}
+					<td>{{r.gpa_average}}</td>
+					{% endif%}
+				{% elif r.gpa_average_letter %}
+					<td>{{r.gpa_average_letter}}</td>
+				{% else %}
+					<td>N/A</td>
+				{% endif %}
+
+				{% if r2.gpa_average %}
+					{% if r2.gpa_average_letter %}
+					<td>{{r2.gpa_average}} / {{r2.gpa_average_letter}}</td>
+					{% else %}
+					<td>{{r2.gpa_average}}</td>
+					{% endif%}
+				{% elif r2.gpa_average_letter %}
+					<td>{{r2.gpa_average_letter}}</td>
+				{% else %}
+					<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.gpa_average %}
+						{% if r3.gpa_average_letter %}
+						<td>{{r3.gpa_average}} / {{r3.gpa_average_letter}}</td>
+						{% else %}
+						<td>{{r3.gpa_average}}</td>
+						{% endif%}
+					{% elif r3.gpa_average_letter %}
+						<td>{{r3.gpa_average_letter}}</td>
+					{% else %}
+						<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.gpa_average %}
+						{% if r4.gpa_average_letter %}
+						<td>{{r4.gpa_average}} / {{r4.gpa_average_letter}}</td>
+						{% else %}
+						<td>{{r4.gpa_average}}</td>
+						{% endif%}
+					{% elif r4.gpa_average_letter %}
+						<td>{{r4.gpa_average_letter}}</td>
+					{% else %}
+						<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.gpa_average %}
+						{% if r5.gpa_average_letter %}
+						<td>{{r5.gpa_average}} / {{r5.gpa_average_letter}}</td>
+						{% else %}
+						<td>{{r5.gpa_average}}</td>
+						{% endif%}
+					{% elif r5.gpa_average_letter %}
+						<td>{{r5.gpa_average_letter}}</td>
+					{% else %}
+						<td>N/A</td>
+					{% endif %}
+				{% endif%}
+			</tr>
+			<tr>
+				<td>GPA Suggested</td>
+				{% if r.gpa_suggested %}
+					{% if r.gpa_suggested_letter %}
+					<td>{{r.gpa_suggested}} / {{r.gpa_suggested_letter}}</td>
+					{% else %}
+					<td>{{r.gpa_suggested}}</td>
+					{% endif%}
+				{% elif r.gpa_suggested_letter %}
+					<td>{{r.gpa_suggested_letter}}</td>
+				{% else %}
+					<td>N/A</td>
+				{% endif %}
+
+				{% if r2.gpa_suggested %}
+					{% if r2.gpa_suggested_letter %}
+					<td>{{r2.gpa_suggested}} / {{r2.gpa_suggested_letter}}</td>
+					{% else %}
+					<td>{{r2.gpa_suggested}}</td>
+					{% endif%}
+				{% elif r2.gpa_suggested_letter %}
+					<td>{{r2.gpa_suggested_letter}}</td>
+				{% else %}
+					<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.gpa_suggested %}
+						{% if r3.gpa_suggested_letter %}
+						<td>{{r3.gpa_suggested}} / {{r3.gpa_suggested_letter}}</td>
+						{% else %}
+						<td>{{r3.gpa_suggested}}</td>
+						{% endif%}
+					{% elif r3.gpa_suggested_letter %}
+						<td>{{r3.gpa_suggested_letter}}</td>
+					{% else %}
+						<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.gpa_suggested %}
+						{% if r4.gpa_suggested_letter %}
+						<td>{{r4.gpa_suggested}} / {{r4.gpa_suggested_letter}}</td>
+						{% else %}
+						<td>{{r4.gpa_suggested}}</td>
+						{% endif%}
+					{% elif r4.gpa_suggested_letter %}
+						<td>{{r4.gpa_suggested_letter}}</td>
+					{% else %}
+						<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.gpa_suggested %}
+						{% if r5.gpa_suggested_letter %}
+						<td>{{r5.gpa_suggested}} / {{r5.gpa_suggested_letter}}</td>
+						{% else %}
+						<td>{{r5.gpa_suggested}}</td>
+						{% endif%}
+					{% elif r5.gpa_suggested_letter %}
+						<td>{{r5.gpa_suggested_letter}}</td>
+					{% else %}
+						<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>			
+			<tr>
+				<td>Post Enrollment Placement Test</td>
+				{% if r.school_test == True %}
+				<td>&#10004;</td>
+				{% elif r.school_test == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.school_test == True %}
+				<td>&#10004;</td>
+				{% elif r2.school_test == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.school_test == True %}
+					<td>&#10004;</td>
+					{% elif r3.school_test == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.school_test == True %}
+					<td>&#10004;</td>
+					{% elif r4.school_test == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.school_test == True %}
+					<td>&#10004;</td>
+					{% elif r5.school_test == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>School Interview</td>
+				{% if r.school_interview == True %}
+				<td>&#10004;</td>
+				{% elif r.school_interview == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.school_interview == True %}
+				<td>&#10004;</td>
+				{% elif r2.school_interview == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.school_interview == True %}
+					<td>&#10004;</td>
+					{% elif r3.school_interview == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.school_interview == True %}
+					<td>&#10004;</td>
+					{% elif r4.school_interview == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.school_interview == True %}
+					<td>&#10004;</td>
+					{% elif r5.school_interview == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+
+			<tr>
+				<td>Resume</td>
+				{% if r.resume == "N" %}
+				<td>&#10008;</td>
+				{% elif r.resume == "Y" %}
+				<td>&#10004;</td>
+				{% elif r.resume == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.resume == "N" %}
+				<td>&#10008;</td>
+				{% elif r2.resume == "Y" %}
+				<td>&#10004;</td>
+				{% elif r2.resume == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.resume == "N" %}
+					<td>&#10008;</td>
+					{% elif r3.resume == "Y" %}
+					<td>&#10004;</td>
+					{% elif r3.resume == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.resume == "N" %}
+					<td>&#10008;</td>
+					{% elif r4.resume == "Y" %}
+					<td>&#10004;</td>
+					{% elif r4.resume == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.resume == "N" %}
+					<td>&#10008;</td>
+					{% elif r5.resume == "Y" %}
+					<td>&#10004;</td>
+					{% elif r5.resume == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Writing Sample</td>
+				{% if r.sup_mat_writing_sample == "N" %}
+				<td>&#10008;</td>
+				{% elif r.sup_mat_writing_sample == "Y" %}
+				<td>&#10004;</td>
+				{% elif r.sup_mat_writing_sample == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.sup_mat_writing_sample == "N" %}
+				<td>&#10008;</td>
+				{% elif r2.sup_mat_writing_sample == "Y" %}
+				<td>&#10004;</td>
+				{% elif r2.sup_mat_writing_sample == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.sup_mat_writing_sample == "N" %}
+					<td>&#10008;</td>
+					{% elif r3.sup_mat_writing_sample == "Y" %}
+					<td>&#10004;</td>
+					{% elif r3.sup_mat_writing_sample == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.sup_mat_writing_sample == "N" %}
+					<td>&#10008;</td>
+					{% elif r4.sup_mat_writing_sample == "Y" %}
+					<td>&#10004;</td>
+					{% elif r4.sup_mat_writing_sample == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.sup_mat_writing_sample == "N" %}
+					<td>&#10008;</td>
+					{% elif r5.sup_mat_writing_sample == "Y" %}
+					<td>&#10004;</td>
+					{% elif r5.sup_mat_writing_sample == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Portfolio</td>
+				{% if r.sup_mat_portfolio == "N" %}
+				<td>&#10008;</td>
+				{% elif r.sup_mat_portfolio == "Y" %}
+				<td>&#10004;</td>
+				{% elif r.sup_mat_portfolio == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.sup_mat_portfolio == "N" %}
+				<td>&#10008;</td>
+				{% elif r2.sup_mat_portfolio == "Y" %}
+				<td>&#10004;</td>
+				{% elif r2.sup_mat_portfolio == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.sup_mat_portfolio == "N" %}
+					<td>&#10008;</td>
+					{% elif r3.sup_mat_portfolio == "Y" %}
+					<td>&#10004;</td>
+					{% elif r3.sup_mat_portfolio == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.sup_mat_portfolio == "N" %}
+					<td>&#10008;</td>
+					{% elif r4.sup_mat_portfolio == "Y" %}
+					<td>&#10004;</td>
+					{% elif r4.sup_mat_portfolio == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.sup_mat_portfolio == "N" %}
+					<td>&#10008;</td>
+					{% elif r5.sup_mat_portfolio == "Y" %}
+					<td>&#10004;</td>
+					{% elif r5.sup_mat_portfolio == "O" %}
+					<td>Optional</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+
+			<tr>
+				<th colspan="6" class="section"> 6. INTERNATIONAL REQUIREMENTS</th>
+			</tr>
+			<tr>
+				<td>International Transcript</td>
+				{% if not Intl_transcript %}
+				<td>N/A</td>
+				{% else %}
+				<td>{% for t in Intl_transcript %}{{ t.name}}-{{t.description}};{% endfor %}</td>
+				{% endif %}
+
+				{% if not Intl_transcript2 %}
+				<td>N/A</td>
+				{% else %}
+				<td>{% for t in Intl_transcript2 %}{{ t.name}}-{{t.description}};{% endfor %}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if not Intl_transcript3 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{% for t in Intl_transcript3 %}{{ t.name}}-{{t.description}};{% endfor %}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if not Intl_transcript4 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{% for t in Intl_transcript4 %}{{ t.name}}-{{t.description}};{% endfor %}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if not Intl_transcript5 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{% for t in Intl_transcript5 %}{{ t.name}}-{{t.description}};{% endfor %}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>International Language Waiver</td>
+				{% if r.intl_lang_waiver == True %}
+				<td>&#10004;</td>
+				{% elif r.intl_lang_waiver == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.intl_lang_waiver == True %}
+				<td>&#10004;</td>
+				{% elif r2.intl_lang_waiver == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.intl_lang_waiver == True %}
+					<td>&#10004;</td>
+					{% elif r3.intl_lang_waiver == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.intl_lang_waiver == True %}
+					<td>&#10004;</td>
+					{% elif r4.intl_lang_waiver == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.intl_lang_waiver == True %}
+					<td>&#10004;</td>
+					{% elif r5.intl_lang_waiver == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>International English Test Required</td>
+				{% if r.intl_english_test_required == True %}
+				<td>&#10004;</td>
+				{% elif r.intl_english_test_required == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if r2.intl_english_test_required == True %}
+				<td>&#10004;</td>
+				{% elif r2.intl_english_test_required == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if r3.intl_english_test_required == True %}
+					<td>&#10004;</td>
+					{% elif r3.intl_english_test_required == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if r4.intl_english_test_required == True %}
+					<td>&#10004;</td>
+					{% elif r4.intl_english_test_required == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if r5.intl_english_test_required == True %}
+					<td>&#10004;</td>
+					{% elif r5.intl_english_test_required == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>International English Test</td>
+				{% if not Intl_eng_test %}
+				<td>N/A</td>
+				{% else %}
+				<td>{% for i in Intl_eng_test %}{{ i.name }}{% if not forloop.last %}/{% endif %}{% endfor %}</td>
+				{% endif %}
+
+				{% if not Intl_eng_test2 %}
+				<td>N/A</td>
+				{% else %}
+				<td>{% for i in Intl_eng_test2 %}{{ i.name }}{% if not forloop.last %}/{% endif %}{% endfor %}</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if not Intl_eng_test3 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{% for i in Intl_eng_test3 %}{{ i.name }}{% if not forloop.last %}/{% endif %}{% endfor %}</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if not Intl_eng_test4 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{% for i in Intl_eng_test4 %}{{ i.name }}{% if not forloop.last %}/{% endif %}{% endfor %}</td>
+					{% endif %}
+				{% endif%}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if not Intl_eng_test5 %}
+					<td>N/A</td>
+					{% else %}
+					<td>{% for i in Intl_eng_test5 %}{{ i.name }}{% if not forloop.last %}/{% endif %}{% endfor %}</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Toefl IBT</td>
+				<td>{{r.toefl_ibt |default:"N/A"}}</td>
+				<td>{{r2.toefl_ibt |default:"N/A"}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.toefl_ibt |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.toefl_ibt |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.toefl_ibt |default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Toefl IBT(reading/listening/speaking/writing)</td>
+				<td>{% if r.toefl_ibt_reading == null %}
+					-
+					{% else %}
+					{{r.toefl_ibt_reading}}
+					{% endif %}
+					/
+					{% if r.toefl_ibt_listening == null %}
+					-
+					{% else %}
+					{{r.toefl_ibt_listening}}
+					{% endif %}
+					/
+					{% if r.toefl_ibt_speaking == null %}
+					-
+					{% else %}
+					{{r.toefl_ibt_speaking}}
+					{% endif %}
+					/
+					{% if r.toefl_ibt_writing == null %}
+					-
+					{% else %}
+					{{r.toefl_ibt_writing}}
+					{% endif %}
+				</td>
+
+				<td>{% if r2.toefl_ibt_reading == null %}
+					-
+					{% else %}
+					{{r2.toefl_ibt_reading}}
+					{% endif %}
+					/
+					{% if r2.toefl_ibt_listening == null %}
+					-
+					{% else %}
+					{{r2.toefl_ibt_listening}}
+					{% endif %}
+					/
+					{% if r2.toefl_ibt_speaking == null %}
+					-
+					{% else %}
+					{{r2.toefl_ibt_speaking}}
+					{% endif %}
+					/
+					{% if r2.toefl_ibt_writing == null %}
+					-
+					{% else %}
+					{{r2.toefl_ibt_writing}}
+					{% endif %}
+				</td>
+
+				{% if length < 3 %}
+				{% else %}
+					<td>{% if r3.toefl_ibt_reading == null %}
+						-
+						{% else %}
+						{{r3.toefl_ibt_reading}}
+						{% endif %}
+						/
+						{% if r3.toefl_ibt_listening == null %}
+						-
+						{% else %}
+						{{r3.toefl_ibt_listening}}
+						{% endif %}
+						/
+						{% if r3.toefl_ibt_speaking == null %}
+						-
+						{% else %}
+						{{r3.toefl_ibt_speaking}}
+						{% endif %}
+						/
+						{% if r3.toefl_ibt_writing == null %}
+						-
+						{% else %}
+						{{r3.toefl_ibt_writing}}
+						{% endif %}
+					</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					<td>{% if r4.toefl_ibt_reading == null %}
+						-
+						{% else %}
+						{{r4.toefl_ibt_reading}}
+						{% endif %}
+						/
+						{% if r4.toefl_ibt_listening == null %}
+						-
+						{% else %}
+						{{r4.toefl_ibt_listening}}
+						{% endif %}
+						/
+						{% if r4.toefl_ibt_speaking == null %}
+						-
+						{% else %}
+						{{r4.toefl_ibt_speaking}}
+						{% endif %}
+						/
+						{% if r4.toefl_ibt_writing == null %}
+						-
+						{% else %}
+						{{r4.toefl_ibt_writing}}
+						{% endif %}
+					</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					<td>{% if r5.toefl_ibt_reading == null %}
+						-
+						{% else %}
+						{{r5.toefl_ibt_reading}}
+						{% endif %}
+						/
+						{% if r5.toefl_ibt_listening == null %}
+						-
+						{% else %}
+						{{r5.toefl_ibt_listening}}
+						{% endif %}
+						/
+						{% if r5.toefl_ibt_speaking == null %}
+						-
+						{% else %}
+						{{r5.toefl_ibt_speaking}}
+						{% endif %}
+						/
+						{% if r5.toefl_ibt_writing == null %}
+						-
+						{% else %}
+						{{r5.toefl_ibt_writing}}
+						{% endif %}
+					</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Toefl Pbt</td>
+				<td>{{r.toefl_pbt |default:"N/A"}}</td>
+				<td>{{r2.toefl_pbt |default:"N/A"}}</td>
+				
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.toefl_pbt |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.toefl_pbt |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.toefl_pbt |default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Toefl Twe</td>
+				<td>{{r.toefl_twe |default:"N/A"}}</td>
+				<td>{{r2.toefl_twe |default:"N/A"}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.toefl_twe |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.toefl_twe |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.toefl_twe |default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Toefl Tse</td>
+				<td>{{r.toefl_tse |default:"N/A"}}</td>   <!-- not exam use exam.name instead  #??-->
+				<td>{{r2.toefl_tse |default:"N/A"}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.toefl_tse |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.toefl_tse |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.toefl_tse |default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Toefl Cbt</td>
+				<td>{{r.cbt |default:"N/A"}}</td>
+				<td>{{r2.cbt |default:"N/A"}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.cbt |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.cbt |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.cbt |default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>International Ielts Requirements</td>
+				<td>{{r.intl_ielts_reqs |default:"N/A"}}</td>
+				<td>{{r2.intl_ielts_reqs |default:"N/A"}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.intl_ielts_reqs |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.intl_ielts_reqs |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.intl_ielts_reqs |default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td>International Others</td>
+				<td>{{r.intl_other |default:"N/A"}}</td>
+				<td>{{r2.intl_other |default:"N/A"}}</td>
+
+				{% if length < 3 %}
+				{% else %}
+				<td>{{r3.intl_other |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+				<td>{{r4.intl_other |default:"N/A"}}</td>
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+				<td>{{r5.intl_other |default:"N/A"}}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<th colspan="6" class="section"> 7. SCHOLARSHIPS</th>
+			</tr>
+			<tr>
+				<td>Fully Funded</td>
+				{% if s.fully_funded == True %}
+				<td>&#10004;</td>
+				{% elif s.fully_funded == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+				
+				{% if s2.fully_funded == True %}
+				<td>&#10004;</td>
+				{% elif s2.fully_funded == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if s3.fully_funded == True %}
+					<td>&#10004;</td>
+					{% elif s3.fully_funded == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if s4.fully_funded == True %}
+					<td>&#10004;</td>
+					{% elif s4.fully_funded == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if s5.fully_funded == True %}
+					<td>&#10004;</td>
+					{% elif s5.fully_funded == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+			<tr>
+				<td>Scholarship</td>
+				{% if s.scholarship_avail == True %}
+				<td>&#10004;</td>
+				{% elif s.scholarship_avail == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>asf</td>
+				{% endif %}
+				
+				{% if s2.scholarship_avail == True %}
+				<td>&#10004;</td>
+				{% elif s2.scholarship_avail == False %}
+				<td>&#10008;</td>
+				{% else%}
+				<td>N/A</td>
+				{% endif %}
+
+				{% if length < 3 %}
+				{% else %}
+					{% if s3.scholarship_avail == True %}
+					<td>&#10004;</td>
+					{% elif s3.scholarship_avail == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 4 %}
+				{% else %}
+					{% if s4.scholarship_avail == True %}
+					<td>&#10004;</td>
+					{% elif s4.scholarship_avail == False %}
+					<td>&#10008;</td>
+					{% else %}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+
+				{% if length < 5 %}
+				{% else %}
+					{% if s5.scholarship_avail == True %}
+					<td>&#10004;</td>
+					{% elif s5.scholarship_avail == False %}
+					<td>&#10008;</td>
+					{% else%}
+					<td>N/A</td>
+					{% endif %}
+				{% endif %}
+			</tr>
+		</table>
+	</body>
+</html>

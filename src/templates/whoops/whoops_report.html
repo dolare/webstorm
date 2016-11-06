@@ -1,0 +1,394 @@
+{% load static %}
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+		<style>
+
+		body {
+			    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
+
+		table .heading td {
+			padding-left:15px;
+			background: #337ab7;
+			color:white;
+			
+		}
+
+		table .heading td h3 {
+			padding-top:0;
+			padding-bottom:0;
+			margin-top:10px;
+			margin-bottom:10px;
+		}
+
+		table .url, table .desc {
+			
+			font-size:20px;
+			line-height:28px;
+			padding-left:15px;
+			
+			margin-bottom:0;
+
+		}
+
+		table .url td, table .desc td{
+			padding-left: 15px;
+		}
+		.badge {
+		    background-color: #EA6A2A;
+		    border-radius: 5px;
+		    color: #ffffff;
+		    display: inline-block;
+		    font-family: Arial, sans-serif;
+		    font-size: 15px;
+		    line-height: 18px;
+		    padding: 4px 6px;
+
+		}
+
+		.badge0 {
+		    background-color: #61B6FF;
+		    border-radius: 5px;
+		    color: #ffffff;
+		    display: inline-block;
+		    font-family: Arial, sans-serif;
+		    font-size: 15px;
+		    line-height: 18px;
+		    padding: 4px 6px;
+
+		}
+
+		.where:nth-child(odd),.desc:nth-child(odd), .dead_link_url1:nth-child(even), dead_link_url1:nth-child(even) {
+			background-color:#ddd;
+		}
+
+		.table .url, .table .url td {
+			padding-top: 0 !important;
+			padding-bottom: 0 !important;
+			margin-top: 0 !important;
+			margin-bottom: 0 !important;
+			border:0 !important;
+		}
+
+		.tdtitle {
+			vertical-align:top;
+		}
+
+		.url.desc {
+			color: navy;
+		}
+
+		.url.where {
+			color: yellow;
+		}
+
+		.even {
+			background-color:#e0eaf6;
+			font-size:20px;
+			line-height:28px;
+			padding-left:15px;
+			
+			margin-bottom:0;
+			margin-left:20px;
+			vertical-align: top
+		}
+
+		.odd {
+			background-color: #f4f8fc;
+			font-size:20px;
+			line-height:28px;
+			padding-left:15px;
+			
+			margin-bottom:0;
+			vertical-align: top;
+		}
+
+
+		</style>
+
+	</head>
+	<body>
+
+	<div class="container">
+	    <h1 style="text-align:center;">Whoops Report</h1>
+	<br/>
+
+	
+<table width="100%" class="table table-striped" style="border-collapse: collapse;">
+
+    <thead>
+      
+    </thead>
+    <tbody>
+    
+      {% if deadlink|length == 0 %}
+    		<tr class="heading" ><td colspan="2"><h3>Dead Link &nbsp;<span class="badge0">{{deadlink | length}}</span><h3></td></tr>
+       {% else %}
+			<tr class="heading" ><td colspan="2"><h3>Dead Link &nbsp;<span class="badge">{{deadlink | length}}</span><h3></td></tr>
+		{% endif %}
+
+      {% for i in deadlink%}
+      			{% if not i.additional_note_url %}
+				{% else%}
+						
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td style="width: 25%"><strong>Where:</strong></td><td style="width: 75%"> <a target="_blank">{{i.additional_note_url}}</a></td></tr>
+						
+				{% endif %}
+				{% if not i.additional_note_url2  %}
+				{% else %}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td class="tdtitle"><strong>Dead Link Url:</strong></td><td>{{i.additional_note_url2}}</td></tr>
+				{% endif %}				
+				{% if not i.additional_note_url3 %}
+				{% else%}
+				<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td class="tdtitle"><strong>Dead Link Url:</strong></td><td>{{i.additional_note_url3}}</td></tr>
+				{% endif %}
+
+				{% if not i.additional_note %}
+
+				{% else %}
+					<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td class="tdtitle"><strong>Description:</strong></td> <td>{{i.additional_note}}<br/><br/></td></tr>
+
+				{% endif %}			
+      {% endfor %}
+    
+                 <tr style="background-color:white;"><td><br/><br/></td></tr>
+
+
+      	{% if typo|length == 0 %}
+    		<tr class="heading"><td colspan="2"><h3>Typo &nbsp;<span class="badge0">{{typo | length}}</span><h3></td></tr>
+       {% else %}
+			<tr class="heading"><td colspan="2"><h3>Typo &nbsp;<span class="badge">{{typo | length}}</span><h3></td></tr>
+		{% endif %}
+
+    	
+      {% for i in typo%}
+      			{% if not i.additional_note_url %}
+				{% else%}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Where:</strong></td><td> {{i.additional_note_url}}</td></tr>
+				{% endif %}
+				{% if not i.additional_note_url2  %}
+				{% else %}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Typo Url:</strong></td><td> {{i.additional_note_url2}}</td></tr>
+				{% endif %}				
+				{% if not i.additional_note_url3 %}
+				{% else%}
+				<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Typo Url:</strong></td><td> {{i.additional_note_url3}}</td></tr>
+				{% endif %}
+
+				{% if not i.additional_note %}
+
+				{% else %}
+					<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Description:</strong></td><td> {{i.additional_note}}<br/><br/></td></tr>
+				{% endif %}				
+      {% endfor %}
+      			<tr style="background-color:white;"><td><br/><br/></td></tr>
+
+      {% if outdated_information|length == 0 %}
+    		<tr class="heading"><td colspan="2"><h3>Outdated Information &nbsp;<span class="badge0">{{outdated_information | length}}</span><h3></td></tr>
+       {% else %}
+			<tr class="heading"><td colspan="2"><h3>Outdated Information &nbsp;<span class="badge">{{outdated_information | length}}</span><h3></td></tr>
+		{% endif %}
+
+    	
+      {% for i in outdated_information %}
+      			{% if not i.additional_note_url %}
+				{% else%}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Where:</strong></td><td> {{i.additional_note_url}}</td></tr>
+				{% endif %}
+				{% if not i.additional_note_url2  %}
+				{% else %}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Outdated Information Url:</strong></td><td> {{i.additional_note_url2}}</td></tr>
+				{% endif %}				
+				{% if not i.additional_note_url3 %}
+				{% else%}
+				<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Outdated Information Url:</strong></td><td> {{i.additional_note_url3}}</td></tr>
+				{% endif %}
+
+				{% if not i.additional_note %}
+
+				{% else %}
+					<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Description:</strong></td><td> {{i.additional_note}}</td></tr>
+				{% endif %}				
+      {% endfor %}
+      			<tr style="background-color:white;"><td><br/><br/></td></tr>
+
+       {% if data_discrepancy|length == 0 %}
+    		<tr class="heading"><td colspan="2"><h3>Data Discrepancy &nbsp;<span class="badge0">{{data_discrepancy | length}}</span><h3></td></tr>
+       {% else %}
+			<tr class="heading"><td colspan="2"><h3>Data Discrepancy &nbsp;<span class="badge">{{data_discrepancy | length}}</span><h3></td></tr>
+		{% endif %}
+
+    	
+      {% for i in data_discrepancy %}
+      			{% if not i.additional_note_url %}
+				{% else%}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Where:</strong></td><td> {{i.additional_note_url}}</td></tr>
+				{% endif %}
+				{% if not i.additional_note_url2  %}
+				{% else %}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Source Url:</strong></td><td> {{i.additional_note_url2}}</td></tr>
+				{% endif %}				
+				{% if not i.additional_note_url3 %}
+				{% else%}
+				<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Source Url:</strong></td><td> {{i.additional_note_url3}}</td></tr>
+				{% endif %}
+
+				{% if not i.additional_note %}
+
+				{% else %}
+					<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Description:</strong></td><td> {{i.additional_note}}</td></tr>
+				{% endif %}				
+      {% endfor %}
+      			<tr style="background-color:white;"><td><br/><br/></td></tr>
+    	
+
+    	{% if sidebars|length == 0 %}
+    		<tr class="heading"><td colspan="2"><h3>Sidebars &nbsp;<span class="badge0">{{sidebars | length}}</span><h3></td></tr>
+       {% else %}
+			<tr class="heading"><td colspan="2"><h3>Sidebars &nbsp;<span class="badge">{{sidebars | length}}</span><h3></td></tr>
+		{% endif %}
+
+      {% for i in sidebars %}
+      			{% if not i.additional_note_url %}
+				{% else%}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Where:</strong></td><td> {{i.additional_note_url}}</td></tr>
+				{% endif %}
+				{% if not i.additional_note_url2  %}
+				{% else %}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Sidebars Url:</strong></td><td> {{i.additional_note_url2}}</td></tr>
+				{% endif %}				
+				{% if not i.additional_note_url3 %}
+				{% else%}
+				<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Sidebars Url:</strong></td><td> {{i.additional_note_url3}}</td></tr>
+				{% endif %}
+
+				{% if not i.additional_note %}
+
+				{% else %}
+					<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Description:</strong></td><td> {{i.additional_note}}<br/><br/></td></tr>
+				{% endif %}				
+      {% endfor %}
+      			<tr style="background-color:white;"><td><br/><br/></td></tr>
+    	
+
+    	{% if infinite_loop|length == 0 %}
+    		<tr class="heading"><td><h3>Infinite Loop &nbsp;</h3></td><td><span class="badge0">{{infinite_loop | length}}</span><h3></td></tr>
+       {% else %}
+			<tr class="heading"><td><h3>Infinite Loop &nbsp;</h3></td><td><span class="badge">{{infinite_loop | length}}</span><h3></td></tr>
+		{% endif %}
+
+      {% for i in infinite_loop %}
+      			{% if not i.additional_note_url %}
+				{% else%}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Where:</strong></td><td>{{i.additional_note_url}}</td></tr>
+				{% endif %}
+				{% if not i.additional_note_url2  %}
+				{% else %}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Infinite Loop Url:</strong></td><td>{{i.additional_note_url2}}</td></tr>
+				{% endif %}				
+				{% if not i.additional_note_url3 %}
+				{% else%}
+				<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Infinite Loop Url:</strong></td><td>{{i.additional_note_url3}}</td></tr>
+				{% endif %}
+
+				{% if not i.additional_note %}
+
+				{% else %}
+					<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Description:</strong></td><td>{{i.additional_note}}<br/><br/></td></tr>
+				{% endif %}				
+      {% endfor %}
+      			<tr style="background-color:white;"><td><br/><br/></td></tr>
+    	
+
+    	{% if floating_page|length == 0 %}
+    		<tr class="heading"><td colspan="2"><h3>Floating Page &nbsp;<span class="badge0">{{floating_page | length}}</span><h3></td></tr>
+       {% else %}
+			<tr class="heading"><td colspan="2"><h3>Floating Page &nbsp;<span class="badge">{{floating_page | length}}</span><h3></td></tr>
+		{% endif %}
+
+      {% for i in floating_page %}
+      			{% if not i.additional_note_url %}
+				{% else%}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Where:</strong></td><td> {{i.additional_note_url}}</td></tr>
+				{% endif %}
+				{% if not i.additional_note_url2  %}
+				{% else %}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Floating Page Url:</strong></td><td> {{i.additional_note_url2}}</td></tr>
+				{% endif %}				
+				{% if not i.additional_note_url3 %}
+				{% else%}
+				<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Floating Page Url:</strong></td><td> {{i.additional_note_url3}}</td></tr>
+				{% endif %}
+
+				{% if not i.additional_note %}
+
+				{% else %}
+					<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Description:</strong></td><td> {{i.additional_note}}<br/><br/></td></tr>
+				{% endif %}				
+      {% endfor %}
+      			<tr style="background-color:white;"><td><br/><br/></td></tr>
+
+      {% if confusing|length == 0 %}
+    		<tr class="heading"><td colspan="2"><h3>Confusing and Not Clearly Presented &nbsp;<span class="badge0">{{confusing | length}}</span><h3></td></tr>
+       {% else %}
+			<tr class="heading"><td colspan="2"><h3>Confusing and Not Clearly Presented &nbsp;<span class="badge">{{confusing | length}}</span><h3></td></tr>
+		{% endif %}
+
+    	
+      {% for i in confusing %}
+      			{% if not i.additional_note_url %}
+				{% else%}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Where:</strong></td><td> {{i.additional_note_url}}</td></tr>
+				{% endif %}
+				{% if not i.additional_note_url2  %}
+				{% else %}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Confusing Url:</strong></td><td> {{i.additional_note_url2}}</td></tr>
+				{% endif %}				
+				{% if not i.additional_note_url3 %}
+				{% else%}
+				<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Confusing Url:</strong></td><td> {{i.additional_note_url3}}</td></tr>
+				{% endif %}
+
+				{% if not i.additional_note %}
+
+				{% else %}
+					<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Description:</strong></td><td> {{i.additional_note}}<br/><br/></td></tr>
+				{% endif %}				
+      {% endfor %}
+      			<tr style="background-color:white;"><td><br/><br/></td></tr>
+
+       {% if other_expert_note|length == 0 %}
+    		<tr class="heading"><td colspan="2"><h3>Others &nbsp;<span class="badge0">{{other_expert_note | length}}</span><h3></td></tr>
+       {% else %}
+			<tr class="heading"><td colspan="2"><h3>Others &nbsp;<span class="badge">{{other_expert_note | length}}</span><h3></td></tr>
+		{% endif %}
+
+    	
+      {% for i in other_expert_note %}
+      			{% if not i.additional_note_url %}
+				{% else%}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Where:</strong></td><td> {{i.additional_note_url}}</td></tr>
+				{% endif %}
+				{% if not i.additional_note_url2  %}
+				{% else %}
+						<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Other Expert Notes Url:</strong></td><td> {{i.additional_note_url2}}</td></tr>
+				{% endif %}				
+				{% if not i.additional_note_url3 %}
+				{% else%}
+				<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Other Expert Notes Url:</strong></td><td> {{i.additional_note_url3}}</td></tr>
+				{% endif %}
+
+				{% if not i.additional_note %}
+
+				{% else %}
+					<tr class="{% if forloop.counter|divisibleby:2 %}url even{% else %} url odd{% endif %}"><td><strong>Description:</strong></td><td> {{i.additional_note}}<br/><br/></td></tr>
+				{% endif %}				
+      {% endfor %}
+      			<tr style="background-color:white;"><td><br/><br/></td></tr>
+    </tbody>
+  </table>
+		
+     </div>
+	</body>
+</html>

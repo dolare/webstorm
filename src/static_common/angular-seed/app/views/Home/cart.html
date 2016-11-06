@@ -1,0 +1,290 @@
+
+<!-- Page Content -->
+<div class="content content-boxed">
+  <!-- Table Sections (data-js-table-sections attribute is initialized in js/directives.js) -->
+  
+
+  <!-- Table Sections (data-js-table-checkable attribute is initialized in js/directives.js) -->
+  <div class="block block-rounded" id="reports">
+    <div class="block-header">
+            <!-- <div class="block-options">
+                <code>.data-js-table-checkable</code>
+              </div> -->
+              <!-- <h3 class="block-title">Checkable Table</h3> -->
+              <div class="col-sm-7">
+                <h1 class="page-heading">
+                  Report Manager <!-- <small></small> -->
+                </h1>
+                
+                
+                
+              </div>
+            </div>
+            <div class="block-content">
+              <!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
+
+              <div class="alert alert-warning" role="alert" ng-if="Checked.length===0">{{message}}</div>
+
+              <table st-table="Checked" class="table" ng-if="Checked.length>0">
+                <colgroup>
+                <col width="40%">               
+                <col width="20%">           
+                <col width="20%">                          
+                <col width="20%">               
+              </colgroup>
+              <thead class="thead-inverse">
+                
+                <tr class=" bg-info" style="border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); color:white;">
+                  <th st-sort="name" style="padding-left:15px;" class="h4 font-w700">program
+                  </th>
+                  <th st-sort="degree" style="padding-left:15px;text-align:center;" class="h4 font-w700">degree
+                  </th>
+                  <th class="h4 font-w700" style="text-align:center;">whoops!
+                  </th>
+                  <th class="h4 font-w700" style="text-align:center;">
+                    enhancement
+                  </th>
+                  
+                </tr>
+
+                <tr class="">
+                  <th>
+                   <input st-search="name" placeholder="Search for a program..."  style="height:auto; width:100%;" type="search" class="form-control"/>
+                 </th>
+
+                 <th>
+                 <input st-search="degree" placeholder="And a degree..."  style="height:auto; width:100%;" type="search" class="form-control"/>
+                </th>
+
+                <th style="text-align:center;vertical-align: middle;">
+                Status
+                </th>
+                
+                <th style="text-align:center;vertical-align: middle;">
+                Status
+                </th>
+
+
+               <!--  <th class="text-center" style="width: 70px;">
+                      <label class="css-input css-checkbox css-checkbox-primary remove-margin-t remove-margin-b" ng-class="{'css-input-disabled':availablenum===0}">
+                          <input type="checkbox" id="check-all" name="check-all" ng-model="$storage.checkAllwhoops" ng-change="selectAll()" ng-disabled="availablenum===0"><span></span>
+                      </label>
+                  </th>
+                -->
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr ng-repeat="row in Checked" class="">
+                <td class="font-w600" style="padding-left:15px;">
+                  {{row.name}}
+                </td>
+                <td class="font-w600" style="padding-left:15px;text-align:center;">
+                  {{row.degree}}
+                </td>
+
+
+                <td style="text-align:center;">
+                 
+                  <!-- <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.status!=='True'||row.notes==='False'}">
+                    <input type="checkbox" ng-model="$storage.upgrid[row.programName+row.degreeName].whoops" ng-change="checkbox()" ng-disabled="row.status!=='True'||row.notes==='False'"><span></span>
+                  </label> -->
+                  <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.WStatus==='False'||row.WNotes==='False'}">
+
+                  <input type="checkbox" ng-model="$storage.upgrid[row.name+'|'+row.degree]['whoops']" ng-true-value=true ng-false-value="undefined" ng-disabled="row.WStatus==='False'||row.WNotes==='False'"><span></span>
+
+
+                </label>
+                </td>
+
+               
+
+              
+                <td style="text-align:center;">
+                  
+                  <!-- <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.status!=='True'||row.confirm!=='Yes'}">
+                    <input type="checkbox" ng-model="$storage.upgrid[row.programName+row.degreeName].enhancement" ng-change="checkbox()" ng-disabled="row.status!=='True'||row.confirm!=='Yes'"><span></span>
+                  </label> -->
+                   <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.EStatus==='False'||row.EConfirm!=='Yes' }">
+                                  <input type="checkbox" ng-model="$storage.upgrid[row.name+'|'+row.degree]['enhancement']" ng-true-value=true ng-false-value="undefined" ng-disabled="row.EStatus==='False'||row.EConfirm!=='Yes'"><span></span>
+                              </label>
+                </td>
+               
+            </tr>
+
+          </tbody>
+          <tfoot>
+            <tr>
+
+              <td colspan="2" >
+                <br/><br/>
+                <div class="btn-group pull-left ng-scope tablepagenum" >
+                 
+                  <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
+                  <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button>
+                </div>
+              </td>
+
+              <td colspan="2" class="text-center">
+                <br/><br/>
+                <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5" style="text-align:right;"></div>
+              </td>
+
+            </tr>
+          </tfoot>
+        </table>
+
+
+        <button class="btn btn-lg btn-square bg-info" ng-click="DownloadAll()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0">
+          View [{{count}}]
+        </button>
+        <button class="btn btn-lg pull-right btn-square bg-city-light" data-target="#myModal1" data-toggle="modal" ng-click="ShareAll()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0">
+          Share [{{count}}]
+        </button>
+
+      </div>
+    </div>
+  </div>
+  <!-- Modal of Whoops Pdf Viewer-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="block block-themed block-transparent remove-margin-b">
+          <div class="block-header bg-primary-dark">
+            <ul class="block-options">
+                                <!-- <li>
+                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                                  </li> -->
+                                  <li>
+                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                  </li>
+                                </ul>
+                                <h3 class="block-title">Report Viewer</h3>
+                              </div>
+                              
+                              <div class="block-content" style="width:auto;height:500px;padding:0;">
+
+                                <!-- progress circle -->
+                                <div class="sk-fading-circle" ng-show="viewerLoading">
+                                  <div class="sk-circle1 sk-circle"></div>
+                                  <div class="sk-circle2 sk-circle"></div>
+                                  <div class="sk-circle3 sk-circle"></div>
+                                  <div class="sk-circle4 sk-circle"></div>
+                                  <div class="sk-circle5 sk-circle"></div>
+                                  <div class="sk-circle6 sk-circle"></div>
+                                  <div class="sk-circle7 sk-circle"></div>
+                                  <div class="sk-circle8 sk-circle"></div>
+                                  <div class="sk-circle9 sk-circle"></div>
+                                  <div class="sk-circle10 sk-circle"></div>
+                                  <div class="sk-circle11 sk-circle"></div>
+                                  <div class="sk-circle12 sk-circle"></div>
+                                </div>
+
+
+                                <div id = "my-container"></div>
+
+                              </div>
+                            </div>
+      <!-- <div class="modal-footer">
+       
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal of Share the Link-->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="block block-themed block-transparent remove-margin-b">
+        <div class="block-header bg-primary-dark">
+          <ul class="block-options">
+                                <!-- <li>
+                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                                  </li> -->
+                                  <li>
+                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                  </li>
+                                </ul>
+                                <h3 class="block-title">Share the Reports</h3>
+                              </div>
+                              <div class="block-content">
+                                <div class="form-group">
+                                  <div class="spinner" style="position:absolute;margin:0 auto;top:85px;left:280px;" ng-show="shareLoading">
+                                    <div class="rect1"></div>
+                                    <div class="rect2"></div>
+                                    <div class="rect3"></div>
+                                    <div class="rect4"></div>
+                                    <div class="rect5"></div>
+                                  </div>
+
+                                  <label for="reportlink">Link: </label> 
+                                  <label style="float:right" ng-show="copied">Copied!</label>
+                                  <input type="url" ng-copy="copied=true" class="form-control" id="reportlink" ng-model= "url.text" >
+                                  
+
+                                </div>
+                                <!-- Target -->
+                                <!-- Trigger -->
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button data-clipboard-target="#reportlink" type="button" class="btn btn-primary">Copy</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Modal of Enhancement Pdf Viewer-->
+                      <div class="modal fade" id="myModalEnhan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            <div class="block block-themed block-transparent remove-margin-b">
+                              <div class="block-header bg-primary-dark">
+                                <ul class="block-options">
+                                <!-- <li>
+                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                                  </li> -->
+                                  <li>
+                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                  </li>
+                                </ul>
+                                <h3 class="block-title">Whoops Report</h3>
+                              </div>
+                              
+                              <div class="block-content" style="width:auto;height:500px;padding:0;">
+
+                                <!-- progress circle -->
+                                <div class="sk-fading-circle" ng-show="viewerLoading">
+                                  <div class="sk-circle1 sk-circle"></div>
+                                  <div class="sk-circle2 sk-circle"></div>
+                                  <div class="sk-circle3 sk-circle"></div>
+                                  <div class="sk-circle4 sk-circle"></div>
+                                  <div class="sk-circle5 sk-circle"></div>
+                                  <div class="sk-circle6 sk-circle"></div>
+                                  <div class="sk-circle7 sk-circle"></div>
+                                  <div class="sk-circle8 sk-circle"></div>
+                                  <div class="sk-circle9 sk-circle"></div>
+                                  <div class="sk-circle10 sk-circle"></div>
+                                  <div class="sk-circle11 sk-circle"></div>
+                                  <div class="sk-circle12 sk-circle"></div>
+                                </div>
+
+
+                                <div id = "my-container1" style=""></div>
+
+                              </div>
+                            </div>
+      <!-- <div class="modal-footer">
+       
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div> -->
+    </div>
+  </div>
+</div>

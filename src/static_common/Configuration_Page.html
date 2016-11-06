@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en-US">
+<html>
+<head>
+	<title>Configuration Page</title>
+</head>
+<body>
+	<div ng-app='myApp' ng-controller='myCtrl'>
+	<p>{{res.Password}}</p>
+
+	<form>
+		<table align="center" cellpadding="10px">
+			<tr>
+				<td>Ceeb:</td>
+				<td ng-model='ceeb'>{{res.Ceeb+':'+res.Username}}</td>
+			</tr>
+			<tr>
+				<td>Contact:</td>
+				<td ng-model='contact'>{{res.Primary_Contact_Name}}</td>
+			</tr>
+			<tr>
+				<td>Competing School:</td>
+				<td ng-repeat='s in res.Competing_Schools', ng-model='compete'>{{s}}/td><br/>
+			</tr>
+			<tr>
+				<td>Username:</td>
+				<td>{{res.Username}}</td>
+			</tr>
+			</br></br>
+			<tr>
+				<td>Password Reset : </td>
+			</tr>
+			<tr>
+				<td><input type='text' placeholder='Initial Password' ng-model='Init'></td>
+			</tr>
+			<tr>
+				<td><input type='text'placeholder='New Password' ng-model='p1'></td>
+			</tr>
+			<tr>
+				<td><input type='text' placeholder='Confirm Password' ng-model='p2'></td>
+			</tr>
+			<tr>
+				<td><button ng-click='confirm()'>Confirm</button></td>
+			</tr>
+			<tr>
+				<td ng-show="alert()">You have reset your password!</td>
+			</tr>
+			<tr>
+				<td ng-show="!alert()">Please input correct password!</td>
+			</tr>
+
+
+		</table>
+	</form>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+	<script>
+		var app = angular.module('myApp' , []);
+		
+		app.controller('myCtrl',function($scope,$http){
+			$http.get("http://localhost:8000/api/customers/450c2aca-c278-45d3-aae5-845c8982311e/").then(function(response){
+				$scope.res=response.data;
+			});
+			$http.get("http://localhost:8000/api/programs/").then(function(response){
+				$scope.unischool=response.data;
+			});
+
+		 
+		 $scope.confirm=function(){
+				console.log("haha");
+			if($scope.p1==$scope.p2 && $scope.Init==$scope.res.Password){	$http.put("http://localhost:8000/api/customers/450c2aca-c278-45d3-aae5-845c8982311e/", {"Ceeb":$scope.res.Ceeb,"Username":$scope.res.Username,"Competing_Schools":$scope.res.Competing_Schools,"Password":$scope.p1}).then(function(response){
+				$scope.alert=function(){
+					return true;
+				}
+				console.log("successful");
+			},function(response){
+				$scope.alert=function(){
+					return false;
+				}
+				console.log("failed");
+			});
+		}else{
+			console.log("Please input correct password");
+		}
+			
+		}
+		});
+	</script>
+</body>
+</html>

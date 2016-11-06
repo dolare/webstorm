@@ -1,0 +1,21 @@
+<!-- pagination template for the smart-table -->
+
+<div class="pagination">
+  <ul class="pagination">
+    <li ng-class="{'disabled':currentPage===1|| numPages===0}">
+      <a ng-click="selectPage(1)">First</a>
+    </li>
+
+    <li ng-class="{'disabled':currentPage===1|| numPages===0}">
+      <!-- ng-if="currentPage > 1" --> 
+      <a ng-click="selectPage(currentPage-1)"><i class="fa fa-angle-left"></i></a>
+    </li>
+    <li ng-repeat="page in pages" ng-class="{active: page==currentPage}"><a ng-click="selectPage(page)">{{page}}</a>
+    </li>
+    <li ng-class="{'disabled':currentPage===numPages || numPages===0}"><a ng-click="selectPage(currentPage+1)"><i class="fa fa-angle-right"></i></a>
+    </li>
+    <li ng-class="{'disabled':currentPage===numPages || numPages===0}">
+    <a ng-click="selectPage(numPages)">Last</a>
+  </li>
+</ul>
+</div>

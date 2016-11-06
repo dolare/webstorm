@@ -1,0 +1,560 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="enhancement/html; charset=utf-8"/>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js">
+		</script>		
+
+		
+		<script>
+		$(document).ready(function(){
+				if(6>2){
+			$("#td_3").hide();
+			
+		});
+		}
+		document.getElementById("#td_3").innerHTML="test";
+		</script>
+
+		<style>
+		table.one{
+			border-style:solid;
+			border-color:#0000ff;
+		}
+			th {text-align: center; border:1px solid black;}
+			td {text-align: center;  border:1px solid black;}
+		</style>
+	</head>
+	<body>
+		<table class="one" width="100%" >
+			<tr>
+				<th colspan="6";>Enhancement Report</th>
+			</tr>
+			<tr>
+				<td class="title">University School</td>
+				<td>{{p.university_school.university}}</td>
+				<td>{{p2.university_school.university}}</td>
+				<td id="td_3">b</td>
+				<td id="td_3">c</td>
+				<td id="td_3">d</td>
+			</tr>
+			<tr>
+				<td>Program Name</td>
+				<td>{{p.program_name}}</td>
+				<td>{{p2.program_name}}</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Degree</td>
+				<td>{{p.degree}}</td>
+				<td>{{p2.degree}}</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<th colspan="6"; align="left">1.PROGRAM DETAILS</th>
+			</tr>
+
+			<tr>
+				<td>Full Time</td>
+				{% if c.full_part_time == "F" %}
+				<td>Yes</td>
+				{% else %}
+				<td>No</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Part Time</td>
+				{% if c.full_part_time == "P" %}
+				<td>Yes</td>
+				{% else%}
+				<td>No</td>
+				{% endif%}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+
+			<tr>
+				<td>Free-Standing</td>
+				{% ifequal c.terminal_or_fs_degree False%}
+				<td>No</td>
+				{% else %}
+				<td>Yes</td>
+				{% endifequal %}
+				<td>2</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+			</tr>
+			<tr>
+				<td>program duration</td>
+				<td>{{c.duration_min}} to {{c.duration_max}} {{c.duration_unit}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>duration time limit</td>
+				<td>{{c.durationtime_limit}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>required curriculum units</td>
+				<td>{{c.min_total_unit}} {{c.curriculum_unit}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Master thesis or equivalent</td>
+				{% if c.master_thesis_or_equivalent == "N" %}
+				<td>No</td>
+				{% elif c.master_thesis_or_equivalent == "Y" %}
+				<td>Yes</td>
+				{% elif c.master_thesis_or_equivalent == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td></td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>tuition</td>
+				<td>{{c.tuition_per_unit}} {{c.tuition_unit}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>other fee included</td>
+				{% if c.fee_included == "True" %}
+				<td>Yes</td>
+				{% elif c.fee_included == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+
+			<tr>
+				<th colspan="6">2.ADMISSION DEADLINES</th>
+			</tr>
+
+			<tr>
+				<td>deadline fall early</td>
+				<td>Month:{{d.deadline_fall_early_month}} Day:{{d.deadline_fall_early_day}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>deadline fall late</td>
+				<td>Month:{{d.deadline_fall_late_month}} Day:{{d.deadline_fall_late_day}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>deadline spring early</td>
+				<td>Month:{{d.deadline_spring_early_month}} Day:{{d.deadline_spring_early_day}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>deadline spring late</td>
+				<td>Month:{{d.deadline_spring_late_month}} Day:{{d.deadline_spring_late_day}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>deadline summer early</td>
+				<td>Month:{{d.deadline_summer_early_month}} Day:{{d.deadline_summer_early_day}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>deadline summer late</td>
+				<td>Month:{{d.deadline_summer_late_month}} Day:{{d.deadline_summer_late_day}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Deadline Rolling</td>
+				{% if d.deadline_rolling == "True" %}
+				<td>Yes</td>
+				{% elif d.deadline_rolling == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Scholarship Deadline</td>
+				<td>Month:{{d.scholarship_deadline_month}} Day:{{d.scholarship_deadline_day}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			
+			<tr>
+				<th colspan="6">3.ADMISSION REQUIREMENTS</th>
+			</tr>
+
+			<tr>
+				<td>Special Requirements</td>
+				<td>{{r.special_reqs}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Apply Online</td>
+				{% if r.apply_online == "True" %}
+				<td>Yes</td>
+				{% elif r.apply_online == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Application Fee</td>
+				<td>{{r.application_fee}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Application Fee Waiver</td>
+				{% if r.application_fee_waiver == "True" %}
+				<td>Yes</td>
+				{% elif r.application_fee_waiver == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>required exam</td>
+				<td>
+				{% for exam in ex %}
+				{{ exam }}; 
+				{% endfor %}
+				</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>personal statement or equivalent</td>
+				<td>{{r.essays}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>letters of recommendation</td>
+				<td>{{r.recommendation}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>post enrollment placement test</td>
+				{% if r.school_test == "True" %}
+				<td>Yes</td>
+				{% elif r.school_test == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>school interview</td>
+				{% if r.school_interview == "True" %}
+				<td>Yes</td>
+				{% elif r.school_interview == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>official transcript</td>
+				{% if r.transcript_post_admin == "True" %}
+				<td>Yes</td>
+				{% elif r.transcript_post_admin == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>resume</td>
+				{% if r.resume == "N" %}
+				<td>No</td>
+				{% elif r.resume == "Y" %}
+				<td>Yes</td>
+				{% elif r.resume == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td></td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>writing sample</td>
+				{% if r.sup_mat_writing_sample == "N" %}
+				<td>No</td>
+				{% elif r.sup_mat_writing_sample == "Y" %}
+				<td>Yes</td>
+				{% elif r.sup_mat_writing_sample == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td></td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>portfolio</td>
+				{% if r.sup_mat_portfolio == "N" %}
+				<td>No</td>
+				{% elif r.sup_mat_portfolio == "Y" %}
+				<td>Yes</td>
+				{% elif r.sup_mat_portfolio == "O" %}
+				<td>Optional</td>
+				{% else %}
+				<td></td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+
+
+
+
+
+			<tr>
+				<th colspan="6">4.INTERNATION REQUIREMENTS</th>
+			</tr>
+			<tr>
+				<td>International Transcript</td>
+				<td>
+				{% for t in Intl_transcript %}
+				{{ t }}; 
+				{% endfor %}
+				</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>International Language Waiver</td>
+				{% if r.intl_lang_waiver == "True" %}
+				<td>Yes</td>
+				{% elif r.intl_lang_waiver == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>International English Test Required</td>
+				{% if r.intl_english_test_required == "True" %}
+				<td>Yes</td>
+				{% elif r.intl_english_test_required == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>International English Test</td>
+				<td>
+					{% for i in Intl_eng_test %}
+					{{ i }};
+					{% endfor %}
+				</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Toefl IBT</td>
+				<td>{{r.toefl_ibt}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Toefl IBT(reading/listening/speaking/writing)</td>
+				<td>{{r.toefl_ibt_reading}}/{{r.toefl_ibt_listening}}/{{r.toefl_ibt_speaking}}/{{r.toefl_ibt_writing}}
+				</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Toefl pbt</td>
+				<td>{{r.toefl_pbt}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Toefl twe</td>
+				<td>{{r.toefl_twe}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Toefl tse</td>
+				<td>{{r.tse}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Toefl cbt</td>
+				<td>{{r.cbt}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>International Ielts Requirements</td>
+				<td>{{r.intl_ielts_reqs}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>International others</td>
+				<td>{{r.intl_other}}</td>
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<th colspan="6">5.SCHOLARSHIPS</th>
+			</tr>
+			<tr>
+				<td>Fully Funded</td>
+				{% if s.fully_funded == "True" %}
+				<td>Yes</td>
+				{% elif s.fully_funded == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>3</td>
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+			<tr>
+				<td>Scholarship</td>
+				{% if s.scholarship_avail == "True" %}
+				<td>Yes</td>
+				{% elif s.scholarship_avail == "False" %}
+				<td>No</td>
+				{% else%}
+				<td>Unknown</td>
+				{% endif %}
+				<td>4</td>
+				<td>5</td>
+				<td>6</td>
+			</tr>
+		</table>
+	</body>
+</html>

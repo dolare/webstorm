@@ -1,0 +1,19 @@
+#user_login_display {
+  text-align: right;
+  padding-right: 40px;
+}
+
+#header {
+}
+
+#sidebar {
+  float: left;
+}
+
+#content {
+  float: left;
+}
+
+#footer {
+  clear: both;
+}

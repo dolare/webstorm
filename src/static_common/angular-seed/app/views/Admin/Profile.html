@@ -1,0 +1,132 @@
+
+<!-- Page Content -->
+<div class="content content-boxed">
+  <!-- Table Sections (data-js-table-sections attribute is initialized in js/directives.js) -->
+  
+
+  <!-- Table Sections (data-js-table-checkable attribute is initialized in js/directives.js) -->
+  <div class="block block-rounded">
+    <div class="block-header">
+            <!-- <div class="block-options">
+                <code>.data-js-table-checkable</code>
+              </div> -->
+              <!-- <h3 class="block-title">Checkable Table</h3> -->
+              <div class="col-sm-7">
+                <h1 class="page-heading">
+                  Admin Profile
+                </h1>
+                
+               <!--  <div class="block-content block-content-full">
+                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Top Tooltip" type="button">Show Tooltip</button>
+                                </div> -->
+
+
+                
+              </div>
+            </div>
+            <div class="block-content">
+
+              <h3 class="block-title" style="padding-left:15px;color:#5c90d2;">Account</h3>
+              <hr/ style="margin-left:15px;">
+              
+
+              <table class="table table-borderless">
+                <colgroup>
+                <col width="25%"/>
+                <col width="25%"/>
+                <col width="50%"/>
+                
+              </colgroup>        
+              <tbody>
+                <tr>
+                  <td class="text-right"><p class="font-w600">Login:</p></td>
+                  <td ><p ng-bind="admin_email"></p>
+                  </td>
+
+                  <td></td>
+                  
+                </tr>
+                
+
+                <tr>
+                  <td class="text-right"><p class="font-w600">Password:</p></td>
+                  <td class="font-w600"><p>**********</p>
+                  </td>
+
+                  <td class="text-left"><p><a data-uib-tooltip="Change password" data-tooltip-placement="top"><button class="btn btn-info" type="button" data-toggle="modal" data-target="#pwModal" ng-click="changepw()"><i class="fa fa-pencil"></i></button></a></p></td>
+
+                </tr>
+
+                
+              </tbody>
+            </table>
+
+            
+          </div>
+        </div>
+        <!-- END Checkable Table -->
+      </div>
+      <!-- END Page Content -->
+
+
+ <!-- Password Change Modal -->
+      <div class="modal fade" id="pwModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+              <div class="block-header bg-primary-dark">
+                <ul class="block-options">
+                  <li>
+                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                  </li>
+                </ul>
+                <h3 class="block-title">Change Password</h3>
+              </div>
+              <div class="block-content">
+                
+                <table class="table table-borderless">
+                  <colgroup>
+                  <col width="35%"/>
+                  <col width="65%"/>
+                  
+                  
+                </colgroup>        
+                <tbody>
+
+
+                  <tr>
+                    <td class="text-right"><div class="font-w600">Old Password:</div></td>
+                    <td><div><input ng-model="oldpw" class="form-control" type="password" id="lock1-password" name="lock1-password" ></div>
+                    </td>
+
+                    
+                    
+                  </tr>
+                  
+                  <tr>
+                    <td class="text-right"><div class="font-w600">New Password:</div></td>
+                    <td><div><input ng-model="newpw1" class="form-control" type="password" id="lock1-password" name="lock1-password" ></div>
+                    </td>
+
+                  </tr>
+
+                  <tr>
+                    <td class="text-right"><div class="font-w600">Confirm Password:</div></td>
+                    <td><div><input ng-model="newpw2" class="form-control" type="password" id="lock1-password" name="lock1-password" ></div>
+                    </td>
+
+                  </tr>
+                  
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
+            <button class="btn btn-sm btn-primary" type="button" ng-click="submitpassword()"><i class="fa fa-check"></i> Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Password Modal -->

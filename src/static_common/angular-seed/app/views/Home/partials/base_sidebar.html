@@ -1,0 +1,169 @@
+<!-- Sidebar Scroll Container -->
+<div id="sidebar-scroll">
+    <!-- Sidebar Content -->
+    <!-- Adding .sidebar-mini-hide to an element will hide it when the sidebar is in mini mode -->
+    <div class="sidebar-content" style="height: 100%;">
+        <!-- Side Header -->
+        <div class="side-header side-content bg-white-op">
+            <button class="btn btn-link text-gray pull-right hidden-md hidden-lg" type="button" data-ng-click="oneui.settings.sidebarOpenXs = false" data-js-blur>
+                <i class="fa fa-times"></i>
+            </button>
+            <div class="btn-group pull-right" data-on-toggle="toggled(open)" data-uib-dropdown>
+
+                <!-- change the color theme -->
+               <!--  <button class="btn btn-link text-gray" type="button" data-uib-dropdown-toggle>
+                    <i class="si si-drop"></i>
+                </button>
+                <ul class="dropdown-menu-right font-s13 sidebar-mini-hide" data-uib-dropdown-menu>
+                    <li data-ng-class="{'active': ! oneui.settings.activeColorTheme}">
+                        <a data-ng-click="oneui.settings.activeColorTheme = false" tabindex="-1" href="javascript:void(0)">
+                            <i class="fa fa-circle text-default pull-right"></i> <span class="font-w600">Default</span>
+                        </a>
+                    </li>
+                    <li data-ng-class="{'active': oneui.settings.activeColorTheme === 'amethyst'}">
+                        <a data-ng-click="oneui.settings.activeColorTheme = 'amethyst'" tabindex="-1" href="javascript:void(0)">
+                            <i class="fa fa-circle text-amethyst pull-right"></i> <span class="font-w600">Amethyst</span>
+                        </a>
+                    </li>
+                    <li data-ng-class="{'active': oneui.settings.activeColorTheme === 'city'}">
+                        <a data-ng-click="oneui.settings.activeColorTheme = 'city'" tabindex="-1" href="javascript:void(0)">
+                            <i class="fa fa-circle text-city pull-right"></i> <span class="font-w600">City</span>
+                        </a>
+                    </li>
+                    <li data-ng-class="{'active': oneui.settings.activeColorTheme === 'flat'}">
+                        <a data-ng-click="oneui.settings.activeColorTheme = 'flat'" tabindex="-1" href="javascript:void(0)">
+                            <i class="fa fa-circle text-flat pull-right"></i> <span class="font-w600">Flat</span>
+                        </a>
+                    </li>
+                    <li data-ng-class="{'active': oneui.settings.activeColorTheme === 'modern'}">
+                        <a data-ng-click="oneui.settings.activeColorTheme = 'modern'" tabindex="-1" href="javascript:void(0)">
+                            <i class="fa fa-circle text-modern pull-right"></i> <span class="font-w600">Modern</span>
+                        </a>
+                    </li>
+                    <li data-ng-class="{'active': oneui.settings.activeColorTheme === 'smooth'}">
+                        <a data-ng-click="oneui.settings.activeColorTheme = 'smooth'" tabindex="-1" href="javascript:void(0)">
+                            <i class="fa fa-circle text-smooth pull-right"></i> <span class="font-w600">Smooth</span>
+                        </a>
+                    </li>
+                </ul> -->
+            </div>
+            <a class="h5 text-white" data-ui-sref="dashboard" data-js-blur>
+                <!-- LOGO -->
+                <!-- <img alt="Brand" src="./img/G-rid-trans.png" width="20"> -->
+                <!-- <i class="fa fa-circle-o-notch text-primary"></i>  -->
+                <!-- <span class="lead font-w700 text-primary">U</span> -->
+                <i class="glyphicon glyphicon-magnet text-primary"></i>
+                <span class="h4 font-w700 sidebar-mini-hide" style="letter-spacing:1.5px;color:white;"><span class="text-primary">p</span>grid</span>
+                
+
+            </a>
+
+        </div>
+        <!-- END Side Header -->
+
+        <!-- Side Content -->
+        <div class="side-content">
+            <!-- Main navigation functionality (data-js-main-nav attribute is initialized in js/directives.js) -->
+            <ul class="nav-main" data-js-main-nav>
+                <!-- <li style="padding-left:20px;padding-right:30px;"><div class="sidebar-mini-hide" style="font-size:15px;font-weight:bold;color:#14adc4;font-family:"Source Sans Pro","Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;">Stay Abreast of the competing programs.</div><hr class="sidebar-mini-hide" style="margin-bottom:0;color:rgba(255,255,255,0.3);"/></li> -->
+                
+                <li class="nav-main-heading animate-show" ng-show="admin==='True'&&avatar_id===''">
+                    <span class="sidebar-mini-hide" style="font-weight:bold;">Admin</span>
+                </li>
+
+                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+                    <a data-ui-sref="admin" data-ui-sref-active="active" >
+                        <i class="si si-home"></i><span class="sidebar-mini-hide">Admin Dashboard</span>
+                    </a>
+                </li>
+
+
+
+                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+                    <a data-ui-sref="quote" data-ui-sref-active="active" >
+                        <i class="si si-bar-chart"></i><span class="sidebar-mini-hide">Pricing Quote</span>
+                    </a>
+                </li>
+
+
+                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+                    <a data-ui-sref="admin_profile" data-ui-sref-active="active" >
+                        <i class="si si-user-following"></i><span class="sidebar-mini-hide">Admin Profile</span>
+                    </a>
+                </li>
+
+
+
+                <li class="animate-show nav-main-heading" ng-hide="admin==='True'&&avatar_id===''"><span class="sidebar-mini-hide" style="font-weight:bold;">Menu</span></li>
+
+                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                    <a data-ui-sref="dashboard" data-ui-sref-active="active" >
+                        <i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                    <a data-ui-sref="whoops" data-ui-sref-active="active" >
+                        <i class="si si-wrench"></i><span class="sidebar-mini-hide">"Whoops!" Report</span>
+                    </a>
+                </li>
+                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                    <a data-ui-sref="enhancement" data-ui-sref-active="active" >
+                        <i class="si si-rocket"></i><span class="sidebar-mini-hide">Enhancement Report</span>
+                    </a>
+                </li>
+
+                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                    <a data-ui-sref="reports" data-ui-sref-active="active" style="position:relative;" ><i class="si si-folder-alt"></i><span shake count="count" class="badge badge-info pull-right programbadge" ng-if="oneui.settings.sidebarMini&&count>0" style="position: absolute;top:0px;left:26px;">{{count}}</span><span class="sidebar-mini-hide">Report Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span shake count="count" class="badge badge-info pull-right sidebar-mini-hide programbadge" style="position: absolute" ng-if="!oneui.settings.sidebarMini&&count>0" >{{count}}</span>
+                    </a>
+                </li>
+
+                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                    <a data-ui-sref="profile" data-ui-sref-active="active" >
+                        <i class="si si-user"></i><span class="sidebar-mini-hide">User Profile</span>
+                    </a>
+                </li>
+
+                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                    <a data-ui-sref="help" data-ui-sref-active="active" >
+                        <i class="si si-support"></i><span class="sidebar-mini-hide">Client Support</span>
+                    </a>
+                </li>
+                
+            </ul>
+
+             <ul class="nav-main logout" style="position:absolute; bottom:10px; left: 20px; width: 100%">
+                <li class="animate-show" ng-show="admin==='True'&&avatar_id!==''">
+                    <a href="javascript:void(0)" ng-click="signout_avatar()">
+                        <i class="si si-magnifier-remove"></i><span class="sidebar-mini-hide">End impersonation</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0)" ng-click="logout()">
+                        <i class="si si-power"></i><span class="sidebar-mini-hide">Log out</span>
+                    </a>
+                </li>
+
+             </ul>
+
+            <!--  <ul class="nav-main" data-js-main-nav style="position; absolute; bottom: 10px">
+                <li>
+                    <a data-ui-sref="help" data-ui-sref-active="active">
+                        <i class="si si-question"></i><span class="sidebar-mini-hide">Client Support</span>
+                    </a>
+                </li>
+             </ul> -->
+
+            <!-- <li style="position:absolute;bottom:10px;">
+                    <a data-ui-sref="help" data-ui-sref-active="active">
+                        <i class="si si-question"></i><span class="sidebar-mini-hide">Log out</span>
+                    </a>
+                </li> -->
+
+        </div>
+        <!-- END Side Content -->
+    </div>
+    <!-- Sidebar Content -->
+</div>
+<!-- END Sidebar Scroll Container -->
