@@ -13,6 +13,30 @@ controller('LoginController',
         console.log('cookies before login: ' + $cookies.get('userInfo'));
         console.log('session before login: ' + $window.sessionStorage["userInfo"]);
 
+
+        // $http({
+        //   url: '/api/upgrid/',
+        //   method: 'POST',
+        //   data: {
+        //     username: "Admin",
+        //     password: "Test128",
+        //     email: "Admin@gmail.com"
+        //   },
+          
+        // }).then(function (response) {
+
+        //    $scope.details = response.data;
+
+        //    console.log("create manager"+ JSON.stringify(response));
+        //     // if(response.status === 204){
+        //     //   console.log("===204");
+        //     // }
+        // }).
+        //  catch(function(error){
+        //     console.log('an error occurred...'+JSON.stringify(error));
+
+        //  });
+
         // if($cookies.get('userInfo') === "undefined"){
         //     console.log("='undefined'")
         // } else if($cookies.get('userInfo') === undefined) {

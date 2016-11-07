@@ -242,17 +242,6 @@ class ClientListSerializer(serializers.ModelSerializer):
         return '{0} - {1}'.format(obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
 
 
-# class ProgramSerializer(serializers.ModelSerializer):
-#     program_display = SerializerMethodField()
-
-#     class Meta:
-#         model = Program
-#         fields = ('object_id', 'program_display',)
-
-#     def get_program_display(self, obj):
-#         return '{0} - {1} - {2}'.format(obj.university_school, obj.program_name, obj.degree)
-
-
 class ClientProgramSerializer(serializers.ModelSerializer):
     program      = SerializerMethodField()
     competing_program = SerializerMethodField()

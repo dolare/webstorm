@@ -650,7 +650,7 @@ class EnhancementReportsAPI(APIView):
 
                 try:
                     s_value = Scholarship.objects.get(program=Total_Program[i-1])
-                except s_value.DoesNotExist:
+                except Scholarship.DoesNotExist:
                     s_value = "empty"    
 
                 res_obj[program] = p_value
@@ -1475,7 +1475,7 @@ class EnhancementWebReports(APIView):
 
                 try:
                     s_value = Scholarship.objects.get(program=Total_Program[i-1])
-                except s_value.DoesNotExist:
+                except Scholarship.DoesNotExist:
                     s_value = "empty"    
 
                 p_value = dblizer.ProgramSerializer(p_value) 

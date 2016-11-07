@@ -10,6 +10,29 @@ dashboard.controller('DashboardController',
    console.log("Dash = "+JSON.stringify(Dash));
    console.log("getAdmin@dash = "+JSON.stringify(apiService.getAdmin()));
 
+   
+   // $http({
+   //        url: '/api/upgrid/ewr/'+"c732b4d6-77d2-4c59-8570-54d11f089083",
+   //        method: 'GET',
+   //        headers: {
+   //          'Authorization': 'JWT ' + token
+   //        }
+   //  }).then(function (response) {
+
+      
+
+   //     console.log("released report whoops"+ JSON.stringify(response));
+        
+   //  }).
+   //   catch(function(error){
+   //      console.log('an error occurred...'+JSON.stringify(error));
+
+   //   });
+
+
+
+
+    $scope.date = new Date();
 
    //show the name and position
    $scope.contact_name = List.profile.contact_name;
@@ -168,5 +191,17 @@ dashboard.controller('DashboardController',
         // });
 
     console.log("welcome!");
+    
+    $scope.togglefull = function(){
+      angular.element(document.getElementById("WhoopsReport")).toggleClass('fullscreen-modal');
+      
+
+    }
+
+    $scope.togglefullen = function(){
+      angular.element(document.getElementById("EnhancementReport")).toggleClass('fullscreen-modal');
+      
+
+    }
     
   });

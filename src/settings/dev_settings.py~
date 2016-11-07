@@ -96,7 +96,7 @@ DATABASES = {
     #     'PASSWORD': db_pass,
     #     },
 
-    'default': {
+    'ceeb_db': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'upgriddemo',
         'HOST': 'localhost',

@@ -28,7 +28,9 @@
   </label>
 </div> -->
 
-             <!-- <button data-toggle="modal" data-target="#myModal">click</button> -->
+             <!-- <button data-toggle="modal" data-target="#WhoopsReport">click</button>
+
+             <button data-toggle="modal" data-target="#EnhancementReport">click</button> -->
      
                         <!-- Stats -->
                         
@@ -41,7 +43,7 @@
 
 
                         <!-- 1 -->
-                        <div class="col-xs-6 col-sm-3">
+                        <div class="col-xs-6 col-sm-4">
                            
                             <div class="push-20 font-w700 text-dark animated fadeIn">Programs</div>
 
@@ -53,7 +55,7 @@
                         </div>
                                
                         <!-- 2 -->
-                        <div class="col-xs-6 col-sm-3">
+                        <div class="col-xs-6 col-sm-4">
                             
                             <div class="push-20 font-w700 text-dark animated fadeIn">"Whoops!" Report</div>
 
@@ -70,7 +72,7 @@
                                 </div>
  -->
                         <!-- 3 -->
-                        <div class="col-xs-6 col-sm-3">
+                        <div class="col-xs-6 col-sm-4" ng-show="unconfirmed_num===0">
                             
                             <div class="push-20 font-w700 text-dark animated fadeIn">Enhancement Report</div>
 
@@ -87,7 +89,7 @@
                                     <a class="h2 font-w300 text-primary animated flipInX" data-ui-sref="enhancement" data-uib-tooltip="{{enhancement_num}} out of {{customer_num}} Enhancement Reports are available'" data-tooltip-placement="right">{{enhancement_num}}/{{customer_num}}</a>
                                 </div> -->
                         <!-- 4 -->
-                        <div class="col-xs-6 col-sm-3">
+                        <div class="col-xs-6 col-sm-4" ng-hide="unconfirmed_num===0">
                             
                             <div class="push-20 font-w700 text-dark animated fadeIn">Confirmed</div>
 
@@ -532,8 +534,8 @@
 
 
          <!-- Modal of Pdf Viewer-->
-  <div class="modal viewer fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
-    <div class="modal-dialog" role="document">
+  <div class="modal viewer fade" id="WhoopsReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="block block-themed block-transparent remove-margin-b">
           <div class="block-header bg-primary-dark">
@@ -543,7 +545,7 @@
                                  </li>
 
                                 <li>
-                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle" onclick="App.blocks('#myModal', 'fullscreen_toggle');" ng-click="togglefull()" data-js-blur><i class="si si-size-fullscreen"></i></button>
+                                    <button type="button" ng-click="togglefull(); actualscreen = !actualscreen" data-js-blur><i ng-class="{'si si-size-fullscreen': !actualscreen, 'si si-size-actual': actualscreen }"></i></button>
                                   </li>
                                   
                                   <li>
@@ -578,7 +580,7 @@
 
                      <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
                
-                        <div class="block-content block-content-full bg-white" style="height:100%" id="print-content">
+                        <div class="block-content block-content-narrow bg-white" style="height:100%;" id="print-content">
 
 
                         <style>
@@ -597,20 +599,285 @@
                                 padding: 0;
                                 min-height:550px
                             }
+
+                            /*div#print_all.block-content {
+                                height: 100%;
+                                overflow: visible;
+                            }*/
+                            }
+
+                            /*.table-hover > tbody > tr:hover {
+                                background-color: #fefaf4;
+                            }*/
+
+                            .table>tbody>tr>td {
+                                vertical-align: top;
                             }
                             
                             </style>
+                            <div class="row">
+                            <div class="col-sm-6">
+                          
+
+                            <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
+                            <small>Gradgrid.com/upgrid</small><br>"WHOOPS!" REPORT
+                            </h1>
+                            </div>
+
+                            <div class="col-sm-6">
+                            <img src="img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
+                            </div>
+                            </div>
+                            
+                            <hr class="hidden-print">
+                            <div class="row items-push-2x">
+                                <!-- Company Info -->
+                                <div class="col-sm-9">
+                                    <p class="h3 font-w400 push-15 push-10-t text-uppercase">Program Details</p>
+                                    
+                                    <address>
+
+                                    <table>
+                                    <tr>
+                                        <td class="text-muted">Univerity</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;Columbia University&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">School</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;School of Engineering & Applied Science&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">Program</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;Applied Linguistics&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">Degree</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;EdM&nbsp;</td>
+                                    </tr>
+
+                                    </table>
+
+                                       <!--  Univerity &nbsp;&nbsp;: Columbia University<br>
+                                        School &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: School of Engineering & Applied Science<br>
+                                        Program &nbsp;&nbsp;: Applied Linguistics<br>
+                                        Degree &nbsp;&nbsp;&nbsp;&nbsp;: EdM<br> -->
+                                    </address>
+                                </div>
+                                <!-- END Company Info -->
+
+                                <!-- Client Info -->
+                                <div class="col-sm-3 text-right">
+                                    <p class="h3 font-w400 push-15 push-10-t">Date</p>
+                                    <address>
+                                        
+                                        
+                                        <span class="text-muted">Generated on</span><br>{{date | date:'MMM dd , yyyy'}}
+                                    </address>
+                                </div>
+                                <!-- END Client Info -->
+                            </div>
+                            <!-- END Invoice Info -->
+
+                            <!-- Table -->
+                            <div class="table-responsive push-50">
+                                <table class="table table-bordered table-hover">
+
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="25%"/>
+                                        <col width="65%"/>
+                                    
+                                      </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center"></th>
+                                            <th colspan="2" style="text-decoration: none; cursor: default; padding-bottom: 20px" >"Whoops!" glitches</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">1</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">DEAD LINK</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-warning-lighter">
+                                            <td class="text-right text-muted">1)</td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Where</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighter">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Dead link url</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighter">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Description</span>
+                                                
+                                            </td>
+                                            <td>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis sapien massa, et molestie nulla pellentesque eget. Curabitur porta sed odio eget porttitor. Duis magna purus, euismod vel dignissim vitae, feugiat eget nisi. Praesent ullamcorper consequat varius. Quisque gravida massa quam,
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+
+
+                                        <tr class="bg-warning-lighter">
+                                            <td class="text-right text-muted">2)</td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Where</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighter">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Dead link url</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighter">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Description</span>
+                                                
+                                            </td>
+                                            <td>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis sapien massa, et molestie nulla pellentesque eget. Curabitur porta sed odio eget porttitor. Duis magna purus, euismod vel dignissim vitae, feugiat eget nisi. Praesent ullamcorper consequat varius. Quisque gravida massa quam,
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+
+                                       
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">2</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">TYPO</span>
+
+                                                <i class="fa fa-check-circle fa-lg pull-right" style="color:green"></i>
+                                                <!-- <span class="badge badge-primary pull-right">1</span> -->
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">3</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">OUTDATED INFORMATION</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">4</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">DATA DISCREPANCY</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">5</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">SIDEBARS</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">6</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">INFINITE LOOP</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">7</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">FLOATING PAGE</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">8</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">CONFUSING AND NOT CLEARLY PRESENTED</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">9</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">OTHERS</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END Table -->
+
+                            <!-- Footer -->
+                            <hr class="hidden-print" style="margin-bottom: 8px;">
+                            <p class="text-muted text-left"><small><strong>Gridology Education & Technology, Inc.</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oak Tree Center, 2024 Center Ave, Fort Lee, NJ 07024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="http://www.gridet.com" target="_blank"><strong>gridet</strong>.com</a></small></p>
                        
-                        <!-- content -->
-                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                        <!-- end content -->
-                      <!--   </div> -->
 
                         </div>
                         </div>
@@ -623,11 +890,407 @@
 
             </div>
                             </div>
-      <!-- <div class="modal-footer">
-       
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-       
-      </div> -->
+      
+    </div>
+  </div>
+</div>
+
+
+
+ <div class="modal fullscreen-modal viewer fade" id="EnhancementReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="block block-themed block-transparent remove-margin-b">
+          <div class="block-header bg-primary-dark">
+            <ul class="block-options">
+                                <li>
+                                    <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
+                                 </li>
+
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle" onclick="App.blocks('#WhoopsReport', 'fullscreen_toggle');" ng-click="togglefullen(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
+                                  </li>
+                                  
+                                  <li>
+                                    <button data-dismiss="modal" type="button" data-js-blur><i class="si si-close"></i></button>
+                                  </li>
+                                </ul>
+                                <h3 class="block-title">Enhancement Report</h3>
+                              </div>
+                              
+                              <div class="block-content" style="width:auto;padding:0;">
+
+                                <!-- progress circle -->
+                                <div class="sk-fading-circle" ng-show="viewerLoading">
+                                  <div class="sk-circle1 sk-circle"></div>
+                                  <div class="sk-circle2 sk-circle"></div>
+                                  <div class="sk-circle3 sk-circle"></div>
+                                  <div class="sk-circle4 sk-circle"></div>
+                                  <div class="sk-circle5 sk-circle"></div>
+                                  <div class="sk-circle6 sk-circle"></div>
+                                  <div class="sk-circle7 sk-circle"></div>
+                                  <div class="sk-circle8 sk-circle"></div>
+                                  <div class="sk-circle9 sk-circle"></div>
+                                  <div class="sk-circle10 sk-circle"></div>
+                                  <div class="sk-circle11 sk-circle"></div>
+                                  <div class="sk-circle12 sk-circle"></div>
+                                </div>
+           
+                    <!-- SlimScroll Container -->
+                    <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}">
+
+
+
+                     <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+               
+                        <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content1">
+
+
+                        <style>
+                            @media print {
+                            body * {
+                                visibility: hidden;
+
+                            }
+                            #print-content1 * {
+                                visibility: visible;
+                                overflow: visible;
+                            }
+                            .modal{
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                margin: 0;
+                                padding: 0;
+                                width: 100%;
+                                height: 100%;
+                                margin: 0;
+                                padding: 0;
+                                overflow: visible;
+                            }
+                            }
+
+                            /*.table-hover > tbody > tr:hover {
+                                background-color: #fefaf4;
+                            }*/
+
+                            .table>tbody>tr>td {
+                                vertical-align: top;
+                            }
+                            
+                            </style>
+                            <div class="row">
+                            <div class="col-sm-6">
+                          
+
+                            <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
+                            <small>Gradgrid.com/upgrid</small><br>ENHANCEMENT REPORT
+                            </h1>
+                            </div>
+
+                            <div class="col-sm-6">
+                            <img src="img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
+                            </div>
+                            </div>
+                            
+                            <hr class="hidden-print">
+                            <div class="row items-push-2x">
+                                <!-- Company Info -->
+                                <div class="col-sm-9">
+                                    <p class="h3 font-w400 push-15 push-10-t text-uppercase">Program Details</p>
+                                    
+                                    <address>
+
+                                    <table>
+                                    <tr>
+                                        <td class="text-muted">Univerity</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;Columbia University&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">School</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;School of Engineering & Applied Science&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">Program</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;Applied Linguistics&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">Degree</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;EdM&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">Competing programs</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;1.  Developmental Psychology - MA</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graduate School (Cornell University)</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;2.  Developmental Psychology - MA</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graduate School (Cornell University)</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;3.  Developmental Psychology - MA</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graduate School (Cornell University)</td>
+                                    </tr>
+
+                                    </table>
+
+                                       <!--  Univerity &nbsp;&nbsp;: Columbia University<br>
+                                        School &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: School of Engineering & Applied Science<br>
+                                        Program &nbsp;&nbsp;: Applied Linguistics<br>
+                                        Degree &nbsp;&nbsp;&nbsp;&nbsp;: EdM<br> -->
+                                    </address>
+                                </div>
+                                <!-- END Company Info -->
+
+                                <!-- Client Info -->
+                                <div class="col-sm-3 text-right">
+                                    <p class="h3 font-w400 push-15 push-10-t">Date</p>
+                                    <address>
+                                        
+                                        
+                                        <span class="text-muted">Generated on</span><br>{{date | date:'MMM dd , yyyy'}}
+                                    </address>
+                                </div>
+                                <!-- END Client Info -->
+                            </div>
+                            <!-- END Invoice Info -->
+
+                            <!-- Table -->
+                            <div class="table-responsive push-50">
+                                <table class="table table-bordered table-hover">
+
+                                    <colgroup>
+                                        <col width="10%"/>
+                                        <col width="25%"/>
+                                        <col width="65%"/>
+                                    
+                                      </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center"></th>
+                                            <th colspan="2" style="text-decoration: none; cursor: default; padding-bottom: 20px" >Enhancement Blank</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">1</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">DEAD LINK</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-warning-lighter">
+                                            <td class="text-right text-muted">1)</td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Where</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighter">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Dead link url</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighter">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Description</span>
+                                                
+                                            </td>
+                                            <td>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis sapien massa, et molestie nulla pellentesque eget. Curabitur porta sed odio eget porttitor. Duis magna purus, euismod vel dignissim vitae, feugiat eget nisi. Praesent ullamcorper consequat varius. Quisque gravida massa quam,
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+
+
+                                        <tr class="bg-warning-lighter">
+                                            <td class="text-right text-muted">2)</td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Where</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighter">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Dead link url</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighter">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Description</span>
+                                                
+                                            </td>
+                                            <td>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis sapien massa, et molestie nulla pellentesque eget. Curabitur porta sed odio eget porttitor. Duis magna purus, euismod vel dignissim vitae, feugiat eget nisi. Praesent ullamcorper consequat varius. Quisque gravida massa quam,
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+
+                                       
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">2</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">TYPO</span>
+
+                                                <i class="fa fa-check-circle fa-lg pull-right" style="color:green"></i>
+                                                <!-- <span class="badge badge-primary pull-right">1</span> -->
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">3</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">OUTDATED INFORMATION</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">4</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">DATA DISCREPANCY</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">5</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">SIDEBARS</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">6</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">INFINITE LOOP</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">7</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">FLOATING PAGE</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">8</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">CONFUSING AND NOT CLEARLY PRESENTED</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center font-w600 text-primary">9</td>
+                                            <td colspan="2">
+                                                <span class="font-w600 text-primary">OTHERS</span>
+                                                <span class="badge badge-primary pull-right">1</span>
+                                            </td>
+                                            
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END Table -->
+
+                            <!-- Footer -->
+                            <hr class="hidden-print" style="margin-bottom: 8px;">
+                            <p class="text-muted text-left"><small><strong>Gridology Education & Technology, Inc.</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oak Tree Center, 2024 Center Ave, Fort Lee, NJ 07024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="http://www.gridet.com" target="_blank"><strong>gridet</strong>.com</a></small></p>
+                       
+
+                        </div>
+                        </div>
+
+
+
+                    </div>
+                    <!-- END SlimScroll Container -->
+            
+
+            </div>
+                            </div>
+      
     </div>
   </div>
 </div>
