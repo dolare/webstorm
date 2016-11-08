@@ -28,10 +28,10 @@
   </label>
 </div> -->
 
-             <!-- <button data-toggle="modal" data-target="#WhoopsReport">click</button>
+            <!--  <button data-toggle="modal" data-target="#WhoopsReport">click</button>
 
-             <button data-toggle="modal" data-target="#EnhancementReport">click</button> -->
-     
+             <button data-toggle="modal" data-target="#EnhancementReport">click</button>
+      -->
                         <!-- Stats -->
                         
                         <div class="block-content text-center">
@@ -341,64 +341,56 @@
                                 <div class="block-content">
                                      <ul class="list list-timeline pull-t">
                                         <!-- Facebook Notification -->
-                                        <li>
+                                        <li ng-if="newly_released_whoops.length!==0">
                                             <div class="list-timeline-time">3 hrs ago</div>
                                             <i class="si si-wrench list-timeline-icon bg-info"></i>
                                             <div class="list-timeline-content">
                                                 <p class="font-w600">"Whoops!" Reports</p>
                                                <ul class="nav-users push-10-t push">
-                                                    <li>
-                                                        <a data-ui-sref="whoops">
+                                                    <li ng-repeat = "row in newly_released_whoops | limitTo : 2">
+                                                        <a>
+                                                        <button class="btn btn-default pull-right" type="button" data-toggle="modal" data-target="#WhoopsReport" ng-click="WhoopsViewer(row.object_id, row.program_name, row.program_degree)" data-js-blur><i class="fa fa-eye text-primary"></i></button>
+
                                                             <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                            Applied Physics and Applied Mathematics
-                                                            <div class="font-w400 text-muted"><small>PhD</small></div>
+                                                            {{row.program_name}}
+                                                            <div class="font-w400 text-muted"><small>{{row.program_degree}}</small></div>
                                                         </a>
                                                     </li>
 
-                                                    <li>
-                                                        <a data-ui-sref="whoops">
-                                                            <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                            Medieval and Renaissance Studies
-                                                            <div class="font-w400 text-muted"><small>MA</small></div>
-                                                        </a>
-                                                    </li>
-                                                    
-                                    
+
                                                 </ul>
                                             </div>
                                         </li>
                                         <!-- END Facebook Notification -->
 
                                         <!-- Generic Notification -->
-                                        <li>
+                                        <li ng-if="newly_released_enhancement.length!==0">
                                             <div class="list-timeline-time">4 hrs ago</div>
                                             <i class="si si-rocket list-timeline-icon bg-smooth"></i>
                                             <div class="list-timeline-content">
                                                 <p class="font-w600">Enhancement Reports</p>
                                                 <ul class="nav-users push-10-t push">
-                                                    <li>
-                                                        <a data-ui-sref="enhancement">
+                                                    <li ng-repeat = "row in newly_released_enhancement | limitTo : 1">
+                                                        <a>
+                                                            
+                                                            <button class="btn btn-default pull-right" data-toggle="modal" data-target="#EnhancementReport" type="button" ng-click="EnhancementViewer(row.object_id, row.program_name, row.program_degree)" data-js-blur><i class="fa fa-eye text-primary"></i></button>
+
+                                                            <!-- <button class="btn btn-default pull-right" data-toggle="modal" data-target="#WhoopsReport" ng-click = "WhoopsViewer(row.objectId, row.programName, row.degreeName)" data-js-blur>
+                                                            <span data-uib-tooltip="View" data-tooltip-placement="top">
+                                                            <a class="fa fa-eye text-primary"></a>
+                                                            </span>
+                                                            </button> -->
+
                                                             <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                            Neurobiology and Behavior
-                                                            <div class="font-w400 text-muted"><small>PhD</small></div>
+                                                            {{row.program_name}}
+                                                            <div class="font-w400 text-muted"><small>{{row.program_degree}}</small></div>
+
+
+
                                                         </a>
                                                     </li>
 
-                                                    <li>
-                                                        <a data-ui-sref="enhancement">
-                                                            <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                            Museum Anthropology
-                                                            <div class="font-w400 text-muted"><small>MA</small></div>
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a data-ui-sref="enhancement">
-                                                            <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                                Modern European Studies
-                                                            <div class="font-w400 text-muted"><small>MA</small></div>
-                                                        </a>
-                                                    </li>
+                                                    
                                                     
                                     
                                                 </ul>
@@ -406,23 +398,7 @@
                                         </li>
                                         <!-- END Generic Notification -->
 
-                                        <li>
-                                            <div class="list-timeline-time">6 hrs ago</div>
-                                            <i class="si si-rocket list-timeline-icon bg-smooth"></i>
-                                            <div class="list-timeline-content">
-                                                <p class="font-w600">Enhancement Reports</p>
-                                                <ul class="nav-users push-10-t push">
-                                                    <li>
-                                                        <a data-ui-sref="enhancement">
-                                                            <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                            Mathematics
-                                                            <div class="font-w400 text-muted"><small>PhD</small></div>
-                                                        </a>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </li>
+                                       
                                     </ul>
 
                                    
@@ -448,69 +424,28 @@
                                 <div class="block-content">
                                      <ul class="list list-timeline pull-t">
                                         <!-- Facebook Notification -->
-                                        <li>
-                                            <div class="list-timeline-time">30 mins ago</div>
-                                            <i class="si si-wrench list-timeline-icon bg-info"></i>
-                                            <div class="list-timeline-content">
-                                                <p class="font-w600">"Whoops!" Reports</p>
-                                               <ul class="nav-users push-10-t push">
-                                                    <li>
-                                                        <a data-ui-sref="whoops">
-                                                            <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                            Modern Art - Critical and Curatorial Studies
-                                                            <div class="font-w400 text-muted"><small>MA</small></div>
-                                                        </a>
-                                                    </li>
-
-                                    
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <!-- END Facebook Notification -->
-
-                                        <li>
-                                            <div class="list-timeline-time">2 hrs ago</div>
-                                            <i class="si si-wrench list-timeline-icon bg-info"></i>
-                                            <div class="list-timeline-content">
-                                                <p class="font-w600">"Whoops!" Reports</p>
-                                               <ul class="nav-users push-10-t push">
-                                                    <li>
-                                                        <a data-ui-sref="whoops">
-                                                            <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                            Germanic Languages
-                                                            <div class="font-w400 text-muted"><small>MA</small></div>
-                                                        </a>
-                                                    </li>
-
-                                    
-                                                </ul>
-                                            </div>
-                                        </li>
+                                        
+                                       
 
                                         <!-- Generic Notification -->
-                                        <li>
-                                            <div class="list-timeline-time">3 hrs ago</div>
+                                        <li ng-if="newly_released_enhancement.length!==0">
+                                            <div class="list-timeline-time">30 mins ago</div>
                                             <i class="si si-rocket list-timeline-icon bg-smooth"></i>
                                             <div class="list-timeline-content">
                                                 <p class="font-w600">Enhancement Reports</p>
                                                 <ul class="nav-users push-10-t push">
-                                                    <li>
-                                                        <a data-ui-sref="enhancement">
+                                                    <li ng-repeat = "row in newly_released_enhancement | limitTo : 1">
+                                                        <a>
+
+                                                        <button class="btn btn-default pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-eye text-primary"></i><span class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span></button>
+
+
                                                             <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                            Islamic Studies
-                                                            <div class="font-w400 text-muted"><small>MA</small></div>
+                                                            {{row.program_name}}
+                                                            <div class="font-w400 text-muted"><small>{{row.program_degree}}</small></div>
                                                         </a>
                                                     </li>
 
-                                                    <li>
-                                                        <a data-ui-sref="enhancement">
-                                                            <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                                Art History and Archaeology
-                                                            <div class="font-w400 text-muted"><small>MA</small></div>
-                                                        </a>
-                                                    </li>
-                                                    
-                                    
                                                 </ul>
                                             </div>
                                         </li>
@@ -531,13 +466,11 @@
                 <!-- END Page Content -->
          
 
-
-
-         <!-- Modal of Pdf Viewer-->
+ <!-- Modal of Pdf Viewer-->
   <div class="modal viewer fade" id="WhoopsReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <div class="block block-themed block-transparent remove-margin-b">
+        <div class="block block-themed block-transparent remove-margin-b" id="whoops_loading">
           <div class="block-header bg-primary-dark">
             <ul class="block-options">
                                 <li>
@@ -641,25 +574,25 @@
                                     <tr>
                                         <td class="text-muted">Univerity</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;Columbia University&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{univeristy_name}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">School</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;School of Engineering & Applied Science&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{school_name}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">Program</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;Applied Linguistics&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{whoops_report_program}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">Degree</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;EdM&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{whoops_report_degree}}&nbsp;</td>
                                     </tr>
 
                                     </table>
@@ -698,178 +631,696 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center"></th>
-                                            <th colspan="2" style="text-decoration: none; cursor: default; padding-bottom: 20px" >"Whoops!" glitches</th>
+                                            <th colspan="2" style="text-decoration: none; cursor: default; padding-bottom: 20px" class="text-center">"Whoops!" glitches</th>
                                            
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">1</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">DEAD LINK</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
-                                        </tr>
+                                        <tr class="bg-info">
+                                            <td class="text-center font-w600 text-white bg-info">1</td>
+                                            <td colspan="2" class="bg-info">
+                                                <span class="font-w600 text-white">DEAD LINK</span>
 
-                                        <tr class="bg-warning-lighter">
-                                            <td class="text-right text-muted">1)</td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Where</span>
-                                                
-                                            </td>
-                                            <td>
-                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
+                                                <span ng-if="w_array_final[0].length!==0" class="badge badge-primary pull-right">{{w_array_final[0].length}}</span>
 
+                                                <span ng-if="w_array_final[0].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="color:white;width: 18px;"></i></span>
 
-                                            </td>
-                                            
-                                        </tr>
-
-                                        <tr class="bg-gray-lighter">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Dead link url</span>
-                                                
-                                            </td>
-                                            <td>
-                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
-
-
-                                            </td>
-                                            
-                                        </tr>
-
-                                        <tr class="bg-gray-lighter">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Description</span>
-                                                
-                                            </td>
-                                            <td>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis sapien massa, et molestie nulla pellentesque eget. Curabitur porta sed odio eget porttitor. Duis magna purus, euismod vel dignissim vitae, feugiat eget nisi. Praesent ullamcorper consequat varius. Quisque gravida massa quam,
-
-
-                                            </td>
-                                            
-                                        </tr>
-
-
-
-                                        <tr class="bg-warning-lighter">
-                                            <td class="text-right text-muted">2)</td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Where</span>
-                                                
-                                            </td>
-                                            <td>
-                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
-
-
-                                            </td>
-                                            
-                                        </tr>
-
-                                        <tr class="bg-gray-lighter">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Dead link url</span>
-                                                
-                                            </td>
-                                            <td>
-                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
-
-
-                                            </td>
-                                            
-                                        </tr>
-
-                                        <tr class="bg-gray-lighter">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Description</span>
-                                                
-                                            </td>
-                                            <td>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis sapien massa, et molestie nulla pellentesque eget. Curabitur porta sed odio eget porttitor. Duis magna purus, euismod vel dignissim vitae, feugiat eget nisi. Praesent ullamcorper consequat varius. Quisque gravida massa quam,
-
-
-                                            </td>
-                                            
-                                        </tr>
-
-
-                                       
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">2</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">TYPO</span>
-
-                                                <i class="fa fa-check-circle fa-lg pull-right" style="color:green"></i>
-                                                <!-- <span class="badge badge-primary pull-right">1</span> -->
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">3</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">OUTDATED INFORMATION</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">4</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">DATA DISCREPANCY</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">5</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">SIDEBARS</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">6</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">INFINITE LOOP</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">7</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">FLOATING PAGE</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
-                                        </tr>
-
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">8</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">CONFUSING AND NOT CLEARLY PRESENTED</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
-                                        </tr>
-
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">9</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">OTHERS</span>
-                                                <span class="badge badge-primary pull-right">1</span>
                                             </td>
                                             
                                         </tr>
 
                                     </tbody>
+
+                                    <tbody ng-repeat="row in w_array_final[0]">
+                                       <tr class="bg-warning-lighter">
+                                             <td class="text-right text-muted">{{$index+1}})</td>
+
+                                             <td>
+                                                <span class="font-w600 text-muted">Where</span>
+                                                
+                                            </td>
+
+                                            <td>
+                                                <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                                            </td>
+                                       </tr>
+
+                                       <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Dead link url</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Dead link url</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Description</span>
+                                                
+                                            </td>
+                                            <td>
+                                               {{row.additional_note}}
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                    </tbody>
+
+                                            <tbody>
+                                        <tr class="bg-info">
+                                            <td class="text-center font-w600 text-white bg-info">2</td>
+                                            <td colspan="2" class="bg-info">
+                                                <span class="font-w600 text-white">TYPO</span>
+
+                                                <span ng-if="w_array_final[1].length!==0" class="badge badge-primary pull-right">{{w_array_final[1].length}}</span>
+
+                                                <span ng-if="w_array_final[1].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="color:white;width: 18px;"></i></span>
+
+                                            </td>
+                                            
+                                        </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[1]">
+           <tr class="bg-warning-lighter">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Typo url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Typo url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   {{row.additional_note}}
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+
+        <tbody>
+            <tr class="bg-info">
+                <td class="text-center font-w600 text-white bg-info">3</td>
+                <td colspan="2" class="bg-info">
+                    <span class="font-w600 text-white">OUTDATED INFORMATION</span>
+
+                    <span ng-if="w_array_final[2].length!==0" class="badge badge-primary pull-right">{{w_array_final[2].length}}</span>
+
+                    <span ng-if="w_array_final[2].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="color:white;width: 18px;"></i></span>
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[2]">
+           <tr class="bg-warning-lighter">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Outdated information url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Outdated information url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   {{row.additional_note}}
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody>
+            <tr class="bg-info">
+                <td class="text-center font-w600 text-white bg-info">4</td>
+                <td colspan="2" class="bg-info">
+                    <span class="font-w600 text-white">DATA DISCREPANCY</span>
+
+                    <span ng-if="w_array_final[3].length!==0" class="badge badge-primary pull-right">{{w_array_final[3].length}}</span>
+
+                    <span ng-if="w_array_final[3].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="color:white;width: 18px;"></i></span>
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[3]">
+           <tr class="bg-warning-lighter">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Source url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Source url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   {{row.additional_note}}
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody>
+            <tr class="bg-info">
+                <td class="text-center font-w600 text-white bg-info">5</td>
+                <td colspan="2" class="bg-info">
+                    <span class="font-w600 text-white">SIDEBARS</span>
+
+                    <span ng-if="w_array_final[4].length!==0" class="badge badge-primary pull-right">{{w_array_final[4].length}}</span>
+
+                    <span ng-if="w_array_final[4].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="color:white;width: 18px;"></i></span>
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[4]">
+           <tr class="bg-warning-lighter">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Sidebars url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Sidebars url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   {{row.additional_note}}
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody>
+            <tr class="bg-info">
+                <td class="text-center font-w600 text-white bg-info">6</td>
+                <td colspan="2" class="bg-info">
+                    <span class="font-w600 text-white">INFINITE LOOP</span>
+
+                    <span ng-if="w_array_final[5].length!==0" class="badge badge-primary pull-right">{{w_array_final[5].length}}</span>
+
+                    <span ng-if="w_array_final[5].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="color:white;width: 18px;"></i></span>
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[5]">
+           <tr class="bg-warning-lighter">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Infinite loop url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Infinite loop url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   {{row.additional_note}}
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody>
+            <tr class="bg-info">
+                <td class="text-center font-w600 text-white bg-info">7</td>
+                <td colspan="2" class="bg-info">
+                    <span class="font-w600 text-white">FLOATING PAGE</span>
+
+                    <span ng-if="w_array_final[6].length!==0" class="badge badge-primary pull-right">{{w_array_final[6].length}}</span>
+
+                    <span ng-if="w_array_final[6].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="color:white;width: 18px;"></i></span>
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[6]">
+           <tr class="bg-warning-lighter">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Floating page url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Floating page url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   {{row.additional_note}}
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody>
+            <tr class="bg-info">
+                <td class="text-center font-w600 text-white bg-info">8</td>
+                <td colspan="2" class="bg-info">
+                    <span class="font-w600 text-white">CONFUSING AND NOT CLEARLY PRESENTED</span>
+
+                    <span ng-if="w_array_final[7].length!==0" class="badge badge-primary pull-right">{{w_array_final[7].length}}</span>
+
+                    <span ng-if="w_array_final[7].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="color:white;width: 18px;"></i></span>
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[7]">
+           <tr class="bg-warning-lighter">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Confusing url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Confusing url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   {{row.additional_note}}
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody>
+            <tr class="bg-info">
+                <td class="text-center font-w600 text-white bg-info">9</td>
+                <td colspan="2" class="bg-info">
+                    <span class="font-w600 text-white">Others</span>
+
+                    <span ng-if="w_array_final[8].length!==0" class="badge badge-primary pull-right">{{w_array_final[8].length}}</span>
+
+                    <span ng-if="w_array_final[8].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="color:white;width: 18px;"></i></span>
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[8]">
+           <tr class="bg-warning-lighter">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Other expert notes url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Other expert notes url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   {{row.additional_note}}
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+
                                 </table>
                             </div>
                             <!-- END Table -->
@@ -897,10 +1348,10 @@
 
 
 
- <div class="modal fullscreen-modal viewer fade" id="EnhancementReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+<div class="modal fullscreen-modal viewer fade" id="EnhancementReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <div class="block block-themed block-transparent remove-margin-b">
+        <div class="block block-themed block-transparent remove-margin-b" id="enhancement_loading">
           <div class="block-header bg-primary-dark">
             <ul class="block-options">
                                 <li>
@@ -1005,62 +1456,28 @@
                                     <tr>
                                         <td class="text-muted">Univerity</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;Columbia University&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{univeristy_name}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">School</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;School of Engineering & Applied Science&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{school_name}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">Program</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;Applied Linguistics&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{enhancement_report_program}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">Degree</td>
                                         <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;EdM&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{enhancement_report_degree}}&nbsp;</td>
                                     </tr>
 
-                                    <tr>
-                                        <td class="text-muted">Competing programs</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;1.  Developmental Psychology - MA</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graduate School (Cornell University)</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;2.  Developmental Psychology - MA</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graduate School (Cornell University)</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;3.  Developmental Psychology - MA</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graduate School (Cornell University)</td>
-                                    </tr>
+                                    
 
                                     </table>
 
@@ -1087,187 +1504,504 @@
 
                             <!-- Table -->
                             <div class="table-responsive push-50">
-                                <table class="table table-bordered table-hover">
+                                <table class="table report_table2 table-bordered table-hover" style="table-layout: fixed;">
 
-                                    <colgroup>
-                                        <col width="10%"/>
-                                        <col width="25%"/>
-                                        <col width="65%"/>
-                                    
-                                      </colgroup>
+                                    <col span="1" class="cell_narrow">
                                     <thead>
                                         <tr>
                                             <th class="text-center"></th>
-                                            <th colspan="2" style="text-decoration: none; cursor: default; padding-bottom: 20px" >Enhancement Blank</th>
+                                            <th colspan="{{e_raw.length}}" style="text-decoration: none; cursor: default; padding-bottom: 20px" class="text-center">Enhancement Table</th>
                                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="text-center font-w600 text-primary">1</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">DEAD LINK</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Univeristy school</td>
+                                            <td ng-repeat = "row in e_array_final[0]">{{row.university_school.university}}</td>
                                         </tr>
 
-                                        <tr class="bg-warning-lighter">
-                                            <td class="text-right text-muted">1)</td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Where</span>
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">School name</td>
+                                            <td ng-repeat = "row in e_array_final[0]">{{row.university_school.school}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Program name</td>
+                                            <td ng-repeat = "row in e_array_final[0]">
+
+                                            <span ng-if="row.program_name&&row.url">
+                                                <a href="{{row.url}}" target="_blank" style="text-decoration: underline;">
+                                                {{row.program_name}}
+                                                </a>
+                                            </span>
+
+                                            <span ng-if="row.program_name&&!row.url">
+                                                {{row.program_name}}
+                                            </span>
+
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Degree</td>
+                                            <td ng-repeat = "row in e_array_final[0]">{{row.degree.name}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Department</td>
+                                            <td ng-repeat = "row in e_array_final[0]">{{row.department}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Specialization</td>
+                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.specialization}}</td>
+                                        </tr>
+
+                                         <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Highlights</td>
+                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.highlights}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Audience</td>
+                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.audience}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Job placement</td>
+                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left"><span ng-if="row.job_placement&&row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;">{{row.job_placement}}</a></span><span ng-if="row.job_placement&&!row.job_placement_url">{{row.job_placement}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Online program</td>
+
+
+                                            <td ng-repeat = "row in e_array_final[0]">
+                                            <span ng-if="row.online_program === true">
+                                            <i class="fa fa-check text-success"></i>
+                                            </span>
+
+                                            <span ng-if="row.online_program === false">
+                                            <i class="fa fa-times text-danger"></i>
+                                            </span>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Handbook</td>
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.additional_url"><a href="{{row.additional_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">F&Q</td>
+                                           
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.program_faq_url"><a href="{{row.program_faq_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Admission stats</td>
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.stats_profile_url"><a href="{{row.stats_profile_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                        </tr>
+
+
+
+                                        <!-- 1. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">1. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">PROGRAM DETAILS</td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Full-time</td>
+                                            <td ng-repeat = "row in e_array_final[9]"><span ng-if="row.full_part_time==='F'"><i class="fa fa-check text-success"></i></span><span ng-if="row.full_part_time==='P'"><i class="fa fa-times text-danger"></i>
+                                        </span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Part-time</td>
+                                            <td ng-repeat = "row in e_array_final[9]"><span ng-if="row.part_time===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.part_time===false"><i class="fa fa-times text-danger"></i></span><span ng-if="!row.part_time&&row.full_part_time==='P'"><i class="fa fa-check text-success"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Program duration</td>
+                                            <td ng-repeat = "row in e_array_final[9]">{{row.duration_min}}<span ng-if="row.duration_max">~{{row.duration_max}}</span><span ng-if="row.duration_conj"> {{row.duration_conj}}</span><span ng-if="row.duration_unit"> {{row.duration_unit.name}}</span><span ng-if="row.duration_addl"> {{row.duration_addl}}</span><span ng-if="row.duration_addl_unit"> {{row.duration_addl_unit}}</span></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Duration time limit</td>
+                                            <td ng-repeat = "row in e_array_final[9]"><span ng-if="row.durationtime_limit">{{row.durationtime_limit}} {{row.duration_unit.name}}</span></td>
+                                        </tr>
+                                            
+
+
+                                        <!-- 2. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">2. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">CURRICULUMS</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Required curriculum units</td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.min_total_unit">{{row.min_total_unit}} per {{row.curriculum_unit.name}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Max transfer units</td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.max_transfer_unit">{{row.max_transfer_unit}} {{row.curriculum_unit.name}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Master thesis or equivalent</td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.master_thesis_or_equivalent==='Y'">Yes</span><span ng-if="row.master_thesis_or_equivalent==='N'">No</span><span ng-if="row.master_thesis_or_equivalent==='O'">Optional</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Thesis notes</td>
+                                            <td ng-repeat = "row in e_array_final[1]">{{row.thesis_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Doctorate dissertation or equivalent</td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.doctorate_dissertation_or_equivalent==='Y'">Yes</span><span ng-if="row.doctorate_dissertation_or_equivalent==='N'">No</span><span ng-if="row.doctorate_dissertation_or_equivalent==='O'">Optional</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Dissertation notes</td>
+                                            <td ng-repeat = "row in e_array_final[1]">{{row.dissertation_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Curriculums</td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.program_faq_url"><a href="{{row.curriculum_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                        </tr>
+                                        
+
+
+                                        <!-- 3. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">3. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">TUITION</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Tuition in state</td>
+                                            <td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a>
+                                            </span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit">
+                                            <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a>
+                                            </span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit">
+                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}
+                                            </span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Tuition out of state</td><td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit_out_state">
+                                            <a href="{{row.school_cost_url}}" target="_blank">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit_out_state"><a href="{{row.university_cost_url}}" target="_blank">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a>
+                                            </span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit_out_state">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Other fees included</td>
+                                            <td ng-repeat = "row in e_array_final[2]"><span ng-if="row.fee_included===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.fee_included===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        
+                                        <!-- 4. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">4. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">ADMISSION DEADLINES</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline url</td>
+
+
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.deadline_url"><a href="{{row.deadline_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline fall early</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_fall_early_month_display&&row.get_deadline_fall_early_day_display">
+                                                {{row.get_deadline_fall_early_month_display}} {{row.get_deadline_fall_early_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline fall late</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_fall_late_month_display&&row.get_deadline_fall_late_day_display">{{row.get_deadline_fall_late_month_display}} {{row.get_deadline_fall_late_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline spring early</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_spring_early_month_display&&row.get_deadline_spring_early_day_display">{{row.get_deadline_spring_early_month_display}} {{row.get_deadline_spring_early_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline spring late</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_spring_late_month_display&&row.get_deadline_spring_late_day_display">{{row.get_deadline_spring_late_month_display}} {{row.get_deadline_spring_late_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline summer early</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_summer_early_month_display&&row.get_deadline_summer_early_day_display">{{row.get_deadline_summer_early_month_display}} {{row.get_deadline_summer_early_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline summer late</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_summer_late_month_display&&row.get_deadline_summer_late_day_display">{{row.get_deadline_summer_late_month_display}} {{row.get_deadline_summer_late_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline rolling</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.deadline_rolling===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.deadline_rolling===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship deadline</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.scholarship_deadline_month&&row.scholarship_deadline_day">{{row.scholarship_deadline_month}}/{{row.scholarship_deadline_day}}</span></td>
+                                        </tr>
+                                        
+                                        
+
+
+
+
+                                        <!-- 5. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">5. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">ADMISSION REQUIREMENTS</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Special requirements</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.special_reqs}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Apply online</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.apply_online===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.apply_online===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Application fee</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.application_fee | currency}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Application fee waiver</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.application_fee_waiver===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.application_fee_waiver===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Application fee waiver notes</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.application_fee_waiver_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Transcript for application</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.transcript_for_application===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.transcript_for_application===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Transcript for enrollment</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.official_transcript_for_enrollment===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.official_transcript_for_enrollment===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Required exam</td>
+                                            <td ng-repeat = "row in e_array_final[5]"><span ng-repeat="row3 in row">{{row3.name}}<br></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Personal statement or equivalent</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.essays}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Letters of recommendation</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.recommendation}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">GPA minimum</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.gpa_minimum&&!row.gpa_minimum_letter">{{row.gpa_minimum}}</span><span ng-if="!row.gpa_minimum&&row.gpa_minimum_letter">{{row.gpa_minimum_letter}}
+                                            </span><span ng-if="row.gpa_minimum&&row.gpa_minimum_letter">{{row.gpa_minimum}}/{{row.gpa_minimum_letter}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">GPA average</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.gpa_average&&!row.gpa_average_letter">{{row.gpa_average}}</span><span ng-if="!row.gpa_average&&row.gpa_average_letter">{{row.gpa_average_letter}}</span><span ng-if="row.gpa_average&&row.gpa_average_letter">{{row.gpa_average}}/{{row.gpa_average_letter}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">GPA suggested</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.gpa_suggested&&!row.gpa_suggested_letter">{{row.gpa_suggested}}</span><span ng-if="!row.gpa_suggested&&row.gpa_suggested_letter">{{row.gpa_suggested_letter}}</span><span ng-if="row.gpa_suggested&&row.gpa_suggested_letter">{{row.gpa_suggested}}/{{row.gpa_suggested_letter}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">School interview</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.school_interview===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.school_interview===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Resume</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.resume==='Y'">Yes</span><span ng-if="row.resume==='N'">No</span><span ng-if="row.resume==='O'">Optional</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Writing sample</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.sup_mat_writing_sample==='Y'">Yes</span><span ng-if="row.sup_mat_writing_sample==='N'">No</span><span ng-if="row.sup_mat_writing_sample==='O'">Optional</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Writing sample notes</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.sup_mat_writing_sample_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Portfolio</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.sup_mat_portfolio==='Y'">Yes</span><span ng-if="row.sup_mat_portfolio==='N'">No</span><span ng-if="row.sup_mat_portfolio==='O'">Optional</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Portfolio notes</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.sup_mat_portfolio_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Admission requirement</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.program_req_url"><a href="{{row.program_req_url}}" target="_blank" style="text-decoration: underline;">link</a></span><span ng-if="!row.program_req_url&&row.school_req_url"><a href="{{row.school_req_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                        </tr>
+                                        
+
+
+                                        <!-- 6. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">6. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">INTERNATIONAL REQUIREMENTS</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">International transcript</td>
+                                            <td ng-repeat = "row in e_array_final[6]"><span ng-repeat="row1 in row"><span ng-if="row1" data-uib-tooltip="{{row1.description}}" data-tooltip-placement="top" style="border-bottom: 1px dashed #aaa;cursor: pointer;">{{row1.name}}<br></span></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int lang waiver</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.intl_lang_waiver===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.intl_lang_waiver===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int lang waiver notes</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.intl_lang_waiver_conditions}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl english test required</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.intl_english_test_required===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.intl_english_test_required===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl english test</td>
+                                            <td ng-repeat = "row in e_array_final[7]"><span ng-repeat="row2 in row">{{row2.name}}<br></span></td>
                                                 
-                                            </td>
-                                            <td>
-                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
-
-
-                                            </td>
-                                            
                                         </tr>
 
-                                        <tr class="bg-gray-lighter">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Dead link url</span>
-                                                
-                                            </td>
-                                            <td>
-                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
-
-
-                                            </td>
-                                            
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl ibt</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_ibt}}</td>
                                         </tr>
 
-                                        <tr class="bg-gray-lighter">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Description</span>
-                                                
-                                            </td>
-                                            <td>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis sapien massa, et molestie nulla pellentesque eget. Curabitur porta sed odio eget porttitor. Duis magna purus, euismod vel dignissim vitae, feugiat eget nisi. Praesent ullamcorper consequat varius. Quisque gravida massa quam,
-
-
-                                            </td>
-                                            
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl ibt reading /listening /speaking /writing</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.toefl_ibt_reading||row.toefl_ibt_listening||row.toefl_ibt_speaking||row.toefl_ibt_writing">{{row.toefl_ibt_reading?row.toefl_ibt_reading: '-'}}/{{row.toefl_ibt_listening?row.toefl_ibt_listening: '-'}}/{{row.toefl_ibt_speaking?row.toefl_ibt_speaking: '-'}}/{{row.toefl_ibt_writing?row.toefl_ibt_writing: '-'}}</span></td>
                                         </tr>
 
 
-
-                                        <tr class="bg-warning-lighter">
-                                            <td class="text-right text-muted">2)</td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Where</span>
-                                                
-                                            </td>
-                                            <td>
-                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
-
-
-                                            </td>
-                                            
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl pbt</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_pbt}}</td>
                                         </tr>
 
-                                        <tr class="bg-gray-lighter">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Dead link url</span>
-                                                
-                                            </td>
-                                            <td>
-                                                <a href="http://www.google.com" target="_blank">http://www.google.com</a>
-
-
-                                            </td>
-                                            
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl twe</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_twe}}</td>
                                         </tr>
 
-                                        <tr class="bg-gray-lighter">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Description</span>
-                                                
-                                            </td>
-                                            <td>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mollis sapien massa, et molestie nulla pellentesque eget. Curabitur porta sed odio eget porttitor. Duis magna purus, euismod vel dignissim vitae, feugiat eget nisi. Praesent ullamcorper consequat varius. Quisque gravida massa quam,
-
-
-                                            </td>
-                                            
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl tse</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_tse}}</td>
                                         </tr>
 
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl cbt</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_cbt}}</td>
+                                        </tr>
 
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl ielts requirements</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.intl_ielts_reqs}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl other</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.intl_other}}</td>
+                                        </tr>
                                        
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">2</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">TYPO</span>
 
-                                                <i class="fa fa-check-circle fa-lg pull-right" style="color:green"></i>
-                                                <!-- <span class="badge badge-primary pull-right">1</span> -->
-                                            </td>
-                                            
-                                        </tr>
+                                        <!-- 7. -->
                                         <tr>
-                                            <td class="text-center font-w600 text-primary">3</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">OUTDATED INFORMATION</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
                                             
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">4</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">DATA DISCREPANCY</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">5</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">SIDEBARS</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">6</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">INFINITE LOOP</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center font-w600 text-primary">7</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">FLOATING PAGE</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
+                                            <td class="text-center bg-info text-white">7. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">SCHOLARSHIPS</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-center font-w600 text-primary">8</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">CONFUSING AND NOT CLEARLY PRESENTED</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Fully funded</td>
+                                            <td ng-repeat = "row in e_array_final[8]"><span ng-if="row.fully_funded===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.fully_funded===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Fully funded notes</td>
+                                            <td ng-repeat = "row in e_array_final[8]" style="text-align: left">{{row.fully_funded_notes}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-center font-w600 text-primary">9</td>
-                                            <td colspan="2">
-                                                <span class="font-w600 text-primary">OTHERS</span>
-                                                <span class="badge badge-primary pull-right">1</span>
-                                            </td>
-                                            
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship</td>
+                                            <td ng-repeat = "row in e_array_final[8]"><span ng-if="row.scholarship_avail===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.scholarship_avail===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship notes</td>
+                                            <td ng-repeat = "row in e_array_final[8]" style="text-align: left">{{row.scholarship_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship url</td>
+
+                                            <td ng-repeat = "row in e_array_final[8]"><span ng-if="row.scholarship_program_specific_url"><a href="{{row.scholarship_program_specific_url}}" target="_blank" style="text-decoration: underline;">link</a></span><span ng-if="!row.scholarship_program_specific_url&&row.scholarship_general_url"><a href="{{row.scholarship_general_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+
+
+                                        </tr>
+                                        
+
+
+                                        
 
                                     </tbody>
                                 </table>
@@ -1294,3 +2028,693 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+<div class="modal fullscreen-modal viewer fade" id="EnhancementReport1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="block block-themed block-transparent remove-margin-b" id="enhancement_loading1">
+          <div class="block-header bg-primary-dark">
+            <ul class="block-options">
+                                <li>
+                                    <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
+                                 </li>
+
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle" onclick="App.blocks('#WhoopsReport', 'fullscreen_toggle');" ng-click="togglefullen1(); actualscreen2 = !actualscreen2" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen2, 'si si-size-actual': !actualscreen2 }"></i></button>
+                                  </li>
+                                  
+                                  <li>
+                                    <button data-dismiss="modal" type="button" data-js-blur><i class="si si-close"></i></button>
+                                  </li>
+                                </ul>
+                                <h3 class="block-title">Enhancement Report</h3>
+                              </div>
+                              
+                              <div class="block-content" style="width:auto;padding:0;">
+
+                                <!-- progress circle -->
+                                <div class="sk-fading-circle" ng-show="viewerLoading">
+                                  <div class="sk-circle1 sk-circle"></div>
+                                  <div class="sk-circle2 sk-circle"></div>
+                                  <div class="sk-circle3 sk-circle"></div>
+                                  <div class="sk-circle4 sk-circle"></div>
+                                  <div class="sk-circle5 sk-circle"></div>
+                                  <div class="sk-circle6 sk-circle"></div>
+                                  <div class="sk-circle7 sk-circle"></div>
+                                  <div class="sk-circle8 sk-circle"></div>
+                                  <div class="sk-circle9 sk-circle"></div>
+                                  <div class="sk-circle10 sk-circle"></div>
+                                  <div class="sk-circle11 sk-circle"></div>
+                                  <div class="sk-circle12 sk-circle"></div>
+                                </div>
+           
+                    <!-- SlimScroll Container -->
+                    <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}">
+
+
+
+                     <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+               
+                        <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content1">
+
+
+                        <style>
+                            @media print {
+                            body * {
+                                visibility: hidden;
+
+                            }
+                            #print-content1 * {
+                                visibility: visible;
+                                overflow: visible;
+                            }
+                            .modal{
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                margin: 0;
+                                padding: 0;
+                                width: 100%;
+                                height: 100%;
+                                margin: 0;
+                                padding: 0;
+                                overflow: visible;
+                            }
+                            }
+
+                            /*.table-hover > tbody > tr:hover {
+                                background-color: #fefaf4;
+                            }*/
+
+                            .table>tbody>tr>td {
+                                vertical-align: top;
+                            }
+                            
+                            </style>
+                            <div class="row">
+                            <div class="col-sm-6">
+                          
+
+                            <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
+                            <small>Gradgrid.com/upgrid</small><br>ENHANCEMENT REPORT
+                            </h1>
+                            </div>
+
+                            <div class="col-sm-6">
+                            <img src="img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
+                            </div>
+                            </div>
+                            
+                            <hr class="hidden-print">
+                            <div class="row items-push-2x">
+                                <!-- Company Info -->
+                                <div class="col-sm-9">
+                                    <p class="h3 font-w400 push-15 push-10-t text-uppercase">Program Details</p>
+                                    
+                                    <address>
+
+                                    <table>
+                                    <tr>
+                                        <td class="text-muted">Univerity</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{univeristy_name}}&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">School</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{school_name}}&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">Program</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{enhancement_report_program}}&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">Degree</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{enhancement_report_degree}}&nbsp;</td>
+                                    </tr>
+
+                                    
+
+                                    </table>
+
+                                       <!--  Univerity &nbsp;&nbsp;: Columbia University<br>
+                                        School &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: School of Engineering & Applied Science<br>
+                                        Program &nbsp;&nbsp;: Applied Linguistics<br>
+                                        Degree &nbsp;&nbsp;&nbsp;&nbsp;: EdM<br> -->
+                                    </address>
+                                </div>
+                                <!-- END Company Info -->
+
+                                <!-- Client Info -->
+                                <div class="col-sm-3 text-right">
+                                    <p class="h3 font-w400 push-15 push-10-t">Date</p>
+                                    <address>
+                                        
+                                        
+                                        <span class="text-muted">Generated on</span><br>{{date | date:'MMM dd , yyyy'}}
+                                    </address>
+                                </div>
+                                <!-- END Client Info -->
+                            </div>
+                            <!-- END Invoice Info -->
+
+                            <!-- Table -->
+                            <div class="table-responsive push-50">
+                                <table class="table report_table2 table-bordered table-hover" style="table-layout: fixed;">
+
+                                    <col span="1" class="cell_narrow">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center"></th>
+                                            <th colspan="{{e_raw.length}}" style="text-decoration: none; cursor: default; padding-bottom: 20px" class="text-center">Enhancement Table</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Univeristy school</td>
+                                            <td ng-repeat = "row in e_array_final[0]">{{row.university_school.university}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">School name</td>
+                                            <td ng-repeat = "row in e_array_final[0]">{{row.university_school.school}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Program name</td>
+                                            <td ng-repeat = "row in e_array_final[0]">
+
+                                            <span ng-if="row.program_name&&row.url">
+                                                <a href="{{row.url}}" target="_blank" style="text-decoration: underline;">
+                                                {{row.program_name}}
+                                                </a>
+                                            </span>
+
+                                            <span ng-if="row.program_name&&!row.url">
+                                                {{row.program_name}}
+                                            </span>
+
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Degree</td>
+                                            <td ng-repeat = "row in e_array_final[0]">{{row.degree.name}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Department</td>
+                                            <td ng-repeat = "row in e_array_final[0]">{{row.department}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Specialization</td>
+                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.specialization}}</td>
+                                        </tr>
+
+                                         <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Highlights</td>
+                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.highlights}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Audience</td>
+                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.audience}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Job placement</td>
+                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left"><span ng-if="row.job_placement&&row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;">{{row.job_placement}}</a></span><span ng-if="row.job_placement&&!row.job_placement_url">{{row.job_placement}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Online program</td>
+
+
+                                            <td ng-repeat = "row in e_array_final[0]">
+                                            <span ng-if="row.online_program === true">
+                                            <i class="fa fa-check text-success"></i>
+                                            </span>
+
+                                            <span ng-if="row.online_program === false">
+                                            <i class="fa fa-times text-danger"></i>
+                                            </span>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Handbook</td>
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.additional_url"><a href="{{row.additional_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">F&Q</td>
+                                           
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.program_faq_url"><a href="{{row.program_faq_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Admission stats</td>
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.stats_profile_url"><a href="{{row.stats_profile_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                        </tr>
+
+
+
+                                        <!-- 1. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">1. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">PROGRAM DETAILS</td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Full-time</td>
+                                            <td ng-repeat = "row in e_array_final[9]"><span ng-if="row.full_part_time==='F'"><i class="fa fa-check text-success"></i></span><span ng-if="row.full_part_time==='P'"><i class="fa fa-times text-danger"></i>
+                                        </span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Part-time</td>
+                                            <td ng-repeat = "row in e_array_final[9]"><span ng-if="row.part_time===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.part_time===false"><i class="fa fa-times text-danger"></i></span><span ng-if="!row.part_time&&row.full_part_time==='P'"><i class="fa fa-check text-success"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Program duration</td>
+                                            <td ng-repeat = "row in e_array_final[9]">{{row.duration_min}}<span ng-if="row.duration_max">~{{row.duration_max}}</span><span ng-if="row.duration_conj"> {{row.duration_conj}}</span><span ng-if="row.duration_unit"> {{row.duration_unit.name}}</span><span ng-if="row.duration_addl"> {{row.duration_addl}}</span><span ng-if="row.duration_addl_unit"> {{row.duration_addl_unit}}</span></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Duration time limit</td>
+                                            <td ng-repeat = "row in e_array_final[9]"><span ng-if="row.durationtime_limit">{{row.durationtime_limit}} {{row.duration_unit.name}}</span></td>
+                                        </tr>
+                                            
+
+
+                                        <!-- 2. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">2. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">CURRICULUMS</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Required curriculum units</td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.min_total_unit">{{row.min_total_unit}} per {{row.curriculum_unit.name}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Max transfer units</td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.max_transfer_unit">{{row.max_transfer_unit}} {{row.curriculum_unit.name}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Master thesis or equivalent</td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.master_thesis_or_equivalent==='Y'">Yes</span><span ng-if="row.master_thesis_or_equivalent==='N'">No</span><span ng-if="row.master_thesis_or_equivalent==='O'">Optional</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Thesis notes</td>
+                                            <td ng-repeat = "row in e_array_final[1]">{{row.thesis_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Doctorate dissertation or equivalent</td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.doctorate_dissertation_or_equivalent==='Y'">Yes</span><span ng-if="row.doctorate_dissertation_or_equivalent==='N'">No</span><span ng-if="row.doctorate_dissertation_or_equivalent==='O'">Optional</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Dissertation notes</td>
+                                            <td ng-repeat = "row in e_array_final[1]">{{row.dissertation_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Curriculums</td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.program_faq_url"><a href="{{row.curriculum_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                        </tr>
+                                        
+
+
+                                        <!-- 3. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">3. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">TUITION</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Tuition in state</td>
+                                            <td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index!==1"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index!==1">
+                                            <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index!==1">
+                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index===1" style="background:yellow" data-uib-tooltip="History: $21,850.00 per Year" data-tooltip-placement="top"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a>
+                                            </span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===1" style="background:yellow" data-uib-tooltip="History: $21,850.00 per Year" data-tooltip-placement="top">
+                                            <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===1" style="background:yellow" data-uib-tooltip="History: $21,850.00 per Year" data-tooltip-placement="top">
+                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Tuition out of state</td><td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit_out_state">
+                                            <a href="{{row.school_cost_url}}" target="_blank">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit_out_state"><a href="{{row.university_cost_url}}" target="_blank">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a>
+                                            </span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit_out_state">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Other fees included</td>
+                                            <td ng-repeat = "row in e_array_final[2]"><span ng-if="row.fee_included===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.fee_included===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        
+                                        <!-- 4. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">4. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">ADMISSION DEADLINES</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline url</td>
+
+
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.deadline_url"><a href="{{row.deadline_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline fall early</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_fall_early_month_display&&row.get_deadline_fall_early_day_display&&$index!==0">
+                                                {{row.get_deadline_fall_early_month_display}} {{row.get_deadline_fall_early_day_display}}</span><span ng-if="row.get_deadline_fall_early_month_display&&row.get_deadline_fall_early_day_display&&$index===0" style="background:yellow;" data-uib-tooltip="History: December 1st" data-tooltip-placement="top">{{row.get_deadline_fall_early_month_display}} {{row.get_deadline_fall_early_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline fall late</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_fall_late_month_display&&row.get_deadline_fall_late_day_display">{{row.get_deadline_fall_late_month_display}} {{row.get_deadline_fall_late_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline spring early</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_spring_early_month_display&&row.get_deadline_spring_early_day_display">{{row.get_deadline_spring_early_month_display}} {{row.get_deadline_spring_early_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline spring late</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_spring_late_month_display&&row.get_deadline_spring_late_day_display">{{row.get_deadline_spring_late_month_display}} {{row.get_deadline_spring_late_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline summer early</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_summer_early_month_display&&row.get_deadline_summer_early_day_display">{{row.get_deadline_summer_early_month_display}} {{row.get_deadline_summer_early_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline summer late</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_summer_late_month_display&&row.get_deadline_summer_late_day_display">{{row.get_deadline_summer_late_month_display}} {{row.get_deadline_summer_late_day_display}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline rolling</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.deadline_rolling===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.deadline_rolling===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship deadline</td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.scholarship_deadline_month&&row.scholarship_deadline_day">{{row.scholarship_deadline_month}}/{{row.scholarship_deadline_day}}</span></td>
+                                        </tr>
+                                        
+                                        
+
+
+
+
+                                        <!-- 5. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">5. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">ADMISSION REQUIREMENTS</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Special requirements</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.special_reqs}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Apply online</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.apply_online===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.apply_online===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Application fee</td>
+                                            <td ng-repeat = "row in e_array_final[4]" ><span ng-if="$index===0" style="background: yellow" data-uib-tooltip="History: $72.50" data-tooltip-placement="top">{{row.application_fee | currency}}</span><span ng-if="$index!==0">{{row.application_fee | currency}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Application fee waiver</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.application_fee_waiver===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.application_fee_waiver===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Application fee waiver notes</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.application_fee_waiver_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Transcript for application</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.transcript_for_application===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.transcript_for_application===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Transcript for enrollment</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.official_transcript_for_enrollment===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.official_transcript_for_enrollment===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Required exam</td>
+                                            <td ng-repeat = "row in e_array_final[5]"><span ng-repeat="row3 in row">{{row3.name}}<br></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Personal statement or equivalent</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.essays}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Letters of recommendation</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.recommendation}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">GPA minimum</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.gpa_minimum&&!row.gpa_minimum_letter">{{row.gpa_minimum}}</span><span ng-if="!row.gpa_minimum&&row.gpa_minimum_letter">{{row.gpa_minimum_letter}}
+                                            </span><span ng-if="row.gpa_minimum&&row.gpa_minimum_letter">{{row.gpa_minimum}}/{{row.gpa_minimum_letter}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">GPA average</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.gpa_average&&!row.gpa_average_letter">{{row.gpa_average}}</span><span ng-if="!row.gpa_average&&row.gpa_average_letter">{{row.gpa_average_letter}}</span><span ng-if="row.gpa_average&&row.gpa_average_letter">{{row.gpa_average}}/{{row.gpa_average_letter}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">GPA suggested</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.gpa_suggested&&!row.gpa_suggested_letter">{{row.gpa_suggested}}</span><span ng-if="!row.gpa_suggested&&row.gpa_suggested_letter">{{row.gpa_suggested_letter}}</span><span ng-if="row.gpa_suggested&&row.gpa_suggested_letter">{{row.gpa_suggested}}/{{row.gpa_suggested_letter}}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">School interview</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.school_interview===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.school_interview===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Resume</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.resume==='Y'">Yes</span><span ng-if="row.resume==='N'">No</span><span ng-if="row.resume==='O'">Optional</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Writing sample</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.sup_mat_writing_sample==='Y'">Yes</span><span ng-if="row.sup_mat_writing_sample==='N'">No</span><span ng-if="row.sup_mat_writing_sample==='O'">Optional</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Writing sample notes</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.sup_mat_writing_sample_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Portfolio</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.sup_mat_portfolio==='Y'">Yes</span><span ng-if="row.sup_mat_portfolio==='N'">No</span><span ng-if="row.sup_mat_portfolio==='O'">Optional</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Portfolio notes</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.sup_mat_portfolio_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Admission requirement</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.program_req_url"><a href="{{row.program_req_url}}" target="_blank" style="text-decoration: underline;">link</a></span><span ng-if="!row.program_req_url&&row.school_req_url"><a href="{{row.school_req_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                        </tr>
+                                        
+
+
+                                        <!-- 6. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">6. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">INTERNATIONAL REQUIREMENTS</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">International transcript</td>
+                                            <td ng-repeat = "row in e_array_final[6]"><span ng-repeat="row1 in row"><span ng-if="row1" data-uib-tooltip="{{row1.description}}" data-tooltip-placement="top" style="border-bottom: 1px dashed #aaa;cursor: pointer;">{{row1.name}}<br></span></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int lang waiver</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.intl_lang_waiver===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.intl_lang_waiver===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int lang waiver notes</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.intl_lang_waiver_conditions}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl english test required</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.intl_english_test_required===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.intl_english_test_required===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl english test</td>
+                                            <td ng-repeat = "row in e_array_final[7]"><span ng-repeat="row2 in row">{{row2.name}}<br></span></td>
+                                                
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl ibt</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_ibt}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl ibt reading /listening /speaking /writing</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.toefl_ibt_reading||row.toefl_ibt_listening||row.toefl_ibt_speaking||row.toefl_ibt_writing">{{row.toefl_ibt_reading?row.toefl_ibt_reading: '-'}}/{{row.toefl_ibt_listening?row.toefl_ibt_listening: '-'}}/{{row.toefl_ibt_speaking?row.toefl_ibt_speaking: '-'}}/{{row.toefl_ibt_writing?row.toefl_ibt_writing: '-'}}</span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl pbt</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_pbt}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl twe</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_twe}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl tse</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_tse}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl cbt</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_cbt}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl ielts requirements</td>
+                                            <td ng-repeat = "row in e_array_final[4]">{{row.intl_ielts_reqs}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl other</td>
+                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.intl_other}}</td>
+                                        </tr>
+                                       
+
+                                        <!-- 7. -->
+                                        <tr>
+                                            
+                                            <td class="text-center bg-info text-white">7. </td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">SCHOLARSHIPS</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Fully funded</td>
+                                            <td ng-repeat = "row in e_array_final[8]"><span ng-if="row.fully_funded===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.fully_funded===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Fully funded notes</td>
+                                            <td ng-repeat = "row in e_array_final[8]" style="text-align: left">{{row.fully_funded_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship</td>
+                                            <td ng-repeat = "row in e_array_final[8]"><span ng-if="row.scholarship_avail===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.scholarship_avail===false"><i class="fa fa-times text-danger"></i></span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship notes</td>
+                                            <td ng-repeat = "row in e_array_final[8]" style="text-align: left">{{row.scholarship_notes}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship url</td>
+
+                                            <td ng-repeat = "row in e_array_final[8]"><span ng-if="row.scholarship_program_specific_url"><a href="{{row.scholarship_program_specific_url}}" target="_blank" style="text-decoration: underline;">link</a></span><span ng-if="!row.scholarship_program_specific_url&&row.scholarship_general_url"><a href="{{row.scholarship_general_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+
+
+                                        </tr>
+                                        
+
+
+                                        
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END Table -->
+
+                            <!-- Footer -->
+                            <hr class="hidden-print" style="margin-bottom: 8px;">
+                            <p class="text-muted text-left"><small><strong>Gridology Education & Technology, Inc.</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oak Tree Center, 2024 Center Ave, Fort Lee, NJ 07024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="http://www.gridet.com" target="_blank"><strong>gridet</strong>.com</a></small></p>
+                       
+
+                        </div>
+                        </div>
+
+
+
+                    </div>
+                    <!-- END SlimScroll Container -->
+            
+
+            </div>
+                            </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+

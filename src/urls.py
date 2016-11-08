@@ -12,7 +12,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name="index.html")),
-    url(r'^ceeb-admin/', include(admin.site.urls)),
+    # url(r'^ceeb-admin/', include(admin.site.urls)),
     #upgrid API
     #url(r'^_nested_admin/',include('nested_admin.urls')),
     url(r'^',include('apps.upgrid.urls', namespace = 'upgrid'),),

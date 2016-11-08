@@ -13,6 +13,8 @@ var App = angular.module('myApp', [
   'myApp.login.success.cart',
   'myApp.login.success.profile',
   'myApp.admin',
+  'myApp.ShareWhoops',
+  'myApp.ShareEnhancement',
   'auth',
   'avatar',
   'ui.router',
@@ -43,6 +45,78 @@ App.config(function($stateProvider, $urlRouterProvider) {
     url: '/upgrid/reset/:param1/:param2/',
     templateUrl: 'views/Login/resetpassword.html',
     controller: 'ResetController',
+
+  }).
+
+  state('shareWhoops', {
+    url: '/upgrid/share_whoops_report/:param1/:param2/:param3/',
+    templateUrl: 'views/Login/whoops_report.html',
+    controller: 'ShareWhoopsController',
+    resolve: {
+
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log("userInfo= "+userInfo)
+        if (userInfo) {
+          console.log("whoops page authenticated");
+          //console.log(userInfo);
+          console.log('-------------');
+          return $q.when(userInfo);
+        } else {
+          console.log('fail to see the page, route change error');
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      List: function(apiService, authenticationSvc) {
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log('*************');
+        return apiService.getProfileList(userInfo.accessToken);
+
+      },
+
+     
+    }
+
+
+  }).
+
+  state('shareEnhancement', {
+    url: '/upgrid/share_enhancement_report/:param1/:param2/:param3/',
+    templateUrl: 'views/Login/enhancement_report.html',
+    controller: 'ShareEnhancementController',
+    resolve: {
+
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log("userInfo= "+userInfo)
+        if (userInfo) {
+          console.log("whoops page authenticated");
+          //console.log(userInfo);
+          console.log('-------------');
+          return $q.when(userInfo);
+        } else {
+          console.log('fail to see the page, route change error');
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      List: function(apiService, authenticationSvc) {
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log('*************');
+        return apiService.getProfileList(userInfo.accessToken);
+
+      },
+
+     
+    }
+
 
   }).
 
@@ -320,6 +394,18 @@ App.config(function($stateProvider, $urlRouterProvider) {
         console.log('*************');
         return apiService.getDashboard(token);
 
+      },
+
+      ReleasedWhoops: function(apiService, authenticationSvc){
+        var token = authenticationSvc.getUserInfo().accessToken;
+        return apiService.getNewWhoops(token);
+
+      },
+
+      ReleasedEnhancement: function(apiService, authenticationSvc){
+        var token = authenticationSvc.getUserInfo().accessToken;
+        return apiService.getNewEnhancement(token);
+
       }
       // //get raw data
       // List: function(apiService, authenticationSvc) {
@@ -363,6 +449,13 @@ App.config(function($stateProvider, $urlRouterProvider) {
             authenticated: false
           });
         }
+      },
+
+      List: function(apiService, authenticationSvc) {
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log('*************');
+        return apiService.getProfileList(userInfo.accessToken);
+
       },
 
       // //get raw data

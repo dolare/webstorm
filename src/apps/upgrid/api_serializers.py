@@ -177,10 +177,12 @@ class SubuserListSerializer(serializers.ModelSerializer):
 class MainUserDetailSerializer(serializers.ModelSerializer):
     subuser_list = SerializerMethodField()
     competing_schools=SerializerMethodField()
+    university = SerializerMethodField()
+    school = SerializerMethodField()
     
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'Ceeb', 'service_level', 'service_until',
+        fields = ('username', 'Ceeb', 'university', 'school', 'service_level', 'service_until',
             'account_type', 'position', 'contact_name',
             'email', 'competing_schools', 'subuser_list')
 
@@ -191,6 +193,12 @@ class MainUserDetailSerializer(serializers.ModelSerializer):
     def get_competing_schools(self,obj):
         serializers= UniversityAndSchoolSerializer(obj.competing_schools, many=True)
         return serializers.data
+
+    def get_university(self, obj):
+        return obj.Ceeb.university_foreign_key.name
+
+    def get_school(self, obj):
+        return obj.Ceeb.school
 
 #Used for subuser get main user information
 class MainuserInfoSerializer(serializers.ModelSerializer):
@@ -203,16 +211,23 @@ class MainuserInfoSerializer(serializers.ModelSerializer):
 
 class SubUserDetailSerializer(serializers.ModelSerializer):
     mainuser_info = SerializerMethodField()
-
+    university = SerializerMethodField()
+    school = SerializerMethodField()
+    
     class Meta:
         model = UniversityCustomer
-        fields = ('mainuser_info', 'Ceeb', 'service_until', 'account_type', 'position',
-            'contact_name', 'email',)
+        fields = ('mainuser_info', 'Ceeb', 'university', 'school', 'service_until', 
+            'account_type', 'position', 'contact_name', 'email',)
 
     def get_mainuser_info(self, obj):
         mainuser = UniversityCustomer.objects.get(Ceeb=obj.Ceeb, account_type="main")
         return MainuserInfoSerializer(mainuser).data
+        
+    def get_university(self, obj):
+        return obj.Ceeb.university_foreign_key.name
 
+    def get_school(self, obj):
+        return obj.Ceeb.school
 
 
 

@@ -822,7 +822,7 @@ can be found in the LICENSE file at http://angular.io/license
   height: 100vh;
 }
 
-#WhoopsReport>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport>.modal-dialog>.modal-content>.block>.block-content {
+#WhoopsReport>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport1>.modal-dialog>.modal-content>.block>.block-content {
   height:500px;
 }
 
@@ -842,7 +842,7 @@ Full screen Modal
   border-radius: 0;
 }
 
-#WhoopsReport.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content {
+#WhoopsReport.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport1.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content {
   height:calc(100vh - 48px);
 }
 /*@media (min-width: 768px) {
@@ -862,5 +862,37 @@ Full screen Modal
 }*/
 
 .bg-warning-lighter {
-  background: #fefbf7;
+  background: #fdfced;
+}
+
+.bg-gray-lighterer {
+  background: #fcfcfc
+}
+
+.cell_narrow {
+  width: 140px !important;
+}
+
+.table.report_table2 tr>td {
+  vertical-align: middle !important;
+}
+
+/*test*/
+/*.table.report_table2>tbody>tr>td:empty {
+  background-color: #abe37d;
+}*/
+
+.table.report_table2>tbody>tr>td:not(:first-child) {
+  text-align:center;
+}
+
+.table.report_table2>tbody>tr>td:nth-child(2):empty {
+  background-color: #f3f6e7;
+}
+
+
+
+.table.report_table2>tbody>tr>td:not(:first-child):empty::after {
+  content: "N/A";
+  text-align: center !important;
 }

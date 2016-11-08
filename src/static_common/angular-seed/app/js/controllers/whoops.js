@@ -2,12 +2,17 @@
 
 var whoops = angular.module('myApp.login.success.whoops', [])
 whoops.controller('WhoopsController',
-  function(avatarService, ajaxService, reportService, $location, tableDataService, filterFilter, $scope, apiService, $window, $http, authenticationSvc, $localStorage, $sessionStorage, $state, $filter, $q) {
+  function(List, avatarService, ajaxService, reportService, $location, tableDataService, filterFilter, $scope, apiService, $window, $http, authenticationSvc, $localStorage, $sessionStorage, $state, $filter, $q) {
 
     //progressJs().end();
     //////////
     var token = authenticationSvc.getUserInfo().accessToken;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
+    $scope.univeristy_name = List.profile.university;
+    $scope.school_name = List.profile.school;
+
+   
+    console.log("host 1 is "+$location.absUrl());
     //for api test
     // $http({
     //       url: '/api/upgrid/user/program/?&name=app',
@@ -30,6 +35,112 @@ whoops.controller('WhoopsController',
     //  });
 
     $scope.count = 0;
+
+
+
+    $scope.WhoopsViewer = function(Id, Program, Degree){
+      App.blocks('#whoops_loading', 'state_loading');
+       
+
+      $scope.whoops_report_program = Program;
+      $scope.whoops_report_degree = Degree;
+      $scope.date = new Date();
+      $http({
+          url: '/api/upgrid/wwr/'+Id,
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+    }).then(function (response) {
+
+        console.log("wwr"+JSON.stringify(response.data));
+        $scope.w_raw = response.data;
+        $scope.w_array_final = [];
+         var w_array_1 = [];
+         var w_array_2 = [];
+         var w_array_3 = [];
+         var w_array_4 = [];
+         var w_array_5 = [];
+         var w_array_6 = [];
+         var w_array_7 = [];
+         var w_array_8 = [];
+         var w_array_9 = [];
+         
+
+        for(i=0; i<$scope.w_raw.length; i++){
+          if($scope.w_raw[i].additional_note_type === "dead_link")
+          {
+
+            w_array_1.push($scope.w_raw[i])
+
+          }
+
+          if($scope.w_raw[i].additional_note_type === "typo")
+          {
+            w_array_2.push($scope.w_raw[i])
+
+          }
+
+          if($scope.w_raw[i].additional_note_type === "outdated_information")
+          {
+            w_array_3.push($scope.w_raw[i])
+
+          }
+
+          if($scope.w_raw[i].additional_note_type === "data_discrepancy")
+          {
+            w_array_4.push($scope.w_raw[i])
+
+          }
+
+          if($scope.w_raw[i].additional_note_type === "sidebars")
+          {
+
+            w_array_5.push($scope.w_raw[i])
+          }
+
+          if($scope.w_raw[i].additional_note_type === "infinite_loop")
+          {
+            w_array_6.push($scope.w_raw[i])
+
+          }
+
+          if($scope.w_raw[i].additional_note_type === "floating_page")
+          {
+            w_array_7.push($scope.w_raw[i])
+
+          }
+
+          if($scope.w_raw[i].additional_note_type === "confusing")
+          {
+            w_array_8.push($scope.w_raw[i])
+
+          }
+
+          if($scope.w_raw[i].additional_note_type === "other_expert_note")
+          {
+
+            w_array_9.push($scope.w_raw[i])
+          }
+
+          
+        }
+
+        $scope.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9];
+        App.blocks('#whoops_loading', 'state_normal');
+
+        console.log('w_array_1='+JSON.stringify($scope.w_array_final));
+
+
+
+      }).
+     catch(function(error){
+        console.log('an error occurred...'+JSON.stringify(error));
+
+     });
+
+    }
+
 
     $scope.addMessage = function() {
       $scope.count++;
@@ -171,6 +282,7 @@ whoops.controller('WhoopsController',
       // $scope.isLoading = true;
       console.log("~~~tableState= "+JSON.stringify(tableState));
       App.blocks('#loadingtable', 'state_loading');
+
 
 
       var pagination = tableState.pagination;
@@ -575,11 +687,46 @@ whoops.controller('WhoopsController',
 
     };
 
-    $scope.togglefull = function (){
+
+    $scope.reportShare = function(Id, Program, Degree) {
+      $scope.url = {
+        text: null
+      };
+
+      $scope.copied = false;
+      new Clipboard('.btn');
+
+      $scope.shareLoading = true;
+
+        $scope.url = {
+          text: $location.absUrl().split('#')[0]+'#/upgrid/share_whoops_report/'+Id+'/'+Program+'/'+Degree+'/',
+        };
+
+
+        $scope.shareLoading = false;
+    
+
+    };
+
+
+
+    // $scope.togglefull = function (){
       
-      angular.element(document.getElementById("myModal").getElementsByClassName("modal-dialog")).toggleClass('modal-dialogfull');
-      angular.element(document.getElementById("myModal").getElementsByClassName("modal-content")).toggleClass('modal-contentfull');
-      angular.element(document.getElementById("myModal").getElementsByClassName("block-content")).toggleClass('block-contentfull');
+    //   angular.element(document.getElementById("myModal").getElementsByClassName("modal-dialog")).toggleClass('modal-dialogfull');
+    //   angular.element(document.getElementById("myModal").getElementsByClassName("modal-content")).toggleClass('modal-contentfull');
+    //   angular.element(document.getElementById("myModal").getElementsByClassName("block-content")).toggleClass('block-contentfull');
+
+    // }
+
+
+    $scope.printReport = function() {
+      window.print();
+      
+   }
+
+    $scope.togglefull = function(){
+      angular.element(document.getElementById("WhoopsReport")).toggleClass('fullscreen-modal');
+      
 
     }
 

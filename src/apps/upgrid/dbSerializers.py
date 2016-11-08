@@ -8,7 +8,10 @@ class AbstractSimpleObjectSerializer(serializers.ModelSerializer):
         model= AbstractSimpleObject
         fields =('name',) 
             
-
+class DurationUnitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DurationUnit
+        fields = ('name',)
 class DegreeRefSerializer(serializers.ModelSerializer):
     class Meta:
         model= DegreeRef
@@ -43,23 +46,25 @@ class ProgramSerializer(serializers.ModelSerializer):
     university_school=UniversitySchoolSerializer(read_only=True,required=False,many=False)
     class Meta:
         model = Program
-        fields = ('object_id', 'university_school', 'program_name', 'degree','department',
+        fields = ('object_id', 'url', 'university_school', 'program_name', 'degree','department',
         'specialization','highlights','audience','job_placement', 'job_placement_url','online_program', 'url', 
         'additional_url', 'program_faq_url', 'stats_profile_url')
 
 
 class DurationSerializer(serializers.ModelSerializer):
+    duration_unit = DurationUnitSerializer(read_only=True, required=False, many=False)
     class Meta:
-        model = UniversitySchool
-        fields = ('full_part_time','school','duration_min','duration_max','durationtime_limit',
+        model = Duration
+        fields = ('full_part_time', 'duration_unit','duration_min','duration_max','durationtime_limit',
             'duration_conj', 'duration_addl', 'duration_addl_unit')
+
 
 
 class CurriculumSerializer(serializers.ModelSerializer):
     curriculum_unit = CurriculumUnitSerializer(read_only=True,required=False,many=False)
     class Meta:
         model = Curriculum 
-        fields = ('curriculum_unit','min_total_unit','max_transfer_unit','master_thesis_or_equivalent',
+        fields = ('curriculum_unit','curriculum_url','min_total_unit','max_transfer_unit','master_thesis_or_equivalent',
         'doctorate_dissertation_or_equivalent', 'dissertation_notes', 'thesis_notes',)
 
 

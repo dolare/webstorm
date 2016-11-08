@@ -662,6 +662,7 @@ class EnhancementReportsAPI(APIView):
                 res_obj[Intl_transcript] = i_value
                 res_obj[Intl_eng_test] = i_e_t_value
                 res_obj[scholarship] = s_value
+                res_obj[duration] = dura_value
 
             res_obj["length"]=length
 
@@ -1363,7 +1364,7 @@ class WhoopsWebReports(APIView):
             ean = self.get_object(object_id)
             if not len(ean) == 0:
 
-                return Response(ExpertAdditionalNoteSerializer(ean, many=True).data)
+                return Response(dblizer.ExpertAdditionalNoteSerializer(ean, many=True).data)
             else:
                 return HttpResponse(status =HTTP_204_NO_CONTENT)
 
@@ -1419,7 +1420,8 @@ class EnhancementWebReports(APIView):
         return program_list
 
     def get(self, request, object_id, client_id=None):
-        perm = self.check_permission(request, object_id, client_id)
+       # perm = self.check_permission(request, object_id, client_id)
+        perm =True
         if perm:
             Total_Program = self.get_object(object_id)
 
@@ -1488,6 +1490,7 @@ class EnhancementWebReports(APIView):
                 i_value = dblizer.TranscriptEvaluationProviderSerializer(i_value, many=True)
                 i_e_t_value = dblizer.InternationalEnglishTestSerializer(i_e_t_value, many=True)
                 s_value = dblizer.ScholarshipSerializer(s_value)
+                dura_value = dblizer.DurationSerializer(dura_value)
 
                 res_obj[program] = p_value.data
                 res_obj[curriculum] = c_value.data
@@ -1498,6 +1501,7 @@ class EnhancementWebReports(APIView):
                 res_obj[Intl_transcript] = i_value.data
                 res_obj[Intl_eng_test] = i_e_t_value.data
                 res_obj[scholarship] = s_value.data
+                res_obj[duration] = dura_value.data
 
             res_obj["length"]=length
 

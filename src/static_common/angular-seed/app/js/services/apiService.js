@@ -418,6 +418,54 @@ angular.module('apiServiceModule', [])
 
         }
 
+
+        var getNewWhoops = function(token) {
+
+          var promise =  $http({
+                url: '/api/upgrid/user/program/?order=oname&wfs=True',
+                method: 'GET',
+                
+                headers: {
+                  'Authorization': 'JWT ' + token
+                }
+          }).then(function (response) {
+
+                return response.data.results
+          }).
+           catch(function(error){
+              console.log('an error occurred...'+JSON.stringify(error));
+
+           });
+
+            return promise;
+
+
+        }
+
+
+        var getNewEnhancement = function(token) {
+
+          var promise =  $http({
+                url: '/api/upgrid/user/program/?order=oname&efs=True',
+                method: 'GET',
+                
+                headers: {
+                  'Authorization': 'JWT ' + token
+                }
+          }).then(function (response) {
+
+                return response.data.results
+          }).
+           catch(function(error){
+              console.log('an error occurred...'+JSON.stringify(error));
+
+           });
+
+            return promise;
+
+
+        }
+
         
 
     return {
@@ -430,7 +478,9 @@ angular.module('apiServiceModule', [])
       getClient: getClient,
       getReleasedWhoops: getReleasedWhoops,
       getReleasedEnhancement: getReleasedEnhancement,
-      getDashboard: getDashboard
+      getDashboard: getDashboard,
+      getNewWhoops: getNewWhoops,
+      getNewEnhancement: getNewEnhancement
 
 
     };
