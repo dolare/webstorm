@@ -822,7 +822,7 @@ can be found in the LICENSE file at http://angular.io/license
   height: 100vh;
 }
 
-#WhoopsReport>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport1>.modal-dialog>.modal-content>.block>.block-content {
+#WhoopsReport>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport1>.modal-dialog>.modal-content>.block>.block-content,#ViewAll>.modal-dialog>.modal-content>.block>.block-content {
   height:500px;
 }
 
@@ -842,7 +842,7 @@ Full screen Modal
   border-radius: 0;
 }
 
-#WhoopsReport.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport1.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content {
+#WhoopsReport.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content, #EnhancementReport1.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content, #ViewAll.fullscreen-modal>.modal-dialog>.modal-content>.block>.block-content {
   height:calc(100vh - 48px);
 }
 /*@media (min-width: 768px) {
@@ -887,7 +887,7 @@ Full screen Modal
 }
 
 .table.report_table2>tbody>tr>td:nth-child(2):empty {
-  background-color: #f3f6e7;
+  background-color: #faffd4;
 }
 
 
@@ -895,4 +895,9 @@ Full screen Modal
 .table.report_table2>tbody>tr>td:not(:first-child):empty::after {
   content: "N/A";
   text-align: center !important;
+}
+
+
+.note-left {
+  text-align: left !important;
 }

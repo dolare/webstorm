@@ -272,10 +272,10 @@ class FinalReleasedWhoops(APIView):
 
     def get(self, request, object_id=None, format=None):
         customer = self.get_object(request, object_id)
-
+        print (customer.account_type)
         if customer.account_type == 'sub':
             customer_programs = ClientAndProgramRelation.objects.filter(client = customer).values('client_program')
-            finaltrue_program = UniversityCustomerProgram.objects.filter(customer = User.main_user_id, object_id__in=customer_programs, whoops_final_release='True').count()
+            finaltrue_program = UniversityCustomerProgram.objects.filter(customer = customer.main_user_id, object_id__in=customer_programs, whoops_final_release='True').count()
         else:
             finaltrue_program = UniversityCustomerProgram.objects.filter(customer=customer, whoops_final_release='True').count()
         return Response(data=finaltrue_program, status=HTTP_200_OK)
@@ -1420,8 +1420,7 @@ class EnhancementWebReports(APIView):
         return program_list
 
     def get(self, request, object_id, client_id=None):
-       # perm = self.check_permission(request, object_id, client_id)
-        perm =True
+        perm = self.check_permission(request, object_id, client_id)
         if perm:
             Total_Program = self.get_object(object_id)
 

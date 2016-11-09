@@ -129,7 +129,7 @@ dashboard.controller('DashboardController',
       $scope.enhancement_report_degree = Degree;
         //ewr
          $http({
-                url: '/api/upgrid/ewr/'+ Id,
+                url: '/api/upgrid/ewr/'+Id,
                 method: 'GET',
                 headers: {
                   'Authorization': 'JWT ' + token
@@ -191,7 +191,7 @@ dashboard.controller('DashboardController',
       $scope.enhancement_report_degree = Degree;
         //ewr
          $http({
-                url: '/api/upgrid/ewr/'+ Id,
+                url: '/api/upgrid/ewr/'+Id,
                 method: 'GET',
                 headers: {
                   'Authorization': 'JWT ' + token
@@ -422,5 +422,7 @@ dashboard.controller('DashboardController',
       
 
     }
+
+
     
   });

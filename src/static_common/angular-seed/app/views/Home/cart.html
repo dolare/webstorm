@@ -91,7 +91,8 @@
                   </label> -->
                   <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.WStatus==='False'||row.WNotes==='False'}">
 
-                  <input type="checkbox" ng-model="$storage.upgrid[row.name+'|'+row.degree]['whoops']" ng-true-value=true ng-false-value="undefined" ng-disabled="row.WStatus==='False'||row.WNotes==='False'"><span></span>
+                  <input type="checkbox" ng-model="$storage.upgrid[row.name+'|'+row.degree]['whoops']" ng-true-value=true ng-false-value="undefined" ng-change="selectWh(row.name, row.degree, row.WId, row.WStatus, row.EStatus, row.WNotes, row.EConfirm)"
+                    ng-disabled="row.WStatus==='False'||row.WNotes==='False'"><span></span>
 
 
                 </label>
@@ -106,7 +107,7 @@
                     <input type="checkbox" ng-model="$storage.upgrid[row.programName+row.degreeName].enhancement" ng-change="checkbox()" ng-disabled="row.status!=='True'||row.confirm!=='Yes'"><span></span>
                   </label> -->
                    <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.EStatus==='False'||row.EConfirm!=='Yes' }">
-                                  <input type="checkbox" ng-model="$storage.upgrid[row.name+'|'+row.degree]['enhancement']" ng-true-value=true ng-false-value="undefined" ng-disabled="row.EStatus==='False'||row.EConfirm!=='Yes'"><span></span>
+                                  <input type="checkbox" ng-model="$storage.upgrid[row.name+'|'+row.degree]['enhancement']" ng-true-value=true ng-false-value="undefined" ng-change="selectEn(row.name, row.degree, row.EId, row.WStatus, row.EStatus, row.EConfirm, row.WNotes)" ng-disabled="row.EStatus==='False'||row.EConfirm!=='Yes'"><span></span>
                               </label>
                 </td>
                
@@ -135,12 +136,17 @@
         </table>
 
 
-        <button class="btn btn-lg btn-square bg-info" ng-click="DownloadAll()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0">
+        <button class="btn btn-lg btn-square bg-info" ng-click="ViewAll()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0" data-toggle="modal" data-target="#ViewAll">
           View [{{count}}]
         </button>
-        <button class="btn btn-lg pull-right btn-square bg-city-light" data-target="#myModal1" data-toggle="modal" ng-click="ShareAll()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0">
+        <button class="btn btn-lg pull-right btn-square bg-city-light" data-target="#myModal1" data-toggle="modal" ng-click="ShareAllSelected()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0">
           Share [{{count}}]
         </button>
+
+
+        <!-- <div ng-include src="'views/Login/whoops_report.html'"></div> -->
+       
+        
 
       </div>
     </div>
@@ -288,3 +294,164 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- viewall modal -->
+<div class="modal fullscreen-modal viewer fade" id="ViewAll" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="block block-themed block-transparent remove-margin-b" id="enhancement_loading">
+          <div class="block-header bg-primary-dark">
+            <ul class="block-options">
+                                <li>
+                                    <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
+                                 </li>
+
+                                <li>
+                                    <button type="button" ng-click="togglefullen(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
+                                  </li>
+                                  
+                                  <li>
+                                    <button data-dismiss="modal" type="button" data-js-blur><i class="si si-close"></i></button>
+                                  </li>
+                                </ul>
+                                <h3 class="block-title">View Reports</h3>
+                              </div>
+                              
+                              <div class="block-content" style="width:auto;padding:0;">
+
+           
+                    <!-- SlimScroll Container -->
+                    <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}">
+
+
+
+                     <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+               
+                        <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content1">
+
+
+                        <style>
+                            @media print {
+                            body * {
+                                visibility: hidden;
+
+                            }
+                            #print-content1 * {
+                                visibility: visible;
+                                overflow: visible;
+                            }
+                            .modal{
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                margin: 0;
+                                padding: 0;
+                                width: 100%;
+                                height: 100%;
+                                margin: 0;
+                                padding: 0;
+                                overflow: visible;
+                            }
+                            }
+
+                            /*.table-hover > tbody > tr:hover {
+                                background-color: #fefaf4;
+                            }*/
+
+                            .report_table2.table>tbody>tr>td {
+                                vertical-align: top;
+                            }
+                            
+                            </style>
+                            <div class="row">
+                            <div class="col-sm-6">
+                          
+
+                            <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
+                            <small>Gradgrid.com/upgrid</small><br>UPGRID REPORTS
+                            </h1>
+                            </div>
+
+                            <div class="col-sm-6">
+                            <img src="img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
+                            </div>
+                            </div>
+                            
+                            <hr class="hidden-print">
+                            <div class="row items-push-2x">
+                                <!-- Company Info -->
+                                <div class="col-sm-9">
+                                    <p class="h3 font-w400 push-15 push-10-t text-uppercase">Basic Information</p>
+                                    
+                                    <address>
+
+                                    <table>
+                                    <tr>
+                                        <td class="text-muted">Univerity</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{univeristy_name}}&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted">School</td>
+                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{school_name}}&nbsp;</td>
+                                    </tr>
+
+
+                                    </table>
+
+                                       <!--  Univerity &nbsp;&nbsp;: Columbia University<br>
+                                        School &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: School of Engineering & Applied Science<br>
+                                        Program &nbsp;&nbsp;: Applied Linguistics<br>
+                                        Degree &nbsp;&nbsp;&nbsp;&nbsp;: EdM<br> -->
+                                    </address>
+                                </div>
+                                <!-- END Company Info -->
+
+                                <!-- Client Info -->
+                                <div class="col-sm-3 text-right">
+                                    <p class="h3 font-w400 push-15 push-10-t">Date</p>
+                                    <address>
+                                        
+                                        
+                                        <span class="text-muted">Generated on</span><br>{{date | date:'MMM dd , yyyy'}}
+                                    </address>
+                                </div>
+                                <!-- END Client Info -->
+                            </div>
+                            <!-- END Invoice Info -->
+
+
+                            <!-- ########### -->
+
+                            <div ng-repeat="report in report_array">
+                              <div ng-include src="'views/Home/report_manager.html'"></div>
+
+                            </div>
+
+                            
+
+                            <!-- Footer -->
+                            <hr class="hidden-print" style="margin-bottom: 8px;">
+                            <p class="text-muted text-left"><small><strong>Gridology Education & Technology, Inc.</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oak Tree Center, 2024 Center Ave, Fort Lee, NJ 07024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="http://www.gridet.com" target="_blank"><strong>gridet</strong>.com</a></small></p>
+                       
+
+                        </div>
+                        </div>
+
+
+
+                    </div>
+                    <!-- END SlimScroll Container -->
+            
+
+            </div>
+                            </div>
+      
+    </div>
+  </div>
+</div>
+

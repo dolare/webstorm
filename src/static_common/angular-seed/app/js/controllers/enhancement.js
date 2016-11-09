@@ -454,28 +454,8 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
     //~~~~~
     //one checked
     $scope.selectOne = function(Name, Degree, Id,  WStatus, EStatus, Confirm, Notes) {
-        // $scope.checkAll = true;
-        // for (var i = 0; i < $scope.data.length; i++) {
-        //     if ($scope.data[i].confirm === "Yes" && $scope.data[i].status === "True") {
-        //         if ($storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName] === undefined) {
-        //             console.log("storage undefined");
-        //             $scope.checkAll = false;
-        //             break;
-        //         } else if ($storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName].enhancement !== true) {
-        //             $scope.checkAll = false;
-        //             break;
-        //         }
-        //     }
-        // };
-        // $scope.$storage.checkAllenhancement = $scope.checkAll;
-
+        
         if($scope.$storage.upgrid[Name+'|'+ Degree]['enhancement']){
-
-            // var competingUrl = Id + '/';
-           
-            // for (i = 0; i < competing.length; i++) {
-            //     competingUrl += competing[i].programId + '/';
-            // }
 
             $scope.$storage.upgrid[Name+'|'+ Degree]['EId'] = Id;
             $scope.$storage.upgrid[Name+'|'+ Degree]['WStatus'] = WStatus
@@ -493,17 +473,6 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
         }
 
 
-        //delete the empty localstorage
-        // if( JSON.stringify($storage.upgrid[Name+'|'+ Degree]) === "{}"){
-        //     $storage.upgrid[Name+'|'+ Degree] = (function () { return; })();
-        // } else {
-        //   console.log("Value= "+JSON.stringify($storage.upgrid[Name+'|'+ Degree]));
-        // }
-
-        
-
-      console.log("upgrid data="+JSON.stringify($scope.$storage.upgrid));
-      //console.log("test123 = "+$scope.test123);
     };
     $scope.pdfViewer = function(Id, competing) {
        //$event.stopPropagation();

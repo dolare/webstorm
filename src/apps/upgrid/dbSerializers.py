@@ -53,6 +53,7 @@ class ProgramSerializer(serializers.ModelSerializer):
 
 class DurationSerializer(serializers.ModelSerializer):
     duration_unit = DurationUnitSerializer(read_only=True, required=False, many=False)
+    duration_addl_unit = DurationUnitSerializer(read_only=True, required=False, many=False)
     class Meta:
         model = Duration
         fields = ('full_part_time', 'duration_unit','duration_min','duration_max','durationtime_limit',

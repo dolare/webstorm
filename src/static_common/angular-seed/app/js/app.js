@@ -12,6 +12,7 @@ var App = angular.module('myApp', [
   'myApp.login.success.enhancement',
   'myApp.login.success.cart',
   'myApp.login.success.profile',
+  'myApp.shareall',
   'myApp.admin',
   'myApp.ShareWhoops',
   'myApp.ShareEnhancement',
@@ -45,6 +46,46 @@ App.config(function($stateProvider, $urlRouterProvider) {
     url: '/upgrid/reset/:param1/:param2/',
     templateUrl: 'views/Login/resetpassword.html',
     controller: 'ResetController',
+
+  }).
+  state('shareAll', {
+    url: '/upgrid/share_selected_report/:param1/',
+    templateUrl: 'views/Home/share_all.html',
+    controller: 'ShareAllController',
+    resolve: {
+
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log("userInfo= "+userInfo)
+        if (userInfo) {
+          console.log("whoops page authenticated");
+          //console.log(userInfo);
+          console.log('-------------');
+          return $q.when(userInfo);
+        } else {
+          console.log('fail to see the page, route change error');
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      Checked: function(cartCounter) {
+        
+        return cartCounter.counter();
+
+      },
+      List: function(apiService, authenticationSvc) {
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log('*************');
+        return apiService.getProfileList(userInfo.accessToken);
+
+      }
+
+     
+    }
+
 
   }).
 
@@ -534,16 +575,15 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
-      // List: function(apiService, authenticationSvc) {
-      //   var userInfo = authenticationSvc.getUserInfo();
-      //   console.log('*************');
-      //   return apiService.getReports(userInfo.username, userInfo.accessToken);
-
-      // },
-
       Checked: function(cartCounter) {
         
         return cartCounter.counter();
+
+      },
+      List: function(apiService, authenticationSvc) {
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log('*************');
+        return apiService.getProfileList(userInfo.accessToken);
 
       }
     }

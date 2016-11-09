@@ -47,7 +47,7 @@ angular.module('counterServiceModule', [])
             var checkedArray = [];
             //add to the array
             for (var key in $storage.upgrid) {
-                   
+                    //if has reports
                     if($storage.upgrid[key]!==undefined &&JSON.stringify($storage.upgrid[key]) !=="{}"){
                         if(JSON.stringify($storage.upgrid[key].whoops) || JSON.stringify($storage.upgrid[key].enhancement)){
                                 checkedArray0.push({

@@ -485,32 +485,6 @@ whoops.controller('WhoopsController',
     $scope.selectOne = function(Name, Degree, Id, WStatus, EStatus, Notes, Confirm) {
       
 
-      
-      // $scope.checkAll = true;
-
-
-      // for (var i = 0; i < $scope.data.length; i++) {
-
-
-      //   console.log($scope.data[i].status);
-
-      //   //to ensure every released program with report has been chosen
-      //   if ($scope.data[i].status === "True" && $scope.data[i].perfect !== "True") {
-      //     if ($storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName] === undefined) {
-      //       console.log("storage undefined");
-
-      //       $scope.checkAll = false;
-      //       break;
-      //     } else if ($storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName].whoops !== true) {
-      //       $scope.checkAll = false;
-      //       break;
-      //     }
-      //   }
-
-      // };
-
-      // $scope.$storage.checkAllwhoops = $scope.checkAll;
-
       if($scope.$storage.upgrid[Name+'|'+ Degree]['whoops']){
 
           $scope.$storage.upgrid[Name+'|'+Degree]["WId"] = Id
@@ -527,27 +501,10 @@ whoops.controller('WhoopsController',
           $scope.$storage.upgrid[Name+'|'+Degree]["EStatus"] = EStatus
           $scope.$storage.upgrid[Name+'|'+Degree]["WNotes"] = Notes
           $scope.$storage.upgrid[Name+'|'+Degree]["EConfirm"] = Confirm
-          // if($scope.$storage.upgrid[Name+'|'+Degree]["WId"]) {
-          //   console.log("it has value")
-          // } else {
-          //   console.log("it is null or undefined "+$scope.$storage.upgrid[Name+'|'+Degree]["WId"]);
-          // }
-      
+         
 
       }
 
-
-      //delete the empty localstorage
-        // if(JSON.stringify($storage.upgrid[Name+'|'+ Degree]) === "{}"){
-        //     $storage.upgrid[Name+'|'+ Degree] = (function () { return; })();
-        // } else {
-        //   console.log("Value= "+JSON.stringify($storage.upgrid[Name+'|'+ Degree]));
-        // }
-
-
-      //console.log("upgrid program data="+JSON.stringify($storage.upgrid[Name+'|'+Degree]));
-
-      //console.log("upgrid data="+JSON.stringify($scope.$storage.upgrid));
 
 
 

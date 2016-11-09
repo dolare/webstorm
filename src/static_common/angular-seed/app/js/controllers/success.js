@@ -142,6 +142,7 @@ controller('SuccessController',
             //get the number of program checked and display the count on the cart icon
             //use the cartCounter service
             
+            //for counting
             console.log("$$$upgrid scope "+JSON.stringify($scope.$storage.upgrid));
             $scope.count = 0;
             for(var key in $scope.$storage.upgrid){

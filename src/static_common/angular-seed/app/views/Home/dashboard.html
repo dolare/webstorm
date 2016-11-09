@@ -543,7 +543,7 @@
                                 background-color: #fefaf4;
                             }*/
 
-                            .table>tbody>tr>td {
+                            .report_table1.table>tbody>tr>td {
                                 vertical-align: top;
                             }
                             
@@ -620,7 +620,7 @@
 
                             <!-- Table -->
                             <div class="table-responsive push-50">
-                                <table class="table table-bordered table-hover">
+                                <table class="table report_table1 table-bordered table-hover">
 
                                     <colgroup>
                                         <col width="10%"/>
@@ -1425,7 +1425,7 @@
                                 background-color: #fefaf4;
                             }*/
 
-                            .table>tbody>tr>td {
+                            .report_table2.table>tbody>tr>td {
                                 vertical-align: top;
                             }
                             
@@ -1555,22 +1555,22 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Specialization</td>
-                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.specialization}}</td>
+                                            <td ng-class="{'note-left':row.specialization}" ng-repeat = "row in e_array_final[0]">{{row.specialization}}</td>
                                         </tr>
 
                                          <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Highlights</td>
-                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.highlights}}</td>
+                                            <td ng-class="{'note-left':row.highlights}" ng-repeat = "row in e_array_final[0]">{{row.highlights}}</td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Audience</td>
-                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.audience}}</td>
+                                            <td ng-class="{'note-left':row.audience}" ng-repeat = "row in e_array_final[0]">{{row.audience}}</td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Job placement</td>
-                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left"><span ng-if="row.job_placement&&row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;">{{row.job_placement}}</a></span><span ng-if="row.job_placement&&!row.job_placement_url">{{row.job_placement}}</span></td>
+                                            <td ng-class="{'note-left':row.job_placement}" ng-repeat = "row in e_array_final[0]"><span ng-if="row.job_placement&&row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;">{{row.job_placement}}</a></span><span ng-if="row.job_placement&&!row.job_placement_url">{{row.job_placement}}</span></td>
                                         </tr>
 
                                         <tr>
@@ -1644,7 +1644,7 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">2. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">CURRICULUMS</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">CURRICULUMS</td>
                                         </tr>
 
                                         <tr>
@@ -1664,7 +1664,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Thesis notes</td>
-                                            <td ng-repeat = "row in e_array_final[1]">{{row.thesis_notes}}</td>
+                                            <td ng-class="{'note-left':row.thesis_notes}" ng-repeat = "row in e_array_final[1]">{{row.thesis_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -1688,7 +1688,7 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">3. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">TUITION</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">TUITION</td>
                                         </tr>
 
 
@@ -1718,7 +1718,7 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">4. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">ADMISSION DEADLINES</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">ADMISSION DEADLINES</td>
                                         </tr>
 
 
@@ -1781,12 +1781,12 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">5. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">ADMISSION REQUIREMENTS</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">ADMISSION REQUIREMENTS</td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Special requirements</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.special_reqs}}</td>
+                                            <td ng-class="{'note-left':row.special_reqs}" ng-repeat = "row in e_array_final[4]">{{row.special_reqs}}</td>
                                         </tr>
 
                                         <tr>
@@ -1806,7 +1806,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Application fee waiver notes</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.application_fee_waiver_notes}}</td>
+                                            <td ng-class="{'note-left':row.application_fee_waiver_notes}" ng-repeat = "row in e_array_final[4]">{{row.application_fee_waiver_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -1867,7 +1867,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Writing sample notes</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.sup_mat_writing_sample_notes}}</td>
+                                            <td ng-class="{'note-left':row.sup_mat_writing_sample_notes}" ng-repeat = "row in e_array_final[4]">{{row.sup_mat_writing_sample_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -1877,7 +1877,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Portfolio notes</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.sup_mat_portfolio_notes}}</td>
+                                            <td ng-class="{'note-left':row.sup_mat_portfolio_notes}" ng-repeat = "row in e_array_final[4]">{{row.sup_mat_portfolio_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -1891,7 +1891,7 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">6. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">INTERNATIONAL REQUIREMENTS</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">INTERNATIONAL REQUIREMENTS</td>
                                         </tr>
 
                                         <tr>
@@ -1907,7 +1907,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Int lang waiver notes</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.intl_lang_waiver_conditions}}</td>
+                                            <td ng-class="{'note-left':row.intl_lang_waiver_conditions}" ng-repeat = "row in e_array_final[4]">{{row.intl_lang_waiver_conditions}}</td>
                                         </tr>
 
                                         <tr>
@@ -1959,7 +1959,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Intl other</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.intl_other}}</td>
+                                            <td ng-class="{'note-left':row.intl_other}" ng-repeat = "row in e_array_final[4]">{{row.intl_other}}</td>
                                         </tr>
                                        
 
@@ -1967,7 +1967,7 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">7. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">SCHOLARSHIPS</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">SCHOLARSHIPS</td>
                                         </tr>
 
                                         <tr>
@@ -1978,7 +1978,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Fully funded notes</td>
-                                            <td ng-repeat = "row in e_array_final[8]" style="text-align: left">{{row.fully_funded_notes}}</td>
+                                            <td ng-class="{'note-left':row.fully_funded_notes}" ng-repeat = "row in e_array_final[8]">{{row.fully_funded_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -1988,7 +1988,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Scholarship notes</td>
-                                            <td ng-repeat = "row in e_array_final[8]" style="text-align: left">{{row.scholarship_notes}}</td>
+                                            <td ng-class="{'note-left':row.scholarship_notes}" ng-repeat = "row in e_array_final[8]">{{row.scholarship_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -2111,7 +2111,7 @@
                                 background-color: #fefaf4;
                             }*/
 
-                            .table>tbody>tr>td {
+                            .report_table2.table>tbody>tr>td {
                                 vertical-align: top;
                             }
                             
@@ -2196,7 +2196,7 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center"></th>
-                                            <th colspan="{{e_raw.length}}" style="text-decoration: none; cursor: default; padding-bottom: 20px" class="text-center">Enhancement Table</th>
+                                            <th colspan="{{e_raw.length}}" style="text-decoration: none; cursor: default;" class="text-center">Enhancement Table</th>
                                            
                                         </tr>
                                     </thead>
@@ -2241,22 +2241,22 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Specialization</td>
-                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.specialization}}</td>
+                                            <td ng-class="{'note-left': row.specialization}" ng-repeat = "row in e_array_final[0]">{{row.specialization}}</td>
                                         </tr>
 
                                          <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Highlights</td>
-                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.highlights}}</td>
+                                            <td ng-class="{'note-left': row.highlights}" ng-repeat = "row in e_array_final[0]">{{row.highlights}}</td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Audience</td>
-                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left">{{row.audience}}</td>
+                                            <td ng-class="{'note-left': row.audience}" ng-repeat = "row in e_array_final[0]">{{row.audience}}</td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Job placement</td>
-                                            <td ng-repeat = "row in e_array_final[0]" style="text-align: left"><span ng-if="row.job_placement&&row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;">{{row.job_placement}}</a></span><span ng-if="row.job_placement&&!row.job_placement_url">{{row.job_placement}}</span></td>
+                                            <td ng-class="{'note-left': row.job_placement}" ng-repeat = "row in e_array_final[0]"><span ng-if="row.job_placement&&row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;">{{row.job_placement}}</a></span><span ng-if="row.job_placement&&!row.job_placement_url">{{row.job_placement}}</span></td>
                                         </tr>
 
                                         <tr>
@@ -2330,7 +2330,7 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">2. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">CURRICULUMS</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">CURRICULUMS</td>
                                         </tr>
 
                                         <tr>
@@ -2350,7 +2350,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Thesis notes</td>
-                                            <td ng-repeat = "row in e_array_final[1]">{{row.thesis_notes}}</td>
+                                            <td ng-class="{'note-left':row.thesis_notes}" ng-repeat = "row in e_array_final[1]">{{row.thesis_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -2374,20 +2374,20 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">3. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">TUITION</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">TUITION</td>
                                         </tr>
 
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Tuition in state</td>
-                                            <td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index!==1"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index!==1">
-                                            <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index!==1">
-                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index===1" style="background:yellow" data-uib-tooltip="History: $21,850.00 per Year" data-tooltip-placement="top"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a>
-                                            </span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===1" style="background:yellow" data-uib-tooltip="History: $21,850.00 per Year" data-tooltip-placement="top">
-                                            <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===1" style="background:yellow" data-uib-tooltip="History: $21,850.00 per Year" data-tooltip-placement="top">
+                                            <td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index!==0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index!==0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index!==0">
+                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0" style="background:yellow" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">
                                             {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span></td>
-                                        </tr>
+                                       </tr>
 
+
+
+                                            
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Tuition out of state</td><td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit_out_state">
                                             <a href="{{row.school_cost_url}}" target="_blank">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit_out_state"><a href="{{row.university_cost_url}}" target="_blank">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a>
@@ -2404,7 +2404,7 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">4. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">ADMISSION DEADLINES</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">ADMISSION DEADLINES</td>
                                         </tr>
 
 
@@ -2419,9 +2419,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Deadline fall early</td>
-                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_fall_early_month_display&&row.get_deadline_fall_early_day_display&&$index!==0">
-                                                {{row.get_deadline_fall_early_month_display}} {{row.get_deadline_fall_early_day_display}}</span><span ng-if="row.get_deadline_fall_early_month_display&&row.get_deadline_fall_early_day_display&&$index===0" style="background:yellow;" data-uib-tooltip="History: December 1st" data-tooltip-placement="top">{{row.get_deadline_fall_early_month_display}} {{row.get_deadline_fall_early_day_display}}</span></td>
-                                        </tr>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_fall_early_month_display&&row.get_deadline_fall_early_day_display">{{row.get_deadline_fall_early_month_display}} {{row.get_deadline_fall_early_day_display}}</span></tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Deadline fall late</td>
@@ -2467,12 +2465,12 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">5. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">ADMISSION REQUIREMENTS</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">ADMISSION REQUIREMENTS</td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Special requirements</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.special_reqs}}</td>
+                                            <td ng-class="{'note-left': row.special_reqs}" ng-repeat = "row in e_array_final[4]">{{row.special_reqs}}</td>
                                         </tr>
 
                                         <tr>
@@ -2482,7 +2480,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Application fee</td>
-                                            <td ng-repeat = "row in e_array_final[4]" ><span ng-if="$index===0" style="background: yellow" data-uib-tooltip="History: $72.50" data-tooltip-placement="top">{{row.application_fee | currency}}</span><span ng-if="$index!==0">{{row.application_fee | currency}}</span></td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.application_fee&&$index===1" style="background: yellow" data-uib-tooltip="History: $65.00" data-tooltip-placement="top">{{row.application_fee | currency}}</span><span ng-if="row.application_fee&&$index!==1">{{row.application_fee | currency}}</span></td>
                                         </tr>
 
                                         <tr>
@@ -2492,7 +2490,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Application fee waiver notes</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.application_fee_waiver_notes}}</td>
+                                            <td ng-class="{'note-left': row.application_fee_waiver_notes}" ng-repeat = "row in e_array_final[4]">{{row.application_fee_waiver_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -2553,7 +2551,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Writing sample notes</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.sup_mat_writing_sample_notes}}</td>
+                                            <td ng-class="{'note-left': row.sup_mat_writing_sample_notes}" ng-repeat = "row in e_array_final[4]">{{row.sup_mat_writing_sample_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -2563,7 +2561,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Portfolio notes</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.sup_mat_portfolio_notes}}</td>
+                                            <td ng-class="{'note-left': row.sup_mat_portfolio_notes}" ng-repeat = "row in e_array_final[4]">{{row.sup_mat_portfolio_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -2577,7 +2575,7 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">6. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">INTERNATIONAL REQUIREMENTS</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">INTERNATIONAL REQUIREMENTS</td>
                                         </tr>
 
                                         <tr>
@@ -2593,7 +2591,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Int lang waiver notes</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.intl_lang_waiver_conditions}}</td>
+                                            <td ng-class="{'note-left': row.intl_lang_waiver_conditions}" ng-repeat = "row in e_array_final[4]">{{row.intl_lang_waiver_conditions}}</td>
                                         </tr>
 
                                         <tr>
@@ -2609,7 +2607,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Toefl ibt</td>
-                                            <td ng-repeat = "row in e_array_final[4]">{{row.toefl_ibt}}</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="$index===1&&row.toefl_ibt" style="background: yellow" data-uib-tooltip="History: 95" data-tooltip-placement="top">{{row.toefl_ibt}}</span><span ng-if="$index!==1&&row.toefl_ibt">{{row.toefl_ibt}}</span></td>
                                         </tr>
 
                                         <tr>
@@ -2645,7 +2643,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Intl other</td>
-                                            <td ng-repeat = "row in e_array_final[4]" style="text-align: left">{{row.intl_other}}</td>
+                                            <td ng-class="{'note-left': row.intl_other}" ng-repeat = "row in e_array_final[4]">{{row.intl_other}}</td>
                                         </tr>
                                        
 
@@ -2653,7 +2651,7 @@
                                         <tr>
                                             
                                             <td class="text-center bg-info text-white">7. </td>
-                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default; padding-bottom: 20px">SCHOLARSHIPS</td>
+                                            <td colspan="{{e_raw.length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">SCHOLARSHIPS</td>
                                         </tr>
 
                                         <tr>
@@ -2664,7 +2662,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Fully funded notes</td>
-                                            <td ng-repeat = "row in e_array_final[8]" style="text-align: left">{{row.fully_funded_notes}}</td>
+                                            <td ng-class="{'note-left':row.fully_funded_notes}" ng-repeat = "row in e_array_final[8]">{{row.fully_funded_notes}}</td>
                                         </tr>
 
                                         <tr>
@@ -2674,7 +2672,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Scholarship notes</td>
-                                            <td ng-repeat = "row in e_array_final[8]" style="text-align: left">{{row.scholarship_notes}}</td>
+                                            <td ng-class="{'note-left':row.scholarship_notes}" ng-repeat = "row in e_array_final[8]">{{row.scholarship_notes}}</td>
                                         </tr>
 
                                         <tr>

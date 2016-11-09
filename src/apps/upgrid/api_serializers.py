@@ -220,7 +220,7 @@ class SubUserDetailSerializer(serializers.ModelSerializer):
             'account_type', 'position', 'contact_name', 'email',)
 
     def get_mainuser_info(self, obj):
-        mainuser = UniversityCustomer.objects.get(Ceeb=obj.Ceeb, account_type="main")
+        mainuser = UniversityCustomer.objects.get(Ceeb=obj.Ceeb, account_type="main", id = obj.main_user_id)
         return MainuserInfoSerializer(mainuser).data
         
     def get_university(self, obj):

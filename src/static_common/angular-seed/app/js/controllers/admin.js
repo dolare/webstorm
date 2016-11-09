@@ -772,51 +772,244 @@ admin.controller('QuoteController', ['$scope', '$localStorage', '$window',
     $scope.discount = 1;
     $scope.rate = "$112";
     $scope.ApplyPromo = function() {
+      if ($scope.promocode.toUpperCase() === "ONSITE15" || $scope.promocode.toUpperCase() === 'ALMAMATER50' || $scope.promocode.toUpperCase() === 'ALMAMATER40' || $scope.promocode.toUpperCase() === 'ALMAMATER30' || $scope.promocode.toUpperCase() === 'ALMAMATER20') {
 
 
-      if ($scope.promocode !== "ONSITE15") {
-        $.notify({
+          if ($scope.promocode.toUpperCase() === 'ONSITE15') {
+            $scope.discount = 0.85;
+            $.notify({
 
-          // options
-          icon: "fa fa-times",
-          message: 'Please enter a valid code.'
-        }, {
-          // settings
-          type: 'danger',
-          placement: {
-            from: "top",
-            align: "center"
-          },
-        });
+              // options
+              icon: "fa fa-check",
+              message: 'The code has been successfully applied !'
+            }, {
+              // settings
+              type: 'success',
+              placement: {
+                from: "top",
+                align: "center"
+              },
+              z_index: 1999,
+            });
+          }
 
-      } else {
+          if ($scope.promocode.toUpperCase() === 'ALMAMATER50') {
 
-        $scope.discount = 0.85;
-        $.notify({
 
-          // options
-          icon: "fa fa-check",
-          message: 'The discount code has been applied successfully.'
-        }, {
-          // settings
-          type: 'success',
-          placement: {
-            from: "top",
-            align: "center"
-          },
-          z_index: 1999,
-        });
+            if ($scope.result > 40000) {
+              $scope.discount = 0.5;
 
-      }
+              $.notify({
+
+                // options
+                icon: "fa fa-check",
+                message: 'The code has been successfully applied !'
+              }, {
+                // settings
+                type: 'success',
+                placement: {
+                  from: "top",
+                  align: "center"
+                },
+                z_index: 1999,
+              });
+
+
+
+            } else {
+              $scope.discount = 1;
+              $.notify({
+
+                // options
+                icon: "fa fa-times",
+                message: 'This code is not qualified for a quote less than $40,000'
+              }, {
+                // settings
+                type: 'danger',
+                placement: {
+                  from: "top",
+                  align: "center"
+                },
+              });
+
+
+            }
+
+
+          }
+
+
+          if ($scope.promocode.toUpperCase() === 'ALMAMATER40') {
+
+
+            if ($scope.result > 30000) {
+              $scope.discount = 0.6;
+
+              $.notify({
+
+                // options
+                icon: "fa fa-check",
+                message: 'The code has been successfully applied !'
+              }, {
+                // settings
+                type: 'success',
+                placement: {
+                  from: "top",
+                  align: "center"
+                },
+                z_index: 1999,
+              });
+
+
+
+            } else {
+              $scope.discount = 1;
+              $.notify({
+
+                // options
+                icon: "fa fa-times",
+                message: 'This code is not qualified for a quote less than $30,000'
+              }, {
+                // settings
+                type: 'danger',
+                placement: {
+                  from: "top",
+                  align: "center"
+                },
+              });
+
+
+            }
+
+
+          }
+
+
+          if ($scope.promocode.toUpperCase() === 'ALMAMATER30') {
+
+
+            if ($scope.result > 20000) {
+              $scope.discount = 0.7;
+
+              $.notify({
+
+                // options
+                icon: "fa fa-check",
+                message: 'The code has been successfully applied !'
+              }, {
+                // settings
+                type: 'success',
+                placement: {
+                  from: "top",
+                  align: "center"
+                },
+                z_index: 1999,
+              });
+
+
+
+            } else {
+              $scope.discount = 1;
+              $.notify({
+
+                // options
+                icon: "fa fa-times",
+                message: 'This code is not qualified for a quote less than $20,000'
+              }, {
+                // settings
+                type: 'danger',
+                placement: {
+                  from: "top",
+                  align: "center"
+                },
+              });
+
+
+            }
+
+
+          }
+
+
+           if ($scope.promocode.toUpperCase() === 'ALMAMATER20') {
+
+
+            if ($scope.result > 10000) {
+              $scope.discount = 0.8;
+
+              $.notify({
+
+                // options
+                icon: "fa fa-check",
+                message: 'The code has been successfully applied !'
+              }, {
+                // settings
+                type: 'success',
+                placement: {
+                  from: "top",
+                  align: "center"
+                },
+                z_index: 1999,
+              });
+
+
+
+            } else {
+              $scope.discount = 1;
+              $.notify({
+
+                // options
+                icon: "fa fa-times",
+                message: 'This code is not qualified for a quote less than $10,000'
+              }, {
+                // settings
+                type: 'danger',
+                placement: {
+                  from: "top",
+                  align: "center"
+                },
+              });
+
+
+            }
+
+
+          }
+
+
+
+
+        } else {
+
+          $scope.discount = 1;
+          $.notify({
+
+
+            // options
+            icon: "fa fa-times",
+            message: 'Please enter a valid code.'
+          }, {
+            // settings
+            type: 'danger',
+            placement: {
+              from: "top",
+              align: "center"
+            },
+          });
+        }
+             
+
+
+
 
 
     }
 
     $scope.$watchGroup(['user_program', 'competing_program'], function(newValues, oldValues, scope) {
       //alert("changed");
-      if (!isNaN($scope.user_program) && !isNaN($scope.competing_program) && $scope.user_program > 0 && $scope.user_program < 601 && $scope.competing_program > 0 && $scope.competing_program < 11) {
+      if (!isNaN($scope.user_program) && !isNaN($scope.competing_program) && $scope.user_program > 0 && $scope.user_program < 251 && $scope.competing_program >= 0 && $scope.competing_program < 11) {
         $scope.programs = $scope.user_program * ($scope.competing_program + 1);
-        $scope.result = $scope.programs > 300 ? 31500 + 200 * $scope.user_program : 75 * Math.ceil($scope.programs / 15) * (Math.ceil($scope.programs / 15) - 1) + (410 - 10 * Math.ceil($scope.programs / 15)) * $scope.programs;
+        $scope.result = $scope.programs > 300 ? 91500 + 200 * ($scope.programs -300) : 75 * Math.ceil($scope.programs / 15) * (Math.ceil($scope.programs / 15) - 1) + (410 - 10 * Math.ceil($scope.programs / 15)) * $scope.programs;
 
       } else {
         $scope.result = 0;
@@ -1029,7 +1222,7 @@ admin.controller('QuoteController', ['$scope', '$localStorage', '$window',
             callbacks: {
               title: function(tooltipItem, data) {
                 if (data.labels[tooltipItem[0].index] < 315) {
-                  var display = data.labels[tooltipItem[0].index] - 15 + ' ~ ' + data.labels[tooltipItem[0].index];
+                  var display = data.labels[tooltipItem[0].index] - 14 + ' ~ ' + data.labels[tooltipItem[0].index];
                 } else {
                   var display = "300+";
                 }
