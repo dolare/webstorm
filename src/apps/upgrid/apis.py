@@ -272,10 +272,10 @@ class FinalReleasedWhoops(APIView):
 
     def get(self, request, object_id=None, format=None):
         customer = self.get_object(request, object_id)
-        print (customer.account_type)
+
         if customer.account_type == 'sub':
             customer_programs = ClientAndProgramRelation.objects.filter(client = customer).values('client_program')
-            finaltrue_program = UniversityCustomerProgram.objects.filter(customer = customer.main_user_id, object_id__in=customer_programs, whoops_final_release='True').count()
+            finaltrue_program = UniversityCustomerProgram.objects.filter(customer = User.main_user_id, object_id__in=customer_programs, whoops_final_release='True').count()
         else:
             finaltrue_program = UniversityCustomerProgram.objects.filter(customer=customer, whoops_final_release='True').count()
         return Response(data=finaltrue_program, status=HTTP_200_OK)
@@ -724,7 +724,7 @@ class ShareWhoopsReports(APIView):
         
         if User.account_type == 'sub':
             try:
-                customer_programs = ClientAndProgramRelation.objects.get(client = User, client_program = object_id)
+                customer_programs = ClientAndProgramRelation.objects.get(client = User, client_program = self.request.data['univcustomer_program_id'])
                 selected_programs = UniversityCustomerProgram.objects.get(object_id=self.request.data['univcustomer_program_id'] ,customer=User.main_user_id, whoops_final_release='True')                
                 return True
             except:
@@ -755,19 +755,11 @@ class ShareWhoopsReports(APIView):
             if period.total_seconds() > EXPIRED_PERIOD:
                 return Response("expired!",status=HTTP_403_FORBIDDEN)
             else:
-                # response = HttpResponse(content_type = 'application/pdf')
-                # response['Content-Disposition'] = 'filename="whoops_report.pdf"'
                 json_str=zlib.decompress(obj.wr_whoops_report)
-                # stream = BytesIO(json_str)
-                # obj_data = JSONParser().parse(stream)
+
                 return HttpResponse(json_str, content_type="application/json")
     
-                #python_obj=loads(json_str,encoding='utf-8')
 
-               #  html = render_to_string('whoops/whoops_report.html', obj_data)
-               #  weasyprint.HTML(string=html).write_pdf(response)
-               # # return HttpResponse(html, content_type="text/html")
-               #  return response
     #generate sharewhoops report's link
     def post(self, request):
         perm = self.check_permission(request)
@@ -775,17 +767,12 @@ class ShareWhoopsReports(APIView):
             return Response({"Failed": _("Permission denied!")},status=HTTP_403_FORBIDDEN)
         else:
             ean,program = self.get_object(request)
-            # print(ean[0]._meta.get_fields())
-            #print (model_to_dict(ean[0]))
             if not len(ean) == 0:
-                json_data={
-                    'dead_link':None,'type':None,'outdated_information':None,
-                    'data_discrepancy':None,'sidebars':None,
-                    'infinite_loop':None,'floating_page':None,
-                    'confusing':None,'other_expert_note':None
-                }
-                res=dblizer.ExpertAdditionalNoteSerializer(ean,many=True)
+                info={'university': program.university_school.university_foreign_key.name, 'school': program.university_school.school,
+                    'program': program.program_name, 'degree': program.degree.name}              
+                res=dblizer.ExpertAdditionalNoteSerializer(ean,many=True)       
                 arr=res.data
+                arr.append(info)
                 json_str=JSONRenderer().render(arr)
                 raw_data=zlib.compress(json_str)
                 w_obj = WhoopsReports(wr_customer=UniversityCustomer.objects.get(username=request.user.username),
@@ -793,8 +780,7 @@ class ShareWhoopsReports(APIView):
                                         wr_whoops_report = raw_data
                                     )                    
                 w_obj.save()  
-                res={'shared_pdf_access_link':request.META['HTTP_HOST']+'/api/upgrid/whoops_reports/shared/{0}/{1}'
-                    .format(w_obj.object_id,w_obj.wr_token)}
+                res={'{0}/{1}'.format(w_obj.object_id,w_obj.wr_token)}
                 return Response(res) #redner json string by default
             else:
                 #print("not content in sharedwhoops POST")
@@ -850,15 +836,9 @@ class ShareEnhancementReports(APIView):
             if period.total_seconds() > EXPIRED_PERIOD:
                 return Response("Token Expired!",status=HTTP_403_FORBIDDEN)
             else:
-                # response = HttpResponse(content_type = 'application/pdf')
-                # response['Content-Disposition'] = 'filename="enhancement_report.pdf"'
+
                 json_string=zlib.decompress(obj.er_enhancement_report)
-                #print("#####---###",json_string)
-                # weasyprint.HTML(string=pdf_string).write_pdf(response)
-                # stream=BytesIO(json_string)
-                # python_obj = JSONParser().parse(stream)
-                # return response
-                # html = render_to_string('enhancement/enhancement_share.html',python_obj)
+
                 return HttpResponse(json_string, content_type="application/json")
     def post(self, request):
         object_id = self.request.data['univcustomer_program_id']
@@ -868,8 +848,7 @@ class ShareEnhancementReports(APIView):
             Total_Program = self.get_object(request)
             json_data={} 
             length = len(Total_Program)
-            # json_serializer=serializers.get_serializer("json")
-            # json_serializer=json_serializer()
+
             for i in range(1,length+1):
                 program = "p"+ (str(i) if i>1 else "")
                 curriculum = "c"+ (str(i) if i>1 else "")
@@ -880,13 +859,13 @@ class ShareEnhancementReports(APIView):
                 Intl_transcript = "Intl_transcript"+ (str(i) if i>1 else "")
                 Intl_eng_test = "Intl_eng_test"+ (str(i) if i>1 else "")
                 scholarship = "s"+ (str(i) if i>1 else "")
+                duration = "dura" + (str(i) if i>1 else "")
                 empty=None
                 try:
-                    #p_value=Program.objects.get(object_id=Total_Program[i-1].object_id)
                     p_value = Total_Program[i-1]
                 except Program.DoesNotExist:
                     return HttpResponse(status= 404)
-                #print(p_value.university_school)
+
                 try:
                     c_value = Curriculum.objects.get(program=Total_Program[i-1],)
                 except ObjectDoesNotExist:
@@ -899,6 +878,10 @@ class ShareEnhancementReports(APIView):
                     d_value = Deadline.objects.get(program=Total_Program[i-1],)
                 except ObjectDoesNotExist:
                     d_value = empty
+                try:    
+                    dura_value = Duration.objects.get(program=Total_Program[i-1])
+                except Duration.DoesNotExist:
+                    dura_value = "empty"
                 try:
                     r_value = Requirement.objects.get(program=Total_Program[i-1],)
                 except ObjectDoesNotExist:
@@ -927,8 +910,9 @@ class ShareEnhancementReports(APIView):
                 r_e_value = dblizer.ExamSerializer(r_e_value, many=True)
                 i_value = dblizer.TranscriptEvaluationProviderSerializer(i_value, many=True)
                 i_e_t_value = dblizer.InternationalEnglishTestSerializer(i_e_t_value, many=True)
-                s_value = dblizer.ScholarshipSerializer(s_value)
-                
+                s_value = dblizer.ScholarshipSerializer(s_value)         
+                dura_value = dblizer.DurationSerializer(dura_value)
+
                 json_data[program] = p_value.data #return unordered map if empty would be a empty list
                 json_data[curriculum] = c_value.data
                 json_data[tuition] = t_value.data
@@ -938,6 +922,8 @@ class ShareEnhancementReports(APIView):
                 json_data[Intl_transcript] = i_value.data
                 json_data[Intl_eng_test] = i_e_t_value.data
                 json_data[scholarship] = s_value.data
+                json_data[duration] = dura_value.data
+
             json_data["length"] = length
             
             json_str=JSONRenderer().render(json_data)  # render to bytes with utf-8 encoding
@@ -948,8 +934,7 @@ class ShareEnhancementReports(APIView):
             e_obj.save() 
             #ss= str(json_str,'utf-8')
             
-            res={'shared_pdf_access_link':request.META['HTTP_HOST']+'/api/upgrid/enhancement_reports/shared/{0}/{1}'
-                .format(e_obj.object_id,e_obj.er_token)}
+            res={'{0}/{1}'.format(e_obj.object_id,e_obj.er_token)}
             return Response(res)  #redner json string by default  
   
 
@@ -1148,48 +1133,51 @@ class Client(APIView):
                 client.competing_schools.add(school)
 
             #update UniversityCustomerProgram
-            old_list = UniversityCustomerProgram.objects.filter(customer = client).values("program")
+
             for p in self.request.data['selected_customerprogram']:
                 #program = Program.objects.get(object_id = p.get('program_id'))
-                if p.get('object_id') in old_list:
-                    old_list = old_list.exclude(program=p.get('object_id'))
+                if not p.get('customer_program_id') == None:               
+                    customer_program = UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id'))
 
-               
-                customer_program, created = UniversityCustomerProgram.objects.update_or_create(
-                        #program = program,
-                    customer = client,
-                    program = p.get['program_id'],
-                    defaults = {'program': p.get['program_id'], 
-                            'whoops_status' : p.get('whoops_status'),
-                            'whoops_final_release' : p.get('whoops_final_release'),
-                            'enhancement_final_release' : p.get('enhancement_final_release'),
-                            'customer_confirmation' : p.get('customer_confirmation'),
-                            }
-                    )
-                customer_program.save()
+                    customer_program.customer = client,
+                    customer_program.program = Program.objects.get(object_id = p.get('program_id'))        
+                    customer_program.whoops_status = p.get('whoops_status'),
+                    customer_program.whoops_final_release = p.get('whoops_final_release'),
+                    customer_program.enhancement_final_release = p.get('enhancement_final_release'),
+                    customer_program.customer_confirmation = p.get('customer_confirmation'),
+            
+                    customer_program.save()
+                else:
+                    customer_program = UniversityCustomerProgram.objects.create(
+                        customer = client,
+                        program = program.objects.get(object_id = p.get['program_id']),
+                        whoops_status = p.get('whoops_status'),
+                        whoops_final_release = p.get('whoops_final_release'),
+                        enhancement_final_release = p.get('enhancement_final_release'),
+                        customer_confirmation = p.get('customer_confirmation')
+                        )
+                    customer_program.save()
 
             #update competing program of each customer program
-                origin_list = CustomerCompetingProgram.objects.filter(customer_program=customer_program)
+                #origin_list = CustomerCompetingProgram.objects.filter(customer_program=customer_program)
                 for cp in p.get('competing_program'):
-                    if cp.get('object_id') in origin_list:
-                        origin_list = origin_list.exclude(program=p.get('object_id'))
-                    #competingprogram = Program.objects.get(object_id = cp.get('object_id'))
-                    
-                    new_cp = CustomerCompetingProgram.objects.update_or_create(
-                        customer_program = customer_program,
-                        program = cp.get('object_id'),
-                        defaults = {
-                                'customer_program': customer_program,
-                                'program': cp.get('object_id'),
-                                'order': cp.get('order'),
-                                'enhancement_status': cp.get('enhancement_status')
-                                }
-                        )
-                    new_cp.save()
-                CustomerCompetingProgram.objects.filter(customer_program=customer_program, program__in=origin_list).delete()
-            UniversityCustomerProgram.objects.filter(customer = client, program__in=old_list).delete()
+                    ccp = CustomerCompetingProgram.objects.get(object_id = cp.get('competing_program_id'))
+                   
+                    ccp.customer_program = customer_program
+                    ccp.program = Program.objects.get(object_id = cp.get('program_id'))
+                    ccp.order = cp.get('order') 
+                    ccp.enhancement_status = cp.get('enhancement_status')
+
+                    ccp.save()
+
 
         return Response({"success": _("Subuser has been created.")}, status=HTTP_201_CREATED)
+
+    def delete(self, request, format=None):
+        total_program = self.request.data[customer_program_id].split('/')
+        for i in total_program:
+            UniversityCustomerProgram.objects.get(object_id = i).delete()
+        return Response(status=HTTP_204_NO_CONTENT)
 
 
 # Returns all the university and School in the database for Ceeb drop down menu
@@ -1356,15 +1344,19 @@ class WhoopsWebReports(APIView):
         program_id = UniversityCustomerProgram.objects.get(object_id=object_id)
         program = Program.objects.get(object_id=program_id.program.object_id)
         ean = program.expertadditionalnote_set.all()
-        return ean
+        return ean,program
 
     def get(self,request, object_id, client_id=None):
         perm = self.check_permission(request, object_id, client_id)
         if perm:
-            ean = self.get_object(object_id)
+            ean,program = self.get_object(object_id)
             if not len(ean) == 0:
-
-                return Response(dblizer.ExpertAdditionalNoteSerializer(ean, many=True).data)
+                info={'university': program.university_school.university_foreign_key.name, 'school': program.university_school.school,
+                    'program': program.program_name, 'degree': program.degree.name}
+                res = dblizer.ExpertAdditionalNoteSerializer(ean, many=True).data
+                arr = res.data
+                arr.append(info)            
+                return Response(arr, status=HTTP_200_OK)
             else:
                 return HttpResponse(status =HTTP_204_NO_CONTENT)
 
@@ -1420,7 +1412,8 @@ class EnhancementWebReports(APIView):
         return program_list
 
     def get(self, request, object_id, client_id=None):
-        perm = self.check_permission(request, object_id, client_id)
+       # perm = self.check_permission(request, object_id, client_id)
+        perm =True
         if perm:
             Total_Program = self.get_object(object_id)
 

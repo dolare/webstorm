@@ -73,6 +73,11 @@ class Login2Serializer(serializers.Serializer):
 
 
 #-------------------------User API Serializers------------------------------------
+# class ClassicUnivCustomerProgramSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = UniversityCustomerProgram
+#         fields = ('whoops_status', 'whoops_final_release', 'enhancement_final_release', 'customer_confirmation')
+
 
 class UnivCustomerProgramSerializer(serializers.ModelSerializer):
     # program_object_id = SerializerMethodField()
@@ -115,7 +120,7 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
 
 class CompetingProgramSerializer(serializers.ModelSerializer):
 
-    # object_id = SerializerMethodField()
+    program_id = SerializerMethodField()
     program_name = SerializerMethodField()
     program_degree = SerializerMethodField()
     university = SerializerMethodField()
@@ -124,11 +129,11 @@ class CompetingProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomerCompetingProgram
-        fields = ('object_id','program_name', 'program_degree', 'university',
+        fields = ('object_id','program_id','program_name', 'program_degree', 'university',
             'school', 'order', 'enhancement_status')
 
-    # def get_object_id(self, obj):
-    #     return obj.program.object_id
+    def get_program_id(self, obj):
+        return obj.program.object_id
 
     def get_program_name(self, obj):
         return obj.program.program_name

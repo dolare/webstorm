@@ -2,20 +2,19 @@
 
 var whoops = angular.module('myApp.login.success.whoops', [])
 whoops.controller('WhoopsController',
-  function(List, avatarService, ajaxService, reportService, $location, tableDataService, filterFilter, $scope, apiService, $window, $http, authenticationSvc, $localStorage, $sessionStorage, $state, $filter, $q) {
+  function(avatarService, ajaxService, reportService, $location, tableDataService, filterFilter, $scope, apiService, $window, $http, authenticationSvc, $localStorage, $sessionStorage, $state, $filter, $q) {
 
     //progressJs().end();
     //////////
     var token = authenticationSvc.getUserInfo().accessToken;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
-    $scope.univeristy_name = List.profile.university;
-    $scope.school_name = List.profile.school;
+    
 
    
-    console.log("host 1 is "+$location.absUrl());
+    console.log("host 1 is "+location.host);
     //for api test
     // $http({
-    //       url: '/api/upgrid/user/program/?&name=app',
+    //       url: '/api/upgrid/whoops_reports/shared/'+'a37a52bf-e713-48aa-b171-12187466ad44/3de6274e-98ae-4080-b287-e7b41ebe8101',
     //       method: 'GET',
     //       headers: {
     //         'Authorization': 'JWT ' + token
@@ -24,7 +23,7 @@ whoops.controller('WhoopsController',
 
     //    $scope.details = response.data;
 
-    //    console.log("released report whoops"+ JSON.stringify(response));
+    //    console.log("return data"+ JSON.stringify(response.data));
     //     // if(response.status === 204){
     //     //   console.log("===204");
     //     // }
@@ -65,6 +64,7 @@ whoops.controller('WhoopsController',
          var w_array_7 = [];
          var w_array_8 = [];
          var w_array_9 = [];
+         var w_array_10 = [];
          
 
         for(i=0; i<$scope.w_raw.length; i++){
@@ -73,61 +73,53 @@ whoops.controller('WhoopsController',
 
             w_array_1.push($scope.w_raw[i])
 
-          }
-
-          if($scope.w_raw[i].additional_note_type === "typo")
+          } else if($scope.w_raw[i].additional_note_type === "typo")
           {
             w_array_2.push($scope.w_raw[i])
 
-          }
-
-          if($scope.w_raw[i].additional_note_type === "outdated_information")
+          } else if($scope.w_raw[i].additional_note_type === "outdated_information")
           {
             w_array_3.push($scope.w_raw[i])
 
-          }
-
-          if($scope.w_raw[i].additional_note_type === "data_discrepancy")
+          } else if($scope.w_raw[i].additional_note_type === "data_discrepancy")
           {
             w_array_4.push($scope.w_raw[i])
 
-          }
-
-          if($scope.w_raw[i].additional_note_type === "sidebars")
+          } else if($scope.w_raw[i].additional_note_type === "sidebars")
           {
 
             w_array_5.push($scope.w_raw[i])
-          }
 
-          if($scope.w_raw[i].additional_note_type === "infinite_loop")
+          } else if($scope.w_raw[i].additional_note_type === "infinite_loop")
           {
             w_array_6.push($scope.w_raw[i])
 
-          }
-
-          if($scope.w_raw[i].additional_note_type === "floating_page")
+          } else if($scope.w_raw[i].additional_note_type === "floating_page")
           {
+
             w_array_7.push($scope.w_raw[i])
 
-          }
-
-          if($scope.w_raw[i].additional_note_type === "confusing")
+          } else if($scope.w_raw[i].additional_note_type === "confusing")
           {
+
             w_array_8.push($scope.w_raw[i])
 
-          }
-
-          if($scope.w_raw[i].additional_note_type === "other_expert_note")
+          } else if($scope.w_raw[i].additional_note_type === "other_expert_note")
           {
 
             w_array_9.push($scope.w_raw[i])
+
+          } else {
+
+            w_array_10.push($scope.w_raw[i])
           }
 
           
         }
 
-        $scope.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9];
-        App.blocks('#whoops_loading', 'state_normal');
+        $scope.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];
+        
+         App.blocks('#whoops_loading', 'state_normal');
 
         console.log('w_array_1='+JSON.stringify($scope.w_array_final));
 
@@ -599,15 +591,15 @@ whoops.controller('WhoopsController',
 
     }
 
-    $scope.pdfShare = function(Id) {
+    $scope.htmlShare = function(Id) {
+      
       $scope.url = {
-        text: null
-      };
+            text: null
+        };
+        $scope.shareLoading = true;
+        $scope.copied = false;
+        new Clipboard('.btn');
 
-      $scope.copied = false;
-      new Clipboard('.btn');
-
-      $scope.shareLoading = true;
 
       $http({
         url: '/api/upgrid/whoops_reports/shared/',
@@ -619,27 +611,24 @@ whoops.controller('WhoopsController',
           'Authorization': 'JWT ' + token
         },
         'Content-Type': 'application/json'
-        //responseType: 'arraybuffer'
-          // cache: true
-
-
+    
       }).then(function(response) {
-        console.log("RESPONSE is "+JSON.stringify(response.data.shared_pdf_access_link));
-        
-        console.log("link = " + $scope.pdflink);
-        //window.open(fileURL);
-        console.log("success");
-        $scope.shareLoading = false;
-        //console.log("dismiss share progress");
-        $scope.url = {
-          text: response.data.shared_pdf_access_link
-        };
+        console.log("share RESPONSE is "+JSON.stringify(response.data));
+     
+          $scope.shareLoading = false;
 
+
+            $scope.shared_id = response.data[0].split('/')[0];
+            $scope.shared_token = response.data[0].split('/')[1];
+
+            $scope.url = {
+                text: location.host + '/static/angular-seed/app/index.html#'+'/shared_whoops_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
+            };
 
       }).
       catch(function(error) {
         console.log('an error occurred...' + JSON.stringify(error));
-        $scope.shareLoading = false;
+       
       });
 
     };
@@ -679,7 +668,9 @@ whoops.controller('WhoopsController',
     $scope.printReport = function() {
       window.print();
       
-   }
+   }  
+
+
 
     $scope.togglefull = function(){
       angular.element(document.getElementById("WhoopsReport")).toggleClass('fullscreen-modal');
@@ -687,10 +678,4 @@ whoops.controller('WhoopsController',
 
     }
 
-    // $scope.addtest = function(){
-    //   console.log("data = "+JSON.stringify($scope.data));
-    //   $scope.data.push({"programId":"daf3bd2f-612c-430b-8472-a31afb4ba345","programName":"African-African Studies","degreeName":"MA","status":"True","$$hashKey":"object:35","perfect":"False"})
-    // }
-
-    
   });

@@ -1,32 +1,34 @@
 
 angular.module('myApp.ShareEnhancement', []).
 controller('ShareEnhancementController',
-    function(List, $timeout, $stateParams, $scope, $location, $window, $http, authenticationSvc, $cookies, $state) {
+    function($timeout, $stateParams, $scope, $location, $window, $http, $state) {
         
-        var token = authenticationSvc.getUserInfo().accessToken;
+        
         $scope.date = new Date();
-        $scope.univeristy_name = List.profile.university;
-        $scope.school_name = List.profile.school;
+        //$scope.univeristy_name = List.profile.university;
+        //$scope.school_name = List.profile.school;
         console.log("param1 is " + $stateParams.param1);
       
-        
-       $scope.date = new Date();
+  
+      
       App.blocks('#enhancement_loading', 'state_loading');
       
-      $scope.enhancement_report_program = $stateParams.param2;
-      $scope.enhancement_report_degree = $stateParams.param3;
+      //$scope.enhancement_report_program;
+      //$scope.enhancement_report_degree;
+
         //ewr
          $http({
-                url: '/api/upgrid/ewr/'+$stateParams.param1,
+                url: '/api/upgrid/enhancement_reports/shared/'+$stateParams.param1+'/'+$stateParams.param2+'/',
                 method: 'GET',
                 headers: {
-                  'Authorization': 'JWT ' + token
-                }
+                  'Content-Type': 'application/json'
+                },
+                
           }).then(function (response) {
 
             
 
-             console.log("released report whoops"+ JSON.stringify(response.data));
+             console.log("released enhancement whoops"+ JSON.stringify(response.data));
              $scope.e_raw = response.data;
              $scope.e_array_final = [];
              var e_array_1 = [];

@@ -9,8 +9,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
     var token = authenticationSvc.getUserInfo().accessToken;
     $scope.emailadd = authenticationSvc.getUserInfo().username;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
-    $scope.univeristy_name = List.profile.university;
-    $scope.school_name = List.profile.school;
+    
     // $scope.$route = $route;
 
     $scope.$storage = $localStorage;
@@ -544,7 +543,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             console.log('an error occurred...' + JSON.stringify(error));
         });
     }
-    $scope.pdfShare = function(Id, competing) {
+    $scope.htmlShare = function(Id) {
         $scope.url = {
             text: null
         };
@@ -552,11 +551,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
         $scope.copied = false;
         new Clipboard('.btn');
         
-        var competingUrl = Id + '/';
-        //console.log('caught! '+program+' '+degree);
-        for (i = 0; i < competing.length; i++) {
-            competingUrl += competing[i].programId + '/';
-        }
+        
         $http({
             url: '/api/upgrid/enhancement_reports/shared/',
             method: 'POST',
@@ -569,19 +564,26 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             'Content-Type': 'application/json'
             //responseType: 'arraybuffer'
         }).then(function(response) {
-            console.log("RESPONSE is "+JSON.stringify(response.data.shared_pdf_access_link));
-        
+            console.log("shared link RESPONSE is "+JSON.stringify(response.data));
             $scope.shareLoading = false;
-           
+            $scope.shared_id = response.data[0].split('/')[0];
+            $scope.shared_token = response.data[0].split('/')[1];
+
             $scope.url = {
-                text: response.data.shared_pdf_access_link
+                text: location.host + '/static/angular-seed/app/index.html#'+'/shared_enhancement_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
             };
+
+            
+           
+            
         }).
         catch(function(error) {
             console.log('an error occurred...' + JSON.stringify(error));
             $scope.shareLoading = false;
         });
     }
+
+
     $scope.confirmDialog = function() {
         //get the unconfirmed programs list
         $scope.confirmAll = false;
@@ -689,30 +691,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
                 $scope.confirmData[i].checked = $scope.confirmAll;
             }
         }
-        //for test
-    $scope.setAllToUnconfirmed = function() {
-        var setBackArray = [];
-        for (i = 0; i < List.customer.customerprogram.length; i++) {
-            setBackArray.push($http({
-                url: '/api/changeconfirm/' + List.customer.customerprogram[i].object_id + '/',
-                method: 'PUT',
-                data: {
-                    customerconfirmation_status: "No"
-                },
-                headers: {
-                    'Authorization': 'JWT ' + token
-                }
-            }).then(function(response) {
-                console.log('success unconfirm');
-            }).catch(function(error) {
-                console.log('an error occurred...' + JSON.stringify(error));
-            }));
-        }
-        $q.all(setBackArray).then(function(result) {
-            $scope.data = tableDataService.getEnhancement(List);
-        });
-        console.log("ALL HAVE BEEN SET BACK TO UNCONFIRMED");
-    }
+
 
 
     $scope.togglefull = function (){

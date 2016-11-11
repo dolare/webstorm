@@ -365,8 +365,12 @@ controller('LoginController',
             console.log('login again to home page');
             console.log('before going to whoops = ' + authenticationSvc.getUserInfo());
             //console.log('before going to whoops, cookies = '+$cookies.get('userInfo'));
-
-            $state.go('dashboard');
+            if(authenticationSvc.getUserInfo().admin === "True"){
+                $state.go('admin');
+            }else if(authenticationSvc.getUserInfo().admin === "False"){
+                $state.go('dashboard');
+            }
+            
 
         };
 

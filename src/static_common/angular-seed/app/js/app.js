@@ -124,6 +124,18 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
 
   }).
+  state('shareWhoopsReport', {
+    url: '/shared_whoops_report/:param1/:param2/',
+    templateUrl: 'views/Share/shared_whoops_report.html',
+    controller: 'ShareWhoopsController',
+   
+  }).
+  state('shareEnhancementReport', {
+    url: '/shared_enhancement_report/:param1/:param2/',
+    templateUrl: 'views/Share/shared_enhancement_report.html',
+    controller: 'ShareEnhancementController',
+   
+  }).
 
   state('shareEnhancement', {
     url: '/upgrid/share_enhancement_report/:param1/:param2/:param3/',
@@ -490,13 +502,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
             authenticated: false
           });
         }
-      },
-
-      List: function(apiService, authenticationSvc) {
-        var userInfo = authenticationSvc.getUserInfo();
-        console.log('*************');
-        return apiService.getProfileList(userInfo.accessToken);
-
       },
 
       // //get raw data
@@ -1000,6 +1005,16 @@ App.directive("refreshTable", function(){
     }
 }});
 
+App.directive('selectOnClick', ['$window', function ($window) {
+    // Linker function
+    return function (scope, element, attrs) {
+      element.bind('click', function () {
+        if (!$window.getSelection().toString()) {
+          this.setSelectionRange(0, this.value.length)
+        }
+      });
+    };
+}]);
 
 
 // from OneUI
