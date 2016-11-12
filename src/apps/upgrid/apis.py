@@ -1353,7 +1353,7 @@ class WhoopsWebReports(APIView):
             if not len(ean) == 0:
                 info={'university': program.university_school.university_foreign_key.name, 'school': program.university_school.school,
                     'program': program.program_name, 'degree': program.degree.name}
-                res = dblizer.ExpertAdditionalNoteSerializer(ean, many=True).data
+                res = dblizer.ExpertAdditionalNoteSerializer(ean, many=True)
                 arr = res.data
                 arr.append(info)            
                 return Response(arr, status=HTTP_200_OK)
