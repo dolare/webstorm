@@ -2,9 +2,10 @@
                 <div class="content content-boxed">
                     <!-- User Header -->
                     <div class="block">
+                    
                         <!-- Basic Info -->
-                        <div class="bg-image" style="background-image: url('img/photo3@2x.jpg');">
-                            <div class="block-content bg-primary-op text-center overflow-hidden">
+                        <div class="bg-image" style="background-image: url('img/photo29@2x.jpg');">
+                            <div class="block-content bg-black-op text-center overflow-hidden">
                                 <div class="push-30-t push animated fadeInDown">
                                     <img class="img-avatar img-avatar96 img-avatar-thumb" src="assets/img/avatars/avatar10.jpg" alt="">
                                 </div>
@@ -55,7 +56,7 @@
                         </div>
                                
                         <!-- 2 -->
-                        <div class="col-xs-6 col-sm-4">
+                        <div class="col-xs-6 col-sm-4" style="border-right: 1px solid #eee; border-left: 1px solid #eee">
                             
                             <div class="push-20 font-w700 text-dark animated fadeIn">"Whoops!" Report</div>
 
@@ -107,6 +108,9 @@
 
 
                             </div>
+
+
+
                         </div>
                         <!-- END Stats -->
                     </div>
@@ -398,6 +402,18 @@
                                         </li>
                                         <!-- END Generic Notification -->
 
+
+                                        <!-- <li>
+                                            
+                                            <i class="si si-clock list-timeline-icon bg-gray"></i>
+                                            <div class="list-timeline-content">
+                                                
+                                                <a href="javascript:void(0)" class="font-w600 text-muted">Load more...</a>
+                                                
+                                            </div>
+                                        </li> -->
+
+
                                        
                                     </ul>
 
@@ -425,7 +441,7 @@
                                      <ul class="list list-timeline pull-t">
                                         <!-- Facebook Notification -->
                                         
-                                       
+                                   
 
                                         <!-- Generic Notification -->
                                         <li ng-if="newly_released_enhancement.length!==0">
@@ -437,7 +453,7 @@
                                                     <li ng-repeat = "row in newly_released_enhancement | limitTo : 1">
                                                         <a>
 
-                                                        <button class="btn btn-default pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-eye text-primary"></i><span class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span></button>
+                                                        <button class="btn btn-default pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-exclamation-circle text-primary"></i><span class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span></button>
 
 
                                                             <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
@@ -450,6 +466,18 @@
                                             </div>
                                         </li>
                                         <!-- END Generic Notification -->
+
+                                        <!-- <li>
+                                            
+                                            <i class="si si-clock list-timeline-icon bg-gray"></i>
+                                            <div class="list-timeline-content">
+                                                
+                                                <a href="javascript:void(0)" class="font-w600 text-muted">Load more...</a>
+                                                
+                                            </div>
+                                        </li> -->
+
+
                                     </ul>
 
                                    
@@ -488,12 +516,12 @@
                                 <h3 class="block-title">Whoops Report</h3>
                               </div>
                               
-                              <div class="block-content fullscreen-container" style="width:auto;padding:0;">
+                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0; ">
 
                                
            
                     <!-- SlimScroll Container -->
-                    <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}">
+                    <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
 
 
 
@@ -508,7 +536,7 @@
 
 
 
-                    </div>
+                   <!--  </div> -->
                     <!-- END SlimScroll Container -->
             
 
@@ -542,11 +570,11 @@
                                 <h3 class="block-title">Enhancement Report</h3>
                               </div>
                               
-                              <div class="block-content fullscreen-container" style="width:auto;padding:0;">
+                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;">
 
            
                     <!-- SlimScroll Container -->
-                    <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}">
+                    <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
 
                     <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
@@ -554,7 +582,7 @@
                     </div>
 
 
-                    </div>
+                    <!-- </div> -->
                     <!-- END SlimScroll Container -->
             
 
@@ -591,26 +619,12 @@
                                 <h3 class="block-title">Enhancement Report</h3>
                               </div>
                               
-                              <div class="block-content fullscreen-container" style="width:auto;padding:0;">
+                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;">
 
-                                <!-- progress circle -->
-                                <div class="sk-fading-circle" ng-show="viewerLoading">
-                                  <div class="sk-circle1 sk-circle"></div>
-                                  <div class="sk-circle2 sk-circle"></div>
-                                  <div class="sk-circle3 sk-circle"></div>
-                                  <div class="sk-circle4 sk-circle"></div>
-                                  <div class="sk-circle5 sk-circle"></div>
-                                  <div class="sk-circle6 sk-circle"></div>
-                                  <div class="sk-circle7 sk-circle"></div>
-                                  <div class="sk-circle8 sk-circle"></div>
-                                  <div class="sk-circle9 sk-circle"></div>
-                                  <div class="sk-circle10 sk-circle"></div>
-                                  <div class="sk-circle11 sk-circle"></div>
-                                  <div class="sk-circle12 sk-circle"></div>
-                                </div>
+                                
            
                     <!-- SlimScroll Container -->
-                    <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}">
+                    <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
 
                         <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
@@ -675,26 +689,26 @@
 
                                     <table>
                                     <tr>
-                                        <td class="text-muted">Univerity</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">University</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{e_array_final[0][0].university_school.university}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">School</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{e_array_final[0][0].university_school.school}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">Program</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{e_array_final[0][0].program_name}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">Degree</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{e_array_final[0][0].degree.name}}&nbsp;</td>
                                     </tr>
 
@@ -716,7 +730,33 @@
                                     <address>
                                         
                                         
-                                        <span class="text-muted">Generated on</span><br>{{date | date:'MMM dd , yyyy'}}
+                                    <table class="pull-right">
+                                    <tr>
+                                        <td class="text-muted text-left">Released on :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    </tr>
+
+
+                                    <tr class="pull-right">
+                                        <td style="border-bottom: 1px solid #ccc">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{date | date:'MMM dd , yyyy'}}&nbsp;&nbsp;
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted text-left">Last updated on : </td>
+                                    </tr>
+
+                                    <tr class="pull-right">
+                                        <td style="border-bottom: 1px solid #ccc">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{date | date:'MMM dd , yyyy'}}&nbsp;&nbsp;
+                                        </td>
+                                    </tr>
+
+                                    </table>
+<!-- 
+                                        <span class="text-muted">Released on</span><br>{{date | date:'MMM dd , yyyy'}}
+                                        <br>
+                                        <span class="text-muted">Last updated on</span><br>{{date | date:'MMM dd , yyyy'}} -->
                                     </address>
                                 </div>
                                 <!-- END Client Info -->
@@ -731,7 +771,7 @@
                                    
                                     <tbody>
                                         <tr class="font-w600 text-primary" style="background: #f6f6f6">
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Univeristy school</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">University school</td>
                                             <td ng-repeat = "row in e_array_final[0]">{{row.university_school.university}}</td>
                                         </tr>
 
@@ -779,7 +819,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Audience</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Program objectives</td>
                                             <td ng-class="{'note-left': row.audience}" ng-repeat = "row in e_array_final[0]">{{row.audience}}</td>
                                         </tr>
 
@@ -807,18 +847,18 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Handbook</td>
-                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.additional_url"><a href="{{row.additional_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.additional_url"><a href="{{row.additional_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">FAQ</td>
                                            
-                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.program_faq_url"><a href="{{row.program_faq_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.program_faq_url"><a href="{{row.program_faq_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Admission stats</td>
-                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.stats_profile_url"><a href="{{row.stats_profile_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Admission stats.</td>
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.stats_profile_url"><a href="{{row.stats_profile_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
 
 
@@ -864,7 +904,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Required curriculum units</td>
-                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.min_total_unit">{{row.min_total_unit}} per {{row.curriculum_unit.name}}</span></td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.min_total_unit">{{row.min_total_unit}} {{row.curriculum_unit.name}}</span></td>
                                         </tr>
 
                                         <tr>
@@ -894,7 +934,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Curriculums</td>
-                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.program_faq_url"><a href="{{row.curriculum_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.program_faq_url"><a href="{{row.curriculum_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
                                         
 
@@ -938,7 +978,7 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Deadline url</td>
 
 
-                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.deadline_url"><a href="{{row.deadline_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.deadline_url"><a href="{{row.deadline_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
 
                                         </tr>
 
@@ -1094,7 +1134,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Admission requirement</td>
-                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.program_req_url"><a href="{{row.program_req_url}}" target="_blank" style="text-decoration: underline;">link</a></span><span ng-if="!row.program_req_url&&row.school_req_url"><a href="{{row.school_req_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.program_req_url"><a href="{{row.program_req_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span><span ng-if="!row.program_req_url&&row.school_req_url"><a href="{{row.school_req_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
                                         
 
@@ -1107,28 +1147,28 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">International transcript</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l transcript</td>
                                             <td ng-repeat = "row in e_array_final[6]"><span ng-repeat="row1 in row"><span ng-if="row1" data-uib-tooltip="{{row1.description}}" data-tooltip-placement="top" style="border-bottom: 1px dashed #aaa;cursor: pointer;">{{row1.name}}<br></span></span></td>
                                         </tr>
 
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int lang waiver</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l lang waiver</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.intl_lang_waiver===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.intl_lang_waiver===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int lang waiver notes</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l lang waiver notes</td>
                                             <td ng-class="{'note-left': row.intl_lang_waiver_conditions}" ng-repeat = "row in e_array_final[4]">{{row.intl_lang_waiver_conditions}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl english test required</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l english test required</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.intl_english_test_required===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.intl_english_test_required===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl english test</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l english test</td>
                                             <td ng-repeat = "row in e_array_final[7]"><span ng-repeat="row2 in row">{{row2.name}}<br></span></td>
                                                 
                                         </tr>
@@ -1165,12 +1205,12 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl ielts requirements</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l ielts requirements</td>
                                             <td ng-repeat = "row in e_array_final[4]">{{row.intl_ielts_reqs}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl other</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l other</td>
                                             <td ng-class="{'note-left': row.intl_other}" ng-repeat = "row in e_array_final[4]">{{row.intl_other}}</td>
                                         </tr>
                                        
@@ -1206,7 +1246,7 @@
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Scholarship url</td>
 
-                                            <td ng-repeat = "row in e_array_final[8]"><span ng-if="row.scholarship_program_specific_url"><a href="{{row.scholarship_program_specific_url}}" target="_blank" style="text-decoration: underline;">link</a></span><span ng-if="!row.scholarship_program_specific_url&&row.scholarship_general_url"><a href="{{row.scholarship_general_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[8]"><span ng-if="row.scholarship_program_specific_url"><a href="{{row.scholarship_program_specific_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span><span ng-if="!row.scholarship_program_specific_url&&row.scholarship_general_url"><a href="{{row.scholarship_general_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
 
 
                                         </tr>
@@ -1233,7 +1273,7 @@
 
 
 
-                    </div>
+                   <!--  </div> -->
                     <!-- END SlimScroll Container -->
             
 

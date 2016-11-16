@@ -3,7 +3,8 @@ angular.module('myApp.ShareEnhancement', []).
 controller('ShareEnhancementController',
     function($timeout, $stateParams, $scope, $location, $window, $http, $state) {
         
-        
+        angular.element(document.getElementsByTagName("body")).addClass('frame');
+
         $scope.date = new Date();
         //$scope.univeristy_name = List.profile.university;
         //$scope.school_name = List.profile.school;

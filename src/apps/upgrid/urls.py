@@ -1,32 +1,33 @@
 from django.conf.urls import url
-from . import views
 from . import apis
 
 urlpatterns=[
 
-    ## --------------------------New Designed Upgrid API------------------------
+    # --------------------------New Designed Upgrid API------------------------
     
-    #---------------------------Login API----------------------------
+    # ---------------------------Login API----------------------------
     
-    #POST login +++
+    # POST login +++
     url(r'^api/upgrid/access_token/$', apis.CustomizeJWT.as_view()),  
 
-    #PUT change password +++
+    # PUT change password +++
     url(r'^api/upgrid/user/password/$', apis.PasswordChangeView.as_view()), 
     
-    #PUT reset password and POST send reset password email
+    # PUT reset password and POST send reset password email
     url(r'^api/upgrid/user/password/reset/$', apis.ResetPassword.as_view()),
 
-    #--------------------------User API------------------------------
+    # --------------------------User API------------------------------
 
-    #Get user's customer program +++
+    # Get user's customer program +++
     url(r'^api/upgrid/user/program/$', apis.CustomerProgram.as_view()),
 
-    #url(r'^api/upgrid/user/(?P<client_id>[0-9a-fA-F\-]+)/program/$', apis.CustomerProgram.as_view()),
-    #Get competing program +++
+    # url(r'^api/upgrid/user/(?P<client_id>[0-9a-fA-F\-]+)/program/$', apis.CustomerProgram.as_view()),
+    # Get competing program +++
     url(r'^api/upgrid/user/competing_program/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.CustomerCompetingProgramAPI.as_view()),
 
-    url(r'^api/upgrid/user/(?P<client_id>[0-9a-fA-F\-]+)/competing_program/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.CustomerCompetingProgramAPI.as_view()),
+    url(r'^api/upgrid/user/(?P<client_id>[0-9a-fA-F\-]+)/competing_program/(?P<object_id>[0-9a-fA-F\-]+)/$',
+        apis.CustomerCompetingProgramAPI.as_view()),
+
     # numbers of finalreleased whoops reports status == "True"
     url(r'^api/upgrid/user/released_whoops/$', apis.FinalReleasedWhoops.as_view()),
 
@@ -41,7 +42,7 @@ urlpatterns=[
     url(r'^api/upgrid/user/(?P<client_id>[0-9a-fA-F\-]+)/$', apis.CustomerDetail.as_view()),
 
     # Put change subuser is_active status, Post create subuser
-    url(r'^api/upgrid/user/subuser$', apis.CreateOrChangeSubuser.as_view()),
+    url(r'^api/upgrid/user/subuser$', apis.CreateOrChangeSubUser.as_view()),
 
 
     # # Get Dashboard information for client +++
@@ -51,7 +52,7 @@ urlpatterns=[
 
 
 
-#---------------------------Report API----------------------------------------
+# ---------------------------Report API----------------------------------------
 
     # Get Whoops reports by customerprogram object_id +++
     url(r'^api/upgrid/whoops_reports/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.WhoopsReportsAPI.as_view()),
@@ -64,31 +65,30 @@ urlpatterns=[
 
     url(r'^api/upgrid/enhancement_reports/$', apis.EnhancementReportsAPI.as_view()),
 
-    #Post generate whoops reports share link. Post Param: univcustomer_program_id
+    # Post generate whoops reports share link. Post Param: univcustomer_program_id
     url(r'^api/upgrid/whoops_reports/shared/$', apis.ShareWhoopsReports.as_view(),),
-    #Get  get whoops reports through shared link. 
+    # Get  get whoops reports through shared link.
     url(r'^api/upgrid/whoops_reports/shared/(?P<object_id>[0-9a-zA-Z\-]+)/(?P<token>[0-9a-z\-]+)/$', apis.ShareWhoopsReports.as_view(),),
 
-    #Post generate enhancement reports share link. Post Param: univcustomer_program_id
+    # Post generate enhancement reports share link. Post Param: univcustomer_program_id
     url(r'^api/upgrid/enhancement_reports/shared/$', apis.ShareEnhancementReports.as_view(),),
-    #Get  getenhancement reports through shared link.
+    # Get  getenhancement reports through shared link.
     url(r'^api/upgrid/enhancement_reports/shared/(?P<object_id>[0-9a-zA-Z\-]+)/(?P<token>[0-9a-z\-]+)/$', apis.ShareEnhancementReports.as_view(),),
  
 
-    #------------------------------------Account Manager APIs-----------------------------------
+    # ------------------------------------Account Manager APIs-----------------------------------
     
-    #Check if the login user is manager. GET request
+    # Check if the login user is manager. GET request
     url(r'^api/upgrid/accountmanager/is_manager/$', apis.IsAccountManager.as_view()),
 
     # Get account manager's information and client_list under him.   GET request
     url(r'^api/upgrid/accountmanager/$', apis.AccountManager.as_view()),
 
-    #Get client detail infomation of a specific client by id.  GET :param  client_id/  POST create client
+    # Get client detail infomation of a specific client by id.  GET :param  client_id/  POST create client
     url(r'^api/upgrid/accountmanager/client/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.Client.as_view()),
 
     url(r'^api/upgrid/accountmanager/client/$', apis.Client.as_view()),
 
-    #url(r'api/upgrid/testing/$', apis.Testing.as_view()),
 
     # get all Ceebs in database. Used for accountmanager create client's Ceeb. GET request. 
     url(r'api/upgrid/accountmanager/ceebs/$', apis.UniversitySchoolAPI.as_view()),
@@ -96,14 +96,12 @@ urlpatterns=[
     # get all programs' object_id, ceeb code and name. GET request
     url(r'api/upgrid/accountmanager/programs/$', apis.ProgramAPI.as_view()),
 
-    #get department under a specific ceeb code. GET :param  ceeb
+    # get department under a specific ceeb code. GET :param  ceeb
     url(r'api/upgrid/accountmanager/department/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.DepartmentAPI.as_view()),
 
     # :param /?ceeb=??&department=??
     # Get program list for account manager to choice to create client's customer program. Based on Ceeb and department
     url(r'api/upgrid/accountmanager/dropdown_menu/programs/$', apis.CustomerAndCompetingProgramAPI.as_view()),
-
-    url(r'api/upgrid/$', apis.CreateManager.as_view()),
 
     url(r'api/upgrid/wwr/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.WhoopsWebReports.as_view()),
     url(r'api/upgrid/ewr/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.EnhancementWebReports.as_view()),

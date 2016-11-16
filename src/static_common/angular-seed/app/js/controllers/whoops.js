@@ -8,9 +8,8 @@ whoops.controller('WhoopsController',
     //////////
     var token = authenticationSvc.getUserInfo().accessToken;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
-    
 
-   
+        
     console.log("host 1 is "+location.host);
     //for api test
     // $http({
@@ -38,6 +37,9 @@ whoops.controller('WhoopsController',
 
 
     $scope.WhoopsViewer = function(Id, Program, Degree){
+      
+      //jQuery('#WhoopsReport').scrollTop(0);
+
       App.blocks('#whoops_loading', 'state_loading');
        
 
@@ -132,6 +134,9 @@ whoops.controller('WhoopsController',
      });
 
     }
+
+
+  
 
 
     $scope.addMessage = function() {

@@ -54,7 +54,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li>
+                    <li ng-hide="admin==='True'&&avatar_id===''">
                         <button class="btn btn-default" type="button" data-ng-click="oneui.settings.sideOverlayOpen = ! oneui.settings.sideOverlayOpen" data-js-blur>
                             <i class="fa fa-bell-o" style="color:#aaaaaa"></i>
                         </button>
@@ -85,6 +85,7 @@
 <img src="/static/angular-seed/app/img/school_logo/GSAS_Logo.jpg" height="34" ng-if="Ceeb==='2162'">
 <img src="/static/angular-seed/app/img/school_logo/PH_logo.png" height="34" ng-if="Ceeb==='2159'">
 <img src="/static/angular-seed/app/img/school_logo/SPS_logo.png" height="34" ng-if="Ceeb==='2619_SCE'">
+<img src="/static/angular-seed/app/img/school_logo/CSSW-logo.png" height="34" ng-if="Ceeb==='2158'">
 
 <div style="display:inline-block;vertical-align: bottom;font-size:14px" class="text-danger push-30-l">For Demonstration Purposes Only</div>
 

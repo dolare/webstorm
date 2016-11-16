@@ -16,7 +16,9 @@ from datetime import datetime   # used for shared link models
 
 # Create your models here.
 
-#------------------------Custom Base User-----------------------------------------
+# ------------------------Custom Base User-----------------------------------------
+
+
 class UpgridBaseUserManager(models.Manager):
     def _create_user(self, username, email, password, **extra_fields):
         """
@@ -38,7 +40,9 @@ class UpgridBaseUserManager(models.Manager):
     def get_by_natural_key(self, username):
         return self.get(**{self.model.USERNAME_FIELD: username})
         
-#class UpgridBaseUser(AbstractUser):
+# class UpgridBaseUser(AbstractUser):
+
+
 class UpgridBaseUser(models.Model):
     username = models.CharField(max_length=150,null=True, unique=True, blank=False)
     password = models.CharField(max_length=128)
@@ -46,7 +50,7 @@ class UpgridBaseUser(models.Model):
     email = models.EmailField(max_length=254, unique=True, null=True, blank=False)
     is_active = models.BooleanField(default=True)
     data_joined = models.DateTimeField(default=timezone.now)
-    #last_login = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    # last_login = models.DateTimeField(default=timezone.now, blank=True, null=True)
 
     objects = UpgridBaseUserManager()
 
@@ -57,8 +61,8 @@ class UpgridBaseUser(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(UpgridBaseUser, self).__init__(*args, **kwargs)
-        #store the raw password if set_password() is called so that it can be passed to 
-        #password_changed() after the model is saved.
+        # store the raw password if set_password() is called so that it can be passed to
+        # password_changed() after the model is saved.
         self._password=None
 
     def save(self, *args, **kwargs):
@@ -102,10 +106,11 @@ class UpgridBaseUser(models.Model):
     def natural_key(self):
         return (self.get_username(),)
 
-#---------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------
+
 
 class UpgridAccountManager(UpgridBaseUser):
-    #client = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT)
+
     mobile = models.CharField(max_length=20, null=True)
 
     class Meta:
@@ -114,10 +119,9 @@ class UpgridAccountManager(UpgridBaseUser):
 
 class UniversityCustomer(UpgridBaseUser):
 
-
     title = (('Master', 'Master.'), ('Dr','Dr'), ('Professor','Prof'), ('Mr', 'Mr.'), ('Miss', 'Miss.'),
-    ('Ms', 'Ms.'), ('Mrs', 'Mrs.'), ('Mx', 'Mx.'))
-    #Status = (('Active', 'Active'), ('Inactive', 'Inactive'))
+             ('Ms', 'Ms.'), ('Mrs', 'Mrs.'), ('Mx', 'Mx.'))
+
     positionlevel = (('University', 'University'), ('School', 'School'),
         ('Academic_Department', 'Academic_Department'),
         ('Administrative_Department', 'Administrative_Department'),
@@ -139,11 +143,9 @@ class UniversityCustomer(UpgridBaseUser):
     position = models.CharField(max_length=50, null=True)
     position_level = models.CharField(max_length=20, choices=positionlevel, default='University', null=True)
     phone = models.CharField(max_length=20, null=True)
-    account_type = models.CharField(max_length=20, choices=accounttype, default='sub',
-        null=True)
+    account_type = models.CharField(max_length=20, choices=accounttype, default='sub', null=True)
     service_until = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
-    competing_schools = models.ManyToManyField(UniversitySchool,
-        related_name='+')
+    competing_schools = models.ManyToManyField(UniversitySchool, related_name='+')
 
     def __str__(self):
         return '{0} - {1}'.format(self.Ceeb, self.username)
@@ -162,14 +164,13 @@ class UpgridAbstractDatedObject(models.Model):
         default_permissions = ('add', 'change', 'delete', 'view_only')   
 
 
-#Used for set up main user's program relation
+# Used for set up main user's program relation
 class UniversityCustomerProgram(UpgridAbstractDatedObject):
 
     Status = (('in_progress', 'In_Progress'), ('done', 'Done'))
 
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT)
-    #sub_user_readable = models.ManyToManyField(UniversityCustomer, on_delete=models.PROTECT)
     program = models.ForeignKey(Program, on_delete=models.PROTECT)
     whoops_status = models.CharField(max_length=50, choices=Status, default='in_progress')
     whoops_final_release = models.CharField(max_length=20, choices=(('True', 'Released'),
@@ -177,7 +178,7 @@ class UniversityCustomerProgram(UpgridAbstractDatedObject):
     enhancement_final_release = models.CharField(max_length=20, choices=(('True', 'Released'),
         ('False', 'Unreleased')), default='False')    
     customer_confirmation = models.CharField(max_length=20,
-        choices=(('Yes', 'Confirmed'), ('No', 'Not Confirmed')), default='No')
+                                             choices=(('Yes', 'Confirmed'), ('No', 'Not Confirmed')), default='No')
 
     class Meta(UpgridAbstractDatedObject.Meta):
         unique_together = ('customer', 'program')
@@ -186,13 +187,13 @@ class UniversityCustomerProgram(UpgridAbstractDatedObject):
         return '{0}'.format(self.program)
 
 
-#Used for set up main user's competimg program relation
+# Used for set up main user's competing program relation
 class CustomerCompetingProgram(UpgridAbstractDatedObject):
     Status = (('in_progress', 'In_Progress'), ('done', 'Done'))
 
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer_program = models.ForeignKey(UniversityCustomerProgram,
-        on_delete=models.PROTECT)
+                                         on_delete=models.PROTECT)
     program = models.ForeignKey(Program, on_delete=models.PROTECT)
     order = models.IntegerField(null=True, blank=True)
     enhancement_status = models.CharField(max_length=50, choices=Status, default='in_progress')
@@ -204,14 +205,14 @@ class CustomerCompetingProgram(UpgridAbstractDatedObject):
         return '{0}'.format(self.program)
 
 
-#Used for set up sub user's program relation
+# Used for set up sub user's program relation
 class ClientAndProgramRelation(UpgridAbstractDatedObject):
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    client    = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT, null=True)
+    client = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT, null=True)
     client_program = models.ForeignKey(UniversityCustomerProgram, on_delete=models.PROTECT, null=True)
 
     class Meta(UpgridAbstractDatedObject.Meta):
-        unique_together = ('client' , 'client_program')
+        unique_together = ('client', 'client_program')
 
     def __str__(self):
         return '{0} - {1}'.format(self.client, self.client_program)
@@ -219,12 +220,14 @@ class ClientAndProgramRelation(UpgridAbstractDatedObject):
 '''
 model for whoops report, almost same to UniversityCustomerProgram
 '''
+
+
 class WhoopsReports(models.Model):
     """This is the whooop reports model. it could store up to 5 history of whoops reports."""
     @staticmethod
     def delete_history():
         num = WhoopsReports.objects.count()
-        if num!=None and num>=9:
+        if num != None and num >= 9:
             to_be_delete=WhoopsReports.objects.order_by('wr_created')[:5]
             for item in to_be_delete:
                 item.delete()
@@ -232,38 +235,44 @@ class WhoopsReports(models.Model):
     wr_created = models.DateTimeField(default=datetime.now, blank=True)
     wr_customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT) 
     wr_program = models.ForeignKey(Program, on_delete=models.PROTECT)
-    wr_whoops_report= models.BinaryField(blank= True, null=True) #
-    wr_token=models.UUIDField(primary_key=False,  unique=True, default=uuid.uuid4, editable=False)
+    wr_whoops_report = models.BinaryField(blank= True, null=True)
+    wr_token = models.UUIDField(primary_key=False,  unique=True, default=uuid.uuid4, editable=False)
+
     class Meta:
-        unique_together = (('wr_customer', 'wr_program','wr_created'),) 
+        unique_together = (('wr_customer', 'wr_program', 'wr_created'),)
+
     def __str__(self):
         return '{0} - {1}'.format(self.wr_customer, self.wr_program, self.wr_created)
         
     def save(self, *args, **kwargs):
-        self.__class__.delete_history() # call the static method befor saving
+        self.__class__.delete_history()  # call the static method before saving
         super(WhoopsReports, self).save(*args, **kwargs)
 '''
 model for enhancement report
 '''
+
+
 class EnhancementReports(models.Model):
     """This is the enhancement reports model. it could store up to 5 history of whoops reports."""
     @staticmethod
     def delete_history():
         num = EnhancementReports.objects.count()
-        if num!=None and num>=5:
+        if num != None and num >= 5:
             to_be_delete=EnhancementReports.objects.order_by('er_created')[:num-4]
             for item in to_be_delete:
                 item.delete()
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     er_created = models.DateTimeField(default=datetime.now, blank=True) 
     er_customer_program = models.ForeignKey(Program, on_delete=models.PROTECT)
-    er_enhancement_report= models.BinaryField(blank= True, null=True) #
-    er_token=models.UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
+    er_enhancement_report = models.BinaryField(blank=True, null=True)
+    er_token = models.UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
     
     class Meta:
-        unique_together = (('er_customer_program', 'er_created',),) 
+        unique_together = (('er_customer_program', 'er_created',),)
+
     def __str__(self):
         return '{0}-{1}'.format(self.er_customer_program, self.er_created)
+
     def save(self, *args, **kwargs):
-        self.__class__.delete_history() # call the static method inside method 
+        self.__class__.delete_history()  # call the static method inside method
         super(EnhancementReports, self).save(*args, **kwargs)

@@ -12,6 +12,7 @@ angular.module('apiServiceModule', [])
     var subuserNum = null;
     var profile = null;
     var upgridUser;
+    
 
     var IfAdmin = function(token) {
       var deferred = $q.defer();
@@ -420,9 +421,10 @@ angular.module('apiServiceModule', [])
 
 
         var getNewWhoops = function(token) {
-
+          var avatar = avatarService.getClientId() ? "&cid="+ avatarService.getClientId(): "";
+           console.log("avatar = "+avatar);
           var promise =  $http({
-                url: '/api/upgrid/user/program/?order=oname&wfs=True',
+                url: '/api/upgrid/user/program/?order=oname&wfs=True'+avatar,
                 method: 'GET',
                 
                 headers: {
@@ -430,6 +432,7 @@ angular.module('apiServiceModule', [])
                 }
           }).then(function (response) {
 
+                console.log("reponse="+JSON.stringify(response));
                 return response.data.results
           }).
            catch(function(error){
@@ -444,16 +447,17 @@ angular.module('apiServiceModule', [])
 
 
         var getNewEnhancement = function(token) {
-
+          var avatar = avatarService.getClientId() ? "&cid="+ avatarService.getClientId(): "";
+          console.log("avatar = "+avatar);
           var promise =  $http({
-                url: '/api/upgrid/user/program/?order=oname&efs=True',
+                url: '/api/upgrid/user/program/?order=oname&efs=True'+avatar,
                 method: 'GET',
                 
                 headers: {
                   'Authorization': 'JWT ' + token
                 }
           }).then(function (response) {
-
+                console.log("reponse="+JSON.stringify(response));              
                 return response.data.results
           }).
            catch(function(error){

@@ -119,13 +119,13 @@
                     <!-- <td><p>{{data.contractLevel}}</p>
                     </td> -->
 
-                    <td ng-if="data.contractLevel==='basic'"><p><span style="border-radius: 5px;z-index: auto; width: 135px; right: auto; height: 34px; bottom: auto; left: 0px; top: 0px; background-color: #b6d1ec; margin-bottom: 5px;padding: 8px 30px 8px 10px;color: rgba(0, 0, 0, 0.5);font-weight: 700;font-size: 13px;" class="text-center" data-uib-tooltip="Basic service allows you to select 1 competing program to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge"></i>&nbsp;&nbsp;BASIC</span></p></td>
+                    <td ng-if="data.contractLevel==='basic'"><p><span style="border-radius: 5px;z-index: auto; width: 135px; right: auto; height: 34px; bottom: auto; left: 0px; top: 0px;   margin-bottom: 5px;padding: 8px 30px 8px 10px;font-weight: 700;font-size: 13px;" class="bg-info-light text-info text-center" data-uib-tooltip="Basic service allows you to select 1 competing program to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-info"></i>&nbsp;&nbsp;BASIC</span></p></td>
 
-                    <td ng-if="data.contractLevel==='silver'"><p><span style="border-radius: 5px;z-index: auto; width: 135px; right: auto; height: 34px; bottom: auto; left: 0px; top: 0px; background-color: #b6d1ec; margin-bottom: 5px;padding: 8px 30px 8px 10px;color: rgba(0, 0, 0, 0.5);font-weight: 700;font-size: 13px;" class="text-center" data-uib-tooltip="Silver service allows you to select 2 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge"></i>&nbsp;&nbsp;SILVER</span></p></td>
+                    <td ng-if="data.contractLevel==='silver'"><p><span style="border-radius: 5px;z-index: auto; width: 135px; right: auto; height: 34px; bottom: auto; left: 0px; top: 0px;   margin-bottom: 5px;padding: 8px 30px 8px 10px;font-weight: 700;font-size: 13px;" class="bg-info-light text-info text-center" data-uib-tooltip="Silver service allows you to select 2 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-info"></i>&nbsp;&nbsp;SILVER</span></p></td>
 
-                    <td ng-if="data.contractLevel==='gold'"><p><span style="border-radius: 5px;z-index: auto; width: 135px; right: auto; height: 34px; bottom: auto; left: 0px; top: 0px; background-color: #b6d1ec; margin-bottom: 5px;padding: 8px 30px 8px 10px;color: rgba(0, 0, 0, 0.5);font-weight: 700;font-size: 13px;" class="text-center" data-uib-tooltip="Gold service allows you to select 3 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge"></i>&nbsp;&nbsp;GOLD</span></p></td>
+                    <td ng-if="data.contractLevel==='gold'"><p><span style="border-radius: 5px;z-index: auto; width: 135px; right: auto; height: 34px; bottom: auto; left: 0px; top: 0px;   margin-bottom: 5px;padding: 8px 30px 8px 10px;font-weight: 700;font-size: 13px;" class="bg-info-light text-info text-center" data-uib-tooltip="Gold service allows you to select 3 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-info"></i>&nbsp;&nbsp;GOLD</span></p></td>
 
-                    <td ng-if="data.contractLevel==='platinum'"><p><span style="border-radius: 5px;z-index: auto; width: 135px; right: auto; height: 34px; bottom: auto; left: 0px; top: 0px; background-color: #b6d1ec; margin-bottom: 5px;padding: 8px 30px 8px 10px;color: rgba(0, 0, 0, 0.5);font-weight: 700;font-size: 13px;" class="text-center" data-uib-tooltip="Platinum service allows you to select 4 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge"></i>&nbsp;&nbsp;PLATINUM</span></p></td>
+                    <td ng-if="data.contractLevel==='platinum'"><p><span style="border-radius: 5px;z-index: auto; width: 135px; right: auto; height: 34px; bottom: auto; left: 0px; top: 0px;   margin-bottom: 5px;padding: 8px 30px 8px 10px;font-weight: 700;font-size: 13px;" class="bg-info-light text-info text-center" data-uib-tooltip="Platinum service allows you to select 4 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-info"></i>&nbsp;&nbsp;PLATINUM</span></p></td>
 
                     
                   </tr>
@@ -306,21 +306,21 @@
 
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-phone">User Program<span class="text-danger">*</span></label>
+                  <label class="col-md-4 control-label" for="val-phone">Program access<span class="text-danger">*</span></label>
                   <div class="col-md-7">
                     <table st-table="program_permission" class="table table-hover block">
 
                       <tbody>
                       <tr ng-repeat = "row in program_permission">
                       
-                      <td><label class="css-input css-checkbox css-checkbox-primary">
+                      <td style="padding-top:5px; padding-bottom: 5px"><label class="css-input css-checkbox css-checkbox-primary">
 
                       <input type="checkbox" ng-model="set_permission[row.objectId].checked" ng-change="checkvalue()"><span></span>
 
 
                       </label></td>
 
-                        <td>{{row.programName}} ({{row.degreeName}})</td>
+                        <td style="padding-top:5px; padding-bottom: 5px">{{row.programName}} ({{row.degreeName}})</td>
 
                       </tr>
                       </tbody>

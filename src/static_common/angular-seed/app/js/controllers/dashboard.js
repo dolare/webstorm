@@ -242,15 +242,15 @@ dashboard.controller('DashboardController',
    //show the name and position
    $scope.contact_name = List.profile.contact_name;
    $scope.position = List.profile.position;
-   $scope.subuser = List.profile.subuser_list;
+   $scope.subuser = List.profile.sub_user_list;
 
    //dashboard headline number
    
-   $scope.total_num = Dash.ceebprogram_nums;
-   $scope.customer_num = Dash.customerprogram_nums;
-   $scope.whoops_num = Dash.finalreleased_whoops;
-   $scope.enhancement_num = Dash.finalreleased_enhancement;
-   $scope.unconfirmed_num =Dash.unconfirmedprogram_nums;
+   $scope.total_num = Dash.ceeb_program_nums;
+   $scope.customer_num = Dash.customer_program_nums;
+   $scope.whoops_num = Dash.final_released_whoops;
+   $scope.enhancement_num = Dash.final_released_enhancement;
+   $scope.unconfirmed_num =Dash.unconfirmed_program_nums;
 
    //dashboard pie chart data
    var percent1 = $scope.customer_num/$scope.total_num*100;

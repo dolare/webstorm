@@ -59,26 +59,26 @@
 
                                     <table>
                                     <tr>
-                                        <td class="text-muted">Univerity</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">University</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{e_array_final[0][0].university_school.university}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">School</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{e_array_final[0][0].university_school.school}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">Program</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{e_array_final[0][0].program_name}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">Degree</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{e_array_final[0][0].degree.name}}&nbsp;</td>
                                     </tr>
 
@@ -100,7 +100,29 @@
                                     <address>
                                         
                                         
-                                        <span class="text-muted">Generated on</span><br>{{date | date:'MMM dd , yyyy'}}
+                                       <table class="pull-right">
+                                    <tr>
+                                        <td class="text-muted text-left">Released on :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    </tr>
+
+
+                                    <tr class="pull-right">
+                                        <td style="border-bottom: 1px solid #ccc">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{date | date:'MMM dd , yyyy'}}&nbsp;&nbsp;
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted text-left">Last updated on : </td>
+                                    </tr>
+
+                                    <tr class="pull-right">
+                                        <td style="border-bottom: 1px solid #ccc">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{date | date:'MMM dd , yyyy'}}&nbsp;&nbsp;
+                                        </td>
+                                    </tr>
+
+                                    </table>
                                     </address>
                                 </div>
                                 <!-- END Client Info -->
@@ -115,7 +137,7 @@
                                    
                                     <tbody>
                                         <tr class="font-w600 text-primary" style="background: #f6f6f6">
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Univeristy school</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">University school</td>
                                             <td ng-repeat = "row in e_array_final[0]">{{row.university_school.university}}</td>
                                         </tr>
 
@@ -163,7 +185,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Audience</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Program objectives</td>
                                             <td ng-class="{'note-left': row.audience}" ng-repeat = "row in e_array_final[0]">{{row.audience}}</td>
                                         </tr>
 
@@ -191,18 +213,18 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Handbook</td>
-                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.additional_url"><a href="{{row.additional_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.additional_url"><a href="{{row.additional_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">FAQ</td>
                                            
-                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.program_faq_url"><a href="{{row.program_faq_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.program_faq_url"><a href="{{row.program_faq_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Admission stats</td>
-                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.stats_profile_url"><a href="{{row.stats_profile_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Admission stats.</td>
+                                            <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.stats_profile_url"><a href="{{row.stats_profile_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
 
 
@@ -248,7 +270,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Required curriculum units</td>
-                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.min_total_unit">{{row.min_total_unit}} per {{row.curriculum_unit.name}}</span></td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.min_total_unit">{{row.min_total_unit}} {{row.curriculum_unit.name}}</span></td>
                                         </tr>
 
                                         <tr>
@@ -278,7 +300,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Curriculums</td>
-                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.program_faq_url"><a href="{{row.curriculum_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[1]"><span ng-if="row.program_faq_url"><a href="{{row.curriculum_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
                                         
 
@@ -325,7 +347,7 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Deadline url</td>
 
 
-                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.deadline_url"><a href="{{row.deadline_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.deadline_url"><a href="{{row.deadline_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
 
                                         </tr>
 
@@ -481,7 +503,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Admission requirement</td>
-                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.program_req_url"><a href="{{row.program_req_url}}" target="_blank" style="text-decoration: underline;">link</a></span><span ng-if="!row.program_req_url&&row.school_req_url"><a href="{{row.school_req_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.program_req_url"><a href="{{row.program_req_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span><span ng-if="!row.program_req_url&&row.school_req_url"><a href="{{row.school_req_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
                                         
 
@@ -494,28 +516,28 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">International transcript</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l transcript</td>
                                             <td ng-repeat = "row in e_array_final[6]"><span ng-repeat="row1 in row"><span ng-if="row1" data-uib-tooltip="{{row1.description}}" data-tooltip-placement="top" style="border-bottom: 1px dashed #aaa;cursor: pointer;">{{row1.name}}<br></span></span></td>
                                         </tr>
 
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int lang waiver</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l lang waiver</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.intl_lang_waiver===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.intl_lang_waiver===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int lang waiver notes</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l lang waiver notes</td>
                                             <td ng-class="{'note-left': row.intl_lang_waiver_conditions}" ng-repeat = "row in e_array_final[4]">{{row.intl_lang_waiver_conditions}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl english test required</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l english test required</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.intl_english_test_required===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.intl_english_test_required===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl english test</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l english test</td>
                                             <td ng-repeat = "row in e_array_final[7]"><span ng-repeat="row2 in row">{{row2.name}}<br></span></td>
                                                 
                                         </tr>
@@ -552,12 +574,12 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl ielts requirements</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l ielts requirements</td>
                                             <td ng-repeat = "row in e_array_final[4]">{{row.intl_ielts_reqs}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Intl other</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l other</td>
                                             <td ng-class="{'note-left': row.intl_other}" ng-repeat = "row in e_array_final[4]">{{row.intl_other}}</td>
                                         </tr>
                                        
@@ -593,7 +615,7 @@
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Scholarship url</td>
 
-                                            <td ng-repeat = "row in e_array_final[8]"><span ng-if="row.scholarship_program_specific_url"><a href="{{row.scholarship_program_specific_url}}" target="_blank" style="text-decoration: underline;">link</a></span><span ng-if="!row.scholarship_program_specific_url&&row.scholarship_general_url"><a href="{{row.scholarship_general_url}}" target="_blank" style="text-decoration: underline;">link</a></span></td>
+                                            <td ng-repeat = "row in e_array_final[8]"><span ng-if="row.scholarship_program_specific_url"><a href="{{row.scholarship_program_specific_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span><span ng-if="!row.scholarship_program_specific_url&&row.scholarship_general_url"><a href="{{row.scholarship_general_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
 
 
                                         </tr>

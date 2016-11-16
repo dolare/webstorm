@@ -28,15 +28,15 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             }).then(function (response) {
 
                console.log("dashboard="+ JSON.stringify(response.data));
-                $scope.customerprogram_nums = response.data.customerprogram_nums;
-                $scope.finalreleased_enhancement = response.data.finalreleased_enhancement;
-                $scope.unconfirmedprogram_nums = response.data.unconfirmedprogram_nums;
+                $scope.customerprogram_nums = response.data.customer_program_nums;
+                $scope.finalreleased_enhancement = response.data.final_released_enhancement;
+                $scope.unconfirmedprogram_nums = response.data.unconfirmed_program_nums;
                 $scope.width = 100 * $scope.finalreleased_enhancement / $scope.customerprogram_nums;
 
                 if ($scope.accountType === 'main') {
                     //load modal when not confirmed
                     if ($scope.unconfirmedprogram_nums !== 0) {
-                        console.log("$scope.unconfirmedprogram_nums="+$scope.unconfirmedprogram_nums);
+                        //console.log("$scope.unconfirmedprogram_nums="+$scope.unconfirmed_program_nums);
                         $("#myModalConfirm").modal('show');
                     };
                     
@@ -51,40 +51,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
 
            }
 
-    // $http({
-    //       url: '/api/upgrid/enhancement_reports/',
-    //       method: 'PUT',
-    //       data: {
-    //         object_id: "98fcdb0b-e78c-4f94-b2a4-ce8cf8deb734/be679bd5-1d5d-4408-8b01-4c897cab2e47"
-    //       },
-    //       headers: {
-    //         'Authorization': 'JWT ' + token
-    //       }
-    // }).then(function (response) {
-
-    //    $scope.details = response.data;
-
-    //    console.log("confirm applied"+ JSON.stringify(response));
-    //     // if(response.status === 204){
-    //     //   console.log("===204");
-    //     // }
-    // }).
-    //  catch(function(error){
-    //     console.log('an error occurred...'+JSON.stringify(error));
-
-    //  });
-
-
-    
-
-
-    ////////////////////////////////////
-    //get the program+degree data from deferred promise
-    //Newest data
-    //data used for the enhancement table (confirmed)
-    
-    //////$scope.data = tableDataService.getEnhancement(List);
-
+   
     $scope.EnhancementViewer = function(Id, Program, Degree){
       $scope.date = new Date();
       App.blocks('#enhancement_loading', 'state_loading');
@@ -132,7 +99,12 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
              }
 
              $scope.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
-             App.blocks('#enhancement_loading', 'state_normal');
+             
+
+             angular.element(document).ready(function () {
+               App.blocks('#enhancement_loading', 'state_normal');
+             });
+
 
              console.log('e_array_1='+JSON.stringify($scope.e_array_final));
 
@@ -143,30 +115,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
 
            });
 
-
-
     }
-
-
-    $scope.reportShare = function(Id, Program, Degree) {
-      $scope.url = {
-        text: null
-      };
-
-      $scope.copied = false;
-      new Clipboard('.btn');
-
-      $scope.shareLoading = true;
-
-        $scope.url = {
-          text: $location.absUrl().split('#')[0]+'#/upgrid/share_enhancement_report/'+Id+'/'+Program+'/'+Degree+'/',
-        };
-
-
-        $scope.shareLoading = false;
-    
-
-    };
 
 
     $scope.togglefullen = function(){
@@ -180,14 +129,9 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
       
    }
 
-
-
-    
-
     $scope.displayeddata1 = [];
 
     //App.blocks('#confirmloading', 'state_loading');
-
 
     $scope.confirmpipe = function(tableState){
       //$scope.isLoadingConfirm = true;
@@ -213,8 +157,6 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
           
           //$scope.isLoadingConfirm = false;
           App.blocks('#confirmloading', 'state_normal');
-
-  
 
         });
 
@@ -250,8 +192,6 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
           tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
           
 
-
-
           //$scope.isLoading = false;
           App.blocks('#loadingtable', 'state_normal');
 
@@ -260,8 +200,6 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
         });
 
     }
-
-
 
     //init the confirm dialog data
     //////$scope.confirmData = tableDataService.getEnhancementConfirm(List);
@@ -323,12 +261,8 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
 
              });
 
-
-            
-
         }
 
-       
     }
 
 
@@ -350,7 +284,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             }).then(function (response) {
 
                $scope.details = response.data;
-
+               //console.log("compting response = "+reponse)
                console.log("competing programs"+ JSON.stringify(response.data.competing_program));
 
                var competingArray = response.data.competing_program;
@@ -433,25 +367,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             }
         }
     };
-    //~~~~
-    //ngTableDefaults.settings.counts = [];
-    //remove the duplicate degree
-    // $scope.degreeSelection = [];
     
-    // for (i = 0; i < $scope.data.length; i++) {
-    //     var exists = false;
-    //     for (j = 0; j < $scope.degreeSelection.length; j++) {
-    //         if ($scope.data[i].degreeName === $scope.degreeSelection[j]) {
-    //             exists = true;
-    //             break;
-    //         }
-    //     }
-    //     if (!exists) {
-    //         $scope.degreeSelection.push($scope.data[i].degreeName);
-    //     };
-    // };
-    //~~~~~
-    //one checked
     $scope.selectOne = function(Name, Degree, Id,  WStatus, EStatus, Confirm, Notes) {
         
         if($scope.$storage.upgrid[Name+'|'+ Degree]['enhancement']){
@@ -473,42 +389,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
 
 
     };
-    $scope.pdfViewer = function(Id, competing) {
-       //$event.stopPropagation();
-
-        //jQuery("p:nth-child($index)").addClass("text-primary");
-        //angular.element(document.getElementById("loadingtable").getElementsByClassName("js-table-sections-header")).toggleClass('open');
-
-        PDFObject.embed("#", "#my-container");
-        $scope.viewerLoading = true;
-        
-        $http({
-            url: '/api/upgrid/'+ avatar_value +'enhancement_reports/'+Id+'/',
-            method: 'GET',
-            headers: {
-                'Authorization': 'JWT ' + token
-            },
-            // 'Content-Type': 'application/json'
-            responseType: 'arraybuffer'
-        }).then(function(response) {
-            console.log("RESPONSE= " + JSON.stringify(response));
-            var file = new Blob([response.data], {
-                type: 'application/pdf'
-            });
-            var fileURL = (window.URL || window.webkitURL).createObjectURL(file);
-            $scope.pdflink = fileURL;
-            console.log("link = " + $scope.pdflink);
-            //window.open(fileURL);
-            console.log("success");
-            console.log("dismissing progress bar");
-            $scope.viewerLoading = false;
-            PDFObject.embed(fileURL, "#my-container");
-        }).
-        catch(function(error) {
-            console.log('an error occurred...' + JSON.stringify(error));
-            $scope.viewerLoading = false;
-        });
-    };
+   
     $scope.pdfDownload = function(Id, competing, name, degree) {
         App.blocks('#loadingtable', 'state_loading');
         console.log("downloading");
@@ -636,10 +517,10 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
                         });
 
                }).then(function (response) {
-                $scope.customerprogram_nums = response.data.customerprogram_nums;
-                $scope.finalreleased_enhancement = response.data.finalreleased_enhancement;
-                $scope.unconfirmedprogram_nums = response.data.unconfirmedprogram_nums;
-                console.log("customerprogram_nums = "+$scope.customerprogram_nums);
+                $scope.customerprogram_nums = response.data.customer_program_nums;
+                $scope.finalreleased_enhancement = response.data.final_released_enhancement;
+                $scope.unconfirmedprogram_nums = response.data.unconfirmed_program_nums;
+                //console.log("customerprogram_nums = "+$scope.customerprogram_nums);
                 $scope.width = 100 * $scope.finalreleased_enhancement / $scope.customerprogram_nums;
 
                 $("#myModalConfirm").modal('toggle');
@@ -676,14 +557,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
 
 
     $scope.confirmCheckOne = function() {
-        // $scope.confirmCheckAllBox = true;
-        // for (var i = 0; i < $scope.confirmData.length; i++) {
-        //     if ($scope.confirmData[i].checked !== true) {
-        //         $scope.confirmCheckAllBox = false;
-        //         break;
-        //     }
-        // };
-        // $scope.confirmAll = $scope.confirmCheckAllBox;
+        
     }
     $scope.confirmCheckAll = function() {
             //console.log("confirm all = "+$scope.confirmAll);

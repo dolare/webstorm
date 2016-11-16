@@ -10,6 +10,8 @@ controller('ShareAllController',
 
     // console.log("$state.params.url= "+$state.params.url);
     ///////////////////////////////////
+    angular.element(document.getElementsByTagName("body")).addClass('frame');
+
     
 
     $scope.univeristy_name = List.profile.university;

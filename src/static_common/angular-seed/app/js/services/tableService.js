@@ -18,7 +18,7 @@ angular.module('tableServiceModule', [])
           "objectId": List[i].object_id,
           "programName": List[i].program_name,
           "degreeName": List[i].program_degree,
-          "notes": List[i].has_expertnotes,
+          "notes": List[i].has_expert_notes,
           "whoops_status": List[i].whoops_final_release,
           "enhancement_status": List[i].enhancement_final_release,
           "confirm": List[i].customer_confirmation,
@@ -76,7 +76,7 @@ angular.module('tableServiceModule', [])
           "objectId": List[i].object_id,
           "programName": List[i].program_name,
           "degreeName": List[i].program_degree,
-          "notes": List[i].has_expertnotes,
+          "notes": List[i].has_expert_notes,
           "whoops_status": List[i].whoops_final_release,
           "enhancement_status": List[i].enhancement_final_release,
           "confirm": List[i].customer_confirmation,
@@ -226,7 +226,7 @@ angular.module('tableServiceModule', [])
 
         // })(),
         "competingSchools": List.profile.competing_schools,
-        "subuser": List.profile.subuser_list,
+        "subuser": List.profile.sub_user_list,
         "username": List.profile.username,
         "ceeb": List.profile.Ceeb,
         // "subuserNum": List.profile.subuserNum

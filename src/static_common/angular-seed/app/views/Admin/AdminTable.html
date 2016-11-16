@@ -140,20 +140,21 @@
                                                     </button>
                                                     <button class="btn btn-xs btn-default" type="button">
                                                         <i class="fa fa-user-secret push-5-r text-info"></i></button> -->
-                                                        <div class="btn-group">
-                                                        <button class="btn btn-default" data-js-blur data-toggle="modal" data-target="#modal-large" ng-click="addnew(row.id)">
-                                                        <span data-uib-tooltip="Edit" data-tooltip-placement="top">
-                                                        <a class="fa fa-pencil text-success"></a>
-                                                        </span>
-                                                        </button>
-                                                        
-                                                        <button class="btn btn-default" ng-click="impersonate(row.id)" data-js-blur>
-                                                          <span data-uib-tooltip="Impersonate" data-tooltip-placement="top">
-                                                        <a class="fa fa-user-secret text-info"></a>  
-                                                          </span>
-                                                        </button>
+                                                      
+                                                                            <div class="btn-group">
+                                                                        <button class="btn btn-default" data-toggle="modal" data-target="#modal-large" ng-click="addnew(row.id)" data-js-blur>
+                                                                        <a data-uib-tooltip="Edit" data-tooltip-placement="top" class="fa fa-pencil text-success">
+                                                                        </a>
+                                                                        </button>
+                                                                        
+                                                                        <button class="btn btn-default" data-toggle="modal" data-target="#myModal1" ng-click="impersonate(row.id)"  data-js-blur>
+                                                                          <a data-uib-tooltip="Impersonate" data-tooltip-placement="top" class="fa fa-user-secret text-info">
+                                                                         </a> 
 
-                                                        </div>
+
+                                                                        </button>
+                                                                        
+                                                                      </div>
 
                                                 </td>
 
@@ -207,7 +208,7 @@
                             <div class="block-header bg-primary">
                                 <ul class="block-options">
                                     <li>
-                                        <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                        <button data-dismiss="modal" type="button"><i class="si si-close" style="font-size: 20px"></i></button>
                                     </li>
                                 </ul>
                                 <h3 class="block-title text-center">Add a new client</h3>
@@ -259,7 +260,7 @@
                                                                 <label for="simple-classic-progress-account-name" class="col-md-4 control-label">Account Name</label>
                                                                 <div class="col-md-8 input-group" style="padding-right: 15px; padding-left: 15px;">
                                                                 <input ng-model="account_name" class="form-control" type="text" id="simple-classic-progress-account-name" name="simple-classic-progress-account-account-name" placeholder="Please enter the account name">
-                                                                <span class="input-group-addon">@M</span>
+                                                                
                                                                 </div>
                                                             </div>
 
@@ -567,7 +568,7 @@
 
                                                                 <td class="text-center"> 
                                                                     <span ng-if="row.assignment_status==='Assigned'"><span class="label label-info">Assigned</span></span>
-                                                                    <span ng-if="row.assignment_status==='In progress'"><span class="label label-primary">In progress</span></span>
+                                                                    <span ng-if="row.assignment_status==='In_Progress'"><span class="label label-primary">In progress</span></span>
                                                                     <span ng-if="row.assignment_status==='Need update'"><span class="label label-warning">Need update</span></span>
                                                                     <span ng-if="row.assignment_status==='Done'"><span class="label label-success">Done</span></span>
                                                                     <span ng-if="row.assignment_status==='-'"><span class="label label-default">N/A</span></span>
@@ -575,7 +576,7 @@
                                                                 </td>
                                                                 <td class="text-center">    
                                                                     <span ng-if="row.review_status==='Assigned'"><span class="label label-info">Assigned</span></span>
-                                                                    <span ng-if="row.review_status==='In progress'"><span class="label label-primary">In progress</span></span>
+                                                                    <span ng-if="row.review_status==='In_Progress'"><span class="label label-primary">In progress</span></span>
                                                                     <span ng-if="row.review_status==='None'"><span class="label label-default">None</span></span>
                                                                     <span ng-if="row.review_status==='Done'"><span class="label label-success">Done</span></span>
                                                                     <span ng-if="row.review_status==='-'"><span class="label label-default">N/A</span></span>

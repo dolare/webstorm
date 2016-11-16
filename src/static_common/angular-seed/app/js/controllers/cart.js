@@ -314,6 +314,11 @@ controller('ReportsController',
 
 
     $scope.ViewAll = function () {
+
+
+        App.blocks('#viewall_loading', 'state_loading');
+        
+
         console.log("$local="+JSON.stringify($storage.upgrid));
         console.log('storage result= '+JSON.stringify(cartCounter.counter()));
 
@@ -323,7 +328,8 @@ controller('ReportsController',
 
         for(i=0; i<$scope.view_counter.length; i++){
 
-          $scope.report_array.push({'w_array_final': [],
+          $scope.report_array.push({'order': i,
+                                    'w_array_final': [],
                                     'e_array_final': [],
                                     'whoops_report_program': $scope.view_counter[i].name ,
                                     'whoops_report_degree': $scope.view_counter[i].degree
@@ -502,6 +508,9 @@ controller('ReportsController',
 
 
         });
+
+
+        App.blocks('#viewall_loading', 'state_normal');
         
 
 

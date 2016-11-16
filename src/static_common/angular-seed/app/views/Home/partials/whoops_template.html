@@ -1,7 +1,7 @@
                
                         <div class="block-content block-content-narrow bg-white" style="height:100%;" id="print-content">
-
-
+                            <!-- <a href="" scroll-to="haha">click to scroll to `#h1`</a><br />
+ -->
                         <style>
                             @media print {
                             body * {
@@ -59,25 +59,25 @@
                                     <table>
                                     <tr>
                                         <td class="text-muted">Univerity</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{w_array_final[9][0].university}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">School</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{w_array_final[9][0].school}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">Program</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{w_array_final[9][0].program}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">Degree</td>
-                                        <td>&nbsp;:&nbsp;&nbsp;</td>
+                                        <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{w_array_final[9][0].degree}}&nbsp;</td>
                                     </tr>
 
@@ -97,7 +97,33 @@
                                     <address>
                                         
                                         
-                                        <span class="text-muted">Generated on</span><br>{{date | date:'MMM dd , yyyy'}}
+                                    <table class="pull-right">
+                                    <tr>
+                                        <td class="text-muted text-left">Released on :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    </tr>
+
+
+                                    <tr class="pull-right">
+                                        <td style="border-bottom: 1px solid #ccc">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{date | date:'MMM dd , yyyy'}}&nbsp;&nbsp;
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-muted text-left">Last updated on : </td>
+                                    </tr>
+
+                                    <tr class="pull-right">
+                                        <td style="border-bottom: 1px solid #ccc">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{date | date:'MMM dd , yyyy'}}&nbsp;&nbsp;
+                                        </td>
+                                    </tr>
+
+                                    </table>
+<!-- 
+                                        <span class="text-muted">Released on</span><br>{{date | date:'MMM dd , yyyy'}}
+                                        <br>
+                                        <span class="text-muted">Last updated on</span><br>{{date | date:'MMM dd , yyyy'}} -->
                                     </address>
                                 </div>
                                 <!-- END Client Info -->
@@ -778,7 +804,7 @@
                 </td>
                 <td>
                     <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
-
+                    <!-- <div id="haha">haha</div> -->
 
                 </td>
                 

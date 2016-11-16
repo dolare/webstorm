@@ -3,7 +3,8 @@ angular.module('myApp.ShareWhoops', []).
 controller('ShareWhoopsController',
     function($timeout, $stateParams, $scope, $location, $window, $http, $state) {
         
-        
+        angular.element(document.getElementsByTagName("body")).addClass('frame');
+
         $scope.date = new Date();
         
         App.blocks('#whoops_loading', 'state_loading');

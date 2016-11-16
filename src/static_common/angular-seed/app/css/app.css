@@ -908,3 +908,43 @@ Full screen Modal
 .note-left {
   text-align: left !important;
 }
+
+.reportall.table>tbody>tr>td {
+    vertical-align: top;
+}
+
+
+/*scrollbar*/
+.frame {
+    overflow-y: auto;
+}
+
+.frame::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 25px;
+}
+
+.frame::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+.frame::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+.frame::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+    
+}
+
+.frame::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    border: 2px solid #f5f5f5; /* should match background, can't be transparent */
+    background-color: #a4a4a4;
+}
+
+
+.modal-open
+{ 
+  position: relative;
+} 
