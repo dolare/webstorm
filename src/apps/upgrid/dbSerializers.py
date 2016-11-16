@@ -36,9 +36,14 @@ class TuitionUnitSerializer(serializers.ModelSerializer):
 
 
 class UniversitySchoolSerializer(serializers.ModelSerializer):
+	university = SerializerMethodField()
+
     class Meta:
         model = UniversitySchool
-        fields = ('university','school',)
+        fields = ('university', 'school',)
+
+    def get_university(self,obj):
+		return obj.university_foreign_key.name    	
 
 
 # Requirement.exam serializer
