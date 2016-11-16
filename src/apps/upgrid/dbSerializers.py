@@ -1,17 +1,22 @@
-#model serializer
+# model serializer
 from rest_framework import serializers, exceptions
-#our lib
+# our lib
 from ceeb_program.models import * # unsafe
-#lib in same project
+# lib in same project
+
+
 class AbstractSimpleObjectSerializer(serializers.ModelSerializer):
     class Meta:
         model= AbstractSimpleObject
         fields =('name',) 
-            
+
+
 class DurationUnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = DurationUnit
         fields = ('name',)
+
+
 class DegreeRefSerializer(serializers.ModelSerializer):
     class Meta:
         model= DegreeRef
@@ -29,12 +34,14 @@ class TuitionUnitSerializer(serializers.ModelSerializer):
         model= TuitionUnit
         fields =('name',)
 
+
 class UniversitySchoolSerializer(serializers.ModelSerializer):
     class Meta:
         model = UniversitySchool
         fields = ('university','school',)
-    
-# Requirement.exam seiralizer
+
+
+# Requirement.exam serializer
 class ExamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exam
@@ -44,64 +51,70 @@ class ExamSerializer(serializers.ModelSerializer):
 class ProgramSerializer(serializers.ModelSerializer):
     degree=DegreeRefSerializer(read_only=True,required=False,many=False)
     university_school=UniversitySchoolSerializer(read_only=True,required=False,many=False)
+
     class Meta:
         model = Program
         fields = ('object_id', 'url', 'university_school', 'program_name', 'degree','department',
-        'specialization','highlights','audience','job_placement', 'job_placement_url','online_program', 'url', 
-        'additional_url', 'program_faq_url', 'stats_profile_url')
+                  'specialization','highlights','audience','job_placement', 'job_placement_url','online_program', 'url',
+                  'additional_url', 'program_faq_url', 'stats_profile_url')
 
 
 class DurationSerializer(serializers.ModelSerializer):
     duration_unit = DurationUnitSerializer(read_only=True, required=False, many=False)
     duration_addl_unit = DurationUnitSerializer(read_only=True, required=False, many=False)
+
     class Meta:
         model = Duration
         fields = ('full_part_time', 'duration_unit','duration_min','duration_max','durationtime_limit',
-            'duration_conj', 'duration_addl', 'duration_addl_unit')
-
+                  'duration_conj', 'duration_addl', 'duration_addl_unit')
 
 
 class CurriculumSerializer(serializers.ModelSerializer):
     curriculum_unit = CurriculumUnitSerializer(read_only=True,required=False,many=False)
+
     class Meta:
         model = Curriculum 
         fields = ('curriculum_unit','curriculum_url','min_total_unit','max_transfer_unit','master_thesis_or_equivalent',
-        'doctorate_dissertation_or_equivalent', 'dissertation_notes', 'thesis_notes',)
+                  'doctorate_dissertation_or_equivalent', 'dissertation_notes', 'thesis_notes',)
 
 
 class CostSerializer(serializers.ModelSerializer):
     curriculum_unit = CurriculumUnitSerializer(read_only=True,required=False,many=False)
+
     class Meta:
         model = Cost
         fields = ('curriculum_unit','min_total_unit','max_transfer_unit','master_thesis_or_equivalent',
-        'doctorate_dissertation_or_equivalent',)
+                  'doctorate_dissertation_or_equivalent',)
 
 
 class TuitionSerializer(serializers.ModelSerializer):
     tuition_unit = TuitionUnitSerializer(read_only=True,required=False,many=False)
+
     class Meta:
         model = Tuition
         fields = ('tuition_per_unit','tuition_unit','tuition_per_unit_out_state','fee_included',
-            'university_cost_url', 'school_cost_url',)
+                  'university_cost_url', 'school_cost_url',)
 
 
 class DeadlineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Deadline
         fields = ('deadline_fall_early_month','deadline_fall_early_day',
-        'get_deadline_fall_early_month_display','get_deadline_fall_early_day_display',
-        'deadline_fall_late_month','deadline_fall_late_day',
-        'get_deadline_fall_late_month_display','get_deadline_fall_late_day_display',
-        'deadline_spring_early_month','deadline_spring_early_day',
-        'get_deadline_spring_early_month_display','get_deadline_spring_early_day_display',
-        'deadline_spring_late_month','deadline_spring_late_day',
-        'get_deadline_spring_late_month_display','get_deadline_spring_late_day_display',
-        'deadline_summer_early_month','deadline_summer_early_day',
-        'get_deadline_summer_early_month_display','get_deadline_summer_early_day_display',
-        'deadline_summer_late_month','deadline_summer_late_day',
-        'get_deadline_summer_late_month_display','get_deadline_summer_late_day_display',
-        'deadline_rolling', 'deadline_url',
-        'scholarship_deadline_month','scholarship_deadline_day',)
+                  'get_deadline_fall_early_month_display','get_deadline_fall_early_day_display',
+                  'deadline_fall_late_month','deadline_fall_late_day',
+                  'get_deadline_fall_late_month_display','get_deadline_fall_late_day_display',
+                  'deadline_spring_early_month','deadline_spring_early_day',
+                  'get_deadline_spring_early_month_display','get_deadline_spring_early_day_display',
+                  'deadline_spring_late_month','deadline_spring_late_day',
+                  'get_deadline_spring_late_month_display','get_deadline_spring_late_day_display',
+                  'deadline_summer_early_month','deadline_summer_early_day',
+                  'get_deadline_summer_early_month_display','get_deadline_summer_early_day_display',
+                  'deadline_summer_late_month','deadline_summer_late_day',
+                  'get_deadline_summer_late_month_display','get_deadline_summer_late_day_display',
+                  'deadline_rolling', 'deadline_url',
+                  'scholarship_deadline_month','scholarship_deadline_day',)
+
+
 class RequirementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Requirement

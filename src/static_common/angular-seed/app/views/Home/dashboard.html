@@ -322,7 +322,7 @@
                         <div class="alert alert-info alert-dismissable push-30">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                     
-                                        <h3 class="font-w300 push-15">System Updated to v1.1 &nbsp;&nbsp;<i class="fa fa-info-circle" data-uib-popover="1. Fixed table toggle bug.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Added effect to the client support page link" data-popover-title="v1.1 Updates:" data-popover-placement="top"></i></h3>
+                                        <h3 class="font-w300 push-15">System Updated to v1.2 &nbsp;&nbsp;<i class="fa fa-info-circle" data-uib-popover="1. Bookmarks added to the reports (program basis).&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. The attribute of 'Program access' added in colleague dialog. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. Report titles modified." data-popover-title="v1.2 Updates:" data-popover-placement="top"></i></h3>
                                         
                                     </div>
                                     
@@ -453,7 +453,7 @@
                                                     <li ng-repeat = "row in newly_released_enhancement | limitTo : 1">
                                                         <a>
 
-                                                        <button class="btn btn-default pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-exclamation-circle text-primary"></i><span class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span></button>
+                                                        <button class="btn btn-default pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-exclamation-circle text-primary"></i><span ng-if="Ceeb==='2905'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span><span ng-if="Ceeb==='2158'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">1</span></button>
 
 
                                                             <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
@@ -948,8 +948,11 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Tuition in state</td>
-                                            <td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index!==0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index!==0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index!==0">
-                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0" style="background:yellow" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">
+                                            <td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index!==0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">
+                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index!==0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">
+                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index!==0">
+                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="Ceeb==='2905'&&row.school_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2905'&&!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2905'&&!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0" style="background:yellow" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">
+                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="Ceeb==='2158'&&row.school_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $20,880.00 per Year" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2158'&&!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow" data-uib-tooltip="History: $20,880.00 per Year" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2158'&&!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0" style="background:yellow" data-uib-tooltip="History: $20,880.00 per Year" data-tooltip-placement="top">
                                             {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span></td>
                                        </tr>
                                         
@@ -1048,7 +1051,9 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Application fee</td>
-                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.application_fee&&$index===1" style="background: yellow" data-uib-tooltip="History: $65.00" data-tooltip-placement="top">{{row.application_fee | currency}}</span><span ng-if="row.application_fee&&$index!==1">{{row.application_fee | currency}}</span></td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="Ceeb==='2905'&&row.application_fee&&$index===1" style="background: yellow" data-uib-tooltip="History: $65.00" data-tooltip-placement="top">{{row.application_fee | currency}}</span><span ng-if="Ceeb==='2158'&&row.application_fee&&$index===1" >{{row.application_fee | currency}}</span><span ng-if="row.application_fee&&$index!==1">{{row.application_fee | currency}}</span></td>
+
+
                                         </tr>
 
                                         <tr>
@@ -1175,7 +1180,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Toefl ibt</td>
-                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="$index===1&&row.toefl_ibt" style="background: yellow" data-uib-tooltip="History: 95" data-tooltip-placement="top">{{row.toefl_ibt}}</span><span ng-if="$index!==1&&row.toefl_ibt">{{row.toefl_ibt}}</span></td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="Ceeb==='2905'&&$index===1&&row.toefl_ibt" style="background: yellow" data-uib-tooltip="History: 95" data-tooltip-placement="top">{{row.toefl_ibt}}</span><span ng-if="Ceeb==='2158'&&$index===1&&row.toefl_ibt">{{row.toefl_ibt}}</span><span ng-if="$index!==1&&row.toefl_ibt">{{row.toefl_ibt}}</span></td>
                                         </tr>
 
                                         <tr>

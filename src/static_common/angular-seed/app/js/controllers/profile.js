@@ -403,12 +403,28 @@ controller('ProfileController',
         "contract_prefix": $scope.data.subuser[$index].title,
         "contract_name": $scope.data.subuser[$index].contact_name,
         "contract_title": $scope.data.subuser[$index].position,
+        "contract_tel": $scope.data.subuser[$index].phone,
+        "customer_programs": $scope.data.subuser[$index].customer_program
+      }
+
+      console.log("subuser detail..." + JSON.stringify($scope.subuserdetail));
+
+    }
+
+    $scope.editsubuser = function($index) {
+      $scope.subuserdetail = {
+        "login_email": $scope.data.subuser[$index].email,
+        "contract_prefix": $scope.data.subuser[$index].title,
+        "contract_name": $scope.data.subuser[$index].contact_name,
+        "contract_title": $scope.data.subuser[$index].position,
         "contract_tel": $scope.data.subuser[$index].phone
       }
 
       console.log("subuser detail..." + JSON.stringify($scope.subuserdetail));
 
     }
+
+
 
 
     console.log("@@@subuser ... "+JSON.stringify($scope.data.subuser));
