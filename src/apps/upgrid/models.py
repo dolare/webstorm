@@ -2,16 +2,13 @@
 from django.db import models
 from django.utils.deprecation import CallableTrue
 from django.contrib.auth.models import UserManager
-from django.contrib.auth.models import AbstractUser
 import uuid
-from django.core.validators import RegexValidator
 from django.utils import timezone
 from django.contrib.auth import password_validation
 from django.contrib.auth.hashers import make_password, check_password
-#3rd party lib
-#our lib
-from ceeb_program.models import Program, UniversitySchool, AbstractDatedObject
-from django.contrib.auth.models import User
+# 3rd party lib
+# our lib
+from ceeb_program.models import Program, UniversitySchool
 from datetime import datetime   # used for shared link models
 
 # Create your models here.
@@ -34,7 +31,7 @@ class UpgridBaseUserManager(models.Manager):
         return user
 
     def create_user(self, username, email=None, password=None, **extra_fields):
-        extra_fields.setdefault(is_active, True)
+        extra_fields.setdefault(self.is_active, True)
         return self._create_user(username, email, password, **extra_fields)
 
     def get_by_natural_key(self, username):
@@ -63,7 +60,7 @@ class UpgridBaseUser(models.Model):
         super(UpgridBaseUser, self).__init__(*args, **kwargs)
         # store the raw password if set_password() is called so that it can be passed to
         # password_changed() after the model is saved.
-        self._password=None
+        self._password = None
 
     def save(self, *args, **kwargs):
         super(UpgridBaseUser, self).save(*args, **kwargs)
@@ -104,7 +101,7 @@ class UpgridBaseUser(models.Model):
         return self.username
 
     def natural_key(self):
-        return (self.get_username(),)
+        return self.get_username()
 
 # ---------------------------------------------------------------------------------
 
@@ -119,20 +116,20 @@ class UpgridAccountManager(UpgridBaseUser):
 
 class UniversityCustomer(UpgridBaseUser):
 
-    title = (('Master', 'Master.'), ('Dr','Dr'), ('Professor','Prof'), ('Mr', 'Mr.'), ('Miss', 'Miss.'),
+    title = (('Master', 'Master.'), ('Dr', 'Dr'), ('Professor', 'Prof'), ('Mr', 'Mr.'), ('Miss', 'Miss.'),
              ('Ms', 'Ms.'), ('Mrs', 'Mrs.'), ('Mx', 'Mx.'))
 
     positionlevel = (('University', 'University'), ('School', 'School'),
-        ('Academic_Department', 'Academic_Department'),
-        ('Administrative_Department', 'Administrative_Department'),
-        ('Program', 'Program'),)
+                     ('Academic_Department', 'Academic_Department'),
+                     ('Administrative_Department', 'Administrative_Department'),
+                     ('Program', 'Program'),)
     servicelevel = (('basic', 'Basic'), ('silver', 'Silver'), ('gold', 'Gold'),
-        ('platinum', 'Platinum'))
+                    ('platinum', 'Platinum'))
     accounttype = (('main', 'Main'), ('sub', 'Sub'))
 
     objects = UserManager()
-    Ceeb = models.ForeignKey(UniversitySchool,
-        to_field='ceeb', on_delete=models.SET_NULL, db_constraint=False, null=True)
+    Ceeb = models.ForeignKey(UniversitySchool, to_field='ceeb', on_delete=models.SET_NULL,
+                             db_constraint=False, null=True)
     department = models.CharField(max_length=255, null=True, blank=True)
     account_manager = models.ForeignKey(UpgridAccountManager, on_delete=models.PROTECT, null=True)
     # for sub user to store main user information
@@ -159,6 +156,7 @@ class UpgridAbstractDatedObject(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(UpgridBaseUser, on_delete=models.SET_NULL, related_name='+', null=True, blank=True)
     modified_by = models.ForeignKey(UpgridBaseUser, on_delete=models.SET_NULL, related_name='+', null=True, blank=True)
+
     class Meta:
         abstract = True
         default_permissions = ('add', 'change', 'delete', 'view_only')   
@@ -174,9 +172,9 @@ class UniversityCustomerProgram(UpgridAbstractDatedObject):
     program = models.ForeignKey(Program, on_delete=models.PROTECT)
     whoops_status = models.CharField(max_length=50, choices=Status, default='in_progress')
     whoops_final_release = models.CharField(max_length=20, choices=(('True', 'Released'),
-        ('False', 'Unreleased')), default='False')
+                                                                    ('False', 'Unreleased')), default='False')
     enhancement_final_release = models.CharField(max_length=20, choices=(('True', 'Released'),
-        ('False', 'Unreleased')), default='False')    
+                                                                         ('False', 'Unreleased')), default='False')
     customer_confirmation = models.CharField(max_length=20,
                                              choices=(('Yes', 'Confirmed'), ('No', 'Not Confirmed')), default='No')
 
@@ -228,14 +226,14 @@ class WhoopsReports(models.Model):
     def delete_history():
         num = WhoopsReports.objects.count()
         if num != None and num >= 9:
-            to_be_delete=WhoopsReports.objects.order_by('wr_created')[:5]
+            to_be_delete = WhoopsReports.objects.order_by('wr_created')[:5]
             for item in to_be_delete:
                 item.delete()
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     wr_created = models.DateTimeField(default=datetime.now, blank=True)
     wr_customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT) 
     wr_program = models.ForeignKey(Program, on_delete=models.PROTECT)
-    wr_whoops_report = models.BinaryField(blank= True, null=True)
+    wr_whoops_report = models.BinaryField(blank=True, null=True)
     wr_token = models.UUIDField(primary_key=False,  unique=True, default=uuid.uuid4, editable=False)
 
     class Meta:
@@ -258,7 +256,7 @@ class EnhancementReports(models.Model):
     def delete_history():
         num = EnhancementReports.objects.count()
         if num != None and num >= 5:
-            to_be_delete=EnhancementReports.objects.order_by('er_created')[:num-4]
+            to_be_delete = EnhancementReports.objects.order_by('er_created')[:num-4]
             for item in to_be_delete:
                 item.delete()
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -276,3 +274,35 @@ class EnhancementReports(models.Model):
     def save(self, *args, **kwargs):
         self.__class__.delete_history()  # call the static method inside method
         super(EnhancementReports, self).save(*args, **kwargs)
+
+
+class SharedReportsRelation(models.Model):
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    created_by = models.ForeignKey(UpgridBaseUser, on_delete=models.PROTECT)
+    created_time = models.DateTimeField(default=datetime.now, blank=True)
+    access_token = models.UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
+
+    def __str__(self):
+        return '{0} - {1}'.format(self.created_by, self.created_time)
+
+
+class WhoopsReportsRepo(models.Model):
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    wr_created = models.DateTimeField(default=datetime.now, blank=True)
+    wr_customer_program = models.ForeignKey(UniversityCustomerProgram, on_delete=models.PROTECT)
+    wr_whoops_report = models.BinaryField(blank=True, null=True)
+    wr_share_relation = models.ForeignKey(SharedReportsRelation, on_delete=models.PROTECT, blank=True, null=True)
+
+    def __str__(self):
+        return '{0}-{1}'.format(self.wr_created, self.wr_customer_program)
+
+
+class EnhancementReportsRepo(models.Model):
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    er_created = models.DateTimeField(default=datetime.now, blank=True)
+    er_customer_program = models.ForeignKey(UniversityCustomerProgram, on_delete=models.PROTECT)
+    er_enhancement_report = models.BinaryField(blank=True, null=True)
+    er_share_relation = models.ForeignKey(SharedReportsRelation, on_delete=models.PROTECT, blank=True, null=True)
+
+    def __str__(self):
+        return '{0}-{1}'.format(self.er_created, self.er_customer_program)

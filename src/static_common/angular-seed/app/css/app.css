@@ -738,7 +738,7 @@ table input[type="search"] {
 }
 
 #bootstrap-duallistbox-nonselected-list_, #bootstrap-duallistbox-selected-list_ {
-  font-size:12px;
+  font-size:10px;
 }
 
 .nav-sub-header > li > a {
@@ -830,10 +830,16 @@ can be found in the LICENSE file at http://angular.io/license
 /*
 Full screen Modal 
 */
+
+.fullscreen-modal.modal {
+  top: 20px;
+  bottom: 20px;
+}
+
 .fullscreen-modal .modal-dialog {
-  width: 100%;
+  width: calc(100vw - 60px);
   height: 100%;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
 }
 
@@ -844,7 +850,7 @@ Full screen Modal
 }
 
 .fullscreen-modal .block-content.fullscreen-container {
-  height:calc(100vh - 48px);
+  height:calc(100vh - 88px);
 }
 
 .block-content.fullscreen-container.share-link {
@@ -943,8 +949,26 @@ Full screen Modal
     background-color: #a4a4a4;
 }
 
+.sub-checkbox.css-checkbox input + span {
+    background: #fff !important;
+}
 
-.modal-open
-{ 
-  position: relative;
-} 
+.sub-checkbox.css-checkbox input + span:after {
+    color: #fff !important;
+}
+
+.sub-checkbox.css-checkbox input:checked + span {
+    border-color: #ccc;
+}
+
+@media (min-width: 1281px) {
+  .modal-lg {
+    width: 1140px;
+  }
+}
+
+@media (min-width: 1441px) {
+  .modal-lg {
+    width: 1300px;
+  }
+}

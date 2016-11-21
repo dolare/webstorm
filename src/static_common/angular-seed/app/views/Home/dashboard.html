@@ -61,7 +61,7 @@
                             <div class="push-20 font-w700 text-dark animated fadeIn">"Whoops!" Report</div>
 
                             <div class="pie-chart chart-2" data-js-pie-chart="{lineWidth: 3, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
-                                <span data-uib-tooltip="{{whoops_num}} out of {{customer_num}} 'Whoops!' Reports are available'" data-tooltip-placement="right">{{whoops_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
+                                <span data-uib-tooltip="{{whoops_num}} out of {{customer_num}} 'Whoops!' Reports are available" data-tooltip-placement="right">{{whoops_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
                             </div>
 
                             
@@ -78,7 +78,7 @@
                             <div class="push-20 font-w700 text-dark animated fadeIn">Enhancement Report</div>
 
                             <div class="pie-chart chart-3" data-js-pie-chart="{lineWidth: 3, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
-                                <span data-uib-tooltip="{{enhancement_num}} out of {{customer_num}} Enhancement Reports are available'" data-tooltip-placement="right">{{enhancement_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
+                                <span data-uib-tooltip="{{enhancement_num}} out of {{customer_num}} Enhancement Reports are available" data-tooltip-placement="right">{{enhancement_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
                             </div>
 
                             
@@ -322,7 +322,7 @@
                         <div class="alert alert-info alert-dismissable push-30">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                     
-                                        <h3 class="font-w300 push-15">System Updated to v1.2 &nbsp;&nbsp;<i class="fa fa-info-circle" data-uib-popover="1. Bookmarks added to the reports (program basis).&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. The attribute of 'Program access' added in colleague dialog. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3. Report titles modified." data-popover-title="v1.2 Updates:" data-popover-placement="top"></i></h3>
+                                        <h3 class="font-w300 push-15">System Updated to v1.3 &nbsp;&nbsp;<i class="fa fa-info-circle" data-uib-popover="1. Report titles modified.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Whoops/enhancement viewers resized." data-popover-title="v1.3 Updates:" data-popover-placement="top"></i></h3>
                                         
                                     </div>
                                     
@@ -453,8 +453,7 @@
                                                     <li ng-repeat = "row in newly_released_enhancement | limitTo : 1">
                                                         <a>
 
-                                                        <button class="btn btn-default pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-exclamation-circle text-primary"></i><span ng-if="Ceeb==='2905'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span><span ng-if="Ceeb==='2158'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">1</span></button>
-
+                                                        <button class="btn btn-default pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-exclamation-circle text-primary"></i><span ng-if="Ceeb==='2905'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span><span ng-if="Ceeb==='2158'||Ceeb==='2120'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">1</span></button>
 
                                                             <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
                                                             {{row.program_name}}
@@ -857,7 +856,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Admission stats.</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Admissions statistics</td>
                                             <td ng-repeat = "row in e_array_final[0]"><span ng-if="row.stats_profile_url"><a href="{{row.stats_profile_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
 
@@ -947,18 +946,16 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Tuition in state</td>
-                                            <td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index!==0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">
-                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index!==0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">
-                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index!==0">
-                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="Ceeb==='2905'&&row.school_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2905'&&!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2905'&&!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0" style="background:yellow" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">
-                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="Ceeb==='2158'&&row.school_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $20,880.00 per Year" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2158'&&!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow" data-uib-tooltip="History: $20,880.00 per Year" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2158'&&!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0" style="background:yellow" data-uib-tooltip="History: $20,880.00 per Year" data-tooltip-placement="top">
-                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span></td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Tuition (in state)</td>
+                                            <td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit&&$index!==0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index!==0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index!==0">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="Ceeb==='2905'&&row.school_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2905'&&!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2905'&&!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0" style="background:yellow" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="Ceeb==='2158'&&row.school_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $20,880.00 per Year" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2158'&&!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow" data-uib-tooltip="History: $20,880.00 per Year" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2158'&&!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0" style="background:yellow" data-uib-tooltip="History: $20,880.00 per Year" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span><span ng-if="Ceeb==='2120'&&row.school_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $28,340.00 per Semester" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2120'&&!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;background:yellow" data-uib-tooltip="History: $28,340.00 per Semester" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="Ceeb==='2120'&&!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0" style="background:yellow" data-uib-tooltip="History: $28,340.00 per Semester" data-tooltip-placement="top">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span></td>
                                        </tr>
                                         
 
+
+
+
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Tuition out of state</td><td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit_out_state">
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Tuition (out of state)</td><td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit_out_state">
                                             <a href="{{row.school_cost_url}}" target="_blank">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit_out_state"><a href="{{row.university_cost_url}}" target="_blank">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a>
                                             </span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit_out_state">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</span></td>
                                         </tr>
@@ -978,7 +975,7 @@
 
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline url</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Application deadlines link</td>
 
 
                                             <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.deadline_url"><a href="{{row.deadline_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
@@ -987,38 +984,38 @@
 
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline fall early</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline - Fall, early</td>
                                             <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_fall_early_month_display&&row.get_deadline_fall_early_day_display">
                                                 {{row.get_deadline_fall_early_month_display}} {{row.get_deadline_fall_early_day_display}}</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline fall late</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline - Fall, late</td>
                                             <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_fall_late_month_display&&row.get_deadline_fall_late_day_display">{{row.get_deadline_fall_late_month_display}} {{row.get_deadline_fall_late_day_display}}</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline spring early</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline - Spring, early</td>
                                             <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_spring_early_month_display&&row.get_deadline_spring_early_day_display">{{row.get_deadline_spring_early_month_display}} {{row.get_deadline_spring_early_day_display}}</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline spring late</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline - Spring, late</td>
                                             <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_spring_late_month_display&&row.get_deadline_spring_late_day_display">{{row.get_deadline_spring_late_month_display}} {{row.get_deadline_spring_late_day_display}}</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline summer early</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline - Summer, early</td>
                                             <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_summer_early_month_display&&row.get_deadline_summer_early_day_display">{{row.get_deadline_summer_early_month_display}} {{row.get_deadline_summer_early_day_display}}</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline summer late</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline - Summer, late</td>
                                             <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.get_deadline_summer_late_month_display&&row.get_deadline_summer_late_day_display">{{row.get_deadline_summer_late_month_display}} {{row.get_deadline_summer_late_day_display}}</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Deadline rolling</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Rolling deadline</td>
                                             <td ng-repeat = "row in e_array_final[3]"><span ng-if="row.deadline_rolling===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.deadline_rolling===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
 
@@ -1045,13 +1042,13 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Apply online</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Online Application</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.apply_online===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.apply_online===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Application fee</td>
-                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="Ceeb==='2905'&&row.application_fee&&$index===1" style="background: yellow" data-uib-tooltip="History: $65.00" data-tooltip-placement="top">{{row.application_fee | currency}}</span><span ng-if="Ceeb==='2158'&&row.application_fee&&$index===1" >{{row.application_fee | currency}}</span><span ng-if="row.application_fee&&$index!==1">{{row.application_fee | currency}}</span></td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="Ceeb==='2905'&&row.application_fee&&$index===1" style="background: yellow" data-uib-tooltip="History: $65.00" data-tooltip-placement="top">{{row.application_fee | currency}}</span><span ng-if="Ceeb!=='2905'&&row.application_fee&&$index===1" >{{row.application_fee | currency}}</span><span ng-if="row.application_fee&&$index!==1">{{row.application_fee | currency}}</span></td>
 
 
                                         </tr>
@@ -1067,17 +1064,17 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Transcript for application</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Transcripts required for application</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.transcript_for_application===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.transcript_for_application===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Transcript for enrollment</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Transcripts required for enrollment</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.official_transcript_for_enrollment===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.official_transcript_for_enrollment===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Required exam</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Required admissions exam</td>
                                             <td ng-repeat = "row in e_array_final[5]"><span ng-repeat="row3 in row">{{row3.name}}<br></span></td>
                                         </tr>
 
@@ -1092,18 +1089,18 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">GPA minimum</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Minimum GPA</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.gpa_minimum&&!row.gpa_minimum_letter">{{row.gpa_minimum}}</span><span ng-if="!row.gpa_minimum&&row.gpa_minimum_letter">{{row.gpa_minimum_letter}}
                                             </span><span ng-if="row.gpa_minimum&&row.gpa_minimum_letter">{{row.gpa_minimum}}/{{row.gpa_minimum_letter}}</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">GPA average</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Average GPA</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.gpa_average&&!row.gpa_average_letter">{{row.gpa_average}}</span><span ng-if="!row.gpa_average&&row.gpa_average_letter">{{row.gpa_average_letter}}</span><span ng-if="row.gpa_average&&row.gpa_average_letter">{{row.gpa_average}}/{{row.gpa_average_letter}}</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">GPA suggested</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Suggested GPA</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.gpa_suggested&&!row.gpa_suggested_letter">{{row.gpa_suggested}}</span><span ng-if="!row.gpa_suggested&&row.gpa_suggested_letter">{{row.gpa_suggested_letter}}</span><span ng-if="row.gpa_suggested&&row.gpa_suggested_letter">{{row.gpa_suggested}}/{{row.gpa_suggested_letter}}</span></td>
                                         </tr>
 
@@ -1113,7 +1110,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Resume</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Résumé/ Curriculum Vitae</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.resume==='Y'">Yes</span><span ng-if="row.resume==='N'">No</span><span ng-if="row.resume==='O'">Optional</span></td>
                                         </tr>
 
@@ -1138,7 +1135,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Admission requirement</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Additional admissions requirements</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.program_req_url"><a href="{{row.program_req_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span><span ng-if="!row.program_req_url&&row.school_req_url"><a href="{{row.school_req_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span></td>
                                         </tr>
                                         
@@ -1152,70 +1149,70 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l transcript</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">International transcript</td>
                                             <td ng-repeat = "row in e_array_final[6]"><span ng-repeat="row1 in row"><span ng-if="row1" data-uib-tooltip="{{row1.description}}" data-tooltip-placement="top" style="border-bottom: 1px dashed #aaa;cursor: pointer;">{{row1.name}}<br></span></span></td>
                                         </tr>
 
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l lang waiver</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Foreign language waiver</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.intl_lang_waiver===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.intl_lang_waiver===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l lang waiver notes</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Foreign language waiver notes</td>
                                             <td ng-class="{'note-left': row.intl_lang_waiver_conditions}" ng-repeat = "row in e_array_final[4]">{{row.intl_lang_waiver_conditions}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l english test required</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">English language test required (Non-native speakers)</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.intl_english_test_required===true"><i class="fa fa-check text-success"></i></span><span ng-if="row.intl_english_test_required===false"><i class="fa fa-times text-danger"></i></span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l english test</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">English language test</td>
                                             <td ng-repeat = "row in e_array_final[7]"><span ng-repeat="row2 in row">{{row2.name}}<br></span></td>
                                                 
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl ibt</td>
-                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="Ceeb==='2905'&&$index===1&&row.toefl_ibt" style="background: yellow" data-uib-tooltip="History: 95" data-tooltip-placement="top">{{row.toefl_ibt}}</span><span ng-if="Ceeb==='2158'&&$index===1&&row.toefl_ibt">{{row.toefl_ibt}}</span><span ng-if="$index!==1&&row.toefl_ibt">{{row.toefl_ibt}}</span></td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">TOEFL iBT</td>
+                                            <td ng-repeat = "row in e_array_final[4]"><span ng-if="Ceeb==='2905'&&$index===1&&row.toefl_ibt" style="background: yellow" data-uib-tooltip="History: 95" data-tooltip-placement="top">{{row.toefl_ibt}}</span><span ng-if="Ceeb!=='2905'&&$index===1&&row.toefl_ibt">{{row.toefl_ibt}}</span><span ng-if="$index!==1&&row.toefl_ibt">{{row.toefl_ibt}}</span></td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl ibt reading /listening /speaking /writing</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">TOEFL iBT reading /listening /speaking /writing Scores</td>
                                             <td ng-repeat = "row in e_array_final[4]"><span ng-if="row.toefl_ibt_reading||row.toefl_ibt_listening||row.toefl_ibt_speaking||row.toefl_ibt_writing">{{row.toefl_ibt_reading?row.toefl_ibt_reading: '-'}}/{{row.toefl_ibt_listening?row.toefl_ibt_listening: '-'}}/{{row.toefl_ibt_speaking?row.toefl_ibt_speaking: '-'}}/{{row.toefl_ibt_writing?row.toefl_ibt_writing: '-'}}</span></td>
                                         </tr>
 
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl pbt</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">TOEFL PBT</td>
                                             <td ng-repeat = "row in e_array_final[4]">{{row.toefl_pbt}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl twe</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">TOEFL TWE</td>
                                             <td ng-repeat = "row in e_array_final[4]">{{row.toefl_twe}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl tse</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">TOEFL TSE</td>
                                             <td ng-repeat = "row in e_array_final[4]">{{row.toefl_tse}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Toefl cbt</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">TOEFL CBT</td>
                                             <td ng-repeat = "row in e_array_final[4]">{{row.toefl_cbt}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l ielts requirements</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">IELTS requirements</td>
                                             <td ng-repeat = "row in e_array_final[4]">{{row.intl_ielts_reqs}}</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Int'l other</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Misc.</td>
                                             <td ng-class="{'note-left': row.intl_other}" ng-repeat = "row in e_array_final[4]">{{row.intl_other}}</td>
                                         </tr>
                                        
@@ -1234,7 +1231,7 @@
 
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Fully funded notes</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Funding notes</td>
                                             <td ng-class="{'note-left': row.fully_funded_notes}" ng-repeat = "row in e_array_final[8]">{{row.fully_funded_notes}}</td>
                                         </tr>
 

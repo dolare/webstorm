@@ -434,10 +434,11 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
         
         
         $http({
-            url: '/api/upgrid/enhancement_reports/shared/',
+            url: '/api/upgrid/reports/shared/',
             method: 'POST',
             data: {
-                "univcustomer_program_id": Id
+              "whoops_id": null,
+              "enhancement_id": Id
             },
             headers: {
                 'Authorization': 'JWT ' + token

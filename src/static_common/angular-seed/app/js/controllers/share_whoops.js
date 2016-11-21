@@ -10,16 +10,18 @@ controller('ShareWhoopsController',
         App.blocks('#whoops_loading', 'state_loading');
         $scope.whoops_report_program = $stateParams.param2;
 
+        console.log("share whoops api= "+'/api/upgrid/reports/shared/'+$stateParams.param1+'/'+$stateParams.param2+'/');
+
       $http({
-          url: '/api/upgrid/whoops_reports/shared/'+$stateParams.param1+'/'+$stateParams.param2+'/',
+          url: '/api/upgrid/reports/shared/'+$stateParams.param1+'/'+$stateParams.param2+'/',
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
           }
     }).then(function (response) {
 
-        console.log("wwr"+JSON.stringify(response.data));
-        $scope.w_raw = response.data;
+        console.log("wwr"+JSON.stringify(response.data[0].whoops[0]));
+        $scope.w_raw = response.data[0].whoops[0];
         $scope.w_array_final = [];
          var w_array_1 = [];
          var w_array_2 = [];

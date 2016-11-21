@@ -228,8 +228,9 @@
                                   </div>
 
                                   <label for="reportlink">Link: </label> 
+
                                   <label style="float:right" ng-show="copied">Copied!</label>
-                                  <input type="url" ng-copy="copied=true" class="form-control" id="reportlink" ng-model= "url.text" >
+                                  <input type="url" ng-copy="copied=true" class="form-control" id="reportlink" ng-model= "url.text" select-on-click spellcheck="false">
                                   
 
                                 </div>
@@ -238,6 +239,7 @@
 
                               </div>
                               <div class="modal-footer">
+                                <span class="pull-left text-city">The report will expire in 24 hours</span>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                 <button data-clipboard-target="#reportlink" type="button" class="btn btn-primary">Copy</button>
                               </div>

@@ -8,7 +8,6 @@ admin.controller('AdminMainController',
     
     $scope.client_data = Client;
     //sorting in alphabetical order
-
     $scope.client_data.sort(function(a, b) {
       return (a.contact_name.toLowerCase() > b.contact_name.toLowerCase()) ? 1 : ((b.contact_name.toLowerCase() > a.contact_name.toLowerCase()) ? -1 : 0);
     });
@@ -24,6 +23,122 @@ admin.controller('AdminMainController',
         $scope.active_num++;
       }
     }
+
+     // Init wizards with validation, for more examples you can check out http://vadimg.com/twitter-bootstrap-wizard-example/
+        var initWizardValidation = function(){
+            // Get forms
+            var form1 = jQuery('.js-form1');
+           
+            // Prevent forms from submitting on enter key press
+            form1.on('keyup keypress', function (e) {
+                var code = e.keyCode || e.which;
+
+                if (code === 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            // Init form validation on classic wizard form
+            var validator1 = form1.validate({
+                errorClass: 'help-block text-center animated fadeInUp',
+                errorElement: 'div',
+                errorPlacement: function(error, e) {
+                    jQuery(e).parents('.form-group > div').append(error);
+                },
+                highlight: function(e) {
+                    jQuery(e).closest('.form-group').removeClass('has-error').addClass('has-error');
+                    jQuery(e).closest('.help-block').remove();
+                },
+                success: function(e) {
+                    jQuery(e).closest('.form-group').removeClass('has-error');
+                    jQuery(e).closest('.help-block').remove();
+                },
+                rules: {
+                    'simple-classic-progress-account-name': {
+                        required: true,
+                        minlength: 5
+                    },
+                    'validation-classic-lastname': {
+                        required: true,
+                        minlength: 2
+                    },
+                    'validation-classic-email': {
+                        required: true,
+                        email: true
+                    },
+                    'validation-classic-details': {
+                        required: true,
+                        minlength: 5
+                    },
+                    'validation-classic-city': {
+                        required: true
+                    },
+                    'validation-classic-skills': {
+                        required: true
+                    },
+                    'validation-classic-terms': {
+                        required: true
+                    }
+                },
+                messages: {
+                    'simple-classic-progress-account-name': {
+                        required: 'Please enter a name',
+                        minlength: 'The name must consist of at least 5 characters'
+                    },
+                    'validation-classic-lastname': {
+                        required: 'Please enter a lastname',
+                        minlength: 'Your lastname must consist of at least 2 characters'
+                    },
+                    'validation-classic-email': 'Please enter a valid email address',
+                    'validation-classic-details': 'Let us know a few thing about yourself',
+                    'validation-classic-skills': 'Please select a skill!',
+                    'validation-classic-terms': 'You must agree to the service terms!'
+                }
+            });
+
+            
+
+            // Init classic wizard with validation
+            jQuery('.js-wizard-simple').bootstrapWizard({
+                'tabClass': '',
+                'previousSelector': '.wizard-prev',
+                'nextSelector': '.wizard-next',
+                'onTabShow': function(tab, nav, index) {
+                    var total      = nav.find('li').length;
+                    var current    = index + 1;
+
+                    // Get vital wizard elements
+                    var wizard     = nav.parents('.block');
+                    var btnNext    = wizard.find('.wizard-next');
+                    var btnFinish  = wizard.find('.wizard-finish');
+
+                    // If it's the last tab then hide the last button and show the finish instead
+                    if(current >= total) {
+                        btnNext.hide();
+                        btnFinish.show();
+                    } else {
+                        btnNext.show();
+                        btnFinish.hide();
+                    }
+                },
+                'onNext': function(tab, navigation, index) {
+                    var valid = form1.valid();
+
+                    if(!valid) {
+                        validator1.focusInvalid();
+
+                        return false;
+                    }
+                },
+                onTabClick: function(tab, navigation, index) {
+                    return false;
+                }
+            });
+
+        };
+
+
 
     $scope.impersonate = function(id) {
       console.log("id = " + id);
@@ -69,34 +184,29 @@ admin.controller('AdminMainController',
 
     $scope.addaha = function() {
 
-      // $scope.account_name = 'haha';
-      // $scope.position_level = "University";
-      // $scope.ceeb="580bbf8b-642b-4eb7-914c-03a054981719"
-      // console.log("$scope.expiration_date = "+$scope.expiration_date);
-
       //$scope.selected_customprogram.splice(-1,1)
       $scope.listbox.find('option').remove();
       $scope.listbox.bootstrapDualListbox('refresh', true);
 
-
-
     }
-
 
     $scope.removeItem = function(index) {
       $scope.selected_customprogram.splice(index, 1)
       console.log("index=" + index);
     }
 
-    $scope.addnew = function(Id) {
-      $scope.pwhide = Id;
-      console.log("Id = " + Id);
 
-      if (Id) {
-        console.log("editing")
-      } else {
-        console.log("creating");
-      }
+    //for add and edit
+    $scope.addnew = function() {
+      $scope.modaltitle = "Add a new client";
+      // angular.element(document.getElementById("client_form").getElementsByClassName("form-group")).removeClass('has-error');
+      // angular.element(document.getElementById("client_form").getElementsByClassName("help-block")).remove();
+
+      // // Init wizards with validation
+      // initWizardValidation();
+
+     
+    //init wizard
       var initWizardSimple = function() {
         jQuery('.js-wizard-simple').bootstrapWizard({
           'tabClass': '',
@@ -147,6 +257,7 @@ admin.controller('AdminMainController',
       jQuery('.progress-bar.progress-bar-info').css("width", "33.3333%");
 
 
+      //init ng-model
       $scope.account_name = null;
       $scope.email = null;
       $scope.ceeb = null;
@@ -163,7 +274,11 @@ admin.controller('AdminMainController',
       $scope.service_level = null;
       $scope.selected_customprogram = [];
 
+      $scope.showtable = true;
+      $scope.dep_pro_table = null;
+      $scope.dep_pro_table_displayed = null;
       //angular.element(document.getElementsByClassName("nav nav-tabs nav-justified").getElementsByTagName("li")).addClass('active');
+
 
 
       //tab 2
@@ -194,7 +309,7 @@ admin.controller('AdminMainController',
         //  $scope.listbox.find('option').remove();
         // $scope.listbox.bootstrapDualListbox('refresh', true);
 
-        if (!Id) {
+  
 
           var competing_schools_options = "";
           //get competing school list e.g. format: <option value='5e7a795b-2ee2-49dd-9a08-60c48d76f27b'>2120: None - School of Journalism</option>
@@ -205,7 +320,130 @@ admin.controller('AdminMainController',
           $scope.listbox.find('option').remove().end().append(competing_schools_options);
           $scope.listbox.bootstrapDualListbox('refresh', true);
 
-        } else { //for editing
+
+      }).
+      catch(function(error) {
+        console.log('an error occurred...' + JSON.stringify(error));
+
+      });
+
+      //$('#datepicker1').datepicker('setDate', new Date(2011,10,30));
+      //console.log("UTC="+$('#datepicker1').datepicker('getDate'));
+
+
+    }
+
+
+
+    ///////edit 
+    $scope.editold = function(Id) {
+
+      $scope.modaltitle = "Edit a client";
+      $scope.pwhide = Id;
+      console.log("Id = " + Id);
+
+    
+    //init wizard
+      var initWizardSimple = function() {
+        jQuery('.js-wizard-simple').bootstrapWizard({
+          'tabClass': '',
+          'firstSelector': '.wizard-first',
+          'previousSelector': '.wizard-prev',
+          'nextSelector': '.wizard-next',
+          'lastSelector': '.wizard-last',
+          'onTabShow': function(tab, navigation, index) {
+            var total = navigation.find('li').length;
+            var current = index + 1;
+            var percent = (current / total) * 100;
+
+            // Get vital wizard elements
+            var wizard = navigation.parents('.block');
+            var progress = wizard.find('.wizard-progress > .progress-bar');
+            var btnPrev = wizard.find('.wizard-prev');
+            var btnNext = wizard.find('.wizard-next');
+            var btnFinish = wizard.find('.wizard-finish');
+
+            // Update progress bar if there is one
+            if (progress) {
+              progress.css({
+                width: percent + '%'
+              });
+            }
+
+            // If it's the last tab then hide the last button and show the finish instead
+            if (current >= total) {
+              btnNext.hide();
+              btnFinish.show();
+            } else {
+              btnNext.show();
+              btnFinish.hide();
+            }
+          }
+        });
+      };
+
+      // Init simple wizard
+      initWizardSimple();
+
+      jQuery('.nav-tabs>li:nth-child(2)').removeClass('active');
+      jQuery('.nav-tabs>li:nth-child(3)').removeClass('active');
+      jQuery('#simple-classic-progress-step2').removeClass('active in');
+      jQuery('#simple-classic-progress-step3').removeClass('active in');
+      jQuery('#simple-classic-progress-step1').addClass('active in');
+      jQuery('.nav-tabs>li:first-child').addClass('active');
+      jQuery('.progress-bar.progress-bar-info').css("width", "33.3333%");
+
+
+      //init ng-model
+      $scope.account_name = null;
+      $scope.email = null;
+      $scope.ceeb = null;
+      $scope.account_type = null;
+      $scope.title = null;
+      $scope.client_name = null;
+      $scope.position = null;
+      $scope.position_level = null;
+      $scope.phone = null;
+      $scope.expiration_date = null;
+      $scope.password = null;
+      $scope.password_confirm = null;
+      $scope.department = null;
+      $scope.service_level = null;
+      $scope.selected_customprogram = [];
+
+      $scope.showtable = true;
+      $scope.dep_pro_table = null;
+      $scope.dep_pro_table_displayed = null;
+      //angular.element(document.getElementsByClassName("nav nav-tabs nav-justified").getElementsByTagName("li")).addClass('active');
+
+      //tab 2
+      ///load for ceeb and competing schools
+      $http({
+        url: '/api/upgrid/accountmanager/ceebs/',
+        method: 'GET',
+        headers: {
+          'Authorization': 'JWT ' + token
+        }
+      }).then(function(response) {
+
+        $scope.details = response.data;
+
+        console.log("all_ceebs" + JSON.stringify(response.data));
+        $scope.get_ceebs = response.data;
+
+        $scope.listbox = $('#competingschools').bootstrapDualListbox({
+          nonSelectedListLabel: 'Available competing schools',
+          selectedListLabel: 'Chosen competing schools',
+          preserveSelectionOnMove: 'moved',
+          moveOnSelect: false,
+          infoText: 'Total: {0}',
+          selectorMinimalHeight: 200
+
+        });
+
+        //  $scope.listbox.find('option').remove();
+        // $scope.listbox.bootstrapDualListbox('refresh', true);
+
           App.blocks('#client_block', 'state_loading');
           $http({
             url: '/api/upgrid/accountmanager/client/' + Id,
@@ -370,7 +608,7 @@ admin.controller('AdminMainController',
             console.log('an error occurred...' + JSON.stringify(error));
 
           });
-        }
+
 
         ////end of editing
 
@@ -387,9 +625,15 @@ admin.controller('AdminMainController',
 
     }
 
+
+
+
+
     //get depart on ceeb
     $scope.get_depart = function() {
-      $http({
+      
+
+          $http({
         url: '/api/upgrid/accountmanager/department/' + $scope.ceeb,
         method: 'GET',
         headers: {
@@ -398,24 +642,198 @@ admin.controller('AdminMainController',
       }).then(function(response) {
 
         $scope.details = response.data;
+
+        
+
+        response.data.unshift({
+          "department": "All"
+        });
+
         response.data.push({
           "department": "Other"
         });
+
+        
         console.log("all_depart" + JSON.stringify(response.data));
 
         $scope.get_departments = response.data;
+
+
+        //for creating programs for department list
+        // angular.forEach()
+        // pro_dep()
+        $scope.dep_pro_table = [];
+       
+
+       for(i=1; i<$scope.get_departments.length; i++){
+
+
+          $scope.dep_pro_table.push($scope.get_departments[i]);
+
+       }
+
+       for(i=0;i<$scope.dep_pro_table.length;i++){
+        $scope.dep_pro_table[i].isTrue = false;
+       }
+
+       $scope.dep_pro_table_displayed = $scope.dep_pro_table;
+
+      angular.forEach($scope.dep_pro_table, function (value, index) {
+        var dep = value.department;
+        console.log("value="+value.department)
+          $http({
+          url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + ((dep==='All') ? '' : ('&dep=' + dep)),
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+        }).then(function(response) {
+          console.log("response = "+JSON.stringify(response))
+          console.log("custom programs=" + JSON.stringify(response.data));
+          console.log("value=" + JSON.stringify(value));
+
+          var raw_programs = response.data;
+
+          for(i=0;i<raw_programs.length;i++){
+            raw_programs[i].isTrue = false;
+          }
+
+          $scope.dep_pro_table[index].programs = raw_programs;
+
+
+          console.log("Final dep_pro = "+JSON.stringify($scope.dep_pro_table));
+
+
+        }).
+        catch(function(error) {
+          console.log('an error occurred...' + JSON.stringify(error));
+
+        });
+
+
+
+
+      });
+
+
+
+
+
+
 
       }).
       catch(function(error) {
         console.log('an error occurred...' + JSON.stringify(error));
 
       });
+
+
+      
+
+    
     }
 
 
-    $scope.generate_program = function() {
+    $scope.edit_client = function(Id){
+        console.log("Id = " + Id);
+
+            //init wizard
+      var initWizardSimple = function() {
+        jQuery('.js-wizard-simple').bootstrapWizard({
+          'tabClass': '',
+          'firstSelector': '.wizard-first',
+          'previousSelector': '.wizard-prev',
+          'nextSelector': '.wizard-next',
+          'lastSelector': '.wizard-last',
+          'onTabShow': function(tab, navigation, index) {
+            var total = navigation.find('li').length;
+            var current = index + 1;
+            var percent = (current / total) * 100;
+
+            // Get vital wizard elements
+            var wizard = navigation.parents('.block');
+            var progress = wizard.find('.wizard-progress > .progress-bar');
+            var btnPrev = wizard.find('.wizard-prev');
+            var btnNext = wizard.find('.wizard-next');
+            var btnFinish = wizard.find('.wizard-finish');
+
+            // Update progress bar if there is one
+            if (progress) {
+              progress.css({
+                width: percent + '%'
+              });
+            }
+
+            // If it's the last tab then hide the last button and show the finish instead
+            if (current >= total) {
+              btnNext.hide();
+              btnFinish.show();
+            } else {
+              btnNext.show();
+              btnFinish.hide();
+            }
+          }
+        });
+      };
+
+      // Init simple wizard
+      initWizardSimple();
+
+      jQuery('.js-wizard-simple>.nav-tabs>li:nth-child(2)').removeClass('active');
+      jQuery('.js-wizard-simple>.nav-tabs>li:nth-child(3)').removeClass('active');
+      jQuery('#simple-classic-progress-step2').removeClass('active in');
+      jQuery('#simple-classic-progress-step3').removeClass('active in');
+      jQuery('#simple-classic-progress-step1').addClass('active in');
+      jQuery('.js-wizard-simple>.nav-tabs>li:first-child').addClass('active');
+      jQuery('.js-wizard-simple .progress-bar.progress-bar-info').css("width", "33.3333%");
+
+
+      //init ng-model
+      $scope.account_name = null;
+      $scope.email = null;
+      $scope.ceeb = null;
+      $scope.account_type = null;
+      $scope.title = null;
+      $scope.client_name = null;
+      $scope.position = null;
+      $scope.position_level = null;
+      $scope.phone = null;
+      $scope.expiration_date = null;
+      $scope.password = null;
+      $scope.password_confirm = null;
+      $scope.department = null;
+      $scope.service_level = null;
+      $scope.selected_customprogram = [];
+
+      $scope.showtable = true;
+      $scope.dep_pro_table = null;
+      $scope.dep_pro_table_displayed = null;
+      //angular.element(document.getElementsByClassName("nav nav-tabs nav-justified").getElementsByTagName("li")).addClass('active');
+
+
+    }
+
+
+
+
+    $scope.observe_checkbox = function(Pid, Id) {
+      console.log(Pid+' '+Id);
+      $scope.dep_pro_table[Pid].isTrue = true;
+      for(i=0;i<$scope.dep_pro_table[Pid].programs.length;i++){
+        if($scope.dep_pro_table[Pid].programs[i].isTrue === false){
+          $scope.dep_pro_table[Pid].isTrue = false;
+          break;
+        }
+
+      }
+    }
+
+
+
+    $scope.pro_dep = function(dep) {
+
       $http({
-        url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + '&department=' + $scope.department,
+        url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + '&dep=' + dep,
         method: 'GET',
         headers: {
           'Authorization': 'JWT ' + token
@@ -424,9 +842,9 @@ admin.controller('AdminMainController',
 
         $scope.details = response.data;
 
-        console.log("custom programs=" + JSON.stringify(response.data.results));
+        console.log("custom programs=" + JSON.stringify(response.data));
 
-        $scope.rowCollection = response.data.results;
+        
 
       }).
       catch(function(error) {
@@ -436,55 +854,89 @@ admin.controller('AdminMainController',
     }
 
 
-    $scope.preload = function() {
-      if ($scope.service_level === "basic") {
-        $scope.subrows = [{
-          "order": 1
-        }];
-      } else if ($scope.service_level === "silver") {
-        $scope.subrows = [{
-          "order": 1
-        }, {
-          "order": 2
-        }];
-      } else if ($scope.service_level === "gold") {
-        $scope.subrows = [{
-          "order": 1
-        }, {
-          "order": 2
-        }, {
-          "order": 3
-        }];
-      } else if ($scope.service_level === "platinum") {
-        $scope.subrows = [{
-          "order": 1
-        }, {
-          "order": 2
-        }, {
-          "order": 3
-        }, {
-          "order": 4
-        }];
+    $scope.checkmaster = function(value){
+      console.log(value);
+      for(i=0;i<$scope.dep_pro_table.length;i++){
+        $scope.dep_pro_table[i].isTrue = value;
+        for(j=0;j<$scope.dep_pro_table[i].programs.length;j++){
+          $scope.dep_pro_table[i].programs[j].isTrue
+        }
       }
+    }
 
-      //console.log("rowCollection="+JSON.stringify($scope.rowCollection));
-      //generate selected_customprogram list
-      $scope.selected_customprogram = [];
+    
+    $scope.client_programs = [];
+    $scope.print = function(Pid, Id, program, isTrue){
+      console.log(Pid+' '+Id+' '+"value= "+isTrue);
+      console.log("program is "+JSON.stringify(program));
+      // if(isTrue){
+      //   $scope.client_programs.push(program)
+      //   console.log("index in array is"+ $scope.client_programs.indexOf(program));
+      // }
 
-      for (i = 0; i < $scope.rowCollection.length; i++) {
+      console.log("Final dep_pro = "+JSON.stringify($scope.dep_pro_table));
+    }
+
+    $scope.check_all = function(index){
+      //alert("index= "+index)
+     
+        for(i=0;i<$scope.dep_pro_table[index].programs.length;i++){
+          $scope.dep_pro_table[index].programs[i].isTrue = $scope.dep_pro_table[index].isTrue;
+        }
+
+
+        console.log("Final dep_pro = "+JSON.stringify($scope.dep_pro_table));
+    
+      
+    }
+
+    $scope.showtable = true;
+
+    $scope.generate_table = function(){
+        $scope.showtable = false;
+        $scope.subrows = [];
+        for(i=0;i<10;i++){
+          $scope.subrows.push(
+              {"order": i+1}
+            )
+        }
+
+
+        $scope.rowCollection_new = [];
+
+        for(i=0;i<$scope.dep_pro_table.length;i++){
+
+          for(j=0;j<$scope.dep_pro_table[i].programs.length;j++){
+            if($scope.dep_pro_table[i].programs[j].isTrue === true){
+              $scope.rowCollection_new.push($scope.dep_pro_table[i].programs[j]);
+            }
+          }
+
+        }
+
+
+        console.log("$scope.rowCollection_new = "+JSON.stringify($scope.rowCollection_new));
+
+
+
+
+
+        $scope.selected_customprogram = [];
+
+      for (i = 0; i < $scope.rowCollection_new.length; i++) {
 
         console.log("i=" + i)
-        
+        //"customerconfirmation_status": "",
         $scope.selected_customprogram.push({
-          "program_id": $scope.rowCollection[i].object_id,
-          "program_name": $scope.rowCollection[i].program_name,
-          "program_degree": $scope.rowCollection[i].program_degree,
-          "assignment_status": $scope.rowCollection[i].assignment_status,
-          "review_status": $scope.rowCollection[i].review_status,
+          "program_id": $scope.rowCollection_new[i].object_id,
+          "program_name": $scope.rowCollection_new[i].program_name,
+          "program_degree": $scope.rowCollection_new[i].program_degree,
+          "assignment_status": $scope.rowCollection_new[i].assignment_status,
+          "review_status": $scope.rowCollection_new[i].review_status,
           "whoops_status": "",
           "whoops_final_release": "",
           "enhancement_final_release": "",
-          "customerconfirmation_status": "",
+          
           "competing_program": (function() {
             var programs = [];
             for (j = 0; j < $scope.subrows.length; j++) {
@@ -507,7 +959,106 @@ admin.controller('AdminMainController',
 
       }
       $scope.displayeddata1 = [].concat($scope.selected_customprogram);
+
     }
+
+    // $scope.generate_program = function() {
+
+    //   console.log("api for depart = "+ '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + (($scope.department==='All') ? '' : ('&dep=' + $scope.department)));
+    //   $http({
+    //     url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + (($scope.department==='All') ? '' : ('&dep=' + $scope.department)),
+    //     method: 'GET',
+    //     headers: {
+    //       'Authorization': 'JWT ' + token
+    //     }
+    //   }).then(function(response) {
+
+    //     $scope.details = response.data;
+
+    //     console.log("custom programs=" + JSON.stringify(response.data.results));
+
+    //     $scope.rowCollection = response.data.results;
+
+    //   }).
+    //   catch(function(error) {
+    //     console.log('an error occurred...' + JSON.stringify(error));
+
+    //   });
+    // }
+
+
+    // $scope.preload = function() {
+    //   if ($scope.service_level === "basic") {
+    //     $scope.subrows = [{
+    //       "order": 1
+    //     }];
+    //   } else if ($scope.service_level === "silver") {
+    //     $scope.subrows = [{
+    //       "order": 1
+    //     }, {
+    //       "order": 2
+    //     }];
+    //   } else if ($scope.service_level === "gold") {
+    //     $scope.subrows = [{
+    //       "order": 1
+    //     }, {
+    //       "order": 2
+    //     }, {
+    //       "order": 3
+    //     }];
+    //   } else if ($scope.service_level === "platinum") {
+    //     $scope.subrows = [{
+    //       "order": 1
+    //     }, {
+    //       "order": 2
+    //     }, {
+    //       "order": 3
+    //     }, {
+    //       "order": 4
+    //     }];
+    //   }
+
+    //   //console.log("rowCollection="+JSON.stringify($scope.rowCollection));
+    //   //generate selected_customprogram list
+    //   $scope.selected_customprogram = [];
+
+    //   for (i = 0; i < $scope.rowCollection.length; i++) {
+
+    //     console.log("i=" + i)
+        
+    //     $scope.selected_customprogram.push({
+    //       "program_id": $scope.rowCollection[i].object_id,
+    //       "program_name": $scope.rowCollection[i].program_name,
+    //       "program_degree": $scope.rowCollection[i].program_degree,
+    //       "assignment_status": $scope.rowCollection[i].assignment_status,
+    //       "review_status": $scope.rowCollection[i].review_status,
+    //       "whoops_status": "",
+    //       "whoops_final_release": "",
+    //       "enhancement_final_release": "",
+    //       "customerconfirmation_status": "",
+    //       "competing_program": (function() {
+    //         var programs = [];
+    //         for (j = 0; j < $scope.subrows.length; j++) {
+    //           programs[j] = {
+
+    //             "object_id": "",
+    //             "order": j + 1,
+    //             "enhancement_status": ""
+    //           }
+
+    //         }
+    //         // programs.sort(function(a, b) {
+    //         //   return (a.programName.toLowerCase() > b.programName.toLowerCase()) ? 1 : ((b.programName.toLowerCase() > a.programName.toLowerCase()) ? -1 : 0);
+    //         // });
+    //         return programs;
+
+    //       })(),
+
+    //     });
+
+    //   }
+    //   $scope.displayeddata1 = [].concat($scope.selected_customprogram);
+    // }
 
 
   $scope.resources = {stuff: 'stuff', type:'actualtype'}
@@ -529,7 +1080,7 @@ admin.controller('AdminMainController',
 
       if (competing_string !== "") {
         $http({
-          url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + competing_string.slice(0, -1) + '&department=',
+          url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + competing_string.slice(0, -1),
           method: 'GET',
           headers: {
             'Authorization': 'JWT ' + token
@@ -538,10 +1089,10 @@ admin.controller('AdminMainController',
 
           $scope.competing_program_array = [];
 
-          console.log("comepting_programs" + JSON.stringify(response.data.results));
-          $scope.comepting_programs = response.data.results;
+          console.log("comepting_programs" + JSON.stringify(response.data));
+          $scope.comepting_programs = response.data;
 
-          for (i = 0; i < response.data.results.length; i++) {
+          for (i = 0; i < $scope.comepting_programs.length; i++) {
             $scope.competing_program_array.push({
               "object_id": $scope.comepting_programs[i].object_id,
               "display": $scope.comepting_programs[i].Ceeb + " - " + $scope.comepting_programs[i].program_university + " - " + $scope.comepting_programs[i].program_school + " - " + $scope.comepting_programs[i].program_name + " - " + $scope.comepting_programs[i].program_degree
@@ -672,7 +1223,7 @@ admin.controller('AdminMainController',
       } else {  
 
         //*************************************************create user
-
+        //"selected_customerprogram": $scope.selected_customprogram
         $http({
           url: '/api/upgrid/accountmanager/client/',
           method: 'POST',
@@ -691,7 +1242,7 @@ admin.controller('AdminMainController',
             "department": $scope.department,
             "service_level": $scope.service_level,
             "competing_schools": competing_schools_obj,
-            "selected_customerprogram": $scope.selected_customprogram
+            
 
           },
           headers: {
@@ -700,9 +1251,25 @@ admin.controller('AdminMainController',
           }
         }).then(function(response) {
 
-          $scope.details = response.data;
+        
+          console.log("success create" + JSON.stringify(response));
+          var success_client_id = response.data.client_id;
+       return $http({
+            url: '/api/upgrid/accountmanager/client/customer_program/',
+            method: 'POST',
+            data: {
+              client_id: success_client_id,
+              "selected_customer_program": $scope.selected_customprogram
+            },
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+          });
 
-          console.log("success" + JSON.stringify(response));
+        }).then(function(response) {
+
+
+
 
           return $http({
             url: '/api/upgrid/accountmanager/',
@@ -751,17 +1318,13 @@ admin.controller('AdminMainController',
   });
 
 
-// admin.controller('FormController',
-//   function(authenticationSvc, $scope, $http) {
-
-//     $scope.rowCollection = [];
-
-//        //console.log("selected_customprogram= "+JSON.stringify(selected_customprogram));
 
 
 
-//   });
 
+
+
+// ********************************Quote********************************
 admin.controller('QuoteController', ['$scope', '$localStorage', '$window',
   function($scope, $localStorage, $window) {
 
@@ -832,12 +1395,9 @@ admin.controller('QuoteController', ['$scope', '$localStorage', '$window',
                 },
               });
 
-
             }
 
-
           }
-
 
           if ($scope.promocode.toUpperCase() === 'ALMAMATER40') {
 
@@ -998,11 +1558,6 @@ admin.controller('QuoteController', ['$scope', '$localStorage', '$window',
           });
         }
              
-
-
-
-
-
     }
 
     $scope.$watchGroup(['user_program', 'competing_program'], function(newValues, oldValues, scope) {
@@ -1322,6 +1877,8 @@ admin.controller('QuoteController', ['$scope', '$localStorage', '$window',
 ]);
 
 
+
+// ********************************Profile********************************
 
 admin.controller('AdminProfileController', ['$http', '$scope', '$localStorage', '$window', 'authenticationSvc',
   function($http, $scope, $localStorage, $window, authenticationSvc) {

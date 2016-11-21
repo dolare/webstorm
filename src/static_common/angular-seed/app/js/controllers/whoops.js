@@ -607,10 +607,12 @@ whoops.controller('WhoopsController',
 
 
       $http({
-        url: '/api/upgrid/whoops_reports/shared/',
+        url: '/api/upgrid/reports/shared/',
         method: 'POST',
         data: {
-          "univcustomer_program_id": Id
+          "whoops_id": Id,
+          "enhancement_id": null,
+          
         },
         headers: {
           'Authorization': 'JWT ' + token
@@ -618,7 +620,7 @@ whoops.controller('WhoopsController',
         'Content-Type': 'application/json'
     
       }).then(function(response) {
-        console.log("share RESPONSE is "+JSON.stringify(response.data));
+        console.log("share html RESPONSE is "+JSON.stringify(response.data));
      
           $scope.shareLoading = false;
 

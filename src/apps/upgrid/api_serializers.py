@@ -169,6 +169,7 @@ class SubuserListSerializer(serializers.ModelSerializer):
         serializer = ClientProgramSerializer(programs, many=True)
         return serializer.data
 
+
 class MainUserDetailSerializer(serializers.ModelSerializer):
     sub_user_list = SerializerMethodField()
     competing_schools=SerializerMethodField()
@@ -271,6 +272,7 @@ class ClientProgramSerializer(serializers.ModelSerializer):
         serializer = CompetingProgramSerializer(cps, many=True)
         return serializer.data     
 
+
 class MainClientDetailSerializer(serializers.ModelSerializer):
     Ceeb = SerializerMethodField()
     CeebID = SerializerMethodField()
@@ -370,13 +372,13 @@ class CustomerAndCompetingProgramSerializer(serializers.ModelSerializer):
 
     def get_assignment_status(self, obj):
         try:
-            assignee = ProgramAssignment.objects.get(program=obj)
-            if assignee.status == 'Done':
+            assignment_object = ProgramAssignment.objects.get(program=obj)
+            if assignment_object.status == 'Done':
                 assign_status = 'Done'
             else:
                 assign_status = 'In_Progress'
             return assign_status
-        except ObjectDoesNotExist:
+        except ProgramAssignment.DoesNotExist:
             return 'In_Progress'
 
     def get_review_status(self, obj):

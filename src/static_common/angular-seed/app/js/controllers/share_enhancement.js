@@ -19,7 +19,7 @@ controller('ShareEnhancementController',
 
         //ewr
          $http({
-                url: '/api/upgrid/enhancement_reports/shared/'+$stateParams.param1+'/'+$stateParams.param2+'/',
+                url: '/api/upgrid/reports/shared/'+$stateParams.param1+'/'+$stateParams.param2+'/',
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json'
@@ -30,7 +30,7 @@ controller('ShareEnhancementController',
             
 
              console.log("released enhancement whoops"+ JSON.stringify(response.data));
-             $scope.e_raw = response.data;
+             $scope.e_raw = response.data[1].enhancement[0];
              $scope.e_array_final = [];
              var e_array_1 = [];
              var e_array_2 = [];
