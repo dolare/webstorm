@@ -32,7 +32,7 @@ urlpatterns=[
     # numbers of finalreleased whoops reports status == "True"
     url(r'^api/upgrid/user/released_whoops/$', apis.FinalReleasedWhoops.as_view()),
 
-    url(r'^api/upgrid/user/released_whoops/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.FinalReleasedWhoops.as_view()),
+    url(r'^api/upgrid/user/released_whoops/(?P<client_id>[0-9a-fA-F\-]+)/$', apis.FinalReleasedWhoops.as_view()),
 
     # numbers of finalreleased enhancement reports status == "True" 
     url(r'^api/upgrid/user/released_enhancement/$', apis.FinalReleasedEnhancement.as_view()),
@@ -77,7 +77,14 @@ urlpatterns=[
 
     url(r'^api/upgrid/accountmanager/client/$', apis.ClientCRUD.as_view()),
 
+    #   Get all customer programs of a client. :param client_id
+    url(r'^api/upgrid/accountmanager/client/customer_program/(?P<object_id>[0-9a-fA-F\-]+)/$',
+        apis.UniversityCustomerProgramCRUD.as_view()),
     url(r'^api/upgrid/accountmanager/client/customer_program/$', apis.UniversityCustomerProgramCRUD.as_view()),
+
+    # Get all competing programs under a university customer program. :param university customer program object_id.
+    url(r'^api/upgrid/accountmanager/client/competing_program/(?P<object_id>[0-9a-fA-F\-]+)/$',
+        apis.CustomerCompetingProgramCRUD.as_view()),
     url(r'^api/upgrid/accountmanager/client/competing_program/$', apis.CustomerCompetingProgramCRUD.as_view()),
 
     # get all Ceebs in database. Used for accountmanager create client's Ceeb. GET request. 

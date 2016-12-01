@@ -508,9 +508,15 @@ controller('ReportsController',
 
 
         });
+        
 
 
-        App.blocks('#viewall_loading', 'state_normal');
+          $q.all($scope.report_array).then(function(result) {
+            
+               App.blocks('#viewall_loading', 'state_normal');
+          });
+
+       
         
 
 

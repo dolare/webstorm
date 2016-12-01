@@ -254,14 +254,14 @@ class CustomerCompetingProgramAPI(APIView):
 # numbers of finalreleased whoops reports
 class FinalReleasedWhoops(APIView):
 
-    def get_object(self, request, object_id):
+    def get_object(self, request, client_id):
         try:
             user = UniversityCustomer.objects.get(id=request.user.id)
         except UniversityCustomer.DoesNotExist:
             try:
                 manager = UpgridAccountManager.objects.get(id=request.user.id)
                 try:
-                    user = UniversityCustomer.objects.get(id=object_id, account_manager=manager)
+                    user = UniversityCustomer.objects.get(id=client_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
                     return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
@@ -270,8 +270,8 @@ class FinalReleasedWhoops(APIView):
 
         return user
 
-    def get(self, request, object_id=None):
-        customer = self.get_object(request, object_id)
+    def get(self, request, client_id=None):
+        customer = self.get_object(request, client_id)
 
         if customer.account_type == 'sub':
             customer_programs = ClientAndProgramRelation.objects.filter(client=customer).values('client_program')
@@ -510,7 +510,7 @@ class ShareReports(APIView):
             try:
                 manager = UpgridAccountManager.objects.get(id=request.user.id)
                 try:
-                    user = UniversityCustomer.objects.get(id=request.GET['client_id'], account_manager=manager)
+                    user = UniversityCustomer.objects.get(id=request.data['client_id'], account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
                     return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
@@ -920,15 +920,16 @@ class ClientCRUD(APIView):
             client.competing_schools.add(school)
         return Response({'client_id': client.id}, status=HTTP_201_CREATED)
 
-    def put(self,request):
+    def put(self, request):
         perm = self.is_manager(request)
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
-        if 'main_user_id' in self.request.PUT:
+        if not self.request.data['main_user_id'] is None:
             main_user = UniversityCustomer.objects.get(object_id=request.data['main_user_id'])
             university_school = UniversitySchool.objects.get(object_id=self.request.data['ceeb'])
-            client = UniversityCustomer.objects.get(object_id=self.request.data['client_id']).update(
+            client = UniversityCustomer.objects.filter(id=self.request.data['client_id'])
+            client.update(
                 username=self.request.data['username'],
                 email=self.request.data['email'],
                 Ceeb=university_school,
@@ -942,10 +943,11 @@ class ClientCRUD(APIView):
                 phone=self.request.data['phone'],
                 service_until=main_user.service_until,
                 )
-            client.save()
+            #client.save()
         else:
             university_school = UniversitySchool.objects.get(object_id=self.request.data['ceeb'])
-            client = UniversityCustomer.objects.get(object_id=self.request.data['client_id']).update(
+            client = UniversityCustomer.objects.filter(id=self.request.data['client_id'])
+            client.update(
                 username=self.request.data['username'],
                 email=self.request.data['email'],
                 Ceeb=university_school,
@@ -960,20 +962,20 @@ class ClientCRUD(APIView):
                 phone=self.request.data['phone'],
                 service_until=self.request.data['service_until'],
                 )
-            client.save()
+            #client.save()
 
-        client.competing_schools.clear()
+        client[:1].get().competing_schools.clear()
         for cp in self.request.data['competing_schools']:
             school = UniversitySchool.objects.get(object_id=cp['object_id'])
-            client.competing_schools.add(school)
+            client[:1].get().competing_schools.add(school)
         return Response({"success": _("User has been modified.")}, status=HTTP_202_ACCEPTED)
 
-    def delete(self,request):
+    def delete(self, request):
         perm = self.is_manager(request)
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
-            client = UniversityCustomer.objects.get(object_id=request.data['client_id'])
+            client = UniversityCustomer.objects.get(id=request.data['client_id'])
             client.is_active = False
             client.save()
             return Response({"Success": _("User deleted!")}, status=HTTP_204_NO_CONTENT)
@@ -988,6 +990,18 @@ class UniversityCustomerProgramCRUD(APIView):
             return True
         except UpgridAccountManager.DoesNotExist:
             return False
+
+    def get(self, request, object_id):
+        perm = self.is_manager()
+        if not perm:
+            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        try:
+            client = UniversityCustomer.objects.get(id=object_id)
+        except UniversityCustomer.DoesNotExist:
+            return Response({"Failed": _("Can not find client with provided id.")}, status=HTTP_403_FORBIDDEN)
+        customer_program_list = UniversityCustomerProgram.objects.filter(customer=client)
+        serializer = UnivCustomerProgramSerializer(customer_program_list, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
         perm = self.is_manager(request)
@@ -1011,7 +1025,7 @@ class UniversityCustomerProgramCRUD(APIView):
                     whoops_status=p.get('whoops_status'),
                     whoops_final_release=p.get('whoops_final_release'),
                     enhancement_final_release=p.get('enhancement_final_release'),
-                    customer_confirmation='No',
+                    customer_confirmation= 'No',
                     )
                 customer_program.save()
                 # create competing program of each customer program for main user
@@ -1046,7 +1060,8 @@ class UniversityCustomerProgramCRUD(APIView):
         else:
             for p in self.request.data['selected_customer_program']:
                 program = Program.objects.get(object_id=p.get('program_id'))
-                customer_program = UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id')).update(
+                customer_program = UniversityCustomerProgram.objects.filter(object_id=p.get('customer_program_id'))
+                customer_program.update(
                     customer=client,
                     program=program,
                     whoops_status=p.get('whoops_status'),
@@ -1054,14 +1069,14 @@ class UniversityCustomerProgramCRUD(APIView):
                     enhancement_final_release=p.get('enhancement_final_release'),
                     customer_confirmation=p.get('customer_confirmation'),
                 )
-                customer_program.save()
+                #customer_program.save()
             return Response({"success": _("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
 
     def delete(self, request):
         perm = self.is_manager(request)
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
-        client = UniversityCustomer.objects.get(object_id=request.data['client_id'])
+        client = UniversityCustomer.objects.get(id=request.data['client_id'])
         if client.account_type == 'main':
             total_program = request.data['customer_program_id'].split('/')
             for i in total_program:
@@ -1077,6 +1092,14 @@ class CustomerCompetingProgramCRUD(APIView):
             return True
         except UpgridAccountManager.DoesNotExist:
             return False
+
+    def get(self, request, object_id):
+        perm = self.is_manager(request)
+        if not perm:
+            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        competing_programs = CustomerCompetingProgram.objects.filter(customer_program=object_id)
+        serializer = ManagerUseCompetingProgramSerializer(competing_programs, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
         perm = self.is_manager(request)
@@ -1096,12 +1119,14 @@ class CustomerCompetingProgramCRUD(APIView):
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         for p in request.data['customer_competing_program']:
-            CustomerCompetingProgram.objects.get(object_id=p.get('object_id')).update(
+            ccp = CustomerCompetingProgram.objects.filter(object_id=p.get('object_id'))
+            ccp.update(
                 customer_program=UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id')),
                 program=Program.objects.get(object_id=p.get('program_id')),
                 order=p.get('order'),
                 enhancement_status=p.get('enhancement_status')
-            ).save()
+            )
+
         return Response({"success": _("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
 
     def delete(self, request):
@@ -1191,7 +1216,7 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
 
     def is_manager(self, request):
         try:   
-            UpgridAccountManager.objects.get(id = request.user.id)
+            UpgridAccountManager.objects.get(id=request.user.id)
             return True
         except UpgridAccountManager.DoesNotExist:
             return False
@@ -1207,10 +1232,16 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
                 query_list = query_list.filter(
                     Q(university_school__in=total_ceeb)
                     )
+
             if department:
-                query_list = query_list.filter(
-                    Q(department=department)
-                    )
+                if department == 'Others':
+                    #query_list = query_list.exclude(Q(department__isnull=False))
+                    query_list = query_list.filter(department="")
+                    print (query_list)
+                else:
+                    query_list = query_list.filter(
+                        Q(department=department)
+                        )
             return query_list
         else:
             return Response({"Failed": _("You don't have permission to access!")}, status=HTTP_403_FORBIDDEN)

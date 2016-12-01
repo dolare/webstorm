@@ -612,6 +612,7 @@ whoops.controller('WhoopsController',
         data: {
           "whoops_id": Id,
           "enhancement_id": null,
+          "client_id": avatarService.getClientId()
           
         },
         headers: {

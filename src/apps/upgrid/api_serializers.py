@@ -79,7 +79,7 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = UniversityCustomerProgram
         fields = ('object_id', 'program_name', 'program_degree', 
-                  'whoops_final_release', 'enhancement_final_release','customer_confirmation',
+                  'whoops_final_release', 'enhancement_final_release', 'customer_confirmation',
                   'has_expert_notes')
 
     def get_program_name(self, obj):
@@ -111,7 +111,7 @@ class CompetingProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomerCompetingProgram
-        fields = ('object_id','program_id', 'program_name', 'program_degree', 'university',
+        fields = ('object_id', 'program_id', 'program_name', 'program_degree', 'university',
                   'school', 'order', 'enhancement_status')
 
     def get_program_id(self, obj):
@@ -142,12 +142,24 @@ class CustomerCompetingProgramSerializer(serializers.ModelSerializer):
         return CompetingProgramSerializer(qs, many=True).data         
 
 
+class ManagerUseCompetingProgramSerializer(serializers.ModelSerializer):
+    program = SerializerMethodField()
+
+    class Meta:
+        model = CustomerCompetingProgram
+        fields = ('object_id', 'program', 'order', 'enhancement_status')
+
+    def get_program(self, obj):
+        serializer = CustomerAndCompetingProgramSerializer(obj.program)
+        return serializer.data
+
+
 class UniversityAndSchoolSerializer(serializers.ModelSerializer):
     university_school = SerializerMethodField()
 
     class Meta:
         model = UniversitySchool
-        fields = ('object_id','university_school',)
+        fields = ('object_id', 'university_school',)
 
     def get_university_school(self, obj):
         return '{0} : {1} - {2}'.format(obj.ceeb, obj.university_foreign_key, obj.school)
@@ -261,7 +273,7 @@ class ClientProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = UniversityCustomerProgram
         fields = ('object_id', 'program', 'whoops_status', 'whoops_final_release', 'enhancement_final_release',
-                  'customer_confirmation','competing_program')
+                  'customer_confirmation', 'competing_program')
 
     def get_program(self, obj):
     
@@ -282,7 +294,7 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = UniversityCustomer
         fields = ('username', 'id', 'email', 'title', 'contact_name', 'position', 'position_level',
-                  'phone', 'Ceeb', 'CeebID', 'department', 'account_type','service_level', 'service_until',
+                  'phone', 'Ceeb', 'CeebID', 'department', 'account_type', 'service_level', 'service_until',
                   'competing_schools', 'customer_program')
 
     def get_Ceeb(self, obj):
@@ -308,8 +320,8 @@ class SubClientDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'id','email', 'title', 'contact_name', 'position', 'position_level',
-                  'phone', 'Ceeb', 'department', 'account_type', 'main_user_id','service_level', 'service_until',
+        fields = ('username', 'id', 'email', 'title', 'contact_name', 'position', 'position_level',
+                  'phone', 'Ceeb', 'department', 'account_type', 'main_user_id', 'service_level', 'service_until',
                   'competing_schools', 'customer_program')
 
     def get_Ceeb(self, obj):

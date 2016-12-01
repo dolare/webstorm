@@ -438,7 +438,8 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             method: 'POST',
             data: {
               "whoops_id": null,
-              "enhancement_id": Id
+              "enhancement_id": Id,
+              "client_id": avatarService.getClientId()
             },
             headers: {
                 'Authorization': 'JWT ' + token

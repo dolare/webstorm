@@ -32,9 +32,7 @@ var App = angular.module('myApp', [
   'ngSanitize',
   'ngProgress',
   'frapontillo.bootstrap-duallistbox',
-
-  
-  
+  'duScroll'
 
 ]);
 

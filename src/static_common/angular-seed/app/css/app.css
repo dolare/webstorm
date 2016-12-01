@@ -738,7 +738,8 @@ table input[type="search"] {
 }
 
 #bootstrap-duallistbox-nonselected-list_, #bootstrap-duallistbox-selected-list_ {
-  font-size:10px;
+  font-size:12px;
+  overflow-x: scroll;
 }
 
 .nav-sub-header > li > a {
@@ -767,12 +768,12 @@ input[type="radio"][name="yesno"] {
 }
 
 #tab>.btn:first-child.active {
-  background-color:#5c90d2;
+  background-color:#aaa;
   color:white;
 }
 
 #tab>.btn:nth-child(2).active {
-  background-color:#d26a5c;
+  background-color:#5c90d2;
   color:white;
 }
 
@@ -971,4 +972,10 @@ Full screen Modal
   .modal-lg {
     width: 1300px;
   }
+}
+
+
+/*popover modification*/
+.popover-content {
+    white-space: pre-wrap;
 }

@@ -2,12 +2,14 @@
 
 var dashboard = angular.module('myApp.login.success.dashboard', [])
 dashboard.controller('DashboardController',
-  function(ReleasedEnhancement, ReleasedWhoops, $timeout, $window, Dash, authenticationSvc, $http, apiService, List, $scope) {
+  function($sce, ReleasedEnhancement, ReleasedWhoops, $timeout, $window, Dash, authenticationSvc, $http, apiService, List, $scope) {
   	
   	var token = authenticationSvc.getUserInfo().accessToken;
     $scope.univeristy_name = List.profile.university;
     $scope.school_name = List.profile.school;
     $scope.Ceeb = List.profile.Ceeb;
+    $scope.htmlPopover = $sce.trustAsHtml('1. Enhancement titles modified');
+
     //console.log("ceeb result is"+JSON.stringify(List.profile.Ceeb));
    console.log("dashboard result is"+JSON.stringify(List));
    console.log("Dash = "+JSON.stringify(Dash));
