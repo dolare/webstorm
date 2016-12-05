@@ -136,14 +136,14 @@ controller('SuccessController',
 
         //watching on the checkbox status in whoops and enhancement pages using ngStorage
         $scope.$watch('$storage.upgrid', function() {
-            console.log('monitoring...');
+            //console.log('monitoring...');
             //console.log('STORAGE in success.js= '+JSON.stringify($scope.$storage));
 
             //get the number of program checked and display the count on the cart icon
             //use the cartCounter service
             
             //for counting
-            console.log("$$$upgrid scope "+JSON.stringify($scope.$storage.upgrid));
+            //console.log("$$$upgrid scope "+JSON.stringify($scope.$storage.upgrid));
             $scope.count = 0;
             for(var key in $scope.$storage.upgrid){
 

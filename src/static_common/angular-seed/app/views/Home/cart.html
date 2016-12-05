@@ -13,54 +13,61 @@
               <!-- <h3 class="block-title">Checkable Table</h3> -->
               <div class="col-sm-7">
                 <h1 class="page-heading">
-                  Report Manager <!-- <small></small> -->
+                  Report Manager <br><small> &nbsp;&nbsp;- Help you organize the selected reports.</small>
                 </h1>
                 
                 
                 
               </div>
             </div>
-            <div class="block-content">
+            <div class="block-content" style="padding-top:0; padding-left:30px; padding-right:30px">
               <!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
 
               <div class="alert alert-warning" role="alert" ng-if="Checked.length===0">{{message}}</div>
 
-              <table st-table="Checked" class="table" ng-if="Checked.length>0">
+              <table st-table="Checked" class="table" ng-if="Checked.length>0" style="table-layout: fixed;">
                 <colgroup>
-                <col width="40%">               
+                <col width="50px">
+                <col width="60%">               
                 <col width="20%">           
-                <col width="20%">                          
-                <col width="20%">               
+                <col width="115px">                          
+                <col width="115px">               
               </colgroup>
               <thead class="thead-inverse">
                 
-                <tr class=" bg-info" style="border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); color:white;">
-                  <th st-sort="name" style="padding-left:15px;" class="h4 font-w700">program
+                <tr class=" bg-info" style="border: 1px solid #e3e3e3; color:white;">
+                  <th></th>
+                  <th st-sort="name" style="padding-left:15px;" class="h4 font-w400">program
                   </th>
-                  <th st-sort="degree" style="padding-left:15px;text-align:center;" class="h4 font-w700">degree
+                  <th st-sort="degree" style="padding-left:15px;text-align:center;" class="h4 font-w400">degree
                   </th>
-                  <th class="h4 font-w700" style="text-align:center;">whoops!
+                  <th class="h4 font-w400" style="text-align:center;">whoops!
                   </th>
-                  <th class="h4 font-w700" style="text-align:center;">
+                  <th class="h4 font-w400" style="text-align:center;">
                     enhancement
                   </th>
                   
                 </tr>
 
-                <tr class="">
-                  <th>
-                   <input st-search="name" placeholder="Search for a program..."  style="height:auto; width:100%;" type="search" class="form-control"/>
+                <tr class="bg-gray-lighter">
+
+                  <th class="text-center th-bordered" style="vertical-align: middle; text-decoration: none; cursor: default;">
+                      
+                      <i class="fa fa-search text-primary"></i>
+                  </th>
+                  <th class="th-bordered">
+                   <input st-search="name" placeholder="Search for a program..."  style="height:auto; width:100%;" type="search" class="form-control font-w400"/>
                  </th>
 
-                 <th>
-                 <input st-search="degree" placeholder="And a degree..."  style="height:auto; width:100%;" type="search" class="form-control"/>
+                 <th class="th-bordered">
+                 <input st-search="degree" placeholder="degree..."  style="height:auto; width:100%;" type="search" class="form-control font-w400 text-center"/>
                 </th>
 
-                <th style="text-align:center;vertical-align: middle;">
+                <th style="text-align:center;vertical-align: middle;" class="font-w400 th-bordered">
                 Status
                 </th>
                 
-                <th style="text-align:center;vertical-align: middle;">
+                <th style="text-align:center;vertical-align: middle;" class="font-w400 th-bordered">
                 Status
                 </th>
 
@@ -75,24 +82,24 @@
             </thead>
             <tbody>
 
-              <tr ng-repeat="row in Checked" class="">
-                <td class="font-w600" style="padding-left:15px;">
+              <tr ng-repeat="row in Checked">
+                <td class="font-w500 td-bordered text-center bg-gray-lighterer">{{$index+1}}.</td>
+                <td class="font-w500 td-bordered" style="padding-left:15px;">
                   {{row.name}}
                 </td>
-                <td class="font-w600" style="padding-left:15px;text-align:center;">
+                <td class="font-w500 td-bordered" style="padding-left:15px;text-align:center;">
                   {{row.degree}}
                 </td>
 
 
-                <td style="text-align:center;">
+                <td style="text-align:center;" class="td-bordered">
                  
                   <!-- <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.status!=='True'||row.notes==='False'}">
                     <input type="checkbox" ng-model="$storage.upgrid[row.programName+row.degreeName].whoops" ng-change="checkbox()" ng-disabled="row.status!=='True'||row.notes==='False'"><span></span>
                   </label> -->
                   <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.WStatus==='False'||row.WNotes==='False'}">
 
-                  <input type="checkbox" ng-model="$storage.upgrid[row.name+'|'+row.degree]['whoops']" ng-true-value=true ng-false-value="undefined" ng-change="selectWh(row.name, row.degree, row.WId, row.WStatus, row.EStatus, row.WNotes, row.EConfirm)"
-                    ng-disabled="row.WStatus==='False'||row.WNotes==='False'"><span></span>
+                  <input type="checkbox" ng-model="$storage.upgrid[row.name+'|'+row.degree]['whoops']" ng-disabled="row.WStatus==='False'||row.WNotes==='False'"><span></span>
 
 
                 </label>
@@ -101,13 +108,13 @@
                
 
               
-                <td style="text-align:center;">
+                <td style="text-align:center;" class="td-bordered">
                   
                   <!-- <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.status!=='True'||row.confirm!=='Yes'}">
                     <input type="checkbox" ng-model="$storage.upgrid[row.programName+row.degreeName].enhancement" ng-change="checkbox()" ng-disabled="row.status!=='True'||row.confirm!=='Yes'"><span></span>
                   </label> -->
                    <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.EStatus==='False'||row.EConfirm!=='Yes' }">
-                                  <input type="checkbox" ng-model="$storage.upgrid[row.name+'|'+row.degree]['enhancement']" ng-true-value=true ng-false-value="undefined" ng-change="selectEn(row.name, row.degree, row.EId, row.WStatus, row.EStatus, row.EConfirm, row.WNotes)" ng-disabled="row.EStatus==='False'||row.EConfirm!=='Yes'"><span></span>
+                                  <input type="checkbox" ng-model="$storage.upgrid[row.name+'|'+row.degree]['enhancement']" ng-disabled="row.EStatus==='False'||row.EConfirm!=='Yes'"><span></span>
                               </label>
                 </td>
                
@@ -126,7 +133,7 @@
                 </div>
               </td>
 
-              <td colspan="2" class="text-center">
+              <td colspan="3" class="text-center">
                 <br/><br/>
                 <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5" style="text-align:right;"></div>
               </td>
@@ -135,11 +142,12 @@
           </tfoot>
         </table>
 
+        <hr>
 
-        <button class="btn btn-lg btn-square bg-info" ng-click="ViewAll()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0" data-toggle="modal" data-target="#ViewAll">
+        <button class="font-w400 btn btn-lg btn-square bg-info" ng-click="ViewAll()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0" data-toggle="modal" data-target="#ViewAll">
           View [{{count}}]
         </button>
-        <button class="btn btn-lg pull-right btn-square bg-city-light" data-target="#myModal1" data-toggle="modal" ng-click="ShareAllSelected()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0">
+        <button class="font-w400 btn btn-lg pull-right btn-square bg-city-light" ng-click="ShareAllSelected()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0">
           Share [{{count}}]
         </button>
 
@@ -315,13 +323,13 @@
                                   </li>
                                   
                                   <li>
-                                    <button data-dismiss="modal" type="button" data-js-blur><i class="si si-close"></i></button>
+                                    <button data-dismiss="modal" type="button" ng-click="scrolltop()" data-js-blur><i class="si si-close"></i></button>
                                   </li>
                                 </ul>
                                 <h3 class="block-title">View Reports</h3>
                               </div>
                               
-                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;">
+                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_cart">
 
            
                     <!-- SlimScroll Container -->
@@ -446,7 +454,10 @@
                                     <address>
                                       <div ng-repeat="program in view_counter" class="push-5"> 
 
-                                        <a  data-js-blur class="link-effect" href="javascript:void(0)" scroll-to="{{ 'program-' + $index }}">{{$index + 1}}.&nbsp;&nbsp;&nbsp;&nbsp; {{program.name}} - {{program.degree}}</a><br />
+                                        <a  data-js-blur class="link-effect" href="{{ '#program-' + $index }}" du-smooth-scroll>{{$index + 1}}.&nbsp;&nbsp;&nbsp;&nbsp; {{program.name}} - {{program.degree}}</a>
+
+                                        
+                                        <br />
 
                                       </div>
                                     
@@ -483,7 +494,7 @@
                         </div>
 
                         <div style="position: fixed;bottom: 50px;right: 25px;">
-                            <a  data-js-blur href="javascript:void(0)" scroll-to="top-report" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;"><i class="fa fa-arrow-up"></i></a>
+                            <a  data-js-blur href="#top-report" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
 
                         </div>
 

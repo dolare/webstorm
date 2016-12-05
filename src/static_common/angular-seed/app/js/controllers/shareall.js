@@ -42,14 +42,14 @@ controller('ShareAllController',
        
         angular.forEach($scope.view_counter, function (value, index) {
             console.log("index="+index)
-            if($scope.view_counter[index].WId){
+            if($scope.view_counter[index].whoops){
 
 
               console.log("*index="+index);
-              console.log("$scope.view_counter[index].WId"+$scope.view_counter[index].WId);
+              console.log("$scope.view_counter[index].WId"+$scope.view_counter[index].Id);
            
               $http({
-                url: '/api/upgrid/wwr/'+$scope.view_counter[index].WId,
+                url: '/api/upgrid/wwr/'+$scope.view_counter[index].Id,
                 method: 'GET',
                 headers: {
                   'Authorization': 'JWT ' + token
@@ -150,9 +150,9 @@ controller('ShareAllController',
           //////////////
 
 
-          if($scope.view_counter[index].EId){
+          if($scope.view_counter[index].enhancement){
                      $http({
-                            url: '/api/upgrid/ewr/'+$scope.view_counter[index].EId,
+                            url: '/api/upgrid/ewr/'+$scope.view_counter[index].Id,
                             method: 'GET',
                             headers: {
                               'Authorization': 'JWT ' + token

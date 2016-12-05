@@ -34,6 +34,10 @@ whoops.controller('WhoopsController',
 
     $scope.count = 0;
 
+    $scope.scrolltop = function(){
+      
+      angular.element(document.getElementById('scrolltop_whoops_page')).scrollTop(0);
+    }
 
 
     $scope.WhoopsViewer = function(Id, Program, Degree){
@@ -143,123 +147,7 @@ whoops.controller('WhoopsController',
       $scope.count++;
     };
     
-    // $http({
-    //       url: '/api/customerDetail/',
-    //       method: 'POST',
-    //       data: {
-    //          email: authenticationSvc.getUserInfo().username
-    //       },
-    //       headers: {
-    //         'Authorization': 'JWT ' + token
-    //       }
-    // }).then(function (response) {
-
-    //    $scope.details = response.data;
-
-    //    console.log("!!!GOT! customer detail="+ JSON.stringify(response));
-    //     // if(response.status === 204){
-    //     //   console.log("===204");
-    //     // }
-    // }).
-    //  catch(function(error){
-    //     console.log('an error occurred...'+JSON.stringify(error));
-
-    //  });
-
-    // /////////////////////////////
-    // var part1 = [];
-    // var part2 = [];
-    // $http({
-    //       url: '/api/selected_program/?order=oname&page=1&page_size=26',
-    //       method: 'GET',
-          
-    //       headers: {
-    //         'Authorization': 'JWT ' + token
-    //       }
-    // }).then(function (response) {
-
-    //    $scope.details = response.data;
-    //    //part1 = response.data;
-    //    //console.log("***GOT! detail="+ JSON.stringify(response.data));
-    //     // if(response.status === 204){
-    //     //   console.log("===204");
-    //     // }
-    //     //console.log("abcd = "+JSON.stringify($scope.details));
-    //     // if(response.data.next){
-    //     //      console.log("it has next url");
-    //     //                 $http({
-    //     //                 url: response.data.next,
-    //     //                 method: 'GET',
-                        
-    //     //                 headers: {
-    //     //                   'Authorization': 'JWT ' + token
-    //     //                 }
-    //     //           }).then(function (response) {
-
-    //     //              $scope.details = response.data;
-    //     //              part2 = response.data.results;
-    //     //              //console.log("***GOT! detail="+ JSON.stringify(response.data));
-    //     //               // if(response.status === 204){
-    //     //               //   console.log("===204");
-    //     //               // }
-    //     //               //console.log("_______final result = "+JSON.stringify(part1.concat(part2)));
-
-    //     //           }).
-    //     //            catch(function(error){
-    //     //               console.log('an error occurred...'+JSON.stringify(error));
-
-    //     //            });
-
-    //     // } else {
-    //     //   console.log("it does NOT has next url");
-    //     // }
-
-    // }).
-    //  catch(function(error){
-    //     console.log('an error occurred...'+JSON.stringify(error));
-
-    //  });
-
-
-    // $http({
-    //       url: '/api/subuser/',
-    //       method: 'POST',
-    //       data: { "username": "ColumbiaUGSAS@S2",
-    //             //+($scope.data.subuser.length+1)
-    //               "password": "Test128",
-    //               "email": "aha@gmail.com",
-    //               "Ceeb": "2162",
-    //               "Contact_Prefix": "Mr",
-    //               "Contact_Name": "Aha",
-    //               "Contact_Title": "Dean",
-    //               "Contract_Level": "platina",
-    //               "Contact_Tel": "2012732735"},
-    //       headers: {'Authorization': 'JWT ' + token}
-
-    //       }).then(function (response) {
-    //           console.log('success create!');
-    //           // $scope.data.subuser.push(
-    //           //  {"username":$scope.data.username.split('@')[0]+"@S"+($scope.data.subuser.length+1),
-    //           //   "email":$scope.subuser.email,
-    //           //   "Contact_Prefix":$scope.subuser.form_contact_prefix,
-    //           //   "Contact_Name": $scope.subuser.name,
-    //           //   "Contact_Title":$scope.subuser.title,
-    //           //   "Contact_Tel":$scope.subuser.tel});
-
-    //           // //update data
-    //           // $scope.data = tableDataService.getProfile(List);
-
-
-
-    //          }).
-    //        catch(function(error){
-    //           console.log('an error occurred...'+JSON.stringify(error));
-
-
-    //       });
-    // // /////////
-    
-
+  
     //console.log("list is ---" + JSON.stringify(List));
     $scope.userInfo = authenticationSvc.getUserInfo();
     $scope.show_alert = true;
@@ -312,11 +200,16 @@ whoops.controller('WhoopsController',
                         $scope.availablenum = result;
                         console.log("$scope.availablenum="+$scope.availablenum);
                         $scope.width = 100 * $scope.availablenum / $scope.totalnum;
+
+                       
+                        setTimeout(function(){jQuery('.chart-1').data('easyPieChart').update($scope.width);}, 100);
+
                     }, function(error) {
                        
                         console.log('error is: ' + JSON.stringify(error));
 
                     });
+
 
               
           }
@@ -325,78 +218,12 @@ whoops.controller('WhoopsController',
 
           App.blocks('#loadingtable', 'state_normal');
 
-          // $scope.totalnum = 0;
-          // $scope.availablenum = 0;
-          
-
-          // $http({
-          //       url: '/api/selected_program/?order=oname',
-          //       method: 'GET',
-                
-          //       headers: {
-          //         'Authorization': 'JWT ' + token
-          //       }
-          // }).then(function (response) {
-          //   $scope.totalnum = response.data.count; 
-          //   return $http({
-          //       url: '/api/selected_program/?order=oname&fs=True',
-          //       method: 'GET',
-                
-          //       headers: {
-          //         'Authorization': 'JWT ' + token
-          //       }
-          //     });
-
-          // }).then(function (response) {
-          //     $scope.availablenum = response.data.count;
-          //     console.log("$scope.availablenum="+$scope.availablenum);
-          //     console.log("$scope.totalnum="+$scope.totalnum);
-          //     $scope.width = 100 * $scope.availablenum / $scope.totalnum;
-          // }).
-          //  catch(function(error){
-          //     console.log('an error occurred...'+JSON.stringify(error));
-
-          //  });
-
-          //+/+/+/+/+/+/+/check perfect 
-
-           // var checkPerfect = [];
-    
-           //  for (i = 0; i < $scope.data.length; i++) {
-
-           //    if ($scope.data[i].status) {
-           //      checkPerfect.push(reportService.getWhoopsPerfect($scope.data[i].programId, token));
-           //    }
-
-           //  }
-
-            // $q.all(checkPerfect).then(function(result) {
-
-            //   console.log("result= " + JSON.stringify(result));
-            //   for (i = 0; i < $scope.data.length; i++) {
-            //     if (result[i] === 204 && $scope.data[i].status === 'True') {
-            //       $scope.data[i].perfect = "True";
-            //     } else {
-            //       $scope.data[i].perfect = "False";
-
-            //     }
-            //   }
-
-            // });
-
         });
 
     }
-
-
-   
               console.log("$scope.availablenum="+$scope.availablenum);
               console.log("$scope.totalnum="+$scope.totalnum);
     
-    //console.log("DATAAAAAA= "+JSON.stringify($scope.data));
-
-
-
     ////////////smart table
     $scope.itemsByPage = 25;
     $scope.toolTip = "kakaka";
@@ -412,51 +239,7 @@ whoops.controller('WhoopsController',
     //for testing if the program has error
     $scope.perfect = false;
 
-    
-    //remove the duplicate degree
-
-    /////~~~~
-    // for (i = 0; i < $scope.data.length; i++) {
-    //   var exists = false;
-    //   for (j = 0; j < $scope.degreeSelection.length; j++) {
-    //     if ($scope.data[i].degreeName === $scope.degreeSelection[j]) {
-    //       exists = true;
-    //       break;
-    //     }
-    //   }
-
-    //   if (!exists) {
-    //     $scope.degreeSelection.push($scope.data[i].degreeName);
-    //   };
-
-    // };
-
-    //////~~~~~
-
-
-    //console.log("******data length=" + $scope.data.length);
-
-
-
-    ///////////////////
-    //available reports
-    //$scope.totalnum = $scope.data.length;
-
-
-    //////~~~~
-    
-    // $scope.totalnum = 0;
-    // $scope.availablenum = 0;
-    // for (i = 0; i < $scope.data.length; i++) {
-    //   if ($scope.data[i].status) {
-    //     if ($scope.data[i].status === "True") {
-    //       $scope.availablenum++;
-    //     }
-    //     $scope.totalnum++;
-    //   }
-    // }
-
-    ////~~~~~
+  
     //for the title checkbox
     $scope.selectAll = function() {
       for (var i = 0; i < $scope.data.length; i++) {
@@ -482,9 +265,7 @@ whoops.controller('WhoopsController',
     $scope.selectOne = function(Name, Degree, Id, WStatus, EStatus, Notes, Confirm) {
       
 
-      if($scope.$storage.upgrid[Name+'|'+ Degree]['whoops']){
-
-          $scope.$storage.upgrid[Name+'|'+Degree]["WId"] = Id
+          $scope.$storage.upgrid[Name+'|'+Degree]["Id"] = Id
 
           $scope.$storage.upgrid[Name+'|'+Degree]["WStatus"] = WStatus
           $scope.$storage.upgrid[Name+'|'+Degree]["EStatus"] = EStatus
@@ -492,19 +273,8 @@ whoops.controller('WhoopsController',
           $scope.$storage.upgrid[Name+'|'+Degree]["EConfirm"] = Confirm
 
 
-      }else{
-          $scope.$storage.upgrid[Name+'|'+Degree]["WId"] = (function () { return; })();
-          $scope.$storage.upgrid[Name+'|'+Degree]["WStatus"] = WStatus
-          $scope.$storage.upgrid[Name+'|'+Degree]["EStatus"] = EStatus
-          $scope.$storage.upgrid[Name+'|'+Degree]["WNotes"] = Notes
-          $scope.$storage.upgrid[Name+'|'+Degree]["EConfirm"] = Confirm
-         
-
-      }
-
-
-
-
+          console.log("$scope.$storage.upgrid="+JSON.stringify($scope.$storage.upgrid));
+      
     };
 
 
@@ -612,7 +382,6 @@ whoops.controller('WhoopsController',
         data: {
           "whoops_id": Id,
           "enhancement_id": null,
-          "client_id": avatarService.getClientId()
           
         },
         headers: {

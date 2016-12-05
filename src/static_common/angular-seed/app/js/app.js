@@ -807,7 +807,7 @@ App.directive('jsTableSectionsFixed', function () {
                         && e.target.type !== 'button'
                         && e.target.type !== 'radio'
                         && e.target.tagName.toLowerCase() !== 'a'
-                        && e.target.tagName.toLowerCase() !== 'i'
+                        && e.target.tagName.toLowerCase() !== 'span'
                         && !jQuery(e.target).parent('label').length) {
                     var row    = jQuery(this);
                     var tbody  = row.parent('tbody');

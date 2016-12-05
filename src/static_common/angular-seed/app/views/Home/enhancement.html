@@ -5,110 +5,115 @@
   
   <!-- Table Sections (data-js-table-checkable attribute is initialized in js/directives.js) -->
   <div class="block block-rounded">
-    <div class="block-header">
+    <div class="block-header" style="padding-bottom: 0">
             <!-- <div class="block-options">
                 <code>.data-js-table-checkable</code>
               </div> -->
               <!-- <h3 class="block-title">Checkable Table</h3> -->
-              <div class="col-sm-7">
+              <div class="col-sm-6">
                 <h1 class="page-heading">
-                  Enhancement Report <small>  Stay abreast of competing programs.</small>
+                  Enhancement Report <br><small> &nbsp;&nbsp;- Stay abreast of competing programs.</small>
                 </h1>
 
               </div>
 
-              <div ng-if="accountType ==='main'" class="col-sm-5" style="margin-top:1.5em;" >
-                <button href="#myModalConfirm" id="openBtn1" data-toggle="modal" ng-click="confirmDialog()" ng-disabled="unconfirmedprogram_nums === 0" ng-class="{'css-input-disabled btn btn-success':unconfirmedprogram_nums === 0, 'btn btn-warning': unconfirmedprogram_nums !== 0}" style="position:relative;" class="pull-right" >
 
-                  <i ng-class="{'si si-pencil':unconfirmedprogram_nums !== 0, 'si si-check':unconfirmedprogram_nums === 0}"></i>
-                  <span ng-show="!unconfirmedprogram_nums==0">UNCONFIRMED</span>
-                  <span ng-show="unconfirmedprogram_nums===0">CONFIRMED</span>
+              <div class="col-sm-6 text-right" ng-if="accountType ==='main'&&unconfirmedprogram_nums !== 0">
+                  
+                  <div style="margin-top:1.5em;" >
+                    <button href="#myModalConfirm" id="openBtn1" data-toggle="modal" ng-click="confirmDialog()" ng-disabled="unconfirmedprogram_nums === 0" ng-class="{'css-input-disabled btn btn-success':unconfirmedprogram_nums === 0, 'btn btn-default': unconfirmedprogram_nums !== 0}" style="position:relative;" class="pull-right" >
 
-                  <span class="badge progress-bar-danger" data-uib-tooltip="Please confirm the rest competing programs" data-tooltip-placement="top"  ng-if="unconfirmedprogram_nums !== 0" style="position:absolute;top:-10px;right:-10px;background:red;color:white;text-align:center;box-shadow:0 0 1px #333;">{{unconfirmedprogram_nums}}
+                  <i class="fa fa-list-ul text-warning" data-uib-tooltip="Please confirm the rest competing programs" data-tooltip-placement="top"></i>
+
+                  <span class="badge progress-bar-danger"  ng-if="unconfirmedprogram_nums !== 0" style="position:absolute;top:-10px;right:-10px;background:red;color:white;text-align:center;box-shadow:0 0 1px #333;">{{unconfirmedprogram_nums}}
                   </span>
 
                 </button>
+
+                </div>
+
+                    
+
               </div>
+
+              <div class="col-sm-6 text-right" ng-if="unconfirmedprogram_nums === 0">
+
+                <div class="pie-chart chart-1" data-js-pie-chart="{lineWidth: 5, size: 88, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0" ng-if="finalreleased_enhancement>0&&unconfirmedprogram_nums===0">
+                                <span data-uib-tooltip="{{finalreleased_enhancement}} out of {{customerprogram_nums}}  Enhancement Reports are available" data-tooltip-placement="top">{{finalreleased_enhancement}} <br><small class="text-muted">/{{customerprogram_nums}} </small></span>
+                    </div>
+              </div>
+
               
               
 
             </div>
-            <div class="block-content">
-              <!-- for test use -->
-              <!-- <button ng-click="setAllToUnconfirmed()">SetBack (for test)</button> -->
-              <!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
-              <!-- <div class="alert alert-warning" role="alert" ng-if="displayeddata.length===0 && accountType ==='main'">{{message}}</div> -->
+            <div class="block-content" ng-if="accountType !=='main'&& unconfirmedprogram_nums !== 0">
+            
+              <div class="alert alert-warning" role="alert" >{{messageSub}}</div>
 
-              <div class="alert alert-warning" role="alert" ng-if="accountType !=='main'&& unconfirmedprogram_nums !== 0">{{messageSub}}</div>
-
-              <div class="progress" style="margin-bottom:30px;" ng-if="finalreleased_enhancement>0&&unconfirmedprogram_nums===0">
-                
-                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" ng-style="{'width':width + '%'}" ng-if="finalreleased_enhancement>0&&unconfirmedprogram_nums===0">{{finalreleased_enhancement}} / {{customerprogram_nums}} reports available</div>
-
-                
-
-
-              </div>
               </div>
               
 
 
               
-              <div class="block" id="loadingtable">
-              <div class="block-content">
+              <div class="block block-rounded" id="loadingtable">
+              <div class="block-content" style="padding-left: 30px; padding-right: 30px">
 
-                <table class="table table-hover" refresh-table st-pipe="enhancementpipe" st-table="displayeddata"  data-js-table-sections-fixed>
+                <table class="table table-hover" refresh-table st-pipe="enhancementpipe" st-table="displayeddata" style="table-layout: fixed;" data-js-table-sections-fixed>
                 
                 <colgroup>
-                <col width="5%"/>
                 <col width="7%"/>
+                <col width="5%"/>
                 <col width="53%"/>
                 <col width="15%"/>
                 
-                <col width="15%"/>
-                <col width="5%"/>
+                <col width="115px"/>
+                <col width="4%"/>
                 </colgroup>
 
                 <thead>
-                    <tr class="bg-info" style="border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); color:white;">
+                    <tr class="bg-info" style="border: 1px solid #e3e3e3; color:white;">
                   <th></th>
                   <th></th>
-                  <th st-sort="programName" style="padding-left:15px;" class="h4 font-w700">program</th>
-                  <th st-sort="degreeName" style="padding-left:15px;" class="h4 font-w700 text-center">degree</th>
+                  <th st-sort="programName" style="padding-left:15px;" class="h4 font-w400">program</th>
+                  <th st-sort="degreeName" style="padding-left:15px;" class="h4 font-w400 text-center">degree</th>
                  
-                  <th st-sort="enhancement_status" style="padding-left:15px;" class="h4 font-w700 text-center">status</th>
-                  <th  style="padding-left:15px;" class="h4 font-w700">update</th>
+                  <th st-sort="enhancement_status" style="padding-left:15px;" class="h4 font-w400 text-center">status</th>
+                  <th  style="padding-left:15px;" class="h4 font-w400"><i class="fa fa-exclamation-circle" aria-hidden="true" data-uib-tooltip="Newly updated report" data-tooltip-placement="top"></i></th>
                   <!-- st-sort="reportUpdate" -->
                 </tr>
 
-                <tr>
+                <tr style="border: 1px solid #eee;" class="bg-gray-lighter">
                   <!-- border-left: 1px solid #ddd; border-right:1px solid #ddd -->
 
-                  <th class="text-center" style="width: 70px;">
+                  <th class="text-center th-bordered" style="width: 70px; vertical-align: middle; text-decoration: none; cursor: default;">
                     
+                    <i class="fa fa-search text-primary"></i>
                     <!-- <label class="css-input css-checkbox css-checkbox-primary remove-margin-t remove-margin-b" ng-class="{'css-input-disabled':availablenum===0}">
                       <input type="checkbox" id="check-all" name="check-all" ng-model="$storage.checkAllenhancement" ng-change="selectAll()" ng-disabled="availablenum===0"><span></span>
                     </label> -->
                   </th>
-                  <th>
-                  </th>
+                 <!--  <th class="text-center" style="width: 70px;">
+                      
+                      
+                    </th> -->
                   
-                  <th>
-                   <input st-search="programName" placeholder="Search for a program..."  type="search" class="form-control" style="height:auto; width:100%;">
+                  <th colspan="2" class="th-bordered">
+                   <input st-search="programName" placeholder="Search for a program..."  type="search" class="form-control font-w400" style="height:auto; width:100%;">
                  </th>
 
-                 <th>
+                 <th class="th-bordered">
                   <!-- <select st-search="degreeName" class="form-control" st-input-event="change">
                     <option value="">Select...</option>
                     <option ng-repeat="row in degreeSelection" value="{{row}}">{{row}}</option>
                   </select> -->
 
-                  <input st-search="degreeName" placeholder="degree..."  type="search" class="form-control" style="height:auto; width:100%;">
+                  <input st-search="degreeName" placeholder="degree..."  type="search" class="form-control font-w400 text-center" style="height:auto; width:100%;">
                 </th>
 
                 
-                <th>
-                  <select st-search="enhancement_status" class="form-control" st-input-event="change">
+                <th class="th-bordered">
+                  <select st-search="enhancement_status" class="form-control font-w400" st-input-event="change">
                     <option value="">Select...</option>
                     
                     <option value="True">Complete</option>
@@ -116,43 +121,43 @@
                   </select>
                 </th>
 
-                <th></th>
+                <th class="th-bordered"></th>
               </tr>
  
                 </thead>
 
-                <tbody class="js-table-sections-header bg-gray-lighter" ng-repeat-start="row in displayeddata"  ng-click="openTableCompeting(row.objectId, $index, row.competing)">
-                    <tr style="">
-                        <td>
+                <tbody class="js-table-sections-header" ng-repeat-start="row in displayeddata"  ng-click="openTableCompeting(row.objectId, $index, row.competing)">
+                    <tr style="border: 1px solid #f0f0f0">
+                        <td class="text-center bg-gray-lighterer td-bordered" >
                               <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.enhancement_status!=='True'}"  data-uib-tooltip="Add to the 'Report Manager'" data-tooltip-placement="top" >
-                                  <input type="checkbox" ng-model="$storage.upgrid[row.programName+'|'+row.degreeName]['enhancement']" ng-true-value=true ng-false-value="undefined" ng-change="selectOne(row.programName, row.degreeName, row.objectId, row.whoops_status, row.enhancement_status, row.confirm, row.notes)" ng-disabled="row.enhancement_status!=='True'"><span></span>
+                                  <input type="checkbox" ng-model="$storage.upgrid[row.programName+'|'+row.degreeName]['enhancement']" ng-change="selectOne(row.programName, row.degreeName, row.objectId, row.whoops_status, row.enhancement_status, row.confirm, row.notes)" ng-disabled="row.enhancement_status!=='True'"><span></span>
                               </label>
 
                         </td>
 
                         <!-- angle -->
                         <td class="text-center">
-                            <i class="fa fa-angle-right"></i>
+                            <i class="fa fa-angle-right text-primary"></i>
                         </td>
 
-                        <td class="font-w600">{{row.programName}}</td>
-                        <td class="font-w600 text-center">
-                            <span >{{row.degreeName}}</span>
+                        <td class="font-w500">{{row.programName}}</td>
+                        <td class="font-w500 text-center td-bordered">
+                            {{row.degreeName}}
                         </td>
-                        <td class="text-center">
+                        <td class="text-center td-bordered">
 
 
                         <span ng-if="row.enhancement_status==='True'">
 
                           <div class="btn-group">
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#EnhancementReport" ng-click = "EnhancementViewer(row.objectId, row.programName, row.degreeName);" data-js-blur>
+                            <button class="btn btn-default btn-white" type="button" data-toggle="modal" data-target="#EnhancementReport" ng-click = "EnhancementViewer(row.objectId, row.programName, row.degreeName);" data-js-blur>
                               <a data-uib-tooltip="View" data-tooltip-placement="top" class="fa fa-eye text-primary">
                     
                             </a>
                             </button>
 
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal1" ng-click = "htmlShare(row.objectId);" data-js-blur>
-                               <a data-uib-tooltip="Share" data-tooltip-placement="top" class="fa fa-share-alt text-city">
+                            <button class="btn btn-default btn-white" type="button" data-toggle="modal" data-target="#myModal1" ng-click = "htmlShare(row.objectId);" data-js-blur>
+                               <a data-uib-tooltip="Share" data-tooltip-placement="top" class="fa fa-share-alt text-orange">
                           
                             </a>
                             </button>
@@ -161,14 +166,14 @@
 
                         </span>
                         
-                      <label ng-if="row.enhancement_status==='False'"><label class="label label-default"><i class="fa fa-refresh"></i> In Progress</label>
+                      <label ng-if="row.enhancement_status==='False'"><label class="label label-default"><span class="fa fa-refresh"></span> In Progress</label>
 
                       </label>
 
 
                         </td>
 
-                        <td style="text-align:center;">
+                        <td class="td-bordered" style="text-align:center;">
                             <!-- <span ng-if="row.reportUpdate===true"> --><span>
                             <span class="fa fa-exclamation-circle text-primary" ng-if="row.objectId==='9a80a2c5-affd-43f2-8fb7-eace71c68d5a'">
                             </span>
@@ -178,16 +183,16 @@
                     </tr>
                 </tbody>
 
-                <tbody ng-repeat-end>
-                    <tr ng-repeat="competing in row.competing">
-                        <td></td>
-                        <td class="text-center text-muted">{{competing.order}}.</td>
-                        <td class="text-left font-w600 text-primary">
+                <tbody ng-repeat-end class="bg-gray-lighter">
+                    <tr ng-repeat="competing in row.competing" style="border: 1px solid #f0f0f0">
+                        <td class="td-bordered"></td>
+                        <td class="text-center text-muted font-w500">{{competing.order}}.</td>
+                        <td class="text-left font-w500 text-primary">
                           {{competing.program_name}}<br><span class="text-muted"><small>{{competing.school}}  ({{competing.university}})</small></span>
                         </td>
-                        <td class="text-center font-w600 text-primary" style="vertical-align: top">{{competing.program_degree}}</td>
+                        <td class="text-center font-w500 text-primary td-bordered" style="vertical-align: top">{{competing.program_degree}}</td>
                         <td></td>
-                        <td></td>
+                        <td class="td-bordered"></td>
                         
                     </tr>
                    
@@ -312,15 +317,15 @@
                                       <!--  <input st-search="programName" placeholder="Search for the program..."  type="search"/ class="form-control" style="height:auto; width:100%;"> -->
                             <div class="input-group input-group-lg" style="width:100%">
                             <div class="input-group-addon" style="font-size:15px">Search</div>
-                            <input st-search="programName" class="js-icon-search form-control" type="text" placeholder="Program name...">
+                            <input st-search="programName" class="js-icon-search form-control font-w400" type="text" placeholder="Program name...">
                         </div>
                          </th>
                     </tr>
                     <tr>
                         <th></th>
                         <th></th>
-                        <th st-sort="programName" class="text-primary">Program</th>
-                        <th st-sort="degreeName" class="text-center text-primary">Degree</th>
+                        <th st-sort="programName" class="text-primary font-w400">Program</th>
+                        <th st-sort="degreeName" class="text-center text-primary font-w400">Degree</th>
                         
                     </tr>
                 </thead>
@@ -334,11 +339,11 @@
                         </td>
                         <!-- angle -->
                         <td class="text-center">
-                            <i class="fa fa-angle-right"></i>
+                            <i class="fa fa-angle-right text-primary"></i>
                         </td>
 
-                        <td class="font-w600">{{row.programName}}</td>
-                        <td class="font-w600 text-center">
+                        <td class="font-w500">{{row.programName}}</td>
+                        <td class="font-w500 text-center">
                             <span >{{row.degreeName}}</span>
                             <!-- <button ng-click="$event.stopPropagation();">click</button> -->
                         </td>
@@ -348,11 +353,11 @@
                 <tbody ng-repeat-end>
                     <tr ng-repeat="competing in row.competing">
                         <td></td>
-                        <td class="text-center text-muted">{{competing.order}}.</td>
-                        <td class="text-left font-w600 text-primary">
+                        <td class="text-center text-muted font-w500">{{competing.order}}.</td>
+                        <td class="text-left font-w500 text-primary">
                           {{competing.program_name}}<br><span class="text-muted"><small>{{competing.school}}  ({{competing.university}})</small></span>
                         </td>
-                        <td class="text-center font-w600 text-primary" style="vertical-align: top">{{competing.program_degree}}</td>
+                        <td class="text-center font-w500 text-primary" style="vertical-align: top">{{competing.program_degree}}</td>
                     </tr>
                    
                     
@@ -406,13 +411,13 @@
                                   </li>
                                   
                                   <li>
-                                    <button data-dismiss="modal" type="button" data-js-blur><i class="si si-close"></i></button>
+                                    <button data-dismiss="modal" type="button" ng-click="scrolltop()" data-js-blur><i class="si si-close"></i></button>
                                   </li>
                                 </ul>
                                 <h3 class="block-title">Enhancement Report</h3>
                               </div>
                               
-                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;">
+                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" id="scrolltop_enhancement_page">
 
                     <!-- SlimScroll Container -->
                    <!--  <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->

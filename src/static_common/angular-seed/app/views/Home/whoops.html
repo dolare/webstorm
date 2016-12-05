@@ -6,14 +6,14 @@
       <!-- <button ng-click="addtest()">Add to table</button> -->
       <!-- Table Sections (data-js-table-checkable attribute is initialized in js/directives.js) -->
       <div class="block block-rounded">
-        <div class="block-header">
+        <div class="block-header" style="padding-bottom: 0">
                 <!-- <div class="block-options">
                     <code>.data-js-table-checkable</code>
                   </div> -->
                   <!-- <h3 class="block-title">Checkable Table</h3> -->
-                  <div class="col-sm-7">
+                  <div class="col-sm-6">
                     <h1 class="page-heading">
-                      "Whoops!" Report <small>  Keep your website content flawless.</small>
+                      "Whoops!" Report <br><small> &nbsp;&nbsp;- Keep your website content flawless.</small>
                     </h1>                
                     
                     <!-- <button class="btn btn-primary" type="button" ng-animate-children>
@@ -23,89 +23,100 @@
                     <button ng-click="addMessage()">Add Message</button> -->
 
                   </div>
-                </div>
-                <div class="block-content">
-                  <!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
+
+                  <div class="col-sm-6 text-right">
+                      <!-- <div class="block-content">
+                
                   <div class="progress" style="margin-bottom:30px;" ng-show="availablenum>0">
                     
                     <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" ng-style="{'width':width + '%'}" ng-if="availablenum!==0">{{availablenum}} / {{totalnum}} reports available</div>
                   </div>
 
+                    </div> -->
+                    <div class="pie-chart chart-1" data-js-pie-chart="{lineWidth: 5, size: 88, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
+                                <span data-uib-tooltip="{{availablenum}} out of {{totalnum}}  'Whoops!' Reports are available" data-tooltip-placement="top">{{availablenum}} <br><small class="text-muted">/{{totalnum}} </small></span>
                     </div>
+                  </div>
+                </div>
+               <!--  <div class="block-content">
+                 
+                  <div class="progress" style="margin-bottom:30px;" ng-show="availablenum>0">
+                    
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" ng-style="{'width':width + '%'}" ng-if="availablenum!==0">{{availablenum}} / {{totalnum}} reports available</div>
+                  </div>
+
+                    </div> -->
         
         <!-- END Checkable Table -->
 
-                    <div class="block" id="loadingtable">
+                    <div class="block block-rounded" id="loadingtable">
                                    
-                        <div class="block-content">
+                        <div class="block-content" style="padding-left:30px; padding-right:30px">
 
 
-                
-
-                      <table st-table="data" st-pipe="whoopspipe" class="table table-hover block">
+                      <table st-table="data" st-pipe="whoopspipe" class="table table-hover block" style="table-layout: fixed;">
                       <colgroup>
-                      <col width="5%"/>
-                      <col width="55%"/>
-                      <col width="20%"/>
-                      <col width="20%"/>
+                      <col width="7%"/>
+                      <col width="53%"/>
+                      <col width="18%"/>
+                      <col width="115px"/>
+                      <col width="4%" />
                     </colgroup>
                     <thead class="thead-inverse">
                       
-                      <tr class="bg-info" style="border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); color:white;">
+                      <tr class="bg-info" style="border: 1px solid #e3e3e3; color:white;">
                         <th></th>
-                        <th st-sort="programName" style="padding-left:15px;" class="h4 font-w700">program</th>
-                        <th st-sort="degreeName" style="padding-left:15px;" class="h4 font-w700 text-center">degree</th>
-                        <th st-sort="whoops_status" style="padding-left:15px;" class="h4 font-w700 text-center">status</th>
+                        <th st-sort="programName" style="padding-left:15px;" class="h4 font-w400">program</th>
+                        <th st-sort="degreeName" style="padding-left:15px;" class="h4 font-w400 text-center">degree</th>
+                        <th st-sort="whoops_status" style="padding-left:15px;" class="h4 font-w400 text-center">status</th>
+                        <th  style="padding-left:15px;" class="h4 font-w400"><i class="fa fa-exclamation-circle" aria-hidden="true" data-uib-tooltip="Newly updated report" data-tooltip-placement="top"></i></th>
                         
                       </tr>
-                      <tr>
+                      <tr style="border: 1px solid #eee;" class="bg-gray-lighter ">
 
-                      <!-- style="border-left: 1px solid rgb(240,240,240);border-right: 1px solid rgb(240,240,240);" -->
-                        <!-- style="background-color: #edf6fd" -->
-                    <!-- <th>
-                      <md-checkbox md-no-ink='' aria-label="Checkbox No Ink" ng-model="$storage.checkAllwhoops" ng-change="selectAll()" class="md-primary" ng-disabled="availablenum===0" style="margin-bottom:10px;"></md-checkbox>
+                    <th class="text-center th-bordered" style="width: 70px; vertical-align: middle; text-decoration: none; cursor: default;">
                       
-                    </th> -->
-                    <th class="text-center" style="width: 70px;">
-                      <!-- <label class="css-input css-checkbox css-checkbox-primary remove-margin-t remove-margin-b" ng-class="{'css-input-disabled':availablenum===0}">
-                        <input type="checkbox" id="check-all" name="check-all" ng-model="$storage.checkAllwhoops" ng-change="selectAll()" ng-disabled="availablenum===0"><span></span>
-                      </label> -->
+                      <i class="fa fa-search text-primary"></i>
                     </th>
-                    
-                    <th>
-                     <input st-search="programName" placeholder="Search for a program..."  type="search" class="form-control" style="height:auto; width:100%;"/>
+                      
+                    <th class="th-bordered">
+                     <input st-search="programName" placeholder="Search for a program..."  type="search" class="form-control font-w400" style="height:auto; width:100%;"/>
                    </th>
 
-                   <th>
+                   <th class="th-bordered">
                     <!-- <select st-search="degreeName"  class="form-control" st-input-event="change">
                       <option value="" style="text-align:center;">Select...</option>
                       <option ng-repeat="row in degreeSelection" value="{{row}}">{{row}}</option>
                     </select> -->
 
-                    <input st-search="degreeName" placeholder="And a degree..."  type="search" class="form-control" style="height:auto; width:100%;"/>
+                    <input st-search="degreeName" placeholder="degree..."  type="search" class="form-control font-w400 text-center" style="height:auto; width:100%;"/>
                   </th>
-                  <th>
-                    <select st-search="whoops_status" class="form-control" st-input-event="change">
+                  <th class="th-bordered">
+                    <select st-search="whoops_status" class="form-control font-w400" st-input-event="change">
                       <option value="">Select...</option>
                       <option value="True">Complete</option>
                       <option value="False">In Progress</option>
                     </select>
                   </th>
+
+                   <th class="th-bordered">
+
+                   </th>
                 </tr>
               </thead>
               <tbody>
 
-                <tr ng-repeat="row in data" ng-class="{'bg-gray-lighter':!row.whoops_status}" class="">
+                <tr style="border: 1px solid #f0f0f0" ng-repeat="row in data" ng-class="{'bg-gray-lighter':!row.whoops_status}">
 
                   <!-- <td>
                     <md-checkbox md-no-ink='' aria-label="Checkbox No Ink" ng-model="$storage.upgrid[row.programName+row.degreeName].whoops" ng-change="selectOne()" class="md-primary" ng-disabled="row.status!=='T'||row.perfect==='T'"></md-checkbox>
                   </td> -->
 
-                  <td class="text-center">
+                  <td class="text-center bg-gray-lighterer td-bordered">
                   <!-- checkbox one -->
                     <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.whoops_status!=='True'||row.notes===false}" data-uib-tooltip="Add to the 'Report Manager'" data-tooltip-placement="top">
 
-                      <input type="checkbox" ng-model="$storage.upgrid[row.programName+'|'+row.degreeName]['whoops']" ng-true-value=true ng-false-value="undefined" ng-change="selectOne(row.programName, row.degreeName, row.objectId, row.whoops_status, row.enhancement_status, row.notes, row.confirm)" ng-disabled="row.whoops_status!=='True'||row.notes===false"><span></span>
+                      <input type="checkbox" ng-model="$storage.upgrid[row.programName+'|'+row.degreeName]['whoops']" ng-change="selectOne(row.programName, row.degreeName, row.objectId, row.whoops_status, row.enhancement_status, row.notes, row.confirm)" ng-disabled="row.whoops_status!=='True'||row.notes===false"><span></span>
 
 
                     </label>
@@ -113,9 +124,9 @@
                   </td>
 
 
-                  <td class="font-w600">{{row.programName}}</td>
-                  <td style="text-align: center;" class="font-w600">{{row.degreeName}}</td>
-                  <td style="text-align:center;">
+                  <td class="font-w500 td-bordered">{{row.programName}}</td>
+                  <td style="text-align: center;" class="font-w500 td-bordered">{{row.degreeName}}</td>
+                  <td class="text-center td-bordered">
                     <span ng-if="row.whoops_status==='True' && row.notes===false"><i class="fa fa-check-circle fa-2x" style="color:green" data-uib-tooltip="Congratulations! There are currently no errors found in your program’s content." data-tooltip-placement="top"></i>
 
                      
@@ -123,13 +134,14 @@
                     <span ng-if="row.whoops_status==='True' && row.notes===true">
 
                       <div class="btn-group">
-                        <button class="btn btn-default" data-toggle="modal" data-target="#WhoopsReport" ng-click = "WhoopsViewer(row.objectId, row.programName, row.degreeName)" data-js-blur>
+                        <button class="btn btn-default btn-white" data-toggle="modal" data-target="#WhoopsReport" ng-click = "WhoopsViewer(row.objectId, row.programName, row.degreeName)" data-js-blur>
                         <a data-uib-tooltip="View" data-tooltip-placement="top" class="fa fa-eye text-primary">
                         </a>
                         </button>
                         
-                        <button class="btn btn-default"  data-toggle="modal" data-target="#myModal1" ng-click ="htmlShare(row.objectId)" data-js-blur>
-                          <a data-uib-tooltip="Share" data-tooltip-placement="top" class="fa fa-share-alt text-city">
+                        <button class="btn btn-default btn-white"  data-toggle="modal" data-target="#myModal1" ng-click ="htmlShare(row.objectId)" data-js-blur>
+                          <a data-uib-tooltip="Share" data-tooltip-placement="top" class="fa fa-share-alt text-orange">
+
                          </a> 
 
 
@@ -145,7 +157,9 @@
                     
                   </td>
                   
+                  <td class="td-bordered"></td>
                 </tr>
+
               </tbody>
                 
               <!-- <tbody  ng-show="isLoading">
@@ -173,7 +187,7 @@
                     </div>
                   </td>
 
-                  <td colspan="3" class="text-center">
+                  <td colspan="2" class="text-center">
                     <br/><br/>
                     <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
                   </td>
@@ -256,14 +270,14 @@
                                       </li>
                                       
                                       <li>
-                                        <button data-dismiss="modal" type="button" data-js-blur><i class="si si-close"></i></button>
+                                        <button data-dismiss="modal" type="button" ng-click="scrolltop()" data-js-blur><i class="si si-close"></i></button>
                                       </li>
                                     </ul>
                                     <h3 class="block-title">Whoops Report</h3>
 
                                   </div>
                                   
-                                  <div class="block-content fullscreen-container frame" style="width:auto;padding:0; ">
+                                  <div class="block-content fullscreen-container frame" style="width:auto;padding:0; " id="scrolltop_whoops_page">
 
                
                         <!-- SlimScroll Container -->

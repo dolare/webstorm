@@ -5,10 +5,26 @@ dashboard.controller('DashboardController',
   function($sce, ReleasedEnhancement, ReleasedWhoops, $timeout, $window, Dash, authenticationSvc, $http, apiService, List, $scope) {
   	
   	var token = authenticationSvc.getUserInfo().accessToken;
+    var container = angular.element(document.getElementById('scrollframe'));
     $scope.univeristy_name = List.profile.university;
     $scope.school_name = List.profile.school;
     $scope.Ceeb = List.profile.Ceeb;
-    $scope.htmlPopover = $sce.trustAsHtml('1. Enhancement titles modified');
+    $scope.htmlPopover = $sce.trustAsHtml('1. Whoops and Enhancement page style retouched. <br>2. Report viewers now scroll to top on every open.<br>3. Modified page styles.<br>4.Redesigned add to Report Manager mechanism.');
+
+    $scope.scrolltop1 = function(){
+      
+      angular.element(document.getElementById('scrolltop_whoops')).scrollTop(0);
+    }
+
+    $scope.scrolltop2 = function(){
+      
+      angular.element(document.getElementById('scrolltop_enhancement')).scrollTop(0);
+    }
+
+    $scope.scrolltop3 = function(){
+      
+      angular.element(document.getElementById('scrolltop_enhancement_update')).scrollTop(0);
+    }
 
     //console.log("ceeb result is"+JSON.stringify(List.profile.Ceeb));
    console.log("dashboard result is"+JSON.stringify(List));
@@ -22,6 +38,8 @@ dashboard.controller('DashboardController',
 
   
     $scope.WhoopsViewer = function(Id, Program, Degree){
+      jQuery("#scrolltop").scrollTop(0);
+      container.scrollTop(0, 5000);
       App.blocks('#whoops_loading', 'state_loading');
        
 
@@ -179,7 +197,11 @@ dashboard.controller('DashboardController',
 
     }
 
+
+
     $scope.EnhancementViewer1 = function(Id, Program, Degree){
+
+
       $scope.date = new Date();
       App.blocks('#enhancement_loading1', 'state_loading');
       
@@ -279,125 +301,7 @@ dashboard.controller('DashboardController',
       window.print();
       
    }
-          //jQuery('.pie-chart-mine').data('easyPieChart').update(test1);
-          //console.log("pie-chart="+JSON.stringify(jQuery('.pie-chart')));
-          //jQuery('.pie-chart').data('easyPieChart').update(50);
-            // jQuery(document).ready(function(){
-                  
-            //       jQuery('.pie-chart').data('easyPieChart').update(50);
 
-            // });
-
-            // //angular.element(getElementsByClassName("pie-chart")).data('easyPieChart').update(50);
-            // // jQuery('.js-pie-randomize').on('click', function(){
-            //   var init_pie = function(){
-            //     jQuery('.js-pie-randomize')
-            //         .parents('.block')
-            //         .find('.pie-chart')
-            //         .each(function() {
-            //             var random = Math.floor((Math.random() * 100) + 1);
-            //             console.log("random = "+random)
-            //             console.log("this ="+this);
-            //             jQuery(this).data('easyPieChart').update(25);
-            //             console.log("this is "+JSON.stringify(jQuery(this)));
-            //             // jQuery(this)
-            //             //     .data('easyPieChart')
-            //             //     .update(random);
-            //         });
-            //   }
-
-            //   init_pie();
-
-
-
-
-            // });
-            
-
-             
-    
-   // jQuery('.pie-chart').data('easyPieChart').update(50);
-   // jQuery(this)
-   //                          .data('easyPieChart')
-   //                          .update(random);
-
-   // $http({
-   //        url: '/api/upgrid/user/',
-   //        method: 'GET',
-   //        headers: {
-   //          'Authorization': 'JWT ' + token
-   //        }
-   //  }).then(function (response) {
-
-   //     $scope.details = response.data;
-
-   //     console.log("@@@user detail="+ JSON.stringify(response));
-   //      // if(response.status === 204){
-   //      //   console.log("===204");
-   //      // }
-   //  }).
-   //   catch(function(error){
-   //      console.log('an error occurred...'+JSON.stringify(error));
-
-   //   });
-
-
-   
-   //jQuery('.pie-chart').data('easyPieChart').update(50);
-
-    // jQuery('.js-pie-randomize').on('click', function(){
-
-    //             //var random = Math.floor((Math.random() * 100) + 1);
-    //             jQuery('.pie-chart').data('easyPieChart').update(50);
-
-
-
-    //         });
-    //var token = authenticationSvc.getUserInfo().accessToken;
-    
-    // $http({
-    //       url: '/api/upgrid/user/dashboard/',
-    //       method: 'GET',
-    //       headers: {
-    //         'Authorization': 'JWT ' + token
-    //       }
-    // }).then(function (response) {
-
-    //    $scope.details = response.data;
-
-    //    console.log("dashboard="+ JSON.stringify(response.data));
-    //     // if(response.status === 204){
-    //     //   console.log("===204");
-    //     // }
-    // }).
-    //  catch(function(error){
-    //     console.log('an error occurred...'+JSON.stringify(error));
-
-    //  });
-
-    
-     // Init counter functionality
-        // jQuery('[data-toggle="countTo"]').each(function(){
-        //     var $this       = jQuery(this);
-        //     var $after      = $this.data('after');
-        //     var $before     = $this.data('before');
-        //     var $speed      = $this.data('speed') ? $this.data('speed') : 1500;
-        //     var $interval   = $this.data('interval') ? $this.data('interval') : 15;
-
-        //     $this.appear(function() {
-        //         $this.countTo({
-        //             speed: $speed,
-        //             refreshInterval: $interval,
-        //             onComplete: function() {
-        //                 if($after) {
-        //                     $this.html($this.html() + $after);
-        //                 } else if ($before) {
-        //                     $this.html($before + $this.html());
-        //                 }
-        //             }
-        //         });
-        //     });
-        // });
 
     console.log("welcome!");
 

@@ -10,46 +10,57 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
     $scope.emailadd = authenticationSvc.getUserInfo().username;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
     
+
     // $scope.$route = $route;
 
     $scope.$storage = $localStorage;
 
+
+    $scope.scrolltop = function(){
+      
+      angular.element(document.getElementById('scrolltop_enhancement_page')).scrollTop(0);
+    }
+
+
     $scope.accountType = tableDataService.getProfile(List).accountType;
     console.log("account type = " + $scope.accountType);
     
-          if($scope.width === undefined){
-           
-           $http({
-              url: '/api/upgrid/user/dashboard/'+avatarService.getClientId(),
-              method: 'GET',
-              headers: {
-                'Authorization': 'JWT ' + token
-              }
-            }).then(function (response) {
+    if($scope.width === undefined){
+     
+     $http({
+        url: '/api/upgrid/user/dashboard/'+avatarService.getClientId(),
+        method: 'GET',
+        headers: {
+          'Authorization': 'JWT ' + token
+        }
+      }).then(function (response) {
 
-               console.log("dashboard="+ JSON.stringify(response.data));
-                $scope.customerprogram_nums = response.data.customer_program_nums;
-                $scope.finalreleased_enhancement = response.data.final_released_enhancement;
-                $scope.unconfirmedprogram_nums = response.data.unconfirmed_program_nums;
-                $scope.width = 100 * $scope.finalreleased_enhancement / $scope.customerprogram_nums;
+         console.log("dashboard="+ JSON.stringify(response.data));
+          $scope.customerprogram_nums = response.data.customer_program_nums;
+          $scope.finalreleased_enhancement = response.data.final_released_enhancement;
+          $scope.unconfirmedprogram_nums = response.data.unconfirmed_program_nums;
+          $scope.width = 100 * $scope.finalreleased_enhancement / $scope.customerprogram_nums;
 
-                if ($scope.accountType === 'main') {
-                    //load modal when not confirmed
-                    if ($scope.unconfirmedprogram_nums !== 0) {
-                        //console.log("$scope.unconfirmedprogram_nums="+$scope.unconfirmed_program_nums);
-                        $("#myModalConfirm").modal('show');
-                    };
-                    
-                }
+          if ($scope.accountType === 'main') {
+              //load modal when not confirmed
+              if ($scope.unconfirmedprogram_nums !== 0) {
+                  $("#myModalConfirm").modal('show');
+              };
+              
+          }
+
+          if($scope.unconfirmedprogram_nums === 0){
+              setTimeout(function(){jQuery('.chart-1').data('easyPieChart').update($scope.width);}, 100);
+          }
 
 
-             }).
-             catch(function(error){
-                console.log('an error occurred...'+JSON.stringify(error));
+       }).
+       catch(function(error){
+          console.log('an error occurred...'+JSON.stringify(error));
 
-             });
+       });
 
-           }
+     }
 
    
     $scope.EnhancementViewer = function(Id, Program, Degree){
@@ -370,22 +381,15 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
     
     $scope.selectOne = function(Name, Degree, Id,  WStatus, EStatus, Confirm, Notes) {
         
-        if($scope.$storage.upgrid[Name+'|'+ Degree]['enhancement']){
+       
 
-            $scope.$storage.upgrid[Name+'|'+ Degree]['EId'] = Id;
+            $scope.$storage.upgrid[Name+'|'+ Degree]['Id'] = Id;
             $scope.$storage.upgrid[Name+'|'+ Degree]['WStatus'] = WStatus
             $scope.$storage.upgrid[Name+'|'+ Degree]['EStatus'] = EStatus
             $scope.$storage.upgrid[Name+'|'+ Degree]['EConfirm'] = Confirm
             $scope.$storage.upgrid[Name+'|'+ Degree]['WNotes'] = Notes
 
-        } else {
-
-            $scope.$storage.upgrid[Name+'|'+ Degree]['EId'] = (function () { return; })();
-            $scope.$storage.upgrid[Name+'|'+ Degree]['WStatus'] = WStatus
-            $scope.$storage.upgrid[Name+'|'+ Degree]['EStatus'] = EStatus
-            $scope.$storage.upgrid[Name+'|'+ Degree]['EConfirm'] = Confirm
-            $scope.$storage.upgrid[Name+'|'+ Degree]['WNotes'] = Notes
-        }
+          console.log("$scope.$storage.upgrid="+JSON.stringify($scope.$storage.upgrid));
 
 
     };
@@ -438,8 +442,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             method: 'POST',
             data: {
               "whoops_id": null,
-              "enhancement_id": Id,
-              "client_id": avatarService.getClientId()
+              "enhancement_id": Id
             },
             headers: {
                 'Authorization': 'JWT ' + token
@@ -525,6 +528,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
                 //console.log("customerprogram_nums = "+$scope.customerprogram_nums);
                 $scope.width = 100 * $scope.finalreleased_enhancement / $scope.customerprogram_nums;
 
+                setTimeout(function(){jQuery('.chart-1').data('easyPieChart').update($scope.width);}, 100);
                 $("#myModalConfirm").modal('toggle');
                 $scope.$broadcast('refreshProducts');
 

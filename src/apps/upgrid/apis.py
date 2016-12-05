@@ -510,7 +510,7 @@ class ShareReports(APIView):
             try:
                 manager = UpgridAccountManager.objects.get(id=request.user.id)
                 try:
-                    user = UniversityCustomer.objects.get(id=request.data['client_id'], account_manager=manager)
+                    user = UniversityCustomer.objects.get(id=request.GET['client_id'], account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
                     return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
@@ -735,7 +735,6 @@ class ShareReports(APIView):
 
             res = {'{0}/{1}'.format(relation_ship.object_id, relation_ship.access_token)}
             return Response(res)
-
 
 
 # Get Ehancement Reports / Put change confirmation status of a enhancement report.

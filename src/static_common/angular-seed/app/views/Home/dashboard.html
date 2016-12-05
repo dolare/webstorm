@@ -2,7 +2,7 @@
                 <div class="content content-boxed">
                     <!-- User Header -->
                     <div class="block">
-                    
+                        
                         <!-- Basic Info -->
                         <div class="bg-image" style="background-image: url('img/photo29@2x.jpg');">
                             <div class="block-content bg-black-op text-center overflow-hidden">
@@ -48,7 +48,7 @@
                            
                             <div class="push-20 font-w700 text-dark animated fadeIn">Programs</div>
 
-                            <div class="pie-chart chart-1" data-js-pie-chart="{lineWidth: 3, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
+                            <div class="pie-chart chart-1" data-js-pie-chart="{lineWidth: 4, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{customer_num}} programs in service" data-tooltip-placement="right">{{customer_num}} <br><small class="text-muted">/{{total_num}}</small></span>
                             </div>
 
@@ -60,7 +60,7 @@
                             
                             <div class="push-20 font-w700 text-dark animated fadeIn">"Whoops!" Report</div>
 
-                            <div class="pie-chart chart-2" data-js-pie-chart="{lineWidth: 3, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
+                            <div class="pie-chart chart-2" data-js-pie-chart="{lineWidth: 4, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{whoops_num}} out of {{customer_num}} 'Whoops!' Reports are available" data-tooltip-placement="right">{{whoops_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
                             </div>
 
@@ -77,7 +77,7 @@
                             
                             <div class="push-20 font-w700 text-dark animated fadeIn">Enhancement Report</div>
 
-                            <div class="pie-chart chart-3" data-js-pie-chart="{lineWidth: 3, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
+                            <div class="pie-chart chart-3" data-js-pie-chart="{lineWidth: 4, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{enhancement_num}} out of {{customer_num}} Enhancement Reports are available" data-tooltip-placement="right">{{enhancement_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
                             </div>
 
@@ -94,7 +94,7 @@
                             
                             <div class="push-20 font-w700 text-dark animated fadeIn">Confirmed</div>
 
-                            <div class="pie-chart chart-4" data-js-pie-chart="{lineWidth: 3, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
+                            <div class="pie-chart chart-4" data-js-pie-chart="{lineWidth: 4, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{customer_num-unconfirmed_num}} out of {{customer_num}} programs are confirmed for the Enhancement Reports" data-tooltip-placement="right">{{customer_num-unconfirmed_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
                             </div>
 
@@ -322,7 +322,7 @@
                         <div class="alert alert-info alert-dismissable push-30">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                     
-                                        <h3 class="font-w300 push-15">System Updated to v1.4 &nbsp;&nbsp;<i class="fa fa-info-circle" data-uib-popover-html="htmlPopover" data-popover-title="v1.4 Updates:" data-popover-placement="top" data-popover-trigger="'mouseenter'"></i></h3>
+                                        <h3 class="font-w300 push-15">System Updated to v1.5 &nbsp;&nbsp;<i class="fa fa-info-circle" data-uib-popover-html="htmlPopover" data-popover-title="v1.5 Updates:" data-popover-placement="top" data-popover-trigger="'mouseenter'"></i></h3>
                                         
                                     </div>
                                     
@@ -353,7 +353,7 @@
                                                <ul class="nav-users push-10-t push">
                                                     <li ng-repeat = "row in newly_released_whoops | limitTo : 2">
                                                         <a>
-                                                        <button class="btn btn-default pull-right" type="button" data-toggle="modal" data-target="#WhoopsReport" ng-click="WhoopsViewer(row.object_id, row.program_name, row.program_degree)" data-js-blur><i class="fa fa-eye text-primary"></i></button>
+                                                        <button class="btn btn-default btn-white pull-right" type="button" data-toggle="modal" data-target="#WhoopsReport" ng-click="WhoopsViewer(row.object_id, row.program_name, row.program_degree)" data-js-blur><i class="fa fa-eye text-primary"></i></button>
 
                                                             <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
                                                             {{row.program_name}}
@@ -377,7 +377,7 @@
                                                     <li ng-repeat = "row in newly_released_enhancement | limitTo : 1">
                                                         <a>
                                                             
-                                                            <button class="btn btn-default pull-right" data-toggle="modal" data-target="#EnhancementReport" type="button" ng-click="EnhancementViewer(row.object_id, row.program_name, row.program_degree)" data-js-blur><i class="fa fa-eye text-primary"></i></button>
+                                                            <button class="btn btn-default btn-white pull-right" data-toggle="modal" data-target="#EnhancementReport" type="button" ng-click="EnhancementViewer(row.object_id, row.program_name, row.program_degree)" data-js-blur><i class="fa fa-eye text-primary"></i></button>
 
                                                             <!-- <button class="btn btn-default pull-right" data-toggle="modal" data-target="#WhoopsReport" ng-click = "WhoopsViewer(row.objectId, row.programName, row.degreeName)" data-js-blur>
                                                             <span data-uib-tooltip="View" data-tooltip-placement="top">
@@ -453,7 +453,7 @@
                                                     <li ng-repeat = "row in newly_released_enhancement | limitTo : 1">
                                                         <a>
 
-                                                        <button class="btn btn-default pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-exclamation-circle text-primary"></i><span ng-if="Ceeb==='2905'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span><span ng-if="Ceeb==='2158'||Ceeb==='2120'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">1</span></button>
+                                                        <button class="btn btn-default btn-white pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-exclamation-circle text-primary"></i><span ng-if="Ceeb==='2905'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span><span ng-if="Ceeb==='2158'||Ceeb==='2120'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">1</span></button>
 
                                                             <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
                                                             {{row.program_name}}
@@ -486,6 +486,7 @@
                             <!-- END Timeline -->
 
 
+
                         </div>
                     </div>
                     <!-- END Main Content -->
@@ -509,13 +510,13 @@
                                   </li>
                                   
                                   <li>
-                                    <button data-dismiss="modal" type="button" data-js-blur><i class="si si-close"></i></button>
+                                    <button data-dismiss="modal" type="button" ng-click="scrolltop1()" data-js-blur><i class="si si-close"></i></button>
                                   </li>
                                 </ul>
                                 <h3 class="block-title">Whoops Report</h3>
                               </div>
                               
-                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0; ">
+                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0; " id="scrolltop_whoops">
 
                                
            
@@ -563,13 +564,13 @@
                                   </li>
                                   
                                   <li>
-                                    <button data-dismiss="modal" type="button" data-js-blur><i class="si si-close"></i></button>
+                                    <button data-dismiss="modal" type="button" ng-click="scrolltop2()" data-js-blur><i class="si si-close"></i></button>
                                   </li>
                                 </ul>
                                 <h3 class="block-title">Enhancement Report</h3>
                               </div>
                               
-                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;">
+                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" id="scrolltop_enhancement">
 
            
                     <!-- SlimScroll Container -->
@@ -612,13 +613,13 @@
                                   </li>
                                   
                                   <li>
-                                    <button data-dismiss="modal" type="button" data-js-blur><i class="si si-close"></i></button>
+                                    <button data-dismiss="modal" type="button" ng-click="scrolltop3()" data-js-blur><i class="si si-close"></i></button>
                                   </li>
                                 </ul>
                                 <h3 class="block-title">Enhancement Report</h3>
                               </div>
                               
-                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;">
+                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_enhancement_update">
 
                                 
            
@@ -629,8 +630,8 @@
 
                         
                         <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content1">
-
-
+                            <!-- <a href="#anchor"  du-smooth-scroll>Scroll to me</a>
+ -->
                         <style>
                             @media print {
                             body * {
@@ -671,6 +672,8 @@
                             <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
                             <small>Gradgrid.com/upgrid</small><br>ENHANCEMENT REPORT
                             </h1>
+                            <!-- <div id="anchor">here</div>
+                            <button ng-click="toptop()">top</button> -->
                             </div>
 
                             <div class="col-sm-6">

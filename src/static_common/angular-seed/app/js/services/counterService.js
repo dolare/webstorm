@@ -43,41 +43,47 @@ angular.module('counterServiceModule', [])
 
             $storage = $localStorage;
 
+            console.log("raw $storage.upgrid="+JSON.stringify($storage.upgrid));
             var checkedArray0 = [];
             var checkedArray = [];
             //add to the array
+
             for (var key in $storage.upgrid) {
                     //if has reports
                     if($storage.upgrid[key]!==undefined &&JSON.stringify($storage.upgrid[key]) !=="{}"){
-                        if(JSON.stringify($storage.upgrid[key].whoops) || JSON.stringify($storage.upgrid[key].enhancement)){
+                        if($storage.upgrid[key].whoops || $storage.upgrid[key].enhancement){
+                   
                                 checkedArray0.push({
                                 "name": key,
-                                "WId": $storage.upgrid[key]["WId"],
-                                "EId": $storage.upgrid[key]["EId"],
+                                "Id": $storage.upgrid[key]["Id"],
                                 "WStatus": $storage.upgrid[key]["WStatus"],
                                 "EStatus": $storage.upgrid[key]["EStatus"],
                                 "WNotes": $storage.upgrid[key]["WNotes"],
-                                "EConfirm": $storage.upgrid[key]["EConfirm"]
+                                "EConfirm": $storage.upgrid[key]["EConfirm"],
+                                "whoops": $storage.upgrid[key]["whoops"],
+                                "enhancement": $storage.upgrid[key]["enhancement"],
                             })
                         }
                      }
                 
             };
 
+            
             for(i=0; i<checkedArray0.length; i++){
               checkedArray.push({
                 "name": checkedArray0[i].name.split("|")[0],
                 "degree": checkedArray0[i].name.split("|")[1],
-                "WId": checkedArray0[i].WId,
-                "EId": checkedArray0[i].EId,
+                "Id": checkedArray0[i].Id,
                 "WStatus": checkedArray0[i].WStatus,
                 "EStatus": checkedArray0[i].EStatus,
                 "WNotes": checkedArray0[i].WNotes,
-                "EConfirm": checkedArray0[i].EConfirm
+                "EConfirm": checkedArray0[i].EConfirm,
+                "whoops": checkedArray0[i].whoops,
+                "enhancement": checkedArray0[i].enhancement
               })
             }
 
-
+            console.log("proceed checkedArray="+JSON.stringify(checkedArray));
 
 
 

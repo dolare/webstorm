@@ -21,518 +21,391 @@ controller('ReportsController',
     $scope.date = new Date();
     ///////////////////////////////////////
     //user performs no action
-    
 
-    
-    console.log("output Checked programs = "+JSON.stringify(Checked));
+
+    console.log("output Checked programs = " + JSON.stringify(Checked));
     $scope.Checked = Checked;
-    
+
     //console.log("***checked array = "+JSON.stringify($scope.Checked));
     //$scope.Checked = Checked;
-    
+
 
     // $scope.obj1 = {wahaha: ['apple', 'juice']}
+
+
+    $scope.scrolltop = function() {
+
+      angular.element(document.getElementById('scrolltop_cart')).scrollTop(0);
+    }
 
     // alert('wahaha[0]='+$scope.obj1.wahaha[0]);
     $scope.printReport = function() {
       window.print();
-      
-   }
-
-   $scope.togglefullen = function(){
-      angular.element(document.getElementById("ViewAll")).toggleClass('fullscreen-modal');
-      
 
     }
 
-    $scope.selectEn = function(Name, Degree, Id,  WStatus, EStatus, Confirm, Notes) {
-        
-        if($scope.$storage.upgrid[Name+'|'+ Degree]['enhancement']){
+    $scope.togglefullen = function() {
+      angular.element(document.getElementById("ViewAll")).toggleClass('fullscreen-modal');
 
-            $scope.$storage.upgrid[Name+'|'+ Degree]['EId'] = Id;
-            $scope.$storage.upgrid[Name+'|'+ Degree]['WStatus'] = WStatus
-            $scope.$storage.upgrid[Name+'|'+ Degree]['EStatus'] = EStatus
-            $scope.$storage.upgrid[Name+'|'+ Degree]['EConfirm'] = Confirm
-            $scope.$storage.upgrid[Name+'|'+ Degree]['WNotes'] = Notes
 
-        } else {
+    }
 
-            $scope.$storage.upgrid[Name+'|'+ Degree]['EId'] = (function () { return; })();
-            $scope.$storage.upgrid[Name+'|'+ Degree]['WStatus'] = WStatus
-            $scope.$storage.upgrid[Name+'|'+ Degree]['EStatus'] = EStatus
-            $scope.$storage.upgrid[Name+'|'+ Degree]['EConfirm'] = Confirm
-            $scope.$storage.upgrid[Name+'|'+ Degree]['WNotes'] = Notes
+    // $scope.selectEn = function(Name, Degree, Id,  WStatus, EStatus, Notes, Confirm) {
+
+    //     if($scope.$storage.upgrid[Name+'|'+ Degree]['enhancement']){
+
+    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EId'] = Id;
+    //         $scope.$storage.upgrid[Name+'|'+ Degree]['WStatus'] = WStatus
+    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EStatus'] = EStatus
+    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EConfirm'] = Confirm
+    //         $scope.$storage.upgrid[Name+'|'+ Degree]['WNotes'] = Notes
+
+    //     } else {
+
+    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EId'] = (function () { return; })();
+    //         $scope.$storage.upgrid[Name+'|'+ Degree]['WStatus'] = WStatus
+    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EStatus'] = EStatus
+    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EConfirm'] = Confirm
+    //         $scope.$storage.upgrid[Name+'|'+ Degree]['WNotes'] = Notes
+    //     }
+
+    //     console.log("$scope.$storage.upgrid="+JSON.stringify($scope.$storage.upgrid));
+
+
+    // };
+
+
+    // $scope.selectWh = function(Name, Degree, Id, WStatus, EStatus, Notes, Confirm) {
+
+
+    //   if($scope.$storage.upgrid[Name+'|'+ Degree]['whoops']){
+
+    //       $scope.$storage.upgrid[Name+'|'+Degree]["WId"] = Id
+
+    //       $scope.$storage.upgrid[Name+'|'+Degree]["WStatus"] = WStatus
+    //       $scope.$storage.upgrid[Name+'|'+Degree]["EStatus"] = EStatus
+    //       $scope.$storage.upgrid[Name+'|'+Degree]["WNotes"] = Notes
+    //       $scope.$storage.upgrid[Name+'|'+Degree]["EConfirm"] = Confirm
+
+
+    //   }else{
+    //       $scope.$storage.upgrid[Name+'|'+Degree]["WId"] = (function () { return; })();
+    //       $scope.$storage.upgrid[Name+'|'+Degree]["WStatus"] = WStatus
+    //       $scope.$storage.upgrid[Name+'|'+Degree]["EStatus"] = EStatus
+    //       $scope.$storage.upgrid[Name+'|'+Degree]["WNotes"] = Notes
+    //       $scope.$storage.upgrid[Name+'|'+Degree]["EConfirm"] = Confirm
+
+
+    //   }
+
+
+    //   console.log("$scope.$storage.upgrid="+JSON.stringify($scope.$storage.upgrid));
+
+
+    // };
+
+
+
+    $scope.ShareAllSelected = function() {
+      $scope.url = {
+        text: null
+      };
+
+
+      $scope.copied = false;
+      new Clipboard('.btn');
+
+
+      $scope.share_counter = cartCounter.counter();
+
+
+      var whoops_ids = "";
+      var enhancement_ids = "";
+
+      console.log("share_counter"+JSON.stringify($scope.share_counter));
+
+      angular.forEach($scope.share_counter, function(value, index) {
+
+        if($scope.share_counter[index].whoops){
+          whoops_ids = whoops_ids + $scope.share_counter[index].Id + '/';
+        }
+
+        if($scope.share_counter[index].enhancement){
+          enhancement_ids = enhancement_ids + $scope.share_counter[index].Id + '/';
         }
 
 
-    };
+      });
+
+      console.log("whoops_ids="+whoops_ids);
+      console.log("enhancement_ids="+enhancement_ids);
+
+      if(whoops_ids === "" && enhancement_ids === ""){
+        $.notify({
+
+              // options
+              icon: "fa fa-warning",
+              message: 'Please make your selection.'
+            }, {
+              // settings
+              type: 'warning',
+              placement: {
+                from: "top",
+                align: "center"
+              },
+              z_index: 1999,
+            });
+
+      } else {
+
+         $("#myModal1").modal('toggle');
+         $scope.url = {
+        text: $location.absUrl().split('#')[0] + '#/upgrid/share_selected_report/asd3dhu38dj93jdj93/',
+
+         };
+         $http({
+        url: '/api/upgrid/reports/shared/',
+        method: 'POST',
+        data: {
+          "whoops_id": (whoops_ids === ""? null: whoops_ids.slice(0,-1)),
+          "enhancement_id": (enhancement_ids === ""? null: enhancement_ids.slice(0,-1)),
+
+        },
+        headers: {
+          'Authorization': 'JWT ' + token
+        },
+        'Content-Type': 'application/json'
+
+      }).then(function(response) {
+        
+
+        $scope.shared_id = response.data[0].split('/')[0];
+        $scope.shared_token = response.data[0].split('/')[1];
+
+        // $scope.url = {
+        //   text: location.host + '/static/angular-seed/app/index.html#' + '/shared_whoops_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
+        // };
+
+        console.log("shared_id="+$scope.shared_id);
+        console.log("$scope.shared_token"+$scope.shared_token);
+        
+      }).
+      catch(function(error) {
+        console.log('an error occurred...' + JSON.stringify(error));
+
+      });
+
+      }
+
+    }
 
 
-    $scope.selectWh = function(Name, Degree, Id, WStatus, EStatus, Notes, Confirm) {
-      
 
-      if($scope.$storage.upgrid[Name+'|'+ Degree]['whoops']){
-
-          $scope.$storage.upgrid[Name+'|'+Degree]["WId"] = Id
-
-          $scope.$storage.upgrid[Name+'|'+Degree]["WStatus"] = WStatus
-          $scope.$storage.upgrid[Name+'|'+Degree]["EStatus"] = EStatus
-          $scope.$storage.upgrid[Name+'|'+Degree]["WNotes"] = Notes
-          $scope.$storage.upgrid[Name+'|'+Degree]["EConfirm"] = Confirm
+    $scope.ViewAll = function() {
 
 
-      }else{
-          $scope.$storage.upgrid[Name+'|'+Degree]["WId"] = (function () { return; })();
-          $scope.$storage.upgrid[Name+'|'+Degree]["WStatus"] = WStatus
-          $scope.$storage.upgrid[Name+'|'+Degree]["EStatus"] = EStatus
-          $scope.$storage.upgrid[Name+'|'+Degree]["WNotes"] = Notes
-          $scope.$storage.upgrid[Name+'|'+Degree]["EConfirm"] = Confirm
-         
+      App.blocks('#viewall_loading', 'state_loading');
+
+      console.log("$local=" + JSON.stringify($storage.upgrid));
+      console.log('storage result= ' + JSON.stringify(cartCounter.counter()));
+
+      $scope.view_counter = cartCounter.counter();
+
+      console.log("$scope.view_counter = " + JSON.stringify($scope.view_counter));
+      $scope.report_array = [];
+
+      for (i = 0; i < $scope.view_counter.length; i++) {
+
+        $scope.report_array.push({
+          'order': i,
+          'w_array_final': [],
+          'e_array_final': [],
+          'whoops_report_program': $scope.view_counter[i].name,
+          'whoops_report_degree': $scope.view_counter[i].degree
+        });
 
       }
 
 
+      angular.forEach($scope.view_counter, function(value, index) {
+        console.log("index=" + index)
+        if ($scope.view_counter[index].whoops) {
 
 
-    };
+          console.log("*index=" + index);
+          console.log("$scope.view_counter[index].Id" + $scope.view_counter[index].Id);
 
+          $http({
+            url: '/api/upgrid/wwr/' + $scope.view_counter[index].Id,
+            method: 'GET',
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+          }).then(function(response) {
 
+            //console.log("wwr"+JSON.stringify(response.data));
+            $scope.w_raw = response.data;
+            $scope.w_array_final = [];
+            var w_array_1 = [];
+            var w_array_2 = [];
+            var w_array_3 = [];
+            var w_array_4 = [];
+            var w_array_5 = [];
+            var w_array_6 = [];
+            var w_array_7 = [];
+            var w_array_8 = [];
+            var w_array_9 = [];
 
-     $scope.ShareAllSelected = function () {
-        $scope.url = {
-            text: null
-          };
-         
 
-          $scope.copied = false;
-          new Clipboard('.btn');
+            for (i = 0; i < $scope.w_raw.length; i++) {
+              if ($scope.w_raw[i].additional_note_type === "dead_link") {
 
-         
+                w_array_1.push($scope.w_raw[i])
 
-            $scope.url = {
-             text: $location.absUrl().split('#')[0]+'#/upgrid/share_selected_report/asd3dhu38dj93jdj93/',
+              }
 
-            };
+              if ($scope.w_raw[i].additional_note_type === "typo") {
+                w_array_2.push($scope.w_raw[i])
 
+              }
 
+              if ($scope.w_raw[i].additional_note_type === "outdated_information") {
+                w_array_3.push($scope.w_raw[i])
 
-        console.log("$local="+JSON.stringify($storage.upgrid));
-        console.log('storage result= '+JSON.stringify(cartCounter.counter()));
+              }
 
-        $scope.view_counter = cartCounter.counter();
+              if ($scope.w_raw[i].additional_note_type === "data_discrepancy") {
+                w_array_4.push($scope.w_raw[i])
 
-        $scope.report_array = [];
+              }
 
-        for(i=0; i<$scope.view_counter.length; i++){
+              if ($scope.w_raw[i].additional_note_type === "sidebars") {
 
-          $scope.report_array.push({'w_array_final': [],
-                                    'e_array_final': [],
-                                    'whoops_report_program': $scope.view_counter[i].name ,
-                                    'whoops_report_degree': $scope.view_counter[i].degree
-                                   }
-                                   );
+                w_array_5.push($scope.w_raw[i])
+              }
 
-        }
+              if ($scope.w_raw[i].additional_note_type === "infinite_loop") {
+                w_array_6.push($scope.w_raw[i])
 
-       
-        angular.forEach($scope.view_counter, function (value, index) {
-            console.log("index="+index)
-            if($scope.view_counter[index].WId){
+              }
 
+              if ($scope.w_raw[i].additional_note_type === "floating_page") {
+                w_array_7.push($scope.w_raw[i])
 
-              console.log("*index="+index);
-              console.log("$scope.view_counter[index].WId"+$scope.view_counter[index].WId);
-           
-              $http({
-                url: '/api/upgrid/wwr/'+$scope.view_counter[index].WId,
-                method: 'GET',
-                headers: {
-                  'Authorization': 'JWT ' + token
-                }
-              }).then(function (response) {
+              }
 
-                  //console.log("wwr"+JSON.stringify(response.data));
-                  $scope.w_raw = response.data;
-                  $scope.w_array_final = [];
-                   var w_array_1 = [];
-                   var w_array_2 = [];
-                   var w_array_3 = [];
-                   var w_array_4 = [];
-                   var w_array_5 = [];
-                   var w_array_6 = [];
-                   var w_array_7 = [];
-                   var w_array_8 = [];
-                   var w_array_9 = [];
-                   
-                   
-                  for(i=0; i<$scope.w_raw.length; i++){
-                    if($scope.w_raw[i].additional_note_type === "dead_link")
-                    {
+              if ($scope.w_raw[i].additional_note_type === "confusing") {
+                w_array_8.push($scope.w_raw[i])
 
-                      w_array_1.push($scope.w_raw[i])
+              }
 
-                    }
+              if ($scope.w_raw[i].additional_note_type === "other_expert_note") {
 
-                    if($scope.w_raw[i].additional_note_type === "typo")
-                    {
-                      w_array_2.push($scope.w_raw[i])
+                w_array_9.push($scope.w_raw[i])
+              }
 
-                    }
 
-                    if($scope.w_raw[i].additional_note_type === "outdated_information")
-                    {
-                      w_array_3.push($scope.w_raw[i])
+            }
 
-                    }
+            // console.log("$scope.report_array[n].w_array_final="+$scope.report_array[n].w_array_final)
+            // // App.blocks('#whoops_loading', 'state_normal');
+            // // console.log('w_array_1='+JSON.stringify($scope.w_array_final));
+            $scope.report_array[index].w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9];
 
-                    if($scope.w_raw[i].additional_note_type === "data_discrepancy")
-                    {
-                      w_array_4.push($scope.w_raw[i])
 
-                    }
+          }).
+          catch(function(error) {
+            console.log('an error occurred...' + JSON.stringify(error));
 
-                    if($scope.w_raw[i].additional_note_type === "sidebars")
-                    {
-
-                      w_array_5.push($scope.w_raw[i])
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "infinite_loop")
-                    {
-                      w_array_6.push($scope.w_raw[i])
-
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "floating_page")
-                    {
-                      w_array_7.push($scope.w_raw[i])
-
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "confusing")
-                    {
-                      w_array_8.push($scope.w_raw[i])
-
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "other_expert_note")
-                    {
-
-                      w_array_9.push($scope.w_raw[i])
-                    }
-
-                    
-                  }
-                  
-                  // console.log("$scope.report_array[n].w_array_final="+$scope.report_array[n].w_array_final)
-                  // // App.blocks('#whoops_loading', 'state_normal');
-                  // // console.log('w_array_1='+JSON.stringify($scope.w_array_final));
-                  $scope.report_array[index].w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9];
-
-
-                }).
-               catch(function(error){
-                  console.log('an error occurred...'+JSON.stringify(error));
-
-               });
-
-
-
-          }
-
-
-
-          //////////////
-
-
-          if($scope.view_counter[index].EId){
-                     $http({
-                            url: '/api/upgrid/ewr/'+$scope.view_counter[index].EId,
-                            method: 'GET',
-                            headers: {
-                              'Authorization': 'JWT ' + token
-                            }
-                      }).then(function (response) {
-
-                        
-
-                         //console.log("released report whoops"+ JSON.stringify(response.data));
-                         $scope.e_raw = response.data;
-                         $scope.e_array_final = [];
-                         var e_array_1 = [];
-                         var e_array_2 = [];
-                         var e_array_3 = [];
-                         var e_array_4 = [];
-                         var e_array_5 = [];
-                         var e_array_6 = [];
-                         var e_array_7 = [];
-                         var e_array_8 = [];
-                         var e_array_9 = [];
-                         var e_array_10 = [];
-
-                         for(i=0; i<$scope.e_raw.length; i++)
-                         {
-                           e_array_1.push($scope.e_raw['p'+(i===0?'':i+1)]);
-                           e_array_2.push($scope.e_raw['c'+(i===0?'':i+1)]);
-                           e_array_3.push($scope.e_raw['t'+(i===0?'':i+1)]);
-                           e_array_4.push($scope.e_raw['d'+(i===0?'':i+1)]);
-                           e_array_5.push($scope.e_raw['r'+(i===0?'':i+1)]);
-                           e_array_6.push($scope.e_raw['ex'+(i===0?'':i+1)]);
-                           e_array_7.push($scope.e_raw['Intl_transcript'+(i===0?'':i+1)]);
-                           e_array_8.push($scope.e_raw['Intl_eng_test'+(i===0?'':i+1)]);
-                           e_array_9.push($scope.e_raw['s'+(i===0?'':i+1)]);
-                           e_array_10.push($scope.e_raw['dura'+(i===0?'':i+1)]);
-
-                         }
-
-                         $scope.report_array[index].e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
-                         //App.blocks('#enhancement_loading', 'state_normal');
-
-                         //console.log('e_array_1='+JSON.stringify($scope.e_array_final));
-
-                          
-                      }).
-                       catch(function(error){
-                          console.log('an error occurred...'+JSON.stringify(error));
-
-                       });
-
-
-
-
-          }
-
-
-        });
-        
-
-
-
-      }
-
-
-
-
-    $scope.ViewAll = function () {
-
-
-        App.blocks('#viewall_loading', 'state_loading');
-        
-
-        console.log("$local="+JSON.stringify($storage.upgrid));
-        console.log('storage result= '+JSON.stringify(cartCounter.counter()));
-
-        $scope.view_counter = cartCounter.counter();
-
-        $scope.report_array = [];
-
-        for(i=0; i<$scope.view_counter.length; i++){
-
-          $scope.report_array.push({'order': i,
-                                    'w_array_final': [],
-                                    'e_array_final': [],
-                                    'whoops_report_program': $scope.view_counter[i].name ,
-                                    'whoops_report_degree': $scope.view_counter[i].degree
-                                   }
-                                   );
-
-        }
-
-       
-        angular.forEach($scope.view_counter, function (value, index) {
-            console.log("index="+index)
-            if($scope.view_counter[index].WId){
-
-
-              console.log("*index="+index);
-              console.log("$scope.view_counter[index].WId"+$scope.view_counter[index].WId);
-           
-              $http({
-                url: '/api/upgrid/wwr/'+$scope.view_counter[index].WId,
-                method: 'GET',
-                headers: {
-                  'Authorization': 'JWT ' + token
-                }
-              }).then(function (response) {
-
-                  //console.log("wwr"+JSON.stringify(response.data));
-                  $scope.w_raw = response.data;
-                  $scope.w_array_final = [];
-                   var w_array_1 = [];
-                   var w_array_2 = [];
-                   var w_array_3 = [];
-                   var w_array_4 = [];
-                   var w_array_5 = [];
-                   var w_array_6 = [];
-                   var w_array_7 = [];
-                   var w_array_8 = [];
-                   var w_array_9 = [];
-                   
-                   
-                  for(i=0; i<$scope.w_raw.length; i++){
-                    if($scope.w_raw[i].additional_note_type === "dead_link")
-                    {
-
-                      w_array_1.push($scope.w_raw[i])
-
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "typo")
-                    {
-                      w_array_2.push($scope.w_raw[i])
-
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "outdated_information")
-                    {
-                      w_array_3.push($scope.w_raw[i])
-
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "data_discrepancy")
-                    {
-                      w_array_4.push($scope.w_raw[i])
-
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "sidebars")
-                    {
-
-                      w_array_5.push($scope.w_raw[i])
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "infinite_loop")
-                    {
-                      w_array_6.push($scope.w_raw[i])
-
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "floating_page")
-                    {
-                      w_array_7.push($scope.w_raw[i])
-
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "confusing")
-                    {
-                      w_array_8.push($scope.w_raw[i])
-
-                    }
-
-                    if($scope.w_raw[i].additional_note_type === "other_expert_note")
-                    {
-
-                      w_array_9.push($scope.w_raw[i])
-                    }
-
-                    
-                  }
-                  
-                  // console.log("$scope.report_array[n].w_array_final="+$scope.report_array[n].w_array_final)
-                  // // App.blocks('#whoops_loading', 'state_normal');
-                  // // console.log('w_array_1='+JSON.stringify($scope.w_array_final));
-                  $scope.report_array[index].w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9];
-
-
-                }).
-               catch(function(error){
-                  console.log('an error occurred...'+JSON.stringify(error));
-
-               });
-
-
-
-          }
-
-
-
-          //////////////
-
-
-          if($scope.view_counter[index].EId){
-                     $http({
-                            url: '/api/upgrid/ewr/'+$scope.view_counter[index].EId,
-                            method: 'GET',
-                            headers: {
-                              'Authorization': 'JWT ' + token
-                            }
-                      }).then(function (response) {
-
-                        
-
-                         //console.log("released report whoops"+ JSON.stringify(response.data));
-                         $scope.e_raw = response.data;
-                         $scope.e_array_final = [];
-                         var e_array_1 = [];
-                         var e_array_2 = [];
-                         var e_array_3 = [];
-                         var e_array_4 = [];
-                         var e_array_5 = [];
-                         var e_array_6 = [];
-                         var e_array_7 = [];
-                         var e_array_8 = [];
-                         var e_array_9 = [];
-                         var e_array_10 = [];
-
-                         for(i=0; i<$scope.e_raw.length; i++)
-                         {
-                           e_array_1.push($scope.e_raw['p'+(i===0?'':i+1)]);
-                           e_array_2.push($scope.e_raw['c'+(i===0?'':i+1)]);
-                           e_array_3.push($scope.e_raw['t'+(i===0?'':i+1)]);
-                           e_array_4.push($scope.e_raw['d'+(i===0?'':i+1)]);
-                           e_array_5.push($scope.e_raw['r'+(i===0?'':i+1)]);
-                           e_array_6.push($scope.e_raw['ex'+(i===0?'':i+1)]);
-                           e_array_7.push($scope.e_raw['Intl_transcript'+(i===0?'':i+1)]);
-                           e_array_8.push($scope.e_raw['Intl_eng_test'+(i===0?'':i+1)]);
-                           e_array_9.push($scope.e_raw['s'+(i===0?'':i+1)]);
-                           e_array_10.push($scope.e_raw['dura'+(i===0?'':i+1)]);
-
-                         }
-
-                         $scope.report_array[index].e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
-                         //App.blocks('#enhancement_loading', 'state_normal');
-
-                         //console.log('e_array_1='+JSON.stringify($scope.e_array_final));
-
-                          
-                      }).
-                       catch(function(error){
-                          console.log('an error occurred...'+JSON.stringify(error));
-
-                       });
-
-
-
-
-          }
-
-
-        });
-        
-
-
-          $q.all($scope.report_array).then(function(result) {
-            
-               App.blocks('#viewall_loading', 'state_normal');
           });
 
-       
-        
+
+
+        }
 
 
 
-      }
+        //////////////
+
+
+        if ($scope.view_counter[index].enhancement) {
+          $http({
+            url: '/api/upgrid/ewr/' + $scope.view_counter[index].Id,
+            method: 'GET',
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+          }).then(function(response) {
 
 
 
-     if (false) {
-      
+            //console.log("released report whoops"+ JSON.stringify(response.data));
+            $scope.e_raw = response.data;
+            $scope.e_array_final = [];
+            var e_array_1 = [];
+            var e_array_2 = [];
+            var e_array_3 = [];
+            var e_array_4 = [];
+            var e_array_5 = [];
+            var e_array_6 = [];
+            var e_array_7 = [];
+            var e_array_8 = [];
+            var e_array_9 = [];
+            var e_array_10 = [];
+
+            for (i = 0; i < $scope.e_raw.length; i++) {
+              e_array_1.push($scope.e_raw['p' + (i === 0 ? '' : i + 1)]);
+              e_array_2.push($scope.e_raw['c' + (i === 0 ? '' : i + 1)]);
+              e_array_3.push($scope.e_raw['t' + (i === 0 ? '' : i + 1)]);
+              e_array_4.push($scope.e_raw['d' + (i === 0 ? '' : i + 1)]);
+              e_array_5.push($scope.e_raw['r' + (i === 0 ? '' : i + 1)]);
+              e_array_6.push($scope.e_raw['ex' + (i === 0 ? '' : i + 1)]);
+              e_array_7.push($scope.e_raw['Intl_transcript' + (i === 0 ? '' : i + 1)]);
+              e_array_8.push($scope.e_raw['Intl_eng_test' + (i === 0 ? '' : i + 1)]);
+              e_array_9.push($scope.e_raw['s' + (i === 0 ? '' : i + 1)]);
+              e_array_10.push($scope.e_raw['dura' + (i === 0 ? '' : i + 1)]);
+
+            }
+
+            $scope.report_array[index].e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
+            //App.blocks('#enhancement_loading', 'state_normal');
+
+            //console.log('e_array_1='+JSON.stringify($scope.e_array_final));
+
+
+          }).
+          catch(function(error) {
+            console.log('an error occurred...' + JSON.stringify(error));
+
+          });
+
+
+
+        }
+
+
+      });
+
+
+
+      $q.all($scope.report_array).then(function(result) {
+
+        App.blocks('#viewall_loading', 'state_normal');
+      });
+
+
+    }
+
+
+
+    if (false) {
+
       $scope.showMessage = false;
 
       $scope.showFilter = true;
 
       var preData = tableDataService.getCart(List);
-      console.log("preData= "+JSON.stringify(preData));
+      console.log("preData= " + JSON.stringify(preData));
       $scope.data = [];
       for (i = 0; i < preData.length; i++) {
         //data[i].programName = $scope.programs[i].program_name;
@@ -558,7 +431,7 @@ controller('ReportsController',
       }
 
 
-      console.log("D.A.T.A = "+JSON.stringify($scope.data));
+      console.log("D.A.T.A = " + JSON.stringify($scope.data));
 
 
 
@@ -727,7 +600,7 @@ controller('ReportsController',
           url: '/api/enhancement/',
           method: 'POST',
           data: {
-            object_id: competingUrl.slice(0,-1)
+            object_id: competingUrl.slice(0, -1)
           },
           headers: {
             'Authorization': 'JWT ' + token
@@ -765,7 +638,7 @@ controller('ReportsController',
       $scope.pdfDownloadEnhancement = function(Id, competing, name, degree) {
         console.log("downloading");
         var competingUrl = Id + '/';
-        
+
         //console.log('caught! '+program+' '+degree);
         for (i = 0; i < competing.length; i++) {
 
@@ -776,7 +649,7 @@ controller('ReportsController',
           url: '/api/enhancement/',
           method: 'POST',
           data: {
-              object_id: competingUrl.slice(0,-1)
+            object_id: competingUrl.slice(0, -1)
           },
           headers: {
             'Authorization': 'JWT ' + token
@@ -845,7 +718,7 @@ controller('ReportsController',
           url: '/api/enhancement/',
           method: 'POST',
           data: {
-             object_id: competingUrl.slice(0,-1)
+            object_id: competingUrl.slice(0, -1)
           },
           headers: {
             'Authorization': 'JWT ' + token
@@ -901,38 +774,38 @@ controller('ReportsController',
         App.blocks('#reports', 'state_loading');
         var fileArray = [];
 
-        console.log("$scope.Checked = "+JSON.stringify($scope.Checked));
-        console.log("length= "+$scope.Checked.length);
+        console.log("$scope.Checked = " + JSON.stringify($scope.Checked));
+        console.log("length= " + $scope.Checked.length);
         for (i = 0; i < $scope.Checked.length; i++) {
 
-         
-              fileArray.push(i);
-              // fileSystem += $scope.data[i].programName+ " (" +$scope.data[i].degreeName + ") ";
-              //check if has true value
-              if ($scope.Checked[i].WId) {
 
-                //console.log("found one checked WHOOPS");
-                //get the report link
-                fileArray.push("W");
-                fileArray.push(reportService.downloadWhoops($scope.Checked[i].WId, token));
+          fileArray.push(i);
+          // fileSystem += $scope.data[i].programName+ " (" +$scope.data[i].degreeName + ") ";
+          //check if has true value
+          if ($scope.Checked[i].WId) {
 
-              }
-              //end of whoops
+            //console.log("found one checked WHOOPS");
+            //get the report link
+            fileArray.push("W");
+            fileArray.push(reportService.downloadWhoops($scope.Checked[i].WId, token));
 
-              if ($scope.Checked[i].EId) {
+          }
+          //end of whoops
 
-                fileArray.push("E");
-                //get the report link
-                fileArray.push(reportService.downloadEnhancement($scope.Checked[i].EId, token));
+          if ($scope.Checked[i].EId) {
 
-              }
-              //end of enhancement
+            fileArray.push("E");
+            //get the report link
+            fileArray.push(reportService.downloadEnhancement($scope.Checked[i].EId, token));
 
-         
+          }
+          //end of enhancement
+
+
 
         }
         //end of program loop
-        console.log("fileArray = "+JSON.stringify(fileArray))
+        console.log("fileArray = " + JSON.stringify(fileArray))
 
         $q.all(fileArray).then(function(result) {
           // var fileSystemBlob = new Blob([fileSystem], {type: 'text/html'});
@@ -972,7 +845,7 @@ controller('ReportsController',
               // see FileSaver.js
               saveAs(content, "UpgridReports.zip");
             });
-            App.blocks('#reports', 'state_normal');
+          App.blocks('#reports', 'state_normal');
 
         });
 
