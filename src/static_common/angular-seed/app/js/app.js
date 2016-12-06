@@ -47,43 +47,10 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
   state('shareAll', {
-    url: '/upgrid/share_selected_report/:param1/',
+    url: '/upgrid/share_selected_report/:param1/:param2/',
     templateUrl: 'views/Home/share_all.html',
     controller: 'ShareAllController',
-    resolve: {
-
-      auth: function($q, authenticationSvc) {
-
-        var userInfo = authenticationSvc.getUserInfo();
-        console.log("userInfo= "+userInfo)
-        if (userInfo) {
-          console.log("whoops page authenticated");
-          //console.log(userInfo);
-          console.log('-------------');
-          return $q.when(userInfo);
-        } else {
-          console.log('fail to see the page, route change error');
-          return $q.reject({
-            authenticated: false
-          });
-        }
-      },
-
-      Checked: function(cartCounter) {
-        
-        return cartCounter.counter();
-
-      },
-      List: function(apiService, authenticationSvc) {
-        var userInfo = authenticationSvc.getUserInfo();
-        console.log('*************');
-        return apiService.getProfileList(userInfo.accessToken);
-
-      }
-
-     
-    }
-
+    
 
   }).
 

@@ -459,9 +459,6 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
                 text: location.host + '/static/angular-seed/app/index.html#'+'/shared_enhancement_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
             };
 
-            
-           
-            
         }).
         catch(function(error) {
             console.log('an error occurred...' + JSON.stringify(error));

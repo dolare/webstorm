@@ -29,7 +29,7 @@ controller('ShareEnhancementController',
 
             
 
-             console.log("released enhancement whoops"+ JSON.stringify(response.data));
+             console.log("raw enhancement"+ JSON.stringify(response.data[1].enhancement[0]));
              $scope.e_raw = response.data[1].enhancement[0];
              $scope.e_array_final = [];
              var e_array_1 = [];
@@ -61,7 +61,8 @@ controller('ShareEnhancementController',
              $scope.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
              App.blocks('#enhancement_loading', 'state_normal');
 
-             console.log('e_array_1='+JSON.stringify($scope.e_array_final));
+             console.log('final='+JSON.stringify($scope.e_array_final[0][0].program_name));
+             console.log('final2='+JSON.stringify($scope.e_array_final[0][0].degree.name));
 
               
           }).

@@ -4,7 +4,7 @@ admin.controller('AdminMainController',
 
     var token = authenticationSvc.getUserInfo().accessToken;
 
-    $scope.htmlPopover = $sce.trustAsHtml('1. Design modified');
+    $scope.htmlPopover = $sce.trustAsHtml('1. Edit function modified.<br>2. Competing programs can now be added, edited and deleted<br>3. Currently no limit for the number of competing programs');
 
 
     $scope.itemsByPage = 25;

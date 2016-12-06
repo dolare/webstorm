@@ -50,62 +50,6 @@ controller('ReportsController',
 
     }
 
-    // $scope.selectEn = function(Name, Degree, Id,  WStatus, EStatus, Notes, Confirm) {
-
-    //     if($scope.$storage.upgrid[Name+'|'+ Degree]['enhancement']){
-
-    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EId'] = Id;
-    //         $scope.$storage.upgrid[Name+'|'+ Degree]['WStatus'] = WStatus
-    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EStatus'] = EStatus
-    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EConfirm'] = Confirm
-    //         $scope.$storage.upgrid[Name+'|'+ Degree]['WNotes'] = Notes
-
-    //     } else {
-
-    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EId'] = (function () { return; })();
-    //         $scope.$storage.upgrid[Name+'|'+ Degree]['WStatus'] = WStatus
-    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EStatus'] = EStatus
-    //         $scope.$storage.upgrid[Name+'|'+ Degree]['EConfirm'] = Confirm
-    //         $scope.$storage.upgrid[Name+'|'+ Degree]['WNotes'] = Notes
-    //     }
-
-    //     console.log("$scope.$storage.upgrid="+JSON.stringify($scope.$storage.upgrid));
-
-
-    // };
-
-
-    // $scope.selectWh = function(Name, Degree, Id, WStatus, EStatus, Notes, Confirm) {
-
-
-    //   if($scope.$storage.upgrid[Name+'|'+ Degree]['whoops']){
-
-    //       $scope.$storage.upgrid[Name+'|'+Degree]["WId"] = Id
-
-    //       $scope.$storage.upgrid[Name+'|'+Degree]["WStatus"] = WStatus
-    //       $scope.$storage.upgrid[Name+'|'+Degree]["EStatus"] = EStatus
-    //       $scope.$storage.upgrid[Name+'|'+Degree]["WNotes"] = Notes
-    //       $scope.$storage.upgrid[Name+'|'+Degree]["EConfirm"] = Confirm
-
-
-    //   }else{
-    //       $scope.$storage.upgrid[Name+'|'+Degree]["WId"] = (function () { return; })();
-    //       $scope.$storage.upgrid[Name+'|'+Degree]["WStatus"] = WStatus
-    //       $scope.$storage.upgrid[Name+'|'+Degree]["EStatus"] = EStatus
-    //       $scope.$storage.upgrid[Name+'|'+Degree]["WNotes"] = Notes
-    //       $scope.$storage.upgrid[Name+'|'+Degree]["EConfirm"] = Confirm
-
-
-    //   }
-
-
-    //   console.log("$scope.$storage.upgrid="+JSON.stringify($scope.$storage.upgrid));
-
-
-    // };
-
-
-
     $scope.ShareAllSelected = function() {
       $scope.url = {
         text: null
@@ -159,10 +103,11 @@ controller('ReportsController',
       } else {
 
          $("#myModal1").modal('toggle');
-         $scope.url = {
-        text: $location.absUrl().split('#')[0] + '#/upgrid/share_selected_report/asd3dhu38dj93jdj93/',
+         $scope.shareLoading = true;
+        //  $scope.url = {
+        // text: $location.absUrl().split('#')[0] + '#/upgrid/share_selected_report/asd3dhu38dj93jdj93/',
 
-         };
+        //  };
          $http({
         url: '/api/upgrid/reports/shared/',
         method: 'POST',
@@ -181,14 +126,14 @@ controller('ReportsController',
 
         $scope.shared_id = response.data[0].split('/')[0];
         $scope.shared_token = response.data[0].split('/')[1];
-
-        // $scope.url = {
-        //   text: location.host + '/static/angular-seed/app/index.html#' + '/shared_whoops_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
-        // };
+        $scope.shareLoading = false;
+        $scope.url = {
+          text: location.host + '/static/angular-seed/app/index.html#' + '/upgrid/share_selected_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
+        };
 
         console.log("shared_id="+$scope.shared_id);
         console.log("$scope.shared_token"+$scope.shared_token);
-        
+
       }).
       catch(function(error) {
         console.log('an error occurred...' + JSON.stringify(error));
@@ -307,9 +252,6 @@ controller('ReportsController',
 
             }
 
-            // console.log("$scope.report_array[n].w_array_final="+$scope.report_array[n].w_array_final)
-            // // App.blocks('#whoops_loading', 'state_normal');
-            // // console.log('w_array_1='+JSON.stringify($scope.w_array_final));
             $scope.report_array[index].w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9];
 
 

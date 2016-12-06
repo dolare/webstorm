@@ -72,13 +72,13 @@
                                     <tr>
                                         <td class="text-muted">University</td>
                                         <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{univeristy_name}}&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{report_array[0].w_array_final.length!==0?report_array[0].w_array_final[9][0].university:report_array[0].e_array_final[0][0].university_school.university}}&nbsp;</td>
                                     </tr>
 
                                     <tr>
                                         <td class="text-muted">School</td>
                                         <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
-                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{school_name}}&nbsp;</td>
+                                        <td style="border-bottom: 1px solid #ccc">&nbsp;{{report_array[0].w_array_final.length!==0?report_array[0].w_array_final[9][0].school:report_array[0].e_array_final[0][0].university_school.school}}&nbsp;</td>
                                     </tr>
 
 
@@ -120,9 +120,9 @@
                                     <p class="h3 text-gray font-w400 push-15 push-10-t text-uppercase">CONTENTS</p>
                                     
                                     <address>
-                                      <div ng-repeat="program in view_counter" class="push-5"> 
+                                      <div ng-repeat="report in report_array" class="push-5"> 
 
-                                        <a  data-js-blur class="link-effect" href="javascript:void(0)" scroll-to="{{ 'program-' + $index }}">{{$index + 1}}.&nbsp;&nbsp;&nbsp;&nbsp; {{program.name}} - {{program.degree}}</a><br />
+                                        <a  data-js-blur class="link-effect" href="{{ '#program-' + $index }}" du-smooth-scroll>{{report.order + 1}}.&nbsp;&nbsp;&nbsp;&nbsp; {{report.whoops_report_program}} - {{report.whoops_report_degree}}</a><br />
 
                                       </div>
                                     
@@ -151,7 +151,7 @@
                         </div>
 
                         <div style="position: fixed;bottom: 50px;right: 25px;">
-                            <a data-js-blur href="javascript:void(0)" scroll-to="top-report" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;"><i class="fa fa-arrow-up"></i></a>
+                            <a data-js-blur href="#top-report" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
 
                         </div>
 
