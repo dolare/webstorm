@@ -42,24 +42,29 @@ INSTALLED_APPS = (
 )
 
 
-EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+try:
+    email_pass = os.environ["EMAIL_PASS"]
+except KeyError:
+    print("Error: environment variable EMAIL_PASS must be set.")
+    exit(1)
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'gt267127@gmail.com'
-EMAIL_HOST_PASSWORD = 'Gary19890603'
-EMAIL_PORT =587
+EMAIL_HOST = 'smtp.1and1.com'
+EMAIL_HOST_USER = 'no-reply@upgrid.gridet.com'
+EMAIL_HOST_PASSWORD = email_pass
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = 'gt267127@gmail.com'
-SERVER_EMAIL = 'gt267127@gmail.com'
+DEFAULT_FROM_EMAIL = 'no-reply@upgrid.gridet.com'
+SERVER_EMAIL = 'no-reply@upgrid.gridet.com'
 
 
-REST_FRAMEWORK={
+REST_FRAMEWORK = {
     
     'DEFAULT_PERMISSION_CLASSES':(
-        #'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        #'rest_framework.permissions.IsAuthenticated',
         ),
         'DEFAULT_AUTHENTICATION_CLASSES':(
            #'rest_framework.authentication.SessionAuthentication',

@@ -187,7 +187,7 @@ admin.controller('AdminMainController',
       console.log("id = " + id);
       avatarService.register(id);
       console.log("avatarService.getClientId" + avatarService.getClientId());
-
+      
       $http({
         url: '/api/upgrid/user/dashboard/' + avatarService.getClientId(),
         method: 'GET',
@@ -2407,6 +2407,24 @@ admin.controller('AdminProfileController', ['$http', '$scope', '$localStorage', 
       }
 
     };
+
+  }
+]);
+
+
+
+
+
+// ********************************Updates********************************
+
+admin.controller('UpdatesController', ['$http', '$scope', '$localStorage', '$window', 'authenticationSvc',
+  function($http, $scope, $localStorage, $window, authenticationSvc) {
+    console.log("welcome");
+   
+    var token = authenticationSvc.getUserInfo().accessToken;
+
+
+
 
   }
 ]);

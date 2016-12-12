@@ -189,6 +189,34 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
 
+  state('updates', {
+    url: '/updates',
+    parent: 'success_demo',
+    templateUrl: 'views/Admin/Updates.html',
+    controller: 'UpdatesController',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo && userInfo.admin === "True") {
+
+          //console.log("start logout");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+
+        } else {
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      }
+
+
+    }
+
+
+  }).
+
   state('quote', {
     url: '/quote',
     parent: 'success_demo',
@@ -251,7 +279,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
     }
 
-
   }).
 
 
@@ -306,7 +333,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
       Ceeb: function(apiService, authenticationSvc) {
         var userInfo = authenticationSvc.getUserInfo();
         console.log('*************');
-        return apiService.getCustomer(userInfo.username, userInfo.accessToken);
+        return apiService.getCustomer(userInfo.accessToken);
 
       }
 
@@ -644,13 +671,20 @@ App.run(["$rootScope", "$location", "$state", "authenticationSvc",
 
 
 App.factory('AuthInterceptor',
-  function($injector, $location, $q, $stateParams) {
+  function( $localStorage, $sessionStorage, $injector, $location, $q, $stateParams) {
     return {
-      responseError: function(rejection) {
+      // optional method
+      // 'response': function(response) {
+        
+      //   //alert("get called");
+      //   return response;
+      // },
+      'responseError': function(rejection) {
+        
         console.log("url before redirect1..." + $location.url());
         if (rejection.status === 401 && rejection.config.url !== '/login') {
           var $state = $injector.get('$state');
-
+          
           console.log("url before redirect..." + $location.url());
           //console.log("stateParams.url= ..."+$stateParams.url);
           console.log("STATE = " + JSON.stringify($state.current));
@@ -658,11 +692,38 @@ App.factory('AuthInterceptor',
           //$scope.userInfo = authenticationSvc.logout();
           //delete $scope.$storage.upgrid;
 
+
           console.log("output urls...");
           // This is the interesting bit:
+          var myService = $injector.get('authenticationSvc');
+          var myAvatar = $injector.get('avatarService');
+          //$scope.$storage = $localStorage;
+          myService.logout();
+          
+          myAvatar.signout();
+          delete $localStorage.upgrid;
+          
+          
+          $.notify({
+
+              // options
+              icon: "fa fa-times",
+              message: 'Your session has expired. Please log in again.'
+            }, {
+              // settings
+              type: 'danger',
+              placement: {
+                from: "top",
+                align: "center"
+              },
+              z_index: 1999,
+            });
+
+
           $state.go('login', {
             url: $location.url()
           });
+        
         }
         return $q.reject(rejection);
       }

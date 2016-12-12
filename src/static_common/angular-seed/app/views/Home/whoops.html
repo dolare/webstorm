@@ -56,11 +56,11 @@
 
                       <table st-table="data" st-pipe="whoopspipe" class="table table-hover block" style="table-layout: fixed;">
                       <colgroup>
-                      <col width="7%"/>
+                      <col width="60px"/>
                       <col width="53%"/>
                       <col width="18%"/>
                       <col width="115px"/>
-                      <col width="4%" />
+                      <col width="38px" />
                     </colgroup>
                     <thead class="thead-inverse">
                       
@@ -69,7 +69,7 @@
                         <th st-sort="programName" style="padding-left:15px;" class="h4 font-w400">program</th>
                         <th st-sort="degreeName" style="padding-left:15px;" class="h4 font-w400 text-center">degree</th>
                         <th st-sort="whoops_status" style="padding-left:15px;" class="h4 font-w400 text-center">status</th>
-                        <th  style="padding-left:15px;" class="h4 font-w400"><i class="fa fa-exclamation-circle" aria-hidden="true" data-uib-tooltip="Newly updated report" data-tooltip-placement="top"></i></th>
+                        <th  class="h4 font-w400 text-center"><i class="fa fa-exclamation-circle" aria-hidden="true" data-uib-tooltip="Newly updated report" data-tooltip-placement="top"></i></th>
                         
                       </tr>
                       <tr style="border: 1px solid #eee;" class="bg-gray-lighter ">
@@ -124,7 +124,7 @@
                   </td>
 
 
-                  <td class="font-w500 td-bordered">{{row.programName}}</td>
+                  <td class="font-w500 td-bordered" style="padding-left: 15px">{{row.programName}}</td>
                   <td style="text-align: center;" class="font-w500 td-bordered">{{row.degreeName}}</td>
                   <td class="text-center td-bordered">
                     <span ng-if="row.whoops_status==='True' && row.notes===false"><i class="fa fa-check-circle fa-2x" style="color:green" data-uib-tooltip="Congratulations! There are currently no errors found in your program’s content." data-tooltip-placement="top"></i>

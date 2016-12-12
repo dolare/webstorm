@@ -261,10 +261,9 @@ angular.module('apiServiceModule', [])
         }
 
 
-    var getCustomer = function(email, token) {
+    var getCustomer = function(token) {
 
                         var deferred = $q.defer();
-
 
                        $http({
                               url: '/api/upgrid/accountmanager/is_manager/',

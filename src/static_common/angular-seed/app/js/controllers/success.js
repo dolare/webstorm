@@ -9,7 +9,7 @@ controller('SuccessController',
         $scope.Ceeb = Ceeb;
 
         console.log("Ceeb code in success page is"+$scope.Ceeb);
-
+        var token = authenticationSvc.getUserInfo().accessToken;
         // $scope.jump = function (){
         //     progressJs().start().autoIncrease(10, 500);
         // }
@@ -17,8 +17,6 @@ controller('SuccessController',
         // $scope.check = function(){
         //     console.log("avatar id "+avatarService.getClientId());
         // }
-
-
 
 
         $scope.admin = authenticationSvc.getUserInfo().admin;
@@ -105,6 +103,42 @@ controller('SuccessController',
         console.log('session after login: ' + $window.sessionStorage["userInfo"])
 
         $scope.avatar_id = avatarService.getClientId();
+
+
+        //change ceeb in impersonation
+        $scope.$watch(function () {
+          return avatarService.getClientId();
+        }, function (val) {
+           
+           $scope.avatar_id = avatarService.getClientId();
+           console.log("$scope.avatar_id="+$scope.avatar_id);
+           
+           if($scope.admin==='True'&&$scope.avatar_id){
+            $http({
+              url: '/api/upgrid/user/'+$scope.avatar_id,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            }).then(function (response) {
+
+               $scope.Ceeb = response.data.Ceeb;
+               // alert("changed"+$scope.Ceeb);
+               console.log("apiservice Ceeb="+ JSON.stringify(Ceeb));
+                
+            }).catch(function(error){
+                console.log('an error occurred...'+JSON.stringify(error));
+                
+            });
+
+           } else if($scope.admin==='True'&&!$scope.avatar_id) {
+            $scope.Ceeb = null;
+            console.log("set to null");
+           }
+
+
+        });
+
 
         $scope.$watch(function() { 
             return avatarService.getClientId(); 

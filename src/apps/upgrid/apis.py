@@ -85,7 +85,8 @@ class PasswordChangeView(generics.GenericAPIView):
 # api/password/reset/send_email/
 class ResetPassword(generics.GenericAPIView):
 
-    @permission_classes((AllowAny,))
+    permission_classes = (AllowAny,)
+
     def post(self, request):
         text = "Password Reset email has been send! If you do not receive reset email within the next 5 minutes,"
         "please check your email address if it has registered."
@@ -93,7 +94,10 @@ class ResetPassword(generics.GenericAPIView):
         try:
             user_reset = UniversityCustomer.objects.get(email=request.data['email'])
         except UniversityCustomer.DoesNotExist:
-            return HttpResponse(text,HTTP_200_OK)
+            try:
+                user_reset = UpgridAccountManager.objects.get(email = request.data['email'])
+            except UpgridAccountManager.DoesNotExist:
+                return HttpResponse(text, HTTP_200_OK)
         if user_reset:
             payload = jwt_payload_handler(user_reset)
             token = jwt_encode_handler(payload)
@@ -101,13 +105,22 @@ class ResetPassword(generics.GenericAPIView):
             if token:
                 try:
                     # username = user_reset.username
-                    html_content = ("Hello, %s! <br>You're receiving this email"
-                                    "because you requested a password reset for your user account"
-                                    "at Upgrid!<br>Please go to the following page and choose a new"
-                                    "password: http://%s/static/angular-seed/app/index.html#/upgrid/reset/%s/.<br>")
-                    message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.contact_name,
-                                           request.META['HTTP_HOST'], token), to=[request.data['email']])
+                    if hasattr(user_reset, 'contect_name'):
+                        html_content = ("Hello, %s! <br>You're receiving this email"
+                                        "because you requested a password reset for your user account"
+                                        "at Upgrid!<br>Please go to the following page and choose a new"
+                                        "password: http://%s/static/angular-seed/app/index.html#/upgrid/reset/%s/.<br>")
+                        message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.contact_name,
+                                               request.META['HTTP_HOST'], token), to=[request.data['email']])
+                    else:
+                        html_content = ("Hello, %s! <br>You're receiving this email"
+                                        "because you requested a password reset for your user account"
+                                        "at Upgrid!<br>Please go to the following page and choose a new"
+                                        "password: http://%s/static/angular-seed/app/index.html#/upgrid/reset/%s/.<br>")
+                        message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.username,
+                                               request.META['HTTP_HOST'], token), to=[request.data['email']])                        
                     message.content_subtype = 'html'
+                    print("hello")
                     message.send()
                 except BadHeaderError:
                     return HttpResponse(text, status=HTTP_200_OK)

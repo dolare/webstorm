@@ -78,12 +78,19 @@
                 </li>
 
 
+                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+                    <a data-ui-sref="updates" data-ui-sref-active="active" >
+                        <i class="si si-hourglass"></i><span class="sidebar-mini-hide">Updates</span>
+                    </a>
+                </li>
+
 
                 <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
                     <a data-ui-sref="quote" data-ui-sref-active="active" >
                         <i class="si si-bar-chart"></i><span class="sidebar-mini-hide">Pricing Quote</span>
                     </a>
                 </li>
+
 
 
                 <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
@@ -135,7 +142,7 @@
              <ul class="nav-main logout" style="position:absolute; bottom:10px; left: 20px; width: 100%">
                 <li class="animate-show" ng-show="admin==='True'&&avatar_id!==''">
                     <a href="javascript:void(0)" ng-click="signout_avatar()">
-                        <i class="si si-eye"></i><span class="sidebar-mini-hide">End impersonation</span>
+                        <i class="si si-eyeglasses"></i><span class="sidebar-mini-hide">End impersonation</span>
                     </a>
                 </li>
 

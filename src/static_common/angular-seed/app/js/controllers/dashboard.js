@@ -9,7 +9,7 @@ dashboard.controller('DashboardController',
     $scope.univeristy_name = List.profile.university;
     $scope.school_name = List.profile.school;
     $scope.Ceeb = List.profile.Ceeb;
-    $scope.htmlPopover = $sce.trustAsHtml('1. Whoops and Enhancement page style retouched. <br>2. Report viewers now scroll to top on every open.<br>3. Modified page styles.<br>4.Redesigned add to Report Manager mechanism.');
+    $scope.htmlPopover = $sce.trustAsHtml('1. Whoops and Enhancement page style retouched. <br>2. Report viewers now scroll to top on every open.<br>3. Modified page styles.<br>4.Redesigned add to Report Manager mechanism.<br>5.Corrected typos in report');
 
     $scope.scrolltop1 = function(){
       

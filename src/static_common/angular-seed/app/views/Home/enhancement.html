@@ -62,24 +62,24 @@
                 <table class="table table-hover" refresh-table st-pipe="enhancementpipe" st-table="displayeddata" style="table-layout: fixed;" data-js-table-sections-fixed>
                 
                 <colgroup>
-                <col width="7%"/>
-                <col width="5%"/>
+                <col width="60px"/>
+                <col width="60px"/>
                 <col width="53%"/>
                 <col width="15%"/>
                 
                 <col width="115px"/>
-                <col width="4%"/>
+                <col width="38px"/>
                 </colgroup>
 
                 <thead>
                     <tr class="bg-info" style="border: 1px solid #e3e3e3; color:white;">
                   <th></th>
                   <th></th>
-                  <th st-sort="programName" style="padding-left:15px;" class="h4 font-w400">program</th>
+                  <th st-sort="programName" style="padding-left:0" class="h4 font-w400">program</th>
                   <th st-sort="degreeName" style="padding-left:15px;" class="h4 font-w400 text-center">degree</th>
                  
                   <th st-sort="enhancement_status" style="padding-left:15px;" class="h4 font-w400 text-center">status</th>
-                  <th  style="padding-left:15px;" class="h4 font-w400"><i class="fa fa-exclamation-circle" aria-hidden="true" data-uib-tooltip="Newly updated report" data-tooltip-placement="top"></i></th>
+                  <th class="h4 font-w400 text-center"><i class="fa fa-exclamation-circle" aria-hidden="true" data-uib-tooltip="Newly updated report" data-tooltip-placement="top"></i></th>
                   <!-- st-sort="reportUpdate" -->
                 </tr>
 
@@ -140,7 +140,7 @@
                             <i class="fa fa-angle-right text-primary"></i>
                         </td>
 
-                        <td class="font-w500">{{row.programName}}</td>
+                        <td class="font-w500" style="padding-left: 0">{{row.programName}}</td>
                         <td class="font-w500 text-center td-bordered">
                             {{row.degreeName}}
                         </td>
@@ -175,7 +175,7 @@
 
                         <td class="td-bordered" style="text-align:center;">
                             <!-- <span ng-if="row.reportUpdate===true"> --><span>
-                            <span class="fa fa-exclamation-circle text-primary" ng-if="row.objectId==='9a80a2c5-affd-43f2-8fb7-eace71c68d5a'|| row.objectId==='d9030abb-dd51-4671-a622-0a5523f5fd17'||row.objectId==='bade54f9-6dfb-45b2-ab16-0523684ea902'||row.objectId==='9a80a2c5-affd-43f2-8fb7-eace71c68d5a'||row.objectId==='8a41c5ad-3f9d-4e5d-8818-913f0d82783a'||row.objectId==='a374c012-f8bb-4249-b66f-8951ce9269ba'">
+                            <span class="fa fa-exclamation-circle text-primary" ng-if="row.objectId==='9a80a2c5-affd-43f2-8fb7-eace71c68d5a'|| row.objectId==='d9030abb-dd51-4671-a622-0a5523f5fd17'||row.objectId==='bade54f9-6dfb-45b2-ab16-0523684ea902'||row.objectId==='9a80a2c5-affd-43f2-8fb7-eace71c68d5a'||row.objectId==='8a41c5ad-3f9d-4e5d-8818-913f0d82783a'||row.objectId==='a374c012-f8bb-4249-b66f-8951ce9269ba'||row.objectId==='67af2c4a-ff83-4139-a672-a3e5bd038e20'">
                             </span>
                           </span></td>
 
@@ -187,7 +187,7 @@
                     <tr ng-repeat="competing in row.competing" style="border: 1px solid #f0f0f0">
                         <td class="td-bordered"></td>
                         <td class="text-center text-muted font-w500">{{competing.order}}.</td>
-                        <td class="text-left font-w500 text-primary">
+                        <td class="text-left font-w500 text-primary" style="padding-left: 0">
                           {{competing.program_name}}<br><span class="text-muted"><small>{{competing.school}}  ({{competing.university}})</small></span>
                         </td>
                         <td class="text-center font-w500 text-primary td-bordered" style="vertical-align: top">{{competing.program_degree}}</td>
