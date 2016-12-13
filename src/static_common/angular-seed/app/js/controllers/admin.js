@@ -2412,19 +2412,246 @@ admin.controller('AdminProfileController', ['$http', '$scope', '$localStorage', 
 ]);
 
 
-
-
-
 // ********************************Updates********************************
 
-admin.controller('UpdatesController', ['$http', '$scope', '$localStorage', '$window', 'authenticationSvc',
-  function($http, $scope, $localStorage, $window, authenticationSvc) {
+admin.controller('UpdatesController', ['$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc',
+  function($q, $http, $scope, $localStorage, $window, authenticationSvc) {
     console.log("welcome");
    
     var token = authenticationSvc.getUserInfo().accessToken;
 
+    $scope.itemsByPage = 25;
+    $scope.update_client = [];
+    $http({
+          url: '/api/upgrid/update/dashboard/',
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+    }).then(function (response) {
+
+      for(var i=0; i<response.data.length; i++){
+        if(response.data[i].has_update.whoops_update !== 0 || response.data[i].has_update.enhancement_update !== 0)
+        $scope.update_client.push(response.data[i]);
+      }
+       console.log("update client = "+ JSON.stringify(response.data));
+        
+    }).
+     catch(function(error){
+        console.log('an error occurred...'+JSON.stringify(error));
+
+     });
+
+     $scope.baba=[1,2,3];
 
 
+     $scope.updated_whoops = function(id) {
+        $http({
+          url: '/api/upgrid/update/programs/'+id,
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+          }).then(function (response) {
+
+             //$scope.update_client = response.data;
+
+             console.log("programs =  "+ JSON.stringify(response.data.whoops_update));
+             $scope.dropdown_list = response.data.whoops_update;
+          }).
+           catch(function(error){
+              console.log('an error occurred...'+JSON.stringify(error));
+
+           });
+     }
+
+
+     $scope.updated_enhancement = function(id) {
+        $http({
+          url: '/api/upgrid/update/programs/'+id,
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+          }).then(function (response) {
+
+             //$scope.update_client = response.data;
+
+             console.log("programs =  "+ JSON.stringify(response.data.enhancement_update));
+              $scope.dropdown_list = response.data.enhancement_update;
+          }).
+           catch(function(error){
+              console.log('an error occurred...'+JSON.stringify(error));
+
+           });
+     }
+
+
+
+     $scope.testOnDemand = function(){
+
+
+
+      // $http({
+      //     url: '/api/upgrid/update/whoops/ondemand/',
+      //     method: 'PUT',
+      //     data: {
+      //       "customer_program_id": "5fded1bf-c005-4978-b2a3-21fe7dad6f68",
+      //       "client_id": "1640b8ff-2e18-45c7-a8b1-ac7e4c3163c9"
+      //     },
+      //     headers: {
+      //       'Authorization': 'JWT ' + token
+      //     }
+      //   }).then(function (response) {
+
+
+      //     return $http({
+      //     url: '/api/upgrid/update/enhancement/ondemand/',
+      //     method: 'PUT',
+      //     data: {
+      //       "customer_program_id": "5fded1bf-c005-4978-b2a3-21fe7dad6f68",
+      //       "client_id": "1640b8ff-2e18-45c7-a8b1-ac7e4c3163c9"
+      //     },
+      //     headers: {
+      //       'Authorization': 'JWT ' + token
+      //     }
+      //   })
+
+      //   }).then(function (response) {
+
+      //     console.log("success ondemand");
+      //   }).
+      //    catch(function(error){
+      //       console.log('an error occurred...'+JSON.stringify(error));
+
+      //    });
+
+
+      var customer_ids = [];
+      
+
+      for(var i=0; i<$scope.update_client.length; i++){
+
+        customer_ids.push($scope.update_client[i].id);
+
+
+      }
+
+
+      angular.forEach(customer_ids, function(value, index) {
+
+        $http({
+          url: '/api/upgrid/accountmanager/client/' + value,
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+ 
+        }).then(function(response) {
+            var program_ids = [];     
+            //console.log("response.is ... "+JSON.stringify(response.data.customer_program))
+            for(var i=0; i<response.data.customer_program.length; i++){
+              program_ids.push(response.data.customer_program[i].object_id);
+            }
+
+              if(program_ids.length!==0){
+                  angular.forEach(program_ids, function(value1, index1) {
+                    $http({
+                      url: '/api/upgrid/update/whoops/ondemand/',
+                      method: 'PUT',
+                      data: {
+                        "customer_program_id": value1,
+                        "client_id": value
+                      },
+                      headers: {
+                        'Authorization': 'JWT ' + token
+                      }
+                    }).then(function (response) {
+
+
+                      return $http({
+                      url: '/api/upgrid/update/enhancement/ondemand/',
+                      method: 'PUT',
+                      data: {
+                        "customer_program_id": value1,
+                        "client_id": value
+                      },
+                      headers: {
+                        'Authorization': 'JWT ' + token
+                      }
+                    })
+
+                    }).then(function (response) {
+
+                      console.log("success ondemand");
+                    }).
+                     catch(function(error){
+                        console.log('an error occurred...'+JSON.stringify(error));
+
+                     });
+
+
+                  })
+
+              }
+                 
+
+
+        }).catch(function(error){
+          console.log('an error occurred...'+JSON.stringify(error));
+
+        });
+
+      });
+
+    
+
+
+      // $q.all(program_ids).then(function(result) {
+
+      //   console.log("program ids = "+JSON.stringify(program_ids));
+      //     angular.forEach(program_ids, function(value, index) {
+      //   $http({
+      //     url: '/api/upgrid/update/whoops/ondemand/',
+      //     method: 'GET',
+      //     data: {
+      //       "object_id": value,
+      //     },
+      //     headers: {
+      //       'Authorization': 'JWT ' + token
+      //     }
+      //   }).then(function (response) {
+
+
+      //     return $http({
+      //     url: '/api/upgrid/update/enhancement/ondemand/',
+      //     method: 'GET',
+      //     data: {
+      //       "object_id": value,
+      //     },
+      //     headers: {
+      //       'Authorization': 'JWT ' + token
+      //     }
+      //   })
+
+      //   }).then(function (response) {
+
+      //     console.log("success ondemand");
+      //   }).
+      //    catch(function(error){
+      //       console.log('an error occurred...'+JSON.stringify(error));
+
+      //    });
+
+
+      //  })
+        
+      // });
+
+
+     }
+
+     //end of testOnDemand
 
   }
 ]);

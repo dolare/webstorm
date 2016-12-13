@@ -853,6 +853,35 @@ App.directive('jsTableSectionsFixed', function () {
 });
 
 
+//table for admin update
+App.directive('jsTableSectionsUpdate', function () {
+    return {
+        link: function (scope, element) {
+            var table      = jQuery(element);
+            var tableRows  = jQuery('.js-table-sections-header > tr', table);
+
+            console.log("in the directive");
+            table.delegate('.js-table-sections-header > tr', 'click', function(e) {
+                if (e.target.tagName.toLowerCase() === 'button'
+                  || e.target.type === 'button' 
+                  || e.target.tagName.toLowerCase() === 'i') {
+                    var row    = jQuery(this);
+                    var tbody  = row.parent('tbody');
+
+                    if (! tbody.hasClass('open')) {
+                        jQuery('tbody', table).removeClass('open');
+                    }
+
+                    tbody.toggleClass('open');
+                }
+
+            });
+        }
+    };
+});
+
+
+
 App.directive('slideToggle', function() {  
   return {
     restrict: 'A',      

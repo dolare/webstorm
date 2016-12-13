@@ -176,7 +176,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Specialization</td>
-                                            <td ng-class="{'note-left': row.specialization}" ng-repeat = "row in e_array_final[0]"><pre>{{row.specialization}}</pre></td>
+                                            <td ng-class="{'note-left': row.specialization}" ng-repeat = "row in e_array_final[0]">{{row.specialization}}</td>
                                         </tr>
 
                                          <tr>
@@ -325,7 +325,7 @@
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Tuition (out of state)</td><td ng-repeat = "row in e_array_final[2]"><span ng-if="row.school_cost_url&&row.tuition_per_unit_out_state">
-                                            <a href="{{row.school_cost_url}}" target="_blank">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit_out_state"><a href="{{row.university_cost_url}}" target="_blank">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a>
+                                            <a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a></span><span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit_out_state"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a>
                                             </span><span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit_out_state">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</span></td>
                                         </tr>
 

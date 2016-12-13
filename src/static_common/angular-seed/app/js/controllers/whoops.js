@@ -23,9 +23,7 @@ whoops.controller('WhoopsController',
     //    $scope.details = response.data;
 
     //    console.log("return data"+ JSON.stringify(response.data));
-    //     // if(response.status === 204){
-    //     //   console.log("===204");
-    //     // }
+    //    
     // }).
     //  catch(function(error){
     //     console.log('an error occurred...'+JSON.stringify(error));
