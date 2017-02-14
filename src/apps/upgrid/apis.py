@@ -1,6 +1,7 @@
 # System lib
 import base64
-
+import logging
+from django.core.serializers import serialize
 from django.core.mail import BadHeaderError, EmailMessage
 from django.db.models import Q
 from django.http import Http404, HttpResponse
@@ -24,8 +25,6 @@ from rest_framework_jwt.views import ObtainJSONWebToken
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
-import weasyprint
-
 # Our lib
 from ceeb_program.models import (
     Curriculum, Deadline, Duration, Program, Requirement, Scholarship, Tuition,
@@ -42,11 +41,15 @@ from .api_serializers import *
 
 # used shared report
 import zlib
-from datetime import datetime
+from django.utils import timezone
 from . import dbSerializers as dbLizer
-
+from json import dumps,loads
 from rest_framework.renderers import JSONRenderer
 from django.core.exceptions import ObjectDoesNotExist
+
+app_logger = logging.getLogger('app')
+# app_logger.info("This is a INFO level message")
+# app_logger.error("This is an ERROR level message")
 
 # ----------------------Login / Password ----------------------------------------
 
@@ -84,7 +87,6 @@ class PasswordChangeView(generics.GenericAPIView):
 
 # api/password/reset/send_email/
 class ResetPassword(generics.GenericAPIView):
-
     permission_classes = (AllowAny,)
 
     def post(self, request):
@@ -105,22 +107,13 @@ class ResetPassword(generics.GenericAPIView):
             if token:
                 try:
                     # username = user_reset.username
-                    if hasattr(user_reset, 'contect_name'):
-                        html_content = ("Hello, %s! <br>You're receiving this email"
-                                        "because you requested a password reset for your user account"
-                                        "at Upgrid!<br>Please go to the following page and choose a new"
-                                        "password: http://%s/static/angular-seed/app/index.html#/upgrid/reset/%s/.<br>")
-                        message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.contact_name,
-                                               request.META['HTTP_HOST'], token), to=[request.data['email']])
-                    else:
-                        html_content = ("Hello, %s! <br>You're receiving this email"
-                                        "because you requested a password reset for your user account"
-                                        "at Upgrid!<br>Please go to the following page and choose a new"
-                                        "password: http://%s/static/angular-seed/app/index.html#/upgrid/reset/%s/.<br>")
-                        message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.username,
-                                               request.META['HTTP_HOST'], token), to=[request.data['email']])                        
+                    html_content = ("Hello, %s! <br>You're receiving this email"
+                                    "because you requested a password reset for your user account"
+                                    "at Upgrid!<br>Please go to the following page and choose a new"
+                                    "password: http://%s/static/angular-seed/app/index.html#/upgrid/reset/%s/.<br>")
+                    message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.username,
+                                           request.META['HTTP_HOST'], token), to=[request.data['email']])
                     message.content_subtype = 'html'
-                    print("hello")
                     message.send()
                 except BadHeaderError:
                     return HttpResponse(text, status=HTTP_200_OK)
@@ -137,7 +130,7 @@ class ResetPassword(generics.GenericAPIView):
         password = self.validate(encoded_password)
         user.set_password(password)
         user.save()
-        return Response({"success": _("New password has been saved.")},status=HTTP_202_ACCEPTED)
+        return Response({"success": _("New password has been saved.")}, status=HTTP_202_ACCEPTED)
 
 
 # ------------------------------User API--------------------------------------------
@@ -568,24 +561,17 @@ class ShareReports(APIView):
                         return False
         return True
 
-    def get_whoops_object(self, whoops_id):
-        program_id = UniversityCustomerProgram.objects.get(object_id=whoops_id)
+    def get_whoops_object(self, object_id, client):
+        program_id = UniversityCustomerProgram.objects.get(object_id=object_id)
         program = Program.objects.get(object_id=program_id.program.object_id)
-        ean = program.expertadditionalnote_set.all()
-        return ean, program_id
 
-    def get_enhancement_object(self, enhancement_id):
-        program_list = []
-        customer_program = UniversityCustomerProgram.objects.select_related('program').get(
-            object_id=enhancement_id)
-        self_program = Program.objects.get(object_id=customer_program.program.object_id)
-        program_list.append(self_program)
-        competing_program = customer_program.customercompetingprogram_set.all().select_related('program')\
-            .order_by('order')
-        for cp in competing_program:
-            program = Program.objects.get(object_id=cp.program.object_id)
-            program_list.append(program)
-        return program_list
+        wur = WhoopsUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
+
+        return wur, program
+
+    def get_enhancement_object(self, object_id, client):
+        eur = EnhancementUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
+        return eur
 
     def get(self, request, object_id, token):
 
@@ -633,22 +619,23 @@ class ShareReports(APIView):
                 created_time=time_now,
             )
             relation_ship.save()
+            user = UniversityCustomer.objects.get(id=request.user.id)
             if not request.data['whoops_id'] is None:
                 whoops_id_list = request.data['whoops_id'].split('/')
                 for x in whoops_id_list:
-                    ean, program = self.get_whoops_object(x)
-                    if not len(ean) == 0:
-                        info = {'university': program.program.university_school.university_foreign_key.name,
-                                'school': program.program.university_school.school,
-                                'program': program.program.program_name, 'degree': program.program.degree.name}
-                        res = dbLizer.ExpertAdditionalNoteSerializer(ean, many=True)
-                        arr = res.data
-                        arr.append(info)
+                    wur, program = self.get_whoops_object(x, user)
+                    if wur:
+                        customer_program = UniversityCustomerProgram.objects.get(object_id=x)
+                        info = {'university': program.university_school.university_foreign_key.name,
+                                'school': program.university_school.school,
+                                'program': program.program_name, 'degree': program.degree.name}
+                        arr = JSONParser().parse(BytesIO(zlib.decompress(wur.existing_report)))
+                        arr.update(info)
                         json_str = JSONRenderer().render(arr)
                         raw_data = zlib.compress(json_str)
                         w_obj = WhoopsReportsRepo(
                             wr_created=time_now,
-                            wr_customer_program=program,
+                            wr_customer_program=customer_program,
                             wr_whoops_report=raw_data,
                             wr_share_relation=relation_ship)
                         w_obj.save()
@@ -656,95 +643,17 @@ class ShareReports(APIView):
             if not request.data['enhancement_id'] is None:
                 enhancement_id_list = request.data['enhancement_id'].split('/')
                 for y in enhancement_id_list:
-                    total_program = self.get_enhancement_object(y)
-                    json_data = {}
-                    length = len(total_program)
+                    eur = self.get_enhancement_object(y, user)
+                    if eur:
+                        # json_str = JSONRenderer().render(json_data)  # render to bytes with utf-8 encoding
+                        # raw_data = zlib.compress(json_str)
+                        customer_program = UniversityCustomerProgram.objects.get(object_id=y)
+                        e_obj = EnhancementReportsRepo.objects.create(er_customer_program=customer_program,
+                                                                      er_enhancement_report=eur.existing_report,
+                                                                      er_created=time_now,
+                                                                      er_share_relation=relation_ship)
 
-                    for i in range(1, length + 1):
-                        program = "p" + (str(i) if i > 1 else "")
-                        curriculum = "c" + (str(i) if i > 1 else "")
-                        tuition = "t" + (str(i) if i > 1 else "")
-                        deadline = "d" + (str(i) if i > 1 else "")
-                        requirement = "r" + (str(i) if i > 1 else "")
-                        required_exam = "ex" + (str(i) if i > 1 else "")
-                        intl_transcript = "Intl_transcript" + (str(i) if i > 1 else "")
-                        intl_eng_test = "Intl_eng_test" + (str(i) if i > 1 else "")
-                        scholarship = "s" + (str(i) if i > 1 else "")
-                        duration = "dura" + (str(i) if i > 1 else "")
-                        empty = None
-                        try:
-                            p_value = total_program[i - 1]
-                        except Program.DoesNotExist:
-                            return HttpResponse(status=Http404)
-
-                        try:
-                            c_value = Curriculum.objects.get(program=total_program[i - 1], )
-                        except ObjectDoesNotExist:
-                            c_value = empty
-                        try:
-                            t_value = Tuition.objects.get(program=total_program[i - 1], )
-                        except ObjectDoesNotExist:
-                            t_value = empty
-                        try:
-                            d_value = Deadline.objects.get(program=total_program[i - 1], )
-                        except ObjectDoesNotExist:
-                            d_value = empty
-                        try:
-                            dura_value = Duration.objects.get(program=total_program[i - 1])
-                        except Duration.DoesNotExist:
-                            dura_value = "empty"
-                        try:
-                            r_value = Requirement.objects.get(program=total_program[i - 1], )
-                        except ObjectDoesNotExist:
-                            r_value = empty
-                        try:
-                            s_value = Scholarship.objects.get(program=total_program[i - 1], )
-                        except ObjectDoesNotExist:
-                            s_value = empty
-
-                        if r_value:
-                            r_e_value = r_value.exam.all()  # get django queryset
-                            i_value = r_value.intl_transcript.all()
-                            i_e_t_value = r_value.intl_english_test.all()
-                        else:
-                            r_e_value = empty
-                            i_value = empty
-                            i_e_t_value = empty
-
-                        # convert db instance to serializer
-                        p_value = dbLizer.ProgramSerializer(p_value)
-                        c_value = dbLizer.CurriculumSerializer(c_value)
-                        t_value = dbLizer.TuitionSerializer(t_value)
-                        d_value = dbLizer.DeadlineSerializer(d_value)
-                        r_value = dbLizer.RequirementSerializer(r_value)
-
-                        r_e_value = dbLizer.ExamSerializer(r_e_value, many=True)
-                        i_value = dbLizer.TranscriptEvaluationProviderSerializer(i_value, many=True)
-                        i_e_t_value = dbLizer.InternationalEnglishTestSerializer(i_e_t_value, many=True)
-                        s_value = dbLizer.ScholarshipSerializer(s_value)
-                        dura_value = dbLizer.DurationSerializer(dura_value)
-
-                        json_data[program] = p_value.data  # return unordered map if empty would be a empty list
-                        json_data[curriculum] = c_value.data
-                        json_data[tuition] = t_value.data
-                        json_data[deadline] = d_value.data
-                        json_data[requirement] = r_value.data
-                        json_data[required_exam] = r_e_value.data
-                        json_data[intl_transcript] = i_value.data
-                        json_data[intl_eng_test] = i_e_t_value.data
-                        json_data[scholarship] = s_value.data
-                        json_data[duration] = dura_value.data
-
-                    json_data["length"] = length
-
-                    json_str = JSONRenderer().render(json_data)  # render to bytes with utf-8 encoding
-                    raw_data = zlib.compress(json_str)
-                    customer_program = UniversityCustomerProgram.objects.get(object_id=y)
-                    e_obj = EnhancementReportsRepo.objects.create(er_customer_program=customer_program,
-                                                                  er_enhancement_report=raw_data,
-                                                                  er_created=time_now,
-                                                                  er_share_relation=relation_ship)
-                    e_obj.save()
+                        e_obj.save()
 
             res = {'{0}/{1}'.format(relation_ship.object_id, relation_ship.access_token)}
             return Response(res)
@@ -834,7 +743,7 @@ class AccountManager(APIView):
             return Response({"Failed": _("Pleas login first!")}, status=HTTP_403_FORBIDDEN)
 
 
-#Client CRUD
+# Client CRUD
 class ClientCRUD(APIView):
     def check_manager_permission(self, request, object_id):
         try:
@@ -955,7 +864,7 @@ class ClientCRUD(APIView):
                 phone=self.request.data['phone'],
                 service_until=main_user.service_until,
                 )
-            #client.save()
+
         else:
             university_school = UniversitySchool.objects.get(object_id=self.request.data['ceeb'])
             client = UniversityCustomer.objects.filter(id=self.request.data['client_id'])
@@ -974,7 +883,6 @@ class ClientCRUD(APIView):
                 phone=self.request.data['phone'],
                 service_until=self.request.data['service_until'],
                 )
-            #client.save()
 
         client[:1].get().competing_schools.clear()
         for cp in self.request.data['competing_schools']:
@@ -991,7 +899,7 @@ class ClientCRUD(APIView):
             client.is_active = False
             client.save()
             return Response({"Success": _("User deleted!")}, status=HTTP_204_NO_CONTENT)
-        except UniversityCustomer.DoesNotExists:
+        except UniversityCustomer.DoesNotExist:
             return Response({"Failed": _("User doesn't exists!")}, status=HTTP_403_FORBIDDEN)
 
 
@@ -1004,7 +912,7 @@ class UniversityCustomerProgramCRUD(APIView):
             return False
 
     def get(self, request, object_id):
-        perm = self.is_manager()
+        perm = self.is_manager(request)
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
@@ -1037,7 +945,7 @@ class UniversityCustomerProgramCRUD(APIView):
                     whoops_status=p.get('whoops_status'),
                     whoops_final_release=p.get('whoops_final_release'),
                     enhancement_final_release=p.get('enhancement_final_release'),
-                    customer_confirmation= 'No',
+                    customer_confirmation='No',
                     )
                 customer_program.save()
                 # create competing program of each customer program for main user
@@ -1056,18 +964,20 @@ class UniversityCustomerProgramCRUD(APIView):
                         new_cp.save()
             return Response({"success": _(" User programs has been created.")}, status=HTTP_201_CREATED)
 
-    def put(self,request):
+    def put(self, request):
         perm = self.is_manager(request)
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         client = UniversityCustomer.objects.get(id=request.data['client_id'])
         if client.account_type == 'sub':
-            sub_program_list = self.request.data['sub_client_program'].split('/')
-            for cp in sub_program_list:
-                ClientAndProgramRelation.objects.create(
-                    client=client,
-                    client_program=cp,
-                ).save()
+            print(request.data['sub_client_program'])
+            if request.data['sub_client_program']:
+                sub_program_list = self.request.data['sub_client_program'].split('/')
+                for cp in sub_program_list:
+                    ClientAndProgramRelation.objects.create(
+                        client=client,
+                        client_program=cp,
+                    ).save()
             return Response({"success": _("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
         else:
             for p in self.request.data['selected_customer_program']:
@@ -1081,7 +991,7 @@ class UniversityCustomerProgramCRUD(APIView):
                     enhancement_final_release=p.get('enhancement_final_release'),
                     customer_confirmation=p.get('customer_confirmation'),
                 )
-                #customer_program.save()
+                # customer_program.save()
             return Response({"success": _("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
 
     def delete(self, request):
@@ -1224,7 +1134,7 @@ class DepartmentAPI(APIView):
 class CustomerAndCompetingProgramAPI(generics.ListAPIView):
     serializer_class = CustomerAndCompetingProgramSerializer
     permission_classes = ((IsAuthenticated,))
-    #pagination_class = CustomerPageNumberPagination
+    # pagination_class = CustomerPageNumberPagination
 
     def is_manager(self, request):
         try:   
@@ -1247,9 +1157,7 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
 
             if department:
                 if department == 'Others':
-                    #query_list = query_list.exclude(Q(department__isnull=False))
                     query_list = query_list.filter(department="")
-                    print (query_list)
                 else:
                     query_list = query_list.filter(
                         Q(department=department)
@@ -1281,40 +1189,40 @@ class WhoopsWebReports(APIView):
                 ClientAndProgramRelation.objects.get(client=user, client_program=object_id)
                 UniversityCustomerProgram.objects.get(object_id=object_id, customer=user.main_user_id,
                                                       whoops_final_release='True')
-                return True
+                return user
             except ObjectDoesNotExist:
                 return False
         else:
             try:
                 UniversityCustomerProgram.objects.get(object_id=object_id, customer=user,
                                                       whoops_final_release='True')
-                return True
+                return user
             except UniversityCustomerProgram.DoesNotExist:
                 return False
 
-    def get_object(self, object_id):
-        program_id = UniversityCustomerProgram.objects.get(object_id=object_id)
-        program = Program.objects.get(object_id=program_id.program.object_id)
-        ean = program.expertadditionalnote_set.all()
-        return ean, program
+    def get_object(self, object_id, client):
+
+        wur = WhoopsUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
+        if wur.existing_report:
+            existing_report = JSONParser().parse(BytesIO(zlib.decompress(wur.existing_report)))
+        else:
+            existing_report = "None"
+        if wur.update_diff:
+            update_diff = JSONParser().parse(BytesIO(zlib.decompress(wur.update_diff)))
+            print(update_diff)
+        else:
+            update_diff = "None"
+        context = {'existing_report': existing_report, 'update_diff': update_diff}
+        return context
 
     def get(self, request, object_id, client_id=None):
-        perm = self.check_permission(request, object_id, client_id)
-        if perm:
-            ean, program = self.get_object(object_id)
-            if not len(ean) == 0:
-                info = {'university': program.university_school.university_foreign_key.name,
-                        'school': program.university_school.school,
-                        'program': program.program_name, 'degree': program.degree.name}
-                res = dbLizer.ExpertAdditionalNoteSerializer(ean, many=True)
-                arr = res.data
-                arr.append(info)            
-                return Response(arr, status=HTTP_200_OK)
-            else:
-                return HttpResponse(status =HTTP_204_NO_CONTENT)
+        user = self.check_permission(request, object_id, client_id)
+        if user:
+            context = self.get_object(object_id, user)
+            return Response(context, status=HTTP_200_OK)
 
         else:
-            return Response({"Failed": _("Permission denied!")},status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": _("Permission denied!")}, status=HTTP_403_FORBIDDEN)
 
 
 class EnhancementWebReports(APIView):
@@ -1325,6 +1233,7 @@ class EnhancementWebReports(APIView):
         except UniversityCustomer.DoesNotExist:
             try:
                 manager = UpgridAccountManager.objects.get(id=request.user.id)
+                print(123)
                 try:
                     user = UniversityCustomer.objects.get(id=client_id, account_manager=manager)
                     return user
@@ -1355,103 +1264,734 @@ class EnhancementWebReports(APIView):
             except UniversityCustomerProgram.DoesNotExist:
                 return False
 
-    def get_object(self, object_id):
+    def get_object(self, object_id, client):
+        eur = EnhancementUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
+        if eur.existing_report:
+            existing_report = JSONParser().parse(BytesIO(zlib.decompress(eur.existing_report)))
+        else:
+            existing_report = "None"
+        if eur.update_diff:
+            update_diff = JSONParser().parse(BytesIO(zlib.decompress(eur.update_diff)))
+            print(update_diff)
+        else:
+            update_diff = "None"
+        context = {'existing_report': existing_report, 'update_diff': update_diff}
+        return context
+
+    def get(self, request, object_id, client_id=None):
+        perm = self.check_permission(request, object_id, client_id)
+        if perm:
+            user = self.get_user(request, client_id)
+            context = self.get_object(object_id, user)
+            return Response(context, status=HTTP_200_OK)
+
+        else:
+            return Response({"Failed": _("Permission denied!")}, status=HTTP_403_FORBIDDEN)
+
+
+class WhoopsReportsUpdateAPI(APIView):
+
+    def is_manager(self, request):
+        try:
+            UpgridAccountManager.objects.get(id=request.user.id)
+            return True
+        except UpgridAccountManager.DoesNotExist:
+            return False
+
+    def get_object(self, request, customer_program):
+        if customer_program is None:
+            program_id = UniversityCustomerProgram.objects.get(object_id=request.data['customer_program_id'])
+        else:
+            program_id = customer_program
+        program = Program.objects.get(object_id=program_id.program.object_id)
+        ean = program.expertadditionalnote_set.all()
+        return ean, program
+
+    def get_programs_data(self, request, customer_program=None):
+        perm = self.is_manager(request)
+        if not perm:
+            return Response({"Failed": _("Permission denied!")}, status=HTTP_403_FORBIDDEN)
+        else:
+            ean, program = self.get_object(request, customer_program)
+
+            # print(ean[0]._meta.get_fields())
+            # print (model_to_dict(ean[0]))
+            if not len(ean) == 0:
+                json_data = {
+                    'dead_link': None, 'typo': None, 'outdated_information': None,
+                    'data_discrepancy': None, 'sidebars': None,
+                    'infinite_loop': None, 'floating_page': None,
+                    'confusing': None, 'other_expert_note': None
+                }
+                query_fields = ('additional_note_type', 'additional_note_url',
+                                'additional_note_url2', 'additional_note_url3', 'additional_note')
+                # database data=>json string stored in json_data dict
+                print("#####eam type####", type(ean))
+                for k, v in json_data.items():
+                    query_set = ean.filter(additional_note_type=k)
+                    json_data[k] = serialize("json", query_set, fields=query_fields)
+                # json_data=>python dict
+                obj_data = json_data
+                for k, v in obj_data.items():  # you can print it to see its structure
+                    record = loads(v)
+                    new_list = []
+                    for field_dict_idx in range(len(record)):
+                        new_list.append(
+                            record[field_dict_idx].get('fields'))  # if get failed, None value would be return
+                    obj_data[k] = new_list
+                return obj_data
+            else:
+                return None
+
+    @classmethod
+    def compare_whoops_report(cls, a, b):
+        """a is old report, b is new report"""
+
+        def compare(a, b):
+            diff = {}
+            old_diff = {}
+            new_diff = {}
+            diff["old"] = old_diff
+            diff["new"] = new_diff
+            if not a or not b:
+                return None
+            if len(a) == len(b) and len(a) == 0:
+                return None
+            if isinstance(a, dict) and isinstance(b, dict):
+                for k, v in a.items():
+                    if not b.get(k):
+                        old_diff[k] = v
+                        new_diff[k] = None
+                    elif v != b[k]:
+                        old_diff[k] = v
+                        new_diff[k] = b[k]
+                for k, v in b.items():
+                    if not a.get(k):
+                        old_diff[k] = None
+                        new_diff[k] = v
+                for k, v in a.items():
+                    if (not v or len(v) == 0) and (not b.get(k) or len(b.get(k)) == 0):
+                        del old_diff[k]
+                        del new_diff[k]
+
+                return diff
+
+        res_dict = compare(a, b)
+        if res_dict:
+            for _, v in res_dict.items():
+                if len(v) != 0:
+                    return res_dict
+        else:
+            return None  # return None if no difference
+
+    def whoops_compare_process(self, wru, raw_new_whoops_report, new_whoops_report_dict):
+        if raw_new_whoops_report is None and new_whoops_report_dict is None:
+            wru.existing_report = None
+            wru.save()
+        else:
+            if wru.existing_report is None and wru.cache_report is None:  # For the very first WhoopsUpdate object
+                wru.existing_report = raw_new_whoops_report  # raw binary data
+            elif wru.cache_report is None:
+                binary_data = zlib.decompress(wru.existing_report)
+                whoops_json_string = BytesIO(binary_data)
+                existing_report_dict = JSONParser().parse(whoops_json_string)
+                diff = WhoopsReportsUpdateAPI.compare_whoops_report(existing_report_dict, new_whoops_report_dict)
+
+                if diff:
+                    diff = zlib.compress(JSONRenderer().render(diff))
+                    wru.initial_diff = diff
+            else:
+                binary_data = zlib.decompress(wru.cache_report)
+                whoops_json_string = BytesIO(binary_data)
+                cache_report_dict = JSONParser().parse(whoops_json_string)
+                diff = WhoopsReportsUpdateAPI.compare_whoops_report(cache_report_dict, new_whoops_report_dict)
+                if diff:
+                    diff = zlib.compress(JSONRenderer().render(diff))
+                    wru.initial_diff = diff
+            wru.save()
+
+    def whoops_schedule_compare(self, request):
+        """call this method each day at 04:00 or any other time, update WhoopsReports each day for all users"""
+        customer_program_id = request.POST.get('customer_program_id', 0)
+        print(customer_program_id)
+        if customer_program_id != 0:  # Account Manager on demand compare
+            # print(request.user.id)
+            # print(UniversityCustomer.objects.get(id=request.user.id))
+            print(1234567)
+            customer_program = UniversityCustomerProgram.objects.get(object_id=request.data['customer_program_id'])
+            wru, created = WhoopsUpdate.objects.get_or_create(customer_program=customer_program,
+                                                              customer=UniversityCustomer.objects.
+                                                              get(id=request.data['client_id']), most_recent=True)
+            # customer = UniversityCustomer.objects.get(id=request.user.id)
+            new_whoops_report_dict = self.get_programs_data(request)  # dict
+            if new_whoops_report_dict is not None:
+                json_str = JSONRenderer().render(new_whoops_report_dict)  # render to bytes with utf-8 encoding
+                raw_new_whoops_report = zlib.compress(json_str)
+            else:
+                raw_new_whoops_report = None
+            self.whoops_compare_process(wru, raw_new_whoops_report, new_whoops_report_dict)
+        else:
+            users = UniversityCustomer.objects.filter(account_type='main')
+            print(12356)
+            for user in users:
+                print(user)
+                # login_time = user.last_login_time # get latest login time
+                customer_whoops_programs = UniversityCustomerProgram.objects.all().\
+                    filter(customer=user, whoops_final_release='True')
+                for customer_program in customer_whoops_programs:
+                    eru, created = WhoopsUpdate.objects.get_or_create(customer_program=customer_program,
+                                                                      customer=user, most_recent=True)
+                    print('second test')
+                    new_whoops_report_dict = self.get_programs_data(request,customer_program)
+                    if new_whoops_report_dict is not None:
+                        json_str = JSONRenderer().render(new_whoops_report_dict)  # render to bytes with utf-8 encoding
+                        raw_new_whoops_report = zlib.compress(json_str)
+                        self.whoops_compare_process(eru, raw_new_whoops_report, new_whoops_report_dict)
+
+    def put(self, request):
+        if not self.is_manager(request):
+            raise Http404("Permission denied!")
+        else:
+            self.whoops_schedule_compare(request)
+            # p = WhoopsUpdate.objects.get(customer_program=request.data['customer_program_id'], most_recent=True)
+            # # print(p.initial_diff)
+            # if p.initial_diff is None:
+
+            #     print(p.initial_diff)
+            # else:
+            #     json_string = zlib.decompress(p.initial_diff)
+            #     json_string = BytesIO(json_string)
+            #     res = JSONParser().parse(json_string)
+        return Response("Ok", HTTP_200_OK)
+
+
+class ManagerWhoopsDiffConfirmation(APIView):
+    def is_manager(self, request):
+        try:
+            UpgridAccountManager.objects.get(id=request.user.id)
+            return True
+        except UpgridAccountManager.DoesNotExist:
+            return False
+
+    def get(self, request, customer_program_id, client_id):
+        """
+        Get Initial Whoops diff and report for a customer program.
+        """
+        perm = self.is_manager(request)
+        if not perm:
+            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        update_report = WhoopsUpdate.objects.get(customer=client_id, customer_program=customer_program_id, most_recent=True)
+        if update_report.initial_diff is not None:
+            initial_diff = zlib.decompress(update_report.initial_diff)
+            initial_diff = BytesIO(initial_diff)
+            initial_diff = JSONParser().parse(initial_diff)
+        else:
+            initial_diff = None
+        if update_report.existing_report is not None:
+            existing_report = zlib.decompress(update_report.existing_report)
+            existing_report = BytesIO(existing_report)
+            existing_report = JSONParser().parse(existing_report)
+        else:
+            existing_report = None
+        result = {"initial_diff": initial_diff, "existing_report": existing_report}
+        return Response(result, HTTP_200_OK)
+
+    def put(self, request):
+        perm = self.is_manager(request)
+        if not perm:
+            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        wru = WhoopsUpdate.objects.get(customer_program=request.data['customer_program_id'],
+                                       most_recent=True)
+        wru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
+
+        update_diff = WhoopsReportsUpdateAPI.\
+            compare_whoops_report(JSONParser().parse(BytesIO(zlib.decompress(wru.existing_report))),
+                                       request.data['cache_report'])
+        wru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
+        wru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
+        wru.save()
+
+        return Response({"success": _("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
+
+
+class ClientViewWhoopsUpdate(APIView):
+    def get_user(self, request, object_id, client_id):
+        try:
+            UpgridAccountManager.objects.get(id=request.user.id)
+            user = UniversityCustomer.objects.get(id=client_id)
+        except UpgridAccountManager.DoesNotExist:
+            try:
+                user = UniversityCustomer.objects.get(id=request.user.id)
+            except UniversityCustomer.DoesNotExist:
+                return False
+        if user.account_type == 'sub':
+            try:
+                ClientAndProgramRelation.objects.get(client=user, client_program=object_id)
+                return UniversityCustomer.objects.get(id=user.main_user_id)
+            except ClientAndProgramRelation.DoesNotExist:
+                return False
+        return user
+
+    def get(self, request, object_id=None, client_id=None):
+        user = self.get_user(request, object_id, client_id)
+        cust_pro = UniversityCustomerProgram.objects.get(object_id=object_id)
+        if not user:
+            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        try:
+            update_report = WhoopsUpdate.objects.get(customer_program=object_id, customer=user, most_recent=True)
+        except WhoopsUpdate.DoesNotExist:
+            return Response({"failed": _("No WhoopsReportsViewUpdate matches the given query.")},
+                            status=HTTP_403_FORBIDDEN)
+        if update_report.cache_report and not client_id:
+            update_report.existing_report = update_report.cache_report
+            update_report.most_recent = False
+            update_report.save()
+            new_wru = WhoopsUpdate.objects.create(
+                customer_program=cust_pro,
+                customer=user,
+                most_recent=True,
+                existing_report=update_report.existing_report,)
+            new_wru.save()
+        # print(update_report.existing_report)
+        if update_report.existing_report:
+            existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
+        else:
+            existing_report = "None"
+        if update_report.update_diff:
+            update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
+            print(update_diff)
+        else:
+            update_diff = "None"
+
+        # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
+        context = {'existing_report': existing_report, 'update_diff': update_diff,
+                   'university': cust_pro.program.university_school.university_foreign_key.name,
+                   'school': cust_pro.program.university_school.school,
+                   'program': cust_pro.program.program_name, 'degree': cust_pro.program.degree.name}
+        return Response(context, HTTP_200_OK)
+
+
+class EnhancementReportsUpdateAPI(APIView):
+    def get_user(self, request):
+        try:
+            return UniversityCustomer.objects.get(id=self.request.user.id, account_type='main')
+        except UniversityCustomer.DoesNotExist:
+            return False
+
+    def is_manager(self, request):
+        try:
+            UpgridAccountManager.objects.get(id=request.user.id)
+            return True
+        except UpgridAccountManager.DoesNotExist:
+            return False
+
+    def get_programs(self, customer_program_id):
+        """
+        get customer program and competing Program
+           return: object list
+        """
         program_list = []
-        customer_program = UniversityCustomerProgram.objects.select_related('program').get(object_id=object_id)
+        customer_program = UniversityCustomerProgram.objects.select_related('program').get(object_id=customer_program_id)
         self_program = Program.objects.get(object_id=customer_program.program.object_id)
         program_list.append(self_program)
-        competing_program = customer_program.customercompetingprogram_set.all().select_related('program')\
-            .order_by('order')
-        for cp in competing_program:
+        competing_programs = customer_program.customercompetingprogram_set.all().select_related('program').order_by(
+            'order')
+        for cp in competing_programs:
             program = Program.objects.get(object_id=cp.program.object_id)
             program_list.append(program)
         return program_list
 
-    def get(self, request, object_id, client_id=None):
-        perm = self.check_permission(request, object_id, client_id)
+    def get_programs_data(self, object_id):
+        """
+        get customer program and competing program
+           return: dictionary
+        """
+        total_program = self.get_programs(object_id)
+        length = len(total_program)
+        res_obj = {}
+        for i in range(1, length + 1):
+            program = "p" + (str(i) if i > 1 else "")
+            curriculum = "c" + (str(i) if i > 1 else "")
+            tuition = "t" + (str(i) if i > 1 else "")
+            deadline = "d" + (str(i) if i > 1 else "")
+            requirement = "r" + (str(i) if i > 1 else "")
+            required_exam = "ex" + (str(i) if i > 1 else "")
+            intl_transcript = "Intl_transcript" + (str(i) if i > 1 else "")
+            intl_eng_test = "Intl_eng_test" + (str(i) if i > 1 else "")
+            scholarship = "s" + (str(i) if i > 1 else "")
+            duration = "dura" + (str(i) if i > 1 else "")
 
-        if perm:
-            total_program = self.get_object(object_id)
+            empty = None
+            try:
+                p_value = total_program[i - 1]
+            except Program.DoesNotExist:
+                return HttpResponse(status=Http404)
 
-            length = len(total_program)
-            res_obj = {}
-            for i in range(1, length+1):
-                program = "p" + (str(i) if i > 1 else "")
-                curriculum = "c" + (str(i) if i > 1 else "")
-                tuition = "t" + (str(i) if i > 1 else "")
-                deadline = "d" + (str(i) if i > 1 else "")
-                requirement = "r" + (str(i) if i > 1 else "")
-                required_exam = "ex" + (str(i) if i > 1 else "")
-                intl_transcript = "Intl_transcript" + (str(i) if i > 1 else "")
-                intl_eng_test = "Intl_eng_test" + (str(i) if i > 1 else "")
-                scholarship = "s" + (str(i) if i > 1 else "")
-                duration = "dura" + (str(i) if i > 1 else "")
-                empty = None
-                p_value = total_program[i-1]
-                try:
-                    c_value = Curriculum.objects.get(program=total_program[i-1])
-                except Curriculum.DoesNotExist:
-                    c_value = empty
+            try:
+                c_value = Curriculum.objects.get(program=total_program[i - 1], )
+            except ObjectDoesNotExist:
+                c_value = empty
+            try:
+                t_value = Tuition.objects.get(program=total_program[i - 1], )
+            except ObjectDoesNotExist:
+                t_value = empty
+            try:
+                d_value = Deadline.objects.get(program=total_program[i - 1], )
+            except ObjectDoesNotExist:
+                d_value = empty
+            try:
+                dura_value = Duration.objects.get(program=total_program[i - 1])
+            except Duration.DoesNotExist:
+                dura_value = empty
+            try:
+                r_value = Requirement.objects.get(program=total_program[i - 1], )
+            except ObjectDoesNotExist:
+                r_value = empty
+            try:
+                s_value = Scholarship.objects.get(program=total_program[i - 1], )
+            except ObjectDoesNotExist:
+                s_value = empty
 
-                try:
-                    t_value = Tuition.objects.get(program=total_program[i-1])
-                except Tuition.DoesNotExist:
-                    t_value = empty
+            if r_value:
+                r_e_value = r_value.exam.all()  # get django queryset
+                i_value = r_value.intl_transcript.all()
+                i_e_t_value = r_value.intl_english_test.all()
+            else:
+                r_e_value = empty
+                i_value = empty
+                i_e_t_value = empty
 
-                try:    
-                    d_value = Deadline.objects.get(program=total_program[i-1])
-                except Deadline.DoesNotExist:
-                    d_value = empty
+            # convert db instance to serializer
+            p_value = dbLizer.ProgramSerializer(p_value)
+            c_value = dbLizer.CurriculumSerializer(c_value)
+            t_value = dbLizer.TuitionSerializer(t_value)
+            d_value = dbLizer.DeadlineSerializer(d_value)
+            r_value = dbLizer.RequirementSerializer(r_value)
 
-                try:
-                    r_value = Requirement.objects.get(program=total_program[i-1])
-                except Requirement.DoesNotExist:
-                    r_value = empty
+            r_e_value = dbLizer.ExamSerializer(r_e_value, many=True)
+            i_value = dbLizer.TranscriptEvaluationProviderSerializer(i_value, many=True)
+            i_e_t_value = dbLizer.InternationalEnglishTestSerializer(i_e_t_value, many=True)
+            s_value = dbLizer.ScholarshipSerializer(s_value)
+            dura_value = dbLizer.DurationSerializer(dura_value)
 
-                try:    
-                    dura_value = Duration.objects.get(program=total_program[i-1])
-                except Duration.DoesNotExist:
-                    dura_value = empty
+            res_obj[program] = p_value.data  # return unordered map if empty would be a empty list
+            res_obj[curriculum] = c_value.data
+            res_obj[tuition] = t_value.data
+            res_obj[deadline] = d_value.data
+            res_obj[requirement] = r_value.data
+            res_obj[required_exam] = r_e_value.data
+            res_obj[intl_transcript] = i_value.data
+            res_obj[intl_eng_test] = i_e_t_value.data
+            res_obj[scholarship] = s_value.data
+            res_obj[duration] = dura_value.data
 
-                if r_value:
-                    r_e_value = r_value.exam.all()  # get django queryset
-                    i_value = r_value.intl_transcript.all()
-                    i_e_t_value = r_value.intl_english_test.all()
-                else:
-                    r_e_value = empty
-                    i_value = empty
-                    i_e_t_value = empty
+        res_obj["length"] = length
 
-                try:
-                    s_value = Scholarship.objects.get(program=total_program[i-1])
-                except Scholarship.DoesNotExist:
-                    s_value = empty
+        return res_obj
 
-                p_value = dbLizer.ProgramSerializer(p_value)
-                c_value = dbLizer.CurriculumSerializer(c_value)
-                t_value = dbLizer.TuitionSerializer(t_value)
-                d_value = dbLizer.DeadlineSerializer(d_value)
-                r_value = dbLizer.RequirementSerializer(r_value)
-                
-                r_e_value = dbLizer.ExamSerializer(r_e_value, many=True)
-                i_value = dbLizer.TranscriptEvaluationProviderSerializer(i_value, many=True)
-                i_e_t_value = dbLizer.InternationalEnglishTestSerializer(i_e_t_value, many=True)
-                s_value = dbLizer.ScholarshipSerializer(s_value)
-                dura_value = dbLizer.DurationSerializer(dura_value)
+    @classmethod
+    def compare_enhancement_report(cls, a, b):
+        fk_list = ['ex', 'ex2', 'ex3', 'ex4', 'ex5',  # top level list in format of [{name,date}]
+                   'Intl_eng_test', 'Intl_eng_test2', 'Intl_eng_test3', 'Intl_eng_test4', 'Intl_eng_test5',
+                   # top level list
+                   'Intl_transcript', 'Intl_transcript2', 'Intl_transcript3', 'Intl_transcript4', 'Intl_transcript5',
+                   # top level list
+                   ]
+        fk_dict = ['curriculum_unit',  # second level dict{name,date} in c,c2,c3,c4,c5
+                   'degree',  # second level dict in format of {name,date} in p, p2,p3,p4,p5
+                   'tuition_unit',  # second level dict{name,date} in t,t2,t3,t4,t5
+                   'university_school',  # second level dict{university,school,date} in p,p2,p3,p4,p5
+                   ]
+        ignore = ['date_modified']
 
-                res_obj[program] = p_value.data
-                res_obj[curriculum] = c_value.data
-                res_obj[tuition] = t_value.data
-                res_obj[deadline] = d_value.data
-                res_obj[requirement] = r_value.data
-                res_obj[required_exam] = r_e_value.data
-                res_obj[intl_transcript] = i_value.data
-                res_obj[intl_eng_test] = i_e_t_value.data
-                res_obj[scholarship] = s_value.data
-                res_obj[duration] = dura_value.data
+        def compare(a, b):
+            diff = {}
+            new_diff = {}
+            old_diff = {}
+            diff["new"] = new_diff
+            diff["old"] = old_diff
+            # base case
+            # if not a or not b:
+            #     return None
+            if isinstance(a, dict) and isinstance(b, dict):
+                for k, v in a.items():  # top level
+                    v_of_b = b[k]
+                    # 3 list
+                    if (k in fk_list) and (v != v_of_b):  # if top is in fk_list, all 3 list handled here
+                        new_diff[k] = v_of_b  # top level
+                        old_diff[k] = v
+                    # dictionary
+                    elif isinstance(v, dict):  # if top is dict
+                        new_diff[k] = {}
+                        old_diff[k] = {}
+                        for k2, v2 in v.items():
+                            if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
+                                new_diff[k][k2] = v_of_b[k2]
+                                old_diff[k][k2] = v[k2]
+                        if len(new_diff[k]) == 0 and len(old_diff[k]) == 0:
+                            new_diff.pop(k, None)
+                            old_diff.pop(k, None)
+                    # other list and simple <key,value> pair
+                    else:
+                        if v != b[k]:
+                            new_diff[k] = v_of_b
+                            old_diff[k] = v
+                return diff
 
-            res_obj["length"] = length
-            
-            return Response(res_obj, status=HTTP_200_OK)
+        res_dict = compare(a, b)
+        if res_dict:
+            for _, v in res_dict.items():
+                if len(v) != 0:
+                    return res_dict
         else:
-            return Response({"Failed": _("Permission denied!")}, status=HTTP_403_FORBIDDEN)
+            return None  # return None if no difference
+
+    def compare_enhancement_process(self, eru, raw_new_enhancement_report, new_enhancement_report_dict):
+        if eru.existing_report is None and eru.cache_report is None:  # For the very first EnhancementUpdate object
+            eru.existing_report = raw_new_enhancement_report  # raw binary data
+        elif eru.cache_report is None:
+            binary_data = zlib.decompress(eru.existing_report)
+            enhancement_json_string = BytesIO(binary_data)
+            existing_report_dict = JSONParser().parse(enhancement_json_string)
+            diff = EnhancementReportsUpdateAPI.compare_enhancement_report(existing_report_dict,
+                                                                          new_enhancement_report_dict)
+
+            if diff:
+                diff = zlib.compress(JSONRenderer().render(diff))
+                eru.initial_diff = diff
+        else:
+            binary_data = zlib.decompress(eru.cache_report)
+            enhancement_json_string = BytesIO(binary_data)
+            cache_report_dict = JSONParser().parse(enhancement_json_string)
+            diff = EnhancementReportsUpdateAPI.compare_enhancement_report(cache_report_dict,
+                                                                          new_enhancement_report_dict)
+            if diff:
+                diff = zlib.compress(JSONRenderer().render(diff))
+                eru.initial_diff = diff
+        eru.save()
+
+    def enhancement_schedule_compare(self, request):
+        """call this method each day at 04:00 or any other time, update EnhancementReports each day for all users"""
+
+        university_customer_program = request.POST.get('customer_program_id', 0)
+        if university_customer_program != 0:  # Account Manager on demand compare
+            # print(request.user.id)
+            # print(UniversityCustomer.objects.get(id=request.user.id))
+            customer_program = UniversityCustomerProgram.objects.get(object_id=university_customer_program)
+            eru, created = EnhancementUpdate.objects.get_or_create(customer_program=customer_program,
+                                                                   customer=UniversityCustomer.objects.
+                                                                   get(id=request.data['client_id']), most_recent=True)
+            # customer = UniversityCustomer.objects.get(id=request.user.id)
+            new_enhancement_report_dict = self.get_programs_data(university_customer_program)  # dict
+            json_str = JSONRenderer().render(new_enhancement_report_dict)  # render to bytes with utf-8 encoding
+            raw_new_enhancement_report = zlib.compress(json_str)
+            self.compare_enhancement_process(eru, raw_new_enhancement_report, new_enhancement_report_dict)
+        else:
+            users = UniversityCustomer.objects.filter(account_type='main')
+            for user in users:
+                print("enhancement:")
+                print(user)
+                # login_time = user.last_login_time # get latest login time
+                customer_enhancement_programs = UniversityCustomerProgram.objects.all().\
+                    filter(customer=user, enhancement_final_release='True', customer_confirmation='Yes')
+                for customer_program in customer_enhancement_programs:
+                    eru, created = EnhancementUpdate.objects.get_or_create(customer_program=customer_program,
+                                                                           customer=user, most_recent=True)
+                    new_enhancement_report_dict = self.get_programs_data(customer_program.object_id)
+                    json_str = JSONRenderer().render(new_enhancement_report_dict)  # render to bytes with utf-8 encoding
+                    raw_new_enhancement_report = zlib.compress(json_str)
+                    self.compare_enhancement_process(eru, raw_new_enhancement_report, new_enhancement_report_dict)
+
+    def put(self, request):
+        if not self.is_manager(request):
+            raise Http404("Permission denied!")
+        else:
+            self.enhancement_schedule_compare(request)
+        return Response("Ok", HTTP_200_OK)
+
+
+class ManagerUpdateDashBoardAPI(APIView):
+    def is_manager(self, request):
+        try:
+            UpgridAccountManager.objects.get(id=request.user.id)
+            return True
+        except UpgridAccountManager.DoesNotExist:
+            return False
+
+    def get(self, request):
+        """
+        GET If Clients under a Account Manager has whoops or enhancement updates
+        """
+        perm = self.is_manager(request)
+        if not perm:
+            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        user = UpgridAccountManager.objects.get(id=request.user.id)
+        clients = UniversityCustomer.objects.filter(account_manager=user)
+        serializer = ManagerUpdateDashBoardSerializer(clients, many=True)
+        return Response(serializer.data, HTTP_200_OK)
+
+
+class ManagerUpdateProgramListAPI(APIView):
+    def is_manager(self, request):
+        try:
+            UpgridAccountManager.objects.get(id=request.user.id)
+            return True
+        except UpgridAccountManager.DoesNotExist:
+            return False
+
+    def get(self, request, client_id):
+        """
+        GET returns the University customer program list which has updates.
+        """
+        perm = self.is_manager(request)
+        if not perm:
+            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        client = UniversityCustomer.objects.get(id=client_id)
+        enhancement_programs_id = EnhancementUpdate.objects.filter(customer=client, most_recent=True)\
+            .exclude(initial_diff__isnull=True)
+        eur = ManagerEnhancementUpdateNumberSerializer(enhancement_programs_id, many=True)
+
+        whoops_programs_id = WhoopsUpdate.objects.filter(customer=client, most_recent=True)\
+            .exclude(initial_diff__isnull=True)
+        wur = ManagerWhoopsUpdateNumberSerializer(whoops_programs_id, many=True)
+
+        context = {"enhancement_update": eur.data, "whoops_update": wur.data}
+        return Response(context, status=HTTP_200_OK)
+
+
+class ManagerEnhancementDiffConfirmation(APIView):
+    def is_manager(self, request):
+        try:
+            UpgridAccountManager.objects.get(id=request.user.id)
+            return True
+        except UpgridAccountManager.DoesNotExist:
+            return False
+
+    def get(self, request, customer_program_id, client_id):
+        """
+        Get Initial diff and report for a customer program.
+        """
+        perm = self.is_manager(request)
+        # perm = True
+        if not perm:
+            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        update_report = EnhancementUpdate.objects.get(customer=client_id, customer_program=customer_program_id,
+                                                      most_recent=True)
+        if update_report.initial_diff is not None:
+            initial_diff = zlib.decompress(update_report.initial_diff)
+            initial_diff = BytesIO(initial_diff)
+            initial_diff = JSONParser().parse(initial_diff)
+        else:
+            initial_diff = None
+        if update_report.existing_report is not None:
+            existing_report = zlib.decompress(update_report.existing_report)
+            existing_report = BytesIO(existing_report)
+            existing_report = JSONParser().parse(existing_report)
+        else:
+            existing_report = None
+        result = {"initial_diff": initial_diff, "existing_report": existing_report}
+
+        return Response(result, HTTP_200_OK)
+
+    def put(self, request):
+        perm = self.is_manager(request)
+        if not perm:
+            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        eru = EnhancementUpdate.objects.get(customer_program=request.data['customer_program_id'],
+                                            customer=request.data['client_id'], most_recent=True)
+        eru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
+
+        update_diff = EnhancementReportsUpdateAPI.\
+            compare_enhancement_report(JSONParser().parse(BytesIO(zlib.decompress(eru.existing_report))),
+                                       request.data['cache_report'])
+        eru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
+        eru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
+        eru.save()
+
+        return Response({"success": _("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
+
+
+class ClientViewEnhancementUpdate(APIView):
+    def get_user(self, request, object_id, client_id):
+        try:
+            UpgridAccountManager.objects.get(id=request.user.id)
+            user = UniversityCustomer.objects.get(id=client_id)
+        except UpgridAccountManager.DoesNotExist:
+            try:
+                user = UniversityCustomer.objects.get(id=request.user.id)
+            except UniversityCustomer.DoesNotExist:
+                return False
+        if user.account_type == 'sub':
+            try:
+                ClientAndProgramRelation.objects.get(client=user, client_program=object_id)
+            except ClientAndProgramRelation.DoesNotExist:
+                return False
+        return user
+
+    def get(self, request, object_id=None, client_id=None):
+        user = self.get_user(request, object_id, client_id)
+        customer_program = UniversityCustomerProgram.objects.get(object_id=object_id)
+        print (1)
+        if not user:
+            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        try:
+            update_report = EnhancementUpdate.objects.get(customer_program=customer_program, customer=user,
+                                                          most_recent=True)
+        except EnhancementUpdate.DoesNotExist:
+            return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
+                            status=HTTP_403_FORBIDDEN)
+        if update_report.cache_report and not client_id:
+            print(2)
+            update_report.existing_report = update_report.cache_report
+            update_report.most_recent = False
+            update_report.save()
+            new_eru = EnhancementUpdate.objects.create(
+                customer_program=customer_program,
+                customer=user,
+                most_recent=True,
+                existing_report=update_report.existing_report,
+                last_edit_time=timezone.now())
+            new_eru.save()
+        # print(update_report.existing_report)
+        if update_report.existing_report:
+            existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
+        else:
+            existing_report = "None"
+        if update_report.update_diff:
+            update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
+            print('update')
+            print(update_diff)
+            print('diff')
+        else:
+            print(3)
+            update_diff = "None"
+
+        # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
+        context = {'existing_report': existing_report, 'update_diff': update_diff}
+        return Response(context, HTTP_200_OK)
+
+
+class SendEmail(APIView):
+    def send_update_email(self):
+        for user in UniversityCustomer.objects.filter(account_type='main'):
+            total_programs = ConfirmedUpdateEmailQueue.objects.filter(customer=user).values('confirmed_program')
+
+            if len(total_programs) != 0:
+                try:
+                    html_content = "Hello, %s! <br>You have several updated programs:</br> %s"
+                    message = EmailMessage(subject='New Update', body=html_content%(user.contact_name, total_programs),
+                                           to=user.email)
+                    message.content_subtype = 'html'
+                    message.send()
+                    ConfirmedUpdateEmailQueue.objects.filter(customer=user).delete()
+                except:
+                    continue
+            else:
+                continue
+        return HttpResponse(status=HTTP_200_OK)
+
+
+class GetID(APIView):
+    def get(self, request):
+        res = request.user.id
+        return Response(res)

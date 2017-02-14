@@ -103,4 +103,53 @@ urlpatterns=[
     url(r'api/upgrid/wwr/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.WhoopsWebReports.as_view()),
     url(r'api/upgrid/ewr/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.EnhancementWebReports.as_view()),
 
+    # --------------------------------Update API-----------------------------------------------
+    # PUT. used for account manager on-demand compare customer enhancementprogram.
+    # Param: object_id: university customer program id
+    url(r'api/upgrid/update/enhancement/ondemand/$', apis.EnhancementReportsUpdateAPI.
+        as_view()),
+    # PUT. used for account manager on-demand compare customer whoops program.
+    # Param: object_id: university customer program id
+    url(r'api/upgrid/update/whoops/ondemand/$', apis.WhoopsReportsUpdateAPI.
+        as_view()),
+
+    # Get. For Account Manager get initial_diff and existing_report of a customer enhancement program .
+    # Param: customer program id
+    url(r'api/upgrid/update/enhancement/diff_confirmation/(?P<customer_program_id>[0-9a-fA-F\-]+)/'
+        r'(?P<client_id>[0-9a-fA-F\-]+)/$', apis.ManagerEnhancementDiffConfirmation.as_view()),
+
+    # Get. For Account Manager get initial_diff and existing_report of a customer whoops program.
+    # Param: customer program id
+    url(r'api/upgrid/update/whoops/diff_confirmation/(?P<customer_program_id>[0-9a-fA-F\-]+)/'
+        r'(?P<client_id>[0-9a-fA-F\-]+)/$', apis.ManagerWhoopsDiffConfirmation.as_view()),
+
+    # Put. For Account Manager to confirm update_diff and exsiting_report of enhancement.
+    # Param in request: customer_program_id, cache_report, confirmed_diff.
+    url(r'api/upgrid/update/enhancement/diff_confirmation/$', apis.ManagerEnhancementDiffConfirmation.as_view()),
+
+    # Put. For Account Manager to confirm update_diff and exsiting_report of whoops.
+    # Param in request: customer_program_id, cache_report, confirmed_diff.
+    url(r'api/upgrid/update/whoops/diff_confirmation/$', apis.ManagerWhoopsDiffConfirmation.as_view()),
+
+    # Get. For Client to get enhancement existing report and update_diff. Param: customer program id
+    url(r'api/upgrid/update/view/enhancement/(?P<object_id>[0-9a-fA-F\-]+)/$',
+        apis.ClientViewEnhancementUpdate.as_view()),
+    # Get. For Account Manager to get enhancement existing report and update_diff.
+    url(r'api/upgrid/update/view/enhancement/(?P<object_id>[0-9a-fA-F\-]+)/(?P<client_id>[0-9a-fA-F\-]+)/$',
+        apis.ClientViewEnhancementUpdate.as_view()),
+
+    # Get. For Client to get whoops existing report and update_diff. Param: customer program id
+    url(r'api/upgrid/update/view/whoops/(?P<object_id>[0-9a-fA-F\-]+)/$',
+        apis.ClientViewWhoopsUpdate.as_view()),
+    # Get. For Account manager to get whoops existing report and update_diff
+    url(r'api/upgrid/update/view/whoops/(?P<object_id>[0-9a-fA-F\-]+)/(?P<client_id>[0-9a-fA-F\-]+)/$',
+        apis.ClientViewWhoopsUpdate.as_view()),
+
+    # GET. For account manager to get update dashboard client list.
+    url(r'api/upgrid/update/dashboard/$', apis.ManagerUpdateDashBoardAPI.as_view()),
+
+    # GET. For account manager to check how many updates of each program of a client.
+    url(r'api/upgrid/update/programs/(?P<client_id>[0-9a-fA-F\-]+)/$', apis.ManagerUpdateProgramListAPI.as_view()),
+
+    url(r'api/upgrid/getid/$', apis.GetID.as_view()),
 ]

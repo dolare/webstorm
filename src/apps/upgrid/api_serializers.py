@@ -1,7 +1,11 @@
 # System lib
 from django.utils.translation import ugettext_lazy as _
 import base64
+import zlib
+
 # 3rd party lib
+from rest_framework.parsers import JSONParser
+from django.utils.six import BytesIO
 from rest_framework import serializers
 from rest_framework.serializers import *
 from rest_framework_jwt.settings import api_settings
@@ -75,12 +79,14 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
     program_name = SerializerMethodField()
     program_degree = SerializerMethodField()
     has_expert_notes = SerializerMethodField()
+    enhancement_update = SerializerMethodField()
+    whoops_update = SerializerMethodField()
 
     class Meta:
         model = UniversityCustomerProgram
         fields = ('object_id', 'program_name', 'program_degree', 
                   'whoops_final_release', 'enhancement_final_release', 'customer_confirmation',
-                  'has_expert_notes')
+                  'has_expert_notes', 'enhancement_update', 'whoops_update')
 
     def get_program_name(self, obj):
         return obj.program.program_name
@@ -99,6 +105,22 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
             expert_notes = True
 
         return expert_notes
+
+    def get_enhancement_update(self, obj):
+        try:
+            eu = EnhancementUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent='True')
+            serializer = ManagerEnhancementUpdateNumberSerializer(eu)
+            return serializer.data
+        except EnhancementUpdate.DoesNotExist:
+            return 0
+
+    def get_whoops_update(self, obj):
+        try:
+            wu = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent='True')
+            serializer = ManagerWhoopsUpdateNumberSerializer(wu)
+            return serializer.data
+        except WhoopsUpdate.DoesNotExist:
+            return 0
 
 
 class CompetingProgramSerializer(serializers.ModelSerializer):
@@ -172,7 +194,7 @@ class SubuserListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('id', 'email', 'title',
+        fields = ('username', 'id', 'is_active', 'email', 'title',
                   'contact_name', 'position', 'phone', 'customer_program')
 
     def get_customer_program(self, obj):
@@ -195,7 +217,7 @@ class MainUserDetailSerializer(serializers.ModelSerializer):
                   'email', 'competing_schools', 'sub_user_list')
 
     def get_sub_user_list(self, obj):
-        sub_user_list = UniversityCustomer.objects.filter(Ceeb=obj.Ceeb, account_type='sub')
+        sub_user_list = UniversityCustomer.objects.filter(Ceeb=obj.Ceeb, account_type='sub',)
         return SubuserListSerializer(sub_user_list, many=True).data
 
     def get_competing_schools(self,obj):
@@ -298,7 +320,7 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
                   'competing_schools', 'customer_program')
 
     def get_Ceeb(self, obj):
-        return '{0} - {1} - {2}'.format( obj.Ceeb.ceeb, obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
+        return '{0} - {1} - {2}'.format(obj.Ceeb.ceeb, obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
 
     def get_CeebID(self, obj):
         return obj.Ceeb.object_id
@@ -315,17 +337,21 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
 
 class SubClientDetailSerializer(serializers.ModelSerializer):
     Ceeb = SerializerMethodField()
+    CeebID = SerializerMethodField()
     competing_schools = SerializerMethodField()
     customer_program = SerializerMethodField()
 
     class Meta:
         model = UniversityCustomer
         fields = ('username', 'id', 'email', 'title', 'contact_name', 'position', 'position_level',
-                  'phone', 'Ceeb', 'department', 'account_type', 'main_user_id', 'service_level', 'service_until',
+                  'phone', 'Ceeb', 'CeebID','department', 'account_type', 'main_user_id', 'service_level', 'service_until',
                   'competing_schools', 'customer_program')
 
     def get_Ceeb(self, obj):
         return '{0} - {1} - {2}'.format( obj.Ceeb.ceeb, obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
+
+    def get_CeebID(self, obj):
+        return obj.Ceeb.object_id
 
     def get_competing_schools(self, obj):
 
@@ -405,3 +431,84 @@ class CustomerAndCompetingProgramSerializer(serializers.ModelSerializer):
             return 'In_Progress'
 
 
+# -----------------------------Update Serializers--------------------------------
+class ManagerUpdateDashBoardSerializer(serializers.ModelSerializer):
+    university = SerializerMethodField()
+    has_update = SerializerMethodField()
+
+    class Meta:
+        model = UniversityCustomer
+        fields = ('id', 'contact_name', 'email', 'has_update', 'university', 'department')
+
+    def get_university(self, obj):
+        return '{0} - {1}'.format(obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
+
+    def get_has_update(self, obj):
+        eus = EnhancementUpdate.objects.filter(customer=obj, most_recent=True).exclude(initial_diff__isnull=True)
+        wus = WhoopsUpdate.objects.filter(customer=obj, most_recent=True).exclude(initial_diff__isnull=True)
+        context = {"enhancement_update": len(eus), "whoops_update": len(wus)}
+        return context
+
+
+class ManagerEnhancementUpdateNumberSerializer(serializers.ModelSerializer):
+    update_nums = SerializerMethodField()
+    customer_program = SerializerMethodField()
+    customer_program_id = SerializerMethodField()
+
+    class Meta:
+        model = EnhancementUpdate
+        fields = ('update_nums', 'customer_program', 'customer_program_id')
+
+    def get_update_nums(self, obj):
+        if obj.initial_diff is None:
+            return 0
+        else:
+            json_string = zlib.decompress(obj.initial_diff)
+            json_string = BytesIO(json_string)
+            res = JSONParser().parse(json_string)
+            length = 0
+            for k in res["new"]:
+                print(k)
+                if k == 'length':
+                    continue
+                for k2 in res["new"][k]:
+                    length += 1
+            print(length)
+            return length
+
+    def get_customer_program(self, obj):
+        serializer = ProgramSerializer(obj.customer_program.program)
+        return serializer.data
+    
+    def get_customer_program_id(self, obj):
+        return obj.customer_program.object_id
+
+
+class ManagerWhoopsUpdateNumberSerializer(serializers.ModelSerializer):
+    update_nums = SerializerMethodField()
+    customer_program = SerializerMethodField()
+    customer_program_id = SerializerMethodField()
+
+    class Meta:
+        model = WhoopsUpdate
+        fields = ('update_nums', 'customer_program', 'customer_program_id')
+
+    def get_update_nums(self, obj):
+
+        if not obj.initial_diff:
+            return 0
+        else:
+            json_string = zlib.decompress(obj.initial_diff)
+            json_string = BytesIO(json_string)
+            res = JSONParser().parse(json_string)
+            length = 0
+            for v in res["new"]:
+                length += 1
+            return length
+
+    def get_customer_program(self, obj):
+        serializer = ProgramSerializer(obj.customer_program.program)
+        return serializer.data
+
+    def get_customer_program_id(self, obj):
+        return obj.customer_program.object_id

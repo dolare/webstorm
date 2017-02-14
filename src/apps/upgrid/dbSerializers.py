@@ -70,7 +70,7 @@ class DurationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Duration
-        fields = ('full_part_time', 'duration_unit','duration_min','duration_max','durationtime_limit',
+        fields = ('full_part_time', 'part_time', 'duration_unit','duration_min','duration_max','durationtime_limit',
                   'duration_conj', 'duration_addl', 'duration_addl_unit')
 
 

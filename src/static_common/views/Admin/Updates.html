@@ -1,0 +1,949 @@
+        <div class="content content-boxed">
+
+                <!-- Stats -->
+                <div class="row text-uppercase">
+                    <div class="col-xs-6 col-sm-6">
+                        <div class="block block-rounded">
+                            <div class="block-content block-content-full">
+                                <div class="font-s12 font-w700">Total</div>
+                                <a class="h2 font-w300 text-primary">{{update_client.length}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6">
+                        <div class="block block-rounded">
+                            <div class="block-content block-content-full">
+                                <div class="font-s12 font-w700">Active</div>
+                                <a class="h2 font-w300 text-primary">{{update_client.length}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="col-xs-12 col-sm-4">
+                        <div class="block block-rounded">
+                            <div class="block-content block-content-full">
+                                <div class="font-s12 font-w700">Unedited</div>
+                                <a class="h2 font-w300 text-primary" href="javascript:void(0)">3</a>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- END Stats -->
+                
+
+              
+
+                <button class="btn btn-info push-30" ng-click="testOnDemand()"><i aria-hidden="true" ng-class="{'fa fa-refresh': !ondemand, 'fa fa-refresh fa-spin': ondemand }"></i>&nbsp;&nbsp;ON DEMAND</button>
+
+
+                <!-- Customers -->
+                <div class="block" id="loadingclient">
+                    
+                    <div class="block-content">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-vcenter"  st-table="update_client" data-js-table-sections-update>
+
+                                    <colgroup>
+                                      <col width="10%"/>
+                                      <col width="15%"/>
+                                      
+                                      <col width="25%"/>
+                                      <col width="19%"/>
+                                      <col width="16%"/>
+                                      <col width="15%"/>
+                                    </colgroup>
+
+                                <thead>
+                                <tr>
+                                    
+                                    <th></th>
+                                    <th st-sort="contact_name" class="text-left">Name</th>
+                                    <th st-sort="university" class="text-left">University</th>
+                                    <th st-sort="department" class="text-left">Department</th>
+                                    <th st-sort="email" class="text-left">Email</th>
+                                    <th class="text-center">Updates</th>
+
+                                </tr>
+
+                                </thead>
+
+                                <tbody class="js-table-sections-header" ng-repeat-start="row in update_client">
+                                    <tr>
+                                      <td class="text-center">
+                                            <img class="img-avatar img-avatar48" src="assets/img/avatars/avatar15.jpg" alt="">
+                                        </td>
+
+                                        <td>{{row.contact_name}}</td>
+                                       
+                                        <td>{{row.university}}</td>
+
+                                        <td>{{row.department}}
+
+                                            <span ng-if="row.department===null">
+                                                N/A
+                                            </span>
+                                        </td>
+
+                                        <td><a href="mailto:{{row.email}}">{{row.email}}</a></td>
+
+                                        <td class="text-center">
+                                           
+                                                                <button class="btn btn-default btn-white" type="button" style="position: relative; margin-right:6px" ng-click="updated_whoops(row.id)" ng-disabled="row.has_update.whoops_update===0">
+                                                                <i data-uib-tooltip="Whoops" data-tooltip-placement="top" class="fa fa-wrench" ng-disabled="row.has_update.whoops_update===0" ng-class="{'text-success': row.has_update.whoops_update===0, 'text-warning': row.has_update.whoops_update!==0}">
+                                                                </i><span ng-if="row.has_update.whoops_update>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">{{row.has_update.whoops_update}}</span>
+                                                                </button>
+
+                                                                <button class="btn btn-default btn-white" style="position: relative;" ng-click="updated_enhancement(row.id)" ng-disabled="row.has_update.enhancement_update===0">
+                                                                  <i data-uib-tooltip="Enhancement" data-tooltip-placement="top" class="fa fa-rocket" ng-disabled="row.has_update.enhancement_update===0" ng-class="{'text-success': row.has_update.enhancement_update===0, 'text-warning': row.has_update.enhancement_update!==0}">
+                                                                 </i><span ng-if="row.has_update.enhancement_update>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;z-index: 1;">{{row.has_update.enhancement_update}}</span>
+                                                                 </button>
+                                                               
+                                                            
+
+                                        </td>
+
+                                    </tr>
+                                
+                                    </tbody>
+
+
+                                    <tbody ng-repeat-end class="bg-gray-lighter">
+                                    <tr ng-repeat="row1 in dropdown_list">
+                                    <td></td>
+                                    <td colspan="3">
+                                    {{row1.customer_program.program_display.split('--')[1]}} ({{row1.customer_program.program_display.split('--')[2].split('-')[0]}})
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <button class="btn btn-default btn-white" style="position: relative;" ng-click="need_for_confirm(row1.customer_program_id, row1.type, row1.customer_program.program_display, row.id)" data-toggle="modal" data-target="#WhoopsReport" ng-if="row1.type==='whoops'">
+                                                                  <i data-uib-tooltip="Enhancement" data-tooltip-placement="top" class="fa fa-file-text-o text-info">
+                                                                 </i><span ng-if="row1.update_nums>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;z-index: 1;">{{row1.update_nums}}</span>
+                                        </button>
+
+                                        <button class="btn btn-default btn-white" style="position: relative;" ng-click="need_for_confirm(row1.customer_program_id, row1.type, row1.customer_program.program_display, row.id)" data-toggle="modal" data-target="#EnhancementReport" ng-if="row1.type==='enhancement'">
+                                                                  <i data-uib-tooltip="Enhancement" data-tooltip-placement="top" class="fa fa-file-text-o text-info">
+                                                                 </i><span ng-if="row1.update_nums>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;z-index: 1;">{{row1.update_nums}}</span>
+                                        </button>
+                                    </td>
+
+                                    
+                                    </tr>
+                                    </tbody>
+                                <tfoot>
+                                    <tr>
+                                      
+
+                                      
+                                      <td colspan="3">
+                                         <br><br>
+                                        <div class="btn-group pull-left ng-scope tablepagenum" >
+                                         
+                                          <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
+                                          <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button>
+                                          
+                                        </div>
+                                      </td>
+
+                                      <td colspan="3" class="text-center">
+                                        <br><br>
+                                        <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
+                                      </td>
+
+
+                                    </tr>
+                                  </tfoot>
+                            </table>
+                        </div>
+                        <!-- <div class="text-center push">
+                            <button class="btn btn-xs btn-default" type="button">
+                                <i class="fa fa-arrow-down push-5-r text-primary"></i>Load More..
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+        </div>
+
+
+
+        <!-- Large Modal -->
+        <div class="modal" id="modal-large" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: 100%;height: 100%;padding: 0;margin: 0;">
+            <div class="modal-content" style="height: 100%;min-height: 100%;height: auto;border-radius: 0;">
+                <div class="block block-themed block-transparent remove-margin-b" id="client_block">
+                    <div class="block-header bg-primary">
+                        <ul class="block-options">
+                            <li>
+                                <button data-dismiss="modal" type="button"><i class="si si-close" style="font-size: 20px"></i></button>
+                            </li>
+                        </ul>
+                        <h3 class="block-title text-center">{{modaltitle}}</h3>
+                    </div>
+                    <div class="block-content bg-primary-dark" style="padding:0">
+                        
+
+                        <!-- client form -->
+                        <div class="content content-narrow"  style="padding:0; margin: 0 auto; padding-top:15px">
+                <!-- Simple Wizards -->
+                       
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- Simple Classic Progress Wizard (.js-wizard-simple class is initialized in js/controllers.js -> FormsWizardCtrl Controller) -->
+                                <!-- For more examples you can check out http://vadimg.com/twitter-bootstrap-wizard-example/ -->
+                                <div class="js-wizard-simple block">
+                                    <!-- Step Tabs -->
+                                    <ul class="nav nav-tabs nav-justified" data-js-tabs>
+                                        <li class="active">
+                                            <a href="#simple-classic-progress-step1" data-toggle="tab" data-js-blur>1. Client Info</a>
+                                        </li>
+                                        <li>
+                                            <a href="#simple-classic-progress-step2" data-toggle="tab" data-js-blur>2. Contract Details</a>
+                                        </li>
+                                        <li>
+                                            <a href="#simple-classic-progress-step3" data-toggle="tab" data-js-blur>3. University Programs</a>
+                                        </li>
+                                        
+                                    </ul>
+                                    <!-- END Step Tabs -->
+
+                                    <!-- Form -->
+                                    <form class="js-form1 validation form-horizontal" id="client_form" onsubmit="return false;">
+                                        <!-- Steps Progress -->
+                                        <div class="block-content block-content-mini block-content-full border-b">
+                                            <div class="wizard-progress progress progress-mini remove-margin-b">
+                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 0"></div>
+                                            </div>
+                                        </div>
+                                        <!-- END Steps Progress -->
+
+                                        <!-- Steps Content -->
+                                        <div class="block-content tab-content">
+                                            <!-- Step 1 -->
+                                            <!-- <button ng-click="addaha()">add</button> -->
+                                            <div class="tab-pane fade fade-right in push-30-t push-50 active" id="simple-classic-progress-step1">
+                                                <div class="form-group">
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <label for="simple-classic-progress-account-name" class="col-md-4 control-label">Account Name</label>
+                                                        <div class="col-md-8 input-group" style="padding-right: 15px; padding-left: 15px;">
+                                                        <input ng-model="account_name" class="form-control" type="text" id="simple-classic-progress-account-name" name="simple-classic-progress-account-name" placeholder="Please enter the account name">
+                                                        
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <!-- <div class="form-group">
+                                                    <div class="col-sm-8 col-sm-offset-2">
+                                                        <label for="simple-classic-progress-lastname">Last Name</label>
+                                                        <input class="form-control" type="text" id="simple-classic-progress-lastname" name="simple-classic-progress-lastname" placeholder="Please enter your lastname">
+                                                    </div>
+                                                </div> -->
+                                                <div class="form-group" ng-hide="pwhide">
+                                                          
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <label for="simple-classic-progress-password" class="col-md-4 control-label">Password</label>
+                                                        <div class="col-md-8">
+                                                        <input ng-model="password" class="form-control" type="password" id="simple-classic-progress-password" name="simple-classic-progress-password" placeholder="Please enter the password">
+                                                        </div>
+                                                    </div>
+                             
+                                                </div>
+                                                
+                                                <div class="form-group" ng-hide="pwhide">
+                                                          
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <label for="simple-classic-progress-conform-password" class="col-md-4 control-label">Confirm Password</label>
+                                                        <div class="col-md-8">
+                                                        <input ng-model="password_confirm" class="form-control" type="password" id="simple-classic-progress-confirm-password" name="simple-classic-progress-confirm-password" placeholder="Please confirm the password">
+                                                        </div>
+                                                    </div>
+                             
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <label for="simple-classic-progress-email" class="col-md-4 control-label">Email</label>
+                                                        <div class="col-md-8">
+                                                        <input ng-model="email" class="form-control" type="email" id="simple-classic-progress-email" name="simple-classic-progress-email" placeholder="Please enter the email">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <label for="simple-classic-progress-title" class="col-md-4 control-label">Title</label>
+                                                        <div class="col-md-8">
+                                                        <select ng-model="title" class="form-control" id="simple-classic-progress-title" name="simple-classic-progress-title">
+                                                            <option value="">Please select the title</option>
+                                                            <option value="Master">Master</option>
+                                                            <option value="Mr">Mr</option>
+                                                            <option value="Miss">Miss</option>
+                                                            <option value="Ms">Ms</option>
+                                                            <option value="Mrs">Mrs</option>
+                                                            <option value="Mx">Mx</option>
+                                                            <option value="Dr">Dr</option>
+                                                        </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <label for="simple-classic-progress-name" class="col-md-4 control-label">Client Name</label>
+                                                        <div class="col-md-8">
+                                                        <input ng-model="client_name" class="form-control" type="text" id="simple-classic-progress-name" name="simple-classic-progress-name" placeholder="Please enter the client's name">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <label for="simple-classic-position" class="col-md-4 control-label">Position</label>
+                                                        <div class="col-md-8">
+                                                        <input ng-model="position" class="form-control" type="text" id="simple-classic-position" name="simple-classic-progress-position" placeholder="Please enter the position">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <label for="simple-classic-progress-level" class="col-md-4 control-label">Position Level</label>
+                                                        <div class="col-md-8">
+                                                        <select ng-model="position_level" class="form-control" id="simple-classic-progress-level" name="simple-classic-progress-level">
+                                                            <option value="">Please select the position level</option>
+                                                            <option value="University">University</option>
+                                                            <option value="School">School</option>
+                                                            <option value="Academic_Department">Academic Department</option>
+                                                            <option value="Administrative_Department">Administrative Department</option>
+                                                            <option value="Program">Program</option>
+                                                           
+                                                        </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <label for="simple-classic-phone" class="col-md-4 control-label">Phone</label>
+                                                        <div class="col-md-8">
+                                                        <input ng-model="phone" class="form-control" type="text" id="simple-classic-phone" name="simple-classic-progress-phone" placeholder="e.g. 200-111-2222.">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    
+                                                      
+                                                    
+                                            </div>
+                                            <!-- END Step 1 -->
+
+                                            <!-- Step 2 -->
+                                            <div class="tab-pane fade fade-right in push-30-t push-50" id="simple-classic-progress-step2">
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-10 col-sm-offset-1">
+                                                        <label for="simple-classic-progress-level" class="col-md-3 control-label">Ceeb</label>
+                                                        <div class="col-md-9">
+
+                                                        <!-- <select ng-options="p for p in prefix" multiple="multiple" size="10" ng-model="schools" id="competingschools">
+                                                              
+                                                            </select> -->
+
+                                                        <select ng-model="ceeb" ng-change="get_depart()" class="form-control" id="simple-classic-ceeb" name="simple-classic-progress-ceeb" style="width:100%" ng-options="p.object_id as p.university_school for p in get_ceebs">
+                                                            <option value="">Please select the Ceeb</option>
+                                                           
+                                                           
+                                                        </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-10 col-sm-offset-1">
+
+                                                        <label for="simple-classic-progress-dept" class="col-md-3 control-label">Department</label>
+                                                        <div class="col-md-9">
+                                                        <select class="form-control" ng-model="department" id="simple-classic-dept" name="simple-classic-progress-dept" style="width:50%" ng-options="p.department as p.department for p in get_departments">
+                                                            <option value="">Please select the department</option>
+
+                                                            
+                                                            
+                                                           
+                                                        </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-10 col-sm-offset-1">
+                                                        <label for="radio-group4" class="col-md-3 control-label">Account Type</label>
+                                                        <div class="col-md-9">
+                                                        <label class="css-input css-radio css-radio-primary push-10-r">
+                                                                <input type="radio" name="radio-group4" checked ng-model="account_type" value="main"><span></span> Main
+                                                        </label>
+                                                        <label class="css-input css-input-disabled css-radio css-radio-primary">
+                                                                <input type="radio" name="radio-group4" disabled ng-model="account_type" value="sub"><span></span> Sub
+                                                        </label>
+                                                        </div>
+
+
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-10 col-sm-offset-1">
+                                                        <label for="radio-group3" class="col-md-3 control-label">Service Level</label>
+                                                        <div class="col-md-9">
+                                                        <label class="css-input css-radio css-radio-primary push-10-r">
+                                                                <input type="radio" name="radio-group5" ng-model="service_level"  value="basic"><span></span> Basic
+                                                        </label>
+                                                        <label class="css-input css-radio css-radio-primary">
+                                                                <input type="radio" name="radio-group5" ng-model="service_level" value="silver">
+                                                                <span></span> Silver&nbsp;&nbsp;
+                                                        </label>
+
+                                                        <label class="css-input css-radio css-radio-primary push-10-r">
+                                                                <input type="radio"  name="radio-group5" ng-model="service_level" value="gold"><span></span> Gold
+                                                        </label>
+                                                        <label class="css-input css-radio css-radio-primary">
+                                                                <input type="radio" name="radio-group5" ng-model="service_level" value="platinum"><span></span> Platinum
+                                                        </label>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-10 col-sm-offset-1">
+                                                    <label for="datepicker1" class="col-md-3 control-label">Expiration Date</label>
+                                                    <div class="col-md-9">
+                                                        <input ng-model="expiration_date" data-js-datepicker class="form-control" type="text" id="datepicker1" name="datepicker1" data-date-format="mm/dd/yy" placeholder="mm/dd/yy" style="width:50%">
+                                                    </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-10 col-sm-offset-1">
+                                                        <label for="radio-group3" class="col-md-3 control-label">Competing Schools</label>
+                                                        <div class="col-md-9 control-label" style="text-align:left" id="listboxes">
+                                                            
+                                                       <!-- <select ng-options="p for p in prefix" multiple="multiple" size="10" ng-model="schools" id="competingschools">
+                                                              
+                                                            </select> -->
+
+
+                                                            <select multiple="multiple" size="10" ng-model="competing_schools" id="competingschools">
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                 
+                    <!-- 
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="example-datetimepicker3">Full options</label>
+                                                    <div class="col-md-6">
+                                                        <div data-js-datetimepicker="{showTodayButton: true, showClear: true, showClose: true}" class="input-group date">
+                                                            <input class="form-control" type="text" id="example-datetimepicker3" name="example-datetimepicker3" placeholder="Choose a date..">
+                                                            <span class="input-group-addon">
+                                                                <span class="fa fa-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                     -->
+
+
+
+
+                                            </div>
+                                            <!-- END Step 2 -->
+
+                                            <!-- Step 3 -->
+                                            <div class="tab-pane fade fade-right in push-30-t push-50" id="simple-classic-progress-step3">
+                                            
+                                             <!-- <div class="row">
+                                             <div class="col-sm-6 col-sm-offset-3 push-20-t">
+                                             haha
+
+                                             </div>
+                                             </div> -->
+
+                                            <div class="row" ng-if="!pwhide">
+                                                <div class="col-sm-3 text-right push-20-t">
+                                                 <a data-js-blur href="javascript:void(0)" data-uib-tooltip="Show/Hide department" data-tooltip-placement="top" ng-click="showtable=!showtable" ><i ng-class="{'fa fa-plus-square-o fa-2x': !showtable, 'fa fa-minus-square-o fa-2x': showtable}"></i></a>
+                                                 
+                                                </div>
+                                           
+                                            
+
+                                              <div class="col-sm-6 push-30" ng-show="showtable">
+                                                    <table class="table table-hover" refresh-table st-table="dep_pro_table_displayed" st-safe-src="dep_pro_table" data-js-table-sections-fixed>
+
+                                                        <colgroup>
+                                                        <col width="10%"/>
+                                                        <col width="8%"/>
+                                                        <col width="82%"/>
+                                                        
+                                                        </colgroup>
+
+                                                        <thead>
+                                                            <tr class="bg-white text-" style="border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233); color:white;">
+                                                          <th colspan="2">
+                                                               <!-- <label class="css-input css-checkbox css-checkbox-primary">
+                                                                          <input ng-model = "master" ng-change="checkmaster(master)" type="checkbox"><span></span>
+                                                                      </label> -->
+                                                                      <div class="btn-group">
+                                                                        <button class="btn btn-default" data-toggle="modal" data-uib-tooltip="Check All" data-tooltip-placement="top" ng-click = "checkmaster(true)" data-js-blur>
+                                                                        <i class="fa fa-check-square-o text-primary">
+                                                                        </i>
+                                                                        </button>
+                                                                        
+                                                                        <button data-uib-tooltip="Check None" data-tooltip-placement="top" class="btn btn-default"  data-toggle="modal" data-target="#myModal1" ng-click ="checkmaster(false)" data-js-blur>
+                                                                          <i  class="fa fa-square-o text-city">
+                                                                         </i> 
+
+
+                                                                        </button>
+                                                                        
+                                                                      </div>
+
+                                                          </th>
+                                                          
+                                                          <th style="padding-left:15px;vertical-align: middle;text-decoration: none; cursor: default;" class="h4 text-flat font-w700" >Select the programs for the client</th>
+                                                       
+                                                            </tr>
+
+                                                        
+                                         
+                                                        </thead>
+
+                                                        <tbody class="js-table-sections-header bg-white" ng-repeat-start="row in dep_pro_table">
+                                                            <tr>
+                                                                <td>
+                                                                      <label class="css-input css-checkbox css-checkbox-primary"  ng-class="{'css-input-disabled':row.programs.length===0}">
+                                                                          <input type="checkbox" ng-model="row.isTrue" ng-change="check_all($index)" ng-disabled="row.programs.length===0"><span></span>
+                                                                      </label>
+
+                                                                </td>
+
+                                                                <!-- angle -->
+                                                                <td class="text-center">
+                                                                    <i class="fa fa-angle-right"></i>
+                                                                </td>
+
+                                                                <td class="font-w600">{{row.department}}</td>
+
+                                                            </tr>
+                                                        </tbody>
+
+                                                        <tbody ng-repeat-end>
+                                                            <tr ng-repeat="program in row.programs">
+                                                                <td class="pull-right" style="border-top: none;">
+                                                                     <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.programs.length===0}">
+                                                                          <input type="checkbox" ng-model="program.isTrue" ng-change="observe_checkbox($parent.$index, $index)" ng-disabled="row.programs.length===0"><span class="bg-info"></span>
+                                                                      </label>
+
+
+                                                                </td>
+                                                                <td class="text-center text-muted">{{$index + 1}}.</td>
+                                                                <td class="text-left font-w600 text-primary">
+                                                                  {{program.program_name}} ({{program.program_degree}})
+                                                                </td>
+                                                              
+                                                            </tr>
+                                                           
+                                                        </tbody>
+                                                    </table>
+
+                                                    <button class="btn btn-default" ng-click="generate_table()" data-js-blur>{{generate_or_add}}</button>
+
+
+
+                                                    </div>
+
+
+                                                    <hr class="col-sm-12">
+                                                </div>
+                                                    <!-- tableeeee -->
+                                  
+                                                   
+                                        <div ng-if="selected_customprogram.length!==0">
+
+                                            <div class="col-sm-12 push-30">
+                                               
+                                                <br>
+                                                <table st-table="displayeddata1" st-safe-src="selected_customprogram" class="table table-bordered table-hover block" style="table-layout: fixed;" class="formtable" data-js-table-sections-fixed>
+                                                <colgroup>
+                                                         <col width="6%"/>
+                                                         <col width="35%"/>
+                                                          <col width="9%"/>
+                                                          <col width="11%"/>
+                                                          <col width="11%"/>
+                                                          <col width="11%"/>
+                                                          <col width="11%"/>
+                                                          <col width="11%"/>
+                                                          <col width="5%"/>
+                                                        </colgroup>
+
+                                                    <thead>
+                                                    <tr>
+                                                        <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+                                                    </tr>
+
+                                                    <tr class="bg-info text-white">
+                                                        <th st-sort=""></th>
+                                                        <th st-sort="">Program</th>
+                                                        <th st-sort="" class="text-center">Degree</th>
+                                                        <th st-sort="" class="text-center">1st Review</th>
+                                                        <th st-sort="" class="text-center">2nd Review</th>
+                                                        <th st-sort="" class="text-center">Status</th>
+                                                        <th st-sort="" class="text-center">Whoops</th>
+                                                        <th st-sort="" class="text-center">Enhancement</th>
+                                                       
+                                                        <th class="text-right"></th>
+                                                    </tr>
+                                                    
+                                                    </thead>
+
+                                                    <tbody class="js-table-sections-header" ng-repeat-start="row in displayeddata1" ng-click="load_competing()">
+
+                                                    
+                                                    <tr class="text-primary font-w600">
+                                                        <td class="text-center">
+                                                            <i class="fa fa-angle-right"></i>
+                                                        </td>
+                                                        <td>{{row.program_name}}</td>
+                                                        <td class="text-center">{{row.program_degree}}</td>
+
+                                                        <td class="text-center"> 
+                                                            
+                                                            <span ng-if="row.assignment_status==='Assigned'"><span class="label label-info"><i class="fa fa-flag"></i> Assigned</span></span>
+                                                            <span ng-if="row.assignment_status==='In_Progress'"><span class="label label-default"><i class="fa fa-refresh"></i>  In progress</span></span>
+                                                            <span ng-if="row.assignment_status==='Need update'"><span class="label label-warning"><i class="fa fa-cloud-upload"></i> Need update</span></span>
+                                                            <span ng-if="row.assignment_status==='Done'"><span class="label label-success"><i class="fa fa-check"></i> Done</span></span>
+                                                            <span ng-if="row.assignment_status==='-'"><span class="label label-warning"><i class="fa fa-question-circle"></i> N/A</span></span>
+
+                                                        </td>
+                                                        <td class="text-center">  
+                                                            
+                                                            <span ng-if="row.review_status==='Assigned'"><span class="label label-info"><i class="fa fa-flag"></i> Assigned</span></span>
+                                                            <span ng-if="row.review_status==='In_Progress'"><span class="label label-default"><i class="fa fa-refresh"></i>  In progress</span></span>
+                                                            <span ng-if="row.review_status==='None'"><span class="label label-warning"><i class="fa fa-question-circle"></i> None</span></span>
+                                                            <span ng-if="row.review_status==='Done'"><span class="label label-success"><i class="fa fa-check"></i>  Done</span></span>
+                                                            <span ng-if="row.review_status==='-'"><span class="label label-warning"><i class="fa fa-question-circle"></i> N/A</span></span>
+                                                        </td>
+                                                        <td class="text-center">    
+                                                            <div id="tab" class="btn-group" data-toggle="buttons-radio">
+                                                              
+                                                              <a data-uib-tooltip="In progress" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_status='in progress';put_customer_program($index)" ng-class="{'active' : row.whoops_status==='in progress'||row.whoops_status==='in_progress'}" style="width:40px"><i class="fa fa-hourglass-start" aria-hidden="true"></i></a>
+                                                              <a data-uib-tooltip="Done" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_status='done';put_customer_program($index)" ng-class="{'active' : row.whoops_status==='done'}"><i class="fa fa-hourglass-end" aria-hidden="true"></i></a>
+                                                              
+                                                            </div>
+                                                            
+                                                        </td>
+                                                        <td class="text-center">    
+                                                            <div id="tab" class="btn-group" data-toggle="buttons-radio">
+                                                              
+                                                              <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='False';put_customer_program($index)" style="width:40px" ng-class="{'active' : row.whoops_final_release==='False'}"><i class="fa fa-times" aria-hidden="true"></i></a>
+
+                                                              <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='True';put_customer_program($index)" ng-class="{'active' : row.whoops_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                                                              
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="text-center">    
+                                                            <div id="tab" class="btn-group" data-toggle="buttons-radio">
+                                                              
+                                                              <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='False';put_customer_program($index)" ng-class="{'active' : row.enhancement_final_release==='False'}" style="width:40px"><i class="fa fa-times" aria-hidden="true"></i></a>
+
+                                                              <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='True';put_customer_program($index)" ng-class="{'active' : row.enhancement_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                                                              
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="text-center">
+                                                        
+                                                        <button type="button" ng-click="removeItem($index)" class="btn btn-sm btn-danger" data-uib-tooltip="Delete" data-tooltip-placement="top">
+                                                            <i class="fa fa-trash-o">
+                                                            </i>
+                                                        </button>
+
+                                                        </td>
+                                                    </tr>
+
+                                         </tbody>
+
+                                        <tbody ng-repeat-end>
+                                            
+                                            <tr class="bg-white" ng-repeat = "row1 in row.competing_program">
+                                            <td class="text-center"><label ng-if="!pwhide">{{row1.order}}.</label>
+                                            <select ng-if="pwhide" ng-model="row1.order" ng-options="num for num in orders" ng-change="put_competing(row1.object_id, row.customer_program_id, row1.program_id, row1.order, row1.enhancement_status)">
+                                                
+                                            </select>
+                                            </td>
+                                            <td colspan="2">
+                                                    
+                                                        <form class="form-inline">
+                                                        <div class="form-group" style="margin-bottom:0">
+                                                           
+                                                            <div class="col-md-12">
+                                                                
+                                                                <select  ng-if="pwhide" data-js-select2 ng-model="row1.program_id" class="form-control" id="example-select2" name="example-select2" style="width: 100%;" data-placeholder="Choose one.." ng-options="p.object_id as p.display for p in competing_program_array" ng-change="put_competing(row1.object_id, row.customer_program_id, row1.program_id, row1.order, row1.enhancement_status)">
+                                                                    <option></option>
+                                                                    
+                                                                </select>
+
+                                                                <select  ng-if="!pwhide" data-js-select2 ng-model="row1.object_id" class="form-control" id="example-select2" name="example-select2" style="width: 100%;" data-placeholder="Choose one.." ng-options="p.object_id as p.display for p in competing_program_array">
+                                                                    <option></option>
+                                                                    
+                                                                </select>
+
+                                                      
+                                                        </div>
+                                                        
+                                                        
+                                                    </form>
+                                                    </td>
+                                                     <td> 
+                                                            <span ng-if="abc==='Assigned'"><span class="label label-info">Assigned</span></span>
+                                                            <span ng-if="abc==='In progress'"><span class="label label-default">In progress</span></span>
+                                                            <span ng-if="abc==='Need update'"><span class="label label-warning">Need update</span></span>
+                                                            <span ng-if="abc==='Done'"><span class="label label-success">Done</span></span>
+                                                            <span ng-if="abc==='-'"><span class="label label-warning">---</span></span>
+
+                                                        </td>
+                                                        <td>    
+                                                            <span ng-if="abc==='Assigned'"><span class="label label-info">Assigned</span></span>
+                                                            <span ng-if="abc==='In progress'"><span class="label label-default">In progress</span></span>
+                                                            <span ng-if="abc==='None'"><span class="label label-warning">None</span></span>
+                                                            <span ng-if="abc==='Done'"><span class="label label-success">Done</span></span>
+                                                            <span ng-if="abc==='-'"><span class="label label-warning">---</span></span>
+                                                        </td>
+                                                       
+                                                   <td class="text-center">    
+                                                            <div id="tab" class="btn-group" data-toggle="buttons-radio">
+                                                              
+                                                              <a data-uib-tooltip="In progress" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row1.enhancement_status ='in progress'; put_competing(row1.object_id, row.customer_program_id, row1.program_id, row1.order, row1.enhancement_status)" style="width:40px" ng-class="{'active' : row1.enhancement_status==='in progress'}"><i class="fa fa-hourglass-start" aria-hidden="true"></i></a>
+
+                                                              <a data-uib-tooltip="Done" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row1.enhancement_status='done';put_competing(row1.object_id, row.customer_program_id, row1.program_id, row1.order, row1.enhancement_status)" ng-class="{'active' : row1.enhancement_status==='done'}"><i class="fa fa-hourglass-end" aria-hidden="true"></i></a>
+                                                              
+                                                            </div>
+                                                        </td>
+
+
+                                                        <td class="text-center">
+
+
+                                                            <div class="btn-group">
+                                                                <button data-uib-tooltip="Delete" data-tooltip-placement="top" style="width:40px" ng-click="delete_competing(row1.object_id, $parent.$index, $index)" class="btn btn-rounded btn-danger" data-js-blur>
+                                                                <i class="fa fa-trash-o text-white">
+                                                                </i>
+                                                                </button>
+                                                                
+                                                                <button data-uib-tooltip="Insert" data-tooltip-placement="top" style="width:40px" class="btn btn-rounded btn-info" ng-click="insert_competing($parent.$index, $index)" data-js-blur>
+                                                                  <i class="fa fa-plus text-white">
+                                                                 </i> 
+
+
+                                                                </button>
+                                                                
+                                                              </div>
+
+                                                        </td>
+
+
+                                                    <td colspan="2" rowspan="{{row.competing_program.length}}" ng-show="$index===0" class="bg-gray-lighter text-center">
+                                                       
+                                                        <div ng-show="pwhide" id="tab" class="btn-group" data-toggle="buttons-radio">
+                                                              
+                                                              <a data-uib-tooltip="Unconfirmed" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.customerconfirmation_status='No';put_customer_program($parent.$index)" ng-class="{'active' : row.customerconfirmation_status==='No'}"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+
+                                                              <a data-uib-tooltip="Confirmed" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.customerconfirmation_status='Yes';put_customer_program($parent.$index)" ng-class="{'active' : row.customerconfirmation_status==='Yes'}"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                                                              
+                                                            </div>
+
+                                                    </td>
+
+
+
+                                                    </tr>
+
+
+                                                    </tbody>
+
+
+                                                </table>
+
+                                        </div>
+
+                                        </div>
+                                                
+                                            </div>
+                                            <!-- END Step 3 -->
+                                        </div>
+                                        <!-- END Steps Content -->
+
+                                        <!-- Steps Navigation -->
+                                        <div class="block-content block-content-mini block-content-full border-t">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <button class="wizard-prev btn btn-default" type="button" data-js-blur><i class="fa fa-arrow-left"></i> Previous</button>
+                                                </div>
+                                                <div class="col-xs-6 text-right">
+                                                    <button class="wizard-next btn btn-default" type="button" data-js-blur>Next <i class="fa fa-arrow-right"></i></button>
+                                                    <button class="wizard-finish btn btn-primary" type="submit" data-ui-sref="admin" ng-click="submit()" data-js-blur><i class="fa fa-check"></i> Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END Steps Navigation -->
+                                    </form>
+                                    <!-- END Form -->
+                                </div>
+                                <!-- END Simple Classic Progress Wizard -->
+                            </div>
+                            
+                        </div>
+                    </div>
+          
+
+
+
+
+
+                        <!-- end client form -->
+
+
+
+
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
+                    <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"><i class="fa fa-check"></i> Ok</button>
+                </div> -->
+            </div>
+        </div>
+        </div>
+        <!-- END Large Modal -->
+
+
+
+
+
+<div class="modal fullscreen-modal viewer fade" id="EnhancementReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="block block-themed block-transparent remove-margin-b" id="enhancement_loading">
+          <div class="block-header bg-primary-dark">
+            <ul class="block-options">
+                                <li>
+                                    <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
+                                 </li>
+
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle" onclick="App.blocks('#WhoopsReport', 'fullscreen_toggle');" ng-click="togglefullen(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
+                                  </li>
+                                  
+                                  <li>
+                                    <button data-dismiss="modal" type="button" ng-click="scrolltop2()" data-js-blur><i class="si si-close"></i></button>
+                                  </li>
+                                </ul>
+                                <h3 class="block-title">Enhancement Report</h3>
+                              </div>
+                              
+                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" id="scrolltop_enhancement_page">
+
+                    <!-- SlimScroll Container -->
+                   <!--  <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
+
+                   <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+
+                    <div ng-include src="'views/Home/partials/enhancement_template_pro.html'"></div>
+                    </div>
+
+
+                  <!--   </div> -->
+                    <!-- END SlimScroll Container -->
+                
+                        <div style="position: fixed;bottom: 20px;right: 44px;">
+                            <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" data-dismiss="modal" ng-click="scrolltop2(); release_updates(release_customer_program_id)"><i class="si si-mouse"></i> Release</button>
+
+                        </div>
+
+
+            </div>
+                            </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+   <!-- Modal of Pdf Viewer-->
+      <div class="modal viewer fade" id="WhoopsReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b" id="whoops_loading">
+              <div class="block-header bg-primary-dark">
+                <ul class="block-options">
+                                    <li>
+                                        <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
+                                     </li>
+
+                                    <li>
+                                        <button type="button" ng-click="togglefull(); actualscreen = !actualscreen" data-js-blur><i ng-class="{'si si-size-fullscreen': !actualscreen, 'si si-size-actual': actualscreen }"></i></button>
+                                      </li>
+                                      
+                                      <li>
+                                        <button data-dismiss="modal" type="button" ng-click="scrolltop1()" data-js-blur><i class="si si-close"></i></button>
+                                      </li>
+                                    </ul>
+                                    <h3 class="block-title">Whoops Report</h3>
+
+                                  </div>
+                                  
+                                  <div class="block-content fullscreen-container frame" style="width:auto;padding:0; " id="scrolltop_whoops_page">
+
+               
+                        <!-- SlimScroll Container -->
+                       
+
+
+                        <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+
+                        <div ng-include src="'views/Home/partials/whoops_template_pro.html'"></div>
+                        
+                        </div>
+                         
+                        
+                        <!-- END SlimScroll Container -->
+                        <div style="position: fixed;bottom: 20px;right: 110px;">
+                            <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" data-dismiss="modal" ng-click="scrolltop1(); w_release_updates(release_customer_program_id)"><i class="si si-mouse"></i> Release</button>
+
+                        </div>
+
+                </div>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+

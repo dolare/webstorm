@@ -41,7 +41,7 @@ class UpgridBaseUserManager(models.Manager):
 
 
 class UpgridBaseUser(models.Model):
-    username = models.CharField(max_length=150,null=True, unique=True, blank=False)
+    username = models.CharField(max_length=150, null=True, unique=True, blank=False)
     password = models.CharField(max_length=128)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(max_length=254, unique=True, null=True, blank=False)
@@ -63,6 +63,7 @@ class UpgridBaseUser(models.Model):
         self._password = None
 
     def save(self, *args, **kwargs):
+        # self.password = make_password(self.password)
         super(UpgridBaseUser, self).save(*args, **kwargs)
         if self._password is not None:
             password_validation.password_changed(self._password, self)
@@ -306,3 +307,63 @@ class EnhancementReportsRepo(models.Model):
 
     def __str__(self):
         return '{0}-{1}'.format(self.er_created, self.er_customer_program)
+
+
+class EnhancementUpdate(models.Model):
+    """This is the enhancement reports update model."""
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT)
+    created = models.DateTimeField(default=datetime.now, blank=True)
+    customer_program = models.ForeignKey(UniversityCustomerProgram, on_delete=models.PROTECT)
+    existing_report = models.BinaryField(blank=True, null=True)
+    cache_report = models.BinaryField(blank=True, null=True)
+    initial_diff = models.BinaryField(blank=True, null=True)
+    confirmed_diff = models.BinaryField(blank=True, null=True)
+    update_diff = models.BinaryField(blank=True, null=True)
+    most_recent = models.BooleanField(default=False)
+    last_edit_time = models.DateTimeField(auto_now=True, null=True)
+
+    class Meta:
+        unique_together = ('customer', 'customer_program', 'created',)
+
+    def __str__(self):
+        return '{0}-{1}'.format(self.customer_program, self.created)
+
+    def save(self, *args, **kwargs):
+        super(EnhancementUpdate, self).save(*args, **kwargs)
+
+
+class WhoopsUpdate(models.Model):
+    """This is the whoops reports update model. """
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT)
+    created = models.DateTimeField(default=datetime.now, blank=True)
+    customer_program = models.ForeignKey(UniversityCustomerProgram, on_delete=models.PROTECT)
+    existing_report = models.BinaryField(blank=True, null=True)
+    cache_report = models.BinaryField(blank=True, null=True)
+    initial_diff = models.BinaryField(blank=True, null=True)
+    confirmed_diff = models.BinaryField(blank=True, null=True)
+    update_diff = models.BinaryField(blank=True, null=True)
+    most_recent = models.BooleanField(default=False)
+    last_edit_time = models.DateTimeField(auto_now=True, null=True)
+
+    class Meta:
+        unique_together = ('customer', 'customer_program', 'created',)
+
+    def __str__(self):
+        return '{0}-{1}'.format(self.customer_program, self.created)
+
+    def save(self, *args, **kwargs):
+        super(WhoopsUpdate, self).save(*args, **kwargs)
+
+
+class ConfirmedUpdateEmailQueue(models.Model):
+    """
+        Send update programs emails for customer.
+    """
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT)
+    confirmed_program = models.ForeignKey(UniversityCustomerProgram, on_delete=models.PROTECT)
+    update_report_type = models.CharField(max_length=20, choices=(('whoops', 'Whoops'),
+                                                                  ('enhancement', 'Enhancement')),
+                                          null=True, blank=True)

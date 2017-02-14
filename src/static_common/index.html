@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Upgrid</title>
+    
+
+    <link type="text/css" rel="stylesheet" href="./css/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="./css/progressjs.css">
+    <link type="text/css" rel="stylesheet" href="./css/ngProgress.css">
+
+    <!-- date picker -->
+    <link type="text/css" rel="stylesheet" href="js/third-party/bootstrap-datepicker/bootstrap-datepicker3.min.css">
+    <link type="text/css" rel="stylesheet" href="js/third-party/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
+
+
+    <!-- select 2 -->
+    <link type="text/css" rel="stylesheet" href="js/third-party/select2/select2.min.css">
+    <link type="text/css" rel="stylesheet" href="js/third-party/select2/select2-bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="js/third-party/jquery-auto-complete/jquery.auto-complete.min.css">
+    
+
+    <!-- dropzone -->
+    <link type="text/css" rel="stylesheet" href="js/third-party/dropzonejs/dropzone.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.5.0/css/xeditable.min.css" />
+
+    <link rel="stylesheet" id="css-main" href="./css/oneui.css">
+    <link type="text/css" rel="stylesheet" href="./css/app.css">
+    
+
+
+    
+    <link rel="icon" type="image/png" href="img/icon.png" >
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap.min.js"></script> -->
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js"></script>
+
+    
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular/angular-route.min.js"></script>
+    <script src="lib/angular/angular-animate.min.js"></script>
+    
+
+    <script src="js/app.js"></script>
+    <script src="js/third-party/clipboard.min.js"></script>
+    <script src="js/third-party/Blob.js"></script>
+    <script src="js/third-party/FileSaver.min.js"></script>
+    <script src="js/third-party/jszip.min.js"></script>
+    <script src="js/third-party/progress.js"></script>
+    <script src="js/third-party/ngprogress.min.js"></script>
+    <script src="js/third-party/printThis.js"></script>
+    <script src="js/third-party/angular-bootstrap-confirm.min.js"></script>
+
+    
+    
+    
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/oclazyload/1.0.9/ocLazyLoad.min.js"></script>
+    <script src="js/third-party/pdfobject.min.js"></script>
+    
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.0/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" />
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <script src="js/controllers/reset.js"></script>
+    <script src="js/controllers/login.js"></script>
+    <script src="js/controllers/success.js"></script>
+    <script src="js/controllers/dashboard.js"></script>
+    <script src="js/controllers/whoops.js"></script>
+    <script src="js/controllers/enhancement.js"></script>
+    <script src="js/controllers/cart.js"></script>
+    <script src="js/controllers/profile.js"></script>
+    <script src="js/controllers/shareall.js"></script>
+    
+    <!--  -->
+    <script src="js/controllers/admin.js"></script>
+
+    <!-- for test share -->
+    <script src="js/controllers/share_whoops.js"></script>
+    <script src="js/controllers/share_enhancement.js"></script>
+
+
+    <script src="js/services/authService.js"></script>
+    <script src="js/services/apiService.js"></script>
+    <script src="js/services/counterService.js"></script>
+    <script src="js/services/tableService.js"></script>
+    <script src="js/services/reportService.js"></script>
+    <script src="js/services/ajaxService.js"></script>
+    <script src="js/services/avatarService.js"></script>
+    <script src="js/directives/sticky.min.js"></script>
+    <script src="js/directives/directives.js"></script>
+    <script src="lib/angular/angular-cookies.js"></script>
+    <script src="lib/angular-ui-router/angular-ui-router.min.js"></script>
+
+    
+    <link rel="stylesheet" type="text/css" href="./css/menu/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="./css/menu/component.css" />
+    
+    <!-- <script src="js/third-party/menu/modernizr.custom.js"></script>
+    <script src="js/third-party/menu/classie.js"></script>
+    <script src="js/third-party/menu/gnmenu.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/menu/demo.css" /> -->
+
+    <!-- /////// -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-animate.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-touch.min.js"></script>
+    <script src="js/core/jquery.slimscroll.min.js"></script>
+    <script src="js/core/jquery.scrollLock.min.js"></script>
+    <script src="js/core/jquery.appear.min.js"></script>
+    <script src="js/core/jquery.countTo.min.js"></script>
+    <script src="js/core/jquery.placeholder.min.js"></script>
+    <script src="js/core/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.4/ui-bootstrap.min.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.1.4.js"></script>
+    <script src="js/third-party/app.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+
+    
+    <!-- Page JS Plugins -->
+    <script src="js/third-party/jquery.countTo.min.js"></script>
+    <script src="js/third-party/jquery-validation/jquery.validate.min.js"></script>
+    <script src="js/third-party/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="js/third-party/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="js/third-party/bootstrap-duallistbox/bootstrap-duallistbox.min.css">
+    
+    <script src="js/third-party/angular-bootstrap-duallistbox.min.js"></script>
+
+    <script src="js/third-party/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="js/third-party/bootstrap-datetimepicker/moment.min.js"></script>
+    <script src="js/third-party/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="js/third-party/select2/select2.full.min.js"></script>
+
+    <!-- <script src="js/third-party/select2/select2.min.css"></script> -->
+    <script src="js/third-party/masked-inputs/jquery.maskedinput.min.js"></script>
+    <script src="js/third-party/jquery-auto-complete/jquery.auto-complete.min.js"></script>
+    <!-- chartjs -->
+    <script src="js/third-party/chartjs/Chart.min.js"></script>
+    <script src="js/third-party/chartjsv2/Chart.min.js"></script>
+
+    <script src="js/third-party/dropzonejs/dropzone.min.js"></script>
+
+
+    <script src="js/third-party/sparkline/jquery.sparkline.min.js"></script>
+    <script src="js/third-party/easy-pie-chart/jquery.easypiechart.min.js"></script>
+    <script src="js/third-party/flot/jquery.flot.min.js"></script>
+    <script src="js/third-party/flot/jquery.flot.pie.min.js"></script>
+    <script src="js/third-party/flot/jquery.flot.stack.min.js"></script>
+    <script src="js/third-party/flot/jquery.flot.resize.min.js"></script>
+    <!-- <script src="js/third-party/angular.easypiechart.min.js"></script> -->
+
+    
+
+    <!-- Page JS Plugins -->
+    <script src="js/third-party/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="js/third-party/sweetalert/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.5.0/js/xeditable.min.js"></script>
+
+    <!-- Page JS Code -->
+    <!-- <script src="js/third-party/base_pages_login.js"></script> -->
+    <!-- /////// -->
+<!--     <link rel="stylesheet" type="text/css" href="./css/menu/demo.css" />
+ -->
+    
+
+    <style>
+
+      .table th:hover{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .table .action-column{
+        width: 230px;
+    }
+    .table .action-column:hover{
+        text-decoration: none;
+        cursor: default;
+    }
+    .table tfoot .pagination{
+        float: right;
+        margin: 0;
+    }
+    .table tfoot .pagination li{
+        cursor: pointer;
+    }
+    .table tfoot select{
+        width: 90px;
+        float: right;
+        margin-right: 8px;
+    }
+
+</style>
+
+
+</head>
+<body>
+
+    <!-- pages shown here -->
+    <div ui-view>
+
+    </div>
+    
+</body>
+</html>
