@@ -1221,6 +1221,7 @@ ul.help-ul>li {
 .help-section-title {
   font-size: 26px;
   color: #545454;
+  font-weight:100;
   
 }
 
@@ -1290,4 +1291,14 @@ ul.help-ul>li {
 
 .fa.fa-angle-right {
   font-weight:600;
+}
+
+
+#timeline .nav-users a > img {
+    position: absolute;
+    left: 12px;
+    top: inherit;
+    width: 38px;
+    height: 38px;
+    border-radius: 0;
 }

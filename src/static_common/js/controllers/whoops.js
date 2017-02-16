@@ -353,23 +353,23 @@ whoops.controller('WhoopsController',
           App.blocks('#loadingtable', 'state_normal');
 
 
-          $http({
-                url: '/api/upgrid/update/view/whoops/' + result.data[0].object_id + '/' +avatarService.getClientId(),
-                method: 'GET',
-                headers: {
-                  'Authorization': 'JWT ' + token
-                }
-          }).then(function (response) {
+          // $http({
+          //       url: '/api/upgrid/update/view/whoops/' + result.data[0].object_id + '/' +avatarService.getClientId(),
+          //       method: 'GET',
+          //       headers: {
+          //         'Authorization': 'JWT ' + token
+          //       }
+          // }).then(function (response) {
 
-             $scope.details = response.data;
+          //    $scope.details = response.data;
 
-             console.log("data returned whoops"+ JSON.stringify(response.data));
+          //    console.log("data returned whoops"+ JSON.stringify(response.data));
              
-          }).
-           catch(function(error){
-              console.log('an error occurred...'+JSON.stringify(error));
+          // }).
+          //  catch(function(error){
+          //     console.log('an error occurred...'+JSON.stringify(error));
 
-           });
+          //  });
 
 
 

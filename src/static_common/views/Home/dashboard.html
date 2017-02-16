@@ -323,7 +323,7 @@
                         <div class="alert alert-info alert-dismissable push-30">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                     
-                                        <h3 class="font-w300 push-15">System Updated to v1.5 &nbsp;&nbsp;<i class="fa fa-info-circle" data-uib-popover-html="htmlPopover" data-popover-title="v1.5 Updates:" data-popover-placement="top" data-popover-trigger="'mouseenter'"></i></h3>
+                                        <h3 class="font-w300 push-15"><i class="icon-settings" style="vertical-align: middle;"></i>&nbsp; System Updated to v1.5 &nbsp;&nbsp;<i class="fa fa-info-circle" data-uib-popover-html="htmlPopover" data-popover-title="v1.5 Updates:" data-popover-placement="top" data-popover-trigger="'mouseenter'"></i></h3>
                                         
                                     </div>
                                     
@@ -341,14 +341,14 @@
                                             <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
                                         </li>
                                     </ul>
-                                    <h3 class="block-title"><i class="fa fa-star" style="color: #f3dc60"></i>&nbsp;&nbsp;Newly Released Reports</h3>
+                                    <h3 class="block-title"><i class="fa fa-check-circle" style="color: #c8e6ca"></i>&nbsp;&nbsp;Newly Released Reports</h3>
                                 </div>
                                 <div class="block-content">
                                      <ul class="list list-timeline pull-t">
                                         <!-- Facebook Notification -->
                                         <li ng-if="newly_released_whoops.length!==0">
                                             <div class="list-timeline-time">3 hrs ago</div>
-                                            <i class="si si-wrench list-timeline-icon bg-info"></i>
+                                            <i class="si si-wrench list-timeline-icon bg-primary"></i>
                                             <div class="list-timeline-content">
                                                 <p class="font-w600">"Whoops!" Reports</p>
                                                <ul class="nav-users push-10-t push">
@@ -356,8 +356,11 @@
                                                         <a>
                                                         <button class="btn btn-default btn-white pull-right" type="button" data-toggle="modal" data-target="#WhoopsReport" ng-click="WhoopsViewer(row.object_id, row.program_name, row.program_degree)" data-js-blur><i class="fa fa-cloud-download text-primary" style="vertical-align: middle;"></i></button>
 
-                                                            <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
-                                                            {{row.program_name}}
+                                                            <!-- <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i> -->
+
+                                                            <!-- Check File icon by Icons8 -->
+                                                            <img src="https://maxcdn.icons8.com/office/PNG/80/Files/check_file-80.png" title="Check File" width="80">
+                                                            <span>{{row.program_name}}</span>
                                                             <div class="font-w400 text-muted"><small>{{row.program_degree}}</small></div>
                                                         </a>
                                                     </li>
@@ -371,7 +374,7 @@
                                         <!-- Generic Notification -->
                                         <li ng-if="newly_released_enhancement.length!==0">
                                             <div class="list-timeline-time">4 hrs ago</div>
-                                            <i class="si si-rocket list-timeline-icon bg-smooth"></i>
+                                            <i class="si si-rocket list-timeline-icon bg-city"></i>
                                             <div class="list-timeline-content">
                                                 <p class="font-w600">Enhancement Reports</p>
                                                 <ul class="nav-users push-10-t push">
@@ -386,7 +389,9 @@
                                                             </span>
                                                             </button> -->
 
-                                                            <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
+                                                            <!-- <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i> -->
+                                                            <!-- Check File icon by Icons8 -->
+                                                            <img src="https://maxcdn.icons8.com/office/PNG/80/Files/check_file-80.png" title="Check File" width="80">
                                                             {{row.program_name}}
                                                             <div class="font-w400 text-muted"><small>{{row.program_degree}}</small></div>
 
@@ -436,7 +441,7 @@
                                             <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
                                         </li>
                                     </ul>
-                                    <h3 class="block-title"><i class="fa fa-clock-o" style="color: #ddd"></i>&nbsp;&nbsp;Updated Reports</h3>
+                                    <h3 class="block-title"><i class="fa fa-certificate" style="color: #FFEEA3"></i>&nbsp;&nbsp;Updated Reports</h3>
                                 </div>
                                 <div class="block-content">
                                      <ul class="list list-timeline pull-t">
@@ -447,16 +452,18 @@
                                         <!-- Generic Notification -->
                                         <li ng-if="newly_released_enhancement.length!==0">
                                             <div class="list-timeline-time">30 mins ago</div>
-                                            <i class="si si-rocket list-timeline-icon bg-smooth"></i>
+                                            <i class="si si-rocket list-timeline-icon bg-city"></i>
                                             <div class="list-timeline-content">
                                                 <p class="font-w600">Enhancement Reports</p>
                                                 <ul class="nav-users push-10-t push">
                                                     <li ng-repeat = "row in newly_released_enhancement | limitTo : 1">
                                                         <a>
 
-                                                        <button class="btn btn-default btn-white pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-bell text-primary"></i><span ng-if="Ceeb==='2905'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span><span ng-if="Ceeb==='2158'||Ceeb==='2120'||Ceeb==='2111'||Ceeb==='2142'||Ceeb==='2159'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">1</span></button>
+                                                        <button class="btn btn-default btn-white pull-right" data-toggle="modal" data-target="#EnhancementReport1" type="button" ng-click="EnhancementViewer1(row.object_id, row.program_name, row.program_degree)" data-js-blur style="position: relative;"><i class="fa fa-bell text-primary"></i><span ng-if="Ceeb==='2905'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">3</span><span ng-if="Ceeb==='2158'||Ceeb==='2120'||Ceeb==='2111'||Ceeb==='2142'||Ceeb==='2159'||Ceeb==='2174'" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">1</span></button>
 
-                                                            <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i>
+                                                            <!-- <i class="fa fa-file-text-o reporticon text-primary" style="left: 23px;font-size: 32px;top: 23px;background-color: transparent;"></i> -->
+                                                            <!-- New File icon by Icons8 -->
+                                                            <img src="https://maxcdn.icons8.com/office/PNG/80/Files/new_file-80.png" title="New File" width="80">
                                                             {{row.program_name}}
                                                             <div class="font-w400 text-muted"><small>{{row.program_degree}}</small></div>
                                                         </a>
@@ -1187,14 +1194,16 @@
 
                                             <span ng-if="Ceeb==='2905'&&$index===0"><a href="http://www.tc.columbia.edu/admissions/tuition-and-fees/" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $1,454.00 per Credit/Point" data-tooltip-placement="top">$1,512.00 per Credit/Point</a></span>
 
-                                            <span ng-if="Ceeb!=='2142'&&Ceeb!=='2111'&&Ceeb!=='2120'&&Ceeb!=='2158'&&Ceeb!=='2159'&&Ceeb!=='2905'&&$index===0">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span>
+                                            <span ng-if="Ceeb==='2174'&&$index===0"><a href="http://www8.gsb.columbia.edu/programs-admissions/mba/financial-aid/tuition-costs" target="_blank" style="text-decoration: underline;background:yellow;" data-uib-tooltip="History: $32,994.00 per Semester" data-tooltip-placement="top">$34,396.00 per Semester</a></span>
 
-                                            <span ng-if="Ceeb!=='2142'&&Ceeb!=='2111'&&Ceeb!=='2120'&&Ceeb!=='2158'&&Ceeb!=='2159'&&Ceeb!=='2905'&&row.school_cost_url&&row.tuition_per_unit&&$index===0">
+                                            <!-- <span ng-if="Ceeb!=='2142'&&Ceeb!=='2111'&&Ceeb!=='2120'&&Ceeb!=='2158'&&Ceeb!=='2159'&&Ceeb!=='2905'&&$index===0">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span> -->
+
+                                            <span ng-if="Ceeb!=='2142'&&Ceeb!=='2111'&&Ceeb!=='2120'&&Ceeb!=='2158'&&Ceeb!=='2159'&&Ceeb!=='2905'&&Ceeb!=='2174'&&row.school_cost_url&&row.tuition_per_unit&&$index===0">
                                             <a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span>
 
-                                            <span ng-if="Ceeb!=='2142'&&Ceeb!=='2111'&&Ceeb!=='2120'&&Ceeb!=='2158'&&Ceeb!=='2159'&&Ceeb!=='2905'&&!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span>
+                                            <span ng-if="Ceeb!=='2142'&&Ceeb!=='2111'&&Ceeb!=='2120'&&Ceeb!=='2158'&&Ceeb!=='2159'&&Ceeb!=='2905'&&Ceeb!=='2174'&&!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit&&$index===0"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a></span>
 
-                                            <span ng-if="Ceeb!=='2142'&&Ceeb!=='2111'&&Ceeb!=='2120'&&Ceeb!=='2158'&&Ceeb!=='2159'&&Ceeb!=='2905'&&!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span>
+                                            <span ng-if="Ceeb!=='2142'&&Ceeb!=='2111'&&Ceeb!=='2120'&&Ceeb!=='2158'&&Ceeb!=='2159'&&Ceeb!=='2905'&&Ceeb!=='2174'&&!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit&&$index===0">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</span>
 
 
 
@@ -1970,7 +1979,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Additional Scholarships</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship</td>
 
                                             <td ng-class="{'bg-highlight' :row.scholarship_avail!==true && row.scholarship_avail!==false && $index === 0,  'bg-gray-lighter' :row.scholarship_avail!==true && row.scholarship_avail!==false && $index !== 0}" ng-repeat = "row in e_array_final[8]">
 
