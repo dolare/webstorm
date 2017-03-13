@@ -135,7 +135,7 @@
 
               <td colspan="3" class="text-center">
                 <br/><br/>
-                <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5" style="text-align:right;"></div>
+                <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5" style="text-align:right;"></div>
               </td>
 
             </tr>
@@ -151,10 +151,6 @@
           Share [{{count}}]
         </button>
 
-
-        <!-- <div ng-include src="'views/Login/whoops_report.html'"></div> -->
-       
-        
 
       </div>
     </div>
@@ -380,12 +376,12 @@
                           
 
                             <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
-                            <small>Gradgrid.com/upgrid</small><br>UPGRID REPORTS
+                            <small>upgrid.gridet.com</small><br>UPGRID REPORTS
                             </h1>
                             </div>
 
                             <div class="col-sm-6">
-                            <img src="img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
+                            <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
                             </div>
                             </div>
                             
@@ -479,7 +475,7 @@
                             
                            
                               <div ng-attr-id="{{ 'program-' + $index }}"></div>
-                              <div ng-include src="'views/Home/report_manager.html'"></div>
+                              <div ng-include src="'/static/views/Home/report_manager.html'"></div>
 
                             </div>
 

@@ -1,4 +1,8 @@
 # System lib
+####################################################
+from django.shortcuts import render,get_object_or_404
+from django.template import loader
+#####################################################
 import base64
 import logging
 from django.core.serializers import serialize
@@ -6,7 +10,6 @@ from django.core.mail import BadHeaderError, EmailMessage
 from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404
-from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 # 3rd party lib
@@ -43,7 +46,7 @@ from .api_serializers import *
 import zlib
 from django.utils import timezone
 from . import dbSerializers as dbLizer
-from json import dumps,loads
+from json import dumps, loads
 from rest_framework.renderers import JSONRenderer
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -52,10 +55,18 @@ app_logger = logging.getLogger('app')
 # app_logger.error("This is an ERROR level message")
 
 # ----------------------Login / Password ----------------------------------------
+# index
+###################################################
+
+
+def index(request):
+    return render(request, 'upgrid/index.html')
+
+
+###################################################
+
 
 # api/access_token/
-
-
 class CustomizeJWT(ObtainJSONWebToken):
     serializer_class = Login2Serializer
 
@@ -129,7 +140,7 @@ class ResetPassword(generics.GenericAPIView):
         encoded_password = request.data['password']
         password = self.validate(encoded_password)
         user.set_password(password)
-        user.save()
+        #user.save()
         return Response({"success": _("New password has been saved.")}, status=HTTP_202_ACCEPTED)
 
 
@@ -151,35 +162,40 @@ class CustomerProgram(generics.ListAPIView):
         confirmation_status = self.request.GET.get("cs")
         order = self.request.GET.get("order")
         client_id = self.request.GET.get("cid")
-        if order == "oname":
-            order = 'program__program_name'
-
-        elif order == "-oname":
-            order = '-program__program_name'
-
-        elif order == "degree":
-            order = 'program__degree__name'
-
-        elif order == "-degree":
-            order = '-program__degree__name'
-
-        elif order == 'cs':
-            order = 'customer_confirmation'
-
-        elif order == '-cs':
-            order = '-customer_confirmation'
-
-        elif order == 'wfs':
-            order = 'whoops_final_release'
-
-        elif order == '-wfs':
-            order = '-whoops_final_release'
-
-        elif order == 'efs':
-            order = 'enhancement_final_release'
-
-        elif order == '-efs':
-            order = '-enhancement_final_release'
+        order_dict = {"oname": "program__program_name", "-oname": "-program__program_name",
+                      "degree": "program__degree_name", "-degree": "-program__degree_name",
+                      "cs": "customer_confirmation", "-cs": "-customer_confirmation",
+                      "wfs": "whoops_final_release", "-wfs": "-whoops_final_release",
+                      "efs": "enhancement_final_release", "-efs": "-enhancement_final_release"}
+        # if order == "oname":
+        #     order = 'program__program_name'
+        #
+        # elif order == "-oname":
+        #     order = '-program__program_name'
+        #
+        # elif order == "degree":
+        #     order = 'program__degree__name'
+        #
+        # elif order == "-degree":
+        #     order = '-program__degree__name'
+        #
+        # elif order == 'cs':
+        #     order = 'customer_confirmation'
+        #
+        # elif order == '-cs':
+        #     order = '-customer_confirmation'
+        #
+        # elif order == 'wfs':
+        #     order = 'whoops_final_release'
+        #
+        # elif order == '-wfs':
+        #     order = '-whoops_final_release'
+        #
+        # elif order == 'efs':
+        #     order = 'enhancement_final_release'
+        #
+        # elif order == '-efs':
+        #     order = '-enhancement_final_release'
 
         try:
             user = UniversityCustomer.objects.get(id=self.request.user.id)
@@ -199,27 +215,27 @@ class CustomerProgram(generics.ListAPIView):
             query_list = UniversityCustomerProgram.objects.filter(customer=user.main_user_id,
                                                                   object_id__in=customer_programs)
         else:
-            query_list = UniversityCustomerProgram.objects.filter(customer=user).order_by(order)
+            query_list = UniversityCustomerProgram.objects.filter(customer=user).order_by(order_dict[order])
         if program_name:
             query_list = query_list.filter(
                 Q(program__program_name__icontains=program_name)
-                ).order_by(order)
+                ).order_by(order_dict[order])
         if program_degree:
             query_list = query_list.filter(
                 Q(program__degree__name__icontains=program_degree)
-                ).order_by(order)
+                ).order_by(order_dict[order])
         if whoops_final_release:
             query_list = query_list.filter(
                 Q(whoops_final_release=whoops_final_release)
-                ).order_by(order)
+                ).order_by(order_dict[order])
         if enhancement_final_release:
             query_list = query_list.filter(
                 Q(enhancement_final_release=enhancement_final_release)
-                ).order_by(order)
+                ).order_by(order_dict[order])
         if confirmation_status:
             query_list = query_list.filter(
                 Q(customer_confirmation=confirmation_status)
-                ).order_by(order)
+                ).order_by(order_dict[order])
         return query_list
         
 
@@ -387,6 +403,112 @@ class DashBoardAPI(APIView):
         return Response(context)
 
 
+# For User to get final released whoops and enhancement reports and time.
+class ReleasedPrograms(APIView):
+    def get_user(self, request, object_id):
+        try:
+            user = UniversityCustomer.objects.get(id=request.user.id)
+        except UniversityCustomer.DoesNotExist:
+            try:
+                manager = UpgridAccountManager.objects.get(id=request.user.id)
+                try:
+                    user = UniversityCustomer.objects.get(id=object_id, account_manager=manager)
+                except UniversityCustomer.DoesNotExist:
+                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
+            except ObjectDoesNotExist:
+                return Response({"Failed": _("System can not identify your status. Please login first!")},
+                                status=HTTP_403_FORBIDDEN)
+        return user
+
+    def get_released_program_list(self, customer, type):
+        if type == "enhancement":
+            if customer.account_type == 'sub':
+                customer_programs = ClientAndProgramRelation.objects.filter(client=customer).values('client_program')
+                program_list = UniversityCustomerProgram.objects.filter(customer=customer.main_user_id,
+                                                                        enhancement_final_release='True',
+                                                                        object_id__in=customer_programs).\
+                    order_by('enhancement_final_release_time')
+            else:
+                program_list = UniversityCustomerProgram.objects.filter(customer=customer,
+                                                                        enhancement_final_release='True').\
+                    order_by('enhancement_final_release_time')
+            return program_list
+        else:
+            if customer.account_type == 'sub':
+                customer_programs = ClientAndProgramRelation.objects.filter(client=customer).values('client_program')
+                program_list = UniversityCustomerProgram.objects.filter(customer=customer.main_user_id,
+                                                                        whoops_final_release='True',
+                                                                        object_id__in=customer_programs). \
+                    order_by('whoops_final_release_time')
+            else:
+                program_list = UniversityCustomerProgram.objects.filter(customer=customer,
+                                                                        whoops_final_release='True'). \
+                    order_by('whoops_final_release_time')
+            return program_list
+
+    def get(self, request, object_id=None):
+        user = self.get_user(request, object_id)
+        enhancement_list = self.get_released_program_list(user, "enhancement")
+        whoops_list = self.get_released_program_list(user, "whoops")
+        released_enhancement_list = EnhancementReleasedListSerializer(enhancement_list, many=True)
+        released_whoops_list = WhoopsReleasedListSerializer(whoops_list, many=True)
+
+        context = {"FinalReleasedEnhancement": released_enhancement_list, "FinalReleasedWhoops": released_whoops_list}
+        return context
+
+
+# For client's dashboard to display updated reports time info...
+class UpdatedReportsList(APIView):
+    def get_user(self, request, object_id):
+        try:
+            user = UniversityCustomer.objects.get(id=request.user.id)
+        except UniversityCustomer.DoesNotExist:
+            try:
+                manager = UpgridAccountManager.objects.get(id=request.user.id)
+                try:
+                    user = UniversityCustomer.objects.get(id=object_id, account_manager=manager)
+                except UniversityCustomer.DoesNotExist:
+                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
+            except ObjectDoesNotExist:
+                return Response({"Failed": _("System can not identify your status. Please login first!")},
+                                    status=HTTP_403_FORBIDDEN)
+        return user
+
+    def get_reports_list(self, customer, type):
+        if type == "enhancement":
+            if customer.account_type == 'sub':
+                customer_programs = ClientAndProgramRelation.objects.filter(client=customer).values('client_program')
+                report_list = EnhancementUpdate.objects.filter(customer=customer.main_user_id, most_recent=True,
+                                                               customer_program__in=customer_programs).\
+                    order_by("last_edit_time")
+            else:
+                report_list = EnhancementUpdate.objects.filter(customer=customer, most_recent=True).order_by\
+                        ("last_edit_time")
+            return report_list
+
+        else:
+            if customer.account_type == 'sub':
+                customer_programs = ClientAndProgramRelation.objects.filter(client=customer).values('client_program')
+                report_list = WhoopsUpdate.objects.filter(customer=customer.main_user_id, most_recent=True,
+                                                          customer_program__in=customer_programs).\
+                    order_by("last_edit_time")
+            else:
+                report_list = WhoopsUpdate.objects.filter(customer=customer, most_recent=True).order_by\
+                        ("last_edit_time")
+
+            return report_list
+
+    def get(self, request, object_id=None):
+        user = self.get_user(request, object_id)
+        wrlist = self.get_reports_list(user, "whoops")
+        whoopsupdatelist = WhoopsUpdateSerializer(wrlist, many=True)
+        erlist = self.get_reports_list(user, "enhancement")
+        enhancementupdatelist = EnhancementUpdateSerializer(erlist, many=True)
+        context = {"WhoopsUpdateList": whoopsupdatelist, "EnhancementUpdateList": enhancementupdatelist}
+
+        return context
+
+
 # Get user's basic information / 
 class CustomerDetail(APIView):
     def get_object(self, request, client_id):
@@ -422,19 +544,24 @@ class CreateOrChangeSubUser(APIView):
         try:
             sub_user = UniversityCustomer.objects.get(id=request.data['sub_user_id'])
             main_user = UniversityCustomer.objects.get(id=request.user.id)
-            if main_user.Ceeb == sub_user.Ceeb:
-                if main_user.account_type == "main":
-                    if sub_user.account_type == "sub":
-                        return sub_user
-                    else:
-                        return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
-                else:
-                    return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)            
-            else:
+        except UniversityCustomer.DoesNotExist:
+            try:
+                mananger = AccountManager.objects.get(id=request.user.id)
+                sub_user = UniversityCustomer.objects.get(id=request.data['sub_user_id'])
+                main_user = UniversityCustomer.objects.get(id=request.data['main_user_id'])
+            except UniversityCustomer.DoesNotExist:
                 return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
-        except UniversityCustomer.DoesNotExist:
-            raise Http404
+        if main_user.Ceeb == sub_user.Ceeb:
+            if main_user.account_type == "main":
+                if sub_user.account_type == "sub":
+                    return sub_user
+                else:
+                    return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            else:
+                return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        else:
+            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
     def validate(self, data):
         decoded_string = base64.b64decode(data)
@@ -473,6 +600,7 @@ class CreateOrChangeSubUser(APIView):
         
         sub_service_until = main_user.service_until
         university_school = UniversitySchool.objects.get(ceeb=main_user.Ceeb.ceeb)
+        decoded_new_password = self.validate(self.request.data['password'])
         user = UniversityCustomer.objects.create(
             username=request.data['username'],
             email=request.data['email'],
@@ -485,10 +613,10 @@ class CreateOrChangeSubUser(APIView):
             position=request.data['position'],
             position_level=request.data['position_level'],
             phone=request.data['phone'],
-            service_until=sub_service_until)
+            service_until=sub_service_until,
+            password=decoded_new_password)
 
-        decoded_new_password = self.validate(self.request.data['password'])
-        user.set_password(decoded_new_password)
+        #user.set_password(decoded_new_password)
         user.save()
 
         # create corresponding customer programs of subuser
@@ -628,7 +756,9 @@ class ShareReports(APIView):
                         customer_program = UniversityCustomerProgram.objects.get(object_id=x)
                         info = {'university': program.university_school.university_foreign_key.name,
                                 'school': program.university_school.school,
-                                'program': program.program_name, 'degree': program.degree.name}
+                                'program': program.program_name, 'degree': program.degree.name,
+                                'whoops_final_release_time':customer_program.whoops_final_release_time,
+                                'report_last_edit_time':wur.last_edit_time}
                         arr = JSONParser().parse(BytesIO(zlib.decompress(wur.existing_report)))
                         arr.update(info)
                         json_str = JSONRenderer().render(arr)
@@ -645,11 +775,16 @@ class ShareReports(APIView):
                 for y in enhancement_id_list:
                     eur = self.get_enhancement_object(y, user)
                     if eur:
-                        # json_str = JSONRenderer().render(json_data)  # render to bytes with utf-8 encoding
-                        # raw_data = zlib.compress(json_str)
+                        customer_program = UniversityCustomerProgram.objects.get(object_id=y)
+                        info = {'enhancement_final_release_time':customer_program.enhancement_final_release_time,
+                                'report_last_edit_time':eur.last_edit_time}
+                        arr = JSONParser().parse(BytesIO(zlib.decompress(eur.existing_report)))
+                        arr.update(info)
+                        json_str = JSONRenderer().render(arr)
+                        raw_data = zlib.compress(json_str)
                         customer_program = UniversityCustomerProgram.objects.get(object_id=y)
                         e_obj = EnhancementReportsRepo.objects.create(er_customer_program=customer_program,
-                                                                      er_enhancement_report=eur.existing_report,
+                                                                      er_enhancement_report=raw_data,
                                                                       er_created=time_now,
                                                                       er_share_relation=relation_ship)
 
@@ -794,6 +929,7 @@ class ClientCRUD(APIView):
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         # create sub client object
+        decoded_new_password = self.decode_password(self.request.data['password'])
         if 'main_user_id' in self.request.POST:
             main_user = UniversityCustomer.objects.get(object_id=request.data['main_user_id'])
             university_school = UniversitySchool.objects.get(object_id=main_user.Ceeb.object_id)
@@ -811,6 +947,7 @@ class ClientCRUD(APIView):
                 position_level=self.request.data['position_level'],
                 phone=self.request.data['phone'],
                 service_until=main_user.service_until,
+                password=decoded_new_password
                 )
         # create main client object
         else:
@@ -829,10 +966,11 @@ class ClientCRUD(APIView):
                 position_level=self.request.data['position_level'],
                 phone=self.request.data['phone'],
                 service_until=self.request.data['service_until'],
+                password=decoded_new_password
                 )
 
-        decoded_new_password = self.decode_password(self.request.data['password'])
-        client.set_password(decoded_new_password)
+        # decoded_new_password = self.decode_password(self.request.data['password'])
+        # client.set_password(decoded_new_password)
         client.save()
         # for main user add competing_schools
 
@@ -947,6 +1085,11 @@ class UniversityCustomerProgramCRUD(APIView):
                     enhancement_final_release=p.get('enhancement_final_release'),
                     customer_confirmation='No',
                     )
+                if p.get('whoops_final_release') == 'True':
+                    customer_program.whoops_final_release_time = timezone.now()
+                if p.get('enhancement_final_release') == 'True':
+                    customer_program.enhancement_final_release_time = timezone.now()
+
                 customer_program.save()
                 # create competing program of each customer program for main user
                 # if p.get('competing_program')[0]['object_id'] != "":
@@ -991,6 +1134,13 @@ class UniversityCustomerProgramCRUD(APIView):
                     enhancement_final_release=p.get('enhancement_final_release'),
                     customer_confirmation=p.get('customer_confirmation'),
                 )
+                customer_program_object = UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id'))
+                if customer_program_object.whoops_final_release_time is None and p.get('whoops_final_release') == 'True':
+                    customer_program_object.whoops_final_release_time = timezone.now()
+                if customer_program_object.enhancement_final_release_time is None and p.get('enhancement_final_time') == 'True':
+                    customer_program_object.enhancement_final_release_time = timezone.now()
+
+                customer_program_object.save()
                 # customer_program.save()
             return Response({"success": _("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
 
@@ -1157,7 +1307,7 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
 
             if department:
                 if department == 'Others':
-                    query_list = query_list.filter(department="")
+                    query_list = query_list.filter(Q(department=""), Q(department__isnull=True))
                 else:
                     query_list = query_list.filter(
                         Q(department=department)
@@ -1203,6 +1353,7 @@ class WhoopsWebReports(APIView):
     def get_object(self, object_id, client):
 
         wur = WhoopsUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
+        cp = UniversityCustomerProgram.objects.get(object_id=object_id)
         if wur.existing_report:
             existing_report = JSONParser().parse(BytesIO(zlib.decompress(wur.existing_report)))
         else:
@@ -1212,7 +1363,9 @@ class WhoopsWebReports(APIView):
             print(update_diff)
         else:
             update_diff = "None"
-        context = {'existing_report': existing_report, 'update_diff': update_diff}
+        context = {'existing_report': existing_report, 'update_diff': update_diff,
+                   'whoops_released_time':cp.whoops_final_release_time,
+                   'report_last_edit_time':wur.last_edit_time}
         return context
 
     def get(self, request, object_id, client_id=None):
@@ -1266,6 +1419,7 @@ class EnhancementWebReports(APIView):
 
     def get_object(self, object_id, client):
         eur = EnhancementUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
+        cp = UniversityCustomerProgram.objects.get(object_id=object_id)
         if eur.existing_report:
             existing_report = JSONParser().parse(BytesIO(zlib.decompress(eur.existing_report)))
         else:
@@ -1275,7 +1429,9 @@ class EnhancementWebReports(APIView):
             print(update_diff)
         else:
             update_diff = "None"
-        context = {'existing_report': existing_report, 'update_diff': update_diff}
+        context = {'existing_report': existing_report, 'update_diff': update_diff,
+                   'enhancement_released_time': cp.enhancement_final_release_time,
+                   'report_last_edit_time': eur.last_edit_time}
         return context
 
     def get(self, request, object_id, client_id=None):
@@ -1509,6 +1665,7 @@ class ManagerWhoopsDiffConfirmation(APIView):
                                        request.data['cache_report'])
         wru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
         wru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
+        wru.last_edit_time = timezone.now()
         wru.save()
 
         return Response({"success": _("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
@@ -1567,7 +1724,9 @@ class ClientViewWhoopsUpdate(APIView):
         context = {'existing_report': existing_report, 'update_diff': update_diff,
                    'university': cust_pro.program.university_school.university_foreign_key.name,
                    'school': cust_pro.program.university_school.school,
-                   'program': cust_pro.program.program_name, 'degree': cust_pro.program.degree.name}
+                   'program': cust_pro.program.program_name, 'degree': cust_pro.program.degree.name,
+                   'whoops_final_release_time':cust_pro.whoops_final_release_time,
+                   'report_last_edit_time':update_report.last_edit_time}
         return Response(context, HTTP_200_OK)
 
 
@@ -1906,6 +2065,7 @@ class ManagerEnhancementDiffConfirmation(APIView):
                                        request.data['cache_report'])
         eru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
         eru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
+        eru.last_edit_time = timezone.now()
         eru.save()
 
         return Response({"success": _("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
@@ -1967,7 +2127,10 @@ class ClientViewEnhancementUpdate(APIView):
             update_diff = "None"
 
         # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
-        context = {'existing_report': existing_report, 'update_diff': update_diff}
+        context = {'existing_report': existing_report, 'update_diff': update_diff,
+                   'enhancement_final_release_time': customer_program.enhancement_final_release_time,
+                   'report_last_edit_time': update_report.last_edit_time
+                   }
         return Response(context, HTTP_200_OK)
 
 

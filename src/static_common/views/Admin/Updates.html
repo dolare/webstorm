@@ -71,7 +71,7 @@
                                 <tbody class="js-table-sections-header" ng-repeat-start="row in update_client">
                                     <tr>
                                       <td class="text-center">
-                                            <img class="img-avatar img-avatar48" src="assets/img/avatars/avatar15.jpg" alt="">
+                                            <img class="img-avatar img-avatar48" src="/static/img/avatar6.jpg" alt="">
                                         </td>
 
                                         <td>{{row.contact_name}}</td>
@@ -151,7 +151,7 @@
 
                                       <td colspan="3" class="text-center">
                                         <br><br>
-                                        <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
+                                        <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
                                       </td>
 
 
@@ -671,7 +671,11 @@
                                                               
                                                               <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='False';put_customer_program($index)" ng-class="{'active' : row.enhancement_final_release==='False'}" style="width:40px"><i class="fa fa-times" aria-hidden="true"></i></a>
 
+                                                            
+
                                                               <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='True';put_customer_program($index)" ng-class="{'active' : row.enhancement_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
+
+
                                                               
                                                             </div>
                                                         </td>
@@ -873,7 +877,7 @@
 
                    <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
-                    <div ng-include src="'views/Home/partials/enhancement_template_pro.html'"></div>
+                    <div ng-include src="'/static/views/Home/partials/enhancement_template_pro.html'"></div>
                     </div>
 
 
@@ -927,7 +931,7 @@
 
                         <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
-                        <div ng-include src="'views/Home/partials/whoops_template_pro.html'"></div>
+                        <div ng-include src="'/static/views/Home/partials/whoops_template_pro.html'"></div>
                         
                         </div>
                          

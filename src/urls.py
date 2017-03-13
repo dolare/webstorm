@@ -11,11 +11,9 @@ admin.sites.site = admin.site
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name="index.html")),
-    #upgrid API
-    #url(r'^_nested_admin/',include('nested_admin.urls')),
-    url(r'^',include('apps.upgrid.urls', namespace = 'upgrid'),),
-
+    # upgrid API
+    # url(r'^_nested_admin/',include('nested_admin.urls')),
+    url(r'^', include('apps.upgrid.urls', namespace='upgrid'),),
     url(r'^upgrid-admin/', include(admin.site.urls)),
 ]
 

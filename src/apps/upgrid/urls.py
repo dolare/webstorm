@@ -2,7 +2,9 @@ from django.conf.urls import url
 from . import apis
 
 urlpatterns=[
-
+    ##############################################
+    url(r'^$', apis.index, name='index'),
+    ##############################################
     # --------------------------New Designed Upgrid API------------------------
     
     # ---------------------------Login API----------------------------
@@ -52,6 +54,16 @@ urlpatterns=[
     url(r'^api/upgrid/user/dashboard/$', apis.DashBoardAPI.as_view()),
     # For account manager inpersonate use
     url(r'^api/upgrid/user/dashboard/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.DashBoardAPI.as_view()),
+
+    # # Get Dashboard newly released whoops and enhancement reports and time info for client +++
+    url(r'^api/upgrid/user/dashboard/newly_released/$', apis.ReleasedPrograms.as_view()),
+    # For account manager inpersonate use
+    url(r'^api/upgrid/user/dashboard/newly_released/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.ReleasedPrograms.as_view()),
+
+    # # Get Dashboard newly updated whoops and enhancement reports and time info for client +++
+    url(r'^api/upgrid/user/dashboard/newly_updated/$', apis.UpdatedReportsList.as_view()),
+    # For account manager inpersonate use
+    url(r'^api/upgrid/user/dashboard/newly_updated/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.UpdatedReportsList.as_view()),
 
     # ---------------------------Report API----------------------------------------
 

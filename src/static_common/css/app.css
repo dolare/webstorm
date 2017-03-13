@@ -40,6 +40,16 @@ body.modal-open {
 }
 
 
+
+.bg-green {
+  /*background-color: #6BDE98 ! important;*/
+  /*background-color: #5EDB9C ! important;*/
+  /*background-color: #6297DE ! important;*/
+  background-color: #70b9eb ! important;
+
+
+}
+
 /*.badge-notify{
   background-color:red;
   position:relative;
@@ -1301,4 +1311,62 @@ ul.help-ul>li {
     width: 38px;
     height: 38px;
     border-radius: 0;
+}
+
+.table .label.label-default, .table .label.label-info {
+  border-radius: 28px;
+  font-weight:400;
+}
+
+.search-icon {
+  color: #999;
+  /*font-size: 18px !important*/
+}
+
+
+/*table in index*/
+ .table th:hover{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .table .action-column{
+        width: 230px;
+    }
+    .table .action-column:hover{
+        text-decoration: none;
+        cursor: default;
+    }
+    .table tfoot .pagination{
+        float: right;
+        margin: 0;
+    }
+    .table tfoot .pagination li{
+        cursor: pointer;
+    }
+    .table tfoot select{
+        width: 90px;
+        float: right;
+        margin-right: 8px;
+    }
+
+.btn-orange {
+    color: #fff;
+    background-color: #F9883E;
+    border-color: #e66816;
+}
+
+
+.btn-orange:hover {
+    color: #fff;
+    background-color: #DB7837;
+    border-color: #C95B13;
+
+}
+
+.btn-orange:focus {
+  color: #fff;
+}
+
+.btn-blue {
+  background: #00A1E9;
 }

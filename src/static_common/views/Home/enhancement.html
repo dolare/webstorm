@@ -17,6 +17,7 @@
 
               </div>
 
+              <!-- <a href="javascript:void(0)" onclick="find('school');">Find in This Page...</a> -->
 
               <div class="col-sm-6 text-right" ng-if="accountType ==='main'&&unconfirmedprogram_nums >0 ">
                   
@@ -88,7 +89,7 @@
 
                   <th class="text-center th-bordered" style="width: 70px; vertical-align: middle; text-decoration: none; cursor: default;">
                     
-                    <i class="fa fa-search text-primary"></i>
+                    <i class="fa fa-search search-icon"></i>
                     <!-- <label class="css-input css-checkbox css-checkbox-primary remove-margin-t remove-margin-b" ng-class="{'css-input-disabled':availablenum===0}">
                       <input type="checkbox" id="check-all" name="check-all" ng-model="$storage.checkAllenhancement" ng-change="selectAll()" ng-disabled="availablenum===0"><span></span>
                     </label> -->
@@ -166,7 +167,7 @@
 
                         </span>
                         
-                      <label ng-if="row.enhancement_status==='False'"><label class="label label-default"><span class="fa fa-refresh"></span> In Progress</label>
+                      <label ng-if="row.enhancement_status==='False'"><label class="label label-default"><span class="fa fa-refresh"></span> &nbsp;In Progress</label>
 
                       </label>
 
@@ -213,14 +214,10 @@
                                     
                                     <td colspan="3" class="" style="border-top:0">
                                       <br>
-                                       <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="5" class="pull-right"></div>
+                                       <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="5" class="pull-right"></div>
                                     </td>
 
-                                    <!-- <td colspan="3" class="pull-right" style="border-top:0">
-                                      <br>
-                                    
-                                       <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="5" class="pull-left"></div>
-                                    </td> -->
+                                  
                                   </tr>
                                 </tfoot>
                 
@@ -378,7 +375,7 @@
                                     <td colspan="1" class="pull-right" style="border-top:0">
                                       <br>
                                     
-                                       <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="5" class="pull-left"></div>
+                                       <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="5" class="pull-left"></div>
                                     </td>
                                   </tr>
                                 </tfoot>
@@ -416,6 +413,7 @@
                                   </li>
                                 </ul>
                                 <h3 class="block-title">Enhancement Report</h3>
+                                
                               </div>
                               
                               <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" id="scrolltop_enhancement_page">
@@ -425,7 +423,7 @@
 
                    <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
-                    <div ng-include src="'views/Home/partials/enhancement_template.html'"></div>
+                    <div ng-include src="'/static/views/Home/partials/enhancement_template.html'"></div>
                     </div>
 
 

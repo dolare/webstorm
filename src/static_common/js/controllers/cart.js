@@ -128,7 +128,7 @@ controller('ReportsController',
         $scope.shared_token = response.data[0].split('/')[1];
         $scope.shareLoading = false;
         $scope.url = {
-          text: location.host + '/static/index.html#' + '/upgrid/share_selected_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
+          text: location.host + '/#/upgrid/share_selected_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
         };
 
         console.log("shared_id="+$scope.shared_id);

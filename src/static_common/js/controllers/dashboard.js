@@ -26,6 +26,25 @@ dashboard.controller('DashboardController',
       angular.element(document.getElementById('scrolltop_enhancement_update')).scrollTop(0);
     }
 
+    //test
+    // $http({
+    //       url: '/api/upgrid/user/dashboard/newly_released/',
+    //       method: 'GET',
+    //       headers: {
+    //         'Authorization': 'JWT ' + token
+    //       }
+    // }).then(function (response) {
+
+     
+
+    //    console.log("released!!!"+ JSON.stringify(response.data));
+       
+    // }).
+    //  catch(function(error){
+    //     console.log('an error occurred...'+JSON.stringify(error));
+
+    //  });
+
     //console.log("ceeb result is"+JSON.stringify(List.profile.Ceeb));
    console.log("dashboard result is"+JSON.stringify(List));
    console.log("Dash = "+JSON.stringify(Dash));

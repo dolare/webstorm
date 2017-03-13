@@ -94,7 +94,7 @@
                                     <div class="block-title">{{row.contact_name}}</div>
                                 </div>
                                 <div class="block-content block-content-full bg-primary text-center">
-                                    <img class="img-avatar img-avatar-thumb" src="assets/img/avatars/avatar9.jpg" alt="">
+                                    <img class="img-avatar img-avatar-thumb" src="/static/img/avatar6.jpg" alt="">
                                     <div class="font-s13 push-10-t">{{row.position}}</div>
                                 </div>
                                 <div class="block-content">
@@ -224,7 +224,7 @@
                      
                       <span ng-repeat="row in data.competingSchools">
 
-                      <p><span class="font-w600">{{$index+1}}. {{row.university_school.split(':')[1]}}</span>
+                      <p><span class="font-w600">{{$index+1}}. {{row.university_school.split(':')[1].split('--')[1]}} <br>&nbsp;&nbsp;&nbsp;<span class="text-muted" style="font-weight:100;">{{row.university_school.split(':')[1].split('--')[0]}}</span></span>
                       </p>
                       </span>
                       
@@ -557,22 +557,7 @@
                   
                 </colgroup>
                 <thead class="thead-inverse">
-                  
-                <!-- <tr>
-                  <th colspan="1" class="pull-left" style="border-bottom: 0">
-                
-                      <div class="btn-group pull-left ng-scope tablepagenum" >
-                       
-                        <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default">25</button>
-                        <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default">50</button>
-                      </div>
-                 </th>
-
-              <th colspan="1" class="text-center pull-right" style="border-bottom: 0">
-                    
-                    <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="" style="text-align:right;"></div>
-              </th>
-                </tr> -->
+               
 
                   <tr class="cell-bordered text-primary font-w400" style="border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233);">
                    
@@ -623,7 +608,7 @@
 
               <td colspan="1" class="text-center">
                 <br/><br/>
-                <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="" style="text-align:right;"></div>
+                <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="" style="text-align:right;"></div>
               </td>
 
 

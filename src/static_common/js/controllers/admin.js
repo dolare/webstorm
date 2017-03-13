@@ -2487,7 +2487,7 @@ admin.controller('QuoteController', ['$scope', '$localStorage', '$window',
           dataset.backgroundColor = dataset.data.map(function(data) {
 
 
-            console.log("yvalue = " + yvalue);
+           
 
             return data >= yvalue ? 'rgba(112,185, 235, 0.4)' : 'rgba(243, 243, 243, 1)';
           })

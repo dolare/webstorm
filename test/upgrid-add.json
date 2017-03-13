@@ -1,0 +1,1459 @@
+[
+{
+    "model": "ceeb_program.university",
+    "pk": "c2f15d66-6fd0-44ca-acf9-61709d65e174",
+    "fields": {
+        "date_created": "2016-08-24T16:46:49.184Z",
+        "date_modified": "2016-08-24T16:55:21.823Z",
+        "name": "University of California - Santa Barbara",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "2908b138-7271-4c0a-90db-13cc270cb753",
+    "fields": {
+        "date_created": "2016-01-18T21:20:03.918Z",
+        "date_modified": "2016-09-20T00:18:22.203Z",
+        "name": "Rutgers University - New Brunswick",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "fb17d630-2554-4dbe-8d33-fa3fe34325de",
+    "fields": {
+        "date_created": "2016-02-02T21:05:56.724Z",
+        "date_modified": "2016-09-20T00:16:56.538Z",
+        "name": "Rutgers University - Newark",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "2f2c2b47-3b79-4492-9227-d40c638b62c6",
+    "fields": {
+        "date_created": "2016-08-15T20:22:56.225Z",
+        "date_modified": "2016-08-18T03:07:48.649Z",
+        "name": "University of California - Berkeley",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "3dc95f82-4079-4365-b692-b4a9ef09c8a9",
+    "fields": {
+        "date_created": "2016-08-18T21:31:41.640Z",
+        "date_modified": "2016-08-18T21:31:41.640Z",
+        "name": "University of California - Los Angeles",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "238832b9-b194-4309-99e5-8b07330ed86f",
+    "fields": {
+        "date_created": "2016-08-22T21:17:45.722Z",
+        "date_modified": "2016-09-20T00:16:41.928Z",
+        "name": "University of California - San Francisco",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "6d03be28-6b59-47ea-b664-08c4cc611fd3",
+    "fields": {
+        "date_created": "2016-08-29T16:11:49.160Z",
+        "date_modified": "2016-08-29T16:11:49.160Z",
+        "name": "University of Michigan - Ann Arbor",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "bea0593f-8274-45bb-be6f-4bb3d78ec9cd",
+    "fields": {
+        "date_created": "2016-08-30T20:20:48.106Z",
+        "date_modified": "2016-08-30T20:20:48.106Z",
+        "name": "Northwestern University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "0bb8d547-1a87-4776-9b58-b94b08bbeb73",
+    "fields": {
+        "date_created": "2016-08-19T19:59:37.368Z",
+        "date_modified": "2016-08-22T19:03:48.064Z",
+        "name": "Johns Hopkins University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "03816741-2e60-4a56-8330-f18527d919cf",
+    "fields": {
+        "date_created": "2016-08-19T02:48:59.042Z",
+        "date_modified": "2016-08-19T02:53:37.384Z",
+        "name": "California Institute of Technology",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "72a38ec4-8106-48ff-ad2d-cdfd6ce3f2e4",
+    "fields": {
+        "date_created": "2016-08-19T01:04:02.245Z",
+        "date_modified": "2016-09-19T22:37:30.611Z",
+        "name": "University of Chicago",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "de164a18-7707-413c-a414-9bd328543902",
+    "fields": {
+        "date_created": "2016-08-11T19:21:34.578Z",
+        "date_modified": "2016-08-18T03:01:49.127Z",
+        "name": "Massachusetts Institute of Technology",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "2cf872a4-424b-48be-8261-7da710817ab6",
+    "fields": {
+        "date_created": "2016-02-29T22:18:16.071Z",
+        "date_modified": "2016-08-18T02:47:42.513Z",
+        "name": "Cornell University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "856d4d68-dd3d-4417-9e54-b74c3db30c45",
+    "fields": {
+        "date_created": "2016-08-09T03:35:49.996Z",
+        "date_modified": "2016-08-18T02:45:31.947Z",
+        "name": "Brown University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "9e629011-5894-470f-8955-dc5cb4be3112",
+    "fields": {
+        "date_created": "2016-08-12T16:53:12.217Z",
+        "date_modified": "2016-08-18T03:03:04.052Z",
+        "name": "Stanford University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "9fec2308-e31a-4d19-9509-d997f477aa9a",
+    "fields": {
+        "date_created": "2016-08-11T17:54:08.849Z",
+        "date_modified": "2016-08-11T17:55:35.732Z",
+        "name": "Dartmouth College",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "b3dfd7af-3ecf-4cdc-bbaa-83e0fb2cbc12",
+    "fields": {
+        "date_created": "2015-11-23T05:40:12.511Z",
+        "date_modified": "2016-08-11T17:22:53.947Z",
+        "name": "University of Pennsylvania",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "7f30d6f3-af14-4f91-81c6-da4daf9e99c5",
+    "fields": {
+        "date_created": "2016-02-15T20:41:42.284Z",
+        "date_modified": "2016-02-15T20:41:42.284Z",
+        "name": "Harvard University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "6961c159-035a-492d-9e6c-e82797719b12",
+    "fields": {
+        "date_created": "2016-02-05T18:40:50.759Z",
+        "date_modified": "2016-02-05T18:46:10.481Z",
+        "name": "Yale University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "7418fea3-9a78-4e1a-81a4-d56a2391eb7a",
+    "fields": {
+        "date_created": "2016-01-26T01:27:10.556Z",
+        "date_modified": "2016-01-26T01:27:10.556Z",
+        "name": "Princeton University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "71baa754-d588-407d-a046-628563f83fe1",
+    "fields": {
+        "date_created": "2015-11-30T16:01:39.348Z",
+        "date_modified": "2015-11-30T16:01:39.348Z",
+        "name": "New York University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "b2332674-dd44-47b5-aed2-82d5bd9ba901",
+    "fields": {
+        "date_created": "2015-11-23T05:40:16.086Z",
+        "date_modified": "2015-11-23T05:40:16.086Z",
+        "name": "Columbia University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "7e20be28-91a4-42c8-a8df-6f6555e9d322",
+    "fields": {
+        "date_created": "2016-08-29T20:42:15.433Z",
+        "date_modified": "2016-08-29T20:42:15.433Z",
+        "name": "Duke University",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "e030f818-cfe9-4a97-a7b2-0f3f93de9a5f",
+    "fields": {
+        "date_created": "2016-01-18T15:40:27.638Z",
+        "date_modified": "2016-08-11T17:55:44.436Z",
+        "name": "Rutgers University - Camden",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "d93191dd-6c94-4f3c-aea8-6e5e1f9e0939",
+    "fields": {
+        "date_created": "2016-08-24T16:04:24.926Z",
+        "date_modified": "2016-09-20T00:17:54.379Z",
+        "name": "University of California - San Diego",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.university",
+    "pk": "84394a22-f158-4703-a0a9-30249c68e7c4",
+    "fields": {
+        "date_created": "2016-08-19T19:12:39.613Z",
+        "date_modified": "2016-08-19T19:12:39.613Z",
+        "name": "University of Washington",
+        "university_type": "private"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "4657f710-2212-458a-bc7c-ca66ba1e4e94",
+    "fields": {
+        "date_created": "2016-09-19T14:41:48.806Z",
+        "date_modified": "2016-09-20T14:57:03.581Z",
+        "university": "c2f15d66-6fd0-44ca-acf9-61709d65e174",
+        "name": "University of California - Santa Barbara",
+        "iped_index": "110705",
+        "address": "5221 Cheadle Hall",
+        "city": "Santa Barbara",
+        "country": "United States",
+        "region": "CA",
+        "county": "Santa Barbara",
+        "postal": "93106"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "4efc73f8-f35e-48d2-be58-b1dc1c909c09",
+    "fields": {
+        "date_created": "2016-09-16T00:57:34.621Z",
+        "date_modified": "2016-09-20T00:18:25.303Z",
+        "university": "2908b138-7271-4c0a-90db-13cc270cb753",
+        "name": "New Brunswick Campus",
+        "iped_index": "186380",
+        "address": "83 Somerset St",
+        "city": "New Brunswick",
+        "country": "United States",
+        "region": "NJ",
+        "county": "Middlesex",
+        "postal": "08901-1281"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "937e6d54-38e8-4450-a5ab-2734cc315f9f",
+    "fields": {
+        "date_created": "2016-09-15T21:35:34.197Z",
+        "date_modified": "2016-09-20T00:16:58.753Z",
+        "university": "fb17d630-2554-4dbe-8d33-fa3fe34325de",
+        "name": "Newark Campus",
+        "iped_index": "186399",
+        "address": "249 University Avenue, Blumenthal Hall",
+        "city": "Newark",
+        "country": "United States",
+        "region": "NJ",
+        "county": "Essex",
+        "postal": "07102"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "0afa3b37-260a-4a42-8b21-cde5d3d8f361",
+    "fields": {
+        "date_created": "2016-09-19T14:35:33.978Z",
+        "date_modified": "2016-09-20T14:57:45.643Z",
+        "university": "2f2c2b47-3b79-4492-9227-d40c638b62c6",
+        "name": "University of California - Berkeley",
+        "iped_index": "110635",
+        "address": "200 California Hall",
+        "city": "Berkeley",
+        "country": "United States",
+        "region": "CA",
+        "county": "Alameda",
+        "postal": "94720"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "1cd6b1a1-b066-4883-bb40-fabc14b5d2d3",
+    "fields": {
+        "date_created": "2016-09-19T23:30:19.189Z",
+        "date_modified": "2016-09-20T14:57:37.318Z",
+        "university": "3dc95f82-4079-4365-b692-b4a9ef09c8a9",
+        "name": "University of California - Los Angeles",
+        "iped_index": "110662",
+        "address": "405 Hilgard Ave",
+        "city": "Los Angeles",
+        "country": "United States",
+        "region": "CA",
+        "county": "Los Angeles",
+        "postal": "90095-1405"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "66545ccb-1ae5-4951-bbf0-289c34e7fb6d",
+    "fields": {
+        "date_created": "2016-09-19T14:37:18.147Z",
+        "date_modified": "2016-09-20T14:57:28.629Z",
+        "university": "238832b9-b194-4309-99e5-8b07330ed86f",
+        "name": "University of California - San Francisco",
+        "iped_index": "110699",
+        "address": "500 Parnassus Ave",
+        "city": "San Francisco",
+        "country": "United States",
+        "region": "CA",
+        "county": "San Francisco",
+        "postal": "94143-0244"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "161e93dc-942b-4990-b093-1502e4dbbf20",
+    "fields": {
+        "date_created": "2016-09-19T23:26:52.904Z",
+        "date_modified": "2016-09-19T23:26:52.904Z",
+        "university": "6d03be28-6b59-47ea-b664-08c4cc611fd3",
+        "name": "Ann Arbor Campus",
+        "iped_index": "170976",
+        "address": "503 Thompson Street",
+        "city": "Ann Arbor",
+        "country": "United States",
+        "region": "MI",
+        "county": "Washtenaw",
+        "postal": "48109"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "8d1843d5-34ab-427f-853f-95f70af8adfd",
+    "fields": {
+        "date_created": "2016-09-19T23:24:48.307Z",
+        "date_modified": "2016-09-19T23:24:48.307Z",
+        "university": "bea0593f-8274-45bb-be6f-4bb3d78ec9cd",
+        "name": "Northwestern University Campus",
+        "iped_index": "147767",
+        "address": "633 Clark St",
+        "city": "Evanston",
+        "country": "United States",
+        "region": "IL",
+        "county": "Cook",
+        "postal": "60208"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "280d8c2b-a79f-48ad-a7c2-5eba81984aec",
+    "fields": {
+        "date_created": "2016-09-19T22:45:02.939Z",
+        "date_modified": "2016-09-19T22:45:02.939Z",
+        "university": "0bb8d547-1a87-4776-9b58-b94b08bbeb73",
+        "name": "Johns Hopkins University Campus",
+        "iped_index": "162928",
+        "address": "3400 N Charles St",
+        "city": "Baltimore",
+        "country": "United States",
+        "region": "MD",
+        "county": "Baltimore City",
+        "postal": "21218-2688"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "d47664dd-3bc5-4b27-8fa6-5090c3263536",
+    "fields": {
+        "date_created": "2016-09-19T22:42:35.445Z",
+        "date_modified": "2016-09-19T22:42:35.445Z",
+        "university": "03816741-2e60-4a56-8330-f18527d919cf",
+        "name": "California Institute of Technology Campus",
+        "iped_index": "110404",
+        "address": "1200 E California Blvd",
+        "city": "Pasadena",
+        "country": "United States",
+        "region": "CA",
+        "county": "Los Angeles",
+        "postal": "91125"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "1ed777b5-19d4-4e25-b354-9104ccff6de5",
+    "fields": {
+        "date_created": "2016-09-19T22:39:25.708Z",
+        "date_modified": "2016-09-19T22:39:25.708Z",
+        "university": "72a38ec4-8106-48ff-ad2d-cdfd6ce3f2e4",
+        "name": "University of Chicago Campus",
+        "iped_index": "144050",
+        "address": "5801 S Ellis Ave",
+        "city": "Chicago",
+        "country": "United States",
+        "region": "IL",
+        "county": "Cook",
+        "postal": "60637"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "c11634ea-9694-45c9-836c-5c6a0a7abc29",
+    "fields": {
+        "date_created": "2016-09-19T22:36:32.743Z",
+        "date_modified": "2016-09-19T22:36:32.743Z",
+        "university": "de164a18-7707-413c-a414-9bd328543902",
+        "name": "MIT Campus",
+        "iped_index": "166683",
+        "address": "77 Massachusetts Avenue",
+        "city": "Cambridge",
+        "country": "United States",
+        "region": "MA",
+        "county": "Middlesex",
+        "postal": "02139-4307"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "87668e82-8539-4b9e-9df1-b3811eb10f81",
+    "fields": {
+        "date_created": "2016-09-19T22:34:22.751Z",
+        "date_modified": "2016-09-19T22:34:22.751Z",
+        "university": "2cf872a4-424b-48be-8261-7da710817ab6",
+        "name": "Cornell University Campus",
+        "iped_index": "190415",
+        "address": "300 Day Hall",
+        "city": "Ithaca",
+        "country": "United States",
+        "region": "NY",
+        "county": "Tompkins",
+        "postal": "14853"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "34571f45-d27b-401d-a68d-0d8e82167f00",
+    "fields": {
+        "date_created": "2016-09-19T22:32:48.687Z",
+        "date_modified": "2016-09-19T22:32:48.687Z",
+        "university": "856d4d68-dd3d-4417-9e54-b74c3db30c45",
+        "name": "Brown University Campus",
+        "iped_index": "217156",
+        "address": "One Prospect Street",
+        "city": "Providence",
+        "country": "United States",
+        "region": "RI",
+        "county": "Providence",
+        "postal": "02912"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "fe0b1daa-5a2f-4dd9-b5fe-6ce8029cc86c",
+    "fields": {
+        "date_created": "2016-09-19T22:31:06.085Z",
+        "date_modified": "2016-09-19T22:31:06.085Z",
+        "university": "9e629011-5894-470f-8955-dc5cb4be3112",
+        "name": "Stanford University Campus",
+        "iped_index": "243744",
+        "address": "355 Galvez St",
+        "city": "Stanford",
+        "country": "United States",
+        "region": "CA",
+        "county": "Santa Clara",
+        "postal": "94305"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "e80fc8db-c219-47bd-bec6-f35f1e2f33d6",
+    "fields": {
+        "date_created": "2016-09-19T21:02:45.212Z",
+        "date_modified": "2016-09-19T21:02:45.212Z",
+        "university": "9fec2308-e31a-4d19-9509-d997f477aa9a",
+        "name": "Dartmouth College Campus",
+        "iped_index": "182670",
+        "address": "207 Parkhurst Hall",
+        "city": "Hanover",
+        "country": "United States",
+        "region": "NH",
+        "county": "Grafton",
+        "postal": "03755-3529"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "806cc6e7-f207-460d-b7a8-d4763b6bb4e0",
+    "fields": {
+        "date_created": "2016-09-19T21:00:02.958Z",
+        "date_modified": "2016-09-19T21:00:02.958Z",
+        "university": "b3dfd7af-3ecf-4cdc-bbaa-83e0fb2cbc12",
+        "name": "University of Pennsylvania Campus",
+        "iped_index": "215062",
+        "address": "34th & Spruce Street",
+        "city": "Philadelphia",
+        "country": "United States",
+        "region": "PA",
+        "county": "Philadelphia",
+        "postal": "19104-6303"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "2161d3f4-8ae1-47c7-b2f2-8410ef8ee02a",
+    "fields": {
+        "date_created": "2016-09-19T20:29:54.582Z",
+        "date_modified": "2016-09-19T20:29:54.582Z",
+        "university": "7f30d6f3-af14-4f91-81c6-da4daf9e99c5",
+        "name": "Harvard University Campus",
+        "iped_index": "166027",
+        "address": "Massachusetts Hall",
+        "city": "Cambridge",
+        "country": "United States",
+        "region": "MA",
+        "county": "Middlesex",
+        "postal": "02138"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "46891e9b-fd25-4a75-8eb2-d9f471bea7e2",
+    "fields": {
+        "date_created": "2016-09-19T20:28:30.552Z",
+        "date_modified": "2016-09-19T20:28:30.552Z",
+        "university": "6961c159-035a-492d-9e6c-e82797719b12",
+        "name": "Yale University Campus",
+        "iped_index": "130794",
+        "address": "Woodbridge Hall",
+        "city": "New Haven",
+        "country": "United States",
+        "region": "CT",
+        "county": "New Haven",
+        "postal": "06520"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "c74e624d-0fab-434b-a2c0-ac2e58312966",
+    "fields": {
+        "date_created": "2016-09-19T20:27:15.914Z",
+        "date_modified": "2016-09-19T20:27:15.914Z",
+        "university": "7418fea3-9a78-4e1a-81a4-d56a2391eb7a",
+        "name": "Princeton University Campus",
+        "iped_index": "186131",
+        "address": "1 Nassau Hall",
+        "city": "Princeton",
+        "country": "United States",
+        "region": "NJ",
+        "county": "Mercer",
+        "postal": "08544-0070"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "227e3f3a-3fa8-4459-84c4-69159b09c3ab",
+    "fields": {
+        "date_created": "2016-09-19T20:25:50.725Z",
+        "date_modified": "2016-09-19T20:25:50.725Z",
+        "university": "71baa754-d588-407d-a046-628563f83fe1",
+        "name": "New York University Campus",
+        "iped_index": "193900",
+        "address": "70 Washington Sq South",
+        "city": "New York",
+        "country": "United States",
+        "region": "NY",
+        "county": "New York",
+        "postal": "10012-1091"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "098215f0-c8f0-4cfc-96db-013109afb053",
+    "fields": {
+        "date_created": "2016-09-19T20:23:50.048Z",
+        "date_modified": "2016-09-19T20:23:50.048Z",
+        "university": "b2332674-dd44-47b5-aed2-82d5bd9ba901",
+        "name": "Columbia University Campus",
+        "iped_index": "190150",
+        "address": "West 116 St and Broadway",
+        "city": "New York",
+        "country": "United States",
+        "region": "NY",
+        "county": "New York",
+        "postal": "10027"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "9417f3e3-1175-4e34-973d-539eb6c1f816",
+    "fields": {
+        "date_created": "2016-09-19T20:19:18.440Z",
+        "date_modified": "2016-09-19T20:21:42.298Z",
+        "university": "7e20be28-91a4-42c8-a8df-6f6555e9d322",
+        "name": "Duke University Campus",
+        "iped_index": "198419",
+        "address": "103 Allen Bldg",
+        "city": "Durham",
+        "country": "United States",
+        "region": "NC",
+        "county": "Durham",
+        "postal": "27708"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "1f5da9d5-c3a6-4156-992a-971443dafd3e",
+    "fields": {
+        "date_created": "2016-09-16T01:03:02.871Z",
+        "date_modified": "2016-09-16T01:03:02.871Z",
+        "university": "e030f818-cfe9-4a97-a7b2-0f3f93de9a5f",
+        "name": "Camden Campus",
+        "iped_index": "186371",
+        "address": "406 Penn",
+        "city": "Camden",
+        "country": "United States",
+        "region": "NJ",
+        "county": "Camden",
+        "postal": "08102"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "86d31b22-4bf3-44b9-a295-6d8e6f29ce2b",
+    "fields": {
+        "date_created": "2016-09-19T14:39:49.843Z",
+        "date_modified": "2016-09-20T14:57:20.208Z",
+        "university": "d93191dd-6c94-4f3c-aea8-6e5e1f9e0939",
+        "name": "University of California - San Diego",
+        "iped_index": "110680",
+        "address": "9500 Gilman Dr, La Jolla",
+        "city": "La Jolla",
+        "country": "United States",
+        "region": "CA",
+        "county": "San Diego",
+        "postal": "92093"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "410e4660-6a91-4932-ad90-3a69b41af197",
+    "fields": {
+        "date_created": "2016-09-15T17:11:44.791Z",
+        "date_modified": "2016-09-15T17:11:44.791Z",
+        "university": "84394a22-f158-4703-a0a9-30249c68e7c4",
+        "name": "Tacoma Campus",
+        "iped_index": "377564",
+        "address": "1900 Commerce St",
+        "city": "Tacoma",
+        "country": "United States",
+        "region": "WA",
+        "county": "King",
+        "postal": "98402-3100"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "88656522-7e1d-4c91-a3b4-1d8701a8b9be",
+    "fields": {
+        "date_created": "2016-09-15T16:13:34.638Z",
+        "date_modified": "2016-09-15T17:10:29.547Z",
+        "university": "84394a22-f158-4703-a0a9-30249c68e7c4",
+        "name": "Seattle Campus",
+        "iped_index": "236948",
+        "address": "1400 NE Campus Parkway",
+        "city": "Seattle",
+        "country": "United States",
+        "region": "WA",
+        "county": "King",
+        "postal": "98195-4550"
+    }
+},
+{
+    "model": "ceeb_program.campus",
+    "pk": "eae1fd31-9d75-4b05-b54e-11bd37fb7bb1",
+    "fields": {
+        "date_created": "2016-09-15T17:09:20.256Z",
+        "date_modified": "2016-09-15T17:09:20.256Z",
+        "university": "84394a22-f158-4703-a0a9-30249c68e7c4",
+        "name": "Bothell Campus",
+        "iped_index": "377555",
+        "address": "18115 Campus Way NE",
+        "city": "Bothell",
+        "country": "United States",
+        "region": "WA",
+        "county": "King",
+        "postal": "98011-8246"
+    }
+}
+,
+{
+    "model": "ceeb_program.eventtype",
+    "pk": "99adcc16-6ce6-4c98-8c0c-2719e78f87cd",
+    "fields": {
+        "date_created": "2015-12-10T22:24:18.638Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "ONL",
+        "description": "On Line Info Session/Chat/Virtual Event"
+    }
+},
+{
+    "model": "ceeb_program.eventtype",
+    "pk": "3770ad02-3e7e-4064-9b6a-6c14459d622b",
+    "fields": {
+        "date_created": "2015-12-10T22:24:18.638Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "ONCV",
+        "description": "On Campus Visit/Informal Info Session"
+    }
+},
+{
+    "model": "ceeb_program.eventtype",
+    "pk": "e0a4bdea-501d-4c8a-bf9b-145863f3dffc",
+    "fields": {
+        "date_created": "2015-12-10T22:24:18.638Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "ONCI",
+        "description": "On Campus Info Session "
+    }
+},
+{
+    "model": "ceeb_program.eventtype",
+    "pk": "83b8296c-4978-4a44-9b52-540c12e98ab5",
+    "fields": {
+        "date_created": "2015-12-10T22:24:18.638Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "OFF-INTL",
+        "description": "Off campus_international"
+    }
+},
+{
+    "model": "ceeb_program.eventtype",
+    "pk": "9aef80cd-f651-42ea-99ee-67a11f097161",
+    "fields": {
+        "date_created": "2015-12-10T22:24:18.638Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "OFF-DOMS",
+        "description": "Off campus_domestic"
+    }
+}
+,
+{
+    "model": "ceeb_program.exam",
+    "pk": "893f45cc-60e3-4b6e-9f8c-00cea140d67d",
+    "fields": {
+        "date_created": "2016-07-07T21:54:56.056Z",
+        "date_modified": "2016-07-07T21:54:56.056Z",
+        "name": "SAT",
+        "description": "Scholastic Aptitude Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "700568e8-29e8-4fd2-997b-20932e96a251",
+    "fields": {
+        "date_created": "2016-06-14T19:01:18.683Z",
+        "date_modified": "2016-06-14T19:01:18.683Z",
+        "name": "Praxis",
+        "description": "The Praxis Series\u00ae tests are taken by individuals entering the teaching profession as part of the certification process required by many states and professional licensing organizations.",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "61e87a6f-76f9-4c71-bc9c-294744c458e1",
+    "fields": {
+        "date_created": "2016-06-30T18:48:36.668Z",
+        "date_modified": "2016-06-30T18:48:36.669Z",
+        "name": "PCAT",
+        "description": "Pharmacy College Admission Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "de211cb5-515a-46be-a32d-7be1ade3cbb7",
+    "fields": {
+        "date_created": "2016-08-01T21:52:21.403Z",
+        "date_modified": "2016-08-01T21:52:21.403Z",
+        "name": "NBDE",
+        "description": "National Board Dental Examination",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "671c4bc1-8c4e-4c4d-8471-b2b567b4945b",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "N",
+        "description": "No exam is required.",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "de35f887-276e-4377-bb8d-99e7fe5cb448",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "MCAT",
+        "description": "Medical College Admission Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "482ebb1b-3d51-4475-b1e9-6233890800a0",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "MAT",
+        "description": "Miller Analogies Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "67fa4443-6fa7-4d16-8dcb-dad1083b5499",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "LSAT",
+        "description": "Law School Admission Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "9a194b40-59c1-4a81-b674-f87e74846b25",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "GRE SUB - Psychology",
+        "description": "Graduate Record Examination Subject Test in Psychology",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "d728ce91-4b53-46d2-a7b0-7e65dd820736",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "GRE SUB - Physics",
+        "description": "Graduate Record Examination Subject Test in Physics",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "5c5ab588-704c-4cad-bd39-60af6525c94b",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "GRE SUB - Mathematics",
+        "description": "Graduate Record Examination Subject Test in Mathematics",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "86adc2fe-a59b-42d0-8e90-affed9ff069f",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "GRE SUB - Literature in English",
+        "description": "Graduate Record Examination Subject Test in Literature in English",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "c82db83c-e417-46b1-8a29-63639afc45ef",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "GRE SUB - Chemistry",
+        "description": "Graduate Record Examination Subject Test in Chemistry",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "71920bfa-fcc6-4cb7-96b6-d22cd49eeba9",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "GRE SUB - Biology",
+        "description": "Graduate Record Examination Subject Test in Biology",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "674a861c-2ecc-450e-b547-ea1e334ed125",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "GRE SUB - Bioche, Cell, MolecularBio",
+        "description": "Graduate Record Examination Subject Test in Cell and Molecular Biology",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "23e0bffb-fcb1-4297-bab7-c31444393912",
+    "fields": {
+        "date_created": "2016-01-29T06:52:49.148Z",
+        "date_modified": "2016-01-29T06:52:49.148Z",
+        "name": "GRE & GRE SUB - Physics",
+        "description": "",
+        "active": null
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "edb7e2b0-26a4-40c8-802e-679b4bc1a3ca",
+    "fields": {
+        "date_created": "2016-01-28T08:00:20.018Z",
+        "date_modified": "2016-01-28T08:00:20.018Z",
+        "name": "GRE & GRE SUB - Mathematics",
+        "description": "",
+        "active": null
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "8508ba8e-f855-4e15-bbac-f3a8c119429f",
+    "fields": {
+        "date_created": "2016-01-28T07:52:06.950Z",
+        "date_modified": "2016-01-28T07:52:06.950Z",
+        "name": "GRE & GRE SUB - Chemistry",
+        "description": "",
+        "active": null
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "4c33d8d3-ac25-491a-a350-37de49f89d69",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "GRE",
+        "description": "Graduate Record Examination",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "56e47a16-375f-45be-8463-5a8137d59802",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "GMAT",
+        "description": "Graduate Management Admission Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "476d9275-5e8f-4658-b356-cbb8ffe511fb",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "DSAT",
+        "description": "Dentel School Admissions Test",
+        "active": false
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "e5ad3e0a-b7ae-4734-b4a6-284f426cf136",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "DAT",
+        "description": "Dental Admission Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "fe3e12ed-948c-4412-a7d9-745444ccf673",
+    "fields": {
+        "date_created": "2016-04-01T14:57:19.206Z",
+        "date_modified": "2016-04-01T14:57:19.206Z",
+        "name": "ACTFL",
+        "description": "American Council on The Teaching of Foreign Languages",
+        "active": null
+    }
+},
+{
+    "model": "ceeb_program.exam",
+    "pk": "eafc7de9-6ee5-48e5-90b7-da8b3ee6bfb6",
+    "fields": {
+        "date_created": "2016-07-07T21:54:09.268Z",
+        "date_modified": "2016-07-07T21:54:09.268Z",
+        "name": "ACT",
+        "description": "American College Testing",
+        "active": true
+    }
+}
+,
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "ca0e6141-33e4-4c27-a38f-b90e50e6ea35",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "TSE",
+        "description": "Test of Spoken English",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "20459449-5302-4956-b6e2-048f4084518a",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "TOEFL & TSE",
+        "description": "Test of English as a Foreign Language & Test of Spoken English",
+        "active": null
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "6e6fca32-c202-4374-bd06-5e0a6bc5f7b3",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "TOEFL - PBT",
+        "description": "Test of English as a Foreign Language - Paper-based Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "eac1e26f-a882-4285-b623-ebba68fcd1b3",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "TOEFL - IBT",
+        "description": "Test of English as a Foreign Language - Internet-based Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "d6bbce9f-6dbd-4211-8a83-02ab777cf56d",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "TOEFL - CBT",
+        "description": "Test of English as a Foreign Language - Computer-based Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "e65cd0c5-c8b5-439f-8add-4d5cdc2654cc",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "TOEFL",
+        "description": "Test of English as a Foreign Language",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "fae93675-abe9-492d-a16b-4b565fb8be70",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "PTE",
+        "description": "Preliminary English Test",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "8ee602c2-7cf0-4bc5-baa7-62d10c0d3030",
+    "fields": {
+        "date_created": "2016-05-18T20:14:46.943Z",
+        "date_modified": "2016-05-18T20:14:46.943Z",
+        "name": "MELAB",
+        "description": "Michigan English Assessment Battery",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "4f69e7c0-512a-4543-9ec0-7c3ec4b58cf7",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "IELTS",
+        "description": "International English Language Testing System",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "b346c313-636f-4052-90ef-206ec8dc148e",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "ECFMG",
+        "description": "Educational Commission for Foreign Medical Graduates",
+        "active": true
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "d9e5fb09-6afc-445c-a8c5-41ddec2bc455",
+    "fields": {
+        "date_created": "2016-01-28T02:22:22.682Z",
+        "date_modified": "2016-01-28T02:22:22.682Z",
+        "name": "CAE",
+        "description": "",
+        "active": null
+    }
+},
+{
+    "model": "ceeb_program.internationalenglishtest",
+    "pk": "1422b65b-426f-414a-bacc-4c386f03b7c2",
+    "fields": {
+        "date_created": "2016-01-29T16:56:48.590Z",
+        "date_modified": "2016-01-29T16:56:48.590Z",
+        "name": "ALP",
+        "description": "",
+        "active": null
+    }
+}
+,
+{
+    "model": "ceeb_program.subject",
+    "pk": "30776efb-00bd-4751-b2f2-35d64029610c",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "TEC",
+        "description": "Technology"
+    }
+},
+{
+    "model": "ceeb_program.subject",
+    "pk": "1f0ab57f-a362-4fe3-addd-be4c86c028fe",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "REL",
+        "description": "Religious Studies"
+    }
+},
+{
+    "model": "ceeb_program.subject",
+    "pk": "7e757953-744f-4e16-a8b6-0e91ff57b3f8",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "P&S",
+        "description": "Public Affairs & Social Sciences"
+    }
+},
+{
+    "model": "ceeb_program.subject",
+    "pk": "02757c8b-f1fa-401e-9aac-e52eafa62e64",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "MSE",
+        "description": "Math, Science & Engineering"
+    }
+},
+{
+    "model": "ceeb_program.subject",
+    "pk": "9ea6d5a1-360c-41b6-b05a-73cb2bb3b414",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "L&H",
+        "description": "Liberal Arts & Humanities"
+    }
+},
+{
+    "model": "ceeb_program.subject",
+    "pk": "603f404b-f3a9-41c9-aee7-133b4863c419",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "IND",
+        "description": "interdisciplinary"
+    }
+},
+{
+    "model": "ceeb_program.subject",
+    "pk": "8c065942-81b8-45d5-83cf-55721ed68aa4",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "H&M",
+        "description": "Health & Medicine"
+    }
+},
+{
+    "model": "ceeb_program.subject",
+    "pk": "2e126f1a-1e7f-4fa2-bb24-b3fee733934b",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "F&D",
+        "description": "Fine Arts & Design"
+    }
+},
+{
+    "model": "ceeb_program.subject",
+    "pk": "93acb2af-f261-4c4c-ad79-c19b7cb86b86",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "EDU",
+        "description": "Education"
+    }
+},
+{
+    "model": "ceeb_program.subject",
+    "pk": "eab14648-c88b-4b55-9425-5fea1c7fe971",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "CJL",
+        "description": "Criminal Justice & Legal"
+    }
+},
+{
+    "model": "ceeb_program.subject",
+    "pk": "5ee7418d-3a87-4521-b2c8-19c65eb6798f",
+    "fields": {
+        "date_created": "2015-12-10T22:24:36.973Z",
+        "date_modified": "2015-10-28T00:00:00Z",
+        "name": "BUS",
+        "description": "Business"
+    }
+}
+,
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "3a244796-9171-45cc-8732-c830b9e397d5",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "WES - ICAP",
+        "description": "World Education Services - International Credential Advantage Package"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "4b59da99-60b4-4053-bfae-910e827182e2",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "WES",
+        "description": "World Education Services"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "f26c5b0e-5f8f-4e6f-9528-7436e75c4a1e",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "TRANS",
+        "description": "Basic Translation from non-English transcript to English"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "92a7b72b-3c7e-45b6-ac0c-befd2432c4f9",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "SES",
+        "description": "Spantran Evaluation Services"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "6d4d227f-da1b-4e96-a3c4-5fd6c37d0ada",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "NACES",
+        "description": "National Association of Credential Evaluation Services"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "7ee90be2-b799-4561-9375-2b8b048cb844",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "NA",
+        "description": "Not Applicable"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "289cb569-4556-41e6-8ea3-69f5f4088439",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "JSA",
+        "description": "Josef Silny & Associates"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "5480dbbb-f9fb-4b44-8288-001d29e676c1",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "ITAES",
+        "description": "International Transcript Authentication and Evaluation Service, which is offered in cooperation with AACRAO"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "7dd87709-5e08-480b-8e3c-ea466aa5aa4b",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "IERF",
+        "description": "International Education Research Foundation"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "60a37e7c-9a5b-428b-8360-58f6adadb7d7",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-28T02:41:21.747Z",
+        "name": "EQV_OTH",
+        "description": "Other equivalent service providers"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "9159d884-8868-4093-99ca-45cbb0bf45ca",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "EP",
+        "description": "Educational Perspectives"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "df6601c0-71fd-4509-a389-379c4bf32488",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "ECE",
+        "description": "Educational Credential Evaluators"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "35d1d0f6-344e-4fa1-babe-1517f21127c7",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "CHESSIC",
+        "description": "China Higher Education Student Information and Career Center"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "9c908efb-c265-478a-94b7-e0c3f89c3896",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "CGFNS",
+        "description": "Commission on Graduates of Foreign Nursing Schools"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "ede3107f-65b3-4ae3-9c1e-c5f070d519fa",
+    "fields": {
+        "date_created": "2016-01-29T07:33:11.042Z",
+        "date_modified": "2016-02-01T20:45:09.685Z",
+        "name": "CAS",
+        "description": "LSAC Credential Assembly Service"
+    }
+},
+{
+    "model": "ceeb_program.transcriptevaluationprovider",
+    "pk": "d8adb899-5b34-4f95-9165-c7733651d22b",
+    "fields": {
+        "date_created": "2016-01-23T00:00:00Z",
+        "date_modified": "2016-01-23T00:00:00Z",
+        "name": "AACRAO",
+        "description": "American Association of Collegiate Registrars and Admissions Officers"
+    }
+}
+]

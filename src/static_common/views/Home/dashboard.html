@@ -4,10 +4,10 @@
                     <div class="block">
                         
                         <!-- Basic Info -->
-                        <div class="bg-image" style="background-image: url('img/photo29@2x.jpg');">
+                        <div class="bg-image" style="background-image: url('/static/img/photo29@2x.jpg');">
                             <div class="block-content bg-black-op text-center overflow-hidden">
                                 <div class="push-30-t push animated fadeInDown">
-                                    <img class="img-avatar img-avatar96 img-avatar-thumb" src="assets/img/avatars/avatar10.jpg" alt="">
+                                    <img class="img-avatar img-avatar96 img-avatar-thumb" src="/static/img/avatar6.jpg" alt="">
                                 </div>
                                 <div class="push-30 animated fadeInUp">
                                     <h2 class="h4 font-w600 text-white push-5" ng-bind="contact_name"></h2>
@@ -48,7 +48,7 @@
                            
                             <div class="push-20 font-w600 text-dark animated fadeIn">Programs</div>
 
-                            <div class="pie-chart chart-1" data-js-pie-chart="{lineWidth: 4, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
+                            <div class="pie-chart chart-1" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{customer_num}} programs in service" data-tooltip-placement="bottom">{{customer_num}} <br><small class="text-muted">/{{total_num}}</small></span>
                             </div>
 
@@ -60,7 +60,7 @@
                             
                             <div class="push-20 font-w600 text-dark animated fadeIn">"Whoops!" Report</div>
 
-                            <div class="pie-chart chart-2" data-js-pie-chart="{lineWidth: 4, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
+                            <div class="pie-chart chart-2" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{whoops_num}} out of {{customer_num}} 'Whoops!' Reports are available" data-tooltip-placement="bottom">{{whoops_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
                             </div>
 
@@ -77,7 +77,7 @@
                             
                             <div class="push-20 font-w600 text-dark animated fadeIn">Enhancement Report</div>
 
-                            <div class="pie-chart chart-3" data-js-pie-chart="{lineWidth: 4, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
+                            <div class="pie-chart chart-3" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{enhancement_num}} out of {{customer_num}} Enhancement Reports are available" data-tooltip-placement="bottom">{{enhancement_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
                             </div>
 
@@ -94,7 +94,7 @@
                             
                             <div class="push-20 font-w600 text-dark animated fadeIn">Confirmed</div>
 
-                            <div class="pie-chart chart-4" data-js-pie-chart="{lineWidth: 4, size: 100, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
+                            <div class="pie-chart chart-4" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{customer_num-unconfirmed_num}} out of {{customer_num}} programs are confirmed for the Enhancement Reports" data-tooltip-placement="bottom">{{customer_num-unconfirmed_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
                             </div>
 
@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="block-content block-content-full clearfix" style="padding-left:25px">
                                             <div class="pull-right">
-                                                <img class="img-avatar" src="assets/img/avatars/avatar6.jpg" alt="">
+                                                <img class="img-avatar" src="/static/img/avatar6.jpg" alt="">
                                             </div>
                                             <div class="pull-left push-10-t">
                                                 <div class="font-w600 push-5">Gresham Fedora</div>
@@ -229,7 +229,7 @@
                                     <ul class="nav-users push" ng-repeat="row in subuser" ng-if="subuser.length>0">
                                         <li>
                                             <a href="javascript:void(0)">
-                                                <img class="img-avatar" src="assets/img/avatars/avatar10.jpg" alt="">
+                                                <img class="img-avatar" src="/static/img/avatar6.jpg" alt="">
                                                 <i class="fa fa-circle text-success"></i> {{row.contact_name}}
                                                 <div class="font-w400 text-muted"><small>{{row.position}}</small></div>
                                             </a>
@@ -537,7 +537,7 @@
                 
 
 
-                        <div ng-include src="'views/Home/partials/whoops_template.html'"></div>
+                        <div ng-include src="'/static/views/Home/partials/whoops_template.html'"></div>
 
                         
                         </div>
@@ -586,7 +586,7 @@
 
                     <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
-                    <div ng-include src="'views/Home/partials/enhancement_template.html'"></div>
+                    <div ng-include src="'/static/views/Home/partials/enhancement_template.html'"></div>
                     </div>
 
 
@@ -678,14 +678,14 @@
                           
 
                             <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
-                            <small>Gradgrid.com/upgrid</small><br>ENHANCEMENT REPORT
+                            <small>upgrid.gridet.com</small><br>ENHANCEMENT REPORT
                             </h1>
                             <!-- <div id="anchor">here</div>
                             <button ng-click="toptop()">top</button> -->
                             </div>
 
                             <div class="col-sm-6">
-                            <img src="img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
+                            <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
                             </div>
                             </div>
                             

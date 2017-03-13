@@ -44,13 +44,13 @@ App.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider.
   state('reset', {
     url: '/upgrid/reset/:param1/:param2/',
-    templateUrl: 'views/Login/resetpassword.html',
+    templateUrl: '/static/views/Login/resetpassword.html',
     controller: 'ResetController',
 
   }).
   state('shareAll', {
     url: '/upgrid/share_selected_report/:param1/:param2/',
-    templateUrl: 'views/Home/share_all.html',
+    templateUrl: '/static/views/Home/share_all.html',
     controller: 'ShareAllController',
     
 
@@ -58,7 +58,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   state('shareWhoops', {
     url: '/upgrid/share_whoops_report/:param1/:param2/:param3/',
-    templateUrl: 'views/Login/whoops_report.html',
+    templateUrl: '/static/views/Login/whoops_report.html',
     controller: 'ShareWhoopsController',
     resolve: {
 
@@ -93,20 +93,20 @@ App.config(function($stateProvider, $urlRouterProvider) {
   }).
   state('shareWhoopsReport', {
     url: '/shared_whoops_report/:param1/:param2/',
-    templateUrl: 'views/Share/shared_whoops_report.html',
+    templateUrl: '/static/views/Share/shared_whoops_report.html',
     controller: 'ShareWhoopsController',
    
   }).
   state('shareEnhancementReport', {
     url: '/shared_enhancement_report/:param1/:param2/',
-    templateUrl: 'views/Share/shared_enhancement_report.html',
+    templateUrl: '/static/views/Share/shared_enhancement_report.html',
     controller: 'ShareEnhancementController',
    
   }).
 
   state('shareEnhancement', {
     url: '/upgrid/share_enhancement_report/:param1/:param2/:param3/',
-    templateUrl: 'views/Login/enhancement_report.html',
+    templateUrl: '/static/views/Login/enhancement_report.html',
     controller: 'ShareEnhancementController',
     resolve: {
 
@@ -142,7 +142,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   state('adminInterface', {
    
-    templateUrl: 'views/Admin/Dashboard.html',
+    templateUrl: '/static/views/Admin/Dashboard.html',
     controller: 'AdminController',
     abstract: true,
 
@@ -152,7 +152,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('admin', {
     url: '/admin',
     parent: 'success_demo',
-    templateUrl: 'views/Admin/AdminTable.html',
+    templateUrl: '/static/views/Admin/AdminTable.html',
     controller: 'AdminMainController',
     resolve: {
       auth: function($q, authenticationSvc) {
@@ -194,7 +194,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('updates', {
     url: '/updates',
     parent: 'success_demo',
-    templateUrl: 'views/Admin/Updates.html',
+    templateUrl: '/static/views/Admin/Updates.html',
     controller: 'UpdatesController',
     resolve: {
       auth: function($q, authenticationSvc) {
@@ -222,7 +222,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('quote', {
     url: '/quote',
     parent: 'success_demo',
-    templateUrl: 'views/Admin/Quote.html',
+    templateUrl: '/static/views/Admin/Quote.html',
     controller: 'QuoteController',
     resolve: {
       auth: function($q, authenticationSvc) {
@@ -250,7 +250,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('chart', {
     url: '/chart',
     parent: 'admin',
-    templateUrl: 'views/Admin/comp_charts.html',
+    templateUrl: '/static/views/Admin/comp_charts.html',
     controller: 'CompChartsCtrl',
 
 
@@ -259,7 +259,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('admin_profile', {
     url: '/admin_profile',
     parent: 'success_demo',
-    templateUrl: 'views/Admin/Profile.html',
+    templateUrl: '/static/views/Admin/Profile.html',
     controller: 'AdminProfileController',
     resolve: {
       auth: function($q, authenticationSvc) {
@@ -289,10 +289,18 @@ App.config(function($stateProvider, $urlRouterProvider) {
     params: {
       url: null
     },
-    templateUrl: 'views/Admin/Form.html',
+    templateUrl: '/static/views/Admin/Form.html',
     controller: 'FormController',
     //parent: 'admin',
 
+
+
+  }).
+
+   state('intro', {
+    url: '/',
+    templateUrl: '/static/views/Login/intro.html',
+    controller: 'LoginController',
 
 
   }).
@@ -302,18 +310,18 @@ App.config(function($stateProvider, $urlRouterProvider) {
     params: {
       url: null
     },
-    templateUrl: 'views/Login/login.html',
+    templateUrl: '/static/views/Login/login.html',
     controller: 'LoginController',
 
 
   }).
   state('forgot', {
     url: '/forgot',
-    templateUrl: 'views/Login/forgot.html',
+    templateUrl: '/static/views/Login/forgot.html',
     controller: 'LoginController',
 
   }).state('success_demo', {
-    templateUrl: 'views/Home/success_demo.html',
+    templateUrl: '/static/views/Home/success_demo.html',
     controller: 'SuccessController',
     abstract: true,
     resolve: {
@@ -346,7 +354,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   //success as a parent template
   // state('success', {
-  //   templateUrl: 'views/Home/success.html',
+  //   templateUrl: '/static/views/Home/success.html',
   //   controller: 'SuccessController',
   //   abstract: true,
   //   resolve: {
@@ -371,7 +379,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('profile', {
 
     url: '/profile',
-    templateUrl: 'views/Home/profile.html',
+    templateUrl: '/static/views/Home/profile.html',
     controller: 'ProfileController',
     parent: 'success_demo',
     resolve: {
@@ -404,7 +412,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   }).state('dashboard', {
 
     url: '/dashboard',
-    templateUrl: 'views/Home/dashboard.html',
+    templateUrl: '/static/views/Home/dashboard.html',
     controller: 'DashboardController',
     parent: 'success_demo',
     //parent: 'success',
@@ -474,7 +482,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('whoops', {
 
     url: '/whoops',
-    templateUrl: 'views/Home/whoops.html',
+    templateUrl: '/static/views/Home/whoops.html',
     controller: 'WhoopsController',
     parent: 'success_demo',
     //parent: 'success',
@@ -514,7 +522,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('enhancement', {
 
     url: '/enhancement',
-    templateUrl: 'views/Home/enhancement.html',
+    templateUrl: '/static/views/Home/enhancement.html',
     controller: 'EnhancementController',
     parent: 'success_demo',
     resolve: {
@@ -555,7 +563,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('reports', {
 
     url: '/reports',
-    templateUrl: 'views/Home/cart.html',
+    templateUrl: '/static/views/Home/cart.html',
     controller: 'ReportsController',
     parent: 'success_demo',
     resolve: {
@@ -589,24 +597,25 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).state('help', {
     url: '/support',
-    templateUrl: 'views/Home/help.html',
+    templateUrl: '/static/views/Home/help.html',
     controller: 'SuccessController',
     parent: 'success_demo'
 
   }).state('500', {
     url: '/500',
-    templateUrl: 'views/Errors/500.html',
+    templateUrl: '/static/views/Errors/500.html',
     controller: 'ErrorController',
    
   }).state('expired', {
     url: '/expired',
-    templateUrl: 'views/Errors/expired.html',
+    templateUrl: '/static/views/Errors/expired.html',
     controller: 'ErrorController',
    
   });
 
   //default route
-  $urlRouterProvider.otherwise('/login');
+  // $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/');
 
 
 });
@@ -660,13 +669,11 @@ App.run(["$rootScope", "$location", "$state", "authenticationSvc",
         $state.go("login");
       }
 
-
-
     });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     if (toState.resolve) {
-        progressJs().start().autoIncrease(10, 500);
+        progressJs().start().autoIncrease(5, 100);
         console.log("*START");
     }
     });
@@ -676,7 +683,6 @@ App.run(["$rootScope", "$location", "$state", "authenticationSvc",
             console.log("*END");
         }
     });
-
 
   }
 ]);
@@ -928,6 +934,42 @@ App.directive('jsTableSectionsFixed', function () {
         }
     };
 });
+
+
+//for create/edit table
+//customized_oneui_directive
+// Custom Table functionality: Section toggling
+// By adding the attribute 'data-js-table-sections' to your table
+App.directive('jsTableSectionsEdit', function () {
+    return {
+        link: function (scope, element) {
+            var table      = jQuery(element);
+            var tableRows  = jQuery('.js-table-sections-header > tr', table);
+
+            console.log("in the directive");
+            table.delegate('.js-table-sections-header > tr', 'click', function(e) {
+                if (e.target.type !== 'checkbox'
+                        && e.target.type !== 'button'
+                        && e.target.type !== 'radio'
+                        && e.target.tagName.toLowerCase() !== 'a'
+                        && e.target.tagName.toLowerCase() !== 'span'
+                        && e.target.tagName.toLowerCase() !== 'i'
+                        && !jQuery(e.target).parent('label').length) {
+                    var row    = jQuery(this);
+                    var tbody  = row.parent('tbody');
+
+                    if (! tbody.hasClass('open')) {
+                        jQuery('tbody', table).removeClass('open');
+                    }
+
+                    tbody.toggleClass('open');
+                }
+
+            });
+        }
+    };
+});
+
 
 
 //table for admin update

@@ -3,7 +3,7 @@
 <div class="pagination">
   <ul class="pagination">
     <li ng-class="{'disabled':currentPage===1|| numPages===0}">
-      <a ng-click="selectPage(1)">First</a>
+      <a ng-click="(currentPage===1|| numPages===0) ? doNothing() : selectPage(1)">First</a>
     </li>
 
     <li ng-class="{'disabled':currentPage===1|| numPages===0}">
@@ -15,7 +15,7 @@
     <li ng-class="{'disabled':currentPage===numPages || numPages===0}"><a ng-click="selectPage(currentPage+1)"><i class="fa fa-angle-right"></i></a>
     </li>
     <li ng-class="{'disabled':currentPage===numPages || numPages===0}">
-    <a ng-click="selectPage(numPages)">Last</a>
+    <a ng-click="(currentPage===numPages || numPages===0)? doNothing() : selectPage(numPages)">Last</a>
   </li>
 </ul>
 </div>

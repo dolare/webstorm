@@ -216,7 +216,7 @@ angular.module('apiServiceModule', [])
 
        profile = response.data;
 
-       console.log("!!!GOT! detail="+ JSON.stringify(profile));
+       console.log("!!!api service GOT! detail="+ JSON.stringify(profile));
         // if(response.status === 204){
         //   console.log("===204");
         // }

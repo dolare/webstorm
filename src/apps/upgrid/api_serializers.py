@@ -1,4 +1,5 @@
 # System lib
+
 from django.utils.translation import ugettext_lazy as _
 import base64
 import zlib
@@ -21,6 +22,7 @@ from .models import *
 
 
 # ----------------------------Login Serializer---------------------------------
+
 
 
 class Login2Serializer(serializers.Serializer):
@@ -121,6 +123,68 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
             return serializer.data
         except WhoopsUpdate.DoesNotExist:
             return 0
+
+
+class EnhancementReleasedListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UniversityCustomerProgram
+        fields = ('object_id', 'program_degree', 'program_name', 'enhancement_final_release_time')
+
+        def get_program_name(self, obj):
+            return obj.program.program_name
+
+        def get_program_degree(self, obj):
+            return obj.program.degree.name
+
+
+class WhoopsReleasedListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UniversityCustomerProgram
+        fields = ('object_id', 'program_degree', 'program_name', 'whoops_final_release_time')
+
+        def get_program_name(self, obj):
+            return obj.program.program_name
+
+        def get_program_degree(self, obj):
+            return obj.program.degree.name
+
+
+class EnhancementUpdateSerializer(serializers.ModelSerializer):
+    custoemr_program_id = SerializerMethodField()
+    program_name = SerializerMethodField()
+    program_degree = SerializerMethodField()
+
+    class Meta:
+        model = EnhancementUpdate
+        fields = ('customer_program_id', 'program_name', 'program_degree', 'last_edit_time')
+
+    def get_customer_program_id(self, obj):
+        return obj.customer_program.object_id
+
+    def get_program(self, obj):
+        return obj.customer_program.program.program_name
+
+    def get_program_degree(self, obj):
+        return obj.customer_program.program.degree.name
+
+
+class WhoopsUpdateSerializer(serializers.ModelSerializer):
+    custoemr_program_id = SerializerMethodField()
+    program_name = SerializerMethodField()
+    program_degree = SerializerMethodField()
+
+    class Meta:
+        model = WhoopsUpdate
+        fields = ('customer_program_id', 'program_name', 'program_degree', 'last_edit_time')
+
+    def get_customer_program_id(self, obj):
+        return obj.customer_program.object_id
+
+    def get_program(self, obj):
+        return obj.customer_program.program.program_name
+
+    def get_program_degree(self, obj):
+        return obj.customer_program.program.degree.name
 
 
 class CompetingProgramSerializer(serializers.ModelSerializer):

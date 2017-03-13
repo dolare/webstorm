@@ -78,7 +78,7 @@
 
                     <th class="text-center th-bordered" style="width: 70px; vertical-align: middle; text-decoration: none; cursor: default;">
                       
-                      <i class="fa fa-search text-primary"></i>
+                      <i class="fa fa-search search-icon"></i>
                     </th>
                       
                     <th class="th-bordered">
@@ -154,7 +154,7 @@
                     <label ng-if="row.whoops_status==='False'">
                       <!-- <i class="fa fa-hourglass-half fa-1x"></i> -->
                       <!-- <span class="label label-default" style=font-weight:bold;""><span class="fa fa-clock-o"></span>&nbsp;&nbsp;In Progress</span> -->
-                    <label class="label label-default"><i class="fa fa-refresh"></i> In Progress</label>
+                    <label class="label label-default"><i class="fa fa-refresh"></i> &nbsp;In Progress</label>
                     </label>
                     
                   </td>
@@ -163,16 +163,7 @@
                 </tr>
 
               </tbody>
-                
-              <!-- <tbody  ng-show="isLoading">
-                <tr class="cell-bordered">
-                <td colspan="4" style="padding-top:30px;padding-bottom:30px">
-                    
-                   <div class="block block-themed block-transparent remove-margin-b" id="loading">
-                   </div>
-                </td>
-              </tr>
-              </tbody> -->
+         
 
               <tfoot>
                 <tr>
@@ -191,7 +182,7 @@
 
                   <td colspan="2" class="text-center">
                     <br/><br/>
-                    <div st-template="views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
+                    <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
                   </td>
 
 
@@ -288,7 +279,7 @@
 
                         <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
-                        <div ng-include src="'views/Home/partials/whoops_template.html'"></div>
+                        <div ng-include src="'/static/views/Home/partials/whoops_template.html'"></div>
                         
                         </div>
                          

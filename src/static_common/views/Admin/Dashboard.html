@@ -12,7 +12,7 @@
             
 
             <!-- Side Overlay-->
-            <aside data-ng-include="'views/Admin/partials/base_side_overlay.html'" data-ng-controller="SideOverlayCtrl" id="side-overlay"></aside>
+            <aside data-ng-include="'/static/views/Admin/partials/base_side_overlay.html'" data-ng-controller="SideOverlayCtrl" id="side-overlay"></aside>
 
             <!-- Header -->
             <header id="header-navbar">
@@ -24,7 +24,7 @@
                         <li>
                             <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
                             <button class="btn btn-default btn-image" data-ng-click="adminui.settings.sideOverlayOpen = ! adminui.settings.sideOverlayOpen" data-js-blur type="button">
-                                <img src="assets/img/avatars/avatar9.jpg" alt="Avatar">
+                                <img src="/static/assets/img/avatars/avatar9.jpg" alt="Avatar">
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                         </li>

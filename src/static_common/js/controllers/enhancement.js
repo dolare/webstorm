@@ -110,6 +110,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
           }).then(function (response) {
 
             
+             console.log("released response ="+ JSON.stringify(response));
 
              console.log("released report whoops"+ JSON.stringify(response.data));
              //$scope.e_raw = response.data;
@@ -359,7 +360,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
 
         if(competing.length === 0){
             //alert("triggered");
-
+            console.log("avatar_value="+avatar_value);
             $http({
                   url: '/api/upgrid/user/'+ avatar_value +'competing_program/'+id+'/',
                   method: 'GET',
@@ -530,7 +531,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             $scope.shared_token = response.data[0].split('/')[1];
 
             $scope.url = {
-                text: location.host + '/static/index.html#'+'/shared_enhancement_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
+                text: location.host + '/#/shared_enhancement_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
             };
 
         }).

@@ -63,11 +63,15 @@ class UpgridBaseUser(models.Model):
         self._password = None
 
     def save(self, *args, **kwargs):
-        # self.password = make_password(self.password)
         super(UpgridBaseUser, self).save(*args, **kwargs)
         if self._password is not None:
             password_validation.password_changed(self._password, self)
             self._password = None
+        else:
+            self.password = make_password(self.password)
+            print(self.password)
+
+            #self.password = make_password(self.password)
 
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
@@ -88,8 +92,6 @@ class UpgridBaseUser(models.Model):
     def __str__(self):
         return '{0} - {1}'.format(self.username, self.email)
 
-    # def is_active(self):
-    #     return self.is_active
 
     @property
     def is_authenticated(self):
@@ -178,6 +180,8 @@ class UniversityCustomerProgram(UpgridAbstractDatedObject):
                                                                          ('False', 'Unreleased')), default='False')
     customer_confirmation = models.CharField(max_length=20,
                                              choices=(('Yes', 'Confirmed'), ('No', 'Not Confirmed')), default='No')
+    whoops_final_release_time = models.DateTimeField(null=True)
+    enhancement_final_release_time = models.DateTimeField(null=True)
 
     class Meta(UpgridAbstractDatedObject.Meta):
         unique_together = ('customer', 'program')
@@ -321,7 +325,7 @@ class EnhancementUpdate(models.Model):
     confirmed_diff = models.BinaryField(blank=True, null=True)
     update_diff = models.BinaryField(blank=True, null=True)
     most_recent = models.BooleanField(default=False)
-    last_edit_time = models.DateTimeField(auto_now=True, null=True)
+    last_edit_time = models.DateTimeField(null=True)
 
     class Meta:
         unique_together = ('customer', 'customer_program', 'created',)
@@ -345,7 +349,7 @@ class WhoopsUpdate(models.Model):
     confirmed_diff = models.BinaryField(blank=True, null=True)
     update_diff = models.BinaryField(blank=True, null=True)
     most_recent = models.BooleanField(default=False)
-    last_edit_time = models.DateTimeField(auto_now=True, null=True)
+    last_edit_time = models.DateTimeField(null=True)
 
     class Meta:
         unique_together = ('customer', 'customer_program', 'created',)

@@ -9,6 +9,7 @@ whoops.controller('WhoopsController',
     var token = authenticationSvc.getUserInfo().accessToken;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
 
+    var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
         
     console.log("host 1 is "+location.host);
     //for api test
@@ -321,6 +322,7 @@ whoops.controller('WhoopsController',
           console.log("%%%result.data="+JSON.stringify(result.data));
 
           $scope.data = tableDataService.getWhoops($scope.displayeddata);
+
           console.log("$scope.data = "+JSON.stringify($scope.data));
 
           tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
@@ -531,12 +533,14 @@ whoops.controller('WhoopsController',
         new Clipboard('.btn');
 
 
+        console.log("client_id="+client_id);
       $http({
         url: '/api/upgrid/reports/shared/',
         method: 'POST',
         data: {
           "whoops_id": Id,
           "enhancement_id": null,
+          "client_id": client_id
           
         },
         headers: {
@@ -554,7 +558,7 @@ whoops.controller('WhoopsController',
             $scope.shared_token = response.data[0].split('/')[1];
 
             $scope.url = {
-                text: location.host + '/static/index.html#'+'/shared_whoops_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
+                text: location.host + '/#/shared_whoops_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
             };
 
       }).
