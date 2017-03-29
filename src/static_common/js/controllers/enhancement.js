@@ -1,6 +1,6 @@
 //for the enhancement page
 angular.module('myApp.login.success.enhancement', []).
-controller('EnhancementController', function(avatarService, ajaxService, List, reportService, apiService, tableDataService, $localStorage, $sessionStorage, $scope, $window, $location, $http, authenticationSvc, $cookies, $state, $filter, $q) {
+controller('EnhancementController', function(updateService, avatarService, ajaxService, List, reportService, apiService, tableDataService, $localStorage, $sessionStorage, $scope, $window, $location, $http, authenticationSvc, $cookies, $state, $filter, $q) {
     // $scope.isActive = function(route) {
     //     return route === $location.path();
     // };
@@ -9,7 +9,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
     var token = authenticationSvc.getUserInfo().accessToken;
     $scope.emailadd = authenticationSvc.getUserInfo().username;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
-    
+    var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
     // $scope.$route = $route;
 
@@ -92,15 +92,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
       //jQuery('#testbutton').focus();
       $scope.enhancement_report_program = Program;
       $scope.enhancement_report_degree = Degree;
-        //ewr
-         // $http({
-         //        url: '/api/upgrid/ewr/'+Id,
-         //        method: 'GET',
-         //        headers: {
-         //          'Authorization': 'JWT ' + token
-         //        }
-         //  }).then(function (response) {
-
+      
           $http({
                 url: '/api/upgrid/update/view/enhancement/' + Id + '/' +avatarService.getClientId(),
                 method: 'GET',
@@ -112,8 +104,9 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             
              console.log("released response ="+ JSON.stringify(response));
 
+             
              console.log("released report whoops"+ JSON.stringify(response.data));
-             //$scope.e_raw = response.data;
+             //$scope.e_raw = response.data;    
              $scope.e_raw = response.data.existing_report;
              $scope.e_array_final = [];
              var e_array_1 = [];
@@ -143,7 +136,18 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
              }
 
              $scope.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
-             
+              
+
+             //update_diff
+             // process update_diff
+             $scope.e_update_diff = response.data.update_diff;
+             console.log("update_diff = "+JSON.stringify($scope.e_update_diff));
+
+
+             $scope.e_show_update = updateService.updateEnhancement(response.data, 'client');
+             console.log('$scope.e_show_update = '+JSON.stringify($scope.e_show_update));
+             // $scope.e_show_update = {};
+
 
              angular.element(document).ready(function () {
                App.blocks('#enhancement_loading', 'state_normal');
@@ -517,7 +521,8 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             method: 'POST',
             data: {
               "whoops_id": null,
-              "enhancement_id": Id
+              "enhancement_id": Id,
+              "client_id":client_id
             },
             headers: {
                 'Authorization': 'JWT ' + token
@@ -531,7 +536,7 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
             $scope.shared_token = response.data[0].split('/')[1];
 
             $scope.url = {
-                text: location.host + '/#/shared_enhancement_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
+                text: 'https://'+location.host + '/#/shared_enhancement_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
             };
 
         }).
@@ -574,7 +579,8 @@ controller('EnhancementController', function(avatarService, ajaxService, List, r
               url: '/api/upgrid/enhancement_reports/',
               method: 'PUT',
               data: {
-                object_id: confirm_list.slice(0,-1)
+                "object_id": confirm_list.slice(0,-1),
+                "client_id": client_id
               },
               headers: {
                 'Authorization': 'JWT ' + token

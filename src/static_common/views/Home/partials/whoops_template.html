@@ -127,12 +127,13 @@
                                         <span class="text-muted">Released on</span><br>{{date | date:'MMM dd , yyyy'}}
                                         <br>
                                         <span class="text-muted">Last updated on</span><br>{{date | date:'MMM dd , yyyy'}} -->
+
                                     </address>
                                 </div>
                                 <!-- END Client Info -->
                             </div>
                             <!-- END Invoice Info -->
-
+                            
                             <!-- Table -->
                             <div class="table-responsive push-50">
                                 <table class="table report_table1 table-bordered table-hover" style="table-layout: fixed;">
@@ -150,17 +151,27 @@
                                             <td colspan="2" ng-class="{'bg-info text-white': w_array_final[0].length!==0, 'bg-green text-white': w_array_final[0].length===0}">
                                                 <span class="font-w600">DEAD LINK</span>
 
-                                                <span ng-if="w_array_final[0].length!==0" class="badge badge-primary pull-right">{{w_array_final[0].length}}</span>
+                                                <span class="pull-right">
+                                                    <span ng-if="w_array_final[0].length!==0" class="badge badge-primary pull-right">{{w_array_final[0].length}}</span>
 
-                                                <span ng-if="w_array_final[0].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                                                    <span ng-if="w_array_final[0].length===0" class="pull-right" style="margin-left:3px;">
+                                                        <i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i>
+                                                    </span>
 
+
+                                                    <span class="pull-left">
+                                                        &nbsp;&nbsp;
+                                                        <button ng-show="w_update_diff.new.dead_link" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.dead_link = !$parent.show_history.dead_link"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                                                    </span>
+
+                                                </span>
                                             </td>
                                             
                                         </tr>
 
                                     </tbody>
 
-                                    <tbody ng-repeat="row in w_array_final[0]">
+                                    <tbody ng-repeat="row in w_array_final[0]" ng-show="!$parent.show_history.dead_link" class="animate-show-hide">
                                        <tr class="bg-warning-lighter">
                                              <td class="text-right text-muted">{{$index+1}})</td>
 
@@ -220,15 +231,131 @@
 
                                     </tbody>
 
+                                    <!-- history -->
+
+                                    <tbody ng-repeat="row in w_update_diff.old.dead_link" ng-show="$parent.show_history.dead_link" class="animate-show-hide">
+                                       <tr class="bg-gray-light" ng-show="$index===0">
+                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                                    <span class="badge pull-right badge-gray">{{w_update_diff.old.typo.length}}</span>
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                       <tr class="bg-gray-light">
+                                             <td class="text-right text-muted">{{$index+1}})</td>
+
+                                             <td>
+                                                <span class="font-w600 text-muted">Where</span>
+                                                
+                                            </td>
+
+                                            <td>
+                                                <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                                            </td>
+                                       </tr>
+
+                                       <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Dead link url</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Dead link url</span>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                        <tr class="bg-gray-lighter" ng-if="row.additional_note">
+                                            <td class="text-center bg-white"></td>
+                                            <td>
+                                                <span class="font-w600 text-muted">Description</span>
+                                                
+                                            </td>
+                                            <td>
+                                               <pre>{{row.additional_note}}</pre>
+
+
+                                            </td>
+                                            
+                                        </tr>
+
+                                    </tbody>
+
+                                    <!-- null -->
+                                    <tbody ng-show="$parent.show_history.dead_link && w_update_diff.old.dead_link===null" class="animate-show-hide">
+                                       <tr class="bg-gray-light">
+                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                               
+                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                </tbody>
+
+
+
                                             <tbody>
                                         <tr>
                                             <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[1].length!==0, 'bg-green text-white': w_array_final[1].length===0}">2</td>
                                             <td colspan="2" ng-class="{'bg-info text-white': w_array_final[1].length!==0, 'bg-green text-white': w_array_final[1].length===0}">
                                                 <span class="font-w600">TYPO</span>
 
-                                                <span ng-if="w_array_final[1].length!==0" class="badge badge-primary pull-right">{{w_array_final[1].length}}</span>
 
-                                                <span ng-if="w_array_final[1].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                                                <span class="pull-right">
+                                                    <span ng-if="w_array_final[1].length!==0" class="badge badge-primary pull-right">{{w_array_final[1].length}}</span>
+
+                                                    <span ng-if="w_array_final[1].length===0" class="pull-right" style="margin-left:3px;">
+                                                        <i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;">   
+                                                        </i>
+                                                    </span>
+
+                                                    <span class="pull-left">
+                                                        &nbsp;&nbsp;
+                                                        <button ng-show="w_update_diff.new.typo" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.typo = !$parent.show_history.typo"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                                                    </span>
+                                                </span>
 
                                             </td>
                                             
@@ -236,7 +363,7 @@
 
         </tbody>
 
-        <tbody ng-repeat="row in w_array_final[1]">
+        <tbody ng-repeat="row in w_array_final[1]" ng-show="!$parent.show_history.typo" class="animate-show-hide">
            <tr class="bg-warning-lighter">
                  <td class="text-right text-muted">{{$index+1}})</td>
 
@@ -296,6 +423,111 @@
 
         </tbody>
 
+        <!-- history -->
+
+        <tbody ng-repeat="row in w_update_diff.old.typo" ng-show="$parent.show_history.typo" class="animate-show-hide">
+
+        <tr class="bg-gray-light" ng-show="$index===0">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                                    <span class="badge pull-right badge-gray">{{w_update_diff.old.typo.length}}</span>
+
+                                                </span>
+
+                                            </td>
+          </tr>
+
+           <tr class="bg-gray-light">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Typo url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Typo url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   <pre>{{row.additional_note}}</pre>
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <!-- null -->
+
+        <tbody ng-show="$parent.show_history.typo && w_update_diff.old.typo===null" class="animate-show-hide">
+                                       <tr class="bg-gray-light">
+                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                               
+                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                </tbody>
 
         <tbody>
             <tr>
@@ -303,9 +535,21 @@
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[2].length!==0, 'bg-green text-white': w_array_final[2].length===0}">
                     <span class="font-w600">OUTDATED INFORMATION</span>
 
-                    <span ng-if="w_array_final[2].length!==0" class="badge badge-primary pull-right">{{w_array_final[2].length}}</span>
 
-                    <span ng-if="w_array_final[2].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                    <span class="pull-right">
+
+
+                        <span ng-if="w_array_final[2].length!==0" class="badge badge-primary pull-right">{{w_array_final[2].length}}</span>
+
+                        <span ng-if="w_array_final[2].length===0" class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+                        <span class="pull-left">
+                            &nbsp;&nbsp;
+                            <button ng-show="w_update_diff.new.outdated_information" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.outdated_information = !$parent.show_history.outdated_information"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                        </span>
+                        
+                    </span>
+                    
 
                 </td>
                 
@@ -313,7 +557,7 @@
 
         </tbody>
 
-        <tbody ng-repeat="row in w_array_final[2]">
+        <tbody ng-repeat="row in w_array_final[2]" ng-show="!$parent.show_history.outdated_information" class="animate-show-hide">
            <tr class="bg-warning-lighter">
                  <td class="text-right text-muted">{{$index+1}})</td>
 
@@ -372,6 +616,107 @@
             </tr>
 
         </tbody>
+
+        <!-- history -->
+
+        <tbody ng-repeat="row in w_update_diff.old.outdated_information" ng-show="$parent.show_history.outdated_information" class="animate-show-hide">
+
+            <tr class="bg-gray-light" ng-show="$index===0">
+                <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                        <span class="pull-right">
+                            <span class="badge pull-right badge-gray">{{w_update_diff.old.typo.length}}</span>
+
+                        </span>
+
+                </td>
+            </tr>
+           <tr class="bg-gray-light">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Outdated information url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Outdated information url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   {{row.additional_note}}
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <!-- null -->
+
+        <tbody ng-show="$parent.show_history.outdated_information && w_update_diff.old.outdated_information===null" class="animate-show-hide">
+                                       <tr class="bg-gray-light">
+                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+                                                <span class="pull-right">
+                                               
+                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                       </tr>
+
+
+
+                                </tbody>
 
         <tbody>
             <tr>
@@ -379,9 +724,17 @@
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[3].length!==0, 'bg-green text-white': w_array_final[3].length===0}">
                     <span class="font-w600">DATA DISCREPANCY</span>
 
-                    <span ng-if="w_array_final[3].length!==0" class="badge badge-primary pull-right">{{w_array_final[3].length}}</span>
+                    <span class="pull-right">
+                        <span ng-if="w_array_final[3].length!==0" class="badge badge-primary pull-right">{{w_array_final[3].length}}</span>
 
-                    <span ng-if="w_array_final[3].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-if="w_array_final[3].length===0" class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+                        <span class="pull-left">
+                            &nbsp;&nbsp;
+                            <button ng-show="w_update_diff.new.data_discrepancy" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.data_discrepancy = !$parent.show_history.data_discrepancy"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                        </span>
+
+                    </span>
 
                 </td>
                 
@@ -389,7 +742,7 @@
 
         </tbody>
 
-        <tbody ng-repeat="row in w_array_final[3]">
+        <tbody ng-repeat="row in w_array_final[3]" ng-show="!$parent.show_history.data_discrepancy" class="animate-show-hide">
            <tr class="bg-warning-lighter">
                  <td class="text-right text-muted">{{$index+1}})</td>
 
@@ -449,15 +802,73 @@
 
         </tbody>
 
-        <tbody>
-            <tr>
-                <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[4].length!==0, 'bg-green text-white': w_array_final[4].length===0}">5</td>
-                <td colspan="2" ng-class="{'bg-info text-white': w_array_final[4].length!==0, 'bg-green text-white': w_array_final[4].length===0}">
-                    <span class="font-w600">MALFUNCTIONING SIDEBARS/MENU/HYPERLINK</span>
+        <!-- history -->
 
-                    <span ng-if="w_array_final[4].length!==0" class="badge badge-primary pull-right">{{w_array_final[4].length}}</span>
+        <tbody ng-repeat="row in w_update_diff.old.data_discrepancy" ng-show="$parent.show_history.data_discrepancy" class="animate-show-hide">
 
-                    <span ng-if="w_array_final[4].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+            <tr class="bg-gray-light" ng-show="$index===0">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                                    <span class="badge pull-right badge-gray">{{w_update_diff.old.typo.length}}</span>
+
+                                                </span>
+                                            </td>
+           </tr>
+
+           <tr class="bg-gray-light">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Source url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Source url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   <pre>{{row.additional_note}}</pre>
+
 
                 </td>
                 
@@ -465,7 +876,67 @@
 
         </tbody>
 
-        <tbody ng-repeat="row in w_array_final[4]">
+
+        <!-- null -->
+
+        <tbody ng-show="$parent.show_history.data_discrepancy && w_update_diff.old.data_discrepancy===null" class="animate-show-hide">
+                                       <tr class="bg-gray-light">
+                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                               
+                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+
+                                                </span>
+
+                                            </td>
+
+                                            
+
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                       </tr>
+
+
+
+                                </tbody>
+
+        <tbody>
+            <tr>
+                <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[4].length!==0, 'bg-green text-white': w_array_final[4].length===0}">5</td>
+                <td colspan="2" ng-class="{'bg-info text-white': w_array_final[4].length!==0, 'bg-green text-white': w_array_final[4].length===0}">
+                    <span class="font-w600">MALFUNCTIONING SIDEBARS/MENU/HYPERLINK</span>
+
+                    <span class="pull-right">
+                        <span ng-if="w_array_final[4].length!==0" class="badge badge-primary pull-right">{{w_array_final[4].length}}</span>
+
+                        <span ng-if="w_array_final[4].length===0" class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px; vertical-align: initial;"></i></span>
+
+                        <span class="pull-left">
+                            &nbsp;&nbsp;
+                            <button ng-show="w_update_diff.new.sidebars" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.sidebars = !$parent.show_history.sidebars"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                        </span>
+
+
+                    </span>
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[4]" ng-show="!$parent.show_history.sidebars" class="animate-show-hide">
            <tr class="bg-warning-lighter">
                  <td class="text-right text-muted">{{$index+1}})</td>
 
@@ -525,15 +996,74 @@
 
         </tbody>
 
-        <tbody>
-            <tr>
-                <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[5].length!==0, 'bg-green text-white': w_array_final[5].length===0}">6</td>
-                <td colspan="2" ng-class="{'bg-info text-white': w_array_final[5].length!==0, 'bg-green text-white': w_array_final[5].length===0}">
-                    <span class="font-w600">INFINITE LOOP</span>
+        <!-- history -->
 
-                    <span ng-if="w_array_final[5].length!==0" class="badge badge-primary pull-right">{{w_array_final[5].length}}</span>
+        <tbody ng-repeat="row in w_update_diff.old.sidebars" ng-show="$parent.show_history.sidebars" class="animate-show-hide">
+        
+            <tr class="bg-gray-light" ng-show="$index===0">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
 
-                    <span ng-if="w_array_final[5].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                                                <span class="pull-right">
+                                                    <span class="badge pull-right badge-gray">{{w_update_diff.old.typo.length}}</span>
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+
+           <tr class="bg-gray-light">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Source url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Sidebars url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   <pre>{{row.additional_note}}</pre>
+
 
                 </td>
                 
@@ -541,7 +1071,61 @@
 
         </tbody>
 
-        <tbody ng-repeat="row in w_array_final[5]">
+
+        <!-- null -->
+        <tbody ng-show="$parent.show_history.sidebars && w_update_diff.old.sidebars===null" class="animate-show-hide">
+                                       <tr class="bg-gray-light">
+                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                               
+                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                       </tr>
+
+
+
+                                </tbody>
+
+        <tbody>
+            <tr>
+                <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[5].length!==0, 'bg-green text-white': w_array_final[5].length===0}">6</td>
+                <td colspan="2" ng-class="{'bg-info text-white': w_array_final[5].length!==0, 'bg-green text-white': w_array_final[5].length===0}">
+                    <span class="font-w600">INFINITE LOOP</span>
+
+                    <span class="pull-right">
+                        <span ng-if="w_array_final[5].length!==0" class="badge badge-primary pull-right">{{w_array_final[5].length}}</span>
+
+                        <span ng-if="w_array_final[5].length===0" class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+                        <span class="pull-left">
+                            &nbsp;&nbsp;
+                            <button ng-show="w_update_diff.new.infinite_loop" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.infinite_loop = !$parent.show_history.infinite_loop"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                        </span>
+
+                    </span>
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[5]" ng-show="!$parent.show_history.infinite_loop" class="animate-show-hide">
            <tr class="bg-warning-lighter">
                  <td class="text-right text-muted">{{$index+1}})</td>
 
@@ -600,6 +1184,111 @@
             </tr>
 
         </tbody>
+
+        <!-- history -->
+        <tbody ng-repeat="row in w_update_diff.old.infinite_loop" ng-show="$parent.show_history.infinite_loop" class="animate-show-hide">
+
+        <tr class="bg-gray-light" ng-show="$index===0">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                                    <span class="badge pull-right badge-gray">{{w_update_diff.old.typo.length}}</span>
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+           <tr class="bg-gray-light">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Infinite loop url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Infinite loop url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   <pre>{{row.additional_note}}</pre>
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+
+        <!-- null -->
+
+        <tbody ng-show="$parent.show_history.infinite_loop && w_update_diff.old.infinite_loop===null" class="animate-show-hide">
+                                       <tr class="bg-gray-light">
+                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                               
+                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                         
+                                       </tr>
+
+
+
+                                </tbody>
 
         <tbody>
             <tr>
@@ -607,9 +1296,18 @@
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[6].length!==0, 'bg-green text-white': w_array_final[6].length===0}">
                     <span class="font-w600">FLOATING PAGE</span>
 
-                    <span ng-if="w_array_final[6].length!==0" class="badge badge-primary pull-right">{{w_array_final[6].length}}</span>
+                    <span class="pull-right">
 
-                    <span ng-if="w_array_final[6].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-if="w_array_final[6].length!==0" class="badge badge-primary pull-right">{{w_array_final[6].length}}</span>
+
+                        <span ng-if="w_array_final[6].length===0" class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+                        <span class="pull-left">
+                            &nbsp;&nbsp;
+                            <button ng-show="w_update_diff.new.floating_page" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.floating_page = !$parent.show_history.floating_page"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                        </span>
+
+                    </span>
 
                 </td>
                 
@@ -617,7 +1315,7 @@
 
         </tbody>
 
-        <tbody ng-repeat="row in w_array_final[6]">
+        <tbody ng-repeat="row in w_array_final[6]" ng-show="!$parent.show_history.floating_page" class="animate-show-hide">
            <tr class="bg-warning-lighter">
                  <td class="text-right text-muted">{{$index+1}})</td>
 
@@ -676,6 +1374,108 @@
             </tr>
 
         </tbody>
+
+        <!-- history -->
+        <tbody ng-repeat="row in w_update_diff.old.floating_page" ng-show="$parent.show_history.floating_page" class="animate-show-hide">  
+            <tr class="bg-gray-light" ng-show="$index===0">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                                    <span class="badge pull-right badge-gray">{{w_update_diff.old.typo.length}}</span>
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+           <tr class="bg-gray-light">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Floating page url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Floating page url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   <pre>{{row.additional_note}}</pre>
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <!-- null -->
+        <tbody ng-show="$parent.show_history.floating_page && w_update_diff.old.floating_page===null" class="animate-show-hide">
+                                       <tr class="bg-gray-light">
+                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                               
+                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                         
+                                       </tr>
+
+
+
+                                </tbody>
 
         <tbody>
             <tr>
@@ -683,9 +1483,17 @@
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[7].length!==0, 'bg-green text-white': w_array_final[7].length===0}">
                     <span class="font-w600">CONFUSING AND/OR NOT CLEARLY PRESENTED</span>
 
-                    <span ng-if="w_array_final[7].length!==0" class="badge badge-primary pull-right">{{w_array_final[7].length}}</span>
+                    <span class="pull-right">
+                        <span ng-if="w_array_final[7].length!==0" class="badge badge-primary pull-right">{{w_array_final[7].length}}</span>
 
-                    <span ng-if="w_array_final[7].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-if="w_array_final[7].length===0" class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+                        <span class="pull-left">
+                            &nbsp;&nbsp;
+                            <button ng-show="w_update_diff.new.confusing" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.confusing = !$parent.show_history.confusing"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                        </span>
+
+                    </span>
 
                 </td>
                 
@@ -693,7 +1501,7 @@
 
         </tbody>
 
-        <tbody ng-repeat="row in w_array_final[7]">
+        <tbody ng-repeat="row in w_array_final[7]" ng-show="!$parent.show_history.confusing" class="animate-show-hide">
            <tr class="bg-warning-lighter">
                  <td class="text-right text-muted">{{$index+1}})</td>
 
@@ -753,15 +1561,71 @@
 
         </tbody>
 
-        <tbody>
-            <tr>
-                <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[8].length!==0, 'bg-green text-white': w_array_final[8].length===0}">9</td>
-                <td colspan="2" ng-class="{'bg-info text-white': w_array_final[8].length!==0, 'bg-green text-white': w_array_final[8].length===0}">
-                    <span class="font-w600">OTHERS</span>
+        <!-- history -->
+        <tbody ng-repeat="row in w_update_diff.old.confusing" ng-show="$parent.show_history.confusing" class="animate-show-hide">
 
-                    <span ng-if="w_array_final[8].length!==0" class="badge badge-primary pull-right">{{w_array_final[8].length}}</span>
+            <tr class="bg-gray-light" ng-show="$index===0">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+                                                <span class="pull-right">
+                                                    <span class="badge pull-right badge-gray">{{w_update_diff.old.typo.length}}</span>
 
-                    <span ng-if="w_array_final[8].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                                                </span>
+
+                                            </td>
+                                        </tr>
+           <tr class="bg-gray-light">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Confusing url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Confusing url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   <pre>{{row.additional_note}}</pre>
+
 
                 </td>
                 
@@ -769,7 +1633,62 @@
 
         </tbody>
 
-        <tbody ng-repeat="row in w_array_final[8]">
+        <!-- null -->
+        <tbody ng-show="$parent.show_history.confusing && w_update_diff.old.confusing===null" class="animate-show-hide">
+                                       <tr class="bg-gray-light">
+                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                               
+                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                         
+                                       </tr>
+
+
+
+                                </tbody>
+
+
+        <tbody>
+            <tr>
+                <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[8].length!==0, 'bg-green text-white': w_array_final[8].length===0}">9</td>
+                <td colspan="2" ng-class="{'bg-info text-white': w_array_final[8].length!==0, 'bg-green text-white': w_array_final[8].length===0}">
+                    <span class="font-w600">OTHERS</span>
+
+                    <span class="pull-right">
+                        <span ng-if="w_array_final[8].length!==0" class="badge badge-primary pull-right">{{w_array_final[8].length}}</span>
+
+                        <span ng-if="w_array_final[8].length===0" class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+                        <span class="pull-left">
+                            &nbsp;&nbsp;
+                            <button ng-show="w_update_diff.new.other_expert_note" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.other_expert_note = !$parent.show_history.other_expert_note"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                        </span>
+
+                    </span>
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <tbody ng-repeat="row in w_array_final[8]" ng-show="!$parent.show_history.other_expert_note" class="animate-show-hide">
            <tr class="bg-warning-lighter">
                  <td class="text-right text-muted">{{$index+1}})</td>
 
@@ -828,6 +1747,109 @@
             </tr>
 
         </tbody>
+
+        <!-- history -->
+        <tbody ng-repeat="row in w_update_diff.old.other_expert_note" ng-show="$parent.show_history.other_expert_note" class="animate-show-hide">
+
+        <tr class="bg-gray-light" ng-show="$index===0">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                                    <span class="badge pull-right badge-gray">{{w_update_diff.old.typo.length}}</span>
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+           <tr class="bg-gray-light">
+                 <td class="text-right text-muted">{{$index+1}})</td>
+
+                 <td>
+                    <span class="font-w600 text-muted">Where</span>
+                    
+                </td>
+
+                <td>
+                    <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
+
+
+                </td>
+           </tr>
+
+           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Other expert notes url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
+
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Other expert notes url</span>
+                    
+                </td>
+                <td>
+                    <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
+                    <!-- <div id="haha">haha</div> -->
+
+                </td>
+                
+            </tr>
+
+            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+                <td class="text-center bg-white"></td>
+                <td>
+                    <span class="font-w600 text-muted">Description</span>
+                    
+                </td>
+                <td>
+                   <pre>{{row.additional_note}}</pre>
+
+
+                </td>
+                
+            </tr>
+
+        </tbody>
+
+        <!-- null -->
+        <tbody ng-show="$parent.show_history.other_expert_note && w_update_diff.old.other_expert_note===null" class="animate-show-hide">
+                                       <tr class="bg-gray-light">
+                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
+
+                                                <span class="pull-right">
+                                               
+                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
+
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                         
+                                       </tr>
+
+
+
+                                </tbody>
 
 
                                 </table>

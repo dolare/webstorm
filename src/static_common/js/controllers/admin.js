@@ -2752,8 +2752,8 @@ admin.controller('AdminProfileController', ['$http', '$scope', '$localStorage', 
 
 // ********************************Updates********************************
 
-admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc',
-  function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc) {
+admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService',
+  function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService) {
     console.log("welcome");
    
     var token = authenticationSvc.getUserInfo().accessToken;
@@ -2965,6 +2965,11 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
              }
 
              $scope.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
+              
+
+             $scope.e_show_update = updateService.updateEnhancement(response.data, 'admin');
+             console.log('$scope.e_show_update = '+JSON.stringify($scope.e_show_update));
+
              App.blocks('#enhancement_loading', 'state_normal');
              console.log("$scope.e_array_final= "+JSON.stringify($scope.e_array_final));
              console.log("e_update="+JSON.stringify($scope.e_update));
@@ -3509,7 +3514,7 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
               if(keys[i].split(".").length === 1){
 
                 //test if it exists in the update diff
-                if($scope.e_update[category+(index===0?'':index+1)][keys[i]])
+                if($scope.e_update[category+(index===0?'':index+1)][keys[i]]||$scope.e_update[category+(index===0?'':index+1)][keys[i]]===''||$scope.e_update[category+(index===0?'':index+1)][keys[i]]===null)
                 {
 
                   console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])
@@ -3525,7 +3530,7 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
 
                 console.log("nested");
 
-                if($scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]])
+                if($scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]||$scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]===''||$scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]===null)
                 {
 
                   //console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])

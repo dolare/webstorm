@@ -4,6 +4,12 @@ html {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 }
 
+
+h1 {
+    
+    margin: 0.67em 0;
+}
+
 /*fix the modal open offset*/
 body.modal-open {
   overflow:hidden;
@@ -962,6 +968,11 @@ Full screen Modal
   background-color: rgba(249, 249, 249, 0.5) !important;
 }
 
+
+.table.report_table2 > tbody > tr:hover>td>.updated-text {
+  background-color: rgba(241,255,136,0.8);
+}
+
 /*.table.report_table2>tbody>tr>td:not(nth-child(2)):empty::after {
   content: "N/A";
   font-size: 90%;
@@ -1171,7 +1182,7 @@ tfoot>tr>td>div>button {
 }
 
 .updated-text {
-  background-color: yellow;
+  background-color: #F1FF88;
 }
 
 .w_updated-text {
@@ -1370,3 +1381,30 @@ ul.help-ul>li {
 .btn-blue {
   background: #00A1E9;
 }
+
+.badge-whoops {
+  border: none;
+}
+
+
+.badge-gray {
+  background: #999999;
+}
+/*update tooltip*/
+/*data-tooltip-class = "update-tooltip"*/
+            .update-tooltip.tooltip .tooltip-inner {
+                color: #fff;
+  /*background-color: #d9edf7;
+  border-color: #bce8f1;
+  background-image: -webkit-linear-gradient(top, #d9edf7 0%, #b9def0 100%);
+  background-image: linear-gradient(to bottom, #d9edf7 0%, #b9def0 100%);
+  background-repeat: repeat-x;
+  border-color: #9acfea;*/
+                background-color: rgba(35, 156, 236, 0.95);
+                border-radius:3px;
+            }
+            /* Hide arrow */
+            .update-tooltip.tooltip .tooltip-arrow { 
+                /*border-top-color: rgba(94,157,236,0.9);*/
+                border-top-color: rgba(35, 156, 236, 0.95);
+            }

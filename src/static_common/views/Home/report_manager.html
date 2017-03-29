@@ -1170,11 +1170,11 @@
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Curriculums</td>
 
-                                            <td ng-class="{'bg-highlight' : !row.program_faq_url && $index === 0,  'bg-gray-lighter' : !row.program_faq_url && $index !== 0}" ng-repeat = "row in report.e_array_final[1]">
+                                            <td ng-class="{'bg-highlight' : !row.curriculum_url && $index === 0,  'bg-gray-lighter' : !row.curriculum_url && $index !== 0}" ng-repeat = "row in report.e_array_final[1]">
 
-                                            <span ng-if="row.program_faq_url"><a href="{{row.curriculum_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
+                                            <span ng-if="row.curriculum_url"><a href="{{row.curriculum_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.program_faq_url" >N/A</span>
+                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.curriculum_url" >N/A</span>
 
                                             </td>
                                         </tr>

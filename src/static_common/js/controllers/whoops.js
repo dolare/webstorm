@@ -36,8 +36,8 @@ whoops.controller('WhoopsController',
     $scope.scrolltop = function(){
       
       angular.element(document.getElementById('scrolltop_whoops_page')).scrollTop(0);
+      
     }
-
 
     $scope.WhoopsViewer = function(Id, Program, Degree){
       
@@ -49,147 +49,22 @@ whoops.controller('WhoopsController',
       $scope.whoops_report_program = Program;
       $scope.whoops_report_degree = Degree;
       $scope.date = new Date();
-      
-    //   $http({
-    //       url: '/api/upgrid/wwr/'+Id,
-    //       method: 'GET',
-    //       headers: {
-    //         'Authorization': 'JWT ' + token
-    //       }
-    // }).then(function (response) {
 
-    //     console.log("wwr"+JSON.stringify(response.data.existing_report));
-        
-    //     // $scope.w_raw = response.data;
-    //     // $scope.w_array_final = [];
-    //     //  var w_array_1 = [];
-    //     //  var w_array_2 = [];
-    //     //  var w_array_3 = [];
-    //     //  var w_array_4 = [];
-    //     //  var w_array_5 = [];
-    //     //  var w_array_6 = [];
-    //     //  var w_array_7 = [];
-    //     //  var w_array_8 = [];
-    //     //  var w_array_9 = [];
-    //     //  var w_array_10 = [];
-         
+          $scope.show_history = 
+          { dead_link: false,
+            typo: false,
+            outdated_information: false,
+            data_discrepancy: false,
+            sidebars: false,
+            infinite_loop: false,
+            floating_page: false,
+            confusing: false,
+            other_expert_note: false
 
-    //     // for(i=0; i<$scope.w_raw.length; i++){
-    //     //   if($scope.w_raw[i].additional_note_type === "dead_link")
-    //     //   {
-
-    //     //     w_array_1.push($scope.w_raw[i])
-
-    //     //   } else if($scope.w_raw[i].additional_note_type === "typo")
-    //     //   {
-    //     //     w_array_2.push($scope.w_raw[i])
-
-    //     //   } else if($scope.w_raw[i].additional_note_type === "outdated_information")
-    //     //   {
-    //     //     w_array_3.push($scope.w_raw[i])
-
-    //     //   } else if($scope.w_raw[i].additional_note_type === "data_discrepancy")
-    //     //   {
-    //     //     w_array_4.push($scope.w_raw[i])
-
-    //     //   } else if($scope.w_raw[i].additional_note_type === "sidebars")
-    //     //   {
-
-    //     //     w_array_5.push($scope.w_raw[i])
-
-    //     //   } else if($scope.w_raw[i].additional_note_type === "infinite_loop")
-    //     //   {
-    //     //     w_array_6.push($scope.w_raw[i])
-
-    //     //   } else if($scope.w_raw[i].additional_note_type === "floating_page")
-    //     //   {
-
-    //     //     w_array_7.push($scope.w_raw[i])
-
-    //     //   } else if($scope.w_raw[i].additional_note_type === "confusing")
-    //     //   {
-
-    //     //     w_array_8.push($scope.w_raw[i])
-
-    //     //   } else if($scope.w_raw[i].additional_note_type === "other_expert_note")
-    //     //   {
-
-    //     //     w_array_9.push($scope.w_raw[i])
-
-    //     //   } else {
-
-    //     //     w_array_10.push($scope.w_raw[i])
-    //     //   }
-
+          };
           
-    //     // }
-
-    //     $scope.w_raw = response.data.existing_report;
-    //     $scope.w_array_final = [];
-    //      var w_array_1 = [];
-    //      var w_array_2 = [];
-    //      var w_array_3 = [];
-    //      var w_array_4 = [];
-    //      var w_array_5 = [];
-    //      var w_array_6 = [];
-    //      var w_array_7 = [];
-    //      var w_array_8 = [];
-    //      var w_array_9 = [];
-    //      var w_array_10 = [];
-
-    //      for(var i=0; i<$scope.w_raw.dead_link.length; i++){
-    //           w_array_1.push($scope.w_raw.dead_link[i]);
-    //          }
-
-    //          for(var i=0; i<$scope.w_raw.typo.length; i++){
-    //           w_array_2.push($scope.w_raw.typo[i]);
-    //          }
-
-    //          for(var i=0; i<$scope.w_raw.outdated_information.length; i++){
-    //           w_array_3.push($scope.w_raw.outdated_information[i]);
-    //          }
-
-    //          for(var i=0; i<$scope.w_raw.data_discrepancy.length; i++){
-    //           w_array_4.push($scope.w_raw.data_discrepancy[i]);
-    //          }
-
-    //          for(var i=0; i<$scope.w_raw.sidebars.length; i++){
-    //           w_array_5.push($scope.w_raw.sidebars[i]);
-    //          }
-
-    //          for(var i=0; i<$scope.w_raw.infinite_loop.length; i++){
-    //           w_array_6.push($scope.w_raw.infinite_loop[i]);
-    //          }
-
-    //          for(var i=0; i<$scope.w_raw.floating_page.length; i++){
-    //           w_array_7.push($scope.w_raw.floating_page[i]);
-    //          }
-
-    //          for(var i=0; i<$scope.w_raw.confusing.length; i++){
-    //           w_array_8.push($scope.w_raw.confusing[i]);
-    //          }
-
-    //          for(var i=0; i<$scope.w_raw.other_expert_note.length; i++){
-    //           w_array_9.push($scope.w_raw.other_expert_note[i]);
-    //          }
-
-
-    //     $scope.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];
-        
-    //      App.blocks('#whoops_loading', 'state_normal');
-
-    //     console.log('w_array_1='+JSON.stringify($scope.w_array_final));
-
-
-
-    //   }).
-    //  catch(function(error){
-    //     console.log('an error occurred...'+JSON.stringify(error));
-
-    //  });
-
-
-
+          //$scope.show_history_dead_link = false;
+          console.log("$scope.show_history.dead_link="+$scope.show_history.dead_link);
           $http({
                 url: '/api/upgrid/update/view/whoops/' + Id + '/' +avatarService.getClientId(),
                 method: 'GET',
@@ -198,7 +73,10 @@ whoops.controller('WhoopsController',
                 }
           }).then(function (response) {
 
-             
+            //console.log("whoops raw = "+JSON.stringify(response.data));
+
+            $scope.w_update_diff = response.data.update_diff;
+            console.log("update_diff = "+JSON.stringify($scope.w_update_diff));
             $scope.w_raw = response.data.existing_report;
             $scope.w_array_final = [];
              var w_array_1 = [];
@@ -261,7 +139,7 @@ whoops.controller('WhoopsController',
             
              App.blocks('#whoops_loading', 'state_normal');
 
-            console.log('w_array_1='+JSON.stringify($scope.w_array_final));
+            //console.log('w_array_1='+JSON.stringify($scope.w_array_final));
 
 
 
@@ -273,9 +151,6 @@ whoops.controller('WhoopsController',
            });
 
     }
-
-
-  
 
 
     $scope.addMessage = function() {
@@ -533,7 +408,7 @@ whoops.controller('WhoopsController',
         new Clipboard('.btn');
 
 
-        console.log("client_id="+client_id);
+        
       $http({
         url: '/api/upgrid/reports/shared/',
         method: 'POST',
@@ -558,7 +433,7 @@ whoops.controller('WhoopsController',
             $scope.shared_token = response.data[0].split('/')[1];
 
             $scope.url = {
-                text: location.host + '/#/shared_whoops_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
+                text: 'https://'+location.host + '/#/shared_whoops_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
             };
 
       }).

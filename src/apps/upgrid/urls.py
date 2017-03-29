@@ -67,7 +67,7 @@ urlpatterns=[
 
     # ---------------------------Report API----------------------------------------
 
-    # Put change confirmation status of a enhancement report.
+    # Put change confirmation status of a enhancement report. key client_id : for account manager pass main client id.
     url(r'^api/upgrid/enhancement_reports/$', apis.EnhancementReportsAPI.as_view()),
 
     # Post generate whoops reports share link. Post Param: univcustomer_program_id

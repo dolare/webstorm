@@ -139,12 +139,22 @@
                                         <tr class="font-w600 text-primary" style="background: #f6f6f6">
                                             <td class="text-primary font-w600" style="vertical-align: middle">University school</td>
                                             <td ng-class="{'bg-highlight' : !row.university_school.university && $index === 0,  'bg-gray-lighter' : !row.university_school.university && $index !== 0}" ng-repeat = "row in e_array_final[0]">
-                                            <span ng-if="row.university_school.university">
-                                                {{row.university_school.university}}
-                                            </span>
 
-                                        
-                                            <span ng-if="!row.university_school.university" ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}">N/A</span>
+                                                <span ng-class="{'updated-text': e_show_update['university'+($index===0?'':$index+1)]}" 
+
+                                                data-uib-tooltip="History: {{e_show_update['university'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['university'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.university_school.university">
+                                                        {{row.university_school.university}}
+                                                    </span>
+
+                                                    <span ng-if="!row.university_school.university" ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}">N/A</span>
+
+                                                </span>
                                            
                                            
                                             </td>
@@ -153,10 +163,21 @@
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">School name</td>
                                             <td ng-class="{'bg-highlight' : !row.university_school.school && $index === 0,  'bg-gray-lighter' : !row.university_school.school && $index !== 0}" ng-repeat = "row in e_array_final[0]">
-                                            <span ng-if="row.university_school.school">{{row.university_school.school}}</span>
 
-                                            
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.university_school.school">N/A</span>
+                                                <span ng-class="{'updated-text': e_show_update['school'+($index===0?'':$index+1)]}" 
+
+                                                data-uib-tooltip="History: {{e_show_update['school'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['school'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.university_school.school">{{row.university_school.school}}</span>
+
+                                                    
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.university_school.school">N/A</span>
+
+                                                </span>
                                         
 
                                             </td>
@@ -166,17 +187,27 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Program name</td>
                                             <td ng-class="{'bg-highlight' : !row.program_name && $index === 0,  'bg-gray-lighter' : !row.program_name && $index !== 0}" ng-repeat = "row in e_array_final[0]">
 
-                                            <span ng-if="row.program_name&&row.url">
-                                                <a href="{{row.url}}" target="_blank" style="text-decoration: underline;">
-                                                {{row.program_name}}
-                                                </a>
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['program_name'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.program_name&&!row.url">
-                                                {{row.program_name}}
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['program_name'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.program_name">N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['program_name'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.program_name&&row.url">
+                                                        <a href="{{row.url}}" target="_blank" style="text-decoration: underline;">
+                                                        {{row.program_name}}
+                                                        </a>
+                                                    </span>
+
+                                                    <span ng-if="row.program_name&&!row.url">
+                                                        {{row.program_name}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.program_name">N/A</span>
+
+                                                </span>
 
                                       
                                             </td>
@@ -186,9 +217,20 @@
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Degree</td>
                                             <td ng-class="{'bg-highlight' : !row.degree.name && $index === 0,  'bg-gray-lighter' : !row.degree.name && $index !== 0}" ng-repeat = "row in e_array_final[0]">
-                                            <span ng-if="row.degree.name">{{row.degree.name}}</span>
-                                            
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.degree.name">N/A</span>
+                                                
+                                                <span ng-class="{'updated-text': e_show_update['degree'+($index===0?'':$index+1)]}" 
+
+                                                data-uib-tooltip="History: {{e_show_update['degree'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['degree'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.degree.name">{{row.degree.name}}</span>
+                                                    
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.degree.name">N/A</span>
+
+                                                </span>
                                             
                                             </td>
                                         </tr>
@@ -197,11 +239,20 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Department</td>
                                             <td ng-class="{'bg-highlight' : !row.department && $index === 0,  'bg-gray-lighter' : !row.department && $index !== 0}" ng-repeat = "row in e_array_final[0]">
 
+                                                <span ng-class="{'updated-text': e_show_update['department'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.department">{{row.department}}</span>
+                                                data-uib-tooltip="History: {{e_show_update['department'+($index===0?'':$index+1)]}}" 
 
-                                           
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.department" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['department'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.department">{{row.department}}</span>
+
+                                                   
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.department" >N/A</span>
+
+                                                </span>
                                             
 
                                             </td>
@@ -210,10 +261,19 @@
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Specialization</td>
                                             <td ng-class="{'note-left': row.specialization, 'bg-highlight' : !row.specialization && $index === 0,  'bg-gray-lighter' : !row.specialization && $index !== 0}" ng-repeat = "row in e_array_final[0]">
+                                                <span ng-class="{'updated-text': e_show_update['specialization'+($index===0?'':$index+1)]}" 
 
-                                            <pre ng-if="row.specialization">{{row.specialization}}</pre>
+                                                data-uib-tooltip="History: {{e_show_update['specialization'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.specialization" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['specialization'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.specialization">{{row.specialization}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.specialization" >N/A</span>
+
+                                                </span>
 
 
                                             </td>
@@ -223,20 +283,40 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Highlights</td>
                                             <td ng-class="{'note-left': row.highlights, 'bg-highlight' : !row.highlights && $index === 0,  'bg-gray-lighter' : !row.highlights && $index !== 0}" ng-repeat = "row in e_array_final[0]">
 
-                                            <pre ng-if="row.highlights">{{row.highlights}}</pre>
+                                                <span ng-class="{'updated-text': e_show_update['highlights'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.highlights" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['highlights'+($index===0?'':$index+1)]}}" 
 
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['highlights'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.highlights">{{row.highlights}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.highlights" >N/A</span>
+
+
+                                                </span>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Program objectives</td>
                                             <td ng-class="{'note-left': row.audience, 'bg-highlight' : !row.audience && $index === 0,  'bg-gray-lighter' : !row.audience && $index !== 0}" ng-repeat = "row in e_array_final[0]">
-                                            <pre ng-if="row.audience">{{row.audience}}</pre>
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.audience" >N/A</span>
+                                            <span ng-class="{'updated-text': e_show_update['audience'+($index===0?'':$index+1)]}" 
 
+                                            data-uib-tooltip="History: {{e_show_update['audience'+($index===0?'':$index+1)]}}" 
+
+                                            data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                            data-tooltip-enable="e_show_update['audience'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.audience">{{row.audience}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.audience" >N/A</span>
+
+                                                </span>
                                             </td>
                                         </tr>
 
@@ -244,12 +324,20 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Job placement</td>
                                             <td ng-class="{'note-left': row.job_placement, 'bg-highlight' : !row.job_placement && $index === 0,  'bg-gray-lighter' : !row.job_placement && $index !== 0}" ng-repeat = "row in e_array_final[0]">
 
-                                            <pre ng-if="row.job_placement&&row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;">{{row.job_placement}}</a></pre>
+                                                <span ng-class="{'updated-text': e_show_update['job_placement'+($index===0?'':$index+1)]}" 
 
-                                            <pre ng-if="row.job_placement&&!row.job_placement_url">{{row.job_placement}}</pre>
+                                                data-uib-tooltip="History: {{e_show_update['job_placement'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.job_placement" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
+                                                data-tooltip-enable="e_show_update['job_placement'+($index===0?'':$index+1)]">
+                                                    <pre ng-if="row.job_placement&&row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;">{{row.job_placement}}</a></pre>
+
+                                                    <pre ng-if="row.job_placement&&!row.job_placement_url">{{row.job_placement}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.job_placement" >N/A</span>
+
+                                                </span>
                                             </td>
                                         </tr>
 
@@ -259,15 +347,25 @@
 
                                             <td ng-class="{'bg-highlight' : row.online_program !== true && row.online_program !== false && $index === 0,  'bg-gray-lighter' : row.online_program !== true && row.online_program !== false && $index !== 0}" ng-repeat = "row in e_array_final[0]">
 
-                                            <span ng-if="row.online_program === true">
-                                            <i class="fa fa-check text-success"></i>
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['online_program'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.online_program === false">
-                                            <i class="fa fa-times text-danger"></i>
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['online_program'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.online_program !== true && row.online_program !== false" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['online_program'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.online_program === true">
+                                                    <i class="fa fa-check text-success"></i>
+                                                    </span>
+
+                                                    <span ng-if="row.online_program === false">
+                                                    <i class="fa fa-times text-danger"></i>
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.online_program !== true && row.online_program !== false" >N/A</span>
+
+                                                </span>
 
                                             </td>
 
@@ -277,15 +375,25 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Handbook</td>
                                             <td ng-class="{'bg-highlight' : !row.additional_url && $index === 0,  'bg-gray-lighter' : !row.additional_url && $index !== 0}" ng-repeat = "row in e_array_final[0]">
 
-                                            <span ng-if="row.additional_url">
-                                            <a href="{{row.additional_url}}" target="_blank" style="text-decoration: underline;">
-                                            <i class="fa fa-link" aria-hidden="true"></i>
-                                            </a>
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['additional_url'+($index===0?'':$index+1)]}" 
 
-                                            
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.additional_url" >N/A</span>
-                                           
+                                                data-uib-tooltip="History: {{e_show_update['additional_url'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['additional_url'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.additional_url">
+                                                    <a href="{{row.additional_url}}" target="_blank" style="text-decoration: underline;">
+                                                    <i class="fa fa-link" aria-hidden="true"></i>
+                                                    </a>
+                                                    </span>
+
+                                                    
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.additional_url" >N/A</span>
+
+                                                </span>
+                                                   
 
                                             </td>
                                         </tr>
@@ -295,14 +403,24 @@
                                            
                                             <td ng-class="{'bg-highlight' : !row.program_faq_url && $index === 0,  'bg-gray-lighter' : !row.program_faq_url && $index !== 0}" ng-repeat = "row in e_array_final[0]">
 
-                                            <span ng-if="row.program_faq_url">
-                                            <a href="{{row.program_faq_url}}" target="_blank" style="text-decoration: underline;">
-                                            <i class="fa fa-link" aria-hidden="true"></i>
-                                            </a>
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['program_faq_url'+($index===0?'':$index+1)]}" 
 
-                                            
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.program_faq_url" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['program_faq_url'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['program_faq_url'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.program_faq_url">
+                                                    <a href="{{row.program_faq_url}}" target="_blank" style="text-decoration: underline;">
+                                                    <i class="fa fa-link" aria-hidden="true"></i>
+                                                    </a>
+                                                    </span>
+
+                                                    
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.program_faq_url" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -311,13 +429,23 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Admissions statistics</td>
                                             <td ng-class="{'bg-highlight' : !row.stats_profile_url && $index === 0,  'bg-gray-lighter' : !row.stats_profile_url && $index !== 0}" ng-repeat = "row in e_array_final[0]">
 
-                                            <span ng-if="row.stats_profile_url">
-                                            <a href="{{row.stats_profile_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i>
-                                            </a>
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['stats_profile_url'+($index===0?'':$index+1)]}" 
+
+                                                data-uib-tooltip="History: {{e_show_update['stats_profile_url'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['stats_profile_url'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.stats_profile_url">
+                                                    <a href="{{row.stats_profile_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i>
+                                                    </a>
+                                                    </span>
 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.stats_profile_url" >N/A</span>
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.stats_profile_url" >N/A</span>
+
+                                                </span>
 
 
                                             </td>
@@ -338,13 +466,23 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Full-time</td>
                                             <td ng-class="{'bg-highlight' : row.full_part_time!=='F'&&row.full_part_time!=='P' && $index === 0,  'bg-gray-lighter' : row.full_part_time!=='F'&&row.full_part_time!=='P' && $index !== 0}" ng-repeat = "row in e_array_final[9]">
 
-                                            <span ng-if="row.full_part_time==='F'">
-                                            <i class="fa fa-check text-success"></i></span>
+                                                <span ng-class="{'updated-text': e_show_update['full_part_time'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.full_part_time==='P'"><i class="fa fa-times text-danger"></i>
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['full_part_time'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.full_part_time!=='F'&&row.full_part_time!=='P'" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['full_part_time'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.full_part_time==='F'">
+                                                    <i class="fa fa-check text-success"></i></span>
+
+                                                    <span ng-if="row.full_part_time==='P'"><i class="fa fa-times text-danger"></i>
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.full_part_time!=='F'&&row.full_part_time!=='P'" >N/A</span>
+
+                                                </span>
                                         </td>
                                         
                                         </tr>
@@ -352,13 +490,23 @@
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Part-time</td>
                                             
-                                            <td ng-class="{'bg-highlight' : row.part_time !== true && row.part_time !== false && row.full_part_time!=='P' && $index === 0,  'bg-gray-lighter' : row.part_time !== true && row.part_time !== false && row.full_part_time!=='P' && $index !== 0}" ng-repeat = "row in e_array_final[9]">
+                                            <td ng-class="{'bg-highlight' : row.part_time !== true && row.part_time !== false && row.full_part_time!=='P' && $index === 0,  'bg-gray-lighter' : row.part_time !== true && row.part_time !== false && row.full_part_time!=='P' && $index !== 0}" ng-repeat = "row in e_array_final[9]"> 
 
-                                            <span ng-if="row.part_time===true || (!row.part_time&&row.full_part_time==='P')"><i class="fa fa-check text-success"></i></span>
+                                                <span ng-class="{'updated-text': e_show_update['part_time'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.part_time===false"><i class="fa fa-times text-danger"></i></span>
+                                                data-uib-tooltip="History: {{e_show_update['part_time'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.part_time !== true && row.part_time !== false && row.full_part_time!=='P'" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['part_time'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.part_time===true || (!row.part_time&&row.full_part_time==='P')"><i class="fa fa-check text-success"></i></span>
+
+                                                    <span ng-if="row.part_time===false"><i class="fa fa-times text-danger"></i></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.part_time !== true && row.part_time !== false && row.full_part_time!=='P'" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -367,21 +515,31 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Program duration</td>
                                             <td ng-class="{'bg-highlight' : !row.duration_min && $index === 0,  'bg-gray-lighter' : !row.duration_min && $index !== 0}" ng-repeat = "row in e_array_final[9]">
 
-                                            <span ng-if="row.duration_min">{{row.duration_min}}
+                                                <span ng-class="{'updated-text': e_show_update['program_duration'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.duration_max&&row.duration_max!==row.duration_min"> - {{row.duration_max}}</span>
+                                                data-uib-tooltip="History: {{e_show_update['program_duration'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-if="row.duration_conj"> {{row.duration_conj}}</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            <span ng-if="row.duration_unit"> {{row.duration_unit.name}}</span>
+                                                data-tooltip-enable="e_show_update['program_duration'+($index===0?'':$index+1)]">
 
-                                            <span ng-if="row.duration_addl"> {{row.duration_addl}}</span>
+                                                    <span ng-if="row.duration_min">{{row.duration_min}}
 
-                                            <span ng-if="row.duration_addl_unit"> {{row.duration_addl_unit.name}}</span>
+                                                        <span ng-if="row.duration_max&&row.duration_max!==row.duration_min"> - {{row.duration_max}}</span>
 
-                                            </span>
+                                                        <span ng-if="row.duration_conj"> {{row.duration_conj}}</span>
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.duration_min" >N/A</span>
+                                                        <span ng-if="row.duration_unit"> {{row.duration_unit.name}}</span>
+
+                                                        <span ng-if="row.duration_addl"> {{row.duration_addl}}</span>
+
+                                                        <span ng-if="row.duration_addl_unit"> {{row.duration_addl_unit.name}}</span>
+
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.duration_min" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -390,10 +548,20 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Duration time limit</td>
                                             <td ng-class="{'bg-highlight' : !row.durationtime_limit && $index === 0,  'bg-gray-lighter' : !row.durationtime_limit && $index !== 0}" ng-repeat = "row in e_array_final[9]">
 
-                                            <span ng-if="row.durationtime_limit">{{row.durationtime_limit}} {{row.duration_unit.name}}
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['durationtime_limit'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.durationtime_limit" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['durationtime_limit'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['durationtime_limit'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.durationtime_limit">{{row.durationtime_limit}} {{row.duration_unit.name}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.durationtime_limit" >N/A</span>
+
+                                                </span>
 
 
                                             </td>
@@ -413,12 +581,22 @@
 
                                             <td ng-class="{'bg-highlight' : !row.min_total_unit && $index === 0,  'bg-gray-lighter' : !row.min_total_unit && $index !== 0}" ng-repeat = "row in e_array_final[1]">
 
-                                            <span ng-if="row.min_total_unit">
-                                            {{row.min_total_unit}} {{row.curriculum_unit.name}}
+                                                <span ng-class="{'updated-text': e_show_update['min_total_unit'+($index===0?'':$index+1)]}" 
 
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['min_total_unit'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.min_total_unit" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['min_total_unit'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.min_total_unit">
+                                                    {{row.min_total_unit}} {{row.curriculum_unit.name}}
+
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.min_total_unit" >N/A</span>
+
+                                                </span>
 
 
 
@@ -430,11 +608,21 @@
                                            
                                             <td ng-class="{'bg-highlight' : !row.max_transfer_unit && $index === 0,  'bg-gray-lighter' : !row.max_transfer_unit && $index !== 0}" ng-repeat = "row in e_array_final[1]">
 
-                                            <span ng-if="row.max_transfer_unit">{{row.max_transfer_unit}} {{row.curriculum_unit.name}}
+                                                <span ng-class="{'updated-text': e_show_update['max_transfer_unit'+($index===0?'':$index+1)]}" 
 
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['max_transfer_unit'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.max_transfer_unit" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['max_transfer_unit'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.max_transfer_unit">{{row.max_transfer_unit}} {{row.curriculum_unit.name}}
+
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.max_transfer_unit" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -443,14 +631,24 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Master thesis or equivalent</td>
                                             <td ng-class="{'bg-highlight' : row.master_thesis_or_equivalent!=='Y'&&row.master_thesis_or_equivalent!=='N'&&row.master_thesis_or_equivalent!=='O' && $index === 0,  'bg-gray-lighter' : row.master_thesis_or_equivalent!=='Y'&&row.master_thesis_or_equivalent!=='N'&&row.master_thesis_or_equivalent!=='O' && $index !== 0}" ng-repeat = "row in e_array_final[1]">
 
-                                            <span ng-if="row.master_thesis_or_equivalent==='Y'">Yes</span>
+                                                <span ng-class="{'updated-text': e_show_update['master_thesis_or_equivalent'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.master_thesis_or_equivalent==='N'">No</span>
+                                                data-uib-tooltip="History: {{e_show_update['master_thesis_or_equivalent'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-if="row.master_thesis_or_equivalent==='O'">Optional</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['master_thesis_or_equivalent'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.master_thesis_or_equivalent==='Y'">Yes</span>
+
+                                                    <span ng-if="row.master_thesis_or_equivalent==='N'">No</span>
+
+                                                    <span ng-if="row.master_thesis_or_equivalent==='O'">Optional</span>
 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.master_thesis_or_equivalent!=='Y'&&row.master_thesis_or_equivalent!=='N'&&row.master_thesis_or_equivalent!=='O'" >N/A</span>
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.master_thesis_or_equivalent!=='Y'&&row.master_thesis_or_equivalent!=='N'&&row.master_thesis_or_equivalent!=='O'" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -459,10 +657,20 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Thesis notes</td>
                                             <td ng-class="{'note-left':row.thesis_notes, 'bg-highlight' : !row.thesis_notes && $index === 0,  'bg-gray-lighter' : !row.thesis_notes && $index !== 0}" ng-repeat = "row in e_array_final[1]">
 
-                                            <pre ng-if="row.thesis_notes">{{row.thesis_notes}}
-                                            </pre>
+                                                <span ng-class="{'updated-text': e_show_update['thesis_notes'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.thesis_notes" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['thesis_notes'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['thesis_notes'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.thesis_notes">{{row.thesis_notes}}
+                                                    </pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.thesis_notes" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -471,13 +679,22 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Doctorate dissertation or equivalent</td>
                                             <td ng-class="{'bg-highlight' : row.doctorate_dissertation_or_equivalent!=='Y'&&row.doctorate_dissertation_or_equivalent!=='N'&&row.doctorate_dissertation_or_equivalent!=='O' && $index === 0,  'bg-gray-lighter' : row.doctorate_dissertation_or_equivalent!=='Y'&&row.doctorate_dissertation_or_equivalent!=='N'&&row.doctorate_dissertation_or_equivalent!=='O' && $index !== 0}" ng-repeat = "row in e_array_final[1]">
 
-                                            <span ng-if="row.doctorate_dissertation_or_equivalent==='Y'">Yes</span>
+                                                <span ng-class="{'updated-text': e_show_update['doctorate_dissertation_or_equivalent'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.doctorate_dissertation_or_equivalent==='N'">No</span>
+                                                data-uib-tooltip="History: {{e_show_update['doctorate_dissertation_or_equivalent'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-if="row.doctorate_dissertation_or_equivalent==='O'">Optional</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.doctorate_dissertation_or_equivalent!=='Y'&&row.doctorate_dissertation_or_equivalent!=='N'&&row.doctorate_dissertation_or_equivalent!=='O'" >N/A</span>
+                                                data-tooltip-enable="e_show_update['doctorate_dissertation_or_equivalent'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.doctorate_dissertation_or_equivalent==='Y'">Yes</span>
+
+                                                    <span ng-if="row.doctorate_dissertation_or_equivalent==='N'">No</span>
+
+                                                    <span ng-if="row.doctorate_dissertation_or_equivalent==='O'">Optional</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.doctorate_dissertation_or_equivalent!=='Y'&&row.doctorate_dissertation_or_equivalent!=='N'&&row.doctorate_dissertation_or_equivalent!=='O'" >N/A</span>
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -486,20 +703,39 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Dissertation notes</td>
                                             <td ng-class="{'note-left': row.dissertation_notes, 'bg-highlight' : !row.dissertation_notes && $index === 0,  'bg-gray-lighter' : !row.dissertation_notes && $index !== 0}" ng-repeat = "row in e_array_final[1]">
 
-                                            <pre ng-if="row.dissertation_notes">{{row.dissertation_notes}}</pre>
+                                                <span ng-class="{'updated-text': e_show_update['dissertation_notes'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.dissertation_notes" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['dissertation_notes'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['dissertation_notes'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.dissertation_notes">{{row.dissertation_notes}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.dissertation_notes" >N/A</span>
+
+                                                </span>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td class="text-primary font-w600" style="vertical-align: middle">Curriculums</td>
 
-                                            <td ng-class="{'bg-highlight' : !row.program_faq_url && $index === 0,  'bg-gray-lighter' : !row.program_faq_url && $index !== 0}" ng-repeat = "row in e_array_final[1]">
+                                            <td ng-class="{'bg-highlight' : !row.curriculum_url && $index === 0,  'bg-gray-lighter' : !row.curriculum_url && $index !== 0}" ng-repeat = "row in e_array_final[1]">
 
-                                            <span ng-if="row.program_faq_url"><a href="{{row.curriculum_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
+                                                <span ng-class="{'updated-text': e_show_update['curriculum_url'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.program_faq_url" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['curriculum_url'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['curriculum_url'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.curriculum_url"><a href="{{row.curriculum_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.curriculum_url" >N/A</span>
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -518,18 +754,27 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Tuition (in state)</td>
                                             <td ng-class="{'bg-highlight' : !row.tuition_per_unit && $index === 0,  'bg-gray-lighter' : !row.tuition_per_unit && $index !== 0}" ng-repeat = "row in e_array_final[2]">
 
-                                            <span ng-if="row.school_cost_url&&row.tuition_per_unit"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a>
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['tuition_per_unit'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit">
-                                            <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a>
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['tuition_per_unit'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit">
-                                            {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.tuition_per_unit" >N/A</span>
+                                                data-tooltip-enable="e_show_update['tuition_per_unit'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.school_cost_url&&row.tuition_per_unit"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a>
+                                                    </span>
+
+                                                    <span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit">
+                                                    <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}</a>
+                                                    </span>
+
+                                                    <span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit">
+                                                    {{row.tuition_per_unit | currency }} per {{row.tuition_unit.name}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.tuition_per_unit" >N/A</span>
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -539,16 +784,28 @@
 
                                             <td ng-class="{'bg-highlight' : !row.tuition_per_unit_out_state && $index === 0,  'bg-gray-lighter' : !row.tuition_per_unit_out_state && $index !== 0}" ng-repeat = "row in e_array_final[2]">
 
-                                            <span ng-if="row.school_cost_url&&row.tuition_per_unit_out_state">
-                                            <a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a></span>
 
-                                            <span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit_out_state"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a>
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['tuition_per_unit_out_state'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit_out_state">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['tuition_per_unit_out_state'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.tuition_per_unit_out_state" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['tuition_per_unit_out_state'+($index===0?'':$index+1)]">
+
+
+                                                    <span ng-if="row.school_cost_url&&row.tuition_per_unit_out_state">
+                                                    <a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a></span>
+
+                                                    <span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit_out_state"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}</a>
+                                                    </span>
+
+                                                    <span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit_out_state">{{row.tuition_per_unit_out_state | currency }} per {{row.tuition_unit.name}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.tuition_per_unit_out_state" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -558,11 +815,21 @@
 
                                             <td ng-class="{'bg-highlight' : row.fee_included!==true&&row.fee_included!==false && $index === 0,  'bg-gray-lighter' : row.fee_included!==true&&row.fee_included!==false && $index !== 0}" ng-repeat = "row in e_array_final[2]">
 
-                                            <span ng-if="row.fee_included===true"><i class="fa fa-check text-success"></i></span>
+                                                <span ng-class="{'updated-text': e_show_update['fee_included'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.fee_included===false"><i class="fa fa-times text-danger"></i></span>
+                                                data-uib-tooltip="History: {{e_show_update['fee_included'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.fee_included!==true&&row.fee_included!==false" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['fee_included'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.fee_included===true"><i class="fa fa-check text-success"></i></span>
+
+                                                    <span ng-if="row.fee_included===false"><i class="fa fa-times text-danger"></i></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.fee_included!==true&&row.fee_included!==false" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -582,13 +849,22 @@
 
                                             <td ng-class="{'bg-highlight' : !row.deadline_url && $index === 0,  'bg-gray-lighter' : !row.deadline_url && $index !== 0}" ng-repeat = "row in e_array_final[3]">
 
-                                            <span ng-if="row.deadline_url">
+                                                <span ng-class="{'updated-text': e_show_update['deadline_url'+($index===0?'':$index+1)]}" 
 
-                                            <a href="{{row.deadline_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
+                                                data-uib-tooltip="History: {{e_show_update['deadline_url'+($index===0?'':$index+1)]}}" 
 
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.deadline_url" >N/A</span>
+                                                data-tooltip-enable="e_show_update['deadline_url'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.deadline_url">
+
+                                                    <a href="{{row.deadline_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
+
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.deadline_url" >N/A</span>
+                                                </span>
 
                                             </td>
 
@@ -599,13 +875,23 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Deadline - Fall, early</td>
                                             <td ng-class="{'bg-highlight' : !row.get_deadline_fall_early_month_display&&!row.get_deadline_fall_early_day_display && $index === 0,  'bg-gray-lighter' : !row.get_deadline_fall_early_month_display&&!row.get_deadline_fall_early_day_display && $index !== 0}" ng-repeat = "row in e_array_final[3]">
 
-                                            <span ng-if="row.get_deadline_fall_early_month_display&&row.get_deadline_fall_early_day_display">
-                                                {{row.get_deadline_fall_early_month_display}} {{row.get_deadline_fall_early_day_display}}
+                                                <span ng-class="{'updated-text': e_show_update['deadline_fall_early'+($index===0?'':$index+1)]}" 
+
+                                                data-uib-tooltip="History: {{e_show_update['deadline_fall_early'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['deadline_fall_early'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.get_deadline_fall_early_month_display&&row.get_deadline_fall_early_day_display">
+                                                        {{row.get_deadline_fall_early_month_display}} {{row.get_deadline_fall_early_day_display}}
+
+                                                    </span>
+
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_fall_early_month_display&&!row.get_deadline_fall_early_day_display" >N/A</span>
 
                                                 </span>
-
-
-                                                <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_fall_early_month_display&&!row.get_deadline_fall_early_day_display" >N/A</span>
 
 
                                                 </td>
@@ -616,11 +902,21 @@
 
                                             <td ng-class="{'bg-highlight' : !row.get_deadline_fall_late_month_display&&!row.get_deadline_fall_late_day_display && $index === 0,  'bg-gray-lighter' : !row.get_deadline_fall_late_month_display&&!row.get_deadline_fall_late_day_display && $index !== 0}" ng-repeat = "row in e_array_final[3]">
 
-                                            <span ng-if="row.get_deadline_fall_late_month_display&&row.get_deadline_fall_late_day_display">{{row.get_deadline_fall_late_month_display}} {{row.get_deadline_fall_late_day_display}}</span>
+                                                <span ng-class="{'updated-text': e_show_update['deadline_fall_late'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_fall_late_month_display&&!row.get_deadline_fall_late_day_display" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['deadline_fall_late'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['deadline_fall_late'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.get_deadline_fall_late_month_display&&row.get_deadline_fall_late_day_display">{{row.get_deadline_fall_late_month_display}} {{row.get_deadline_fall_late_day_display}}</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_fall_late_month_display&&!row.get_deadline_fall_late_day_display" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -630,11 +926,21 @@
 
                                             <td ng-class="{'bg-highlight' : !row.get_deadline_spring_early_month_display&&!row.get_deadline_spring_early_day_display && $index === 0,  'bg-gray-lighter' : !row.get_deadline_spring_early_month_display&&!row.get_deadline_spring_early_day_display && $index !== 0}" ng-repeat = "row in e_array_final[3]">
 
-                                            <span ng-if="row.get_deadline_spring_early_month_display&&row.get_deadline_spring_early_day_display">{{row.get_deadline_spring_early_month_display}} {{row.get_deadline_spring_early_day_display}}</span>
+                                                <span ng-class="{'updated-text': e_show_update['deadline_spring_early'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_spring_early_month_display&&!row.get_deadline_spring_early_day_display" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['deadline_spring_early'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['deadline_spring_early'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.get_deadline_spring_early_month_display&&row.get_deadline_spring_early_day_display">{{row.get_deadline_spring_early_month_display}} {{row.get_deadline_spring_early_day_display}}</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_spring_early_month_display&&!row.get_deadline_spring_early_day_display" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
 
                                             </td>
@@ -645,11 +951,21 @@
 
                                             <td ng-class="{'bg-highlight' : !row.get_deadline_spring_late_month_display&& !row.get_deadline_spring_late_day_display && $index === 0,  'bg-gray-lighter' : !row.get_deadline_spring_late_month_display&& !row.get_deadline_spring_late_day_display && $index !== 0}" ng-repeat = "row in e_array_final[3]">
 
-                                            <span ng-if="row.get_deadline_spring_late_month_display&&row.get_deadline_spring_late_day_display">{{row.get_deadline_spring_late_month_display}} {{row.get_deadline_spring_late_day_display}}</span>
+                                                <span ng-class="{'updated-text': e_show_update['deadline_spring_late'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_spring_late_month_display&& !row.get_deadline_spring_late_day_display" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['deadline_spring_late'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['deadline_spring_late'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.get_deadline_spring_late_month_display&&row.get_deadline_spring_late_day_display">{{row.get_deadline_spring_late_month_display}} {{row.get_deadline_spring_late_day_display}}</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_spring_late_month_display&& !row.get_deadline_spring_late_day_display" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -658,11 +974,21 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Deadline - Summer, early</td>
                                             <td ng-class="{'bg-highlight' : !row.get_deadline_summer_early_month_display&&!row.get_deadline_summer_early_day_display && $index === 0,  'bg-gray-lighter' : !row.get_deadline_summer_early_month_display&&!row.get_deadline_summer_early_day_display && $index !== 0}" ng-repeat = "row in e_array_final[3]">
 
-                                            <span ng-if="row.get_deadline_summer_early_month_display&&row.get_deadline_summer_early_day_display">{{row.get_deadline_summer_early_month_display}} {{row.get_deadline_summer_early_day_display}}</span>
+                                                <span ng-class="{'updated-text': e_show_update['deadline_summer_early'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_summer_early_month_display&&!row.get_deadline_summer_early_day_display" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['deadline_summer_early'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['deadline_summer_early'+($index===0?'':$index+1)]">
+                                                    
+                                                    <span ng-if="row.get_deadline_summer_early_month_display&&row.get_deadline_summer_early_day_display">{{row.get_deadline_summer_early_month_display}} {{row.get_deadline_summer_early_day_display}}</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_summer_early_month_display&&!row.get_deadline_summer_early_day_display" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -674,12 +1000,21 @@
                                             !row.get_deadline_summer_late_day_display && $index === 0,  'bg-gray-lighter' : !row.get_deadline_summer_late_month_display&&
                                             !row.get_deadline_summer_late_day_display && $index !== 0}" ng-repeat = "row in e_array_final[3]">
 
-                                            <span ng-if="row.get_deadline_summer_late_month_display&&row.get_deadline_summer_late_day_display">{{row.get_deadline_summer_late_month_display}} {{row.get_deadline_summer_late_day_display}}</span>
+                                                <span ng-class="{'updated-text': e_show_update['deadline_summer_late'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_summer_late_month_display&&
-                                            !row.get_deadline_summer_late_day_display" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['deadline_summer_late'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['deadline_summer_late'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.get_deadline_summer_late_month_display&&row.get_deadline_summer_late_day_display">{{row.get_deadline_summer_late_month_display}} {{row.get_deadline_summer_late_day_display}}</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.get_deadline_summer_late_month_display&&
+                                                    !row.get_deadline_summer_late_day_display" >
+                                                        N/A
+                                                    </span>
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -690,17 +1025,27 @@
                                             <td ng-class="{'bg-highlight' : row.deadline_rolling!==true && row.deadline_rolling!==false && $index === 0,  'bg-gray-lighter' : row.deadline_rolling!==true && row.deadline_rolling!==false && $index !== 0}"
                                             ng-repeat = "row in e_array_final[3]">
 
-                                            <span ng-if="row.deadline_rolling===true"><i class="fa fa-check text-success"></i>
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['deadline_rolling'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.deadline_rolling===false"><i class="fa fa-times text-danger"></i>
+                                                data-uib-tooltip="History: {{e_show_update['deadline_rolling'+($index===0?'':$index+1)]}}" 
 
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.deadline_rolling!==true && row.deadline_rolling!==false" >
-                                            N/A
+                                                data-tooltip-enable="e_show_update['deadline_rolling'+($index===0?'':$index+1)]">
 
-                                            </span>
+                                                    <span ng-if="row.deadline_rolling===true"><i class="fa fa-check text-success"></i>
+                                                    </span>
+
+                                                    <span ng-if="row.deadline_rolling===false"><i class="fa fa-times text-danger"></i>
+
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.deadline_rolling!==true && row.deadline_rolling!==false" >
+                                                    N/A
+
+                                                    </span>
+
+                                                </span>
 
 
                                             </td>
@@ -712,14 +1057,24 @@
                                             <td ng-class="{'bg-highlight' : !row.scholarship_deadline_month&&!row.scholarship_deadline_day && $index === 0,  'bg-gray-lighter' : !row.scholarship_deadline_month&&!row.scholarship_deadline_day && $index !== 0}"
                                             ng-repeat = "row in e_array_final[3]">
 
-                                            <span ng-if="row.scholarship_deadline_month&&row.scholarship_deadline_day">{{row.scholarship_deadline_month}}/{{row.scholarship_deadline_day}}
+                                                <span ng-class="{'updated-text': e_show_update['scholarship_deadline'+($index===0?'':$index+1)]}" 
 
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['scholarship_deadline'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.scholarship_deadline_month&&!row.scholarship_deadline_day" >
-                                            N/A
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            </span>
+                                                data-tooltip-enable="e_show_update['scholarship_deadline'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.scholarship_deadline_month&&row.scholarship_deadline_day">{{row.scholarship_deadline_month}}/{{row.scholarship_deadline_day}}
+
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.scholarship_deadline_month&&!row.scholarship_deadline_day" >
+                                                    N/A
+
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -741,9 +1096,19 @@
 
                                             <td ng-class="{'note-left': row.special_reqs, 'bg-highlight' : !row.special_reqs && $index === 0,  'bg-gray-lighter' : !row.special_reqs && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <pre ng-if="row.special_reqs">{{row.special_reqs}}</pre>
+                                                <span ng-class="{'updated-text': e_show_update['special_reqs'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.special_reqs" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['special_reqs'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['special_reqs'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.special_reqs">{{row.special_reqs}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.special_reqs" >N/A</span>
+
+                                                </span>
 
 
                                             </td>
@@ -754,13 +1119,23 @@
                                             
                                             <td ng-class="{'bg-highlight' : row.apply_online!==true && row.apply_online!==false && $index === 0,  'bg-gray-lighter' : row.apply_online!==true && row.apply_online!==false && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.apply_online===true"><i class="fa fa-check text-success"></i></span>
+                                                <span ng-class="{'updated-text': e_show_update['apply_online'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.apply_online===false"><i class="fa fa-times text-danger"></i></span>
+                                                data-uib-tooltip="History: {{e_show_update['apply_online'+($index===0?'':$index+1)]}}" 
 
-                                            <span  ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.apply_online!==true && row.apply_online!==false">
-                                                N/A
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['apply_online'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.apply_online===true"><i class="fa fa-check text-success"></i></span>
+
+                                                    <span ng-if="row.apply_online===false"><i class="fa fa-times text-danger"></i></span>
+
+                                                    <span  ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.apply_online!==true && row.apply_online!==false">
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -770,11 +1145,19 @@
 
                                             <td ng-class="{'bg-highlight' : !row.application_fee && $index === 0,  'bg-gray-lighter' : !row.application_fee && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.application_fee">
-                                            {{row.application_fee | currency}}</span>
+                                                <span ng-class="{'updated-text': e_show_update['application_fee'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.application_fee" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['application_fee'+($index===0?'':$index+1)]}}" 
 
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['application_fee'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.application_fee">
+                                                    {{row.application_fee | currency}}</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.application_fee" >N/A</span>
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -784,14 +1167,23 @@
 
                                             <td ng-class="{'bg-highlight' : row.application_fee_waiver!==true && row.application_fee_waiver!==false && $index === 0,  'bg-gray-lighter' : row.application_fee_waiver!==true && row.application_fee_waiver!==false && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.application_fee_waiver===true"><i class="fa fa-check text-success"></i></span>
+                                                <span ng-class="{'updated-text': e_show_update['application_fee_waiver'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.application_fee_waiver===false"><i class="fa fa-times text-danger"></i></span>
+                                                data-uib-tooltip="History: {{e_show_update['application_fee_waiver'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.application_fee_waiver!==true && row.application_fee_waiver!==false" >
-                                                N/A
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
+                                                data-tooltip-enable="e_show_update['application_fee_waiver'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.application_fee_waiver===true"><i class="fa fa-check text-success"></i></span>
+
+                                                    <span ng-if="row.application_fee_waiver===false"><i class="fa fa-times text-danger"></i></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.application_fee_waiver!==true && row.application_fee_waiver!==false" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
 
                                             </td>
@@ -802,9 +1194,19 @@
 
                                             <td ng-class="{'note-left': row.application_fee_waiver_notes, 'bg-highlight' : !row.application_fee_waiver_notes && $index === 0,  'bg-gray-lighter' : !row.application_fee_waiver_notes && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <pre ng-if="row.application_fee_waiver_notes">{{row.application_fee_waiver_notes}}</pre>
+                                                <span ng-class="{'updated-text': e_show_update['application_fee_waiver_notes'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.application_fee_waiver_notes" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['application_fee_waiver_notes'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['application_fee_waiver_notes'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.application_fee_waiver_notes">{{row.application_fee_waiver_notes}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.application_fee_waiver_notes" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -813,14 +1215,24 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Transcripts required for application</td>
 
                                             <td ng-class="{'bg-highlight' : row.transcript_for_application!=='Y'&&row.transcript_for_application!=='N' && $index === 0,  'bg-gray-lighter' : row.transcript_for_application!=='Y'&&row.transcript_for_application!=='N' && $index !== 0}" ng-repeat = "row in e_array_final[4]">
-                                               
-                                            <span ng-if="row.transcript_for_application==='Y'"><i class="fa fa-check text-success"></i></span>
+                                                
+                                                <span ng-class="{'updated-text': e_show_update['transcript_for_application'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.transcript_for_application==='N'"><i class="fa fa-times text-danger"></i></span>
+                                                data-uib-tooltip="History: {{e_show_update['transcript_for_application'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.transcript_for_application!=='Y'&&row.transcript_for_application!=='N'" >
-                                                N/A
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['transcript_for_application'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.transcript_for_application==='Y'"><i class="fa fa-check text-success"></i></span>
+
+                                                    <span ng-if="row.transcript_for_application==='N'"><i class="fa fa-times text-danger"></i></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.transcript_for_application!=='Y'&&row.transcript_for_application!=='N'" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -830,13 +1242,23 @@
 
                                             <td ng-class="{'bg-highlight' : row.official_transcript_for_enrollment!=='Y'&&row.official_transcript_for_enrollment!=='N' && $index === 0,  'bg-gray-lighter' : row.official_transcript_for_enrollment!=='Y'&&row.official_transcript_for_enrollment!=='N' && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.official_transcript_for_enrollment==='Y'"><i class="fa fa-check text-success"></i></span>
+                                                <span ng-class="{'updated-text': e_show_update['official_transcript_for_enrollment'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.official_transcript_for_enrollment==='N'"><i class="fa fa-times text-danger"></i></span>
+                                                data-uib-tooltip="History: {{e_show_update['official_transcript_for_enrollment'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.official_transcript_for_enrollment!=='Y'&&row.official_transcript_for_enrollment!=='N'" >
-                                            N/A
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['official_transcript_for_enrollment'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.official_transcript_for_enrollment==='Y'"><i class="fa fa-check text-success"></i></span>
+
+                                                    <span ng-if="row.official_transcript_for_enrollment==='N'"><i class="fa fa-times text-danger"></i></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.official_transcript_for_enrollment!=='Y'&&row.official_transcript_for_enrollment!=='N'" >
+                                                    N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -846,14 +1268,24 @@
 
                                             <td ng-class="{'bg-highlight' : row.length === 0 && $index === 0,  'bg-gray-lighter' : row.length === 0 && $index !== 0}" ng-repeat = "row in e_array_final[5]">
 
-                                                <span ng-if="row.length !== 0">
-                                                    <span ng-repeat="row3 in row">{{row3.name}}<br></span>
+                                                <span ng-class="{'updated-text': e_show_update['required_admissions_exam'+($index===0?'':$index+1)]}" 
 
-                                                </span>
-                                                
+                                                data-uib-tooltip="History: {{e_show_update['required_admissions_exam'+($index===0?'':$index+1)]}}" 
 
-                                                <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.length === 0" >
-                                                    N/A
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['required_admissions_exam'+($index===0?'':$index+1)]">
+
+                                                        <span ng-if="row.length !== 0">
+                                                            <span ng-repeat="row3 in row">{{row3.name}}<br></span>
+
+                                                        </span>
+                                                        
+
+                                                        <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.length === 0" >
+                                                            N/A
+
+                                                        </span>
 
                                                 </span>
                                             
@@ -866,9 +1298,18 @@
                                             
                                             <td ng-class="{'note-left': row.essays, 'bg-highlight' : !row.essays && $index === 0,  'bg-gray-lighter' : !row.essays && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <pre ng-if="row.essays">{{row.essays}}</pre>
+                                                <span ng-class="{'updated-text': e_show_update['essays'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.essays" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['essays'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['essays'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.essays">{{row.essays}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.essays" >N/A</span>
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -877,11 +1318,22 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Letters of recommendation</td>
                                             
                                             <td  ng-class="{'bg-highlight' : !row.recommendation && $index === 0,  'bg-gray-lighter' : !row.recommendation && $index !== 0}" ng-repeat = "row in e_array_final[4]">
-                                            <span ng-if="row.recommendation">
-                                            {{row.recommendation}}
-                                            </span>
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.recommendation" >N/A</span>
+                                                <span ng-class="{'updated-text': e_show_update['recommendation'+($index===0?'':$index+1)]}" 
+
+                                                data-uib-tooltip="History: {{e_show_update['recommendation'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['recommendation'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.recommendation">
+                                                    {{row.recommendation}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.recommendation" >N/A</span>
+
+                                                </span>
                                             </td>
                                         </tr>
 
@@ -889,17 +1341,27 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Minimum GPA</td>
                                             <td ng-class="{'bg-highlight' : !row.gpa_minimum&&!row.gpa_minimum_letter && $index === 0,  'bg-gray-lighter' : !row.gpa_minimum&&!row.gpa_minimum_letter && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.gpa_minimum&&!row.gpa_minimum_letter">{{row.gpa_minimum}}</span>
+                                                <span ng-class="{'updated-text': e_show_update['gpa_minimum'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="!row.gpa_minimum&&row.gpa_minimum_letter">{{row.gpa_minimum_letter}}
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['gpa_minimum'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-if="row.gpa_minimum&&row.gpa_minimum_letter">{{row.gpa_minimum}}/{{row.gpa_minimum_letter}}
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.gpa_minimum&&!row.gpa_minimum_letter" >
-                                            N/A
-                                            </span>
+                                                data-tooltip-enable="e_show_update['gpa_minimum'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.gpa_minimum&&!row.gpa_minimum_letter">{{row.gpa_minimum}}</span>
+
+                                                    <span ng-if="!row.gpa_minimum&&row.gpa_minimum_letter">{{row.gpa_minimum_letter}}
+                                                    </span>
+
+                                                    <span ng-if="row.gpa_minimum&&row.gpa_minimum_letter">{{row.gpa_minimum}}/{{row.gpa_minimum_letter}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.gpa_minimum&&!row.gpa_minimum_letter" >
+                                                    N/A
+                                                    </span>
+
+                                                </span>
 
 
 
@@ -910,15 +1372,25 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Average GPA</td>
                                             <td ng-class="{'bg-highlight' : !row.gpa_average&&!row.gpa_average_letter && $index === 0,  'bg-gray-lighter' : !row.gpa_average&&!row.gpa_average_letter && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.gpa_average&&!row.gpa_average_letter">{{row.gpa_average}}</span>
+                                                <span ng-class="{'updated-text': e_show_update['gpa_average'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="!row.gpa_average&&row.gpa_average_letter">{{row.gpa_average_letter}}</span>
+                                                data-uib-tooltip="History: {{e_show_update['gpa_average'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-if="row.gpa_average&&row.gpa_average_letter">{{row.gpa_average}}/{{row.gpa_average_letter}}</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.gpa_average&&!row.gpa_average_letter" >
-                                                N/A
-                                            </span>
+                                                data-tooltip-enable="e_show_update['gpa_average'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.gpa_average&&!row.gpa_average_letter">{{row.gpa_average}}</span>
+
+                                                    <span ng-if="!row.gpa_average&&row.gpa_average_letter">{{row.gpa_average_letter}}</span>
+
+                                                    <span ng-if="row.gpa_average&&row.gpa_average_letter">{{row.gpa_average}}/{{row.gpa_average_letter}}</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.gpa_average&&!row.gpa_average_letter" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -927,15 +1399,24 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Suggested GPA</td>
                                             <td ng-class="{'bg-highlight' : !row.gpa_suggested&&!row.gpa_suggested_letter && $index === 0,  'bg-gray-lighter' : !row.gpa_suggested&&!row.gpa_suggested_letter && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.gpa_suggested&&!row.gpa_suggested_letter">{{row.gpa_suggested}}</span>
+                                                <span ng-class="{'updated-text': e_show_update['gpa_suggested'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="!row.gpa_suggested&&row.gpa_suggested_letter">{{row.gpa_suggested_letter}}</span>
+                                                data-uib-tooltip="History: {{e_show_update['gpa_suggested'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-if="row.gpa_suggested&&row.gpa_suggested_letter">{{row.gpa_suggested}}/{{row.gpa_suggested_letter}}</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.gpa_suggested&&!row.gpa_suggested_letter" >
-                                                N/A
-                                            </span>
+                                                data-tooltip-enable="e_show_update['gpa_suggested'+($index===0?'':$index+1)]">
+                                                    <span ng-if="row.gpa_suggested&&!row.gpa_suggested_letter">{{row.gpa_suggested}}</span>
+
+                                                    <span ng-if="!row.gpa_suggested&&row.gpa_suggested_letter">{{row.gpa_suggested_letter}}</span>
+
+                                                    <span ng-if="row.gpa_suggested&&row.gpa_suggested_letter">{{row.gpa_suggested}}/{{row.gpa_suggested_letter}}</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.gpa_suggested&&!row.gpa_suggested_letter" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -945,14 +1426,24 @@
 
                                             <td ng-class="{'bg-highlight' : row.school_interview!==true && row.school_interview!==false && $index === 0,  'bg-gray-lighter' : row.school_interview!==true && row.school_interview!==false && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.school_interview===true"><i class="fa fa-check text-success"></i>
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['school_interview'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.school_interview===false"><i class="fa fa-times text-danger"></i></span>
+                                                data-uib-tooltip="History: {{e_show_update['school_interview'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.school_interview!==true && row.school_interview!==false" >
-                                                N/A
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['school_interview'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.school_interview===true"><i class="fa fa-check text-success"></i>
+                                                    </span>
+
+                                                    <span ng-if="row.school_interview===false"><i class="fa fa-times text-danger"></i></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.school_interview!==true && row.school_interview!==false" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -961,13 +1452,23 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Résumé/ Curriculum Vitae</td>
                                             <td ng-class="{'bg-highlight' : row.resume!=='Y'&& row.resume!=='N' && row.resume!=='O' && $index === 0,  'bg-gray-lighter' : row.resume!=='Y'&& row.resume!=='N' && row.resume!=='O' && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.resume==='Y'">Yes</span>
-                                            <span ng-if="row.resume==='N'">No</span>
-                                            <span ng-if="row.resume==='O'">Optional</span>
+                                                <span ng-class="{'updated-text': e_show_update['resume'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.resume!=='Y'&& row.resume!=='N' && row.resume!=='O'" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['resume'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['resume'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.resume==='Y'">Yes</span>
+                                                    <span ng-if="row.resume==='N'">No</span>
+                                                    <span ng-if="row.resume==='O'">Optional</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.resume!=='Y'&& row.resume!=='N' && row.resume!=='O'" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -976,15 +1477,25 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Writing sample</td>
                                             <td  ng-class="{'bg-highlight' : row.sup_mat_writing_sample!=='Y'&&row.sup_mat_writing_sample!=='N' &&row.sup_mat_writing_sample!=='O' && $index === 0,  'bg-gray-lighter' : row.sup_mat_writing_sample!=='Y'&&row.sup_mat_writing_sample!=='N' &&row.sup_mat_writing_sample!=='O' && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.sup_mat_writing_sample==='Y'">Yes</span>
+                                                <span ng-class="{'updated-text': e_show_update['sup_mat_writing_sample'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.sup_mat_writing_sample==='N'">No</span>
+                                                data-uib-tooltip="History: {{e_show_update['sup_mat_writing_sample'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-if="row.sup_mat_writing_sample==='O'">Optional</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.sup_mat_writing_sample!=='Y'&&row.sup_mat_writing_sample!=='N' &&row.sup_mat_writing_sample!=='O'" >
-                                                N/A
-                                            </span>
+                                                data-tooltip-enable="e_show_update['sup_mat_writing_sample'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.sup_mat_writing_sample==='Y'">Yes</span>
+
+                                                    <span ng-if="row.sup_mat_writing_sample==='N'">No</span>
+
+                                                    <span ng-if="row.sup_mat_writing_sample==='O'">Optional</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.sup_mat_writing_sample!=='Y'&&row.sup_mat_writing_sample!=='N' &&row.sup_mat_writing_sample!=='O'" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
 
                                             </td>
@@ -995,10 +1506,19 @@
 
                                             <td ng-class="{'note-left': row.sup_mat_writing_sample_notes, 'bg-highlight' : !row.sup_mat_writing_sample_notes && $index === 0,  'bg-gray-lighter' : !row.sup_mat_writing_sample_notes && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <pre ng-if="row.sup_mat_writing_sample_notes">{{row.sup_mat_writing_sample_notes}}</pre>
+                                                <span ng-class="{'updated-text': e_show_update['sup_mat_writing_sample_notes'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.sup_mat_writing_sample_notes" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['sup_mat_writing_sample_notes'+($index===0?'':$index+1)]}}" 
 
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['sup_mat_writing_sample_notes'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.sup_mat_writing_sample_notes">{{row.sup_mat_writing_sample_notes}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.sup_mat_writing_sample_notes" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1007,15 +1527,25 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Portfolio</td>
                                             <td ng-class="{'bg-highlight' : row.sup_mat_portfolio!=='Y' && row.sup_mat_portfolio!=='N' && row.sup_mat_portfolio!=='O' && $index === 0,  'bg-gray-lighter' : row.sup_mat_portfolio!=='Y' && row.sup_mat_portfolio!=='N' && row.sup_mat_portfolio!=='O' && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.sup_mat_portfolio==='Y'">Yes</span>
+                                                <span ng-class="{'updated-text': e_show_update['sup_mat_portfolio'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.sup_mat_portfolio==='N'">No</span>
+                                                data-uib-tooltip="History: {{e_show_update['sup_mat_portfolio'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-if="row.sup_mat_portfolio==='O'">Optional</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.sup_mat_portfolio!=='Y' && row.sup_mat_portfolio!=='N' && row.sup_mat_portfolio!=='O'" >
-                                            N/A
-                                            </span>
+                                                data-tooltip-enable="e_show_update['sup_mat_portfolio'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.sup_mat_portfolio==='Y'">Yes</span>
+
+                                                    <span ng-if="row.sup_mat_portfolio==='N'">No</span>
+
+                                                    <span ng-if="row.sup_mat_portfolio==='O'">Optional</span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.sup_mat_portfolio!=='Y' && row.sup_mat_portfolio!=='N' && row.sup_mat_portfolio!=='O'" >
+                                                    N/A
+                                                    </span>
+
+                                                </span>
 
 
                                             </td>
@@ -1026,9 +1556,19 @@
 
                                             <td ng-class="{'note-left': row.sup_mat_portfolio_notes, 'bg-highlight' : !row.sup_mat_portfolio_notes && $index === 0,  'bg-gray-lighter' : !row.sup_mat_portfolio_notes && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <pre ng-if="row.sup_mat_portfolio_notes">{{row.sup_mat_portfolio_notes}}</pre>
+                                                <span ng-class="{'updated-text': e_show_update['sup_mat_portfolio_notes'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.sup_mat_portfolio_notes" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['sup_mat_portfolio_notes'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['sup_mat_portfolio_notes'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.sup_mat_portfolio_notes">{{row.sup_mat_portfolio_notes}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.sup_mat_portfolio_notes" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1038,14 +1578,24 @@
 
                                             <td ng-class="{'bg-highlight' : !row.program_req_url&& !row.school_req_url && $index === 0,  'bg-gray-lighter' : !row.program_req_url&& !row.school_req_url && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.program_req_url"><a href="{{row.program_req_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
+                                                <span ng-class="{'updated-text': e_show_update['additional_admissions_requirements'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="!row.program_req_url&&row.school_req_url"><a href="{{row.school_req_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
+                                                data-uib-tooltip="History: {{e_show_update['additional_admissions_requirements'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['additional_admissions_requirements'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.program_req_url"><a href="{{row.program_req_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
+
+                                                    <span ng-if="!row.program_req_url&&row.school_req_url"><a href="{{row.school_req_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.program_req_url&& !row.school_req_url" >
-                                                N/A
-                                            </span>
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.program_req_url&& !row.school_req_url" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
 
                                             </td>
@@ -1066,20 +1616,29 @@
 
                                             <td ng-class="{'bg-highlight' : (row.length === 0 || (row.length === 1 && row[0].name === 'NA')) && $index === 0,  'bg-gray-lighter' : (row.length === 0 || (row.length === 1 && row[0].name === 'NA')) && $index !== 0}" ng-repeat = "row in e_array_final[6]">
 
+                                                <span ng-class="{'updated-text': e_show_update['Intl_transcript'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.length !== 0 && row[0].name !== 'NA'">
+                                                data-uib-tooltip="History: {{e_show_update['Intl_transcript'+($index===0?'':$index+1)]}}" 
 
-                                                <span ng-repeat="row1 in row">
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
 
-                                                <span ng-if="row1" data-uib-tooltip="{{row1.description}}" data-tooltip-placement="top" style="border-bottom: 1px dashed #aaa;cursor: pointer;">{{row1.name}}<br></span>
+                                                data-tooltip-enable="e_show_update['Intl_transcript'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.length !== 0 && row[0].name !== 'NA'">
+
+                                                        <span ng-repeat="row1 in row">
+
+                                                        <span ng-if="row1" data-uib-tooltip="{{row1.description}}" data-tooltip-placement="top" style="border-bottom: 1px dashed #aaa;cursor: pointer;">{{row1.name}}<br></span>
+
+                                                        </span>
+
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.length === 0 || (row.length === 1 && row[0].name === 'NA')" >
+                                                    N/A
+                                                    </span>
 
                                                 </span>
-
-                                            </span>
-
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.length === 0 || (row.length === 1 && row[0].name === 'NA')" >
-                                            N/A
-                                            </span>
 
                                             </td>
                                         </tr>
@@ -1090,15 +1649,25 @@
 
                                             <td ng-class="{'bg-highlight' :row.intl_lang_waiver!==true && row.intl_lang_waiver!==false && $index === 0,  'bg-gray-lighter' :row.intl_lang_waiver!==true && row.intl_lang_waiver!==false && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.intl_lang_waiver===true"><i class="fa fa-check text-success"></i>
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['intl_lang_waiver'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.intl_lang_waiver===false"><i class="fa fa-times text-danger"></i>
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['intl_lang_waiver'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.intl_lang_waiver!==true && row.intl_lang_waiver!==false" >
-                                            N/A
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['intl_lang_waiver'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.intl_lang_waiver===true"><i class="fa fa-check text-success"></i>
+                                                    </span>
+
+                                                    <span ng-if="row.intl_lang_waiver===false"><i class="fa fa-times text-danger"></i>
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.intl_lang_waiver!==true && row.intl_lang_waiver!==false" >
+                                                    N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1108,9 +1677,19 @@
 
                                             <td ng-class="{'note-left': row.intl_lang_waiver_conditions, 'bg-highlight' :!row.intl_lang_waiver_conditions && $index === 0,  'bg-gray-lighter' :!row.intl_lang_waiver_conditions && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <pre ng-if="row.intl_lang_waiver_conditions">{{row.intl_lang_waiver_conditions}}</pre>
+                                                <span ng-class="{'updated-text': e_show_update['intl_lang_waiver_conditions'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.intl_lang_waiver_conditions" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['intl_lang_waiver_conditions'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['intl_lang_waiver_conditions'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.intl_lang_waiver_conditions">{{row.intl_lang_waiver_conditions}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.intl_lang_waiver_conditions" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1120,11 +1699,21 @@
 
                                             <td ng-class="{'bg-highlight' :row.intl_english_test_required!==true && row.intl_english_test_required!==false && $index === 0,  'bg-gray-lighter' :row.intl_english_test_required!==true && row.intl_english_test_required!==false && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.intl_english_test_required===true"><i class="fa fa-check text-success"></i></span>
+                                                <span ng-class="{'updated-text': e_show_update['intl_english_test_required'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.intl_english_test_required===false"><i class="fa fa-times text-danger"></i></span>
+                                                data-uib-tooltip="History: {{e_show_update['intl_english_test_required'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.intl_english_test_required!==true && row.intl_english_test_required!==false" >N/A</span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['intl_english_test_required'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.intl_english_test_required===true"><i class="fa fa-check text-success"></i></span>
+
+                                                    <span ng-if="row.intl_english_test_required===false"><i class="fa fa-times text-danger"></i></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.intl_english_test_required!==true && row.intl_english_test_required!==false" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1134,15 +1723,24 @@
 
                                             <td ng-class="{'bg-highlight' :row.length === 0 && $index === 0,  'bg-gray-lighter' :row.length === 0 && $index !== 0}" ng-repeat = "row in e_array_final[7]">
 
-                                            <span ng-if="row.length !== 0">
-                                                <span ng-repeat="row2 in row">{{row2.name}}<br>
-                                                </span>
+                                                <span ng-class="{'updated-text': e_show_update['Intl_eng_test'+($index===0?'':$index+1)]}" 
 
-                                            </span>
-                                    
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.length === 0" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['Intl_eng_test'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['Intl_eng_test'+($index===0?'':$index+1)]">    
+                                                    <span ng-if="row.length !== 0">
+                                                        <span ng-repeat="row2 in row">{{row2.name}}<br>
+                                                        </span>
+
+                                                    </span>
+                                            
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.length === 0" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
 
                                             </td>
@@ -1154,13 +1752,23 @@
 
                                             <td ng-class="{'bg-highlight' :!row.toefl_ibt && $index === 0,  'bg-gray-lighter' :!row.toefl_ibt && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.toefl_ibt">
-                                            {{row.toefl_ibt}}
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['toefl_ibt'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_ibt" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['toefl_ibt'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['toefl_ibt'+($index===0?'':$index+1)]"> 
+
+                                                    <span ng-if="row.toefl_ibt">
+                                                    {{row.toefl_ibt}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_ibt" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1169,12 +1777,22 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">TOEFL iBT reading /listening /speaking /writing Scores</td>
                                             <td  ng-class="{'bg-highlight' :!row.toefl_ibt_reading&&!row.toefl_ibt_listening&&!row.toefl_ibt_speaking&&!row.toefl_ibt_writing && $index === 0,  'bg-gray-lighter' :!row.toefl_ibt_reading&&!row.toefl_ibt_listening&&!row.toefl_ibt_speaking&&!row.toefl_ibt_writing && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.toefl_ibt_reading||row.toefl_ibt_listening||row.toefl_ibt_speaking||row.toefl_ibt_writing">{{row.toefl_ibt_reading?row.toefl_ibt_reading: '-'}}/{{row.toefl_ibt_listening?row.toefl_ibt_listening: '-'}}/{{row.toefl_ibt_speaking?row.toefl_ibt_speaking: '-'}}/{{row.toefl_ibt_writing?row.toefl_ibt_writing: '-'}}
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['toefl_ibt_scores'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_ibt_reading&&!row.toefl_ibt_listening&&!row.toefl_ibt_speaking&&!row.toefl_ibt_writing" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['toefl_ibt_scores'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['toefl_ibt_scores'+($index===0?'':$index+1)]"> 
+
+                                                    <span ng-if="row.toefl_ibt_reading||row.toefl_ibt_listening||row.toefl_ibt_speaking||row.toefl_ibt_writing">{{row.toefl_ibt_reading?row.toefl_ibt_reading: '-'}}/{{row.toefl_ibt_listening?row.toefl_ibt_listening: '-'}}/{{row.toefl_ibt_speaking?row.toefl_ibt_speaking: '-'}}/{{row.toefl_ibt_writing?row.toefl_ibt_writing: '-'}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_ibt_reading&&!row.toefl_ibt_listening&&!row.toefl_ibt_speaking&&!row.toefl_ibt_writing" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1185,11 +1803,21 @@
 
                                             <td ng-class="{'bg-highlight' :!row.toefl_pbt && $index === 0,  'bg-gray-lighter' :!row.toefl_pbt && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.toefl_pbt">
-                                            {{row.toefl_pbt}}
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['toefl_pbt'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_pbt" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['toefl_pbt'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['toefl_pbt'+($index===0?'':$index+1)]"> 
+
+                                                    <span ng-if="row.toefl_pbt">
+                                                    {{row.toefl_pbt}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_pbt" >N/A</span>
+
+                                                </span>
                                             </td>
                                         </tr>
 
@@ -1197,11 +1825,22 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">TOEFL TWE</td>
 
                                             <td ng-class="{'bg-highlight' :!row.toefl_twe && $index === 0,  'bg-gray-lighter' :!row.toefl_twe && $index !== 0}" ng-repeat = "row in e_array_final[4]">
-                                            <span ng-if="row.toefl_twe">
-                                            {{row.toefl_twe}}
-                                            </span>
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_twe" >N/A</span>
+                                                <span ng-class="{'updated-text': e_show_update['toefl_twe'+($index===0?'':$index+1)]}" 
+
+                                                data-uib-tooltip="History: {{e_show_update['toefl_twe'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['toefl_twe'+($index===0?'':$index+1)]"> 
+
+                                                    <span ng-if="row.toefl_twe">
+                                                    {{row.toefl_twe}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_twe" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1210,11 +1849,21 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">TOEFL TSE</td>
                                             <td ng-class="{'bg-highlight' :!row.toefl_tse && $index === 0,  'bg-gray-lighter' :!row.toefl_tse && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.toefl_tse">
-                                            {{row.toefl_tse}}
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['toefl_tse'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_tse" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['toefl_tse'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['toefl_tse'+($index===0?'':$index+1)]"> 
+
+                                                    <span ng-if="row.toefl_tse">
+                                                    {{row.toefl_tse}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_tse" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1223,11 +1872,21 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">TOEFL CBT</td>
                                             <td ng-class="{'bg-highlight' :!row.toefl_cbt && $index === 0,  'bg-gray-lighter' :!row.toefl_cbt && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.toefl_cbt">
-                                            {{row.toefl_cbt}}
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['toefl_cbt'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_cbt" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['toefl_cbt'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['toefl_cbt'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.toefl_cbt">
+                                                    {{row.toefl_cbt}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.toefl_cbt" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1236,11 +1895,20 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">IELTS requirements</td>
                                             <td ng-class="{'bg-highlight' :!row.intl_ielts_reqs && $index === 0,  'bg-gray-lighter' :!row.intl_ielts_reqs && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
-                                            <span ng-if="row.intl_ielts_reqs">
-                                            {{row.intl_ielts_reqs}}
-                                            </span>
+                                                <span ng-class="{'updated-text': e_show_update['intl_ielts_reqs'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.intl_ielts_reqs" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['intl_ielts_reqs'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['intl_ielts_reqs'+($index===0?'':$index+1)]">
+                                                    <span ng-if="row.intl_ielts_reqs">
+                                                    {{row.intl_ielts_reqs}}
+                                                    </span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.intl_ielts_reqs" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1249,11 +1917,21 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Misc.</td>
                                             <td ng-class="{'bg-highlight' :!row.intl_other && $index === 0,  'bg-gray-lighter' :!row.intl_other && $index !== 0}" ng-class="{'note-left': row.intl_other}" ng-repeat = "row in e_array_final[4]">
 
-                                            <pre ng-if="row.intl_other">
-                                            {{row.intl_other}}
-                                            </pre>
+                                                <span ng-class="{'updated-text': e_show_update['intl_other'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.intl_other" >N/A</span>
+                                                data-uib-tooltip="History: {{e_show_update['intl_other'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['intl_other'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.intl_other">
+                                                    {{row.intl_other}}
+                                                    </pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.intl_other" >N/A</span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1270,12 +1948,22 @@
                                             <td class="text-primary font-w600" style="vertical-align: middle">Fully funded</td>
                                             <td ng-class="{'bg-highlight' :row.fully_funded!==true&&row.fully_funded!==false && $index === 0,  'bg-gray-lighter' :row.fully_funded!==true&&row.fully_funded!==false && $index !== 0}" ng-repeat = "row in e_array_final[8]">
 
-                                            <span ng-if="row.fully_funded===true"><i class="fa fa-check text-success"></i></span>
-                                            <span ng-if="row.fully_funded===false"><i class="fa fa-times text-danger"></i></span>
+                                                <span ng-class="{'updated-text': e_show_update['fully_funded'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.fully_funded!==true&&row.fully_funded!==false" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['fully_funded'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['fully_funded'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.fully_funded===true"><i class="fa fa-check text-success"></i></span>
+                                                    <span ng-if="row.fully_funded===false"><i class="fa fa-times text-danger"></i></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.fully_funded!==true&&row.fully_funded!==false" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1286,11 +1974,21 @@
                                             
                                             <td ng-class="{'note-left': row.fully_funded_notes, 'bg-highlight' :!row.fully_funded_notes && $index === 0,  'bg-gray-lighter' :!row.fully_funded_notes && $index !== 0}" ng-repeat = "row in e_array_final[8]">
 
-                                            <pre ng-if="row.fully_funded_notes">{{row.fully_funded_notes}}</pre>
+                                                <span ng-class="{'updated-text': e_show_update['fully_funded_notes'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.fully_funded_notes" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['fully_funded_notes'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['fully_funded_notes'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.fully_funded_notes">{{row.fully_funded_notes}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.fully_funded_notes" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1300,13 +1998,22 @@
 
                                             <td ng-class="{'bg-highlight' :row.scholarship_avail!==true && row.scholarship_avail!==false && $index === 0,  'bg-gray-lighter' :row.scholarship_avail!==true && row.scholarship_avail!==false && $index !== 0}" ng-repeat = "row in e_array_final[8]">
 
-                                            <span ng-if="row.scholarship_avail===true"><i class="fa fa-check text-success"></i></span>
+                                                <span ng-class="{'updated-text': e_show_update['scholarship_avail'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="row.scholarship_avail===false"><i class="fa fa-times text-danger"></i></span>
+                                                data-uib-tooltip="History: {{e_show_update['scholarship_avail'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.scholarship_avail!==true && row.scholarship_avail!==false" >
-                                                N/A
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['scholarship_avail'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.scholarship_avail===true"><i class="fa fa-check text-success"></i></span>
+
+                                                    <span ng-if="row.scholarship_avail===false"><i class="fa fa-times text-danger"></i></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.scholarship_avail!==true && row.scholarship_avail!==false" >
+                                                        N/A
+                                                    </span>
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1316,11 +2023,21 @@
 
                                             <td ng-class="{'note-left': row.scholarship_notes, 'bg-highlight' :!row.scholarship_notes && $index === 0,  'bg-gray-lighter' :!row.scholarship_notes && $index !== 0}" ng-repeat = "row in e_array_final[8]">
 
-                                            <pre ng-if="row.scholarship_notes">{{row.scholarship_notes}}</pre>
+                                                <span ng-class="{'updated-text': e_show_update['scholarship_notes'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.scholarship_notes" >
-                                                N/A
-                                            </span>
+                                                data-uib-tooltip="History: {{e_show_update['scholarship_notes'+($index===0?'':$index+1)]}}" 
+
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['scholarship_notes'+($index===0?'':$index+1)]">
+
+                                                    <pre ng-if="row.scholarship_notes">{{row.scholarship_notes}}</pre>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.scholarship_notes" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
                                             </td>
                                         </tr>
@@ -1330,13 +2047,23 @@
 
                                             <td ng-class="{'bg-highlight' :!row.scholarship_program_specific_url&&!row.scholarship_general_url && $index === 0,  'bg-gray-lighter' :!row.scholarship_program_specific_url&&!row.scholarship_general_url && $index !== 0}" ng-repeat = "row in e_array_final[8]">
 
-                                            <span ng-if="row.scholarship_program_specific_url"><a href="{{row.scholarship_program_specific_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
+                                                <span ng-class="{'updated-text': e_show_update['scholarship_url'+($index===0?'':$index+1)]}" 
 
-                                            <span ng-if="!row.scholarship_program_specific_url&&row.scholarship_general_url"><a href="{{row.scholarship_general_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
+                                                data-uib-tooltip="History: {{e_show_update['scholarship_url'+($index===0?'':$index+1)]}}" 
 
-                                            <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.scholarship_program_specific_url&&!row.scholarship_general_url" >
-                                                N/A
-                                            </span>
+                                                data-tooltip-placement="top" data-tooltip-class = "update-tooltip" 
+
+                                                data-tooltip-enable="e_show_update['scholarship_url'+($index===0?'':$index+1)]">
+
+                                                    <span ng-if="row.scholarship_program_specific_url"><a href="{{row.scholarship_program_specific_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
+
+                                                    <span ng-if="!row.scholarship_program_specific_url&&row.scholarship_general_url"><a href="{{row.scholarship_general_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></span>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.scholarship_program_specific_url&&!row.scholarship_general_url" >
+                                                        N/A
+                                                    </span>
+
+                                                </span>
 
 
                                             </td>

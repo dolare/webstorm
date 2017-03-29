@@ -85,7 +85,19 @@ dashboard.controller('DashboardController',
       jQuery("#scrolltop").scrollTop(0);
       container.scrollTop(0, 5000);
       App.blocks('#whoops_loading', 'state_loading');
-       
+      
+      $scope.show_history = 
+          { dead_link: false,
+            typo: false,
+            outdated_information: false,
+            data_discrepancy: false,
+            sidebars: false,
+            infinite_loop: false,
+            floating_page: false,
+            confusing: false,
+            other_expert_note: false
+
+          };
 
       $scope.whoops_report_program = Program;
       $scope.whoops_report_degree = Degree;
@@ -170,7 +182,7 @@ dashboard.controller('DashboardController',
           
         // }
 
-
+        $scope.w_update_diff = response.data.update_diff;
         $scope.w_raw = response.data.existing_report;
         $scope.w_array_final = [];
          var w_array_1 = [];

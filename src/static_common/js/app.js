@@ -26,6 +26,7 @@ var App = angular.module('myApp', [
   'ui.bootstrap',
   'smart-table',
   'reportServiceModule',
+  'updateServiceModule',
   'oc.lazyLoad',
   'ajaxModule',
   'ngAnimate',

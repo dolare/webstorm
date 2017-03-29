@@ -24,7 +24,6 @@ from .models import *
 # ----------------------------Login Serializer---------------------------------
 
 
-
 class Login2Serializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(style={'input_type': 'password'})
@@ -248,10 +247,10 @@ class UniversityAndSchoolSerializer(serializers.ModelSerializer):
         fields = ('object_id', 'university_school',)
 
     def get_university_school(self, obj):
-        return '{0} : {1} - {2}'.format(obj.ceeb, obj.university_foreign_key, obj.school)
+        return '{0} : {1} -- {2}'.format(obj.ceeb, obj.university_foreign_key, obj.school)
+
 
 # Used for main user get all his subuser detail
-
 
 class SubuserListSerializer(serializers.ModelSerializer):
     customer_program = SerializerMethodField()
@@ -270,7 +269,7 @@ class SubuserListSerializer(serializers.ModelSerializer):
 
 class MainUserDetailSerializer(serializers.ModelSerializer):
     sub_user_list = SerializerMethodField()
-    competing_schools=SerializerMethodField()
+    competing_schools = SerializerMethodField()
     university = SerializerMethodField()
     school = SerializerMethodField()
     

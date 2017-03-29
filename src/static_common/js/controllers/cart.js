@@ -7,6 +7,7 @@ controller('ReportsController',
     //init the ngStorage
     $scope.$storage = $localStorage;
     //console.log("result========"+JSON.stringify(List));
+    var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
     // console.log("$state.params.url= "+$state.params.url);
     ///////////////////////////////////
@@ -114,7 +115,7 @@ controller('ReportsController',
         data: {
           "whoops_id": (whoops_ids === ""? null: whoops_ids.slice(0,-1)),
           "enhancement_id": (enhancement_ids === ""? null: enhancement_ids.slice(0,-1)),
-
+          "client_id": client_id
         },
         headers: {
           'Authorization': 'JWT ' + token
@@ -128,7 +129,7 @@ controller('ReportsController',
         $scope.shared_token = response.data[0].split('/')[1];
         $scope.shareLoading = false;
         $scope.url = {
-          text: location.host + '/#/upgrid/share_selected_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
+          text: 'https://'+location.host + '/#/upgrid/share_selected_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
         };
 
         console.log("shared_id="+$scope.shared_id);

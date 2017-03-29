@@ -167,35 +167,6 @@ class CustomerProgram(generics.ListAPIView):
                       "cs": "customer_confirmation", "-cs": "-customer_confirmation",
                       "wfs": "whoops_final_release", "-wfs": "-whoops_final_release",
                       "efs": "enhancement_final_release", "-efs": "-enhancement_final_release"}
-        # if order == "oname":
-        #     order = 'program__program_name'
-        #
-        # elif order == "-oname":
-        #     order = '-program__program_name'
-        #
-        # elif order == "degree":
-        #     order = 'program__degree__name'
-        #
-        # elif order == "-degree":
-        #     order = '-program__degree__name'
-        #
-        # elif order == 'cs':
-        #     order = 'customer_confirmation'
-        #
-        # elif order == '-cs':
-        #     order = '-customer_confirmation'
-        #
-        # elif order == 'wfs':
-        #     order = 'whoops_final_release'
-        #
-        # elif order == '-wfs':
-        #     order = '-whoops_final_release'
-        #
-        # elif order == 'efs':
-        #     order = 'enhancement_final_release'
-        #
-        # elif order == '-efs':
-        #     order = '-enhancement_final_release'
 
         try:
             user = UniversityCustomer.objects.get(id=self.request.user.id)
@@ -546,10 +517,10 @@ class CreateOrChangeSubUser(APIView):
             main_user = UniversityCustomer.objects.get(id=request.user.id)
         except UniversityCustomer.DoesNotExist:
             try:
-                mananger = AccountManager.objects.get(id=request.user.id)
+                mananger = UpgridAccountManager.objects.get(id=request.user.id)
                 sub_user = UniversityCustomer.objects.get(id=request.data['sub_user_id'])
                 main_user = UniversityCustomer.objects.get(id=request.data['main_user_id'])
-            except UniversityCustomer.DoesNotExist:
+            except UniversityCustomer.DoesNotExist or AccountManager.DoesNotExist:
                 return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
         if main_user.Ceeb == sub_user.Ceeb:
@@ -596,7 +567,11 @@ class CreateOrChangeSubUser(APIView):
         try:
             main_user = UniversityCustomer.objects.get(id=request.user.id, account_type='main')
         except UniversityCustomer.DoesNotExist:
-            return Response({"failed": _("Permission Denied.")}, status=HTTP_403_FORBIDDEN)
+            try:
+                manager = UpgridAccountManager.objects.get(id=request.user.id)
+                main_user = UniversityCustomer.objects.get(id=request.data['main_user_id'])
+            except UniversityCustomer.DoesNotExist or UpgridAccountManager.DoesNotExist:
+                return Response({"failed": _("Permission Denied.")}, status=HTTP_403_FORBIDDEN)
         
         sub_service_until = main_user.service_until
         university_school = UniversitySchool.objects.get(ceeb=main_user.Ceeb.ceeb)
@@ -644,7 +619,7 @@ class ShareReports(APIView):
             try:
                 manager = UpgridAccountManager.objects.get(id=request.user.id)
                 try:
-                    user = UniversityCustomer.objects.get(id=request.GET['client_id'], account_manager=manager)
+                    user = UniversityCustomer.objects.get(id=request.data['client_id'], account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
                     return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
@@ -747,7 +722,10 @@ class ShareReports(APIView):
                 created_time=time_now,
             )
             relation_ship.save()
-            user = UniversityCustomer.objects.get(id=request.user.id)
+            try:
+                user = UniversityCustomer.objects.get(id=request.user.id)
+            except UniversityCustomer.DoesNotExist:
+                user = UniversityCustomer.objects.get(id = request.data['client_id'])
             if not request.data['whoops_id'] is None:
                 whoops_id_list = request.data['whoops_id'].split('/')
                 for x in whoops_id_list:
@@ -823,7 +801,7 @@ class EnhancementReportsAPI(APIView):
             raise Http404
 
     def put(self, request):
-        user = self.get_user(request)        
+        user = self.get_user(request, self.request.data['client_id'])
         if not user:
             return Response({"Failed": _("Permission Denied! ")}, status=HTTP_403_FORBIDDEN)
         
@@ -1135,10 +1113,12 @@ class UniversityCustomerProgramCRUD(APIView):
                     customer_confirmation=p.get('customer_confirmation'),
                 )
                 customer_program_object = UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id'))
-                if customer_program_object.whoops_final_release_time is None and p.get('whoops_final_release') == 'True':
+                print(customer_program_object.enhancement_final_release)
+                if customer_program_object.whoops_final_release_time is None and customer_program_object.whoops_final_release == 'True':
                     customer_program_object.whoops_final_release_time = timezone.now()
-                if customer_program_object.enhancement_final_release_time is None and p.get('enhancement_final_time') == 'True':
+                if customer_program_object.enhancement_final_release_time is None and customer_program_object.enhancement_final_release == 'True':
                     customer_program_object.enhancement_final_release_time = timezone.now()
+                    print(customer_program_object.enhancement_final_release_time)
 
                 customer_program_object.save()
                 # customer_program.save()
@@ -1267,6 +1247,7 @@ class DepartmentAPI(APIView):
             university_school = UniversitySchool.objects.get(object_id=object_id)
             programs = Program.objects.filter(university_school=university_school).values('department')\
                 .exclude(department__isnull=True).exclude(department__exact="").order_by().distinct()
+            #.exclude(department__isnull=True).exclude(department__exact="").order_by().distinct()
             return programs
         except:
             raise Http404
@@ -1725,8 +1706,8 @@ class ClientViewWhoopsUpdate(APIView):
                    'university': cust_pro.program.university_school.university_foreign_key.name,
                    'school': cust_pro.program.university_school.school,
                    'program': cust_pro.program.program_name, 'degree': cust_pro.program.degree.name,
-                   'whoops_final_release_time':cust_pro.whoops_final_release_time,
-                   'report_last_edit_time':update_report.last_edit_time}
+                   'whoops_final_release_time': cust_pro.whoops_final_release_time,
+                   'report_last_edit_time': update_report.last_edit_time}
         return Response(context, HTTP_200_OK)
 
 
