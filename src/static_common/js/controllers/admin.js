@@ -2759,7 +2759,7 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
     var token = authenticationSvc.getUserInfo().accessToken;
 
     $scope.itemsByPage = 25;
-    
+    $scope.emptyUpdateLabel = "Currently there is no update of the reports."
     $scope.date = new Date();
     $scope.popover = {
       "title": "Confirm for the updates",
@@ -2823,6 +2823,9 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
              console.log("init data all = "+ JSON.stringify(response.data))
              console.log("init data =  "+ JSON.stringify(response.data.existing_report));
               
+
+             var whoops_final_release_time = response.data.whoops_final_release_time;
+             var report_last_edit_time = response.data.report_last_edit_time;
 
              //console.log("init outdated =  "+ JSON.stringify(response.data.existing_report.outdated_information[0].additional_note));
 
@@ -2898,7 +2901,10 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
               "school": program.split('--')[0].split('-')[1],
               "university": program.split('--')[0].split('-')[0].split(':')[1],
               "program": program.split('--')[1],
-              "degree": program.split('--')[2].split('-')[0]
+              "degree": program.split('--')[2].split('-')[0],
+              "w_release_time": whoops_final_release_time,
+              "w_update_time": report_last_edit_time
+
              });
 
 
@@ -2934,7 +2940,11 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
              //$scope.update_client = response.data;
              console.log("init data =  "+ JSON.stringify(response.data));
              console.log("init enhancement data =  "+ JSON.stringify(response.data.existing_report));
-             
+              
+             var enhancement_final_release_time = response.data.enhancement_final_release_time;
+             var report_last_edit_time = response.data.report_last_edit_time;
+
+
              $scope.e_update = response.data.initial_diff.new;
              $scope.e_raw = response.data.existing_report;
              $scope.e_array_final = [];
@@ -2948,6 +2958,7 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
              var e_array_8 = [];
              var e_array_9 = [];
              var e_array_10 = [];
+             var e_array_11 = [];
              console.log("$scope.e_raw"+JSON.stringify($scope.e_raw));
              for(i=0; i<$scope.e_raw.length; i++)
              {
@@ -2964,7 +2975,16 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
 
              }
 
-             $scope.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
+
+             e_array_11.push(
+             {
+              
+              "e_release_time": enhancement_final_release_time,
+              "e_update_time": report_last_edit_time
+
+             })
+
+             $scope.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10, e_array_11];
               
 
              $scope.e_show_update = updateService.updateEnhancement(response.data, 'admin');

@@ -111,8 +111,14 @@ controller('ShareWhoopsController',
           
         // }
 
+        var whoops_final_release_time = response.data[0].whoops[0].whoops_final_release_time;
+        var report_last_edit_time = response.data[0].whoops[0].report_last_edit_time;
+
+
         $scope.w_raw = response.data[0].whoops[0];
-            $scope.w_array_final = [];
+        console.log('response.data[0].whoops[0]='+JSON.stringify(response.data[0].whoops[0]));
+             
+             $scope.report = {};
              var w_array_1 = [];
              var w_array_2 = [];
              var w_array_3 = [];
@@ -165,17 +171,19 @@ controller('ShareWhoopsController',
                   "university": response.data[0].whoops[0].university,
                   "school": response.data[0].whoops[0].school,
                   "program": response.data[0].whoops[0].program,
-                  "degree": response.data[0].whoops[0].degree
+                  "degree": response.data[0].whoops[0].degree,
+                  "w_release_time": whoops_final_release_time,
+                  "w_update_time": report_last_edit_time
                  })
 
 
             // $scope.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];
             
 
-        $scope.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];
+        $scope.report.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];
         App.blocks('#whoops_loading', 'state_normal');
 
-        console.log('w_array_1='+JSON.stringify($scope.w_array_final));
+        //console.log('w_array_1='+JSON.stringify($scope.w_array_final));
 
 
 

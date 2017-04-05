@@ -154,7 +154,7 @@
                                     </td>
 
                                     <td>
-                                        <button ng-disabled="!row.is_active" class="btn btn-default" ng-click="deactivate(row.id)"  data-js-blur>
+                                        <button ng-disabled="!row.is_active" class="btn btn-default" confirmed-click="deactivate(row.id)"  ng-confirm-click="Do you really want to delete?" data-js-blur>
                                                               <a data-uib-tooltip="Deactivate" data-tooltip-placement="top" class="fa fa-times text-danger">
                                                              </a> 
 
@@ -167,7 +167,7 @@
                                
                             </tbody>
 
-                            <tfoot>
+                            <tfoot ng-show="client_data.length>25">
                                 <tr>
                                   
 
@@ -211,7 +211,7 @@
                 <div class="block-header bg-primary">
                     <ul class="block-options">
                         <li>
-                            <button data-dismiss="modal" type="button"><i class="si si-close" style="font-size: 20px"></i></button>
+                            <button data-dismiss="modal" type="button"><i class="si si-close" style="font-size: 24px"></i></button>
                         </li>
                     </ul>
                     <h3 class="block-title text-center">{{modaltitle}}</h3>

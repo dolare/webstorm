@@ -121,7 +121,7 @@
             </tr>
 
           </tbody>
-          <tfoot>
+          <tfoot ng-show="Checked.length>25">
             <tr>
 
               <td colspan="2" >
@@ -142,7 +142,7 @@
           </tfoot>
         </table>
 
-        <hr>
+        <hr ng-if="Checked.length>0">
 
         <button class="font-w400 btn btn-lg btn-square bg-info" ng-click="ViewAll()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0" data-toggle="modal" data-target="#ViewAll">
           View [{{count}}]

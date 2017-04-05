@@ -60,7 +60,7 @@
               <div class="block block-rounded" id="loadingtable">
               <div class="block-content" style="padding-left: 30px; padding-right: 30px">
 
-                <table class="table table-hover" refresh-table st-pipe="enhancementpipe" st-table="displayeddata" style="table-layout: fixed;" data-js-table-sections-fixed>
+                <table class="table table-hover push-30" refresh-table st-pipe="enhancementpipe" st-table="displayeddata" style="table-layout: fixed;" data-js-table-sections-fixed>
                 
                 <colgroup>
                 <col width="60px"/>
@@ -201,7 +201,7 @@
                     
                    
                 </tbody>
-                <tfoot>
+                <tfoot ng-show="displayeddata.length>25||displayeddata.length===25">
                                   <tr>
                                     <td colspan="3" class="text-center" style="border-top:0">
                                       <br>
@@ -361,7 +361,7 @@
                     
                    
                 </tbody>
-                <tfoot>
+                <tfoot ng-show="displayeddata1.length>25||displayeddata1.length===25">
                                   <tr>
                                     <td colspan="2" class="text-center" style="border-top:0">
                                       <br>

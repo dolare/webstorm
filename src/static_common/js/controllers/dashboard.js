@@ -9,7 +9,7 @@ dashboard.controller('DashboardController',
     $scope.univeristy_name = List.profile.university;
     $scope.school_name = List.profile.school;
     $scope.Ceeb = List.profile.Ceeb;
-    $scope.htmlPopover = $sce.trustAsHtml('1. Update function integrated.<br>2. User manual updated.<br>3. Profile page updated.');
+    $scope.htmlPopover = $sce.trustAsHtml('1. Confirmation dialog added for delete actions.<br>2. Report template simplified.<br>3. Redesigned the style of the Reports template.<br>4. The release time and update time were integrated into the reports.');
 
     $scope.scrolltop1 = function(){
       

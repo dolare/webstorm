@@ -121,7 +121,7 @@ class ResetPassword(generics.GenericAPIView):
                     html_content = ("Hello, %s! <br>You're receiving this email"
                                     "because you requested a password reset for your user account"
                                     "at Upgrid!<br>Please go to the following page and choose a new"
-                                    "password: http://%s/static/angular-seed/app/index.html#/upgrid/reset/%s/.<br>")
+                                    "password: https://%s/#/upgrid/reset/%s/.<br>")
                     message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.username,
                                            request.META['HTTP_HOST'], token), to=[request.data['email']])
                     message.content_subtype = 'html'
@@ -163,7 +163,7 @@ class CustomerProgram(generics.ListAPIView):
         order = self.request.GET.get("order")
         client_id = self.request.GET.get("cid")
         order_dict = {"oname": "program__program_name", "-oname": "-program__program_name",
-                      "degree": "program__degree_name", "-degree": "-program__degree_name",
+                      "degree": "program__degree", "-degree": "-program__degree",
                       "cs": "customer_confirmation", "-cs": "-customer_confirmation",
                       "wfs": "whoops_final_release", "-wfs": "-whoops_final_release",
                       "efs": "enhancement_final_release", "-efs": "-enhancement_final_release"}
@@ -520,7 +520,8 @@ class CreateOrChangeSubUser(APIView):
                 mananger = UpgridAccountManager.objects.get(id=request.user.id)
                 sub_user = UniversityCustomer.objects.get(id=request.data['sub_user_id'])
                 main_user = UniversityCustomer.objects.get(id=request.data['main_user_id'])
-            except UniversityCustomer.DoesNotExist or AccountManager.DoesNotExist:
+            except UniversityCustomer.DoesNotExist or UpgridAccountManager.DoesNotExist:
+                print(1111111111111111222222222222222222222222222)
                 return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
         if main_user.Ceeb == sub_user.Ceeb:
@@ -528,10 +529,13 @@ class CreateOrChangeSubUser(APIView):
                 if sub_user.account_type == "sub":
                     return sub_user
                 else:
+                    print(1111111111111111111)
                     return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
             else:
+                print(22222222222222222222)
                 return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         else:
+            print(33333333333333333333333333333333)
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
     def validate(self, data):
@@ -716,16 +720,17 @@ class ShareReports(APIView):
         if not perm:
             return Response({"Failed": _("Permission denied!")}, status=HTTP_403_FORBIDDEN)
         else:
+            try:
+                user = UniversityCustomer.objects.get(id=request.user.id)
+            except UniversityCustomer.DoesNotExist:
+                user = UniversityCustomer.objects.get(id=request.data['client_id'])
             time_now = timezone.now()
             relation_ship = SharedReportsRelation.objects.create(
                 created_by=request.user,
                 created_time=time_now,
             )
             relation_ship.save()
-            try:
-                user = UniversityCustomer.objects.get(id=request.user.id)
-            except UniversityCustomer.DoesNotExist:
-                user = UniversityCustomer.objects.get(id = request.data['client_id'])
+
             if not request.data['whoops_id'] is None:
                 whoops_id_list = request.data['whoops_id'].split('/')
                 for x in whoops_id_list:
@@ -1688,7 +1693,8 @@ class ClientViewWhoopsUpdate(APIView):
                 customer_program=cust_pro,
                 customer=user,
                 most_recent=True,
-                existing_report=update_report.existing_report,)
+                existing_report=update_report.existing_report,
+                last_edit_time=update_report.last_edit_time)
             new_wru.save()
         # print(update_report.existing_report)
         if update_report.existing_report:
@@ -2091,7 +2097,7 @@ class ClientViewEnhancementUpdate(APIView):
                 customer=user,
                 most_recent=True,
                 existing_report=update_report.existing_report,
-                last_edit_time=timezone.now())
+                last_edit_time=update_report.last_edit_time)
             new_eru.save()
         # print(update_report.existing_report)
         if update_report.existing_report:

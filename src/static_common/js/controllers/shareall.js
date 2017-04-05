@@ -58,6 +58,12 @@ controller('ShareAllController',
                 console.log("value whoops=" + JSON.stringify(value));
                 
                 $scope.w_raw = value;
+
+                var whoops_final_release_time = $scope.w_raw.whoops_final_release_time;
+                var report_last_edit_time = $scope.w_raw.report_last_edit_time;
+
+
+
                 var w_array_final = [];
                 var w_array_1 = [];
                 var w_array_2 = [];
@@ -71,46 +77,6 @@ controller('ShareAllController',
                 var w_array_10 = [];
 
 
-                // for (i = 0; i < w_raw.length; i++) {
-                //     if (w_raw[i].additional_note_type === "dead_link") {
-
-                //         w_array_1.push(w_raw[i])
-
-                //     } else if (w_raw[i].additional_note_type === "typo") {
-                //         w_array_2.push(w_raw[i])
-
-                //     } else if (w_raw[i].additional_note_type === "outdated_information") {
-                //         w_array_3.push(w_raw[i])
-
-                //     } else if (w_raw[i].additional_note_type === "data_discrepancy") {
-                //         w_array_4.push(w_raw[i])
-
-                //     } else if (w_raw[i].additional_note_type === "sidebars") {
-
-                //         w_array_5.push(w_raw[i])
-
-                //     } else if (w_raw[i].additional_note_type === "infinite_loop") {
-                //         w_array_6.push(w_raw[i])
-
-                //     } else if (w_raw[i].additional_note_type === "floating_page") {
-
-                //         w_array_7.push(w_raw[i])
-
-                //     } else if (w_raw[i].additional_note_type === "confusing") {
-
-                //         w_array_8.push(w_raw[i])
-
-                //     } else if (w_raw[i].additional_note_type === "other_expert_note") {
-
-                //         w_array_9.push(w_raw[i])
-
-                //     } else {
-
-                //         w_array_10.push(w_raw[i])
-                //     }
-
-
-                // }
 
                 for(var i=0; i<$scope.w_raw.dead_link.length; i++){
                   w_array_1.push($scope.w_raw.dead_link[i]);
@@ -153,7 +119,9 @@ controller('ShareAllController',
                   "university": $scope.w_raw.university,
                   "school": $scope.w_raw.school,
                   "program": $scope.w_raw.program,
-                  "degree": $scope.w_raw.degree
+                  "degree": $scope.w_raw.degree,
+                  "w_release_time": whoops_final_release_time,
+                  "w_update_time": report_last_edit_time
                  })
 
                 w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];
@@ -168,8 +136,13 @@ controller('ShareAllController',
             
             angular.forEach(enhancement_all, function(value, index) {
 
-                //console.log("enhancement value = "+JSON.stringify(value));
-                var e_raw = value;
+                console.log("enhancement value = "+JSON.stringify(value));
+                $scope.e_raw = value;
+
+                var enhancement_final_release_time = $scope.e_raw.enhancement_final_release_time;
+                var report_last_edit_time = $scope.e_raw.report_last_edit_time;
+
+
                 var e_array_final = [];
                 var e_array_1 = [];
                 var e_array_2 = [];
@@ -181,22 +154,31 @@ controller('ShareAllController',
                 var e_array_8 = [];
                 var e_array_9 = [];
                 var e_array_10 = [];
+                var e_array_11 = [];
 
-                for (i = 0; i < e_raw.length; i++) {
-                  e_array_1.push(e_raw['p' + (i === 0 ? '' : i + 1)]);
-                  e_array_2.push(e_raw['c' + (i === 0 ? '' : i + 1)]);
-                  e_array_3.push(e_raw['t' + (i === 0 ? '' : i + 1)]);
-                  e_array_4.push(e_raw['d' + (i === 0 ? '' : i + 1)]);
-                  e_array_5.push(e_raw['r' + (i === 0 ? '' : i + 1)]);
-                  e_array_6.push(e_raw['ex' + (i === 0 ? '' : i + 1)]);
-                  e_array_7.push(e_raw['Intl_transcript' + (i === 0 ? '' : i + 1)]);
-                  e_array_8.push(e_raw['Intl_eng_test' + (i === 0 ? '' : i + 1)]);
-                  e_array_9.push(e_raw['s' + (i === 0 ? '' : i + 1)]);
-                  e_array_10.push(e_raw['dura' + (i === 0 ? '' : i + 1)]);
+                for (i = 0; i < $scope.e_raw.length; i++) {
+                  e_array_1.push($scope.e_raw['p' + (i === 0 ? '' : i + 1)]);
+                  e_array_2.push($scope.e_raw['c' + (i === 0 ? '' : i + 1)]);
+                  e_array_3.push($scope.e_raw['t' + (i === 0 ? '' : i + 1)]);
+                  e_array_4.push($scope.e_raw['d' + (i === 0 ? '' : i + 1)]);
+                  e_array_5.push($scope.e_raw['r' + (i === 0 ? '' : i + 1)]);
+                  e_array_6.push($scope.e_raw['ex' + (i === 0 ? '' : i + 1)]);
+                  e_array_7.push($scope.e_raw['Intl_transcript' + (i === 0 ? '' : i + 1)]);
+                  e_array_8.push($scope.e_raw['Intl_eng_test' + (i === 0 ? '' : i + 1)]);
+                  e_array_9.push($scope.e_raw['s' + (i === 0 ? '' : i + 1)]);
+                  e_array_10.push($scope.e_raw['dura' + (i === 0 ? '' : i + 1)]);
 
                 }
 
-                e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
+                e_array_11.push(
+                {
+                
+                  "e_release_time": enhancement_final_release_time,
+                  "e_update_time": report_last_edit_time
+
+                })
+
+                e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10, e_array_11];
                 $scope.enhancement_array.push(e_array_final)
                 //console.log("e_array_final.program_name="+JSON.stringify(e_array_final[0][0].program_name));
                 //console.log("e_array_final.degree="+JSON.stringify(e_array_final[0][0].degree.name));

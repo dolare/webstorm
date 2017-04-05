@@ -35,7 +35,8 @@ var App = angular.module('myApp', [
   'frapontillo.bootstrap-duallistbox',
   'duScroll',
   'xeditable',
-  'mwl.confirm'
+  'mwl.confirm',
+  'angularMoment'
 
 ]);
 
@@ -827,6 +828,36 @@ App.directive('pageSelect', function() {
     }
   }
 });
+
+
+App.directive('ngConfirmClick', [
+        function(){
+            return {
+                link: function (scope, element, attr) {
+                    var msg = attr.ngConfirmClick || "Are you sure?";
+                    var clickAction = attr.confirmedClick;
+                    console.log("msg="+msg)
+                    element.bind('click',function (event) {
+                        // if ( window.confirm(msg) ) {
+                        //     scope.$eval(clickAction)
+                        // }
+
+                        bootbox.confirm({
+                          message: msg,
+                          title: "Confirm", 
+                          callback: function(result){ 
+                          if(result){
+
+                            scope.$eval(clickAction)
+
+                          }
+                        }
+                      })
+                    });
+                }
+            };
+    }])
+
 
 App.filter('unique', function() {
   return function(arr, field) {

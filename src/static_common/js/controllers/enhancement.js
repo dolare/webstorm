@@ -104,11 +104,15 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
             
              console.log("released response ="+ JSON.stringify(response));
 
+             var enhancement_final_release_time = response.data.enhancement_final_release_time;
+             var report_last_edit_time = response.data.report_last_edit_time;
+
              
              console.log("released report whoops"+ JSON.stringify(response.data));
              //$scope.e_raw = response.data;    
              $scope.e_raw = response.data.existing_report;
-             $scope.e_array_final = [];
+
+             $scope.report = {};
              var e_array_1 = [];
              var e_array_2 = [];
              var e_array_3 = [];
@@ -119,6 +123,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
              var e_array_8 = [];
              var e_array_9 = [];
              var e_array_10 = [];
+             var e_array_11 = [];
 
              for(i=0; i<$scope.e_raw.length; i++)
              {
@@ -135,13 +140,23 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
              }
 
-             $scope.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
+
+
+             e_array_11.push(
+             {
+              
+              "e_release_time": enhancement_final_release_time,
+              "e_update_time": report_last_edit_time
+
+             })
+
+             $scope.report.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10, e_array_11];
               
 
              //update_diff
              // process update_diff
              $scope.e_update_diff = response.data.update_diff;
-             console.log("update_diff = "+JSON.stringify($scope.e_update_diff));
+             //console.log("$scope.e_array_final[10][0]= "+$scope.e_array_final[10][0].e_release_time);
 
 
              $scope.e_show_update = updateService.updateEnhancement(response.data, 'client');
@@ -152,9 +167,6 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
              angular.element(document).ready(function () {
                App.blocks('#enhancement_loading', 'state_normal');
              });
-
-
-             console.log('$scope.e_array_final='+JSON.stringify($scope.e_array_final));
 
               
           }).

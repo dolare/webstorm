@@ -56,7 +56,7 @@
                         <div class="block-content" style="padding-left:30px; padding-right:30px">
 
 
-                      <table st-table="data" st-pipe="whoopspipe" class="table table-hover block" style="table-layout: fixed;">
+                      <table st-table="data" st-pipe="whoopspipe" class="table table-hover block push-30" style="table-layout: fixed;">
                       <colgroup>
                       <col width="60px"/>
                       <col width="53%"/>
@@ -165,7 +165,7 @@
               </tbody>
          
 
-              <tfoot>
+              <tfoot ng-show="data.length>25||data.length===25">
                 <tr>
                   
 

@@ -10,7 +10,7 @@ whoops.controller('WhoopsController',
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
 
     var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
-        
+
     console.log("host 1 is "+location.host);
     //for api test
     // $http({
@@ -73,12 +73,26 @@ whoops.controller('WhoopsController',
                 }
           }).then(function (response) {
 
-            //console.log("whoops raw = "+JSON.stringify(response.data));
+            console.log("whoops raw = "+JSON.stringify(response.data));
 
+            // var timeString = "2017-03-31T03:17:28.129804Z"
+            // var newYork    = moment.tz(timeString, "America/New_York");
+
+            // var showTime = newYork.format();   
+            // console.log("showTime = "+showTime);
+            var whoops_final_release_time = response.data.whoops_final_release_time;
+            var report_last_edit_time = response.data.report_last_edit_time;
+
+            // $scope.w_release_time = moment.tz(whoops_final_release_time, "America/New_York").format();
+            // $scope.w_update_time = moment.tz(report_last_edit_time, "America/New_York").format()
+
+            // console.log("$scope.w_release_time"+$scope.w_release_time);
+            // console.log("$scope.w_update_time"+$scope.w_update_time);
             $scope.w_update_diff = response.data.update_diff;
             console.log("update_diff = "+JSON.stringify($scope.w_update_diff));
             $scope.w_raw = response.data.existing_report;
-            $scope.w_array_final = [];
+
+             $scope.report = {};
              var w_array_1 = [];
              var w_array_2 = [];
              var w_array_3 = [];
@@ -131,11 +145,14 @@ whoops.controller('WhoopsController',
                   "university": response.data.university,
                   "school": response.data.school,
                   "program": response.data.program,
-                  "degree": response.data.degree
+                  "degree": response.data.degree,
+                  "w_release_time": whoops_final_release_time,
+                  "w_update_time": report_last_edit_time
+
                  })
 
 
-            $scope.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];
+            $scope.report.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];
             
              App.blocks('#whoops_loading', 'state_normal');
 

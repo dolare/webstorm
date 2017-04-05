@@ -190,69 +190,8 @@ controller('ReportsController',
                 }
           }).then(function (response) {
 
-            //console.log("wwr"+JSON.stringify(response.data));
-            // $scope.w_raw = response.data;
-            // $scope.w_array_final = [];
-            // var w_array_1 = [];
-            // var w_array_2 = [];
-            // var w_array_3 = [];
-            // var w_array_4 = [];
-            // var w_array_5 = [];
-            // var w_array_6 = [];
-            // var w_array_7 = [];
-            // var w_array_8 = [];
-            // var w_array_9 = [];
-
-
-            // for (i = 0; i < $scope.w_raw.length; i++) {
-            //   if ($scope.w_raw[i].additional_note_type === "dead_link") {
-
-            //     w_array_1.push($scope.w_raw[i])
-
-            //   }
-
-            //   if ($scope.w_raw[i].additional_note_type === "typo") {
-            //     w_array_2.push($scope.w_raw[i])
-
-            //   }
-
-            //   if ($scope.w_raw[i].additional_note_type === "outdated_information") {
-            //     w_array_3.push($scope.w_raw[i])
-
-            //   }
-
-            //   if ($scope.w_raw[i].additional_note_type === "data_discrepancy") {
-            //     w_array_4.push($scope.w_raw[i])
-
-            //   }
-
-            //   if ($scope.w_raw[i].additional_note_type === "sidebars") {
-
-            //     w_array_5.push($scope.w_raw[i])
-            //   }
-
-            //   if ($scope.w_raw[i].additional_note_type === "infinite_loop") {
-            //     w_array_6.push($scope.w_raw[i])
-
-            //   }
-
-            //   if ($scope.w_raw[i].additional_note_type === "floating_page") {
-            //     w_array_7.push($scope.w_raw[i])
-
-            //   }
-
-            //   if ($scope.w_raw[i].additional_note_type === "confusing") {
-            //     w_array_8.push($scope.w_raw[i])
-
-            //   }
-
-            //   if ($scope.w_raw[i].additional_note_type === "other_expert_note") {
-
-            //     w_array_9.push($scope.w_raw[i])
-            //   }
-
-
-            // }
+            var whoops_final_release_time = response.data.whoops_final_release_time;
+            var report_last_edit_time = response.data.report_last_edit_time;
 
 
             $scope.w_raw = response.data.existing_report;
@@ -309,7 +248,9 @@ controller('ReportsController',
                   "university": response.data.university,
                   "school": response.data.school,
                   "program": response.data.program,
-                  "degree": response.data.degree
+                  "degree": response.data.degree,
+                  "w_release_time": whoops_final_release_time,
+                  "w_update_time": report_last_edit_time
                  })
 
             //$scope.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];
@@ -373,6 +314,9 @@ controller('ReportsController',
             //   e_array_10.push($scope.e_raw['dura' + (i === 0 ? '' : i + 1)]);
 
             // }
+            var enhancement_final_release_time = response.data.enhancement_final_release_time;
+            var report_last_edit_time = response.data.report_last_edit_time;
+
 
             $scope.e_raw = response.data.existing_report;
              $scope.e_array_final = [];
@@ -386,6 +330,8 @@ controller('ReportsController',
              var e_array_8 = [];
              var e_array_9 = [];
              var e_array_10 = [];
+             var e_array_11 = [];
+
 
              for(i=0; i<$scope.e_raw.length; i++)
              {
@@ -402,7 +348,17 @@ controller('ReportsController',
 
              }
 
-            $scope.report_array[index].e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
+
+             e_array_11.push(
+             {
+              
+              "e_release_time": enhancement_final_release_time,
+              "e_update_time": report_last_edit_time
+
+             })
+
+
+            $scope.report_array[index].e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10, e_array_11];
             //App.blocks('#enhancement_loading', 'state_normal');
 
             //console.log('e_array_1='+JSON.stringify($scope.e_array_final));

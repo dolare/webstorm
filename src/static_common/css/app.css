@@ -10,6 +10,49 @@ h1 {
     margin: 0.67em 0;
 }
 
+
+
+.report_table1 pre, .report_table2 pre {
+  white-space: pre-wrap;
+  font-size: inherit;
+  
+}
+
+.push-25 {
+    margin-bottom: 25px !important;
+}
+
+
+.push-40 {
+    margin-bottom: 40px !important;
+}
+
+
+.bootbox.modal {
+  margin-top: 100px;
+}
+
+.bootbox.modal>.modal-dialog>.modal-content>.modal-header {
+  background-color: #5c90d2;
+  padding: 12px 20px;
+  color: white;
+}
+
+.bootbox.modal>.modal-dialog>.modal-content>.modal-body {
+  font-size: 15px;
+}
+
+
+.report_table2 pre {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /*fix the modal open offset*/
 body.modal-open {
   overflow:hidden;
@@ -1408,3 +1451,14 @@ ul.help-ul>li {
                 /*border-top-color: rgba(94,157,236,0.9);*/
                 border-top-color: rgba(35, 156, 236, 0.95);
             }
+
+
+
+#report-manager-title {
+  border-left: 5px solid;
+  padding: 10px 15px;
+}
+
+.cart-report-row {
+  padding: 0 15px;
+}

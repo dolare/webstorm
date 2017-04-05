@@ -86,7 +86,7 @@
                                         </li>
 
                                         <li>
-                                            <button type="button" ng-click="removesubuser($index)" data-js-blur>
+                                            <button type="button" confirmed-click="removesubuser($index)"  ng-confirm-click="Do you really want to delete?" data-js-blur>
                                                 <i class="icon-trash text-danger"></i>
                                             </button>
                                         </li>
@@ -548,7 +548,7 @@
 
                         <div class="block" id="profileloadingtable">
                                
-                    <div class="block-content">
+                    <div class="block-content" style="overflow: auto">
                   <table st-table="selecteddata" st-pipe="programpipe" class="table">
                   <colgroup>
                  
@@ -592,7 +592,7 @@
             </tr>
           </tbody>
             
-          <tfoot>
+          <tfoot ng-show="selecteddata.length>25||selecteddata.length===25">
             <tr>
               
 

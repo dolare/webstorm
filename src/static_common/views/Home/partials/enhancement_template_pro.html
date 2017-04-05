@@ -108,7 +108,7 @@
 
                                     <tr class="pull-right">
                                         <td style="border-bottom: 1px solid #ccc">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;{{date | date:'MMM dd , yyyy'}}&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{e_array_final[10][0].e_release_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}&nbsp;&nbsp;
                                         </td>
                                     </tr>
 
@@ -118,7 +118,7 @@
 
                                     <tr class="pull-right">
                                         <td style="border-bottom: 1px solid #ccc">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;{{date | date:'MMM dd , yyyy'}}&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;{{(e_array_final[10][0].e_update_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY')?(e_array_final[10][0].e_update_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'):(e_array_final[10][0].e_release_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY')}}&nbsp;&nbsp;
                                         </td>
                                     </tr>
 
@@ -959,7 +959,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Curriculums</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Curriculum link</td>
 
                                             <td ng-class="{'bg-highlight' : !row.curriculum_url && $index === 0,  'bg-gray-lighter' : !row.curriculum_url && $index !== 0}" ng-repeat = "row in e_array_final[1]">    
 
@@ -2177,7 +2177,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Additional admissions requirements</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Admissions requirements link</td>
 
                                             <td ng-class="{'bg-highlight' : !row.program_req_url&& !row.school_req_url && $index === 0,  'bg-gray-lighter' : !row.program_req_url&& !row.school_req_url && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
@@ -2669,8 +2669,8 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Misc.</td>
-                                            <td ng-class="{'bg-highlight' :!row.intl_other && $index === 0,  'bg-gray-lighter' :!row.intl_other && $index !== 0}" ng-class="{'note-left': row.intl_other}" ng-repeat = "row in e_array_final[4]">
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Other international tests</td>
+                                            <td ng-class="{'note-left': row.intl_other, 'bg-highlight' :!row.intl_other && $index === 0,  'bg-gray-lighter' :!row.intl_other && $index !== 0}" ng-repeat = "row in e_array_final[4]">
 
                                                 <span ng-class="{'updated-text': e_show_update['intl_other'+($index===0?'':$index+1)]}" 
                                                 
@@ -2781,7 +2781,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship availability</td>
 
                                             <td ng-class="{'bg-highlight' :row.scholarship_avail!==true && row.scholarship_avail!==false && $index === 0,  'bg-gray-lighter' :row.scholarship_avail!==true && row.scholarship_avail!==false && $index !== 0}" ng-repeat = "row in e_array_final[8]">
 
@@ -2853,7 +2853,7 @@
                                         </tr>
 
                                         <tr>
-                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship url</td>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Scholarship link</td>
 
                                             <td ng-class="{'bg-highlight' :!row.scholarship_program_specific_url&&!row.scholarship_general_url && $index === 0,  'bg-gray-lighter' :!row.scholarship_program_specific_url&&!row.scholarship_general_url && $index !== 0}" ng-repeat = "row in e_array_final[8]">
 
