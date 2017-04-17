@@ -10,7 +10,9 @@ h1 {
     margin: 0.67em 0;
 }
 
-
+.font-w100 {
+  font-weight: 100 !important;
+}
 
 .report_table1 pre, .report_table2 pre {
   white-space: pre-wrap;
@@ -27,6 +29,9 @@ h1 {
     margin-bottom: 40px !important;
 }
 
+.push-40-t {
+  margin-top: 40px !important;
+}
 
 .bootbox.modal {
   margin-top: 100px;
@@ -1461,4 +1466,57 @@ ul.help-ul>li {
 
 .cart-report-row {
   padding: 0 15px;
+}
+
+
+/*#intro-para-1::first-letter {
+
+    float: left;
+    width: 2em;
+    font-size: 310%;
+    
+    line-height: 100%;
+    font-family: 'Georgia', Times, serif;
+   
+    margin-right: 5px;
+}*/
+
+
+.modal .block>.block-content {
+  position: relative; 
+}
+
+
+.whoops_block {
+  min-width: 610px;
+}
+
+.enhancement_block, .cart_block {
+  min-width: 850px;
+}
+
+.report-popover {
+  border-radius: 5px;
+  word-break: break-word;
+}
+
+.report-popover>.popover-inner {
+  border-radius: 3px 3px 0 0;
+}
+
+.report-popover .popover-title {
+    font-size: 13px;
+    padding: 5px 10px 4px 10px;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #ebebeb;
+}
+
+
+.mfp-img {
+  max-height:none !important;
+  max-width:700px !important;
+}
+
+.intro-icon {
+  max-width: 80px;
 }
