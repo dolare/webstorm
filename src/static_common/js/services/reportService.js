@@ -232,6 +232,18 @@ angular.module('reportServiceModule', [])
       //return deferred.promise;
     };
 
+    var nullToString = function(val){
+
+      if(val===undefined || val===null){
+        return '';
+      } else {
+        return val;
+      }
+
+    }
+
+
+
     return {
       getWhoops: getWhoops,
       getWhoopsPerfect: getWhoopsPerfect,
@@ -239,9 +251,8 @@ angular.module('reportServiceModule', [])
       downloadWhoops: downloadWhoops,
       downloadEnhancement: downloadEnhancement,
       confirmProgram: confirmProgram,
-      accessControl: accessControl
-
-
+      accessControl: accessControl,
+      nullToString: nullToString,
 
     };
 

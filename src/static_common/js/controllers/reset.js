@@ -2,7 +2,7 @@
 
 angular.module('myApp.reset.controllers', []).
 controller('ResetController',
-    function($timeout, $stateParams, $scope, $location, $window, $http, authenticationSvc, $cookies, $state) {
+    function($timeout, $stateParams, $scope, $location, $window, $http, authenticationSvc, $state) {
         console.log("reset password entered");
         console.log("param1 is " + $stateParams.param1);
         console.log("param2 is " + $stateParams.param2);

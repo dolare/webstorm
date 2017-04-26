@@ -36,14 +36,14 @@ class TuitionUnitSerializer(serializers.ModelSerializer):
 
 
 class UniversitySchoolSerializer(serializers.ModelSerializer):
-	university = serializers.SerializerMethodField()
+    university = serializers.SerializerMethodField()
 
-	class Meta:
-		model = UniversitySchool
-		fields = ('university', 'school',)
+    class Meta:
+        model = UniversitySchool
+        fields = ('university', 'school',)
 
-	def get_university(self,obj):
-		return obj.university_foreign_key.name    	
+    def get_university(self,obj):
+        return obj.university_foreign_key.name
 
 
 # Requirement.exam serializer
@@ -117,7 +117,8 @@ class DeadlineSerializer(serializers.ModelSerializer):
                   'deadline_summer_late_month','deadline_summer_late_day',
                   'get_deadline_summer_late_month_display','get_deadline_summer_late_day_display',
                   'deadline_rolling', 'deadline_url',
-                  'scholarship_deadline_month','scholarship_deadline_day',)
+                  'scholarship_deadline_month','scholarship_deadline_day','international_deadline_month',
+                  'international_deadline_day')
 
 
 class RequirementSerializer(serializers.ModelSerializer):

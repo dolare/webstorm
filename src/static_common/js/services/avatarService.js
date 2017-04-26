@@ -1,6 +1,6 @@
 //avatar service
 
-angular.module('avatar', []).factory("avatarService",
+angular.module('avatar', ['ngCookies']).factory("avatarService",
     function($http, $q, $window, $cookies) {
         
         var clientId = "";

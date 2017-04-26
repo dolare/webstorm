@@ -39,15 +39,13 @@ whoops.controller('WhoopsController',
       
     }
 
-    $scope.WhoopsViewer = function(Id, Program, Degree){
+    $scope.WhoopsViewer = function(Id){
       
       //jQuery('#WhoopsReport').scrollTop(0);
 
       App.blocks('#whoops_loading', 'state_loading');
       
 
-      $scope.whoops_report_program = Program;
-      $scope.whoops_report_degree = Degree;
       $scope.date = new Date();
 
           $scope.show_history = 
@@ -75,11 +73,6 @@ whoops.controller('WhoopsController',
 
             console.log("whoops raw = "+JSON.stringify(response.data));
 
-            // var timeString = "2017-03-31T03:17:28.129804Z"
-            // var newYork    = moment.tz(timeString, "America/New_York");
-
-            // var showTime = newYork.format();   
-            // console.log("showTime = "+showTime);
             var whoops_final_release_time = response.data.whoops_final_release_time;
             var report_last_edit_time = response.data.report_last_edit_time;
 
@@ -163,7 +156,7 @@ whoops.controller('WhoopsController',
 
           }).
            catch(function(error){
-              console.log('an error occurred...'+JSON.stringify(error));
+              console.log('an error occurred...'+JSON.stringify(error.data));
 
            });
 
@@ -247,25 +240,6 @@ whoops.controller('WhoopsController',
           App.blocks('#loadingtable', 'state_normal');
 
 
-          // $http({
-          //       url: '/api/upgrid/update/view/whoops/' + result.data[0].object_id + '/' +avatarService.getClientId(),
-          //       method: 'GET',
-          //       headers: {
-          //         'Authorization': 'JWT ' + token
-          //       }
-          // }).then(function (response) {
-
-          //    $scope.details = response.data;
-
-          //    console.log("data returned whoops"+ JSON.stringify(response.data));
-             
-          // }).
-          //  catch(function(error){
-          //     console.log('an error occurred...'+JSON.stringify(error));
-
-          //  });
-
-
 
         });
 
@@ -275,8 +249,6 @@ whoops.controller('WhoopsController',
     
     ////////////smart table
     $scope.itemsByPage = 25;
-    $scope.toolTip = "kakaka";
-
 
 
     //init for the checkbox ngStorage
@@ -284,31 +256,6 @@ whoops.controller('WhoopsController',
       $scope.$storage.upgrid = {};
 
     }
-
-    //for testing if the program has error
-    $scope.perfect = false;
-
-  
-    //for the title checkbox
-    $scope.selectAll = function() {
-      for (var i = 0; i < $scope.data.length; i++) {
-
-        if ($scope.data[i].status === 'True' && $scope.data[i].perfect !== 'True') {
-          if ($storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName] === undefined) {
-            $storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName] = {
-              "whoops": true
-            };
-
-          } else {
-            $storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName].whoops = $scope.$storage.checkAllwhoops;
-          }
-
-        }
-      }
-
-    };
-
-    
 
     //checking single checkbox
     $scope.selectOne = function(Name, Degree, Id, WStatus, EStatus, Notes, Confirm) {
@@ -326,94 +273,6 @@ whoops.controller('WhoopsController',
       
     };
 
-
-
-    //trigger pdf viewer
-    $scope.pdfViewer = function(Id) {
-      PDFObject.embed("#", "#my-container");
-      $scope.viewerLoading = true;
-      $http({
-        url: '/api/upgrid/'+ avatar_value +'whoops_reports/'+Id+'/',
-        method: 'GET',
-        headers: {
-          'Authorization': 'JWT ' + token
-        },
-        // 'Content-Type': 'application/json'
-        responseType: 'arraybuffer'
-          // cache: true
-
-
-
-      }).then(function(response) {
-        if (response.status === 204) {
-          console.log("success 204");
-        } else {
-          console.log("whoop response = " + JSON.stringify(response));
-          //console.log(response.headers)
-          var file = new Blob([response.data], {
-            type: 'application/pdf'
-          });
-          var fileURL = (window.URL || window.webkitURL).createObjectURL(file);
-          $scope.pdflink = fileURL;
-          console.log("link = " + $scope.pdflink);
-          console.log("success");
-          console.log("dismissing progress bar");
-          $scope.viewerLoading = false;
-          PDFObject.embed(fileURL, "#my-container");
-
-        };
-
-
-      }).
-      catch(function(error) {
-        console.log('an error occurred...' + JSON.stringify(error));
-        $scope.viewerLoading = false;
-      }).finally(function() {
-        // $scope.viewerLoading=false;
-      });
-
-
-
-    }
-
-    $scope.pdfDownload = function(Id, name, degree) {
-      App.blocks('#loadingtable', 'state_loading');
-      $http({
-        url: '/api/whoops/' ,
-        method: 'POST',
-        data: {
-          "object_id": Id
-        },
-        headers: {
-          'Authorization': 'JWT ' + token
-        },
-        // 'Content-Type': 'application/json'
-        responseType: 'arraybuffer'
-          // cache: true
-
-
-
-      }).then(function(response) {
-        var file = new Blob([response.data], {
-          type: 'application/pdf'
-        });
-        var fileURL = (window.URL || window.webkitURL).createObjectURL(file);
-
-        console.log("success");
-
-        saveAs(file, 'Whoops_Report-' + name + '(' + degree + ')' + '.pdf');
-
-        App.blocks('#loadingtable', 'state_normal');
-
-      }).
-      catch(function(error) {
-        console.log('an error occurred...' + JSON.stringify(error));
-
-      });
-
-
-
-    }
 
     $scope.htmlShare = function(Id) {
       
@@ -460,29 +319,6 @@ whoops.controller('WhoopsController',
       });
 
     };
-
-
-    $scope.reportShare = function(Id, Program, Degree) {
-      $scope.url = {
-        text: null
-      };
-
-      $scope.copied = false;
-      new Clipboard('.btn');
-
-      $scope.shareLoading = true;
-
-        $scope.url = {
-          text: $location.absUrl().split('#')[0]+'#/upgrid/share_whoops_report/'+Id+'/'+Program+'/'+Degree+'/',
-        };
-
-
-        $scope.shareLoading = false;
-    
-
-    };
-
-
 
     // $scope.togglefull = function (){
       

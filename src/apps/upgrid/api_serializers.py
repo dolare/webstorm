@@ -110,7 +110,7 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
     def get_enhancement_update(self, obj):
         try:
             eu = EnhancementUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent='True')
-            serializer = ManagerEnhancementUpdateNumberSerializer(eu)
+            serializer = ClientEnhancementUpdateNumberSerializer(eu)
             return serializer.data
         except EnhancementUpdate.DoesNotExist:
             return 0
@@ -118,38 +118,56 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
     def get_whoops_update(self, obj):
         try:
             wu = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent='True')
-            serializer = ManagerWhoopsUpdateNumberSerializer(wu)
+            serializer = ClientWhoopsUpdateNumberSerializer(wu)
             return serializer.data
         except WhoopsUpdate.DoesNotExist:
             return 0
 
 
 class EnhancementReleasedListSerializer(serializers.ModelSerializer):
+    program_name = SerializerMethodField()
+    program_degree = SerializerMethodField()
+
     class Meta:
         model = UniversityCustomerProgram
         fields = ('object_id', 'program_degree', 'program_name', 'enhancement_final_release_time')
 
-        def get_program_name(self, obj):
+    def get_program_name(self, obj):
             return obj.program.program_name
 
-        def get_program_degree(self, obj):
+    def get_program_degree(self, obj):
             return obj.program.degree.name
 
 
 class WhoopsReleasedListSerializer(serializers.ModelSerializer):
+    program_name = SerializerMethodField()
+    program_degree = SerializerMethodField()
+    has_expert_notes = SerializerMethodField()
+
     class Meta:
         model = UniversityCustomerProgram
-        fields = ('object_id', 'program_degree', 'program_name', 'whoops_final_release_time')
+        fields = ('object_id', 'program_degree', 'program_name', 'whoops_final_release_time', 'has_expert_notes')
 
-        def get_program_name(self, obj):
+    def get_program_name(self, obj):
             return obj.program.program_name
 
-        def get_program_degree(self, obj):
+    def get_program_degree(self, obj):
             return obj.program.degree.name
 
+    def get_has_expert_notes(self, obj):
+        origin_program = Program.objects.get(object_id=obj.program.object_id)
+        qs = ExpertAdditionalNote.objects.filter(program=origin_program)
+
+        expert_notes = ""
+        if len(qs) == 0:
+            expert_notes = False
+        else:
+            expert_notes = True
+
+        return expert_notes
 
 class EnhancementUpdateSerializer(serializers.ModelSerializer):
-    custoemr_program_id = SerializerMethodField()
+    customer_program_id = SerializerMethodField()
     program_name = SerializerMethodField()
     program_degree = SerializerMethodField()
 
@@ -160,7 +178,7 @@ class EnhancementUpdateSerializer(serializers.ModelSerializer):
     def get_customer_program_id(self, obj):
         return obj.customer_program.object_id
 
-    def get_program(self, obj):
+    def get_program_name(self, obj):
         return obj.customer_program.program.program_name
 
     def get_program_degree(self, obj):
@@ -168,22 +186,35 @@ class EnhancementUpdateSerializer(serializers.ModelSerializer):
 
 
 class WhoopsUpdateSerializer(serializers.ModelSerializer):
-    custoemr_program_id = SerializerMethodField()
+    customer_program_id = SerializerMethodField()
     program_name = SerializerMethodField()
     program_degree = SerializerMethodField()
+    has_expert_notes = SerializerMethodField()
 
     class Meta:
         model = WhoopsUpdate
-        fields = ('customer_program_id', 'program_name', 'program_degree', 'last_edit_time')
+        fields = ('customer_program_id', 'program_name', 'program_degree', 'last_edit_time', 'has_expert_notes')
 
     def get_customer_program_id(self, obj):
         return obj.customer_program.object_id
 
-    def get_program(self, obj):
+    def get_program_name(self, obj):
         return obj.customer_program.program.program_name
 
     def get_program_degree(self, obj):
         return obj.customer_program.program.degree.name
+
+    def get_has_expert_notes(self, obj):
+        origin_program = Program.objects.get(object_id=obj.customer_program.program.object_id)
+        qs = ExpertAdditionalNote.objects.filter(program=origin_program)
+
+        expert_notes = ""
+        if len(qs) == 0:
+            expert_notes = False
+        else:
+            expert_notes = True
+
+        return expert_notes
 
 
 class CompetingProgramSerializer(serializers.ModelSerializer):
@@ -275,7 +306,7 @@ class MainUserDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'Ceeb', 'university', 'school', 'service_level', 'service_until',
+        fields = ('username', 'is_demo', 'Ceeb', 'university', 'school', 'service_level', 'service_until',
                   'account_type', 'position', 'contact_name',
                   'email', 'competing_schools', 'sub_user_list')
 
@@ -311,7 +342,7 @@ class SubUserDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UniversityCustomer
-        fields = ('main_user_info', 'Ceeb', 'university', 'school', 'service_until',
+        fields = ('main_user_info', 'is_demo','Ceeb', 'university', 'school', 'service_until',
                   'account_type', 'position', 'contact_name', 'email',)
 
     def get_main_user_info(self, obj):
@@ -345,7 +376,7 @@ class ClientListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('id', 'contact_name', 'is_active', 'university', 'department', 'email')
+        fields = ('id', 'is_demo', 'contact_name', 'is_active', 'university', 'department', 'email')
 
     def get_university(self, obj):
         return '{0} - {1}'.format(obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
@@ -378,7 +409,7 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'id', 'email', 'title', 'contact_name', 'position', 'position_level',
+        fields = ('username', 'id', 'is_demo', 'email', 'title', 'contact_name', 'position', 'position_level',
                   'phone', 'Ceeb', 'CeebID', 'department', 'account_type', 'service_level', 'service_until',
                   'competing_schools', 'customer_program')
 
@@ -532,8 +563,8 @@ class ManagerEnhancementUpdateNumberSerializer(serializers.ModelSerializer):
             length = 0
             for k in res["new"]:
                 print(k)
-                if k == 'length':
-                    continue
+                # if k == 'length':
+                #     continue
                 for k2 in res["new"][k]:
                     length += 1
             print(length)
@@ -575,3 +606,49 @@ class ManagerWhoopsUpdateNumberSerializer(serializers.ModelSerializer):
 
     def get_customer_program_id(self, obj):
         return obj.customer_program.object_id
+
+
+class ClientEnhancementUpdateNumberSerializer(serializers.ModelSerializer):
+    update_nums = SerializerMethodField()
+
+    class Meta:
+        model = EnhancementUpdate
+        fields = ('update_nums', )
+
+    def get_update_nums(self, obj):
+        if obj.confirmed_diff is None:
+            return 0
+        else:
+            json_string = zlib.decompress(obj.confirmed_diff)
+            json_string = BytesIO(json_string)
+            res = JSONParser().parse(json_string)
+            length = 0
+            for k in res["new"]:
+                print(k)
+                # if k == 'length':
+                #     continue
+                for k2 in res["new"][k]:
+                    length += 1
+            print(length)
+            return length
+
+
+class ClientWhoopsUpdateNumberSerializer(serializers.ModelSerializer):
+    update_nums = SerializerMethodField()
+
+    class Meta:
+        model = WhoopsUpdate
+        fields = ('update_nums',)
+
+    def get_update_nums(self, obj):
+
+        if not obj.confirmed_diff:
+            return 0
+        else:
+            json_string = zlib.decompress(obj.confirmed_diff)
+            json_string = BytesIO(json_string)
+            res = JSONParser().parse(json_string)
+            length = 0
+            for v in res["new"]:
+                length += 1
+            return length

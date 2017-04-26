@@ -1,6 +1,6 @@
 //for the enhancement page
 angular.module('myApp.login.success.enhancement', []).
-controller('EnhancementController', function(updateService, avatarService, ajaxService, List, reportService, apiService, tableDataService, $localStorage, $sessionStorage, $scope, $window, $location, $http, authenticationSvc, $cookies, $state, $filter, $q) {
+controller('EnhancementController', function(updateService, avatarService, ajaxService, List, reportService, apiService, tableDataService, $localStorage, $sessionStorage, $scope, $window, $location, $http, authenticationSvc, $state, $filter, $q) {
     // $scope.isActive = function(route) {
     //     return route === $location.path();
     // };
@@ -62,36 +62,16 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
      }
 
-    //  //test 
-    //   $http({
-    //       url:  '/api/upgrid/ewr/f434bdb5-7b29-4ffe-a0d2-93b0147e3497/',
-    //       method: 'GET',
-    //       headers: {
-    //         'Authorization': 'JWT ' + token
-    //       }
-    // }).then(function (response) {
-
-    //    $scope.details = response.data;
-
-    //    console.log("return data"+ JSON.stringify(response.data));
-       
-    // }).
-    //  catch(function(error){
-    //     console.log('test error occurred...'+JSON.stringify(error));
-
-    //  });
-
 
 
 
    
-    $scope.EnhancementViewer = function(Id, Program, Degree){
+    $scope.EnhancementViewer = function(Id){
       $scope.date = new Date();
       App.blocks('#enhancement_loading', 'state_loading');
       //angular.element(document.getElementById('#testbutton')).focus();
       //jQuery('#testbutton').focus();
-      $scope.enhancement_report_program = Program;
-      $scope.enhancement_report_degree = Degree;
+      
       
           $http({
                 url: '/api/upgrid/update/view/enhancement/' + Id + '/' +avatarService.getClientId(),
@@ -108,7 +88,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
              var report_last_edit_time = response.data.report_last_edit_time;
 
              
-             console.log("released report whoops"+ JSON.stringify(response.data));
+             console.log("released report enhancement"+ JSON.stringify(response.data));
              //$scope.e_raw = response.data;    
              $scope.e_raw = response.data.existing_report;
 
@@ -162,6 +142,8 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
              $scope.e_show_update = updateService.updateEnhancement(response.data, 'client');
              console.log('$scope.e_show_update = '+JSON.stringify($scope.e_show_update));
              // $scope.e_show_update = {};
+
+             $scope.open_popover = true;
 
 
              angular.element(document).ready(function () {
@@ -218,25 +200,6 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
           //$scope.isLoadingConfirm = false;
           App.blocks('#confirmloading', 'state_normal');
 
-          // // //for api test
-          // $http({
-          //       url: '/api/upgrid/update/view/enhancement/' + result.data[0].object_id + '/' +avatarService.getClientId(),
-          //       method: 'GET',
-          //       headers: {
-          //         'Authorization': 'JWT ' + token
-          //       }
-          // }).then(function (response) {
-
-          //    $scope.details = response.data;
-
-          //    console.log("data returned1"+ JSON.stringify(response.data));
-             
-          // }).
-          //  catch(function(error){
-          //     console.log('an error occurred...'+JSON.stringify(error));
-
-          //  });
-
 
         });
 
@@ -277,38 +240,12 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
           App.blocks('#loadingtable', 'state_normal');
 
 
-          // // //for api test
-          // $http({
-          //       url: '/api/upgrid/update/view/enhancement/' + result.data[0].object_id + '/' +avatarService.getClientId(),
-          //       method: 'GET',
-          //       headers: {
-          //         'Authorization': 'JWT ' + token
-          //       }
-          // }).then(function (response) {
-
-          //    $scope.details = response.data;
-
-          //    console.log("data returned"+ JSON.stringify(response.data));
-             
-          // }).
-          //  catch(function(error){
-          //     console.log('an error occurred...'+JSON.stringify(error));
-
-          //  });
-
-
   
 
         });
 
     }
 
-    //init the confirm dialog data
-    //////$scope.confirmData = tableDataService.getEnhancementConfirm(List);
-    //////console.log("List is %%%%%%%%%%" + JSON.stringify(List));
-    //console.log("CSLIST = "+CSList);
-
-    //$scope.unconfirmedprogram_nums = CSList;
 
     $scope.message = "Please make your confirmation first.";
 
@@ -441,35 +378,6 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
         }, true);
 
-    $scope.showstorage = function() {
-
-        console.log("checked storage = "+JSON.stringify($scope.$storage.confirmation));
-
-        for(var key in $scope.$storage.confirmation){
-            if($scope.$storage.confirmation[key].checked === true)
-            {
-                console.log("object_id = "+key);
-            }
-        }
-
-
-    }
-
-    //checkbox in the table heading
-    $scope.selectAll = function() {
-        for (var i = 0; i < $scope.data.length; i++) {
-            if ($scope.data[i].status === 'True' && $scope.data[i].confirm === 'Yes') {
-                if ($storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName] === undefined) {
-                    $storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName] = {
-                        "enhancement": true
-                    };
-                } else {
-                    $storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName].enhancement = $scope.$storage.checkAllenhancement;
-                }
-            }
-        }
-    };
-    
     $scope.selectOne = function(Name, Degree, Id,  WStatus, EStatus, Confirm, Notes) {
         
        
@@ -484,41 +392,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
 
     };
-   
-    $scope.pdfDownload = function(Id, competing, name, degree) {
-        App.blocks('#loadingtable', 'state_loading');
-        console.log("downloading");
-        var competingUrl = Id + '/';
-        //console.log('caught! '+program+' '+degree);
-        for (i = 0; i < competing.length; i++) {
-            competingUrl += competing[i].programId + '/';
-        }
-        $http({
-            url: '/api/enhancement/',
-            method: 'POST',
-            data: {
-                object_id: competingUrl.slice(0,-1)
-            },
-            headers: {
-                'Authorization': 'JWT ' + token
-            },
-            // 'Content-Type': 'application/json'
-            responseType: 'arraybuffer'
-        }).then(function(response) {
-            var file = new Blob([response.data], {
-                type: 'application/pdf'
-            });
-            var fileURL = (window.URL || window.webkitURL).createObjectURL(file);
-            //$scope.pdflink = fileURL;
-            //window.open(fileURL);
-            console.log("success");
-            saveAs(file, 'Enhancement_Report-' + name + '(' + degree + ')' + '.pdf');
-            App.blocks('#loadingtable', 'state_normal');
-        }).
-        catch(function(error) {
-            console.log('an error occurred...' + JSON.stringify(error));
-        });
-    }
+
     $scope.htmlShare = function(Id) {
         $scope.url = {
             text: null

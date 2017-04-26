@@ -2,20 +2,13 @@
 from django.contrib import admin, messages
 
 # #3rd party lib
-
 # #our lib
 from ceeb_program.models import *
 
 # #lib in same project
 from .models import *
 
-
-
-
-
-
-
-
+from django.contrib.admin.options import InlineModelAdmin
 
 
 

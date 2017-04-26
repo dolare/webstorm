@@ -419,55 +419,6 @@ angular.module('apiServiceModule', [])
         }
 
 
-        var getNewWhoops = function(token) {
-          var avatar = avatarService.getClientId() ? "&cid="+ avatarService.getClientId(): "";
-           console.log("avatar = "+avatar);
-          var promise =  $http({
-                url: '/api/upgrid/user/program/?order=oname&wfs=True'+avatar,
-                method: 'GET',
-                
-                headers: {
-                  'Authorization': 'JWT ' + token
-                }
-          }).then(function (response) {
-
-                console.log("reponse="+JSON.stringify(response));
-                return response.data.results
-          }).
-           catch(function(error){
-              console.log('an error occurred...'+JSON.stringify(error));
-
-           });
-
-            return promise;
-
-
-        }
-
-
-        var getNewEnhancement = function(token) {
-          var avatar = avatarService.getClientId() ? "&cid="+ avatarService.getClientId(): "";
-          console.log("avatar = "+avatar);
-          var promise =  $http({
-                url: '/api/upgrid/user/program/?order=oname&efs=True'+avatar,
-                method: 'GET',
-                
-                headers: {
-                  'Authorization': 'JWT ' + token
-                }
-          }).then(function (response) {
-                console.log("reponse="+JSON.stringify(response));              
-                return response.data.results
-          }).
-           catch(function(error){
-              console.log('an error occurred...'+JSON.stringify(error));
-
-           });
-
-            return promise;
-
-
-        }
 
         
 
@@ -482,8 +433,7 @@ angular.module('apiServiceModule', [])
       getReleasedWhoops: getReleasedWhoops,
       getReleasedEnhancement: getReleasedEnhancement,
       getDashboard: getDashboard,
-      getNewWhoops: getNewWhoops,
-      getNewEnhancement: getNewEnhancement
+
 
 
     };

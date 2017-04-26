@@ -11,12 +11,11 @@
                     <code>.data-js-table-checkable</code>
                   </div> -->
                   <!-- <h3 class="block-title">Checkable Table</h3> -->
-                  <div class="col-sm-6">
+                  <div class="col-sm-6 col-xs-6">
                     <h1 class="page-heading">
                       "Whoops!" Report <br><small> &nbsp;&nbsp;- Keep your website content flawless.</small>
                     </h1>                
                       
-                    
                       
                     <!-- <button class="btn btn-primary" type="button" ng-animate-children>
                       Messages
@@ -26,7 +25,7 @@
 
                   </div>
 
-                  <div class="col-sm-6 text-right">
+                  <div class="col-sm-6 col-xs-6 text-right">
                       <!-- <div class="block-content">
                 
                   <div class="progress" style="margin-bottom:30px;" ng-show="availablenum>0">
@@ -136,7 +135,7 @@
                     <span ng-if="row.whoops_status==='True' && row.notes===true">
 
                       <div class="btn-group action-btns">
-                        <button class="btn btn-default btn-white" data-toggle="modal" data-target="#WhoopsReport" ng-click = "WhoopsViewer(row.objectId, row.programName, row.degreeName)" data-js-blur>
+                        <button class="btn btn-default btn-white" data-toggle="modal" data-target="#WhoopsReport" ng-click = "WhoopsViewer(row.objectId)" data-js-blur>
                         <a data-uib-tooltip="View" data-tooltip-placement="top" class="fa fa-cloud-download text-primary" style="vertical-align: middle;">
                         </a>
                         </button>
@@ -159,7 +158,10 @@
                     
                   </td>
                   
-                  <td class="td-bordered"></td>
+                  <td class="td-bordered text-center">
+                    <i ng-show="row.updated" class="fa fa-exclamation-circle text-warning" aria-hidden="true" ></i>
+                   
+                  </td>
                 </tr>
 
               </tbody>
@@ -200,7 +202,7 @@
 
 
     <!-- Modal of Share the Link-->
-    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="myModal1"  role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="block block-themed block-transparent remove-margin-b">
@@ -248,7 +250,7 @@
                             </div>
 
        <!-- Modal of Pdf Viewer-->
-      <div class="modal viewer fade" id="WhoopsReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+      <div class="modal viewer fade" id="WhoopsReport"  role="dialog" aria-labelledby="myModalLabel" >
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="block block-themed block-transparent remove-margin-b" id="whoops_loading">
@@ -277,7 +279,7 @@
                        
 
 
-                        <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+                        <div class="block whoops_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
                         <div ng-include src="'/static/views/Home/partials/whoops_template.html'"></div>
                         
@@ -293,3 +295,8 @@
         </div>
       </div>
     </div>
+
+
+
+
+

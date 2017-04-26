@@ -22,6 +22,7 @@ angular.module('tableServiceModule', [])
           "whoops_status": List[i].whoops_final_release,
           "enhancement_status": List[i].enhancement_final_release,
           "confirm": List[i].customer_confirmation,
+          "updated": List[i].whoops_update.update_nums>0?true:false,
 
         };
 
@@ -80,6 +81,7 @@ angular.module('tableServiceModule', [])
           "whoops_status": List[i].whoops_final_release,
           "enhancement_status": List[i].enhancement_final_release,
           "confirm": List[i].customer_confirmation,
+          "updated": List[i].enhancement_update.update_nums>0?true:false,
           
           
           "competing": []

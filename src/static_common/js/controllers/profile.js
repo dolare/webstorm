@@ -1,6 +1,6 @@
 angular.module('myApp.login.success.profile', []).
 controller('ProfileController',
-  function($log, avatarService, $timeout, ajaxService, $filter, tableDataService, List, $scope, $location, $window, $http, authenticationSvc, $cookies, $state) {
+  function($log, avatarService, $timeout, ajaxService, $filter, tableDataService, List, $scope, $location, $window, $http, authenticationSvc, $state) {
 
     var token = authenticationSvc.getUserInfo().accessToken;
     $scope.username = List.profile.email;

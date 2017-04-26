@@ -35,37 +35,39 @@
               
 
                 <button class="btn btn-info push-30" ng-click="testOnDemand()"><i aria-hidden="true" ng-class="{'fa fa-refresh': !ondemand, 'fa fa-refresh fa-spin': ondemand }"></i>&nbsp;&nbsp;ON DEMAND</button>
-
+                
 
                 <!-- Customers -->
-                <div class="block" id="loadingclient">
+                <div class="block" id="loadingtable">
                     
                     <div class="block-content">
                         <div class="table-responsive">
 
                         <div class="alert alert-warning" role="alert" ng-show="update_client.length===0">{{emptyUpdateLabel}}</div>
 
-                            <table class="table table-hover table-vcenter"  st-table="update_client" data-js-table-sections-update ng-show="update_client.length>0">
+                            <table class="table table-hover table-vcenter"  st-table="update_client" data-js-table-sections-update ng-show="update_client.length>0" style="table-layout: fixed;">
 
                                     <colgroup>
                                       <col width="10%"/>
                                       <col width="15%"/>
                                       
-                                      <col width="25%"/>
-                                      <col width="19%"/>
-                                      <col width="16%"/>
+                                      <col width="20%"/>
                                       <col width="15%"/>
+                                      <col width="15%"/>
+                                      <col width="15%"/>
+                                      <col width="60px"/>
                                     </colgroup>
 
                                 <thead>
                                 <tr>
                                     
-                                    <th></th>
+                                    <th class="text-center"><i class="icon-user"></i></th>
                                     <th st-sort="contact_name" class="text-left">Name</th>
                                     <th st-sort="university" class="text-left">University</th>
                                     <th st-sort="department" class="text-left">Department</th>
                                     <th st-sort="email" class="text-left">Email</th>
                                     <th class="text-center">Updates</th>
+                                    <th class="text-center"><i class="fa fa-refresh"></i></th>
 
                                 </tr>
 
@@ -106,6 +108,10 @@
 
                                         </td>
 
+                                        <td>
+
+                                        </td>
+
                                     </tr>
                                 
                                     </tbody>
@@ -125,13 +131,27 @@
 
                                         <button class="btn btn-default btn-white" style="position: relative;" ng-click="need_for_confirm(row1.customer_program_id, row1.type, row1.customer_program.program_display, row.id)" data-toggle="modal" data-target="#WhoopsReport" ng-if="row1.type==='whoops'">
                                                                   <i data-uib-tooltip="Enhancement" data-tooltip-placement="top" class="fa fa-file-text-o text-info">
-                                                                 </i><span ng-if="row1.update_nums>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;z-index: 1;">{{row1.update_nums}}</span>
+                                                                 </i> &nbsp;<span class="text-primary">View</span>
+
+                                                                <!--  <span ng-if="row1.update_nums>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;z-index: 1;">{{row1.update_nums}}</span> -->
                                         </button>
 
                                         <button class="btn btn-default btn-white" style="position: relative;" ng-click="need_for_confirm(row1.customer_program_id, row1.type, row1.customer_program.program_display, row.id)" data-toggle="modal" data-target="#EnhancementReport" ng-if="row1.type==='enhancement'">
                                                                   <i data-uib-tooltip="Enhancement" data-tooltip-placement="top" class="fa fa-file-text-o text-info">
-                                                                 </i><span ng-if="row1.update_nums>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;z-index: 1;">{{row1.update_nums}}</span>
+                                                                 </i> &nbsp;<span class="text-primary">View</span>
+                                                                 <!-- <span ng-if="row1.update_nums>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;z-index: 1;">{{row1.update_nums}}</span> -->
                                         </button>
+
+                                        
+                                    </td>
+
+
+                                    <td>
+                                            <button class="btn btn-default btn-white" style="position: relative;" ng-click="ondemand_one(row1.customer_program_id, row1.type, row.id)">
+                                                                  <i data-uib-tooltip="Ondemand" data-tooltip-placement="top"  ng-class="{'fa fa-refresh text-primary': !ondemand_single, 'fa fa-refresh fa-spin text-primary': ondemand_single }">
+                                            </i>
+                                        </button>
+
                                     </td>
 
                                     
@@ -852,7 +872,7 @@
 
 
 
-<div class="modal fullscreen-modal viewer fade" id="EnhancementReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+<div class="modal fullscreen-modal viewer fade" id="EnhancementReport"  role="dialog" aria-labelledby="myModalLabel" >
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="block block-themed block-transparent remove-margin-b" id="enhancement_loading">
@@ -870,7 +890,11 @@
                                     <button data-dismiss="modal" type="button" ng-click="scrolltop2()" data-js-blur><i class="si si-close"></i></button>
                                   </li>
                                 </ul>
-                                <h3 class="block-title">Enhancement Report</h3>
+                                <h3 class="block-title">Enhancement Report 
+
+                                &nbsp;&nbsp;<span class="badge badge-danger" style=" background-color: #d26a5c;">{{e_show_update | keylength}} Updates</span>
+
+                                </h3>
                               </div>
                               
                               <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" id="scrolltop_enhancement_page">
@@ -903,7 +927,7 @@
 
 
    <!-- Modal of Pdf Viewer-->
-      <div class="modal viewer fade" id="WhoopsReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+      <div class="modal viewer fade" id="WhoopsReport"  role="dialog" aria-labelledby="myModalLabel" >
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="block block-themed block-transparent remove-margin-b" id="whoops_loading">
@@ -921,7 +945,9 @@
                                         <button data-dismiss="modal" type="button" ng-click="scrolltop1()" data-js-blur><i class="si si-close"></i></button>
                                       </li>
                                     </ul>
-                                    <h3 class="block-title">Whoops Report</h3>
+                                    <h3 class="block-title">Whoops Report 
+                                    &nbsp;&nbsp;<span class="badge badge-danger" style=" background-color: #d26a5c;">{{w_update | keylength}} Updates</span>
+                                    </h3>
 
                                   </div>
                                   

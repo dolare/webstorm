@@ -424,8 +424,9 @@ class ReleasedPrograms(APIView):
         released_enhancement_list = EnhancementReleasedListSerializer(enhancement_list, many=True)
         released_whoops_list = WhoopsReleasedListSerializer(whoops_list, many=True)
 
-        context = {"FinalReleasedEnhancement": released_enhancement_list, "FinalReleasedWhoops": released_whoops_list}
-        return context
+        context = {"FinalReleasedEnhancement": released_enhancement_list.data,
+                   "FinalReleasedWhoops": released_whoops_list.data}
+        return Response(data=context, status=HTTP_200_OK)
 
 
 # For client's dashboard to display updated reports time info...
@@ -475,9 +476,9 @@ class UpdatedReportsList(APIView):
         whoopsupdatelist = WhoopsUpdateSerializer(wrlist, many=True)
         erlist = self.get_reports_list(user, "enhancement")
         enhancementupdatelist = EnhancementUpdateSerializer(erlist, many=True)
-        context = {"WhoopsUpdateList": whoopsupdatelist, "EnhancementUpdateList": enhancementupdatelist}
+        context = {"WhoopsUpdateList": whoopsupdatelist.data, "EnhancementUpdateList": enhancementupdatelist.data}
 
-        return context
+        return Response(context, status=HTTP_200_OK)
 
 
 # Get user's basic information / 
@@ -917,6 +918,7 @@ class ClientCRUD(APIView):
             main_user = UniversityCustomer.objects.get(object_id=request.data['main_user_id'])
             university_school = UniversitySchool.objects.get(object_id=main_user.Ceeb.object_id)
             client = UniversityCustomer.objects.create(
+                is_demo=self.request.data['isDemo'],
                 username=self.request.data['username'],
                 email=self.request.data['email'],
                 Ceeb=university_school,
@@ -936,6 +938,7 @@ class ClientCRUD(APIView):
         else:
             university_school = UniversitySchool.objects.get(object_id=self.request.data['ceeb'])
             client = UniversityCustomer.objects.create(
+                is_demo=self.request.data['isDemo'],
                 username=self.request.data['username'],
                 email=self.request.data['email'],
                 Ceeb=university_school,
@@ -972,6 +975,7 @@ class ClientCRUD(APIView):
             university_school = UniversitySchool.objects.get(object_id=self.request.data['ceeb'])
             client = UniversityCustomer.objects.filter(id=self.request.data['client_id'])
             client.update(
+                is_demo=self.request.data['isDemo'],
                 username=self.request.data['username'],
                 email=self.request.data['email'],
                 Ceeb=university_school,
@@ -990,6 +994,7 @@ class ClientCRUD(APIView):
             university_school = UniversitySchool.objects.get(object_id=self.request.data['ceeb'])
             client = UniversityCustomer.objects.filter(id=self.request.data['client_id'])
             client.update(
+                is_demo=self.request.data['isDemo'],
                 username=self.request.data['username'],
                 email=self.request.data['email'],
                 Ceeb=university_school,
@@ -1080,14 +1085,18 @@ class UniversityCustomerProgramCRUD(APIView):
                     if cp.get('object_id') == "":
                         continue
                     else:
-                        competing_program = Program.objects.get(object_id=cp.get('object_id'))
-                        new_cp = CustomerCompetingProgram.objects.create(
-                            customer_program=customer_program,
-                            program=competing_program,
-                            order=cp.get('order'),
-                            enhancement_status=cp.get('enhancement_status'),
-                        )
-                        new_cp.save()
+                        competing_program = Program.objects.filter(object_id=cp.get('object_id'))
+                        if competing_program.exists():
+                            competing_program_obj = competing_program.first()
+                            print(competing_program)
+                            new_cp = CustomerCompetingProgram.objects.create(
+                                customer_program=customer_program,
+                                program=competing_program_obj,
+                                order=cp.get('order'),
+                                enhancement_status=cp.get('enhancement_status'),
+                            )
+                            new_cp.save()
+
             return Response({"success": _(" User programs has been created.")}, status=HTTP_201_CREATED)
 
     def put(self, request):
@@ -1293,7 +1302,8 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
 
             if department:
                 if department == 'Others':
-                    query_list = query_list.filter(Q(department=""), Q(department__isnull=True))
+                    query_list = query_list.filter(Q(department="") | Q(department__isnull=True))
+                    print(query_list)
                 else:
                     query_list = query_list.filter(
                         Q(department=department)
@@ -1635,7 +1645,13 @@ class ManagerWhoopsDiffConfirmation(APIView):
             existing_report = JSONParser().parse(existing_report)
         else:
             existing_report = None
-        result = {"initial_diff": initial_diff, "existing_report": existing_report}
+        if update_report.confirmed_diff is not None:
+            confirmed_diff = zlib.decompress(update_report.confirmed_diff)
+            confirmed_diff = BytesIO(confirmed_diff)
+            confirmed_diff = JSONParser().parse(confirmed_diff)
+        else:
+            confirmed_diff = None
+        result = {"initial_diff": initial_diff, "confirmed_diff": confirmed_diff, "existing_report": existing_report}
         return Response(result, HTTP_200_OK)
 
     def put(self, request):
@@ -1658,7 +1674,9 @@ class ManagerWhoopsDiffConfirmation(APIView):
 
 
 class ClientViewWhoopsUpdate(APIView):
+
     def get_user(self, request, object_id, client_id):
+        
         try:
             UpgridAccountManager.objects.get(id=request.user.id)
             user = UniversityCustomer.objects.get(id=client_id)
@@ -1676,7 +1694,10 @@ class ClientViewWhoopsUpdate(APIView):
         return user
 
     def get(self, request, object_id=None, client_id=None):
+        print(object_id)
+        print(client_id)
         user = self.get_user(request, object_id, client_id)
+        print(user)
         cust_pro = UniversityCustomerProgram.objects.get(object_id=object_id)
         if not user:
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
@@ -1685,7 +1706,7 @@ class ClientViewWhoopsUpdate(APIView):
         except WhoopsUpdate.DoesNotExist:
             return Response({"failed": _("No WhoopsReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
-        if update_report.cache_report and not client_id:
+        if update_report.cache_report and not client_id: #only account manager view report will pass client_id
             update_report.existing_report = update_report.cache_report
             update_report.most_recent = False
             update_report.save()
@@ -1694,19 +1715,42 @@ class ClientViewWhoopsUpdate(APIView):
                 customer=user,
                 most_recent=True,
                 existing_report=update_report.existing_report,
+                prev_diff=update_report.update_diff,
                 last_edit_time=update_report.last_edit_time)
             new_wru.save()
-        # print(update_report.existing_report)
-        if update_report.existing_report:
-            existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
+            print(update_report.existing_report)
+            if new_wru.existing_report:
+                existing_report = JSONParser().parse(BytesIO(zlib.decompress(new_wru.existing_report)))
+            else:
+                existing_report = "None"
+            if new_wru.prev_diff:
+                update_diff = JSONParser().parse(BytesIO(zlib.decompress(new_wru.prev_diff)))
+            else:
+                update_diff = "None"
         else:
-            existing_report = "None"
-        if update_report.update_diff:
-            update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
-            print(update_diff)
-        else:
-            update_diff = "None"
+            print('if2')
+            if update_report.existing_report:
+                print('1')
+                existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
+                print(existing_report)
+            else:
+                print('2')
+                existing_report = "None"
+            if update_report.update_diff and client_id:
+                update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
+            elif update_report.prev_diff:
+                print('end1')
+                print(zlib.decompress(update_report.prev_diff))
+                print(BytesIO(zlib.decompress(update_report.prev_diff)))
+                if not zlib.decompress(update_report.prev_diff) == b'':
+                    update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.prev_diff)))
+                else:
+                    update_diff = '' 
+            else:
+                print('end2')
+                update_diff = "None"
 
+        print('end3')
         # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
         context = {'existing_report': existing_report, 'update_diff': update_diff,
                    'university': cust_pro.program.university_school.university_foreign_key.name,
@@ -1714,6 +1758,7 @@ class ClientViewWhoopsUpdate(APIView):
                    'program': cust_pro.program.program_name, 'degree': cust_pro.program.degree.name,
                    'whoops_final_release_time': cust_pro.whoops_final_release_time,
                    'report_last_edit_time': update_report.last_edit_time}
+        print(context)
         return Response(context, HTTP_200_OK)
 
 
@@ -1860,10 +1905,24 @@ class EnhancementReportsUpdateAPI(APIView):
             # if not a or not b:
             #     return None
             if isinstance(a, dict) and isinstance(b, dict):
+                #print(a)
+                #print(b)
+                print('if')
+                print(len(a) == len(b))
+                print(a.keys())
+                print('...................')
+                print(b.keys())
+                print('...................')
                 for k, v in a.items():  # top level
-                    v_of_b = b[k]
+                    if k in b.keys():
+                        v_of_b = b[k]
+
                     # 3 list
                     if (k in fk_list) and (v != v_of_b):  # if top is in fk_list, all 3 list handled here
+                        if v == '' and v_of_b is None:
+                            continue
+                        if v is None and v_of_b == '':
+                            continue
                         new_diff[k] = v_of_b  # top level
                         old_diff[k] = v
                     # dictionary
@@ -1872,6 +1931,10 @@ class EnhancementReportsUpdateAPI(APIView):
                         old_diff[k] = {}
                         for k2, v2 in v.items():
                             if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
+                                if v2 == '' and v_of_b[k2] is None:
+                                    continue
+                                if v2 is None and v_of_b[k2] == '':
+                                    continue
                                 new_diff[k][k2] = v_of_b[k2]
                                 old_diff[k][k2] = v[k2]
                         if len(new_diff[k]) == 0 and len(old_diff[k]) == 0:
@@ -1880,6 +1943,10 @@ class EnhancementReportsUpdateAPI(APIView):
                     # other list and simple <key,value> pair
                     else:
                         if v != b[k]:
+                            if v == '' and b[k] is None:
+                                continue
+                            if v is None and b[k] == '':
+                                continue
                             new_diff[k] = v_of_b
                             old_diff[k] = v
                 return diff
@@ -2035,7 +2102,13 @@ class ManagerEnhancementDiffConfirmation(APIView):
             existing_report = JSONParser().parse(existing_report)
         else:
             existing_report = None
-        result = {"initial_diff": initial_diff, "existing_report": existing_report}
+        if update_report.confirmed_diff is not None:
+            confirmed_diff = zlib.decompress(update_report.confirmed_diff)
+            confirmed_diff = BytesIO(confirmed_diff)
+            confirmed_diff = JSONParser().parse(confirmed_diff)
+        else:
+            confirmed_diff = None
+        result = {"initial_diff": initial_diff, "confirmed_diff": confirmed_diff, "existing_report": existing_report}
 
         return Response(result, HTTP_200_OK)
 
@@ -2097,21 +2170,37 @@ class ClientViewEnhancementUpdate(APIView):
                 customer=user,
                 most_recent=True,
                 existing_report=update_report.existing_report,
+                prev_diff=update_report.update_diff,
                 last_edit_time=update_report.last_edit_time)
             new_eru.save()
         # print(update_report.existing_report)
-        if update_report.existing_report:
-            existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
+            if new_eru.existing_report and not zlib.decompress(new_eru.existing_report) == b'':
+                existing_report = JSONParser().parse(BytesIO(zlib.decompress(new_eru.existing_report)))
+            else:
+                existing_report = "None"
+            if new_eru.prev_diff and not zlib.decompress(new_eru.prev_diff) == b'':
+                update_diff = JSONParser().parse(BytesIO(zlib.decompress(new_eru.prev_diff)))
+            else:
+                update_diff = "None"
+
         else:
-            existing_report = "None"
-        if update_report.update_diff:
-            update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
-            print('update')
-            print(update_diff)
-            print('diff')
-        else:
-            print(3)
-            update_diff = "None"
+            if update_report.existing_report and not zlib.decompress(update_report.existing_report) == b'':
+                existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
+            else:
+                existing_report = "None"
+            if update_report.update_diff and client_id and not zlib.decompress(update_report.update_diff)==b'':  # if manager view report before client and has updates
+                update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
+            elif update_report.prev_diff:
+                if not zlib.decompress(update_report.prev_diff) == b'':
+                    update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.prev_diff)))
+                else:
+                    update_diff = ''
+                print('update')
+                print(update_diff)
+                print('diff')
+            else:
+                print(3)
+                update_diff = "None"
 
         # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
         context = {'existing_report': existing_report, 'update_diff': update_diff,

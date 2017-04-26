@@ -10,7 +10,7 @@
                 <code>.data-js-table-checkable</code>
               </div> -->
               <!-- <h3 class="block-title">Checkable Table</h3> -->
-              <div class="col-sm-6">
+              <div class="col-sm-6 col-xs-6">
                 <h1 class="page-heading">
                   Enhancement Report <br><small> &nbsp;&nbsp;- Stay abreast of competing programs.</small>
                 </h1>
@@ -19,7 +19,7 @@
 
               <!-- <a href="javascript:void(0)" onclick="find('school');">Find in This Page...</a> -->
 
-              <div class="col-sm-6 text-right" ng-if="accountType ==='main'&&unconfirmedprogram_nums >0 ">
+              <div class="col-sm-6 col-xs-6 text-right" ng-if="accountType ==='main'&&unconfirmedprogram_nums >0 ">
                   
                   <div style="margin-top:1.5em;" >
                     <button href="#myModalConfirm" id="openBtn1" data-toggle="modal" ng-click="confirmDialog()" ng-disabled="unconfirmedprogram_nums === 0" ng-class="{'css-input-disabled btn btn-success':unconfirmedprogram_nums === 0, 'btn btn-default': unconfirmedprogram_nums !== 0}" style="position:relative;" class="pull-right" >
@@ -151,7 +151,7 @@
                         <span ng-if="row.enhancement_status==='True'">
 
                           <div class="btn-group action-btns">
-                            <button class="btn btn-default btn-white" type="button" data-toggle="modal" data-target="#EnhancementReport" ng-click = "EnhancementViewer(row.objectId, row.programName, row.degreeName);" data-js-blur>
+                            <button class="btn btn-default btn-white" type="button" data-toggle="modal" data-target="#EnhancementReport" ng-click = "EnhancementViewer(row.objectId);" data-js-blur>
                               <a data-uib-tooltip="View" data-tooltip-placement="top" class="fa fa-cloud-download text-primary" style="vertical-align: middle;">
                     
                             </a>
@@ -174,12 +174,12 @@
 
                         </td>
 
-                        <td class="td-bordered" style="text-align:center;">
-                            <!-- <span ng-if="row.reportUpdate===true"> --><span>
-                            <span class="fa fa-exclamation-circle text-primary" ng-if="row.objectId==='9a80a2c5-affd-43f2-8fb7-eace71c68d5a'|| row.objectId==='d9030abb-dd51-4671-a622-0a5523f5fd17'||row.objectId==='bade54f9-6dfb-45b2-ab16-0523684ea902'||row.objectId==='9a80a2c5-affd-43f2-8fb7-eace71c68d5a'||row.objectId==='8a41c5ad-3f9d-4e5d-8818-913f0d82783a'||row.objectId==='a374c012-f8bb-4249-b66f-8951ce9269ba'||row.objectId==='67af2c4a-ff83-4139-a672-a3e5bd038e20'||row.objectId==='a3d19cda-4a93-44f5-ba14-36ff98603279'"> 
-                            
-                            </span>
-                          </span></td>
+                        <td class="td-bordered text-center">
+                        
+                          <i ng-show="row.updated" class="fa fa-exclamation-circle text-warning" aria-hidden="true" ></i>
+                        
+                        
+                        </td>
 
                        
                     </tr>
@@ -233,7 +233,7 @@
 
 
 <!-- Modal of Share the Link-->
-<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModal1"  role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="block block-themed block-transparent remove-margin-b">
@@ -283,7 +283,7 @@
 
                       
                       <!-- Confirmation modal -->
-                      <div class="modal fade" id="myModalConfirm" tabindex="-1" role="dialog" aria-hidden="true">
+                      <div class="modal fade" id="myModalConfirm"  role="dialog" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
                             <div class="block block-themed block-transparent remove-margin-b" id="confirmloading">
@@ -394,7 +394,7 @@
                     </div>
                     <!-- END confirmation Modal -->
 
-<div class="modal fullscreen-modal viewer fade" id="EnhancementReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+<div class="modal fullscreen-modal viewer fade" id="EnhancementReport"  role="dialog" aria-labelledby="myModalLabel" >
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="block block-themed block-transparent remove-margin-b" id="enhancement_loading">
@@ -421,7 +421,7 @@
                     <!-- SlimScroll Container -->
                    <!--  <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
 
-                   <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+                   <div class="block enhancement_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
                     <div ng-include src="'/static/views/Home/partials/enhancement_template.html'"></div>
                     </div>

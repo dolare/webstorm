@@ -1,6 +1,6 @@
 //for the success(Home) parent page
 
-var mainApp = angular.module('myApp.login.success', ['auth', 'ngCookies', 'ui.router', 'myApp.login.success.whoops', 'myApp.login.success.enhancement', 'myApp.login.success.cart', 'sticky']).
+var mainApp = angular.module('myApp.login.success', ['auth', 'ngCookies', 'ui.router', 'myApp.login.success.whoops', 'myApp.login.success.enhancement', 'myApp.login.success.cart']).
 controller('SuccessController',
     function(avatarService, $timeout, Ceeb, $scope, $window, $location, $http, authenticationSvc, $cookies, $state, apiService, $localStorage, $sessionStorage, cartCounter) {
         

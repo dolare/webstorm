@@ -63,13 +63,11 @@ class UpgridBaseUser(models.Model):
         self._password = None
 
     def save(self, *args, **kwargs):
+        self.password = make_password(self.password)
         super(UpgridBaseUser, self).save(*args, **kwargs)
         if self._password is not None:
             password_validation.password_changed(self._password, self)
             self._password = None
-        else:
-            self.password = make_password(self.password)
-            print(self.password)
 
             #self.password = make_password(self.password)
 
@@ -131,6 +129,7 @@ class UniversityCustomer(UpgridBaseUser):
     accounttype = (('main', 'Main'), ('sub', 'Sub'))
 
     objects = UserManager()
+    is_demo = models.BooleanField(default=False)
     Ceeb = models.ForeignKey(UniversitySchool, to_field='ceeb', on_delete=models.SET_NULL,
                              db_constraint=False, null=True)
     department = models.CharField(max_length=255, null=True, blank=True)
@@ -170,6 +169,7 @@ class UniversityCustomerProgram(UpgridAbstractDatedObject):
 
     Status = (('in_progress', 'In_Progress'), ('done', 'Done'))
 
+
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT)
     program = models.ForeignKey(Program, on_delete=models.PROTECT)
@@ -182,6 +182,12 @@ class UniversityCustomerProgram(UpgridAbstractDatedObject):
                                              choices=(('Yes', 'Confirmed'), ('No', 'Not Confirmed')), default='No')
     whoops_final_release_time = models.DateTimeField(null=True)
     enhancement_final_release_time = models.DateTimeField(null=True)
+
+    whoops = models.BooleanField(default=True)
+    enhancement = models.BooleanField(default=True)
+    none_degree = models.BooleanField(default=True)
+   
+
 
     class Meta(UpgridAbstractDatedObject.Meta):
         unique_together = ('customer', 'program')
@@ -322,6 +328,7 @@ class EnhancementUpdate(models.Model):
     existing_report = models.BinaryField(blank=True, null=True)
     cache_report = models.BinaryField(blank=True, null=True)
     initial_diff = models.BinaryField(blank=True, null=True)
+    prev_diff = models.BinaryField(blank=True, null=True)
     confirmed_diff = models.BinaryField(blank=True, null=True)
     update_diff = models.BinaryField(blank=True, null=True)
     most_recent = models.BooleanField(default=False)
@@ -346,6 +353,7 @@ class WhoopsUpdate(models.Model):
     existing_report = models.BinaryField(blank=True, null=True)
     cache_report = models.BinaryField(blank=True, null=True)
     initial_diff = models.BinaryField(blank=True, null=True)
+    prev_diff = models.BinaryField(blank=True, null=True)
     confirmed_diff = models.BinaryField(blank=True, null=True)
     update_diff = models.BinaryField(blank=True, null=True)
     most_recent = models.BooleanField(default=False)

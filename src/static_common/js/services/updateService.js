@@ -202,43 +202,50 @@ angular.module('updateServiceModule', [])
                   
 
                     e_show_update['program_duration'+(i===0?'':i+1)] 
-                    = (
+                    = ((
                         (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_min || 
                         (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_min 
-                      ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_min : e_raw['dura'+(i===0?'':i+1)].duration_min
-                    + ((
-                        (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_max || 
-                        (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_max 
-                      ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_max : e_raw['dura'+(i===0?'':i+1)].duration_max) 
-                      !== ((
+                      ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_min : e_raw['dura'+(i===0?'':i+1)].duration_min)
+                      ? 
+                      (
+                        ((
                         (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_min || 
                         (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_min 
-                      ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_min : e_raw['dura'+(i===0?'':i+1)].duration_min) 
-                      ? ' - ' + ((
-                        (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_max || 
-                        (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_max 
-                      ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_max : e_raw['dura'+(i===0?'':i+1)].duration_max) : null
-                    + (
-                        (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_conj || 
-                        (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_conj 
-                      ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_conj : e_raw['dura'+(i===0?'':i+1)].duration_conj
-                    + (
-                        (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_unit || 
-                        (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_unit 
-                      ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_unit.name : e_raw['dura'+(i===0?'':i+1)].duration_unit.name
-                    + (
-                        (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_addl || 
-                        (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_addl 
-                      ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_addl : e_raw['dura'+(i===0?'':i+1)].duration_addl
-                    + (
-                        (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_addl_unit || 
-                        (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_addl_unit 
-                      ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_addl_unit.name : e_raw['dura'+(i===0?'':i+1)].duration_addl_unit.name
+                      ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_min : e_raw['dura'+(i===0?'':i+1)].duration_min)
+                      + (((
+                          (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_max || 
+                          (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_max 
+                        ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_max : e_raw['dura'+(i===0?'':i+1)].duration_max) 
+                        !== ((
+                          (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_min || 
+                          (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_min 
+                        ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_min : e_raw['dura'+(i===0?'':i+1)].duration_min) 
+                        ? ' - ' + ((
+                          (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_max || 
+                          (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_max 
+                        ) ? (e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_max || "") : (e_raw['dura'+(i===0?'':i+1)].duration_max || "")) : "")
+                      + ((
+                          (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_conj || 
+                          (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_conj 
+                        ) ? (e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_conj ? (" " + e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_conj) : "") : (e_raw['dura'+(i===0?'':i+1)].duration_conj ? (" " + e_raw['dura'+(i===0?'':i+1)].duration_conj) : ""))
+                      + ((
+                          (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_unit || 
+                          (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_unit 
+                        ) ? (e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_unit ? (" " + e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_unit.name) : "") : (e_raw['dura'+(i===0?'':i+1)].duration_unit ? (" " + e_raw['dura'+(i===0?'':i+1)].duration_unit.name) : ""))
+                      + ((
+                          (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_addl || 
+                          (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_addl 
+                        ) ? (e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_addl ? (" " + e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_addl) : "") : (e_raw['dura'+(i===0?'':i+1)].duration_addl ? (" " + e_raw['dura'+(i===0?'':i+1)].duration_addl) : ""))
+                      + ((
+                          (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_addl_unit || 
+                          (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_addl_unit 
+                        ) ? (e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_addl_unit ? (" " + e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_addl_unit.name) : "") : (e_raw['dura'+(i===0?'':i+1)].duration_addl_unit ? (" " + e_raw['dura'+(i===0?'':i+1)].duration_addl_unit.name) : "")))
+                    : "N/A";
 
                   
-                  if(!e_show_update['program_duration'+(i===0?'':i+1)]){
-                    e_show_update['program_duration'+(i===0?'':i+1)] = "N/A";
-                  }
+                  // if(!e_show_update['program_duration'+(i===0?'':i+1)]){
+                  //   e_show_update['program_duration'+(i===0?'':i+1)] = "N/A";
+                  // }
 
 
                 }
@@ -254,20 +261,27 @@ angular.module('updateServiceModule', [])
 
 
                   e_show_update['durationtime_limit'+(i===0?'':i+1)] 
-                  = (
+                  = 
+                  ((
                       (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).durationtime_limit || 
                       (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).durationtime_limit 
-                    ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].durationtime_limit : e_raw['dura'+(i===0?'':i+1)].durationtime_limit
-                  + (
+                    ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].durationtime_limit : e_raw['dura'+(i===0?'':i+1)].durationtime_limit)
+                  ?
+                  (((
+                      (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).durationtime_limit || 
+                      (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).durationtime_limit 
+                    ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].durationtime_limit : e_raw['dura'+(i===0?'':i+1)].durationtime_limit)
+                  + ((
                       (((e_update_diff||{}).old||{})['dura'+(i===0?'':i+1)]||{}).duration_unit || 
                       (((e_update_diff||{}).new||{})['dura'+(i===0?'':i+1)]||{}).duration_unit 
-                    ) ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_unit.name : e_raw['dura'+(i===0?'':i+1)].duration_unit.name
+                    ) ? (e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_unit ? e_update_diff[ver]['dura'+(i===0?'':i+1)].duration_unit.name : "") : (e_raw['dura'+(i===0?'':i+1)].duration_unit ? e_raw['dura'+(i===0?'':i+1)].duration_unit.name : "")))
+                  : "N/A"
 
 
 
-                  if(!e_show_update['durationtime_limit'+(i===0?'':i+1)]){
-                    e_show_update['durationtime_limit'+(i===0?'':i+1)] = "N/A";
-                  }
+                  // if(!e_show_update['durationtime_limit'+(i===0?'':i+1)]){
+                  //   e_show_update['durationtime_limit'+(i===0?'':i+1)] = "N/A";
+                  // }
 
                 }
 
@@ -280,19 +294,26 @@ angular.module('updateServiceModule', [])
                   ){
 
                   e_show_update['min_total_unit'+(i===0?'':i+1)] 
-                  = (
+                  = ((
                       (((e_update_diff||{}).old||{})['c'+(i===0?'':i+1)]||{}).min_total_unit || 
                       (((e_update_diff||{}).new||{})['c'+(i===0?'':i+1)]||{}).min_total_unit 
-                    ) ? e_update_diff[ver]['c'+(i===0?'':i+1)].min_total_unit : e_raw['c'+(i===0?'':i+1)].min_total_unit
-                  + (
+                    ) ? e_update_diff[ver]['c'+(i===0?'':i+1)].min_total_unit : e_raw['c'+(i===0?'':i+1)].min_total_unit)
+                    ? (((
+                      (((e_update_diff||{}).old||{})['c'+(i===0?'':i+1)]||{}).min_total_unit || 
+                      (((e_update_diff||{}).new||{})['c'+(i===0?'':i+1)]||{}).min_total_unit 
+                    ) ? e_update_diff[ver]['c'+(i===0?'':i+1)].min_total_unit : e_raw['c'+(i===0?'':i+1)].min_total_unit)
+                       + ((
                       (((e_update_diff||{}).old||{})['c'+(i===0?'':i+1)]||{}).curriculum_unit || 
                       (((e_update_diff||{}).new||{})['c'+(i===0?'':i+1)]||{}).curriculum_unit 
-                    ) ? e_update_diff[ver]['c'+(i===0?'':i+1)].curriculum_unit.name : e_raw['c'+(i===0?'':i+1)].curriculum_unit.name
-                  
+                    ) ? (e_update_diff[ver]['c'+(i===0?'':i+1)].curriculum_unit ? e_update_diff[ver]['c'+(i===0?'':i+1)].curriculum_unit.name : "") : (e_raw['c'+(i===0?'':i+1)].curriculum_unit ? e_raw['c'+(i===0?'':i+1)].curriculum_unit.name : ""))
+                    )
+                    : "N/A"
 
-                  if(!e_show_update['min_total_unit'+(i===0?'':i+1)]){
-                    e_show_update['min_total_unit'+(i===0?'':i+1)] = "N/A";
-                  }
+                 
+
+                  // if(!e_show_update['min_total_unit'+(i===0?'':i+1)]){
+                  //   e_show_update['min_total_unit'+(i===0?'':i+1)] = "N/A";
+                  // }
 
                 }
 
@@ -305,19 +326,26 @@ angular.module('updateServiceModule', [])
                   ){
 
                   e_show_update['max_transfer_unit'+(i===0?'':i+1)] 
-                  = (
+                  = 
+                    ((
                       (((e_update_diff||{}).old||{})['c'+(i===0?'':i+1)]||{}).max_transfer_unit || 
                       (((e_update_diff||{}).new||{})['c'+(i===0?'':i+1)]||{}).max_transfer_unit
-                    ) ? e_update_diff[ver]['c'+(i===0?'':i+1)].max_transfer_unit : e_raw['c'+(i===0?'':i+1)].max_transfer_unit
-                  + (
+                    ) ? e_update_diff[ver]['c'+(i===0?'':i+1)].max_transfer_unit : e_raw['c'+(i===0?'':i+1)].max_transfer_unit) 
+                    ? (((
+                      (((e_update_diff||{}).old||{})['c'+(i===0?'':i+1)]||{}).max_transfer_unit || 
+                      (((e_update_diff||{}).new||{})['c'+(i===0?'':i+1)]||{}).max_transfer_unit
+                    ) ? e_update_diff[ver]['c'+(i===0?'':i+1)].max_transfer_unit : e_raw['c'+(i===0?'':i+1)].max_transfer_unit)
+                    + ((
                       (((e_update_diff||{}).old||{})['c'+(i===0?'':i+1)]||{}).curriculum_unit || 
                       (((e_update_diff||{}).new||{})['c'+(i===0?'':i+1)]||{}).curriculum_unit 
-                    ) ? e_update_diff[ver]['c'+(i===0?'':i+1)].curriculum_unit.name : e_raw['c'+(i===0?'':i+1)].curriculum_unit.name
+                    ) ? (e_update_diff[ver]['c'+(i===0?'':i+1)].curriculum_unit ? e_update_diff[ver]['c'+(i===0?'':i+1)].curriculum_unit.name : "") : (e_raw['c'+(i===0?'':i+1)].curriculum_unit ? e_raw['c'+(i===0?'':i+1)].curriculum_unit.name : ""))
+                    )
+                    : "N/A"
+
                   
-                  
-                  if(!e_show_update['max_transfer_unit'+(i===0?'':i+1)]){
-                    e_show_update['max_transfer_unit'+(i===0?'':i+1)] = "N/A";
-                  }
+                  // if(!e_show_update['max_transfer_unit'+(i===0?'':i+1)]){
+                  //   e_show_update['max_transfer_unit'+(i===0?'':i+1)] = "N/A";
+                  // }
 
                 }
 
@@ -441,20 +469,27 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['tuition_per_unit'+(i===0?'':i+1)] 
-                  = $filter('currency')((
+                  = 
+                  ((
+                      (((e_update_diff||{}).old||{})['t'+(i===0?'':i+1)]||{}).tuition_per_unit || 
+                      (((e_update_diff||{}).new||{})['t'+(i===0?'':i+1)]||{}).tuition_per_unit
+                    ) ? e_update_diff[ver]['t'+(i===0?'':i+1)].tuition_per_unit : e_raw['t'+(i===0?'':i+1)].tuition_per_unit)
+                    ? ($filter('currency')((
                       (((e_update_diff||{}).old||{})['t'+(i===0?'':i+1)]||{}).tuition_per_unit || 
                       (((e_update_diff||{}).new||{})['t'+(i===0?'':i+1)]||{}).tuition_per_unit
                     ) ? e_update_diff[ver]['t'+(i===0?'':i+1)].tuition_per_unit : e_raw['t'+(i===0?'':i+1)].tuition_per_unit, 
                     '$')
-                  + ' '
-                  + (
+                    + ' per ' 
+                    + ((
                       (((e_update_diff||{}).old||{})['t'+(i===0?'':i+1)]||{}).tuition_unit || 
                       (((e_update_diff||{}).new||{})['t'+(i===0?'':i+1)]||{}).tuition_unit
-                    ) ? e_update_diff[ver]['t'+(i===0?'':i+1)].tuition_unit.name : e_raw['t'+(i===0?'':i+1)].tuition_unit.name
+                    ) ? (e_update_diff[ver]['t'+(i===0?'':i+1)].tuition_unit ? e_update_diff[ver]['t'+(i===0?'':i+1)].tuition_unit.name : "") : (e_raw['t'+(i===0?'':i+1)].tuition_unit ? e_raw['t'+(i===0?'':i+1)].tuition_unit.name : ""))
+                    )
+                    : "N/A"
 
-                  if(!e_show_update['tuition_per_unit'+(i===0?'':i+1)]){
-                    e_show_update['tuition_per_unit'+(i===0?'':i+1)] = "N/A";
-                  }
+                  // if(!e_show_update['tuition_per_unit'+(i===0?'':i+1)]){
+                  //   e_show_update['tuition_per_unit'+(i===0?'':i+1)] = "N/A";
+                  // }
 
 
                 }
@@ -472,20 +507,28 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['tuition_per_unit_out_state'+(i===0?'':i+1)] 
-                  = $filter('currency')((
+                  = 
+                    ((
+                      (((e_update_diff||{}).old||{})['t'+(i===0?'':i+1)]||{}).tuition_per_unit_out_state || 
+                      (((e_update_diff||{}).new||{})['t'+(i===0?'':i+1)]||{}).tuition_per_unit_out_state
+                    ) ? e_update_diff[ver]['t'+(i===0?'':i+1)].tuition_per_unit_out_state : e_raw['t'+(i===0?'':i+1)].tuition_per_unit_out_state)
+                    ? ($filter('currency')((
                       (((e_update_diff||{}).old||{})['t'+(i===0?'':i+1)]||{}).tuition_per_unit_out_state || 
                       (((e_update_diff||{}).new||{})['t'+(i===0?'':i+1)]||{}).tuition_per_unit_out_state
                     ) ? e_update_diff[ver]['t'+(i===0?'':i+1)].tuition_per_unit_out_state : e_raw['t'+(i===0?'':i+1)].tuition_per_unit_out_state, 
                     '$')
-                  + ' '
-                  + (
+                    + ' per ' 
+                    + ((
                       (((e_update_diff||{}).old||{})['t'+(i===0?'':i+1)]||{}).tuition_unit || 
                       (((e_update_diff||{}).new||{})['t'+(i===0?'':i+1)]||{}).tuition_unit
-                    ) ? e_update_diff[ver]['t'+(i===0?'':i+1)].tuition_unit.name : e_raw['t'+(i===0?'':i+1)].tuition_unit.name
+                    ) ? (e_update_diff[ver]['t'+(i===0?'':i+1)].tuition_unit ? e_update_diff[ver]['t'+(i===0?'':i+1)].tuition_unit.name : "") : (e_raw['t'+(i===0?'':i+1)].tuition_unit ? e_raw['t'+(i===0?'':i+1)].tuition_unit.name : ""))
+                    )
+                    : "N/A"
 
-                  if(!e_show_update['tuition_per_unit_out_state'+(i===0?'':i+1)]){
-                    e_show_update['tuition_per_unit_out_state'+(i===0?'':i+1)] = "N/A";
-                  }
+
+                  // if(!e_show_update['tuition_per_unit_out_state'+(i===0?'':i+1)]){
+                  //   e_show_update['tuition_per_unit_out_state'+(i===0?'':i+1)] = "N/A";
+                  // }
 
 
                 }
@@ -540,18 +583,28 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['deadline_fall_early'+(i===0?'':i+1)] 
-                  = (
+                  = (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_early_month_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_early_month_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_early_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_early_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_early_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_early_month_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_early_month_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_early_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_early_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_early_month_display)
+                    : "")
                   + ' '
-                  + (
+                  + (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_early_day_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_early_day_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_early_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_early_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_early_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_early_day_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_early_day_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_early_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_early_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_early_day_display)
+                    : "")
                   
 
-                  if(!e_show_update['deadline_fall_early'+(i===0?'':i+1)]){
+                  if(e_show_update['deadline_fall_early'+(i===0?'':i+1)] === ' '){
                     e_show_update['deadline_fall_early'+(i===0?'':i+1)] = "N/A";
                   }
 
@@ -566,19 +619,29 @@ angular.module('updateServiceModule', [])
                   (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_late_day_display 
                  ){
 
-                  e_show_update['deadline_fall_early'+(i===0?'':i+1)] 
-                  = (
+                  e_show_update['deadline_fall_late'+(i===0?'':i+1)] 
+                  = (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_late_month_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_late_month_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_late_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_late_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_late_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_late_month_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_late_month_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_late_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_late_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_late_month_display)
+                    : "")
                   + ' '
-                  + (
+                  + (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_late_day_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_late_day_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_late_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_late_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_late_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_late_day_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_late_day_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_fall_late_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_fall_late_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_fall_late_day_display)
+                    : "")
                   
 
-                  if(!e_show_update['deadline_fall_late'+(i===0?'':i+1)]){
+                  if(e_show_update['deadline_fall_late'+(i===0?'':i+1)] === ' '){
                     e_show_update['deadline_fall_late'+(i===0?'':i+1)] = "N/A";
                   }
 
@@ -594,18 +657,28 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['deadline_spring_early'+(i===0?'':i+1)] 
-                  = (
+                  = (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_early_month_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_early_month_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_early_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_early_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_early_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_early_month_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_early_month_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_early_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_early_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_early_month_display)
+                    : "")
                   + ' '
-                  + (
+                  + (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_early_day_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_early_day_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_early_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_early_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_early_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_early_day_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_early_day_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_early_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_early_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_early_day_display)
+                    : "")
                   
 
-                  if(!e_show_update['deadline_spring_early'+(i===0?'':i+1)]){
+                  if(e_show_update['deadline_spring_early'+(i===0?'':i+1)] === ' '){
                     e_show_update['deadline_spring_early'+(i===0?'':i+1)] = "N/A";
                   }
 
@@ -621,18 +694,28 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['deadline_spring_late'+(i===0?'':i+1)] 
-                  = (
+                  = (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_late_month_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_late_month_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_late_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_late_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_late_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_late_month_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_late_month_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_late_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_late_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_late_month_display)
+                    : "")
                   + ' '
-                  + (
+                  + (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_late_day_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_late_day_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_late_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_late_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_late_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_late_day_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_late_day_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_spring_late_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_spring_late_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_spring_late_day_display)
+                    : "")
                   
 
-                  if(!e_show_update['deadline_spring_late'+(i===0?'':i+1)]){
+                  if(e_show_update['deadline_spring_late'+(i===0?'':i+1)] === ' '){
                     e_show_update['deadline_spring_late'+(i===0?'':i+1)] = "N/A";
                   }
 
@@ -647,18 +730,28 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['deadline_summer_early'+(i===0?'':i+1)] 
-                  = (
+                  = (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_early_month_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_early_month_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_early_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_early_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_early_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_early_month_display) 
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_early_month_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_early_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_early_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_early_month_display)
+                    : "")
                   + ' '
-                  + (
+                  + (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_early_day_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_early_day_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_early_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_early_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_early_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_early_day_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_early_day_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_early_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_early_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_early_day_display)
+                    : "")
                   
 
-                  if(!e_show_update['deadline_summer_early'+(i===0?'':i+1)]){
+                  if(e_show_update['deadline_summer_early'+(i===0?'':i+1)] === ' '){
                     e_show_update['deadline_summer_early'+(i===0?'':i+1)] = "N/A";
                   }
 
@@ -673,18 +766,28 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['deadline_summer_late'+(i===0?'':i+1)] 
-                  = (
+                  = (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_late_month_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_late_month_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_late_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_late_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_late_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_late_month_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_late_month_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_late_month_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_late_month_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_late_month_display)
+                    : "")
                   + ' '
-                  + (
+                  + (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_late_day_display || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_late_day_display
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_late_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_late_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_late_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_late_day_display)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_late_day_display || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).get_deadline_summer_late_day_display
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].get_deadline_summer_late_day_display : e_raw['d'+(i===0?'':i+1)].get_deadline_summer_late_day_display)
+                    : "")
                   
 
-                  if(!e_show_update['deadline_summer_late'+(i===0?'':i+1)]){
+                  if(e_show_update['deadline_summer_late'+(i===0?'':i+1)] === ' '){
                     e_show_update['deadline_summer_late'+(i===0?'':i+1)] = "N/A";
                   }
 
@@ -724,18 +827,28 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['scholarship_deadline'+(i===0?'':i+1)] 
-                  = (
+                  = (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).scholarship_deadline_month || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).scholarship_deadline_month
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].scholarship_deadline_month : e_raw['d'+(i===0?'':i+1)].scholarship_deadline_month
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].scholarship_deadline_month : e_raw['d'+(i===0?'':i+1)].scholarship_deadline_month)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).scholarship_deadline_month || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).scholarship_deadline_month
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].scholarship_deadline_month : e_raw['d'+(i===0?'':i+1)].scholarship_deadline_month)
+                    : "")
                   + '/'
-                  + (
+                  + (((
                       (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).scholarship_deadline_day || 
                       (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).scholarship_deadline_day
-                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].scholarship_deadline_day : e_raw['d'+(i===0?'':i+1)].scholarship_deadline_day
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].scholarship_deadline_day : e_raw['d'+(i===0?'':i+1)].scholarship_deadline_day)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['d'+(i===0?'':i+1)]||{}).scholarship_deadline_day || 
+                      (((e_update_diff||{}).new||{})['d'+(i===0?'':i+1)]||{}).scholarship_deadline_day
+                    ) ? e_update_diff[ver]['d'+(i===0?'':i+1)].scholarship_deadline_day : e_raw['d'+(i===0?'':i+1)].scholarship_deadline_day)
+                    : "")
                   
 
-                  if(!e_show_update['scholarship_deadline'+(i===0?'':i+1)]){
+                  if(e_show_update['scholarship_deadline'+(i===0?'':i+1)] === '/'){
                     e_show_update['scholarship_deadline'+(i===0?'':i+1)] = "N/A";
                   }
 
@@ -957,23 +1070,38 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['gpa_minimum'+(i===0?'':i+1)] 
-                  = (
+                  
+                  = ((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_minimum : e_raw['r'+(i===0?'':i+1)].gpa_minimum
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_minimum : e_raw['r'+(i===0?'':i+1)].gpa_minimum)
 
-                  + ((
+                  ? (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_minimum : e_raw['r'+(i===0?'':i+1)].gpa_minimum && (
-                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum_letter || 
-                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum_letter
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_minimum_letter : e_raw['r'+(i===0?'':i+1)].gpa_minimum_letter) ? '/' : ''
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_minimum : e_raw['r'+(i===0?'':i+1)].gpa_minimum)
 
-                  + (
+                  + (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum_letter || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum_letter
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_minimum_letter : e_raw['r'+(i===0?'':i+1)].gpa_minimum_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_minimum_letter : e_raw['r'+(i===0?'':i+1)].gpa_minimum_letter)
+                    ? ("/" + ((
+                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum_letter || 
+                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_minimum_letter : e_raw['r'+(i===0?'':i+1)].gpa_minimum_letter))
+                    : ""
+                    )
+                  ) : 
+                  (((
+                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum_letter || 
+                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_minimum_letter : e_raw['r'+(i===0?'':i+1)].gpa_minimum_letter)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum_letter || 
+                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_minimum_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_minimum_letter : e_raw['r'+(i===0?'':i+1)].gpa_minimum_letter)
+                    : ""
+                  )
 
               
                   if(!e_show_update['gpa_minimum'+(i===0?'':i+1)]){
@@ -993,23 +1121,39 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['gpa_average'+(i===0?'':i+1)] 
-                  = (
+                  
+                  = 
+                  ((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_average || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_average
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_average : e_raw['r'+(i===0?'':i+1)].gpa_average
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_average : e_raw['r'+(i===0?'':i+1)].gpa_average)
 
-                  + ((
+                  ? (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_average || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_average
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_average : e_raw['r'+(i===0?'':i+1)].gpa_average && (
-                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_average_letter || 
-                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_average_letter
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_average_letter : e_raw['r'+(i===0?'':i+1)].gpa_average_letter) ? '/' : ''
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_average : e_raw['r'+(i===0?'':i+1)].gpa_average)
 
-                  + (
+                  + (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_average_letter || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_average_letter
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_average_letter : e_raw['r'+(i===0?'':i+1)].gpa_average_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_average_letter : e_raw['r'+(i===0?'':i+1)].gpa_average_letter)
+                    ? ("/" + ((
+                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_average_letter || 
+                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_average_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_average_letter : e_raw['r'+(i===0?'':i+1)].gpa_average_letter))
+                    : ""
+                    )
+                  ) : 
+                  (((
+                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_average_letter || 
+                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_average_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_average_letter : e_raw['r'+(i===0?'':i+1)].gpa_average_letter)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_average_letter || 
+                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_average_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_average_letter : e_raw['r'+(i===0?'':i+1)].gpa_average_letter)
+                    : ""
+                  )
 
               
                   if(!e_show_update['gpa_average'+(i===0?'':i+1)]){
@@ -1029,23 +1173,38 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['gpa_suggested'+(i===0?'':i+1)] 
-                  = (
+                  = 
+                  ((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_suggested : e_raw['r'+(i===0?'':i+1)].gpa_suggested
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_suggested : e_raw['r'+(i===0?'':i+1)].gpa_suggested)
 
-                  + ((
+                  ? (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_suggested : e_raw['r'+(i===0?'':i+1)].gpa_suggested && (
-                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested_letter || 
-                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested_letter
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_suggested_letter : e_raw['r'+(i===0?'':i+1)].gpa_suggested_letter) ? '/' : ''
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_suggested : e_raw['r'+(i===0?'':i+1)].gpa_suggested)
 
-                  + (
+                  + (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested_letter || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested_letter
-                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_suggested_letter : e_raw['r'+(i===0?'':i+1)].gpa_suggested_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_suggested_letter : e_raw['r'+(i===0?'':i+1)].gpa_suggested_letter)
+                    ? ("/" + ((
+                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested_letter || 
+                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_suggested_letter : e_raw['r'+(i===0?'':i+1)].gpa_suggested_letter))
+                    : ""
+                    )
+                  ) : 
+                  (((
+                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested_letter || 
+                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_suggested_letter : e_raw['r'+(i===0?'':i+1)].gpa_suggested_letter)
+                    ? ((
+                      (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested_letter || 
+                      (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).gpa_suggested_letter
+                    ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].gpa_suggested_letter : e_raw['r'+(i===0?'':i+1)].gpa_suggested_letter)
+                    : ""
+                  )
 
               
                   if(!e_show_update['gpa_suggested'+(i===0?'':i+1)]){
@@ -1366,7 +1525,7 @@ angular.module('updateServiceModule', [])
                  ){
 
                   e_show_update['toefl_ibt_scores'+(i===0?'':i+1)] 
-                  = ((
+                  = (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_reading || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_reading
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_reading : e_raw['r'+(i===0?'':i+1)].toefl_ibt_reading) 
@@ -1374,9 +1533,9 @@ angular.module('updateServiceModule', [])
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_reading || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_reading
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_reading : e_raw['r'+(i===0?'':i+1)].toefl_ibt_reading) 
-                    : '-'
+                    : '-')
                   + '/'
-                  + ((
+                  + (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_listening || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_listening
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_listening : e_raw['r'+(i===0?'':i+1)].toefl_ibt_listening) 
@@ -1384,9 +1543,9 @@ angular.module('updateServiceModule', [])
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_listening || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_listening
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_listening : e_raw['r'+(i===0?'':i+1)].toefl_ibt_listening) 
-                    : '-'
+                    : '-')
                   + '/'
-                  ((
+                  (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_speaking || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_speaking
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_speaking : e_raw['r'+(i===0?'':i+1)].toefl_ibt_speaking) 
@@ -1394,9 +1553,9 @@ angular.module('updateServiceModule', [])
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_speaking || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_speaking
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_speaking : e_raw['r'+(i===0?'':i+1)].toefl_ibt_speaking) 
-                    : '-'
+                    : '-')
                   + '/'
-                  ((
+                  (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_writing || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_writing
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_writing : e_raw['r'+(i===0?'':i+1)].toefl_ibt_writing) 
@@ -1404,7 +1563,7 @@ angular.module('updateServiceModule', [])
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_writing || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_writing
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_writing : e_raw['r'+(i===0?'':i+1)].toefl_ibt_writing) 
-                    : '-'
+                    : '-')
                   
 
                   if(e_show_update['toefl_ibt_scores'+(i===0?'':i+1)]==='-/-/-/-'){
@@ -1493,7 +1652,7 @@ angular.module('updateServiceModule', [])
                 }
 
 
-                // Misc.
+                // Misc. /other international notes
                 if(
                   (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).intl_other || 
                   (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).intl_other 

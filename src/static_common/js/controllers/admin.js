@@ -360,6 +360,7 @@ admin.controller('AdminMainController',
       $scope.password_confirm = null;
       $scope.department = null;
       $scope.service_level = null;
+      $scope.is_demo = false;
       $scope.selected_customprogram = [];
 
       $scope.showtable = true;
@@ -461,8 +462,6 @@ admin.controller('AdminMainController',
       $scope.dep_pro_table = null;
       $scope.dep_pro_table_displayed = null;
 
-
-
       //***************************get ceebs****************************
       ///load for ceeb and competing schools
       $http({
@@ -509,6 +508,7 @@ admin.controller('AdminMainController',
         $scope.account_type = response.data.account_type;
         $scope.title = response.data.title;
         $scope.client_name = response.data.contact_name;
+        $scope.is_demo = response.data.is_demo;
         $scope.position = response.data.position;
         $scope.position_level = response.data.position_level;
         $scope.phone = response.data.phone;
@@ -518,7 +518,14 @@ admin.controller('AdminMainController',
         $scope.service_level = response.data.service_level;
         $scope.competing_edit = response.data.competing_schools
         $scope.customer_program = response.data.customer_program;
-        console.log("ceeb editold is = "+$scope.ceeb);
+
+
+        if(!$scope.is_demo) {
+            $scope.is_demo = false
+        }
+
+        console.log("editold $scope.is_demo"+$scope.is_demo);
+        
         console.log("competing_edit= " + JSON.stringify($scope.competing_edit));
 
         //select the ceeb
@@ -573,6 +580,8 @@ admin.controller('AdminMainController',
             "whoops_status": $scope.customer_program[i].whoops_status,
             "whoops_final_release": $scope.customer_program[i].whoops_final_release,
             "enhancement_final_release": $scope.customer_program[i].enhancement_final_release,
+            "whoops_final_release_alias": $scope.customer_program[i].whoops_final_release,
+            "enhancement_final_release_alias": $scope.customer_program[i].enhancement_final_release,
             "customerconfirmation_status": $scope.customer_program[i].customer_confirmation,
             "competing_program": (function() {
               var programs = [];
@@ -619,7 +628,7 @@ admin.controller('AdminMainController',
 
 
 
-        //only using for compare in submit
+        //only using for compare in submit to check new program
         for (i = 0; i < $scope.customer_program.length; i++) {
 
           console.log("i=" + i)
@@ -726,6 +735,10 @@ admin.controller('AdminMainController',
         $scope.unselected_programs = [];
         $scope.all_programs = [];
 
+
+        console.log("edit $scope.dep_pro_table="+JSON.stringify($scope.dep_pro_table));
+
+        //$scope.dep_pro_table is the loaded dep lost. i.e. [{"department":"Applied Physics and Applied Mathematics","isTrue":false},{"department":"Computer Science","isTrue":false},{"department":"Other","isTrue":false}]
         angular.forEach($scope.dep_pro_table, function(value, index) {
           var dep = value.department;
           console.log("value=" + value.department)
@@ -762,11 +775,13 @@ admin.controller('AdminMainController',
               }
               
               if(exist_in_selected === false){
-                $scope.unselected_programs.push(response.data[i])
+                response.data[i].department = dep;
+                $scope.unselected_programs.push(response.data[i]);
               }
               
             }
-
+            console.log("edit dep = "+dep);
+            console.log("exist $scope.unselected_programs = "+JSON.stringify($scope.unselected_programs));
             /////////
 
 
@@ -793,8 +808,6 @@ admin.controller('AdminMainController',
         });
 
 
-        //console.log("$scope.unselected_programs = "+JSON.stringify($scope.unselected_programs));
-
         jQuery('.js-wizard-simple').bootstrapWizard('first');
         App.blocks('#client_block', 'state_normal');
 
@@ -804,7 +817,7 @@ admin.controller('AdminMainController',
       });
 
 
-    }
+    }//end of editold
 
     $scope.add_in = function(added){
       console.log("added = "+JSON.stringify(added));
@@ -845,7 +858,6 @@ admin.controller('AdminMainController',
 
       }
       
-
           $scope.unselected_programs = [];
 
           for(var i=0; i<$scope.all_programs.length; i++)
@@ -1210,6 +1222,8 @@ admin.controller('AdminMainController',
 
     $scope.submit = function() {
 
+      console.log("$$$$$$$$");
+
       var competing_array = [];
       var competing_list = document.getElementById("bootstrap-duallistbox-selected-list_");
       for (i = 0; i < competing_list.options.length; i++) {
@@ -1330,24 +1344,9 @@ admin.controller('AdminMainController',
 
 
         console.log("################Editing#####################");
-        var edit_array = {
-          "username": $scope.account_name + "@M",
-          "email": $scope.email,
-          "ceeb": $scope.ceeb,
-          "account_type": $scope.account_type,
-          "title": $scope.title,
-          "contact_name": $scope.client_name,
-          "position": $scope.position,
-          "position_level": $scope.position_level,
-          "phone": $scope.phone,
-          "service_until": '20' + $scope.expiration_date.split('/')[2] + '-' + $scope.expiration_date.split('/')[0] + '-' + $scope.expiration_date.split('/')[1] + 'T00:00:00+00:00',
-          "department": $scope.department,
-          "service_level": $scope.service_level,
-          "competing_schools": competing_schools_obj,
+        
 
-        }
-
-        console.log("edit_array " + JSON.stringify(edit_array));
+        console.log("$scope.is_demo = "+$scope.is_demo);
 
         $http({
           url: '/api/upgrid/accountmanager/client/',
@@ -1369,6 +1368,7 @@ admin.controller('AdminMainController',
             "department": $scope.department,
             "service_level": $scope.service_level,
             "competing_schools": competing_schools_obj,
+            "isDemo": $scope.is_demo
 
           },
           headers: {
@@ -1649,10 +1649,71 @@ admin.controller('AdminMainController',
             }
 
 
+
+
+
+
+          } //end of else
+
+          //on demand for a single report
+
+          for(var i=0; i<$scope.selected_customprogram.length; i++){
+            if($scope.selected_customprogram[i].whoops_final_release_alias==='False' && $scope.selected_customprogram[i].whoops_final_release === 'True'){
+              
+              console.log('num = '+ i + 'whoops customer_program_id='+ $scope.selected_customprogram[i].customer_program_id )
+
+
+              $http({
+                  url: '/api/upgrid/update/whoops/ondemand/',
+                  method: 'PUT',
+                  data: {
+                    "customer_program_id": $scope.selected_customprogram[i].customer_program_id,
+                    "client_id": $scope.pwhide
+                  },
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  }
+                }).then(function (response) {
+                   console.log(i + ' ' + 'Whoops released')
+
+                }).
+                 catch(function(error){
+                    console.log('an error occurred...'+JSON.stringify(error));
+
+                 });
+
+            }
+
+
+            if($scope.selected_customprogram[i].enhancement_final_release_alias==='False' && $scope.selected_customprogram[i].enhancement_final_release === 'True'){
+                
+              console.log('num = '+ i + 'enhancement customer_program_id='+ $scope.selected_customprogram[i].customer_program_id )
+  
+
+              $http({
+                  url: '/api/upgrid/update/enhancement/ondemand/',
+                  method: 'PUT',
+                  data: {
+                    "customer_program_id": $scope.selected_customprogram[i].customer_program_id,
+                    "client_id": $scope.pwhide
+                  },
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  }
+                }).then(function (response) {
+                  console.log(i + ' ' + 'Enhancement released')
+
+                }).
+                 catch(function(error){
+                    console.log('an error occurred...'+JSON.stringify(error));
+
+                 });
+
+            }
+
           }
 
-
-
+          //console.log("submit program list = "+JSON.stringify($scope.selected_customprogram));
         }).
         catch(function(error) {
           console.log('an error occurred...' + JSON.stringify(error));
@@ -1661,6 +1722,7 @@ admin.controller('AdminMainController',
 
       } else {
 
+        /////////////////////////////////////////////////////////////////////
 
         var Base64 = {
           _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
@@ -1754,6 +1816,7 @@ admin.controller('AdminMainController',
         }
 
 
+        console.log("is_demo="+$scope.is_demo);
         //*************************************************create user
         //"selected_customerprogram": $scope.selected_customprogram
         $http({
@@ -1774,6 +1837,7 @@ admin.controller('AdminMainController',
             "department": $scope.department,
             "service_level": $scope.service_level,
             "competing_schools": competing_schools_obj,
+            "isDemo": $scope.is_demo
 
 
           },
@@ -2502,7 +2566,7 @@ admin.controller('QuoteController', ['$scope', '$localStorage', '$window',
       //console.log('STORAGE in success.js= '+JSON.stringify($scope.$storage));
 
       //get the number of program checked and display the count on the cart icon
-      //use the cartCounter service
+      
       //$chart2Bars.update();
       initChartsChartJSv2();
 
@@ -2768,6 +2832,10 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
     }
     $scope.ondemand = false;
     $scope.update_client = [];
+
+
+    $scope.testObject = {'name': 'Siyang', 'age':'26', 'bool': true};
+
     $http({
           url: '/api/upgrid/update/dashboard/',
           method: 'GET',
@@ -2776,21 +2844,112 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
           }
     }).then(function (response) {
 
+      App.blocks('#loadingtable', 'state_loading');
       $scope.full_clients = response.data;
+      console.log("loading")
       console.log("raw client = "+JSON.stringify(response.data))
       for(var i=0; i<response.data.length; i++){
         if(response.data[i].has_update.whoops_update !== 0 || response.data[i].has_update.enhancement_update !== 0)
         $scope.update_client.push(response.data[i]);
       }
+
+      App.blocks('#loadingclient', 'state_normal');
        console.log("update client = "+ JSON.stringify(response.data));
-        
+        App.blocks('#loadingtable', 'state_normal');
     }).
      catch(function(error){
         console.log('an error occurred...'+JSON.stringify(error));
+        App.blocks('#loadingtable', 'state_normal');
 
      });
 
      $scope.baba=[1,2,3];
+
+
+     $scope.ondemand_one = function (id, type, client_id) {
+
+        console.log("id= "+id);
+        console.log("type= "+type);
+        console.log("client_id= "+client_id)
+        $scope.ondemand_single = true;
+        if(type==="whoops"){
+
+             $http({
+                  url: '/api/upgrid/update/whoops/ondemand/',
+                  method: 'PUT',
+                  data: {
+                    "customer_program_id": id,
+                    "client_id": client_id
+                  },
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  }
+                }).then(function (response) {
+                   console.log('Whoops released')
+                   $scope.ondemand_single = false;
+                    $.notify({
+
+                        // options
+                        icon: "fa fa-check",
+                        message: 'On-demand for a single program completed.'
+                      }, {
+                        // settings
+                        type: 'success',
+                        placement: {
+                          from: "top",
+                          align: "center"
+                        },
+                        z_index: 1999,
+                      });
+
+                }).
+                 catch(function(error){
+                    console.log('an error occurred...'+JSON.stringify(error));
+                    $scope.ondemand_single = false;
+                 });
+
+        }
+
+        if(type==="enhancement"){
+
+             $http({
+                  url: '/api/upgrid/update/enhancement/ondemand/',
+                  method: 'PUT',
+                  data: {
+                    "customer_program_id": id,
+                    "client_id": client_id
+                  },
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  }
+                }).then(function (response) {
+                  console.log('Enhancement released')
+                  $scope.ondemand_single = false;
+                   $.notify({
+
+                        // options
+                        icon: "fa fa-check",
+                        message: 'On-demand for a single program completed.'
+                      }, {
+                        // settings
+                        type: 'success',
+                        placement: {
+                          from: "top",
+                          align: "center"
+                        },
+                        z_index: 1999,
+                      });
+
+                }).
+                 catch(function(error){
+                    console.log('an error occurred...'+JSON.stringify(error));
+                    $scope.ondemand_single = false;
+                 });
+        }
+
+     }
+
+
 
      $scope.need_for_confirm = function(id, type, program, client_id){
 
@@ -2847,16 +3006,7 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
              var w_array_9 = [];
              var w_array_10 = [];
              
-             // w_array_1.push($scope.w_raw.dead_link);
-             // w_array_2.push($scope.w_raw.typo);
-             // w_array_3.push($scope.w_raw.outdated_information);
-             // w_array_4.push($scope.w_raw.data_discrepancy);
-             // w_array_5.push($scope.w_raw.sidebars);
-             // w_array_6.push($scope.w_raw.infinite_loop);
-             // w_array_7.push($scope.w_raw.floating_page);
-             // w_array_8.push($scope.w_raw.confusing);
-             // w_array_9.push($scope.w_raw.other_expert_note);
-             // w_array_10.push($scope.w_raw.details);
+      
 
              for(var i=0; i<$scope.w_raw.dead_link.length; i++){
               w_array_1.push($scope.w_raw.dead_link[i]);
@@ -2985,7 +3135,7 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
              })
 
              $scope.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10, e_array_11];
-              
+             $scope.Object = Object;
 
              $scope.e_show_update = updateService.updateEnhancement(response.data, 'admin');
              console.log('$scope.e_show_update = '+JSON.stringify($scope.e_show_update));
@@ -2993,6 +3143,7 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
              App.blocks('#enhancement_loading', 'state_normal');
              console.log("$scope.e_array_final= "+JSON.stringify($scope.e_array_final));
              console.log("e_update="+JSON.stringify($scope.e_update));
+             console.log("diff = "+JSON.stringify(response.data.initial_diff));
           }).
            catch(function(error){
               console.log('an error occurred...'+JSON.stringify(error));
@@ -3260,233 +3411,6 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
 
 
 
-      //App.blocks('#loadingclient', 'state_loading');
-
-
-      // $http({
-      //     url: '/api/upgrid/update/whoops/ondemand/',
-      //     method: 'PUT',
-      //     data: {
-      //       "customer_program_id": "5fded1bf-c005-4978-b2a3-21fe7dad6f68",
-      //       "client_id": "1640b8ff-2e18-45c7-a8b1-ac7e4c3163c9"
-      //     },
-      //     headers: {
-      //       'Authorization': 'JWT ' + token
-      //     }
-      //   }).then(function (response) {
-
-
-      //     return $http({
-      //     url: '/api/upgrid/update/enhancement/ondemand/',
-      //     method: 'PUT',
-      //     data: {
-      //       "customer_program_id": "5fded1bf-c005-4978-b2a3-21fe7dad6f68",
-      //       "client_id": "1640b8ff-2e18-45c7-a8b1-ac7e4c3163c9"
-      //     },
-      //     headers: {
-      //       'Authorization': 'JWT ' + token
-      //     }
-      //   })
-
-      //   }).then(function (response) {
-
-      //     console.log("success ondemand");
-      //   }).
-      //    catch(function(error){
-      //       console.log('an error occurred...'+JSON.stringify(error));
-
-      //    });
-
-
-      // var customer_ids = [];
-      
-
-      // for(var i=0; i<$scope.full_clients.length; i++){
-
-      //   customer_ids.push($scope.full_clients[i].id);
-
-
-      // }
-
-
-
-
-      // // angular.forEach(customer_ids, function(value, index) {
-
-      // //   $http({
-      // //     url: '/api/upgrid/accountmanager/client/' + value,
-      // //     method: 'GET',
-      // //     headers: {
-      // //       'Authorization': 'JWT ' + token
-      // //     }
- 
-      // //   }).then(function(response) {
-      // //       var program_ids = [];     
-      // //       //console.log("response.is ... "+JSON.stringify(response.data.customer_program))
-      // //       for(var i=0; i<response.data.customer_program.length; i++){
-      // //         program_ids.push(response.data.customer_program[i].object_id);
-      // //       }
-
-      // //         if(program_ids.length!==0){
-      // //             angular.forEach(program_ids, function(value1, index1) {
-      // //               $http({
-      // //                 url: '/api/upgrid/update/whoops/ondemand/',
-      // //                 method: 'PUT',
-      // //                 data: {
-      // //                   "customer_program_id": value1,
-      // //                   "client_id": value
-      // //                 },
-      // //                 headers: {
-      // //                   'Authorization': 'JWT ' + token
-      // //                 }
-      // //               }).then(function (response) {
-
-
-      // //                 return $http({
-      // //                 url: '/api/upgrid/update/enhancement/ondemand/',
-      // //                 method: 'PUT',
-      // //                 data: {
-      // //                   "customer_program_id": value1,
-      // //                   "client_id": value
-      // //                 },
-      // //                 headers: {
-      // //                   'Authorization': 'JWT ' + token
-      // //                 }
-      // //               })
-
-      // //               }).then(function (response) {
-
-      // //                 console.log("success ondemand");
-      // //               }).
-      // //                catch(function(error){
-      // //                   console.log('an error occurred...'+JSON.stringify(error));
-
-      // //                });
-
-
-      // //             })
-
-      // //         }
-                 
-
-
-      // //   }).catch(function(error){
-      // //     console.log('an error occurred...'+JSON.stringify(error));
-
-      // //   });
-
-      // // });
-
-
-
-      // $http({
-      //     url: '/api/upgrid/accountmanager/client/' + customer_ids[0],
-      //     method: 'GET',
-      //     headers: {
-      //       'Authorization': 'JWT ' + token
-      //     }
- 
-      //   }).then(function(response) {
-      //       var program_ids = [];     
-      //       //console.log("response.is ... "+JSON.stringify(response.data.customer_program))
-      //       for(var i=0; i<response.data.customer_program.length; i++){
-      //         program_ids.push(response.data.customer_program[i].object_id);
-      //       }
-
-      //         if(program_ids.length!==0){
-      //             angular.forEach(program_ids, function(value1, index1) {
-      //               $http({
-      //                 url: '/api/upgrid/update/whoops/ondemand/',
-      //                 method: 'PUT',
-      //                 data: {
-      //                   "customer_program_id": value1,
-      //                   "client_id": customer_ids[0]
-      //                 },
-      //                 headers: {
-      //                   'Authorization': 'JWT ' + token
-      //                 }
-      //               }).then(function (response) {
-
-
-      //                 return $http({
-      //                 url: '/api/upgrid/update/enhancement/ondemand/',
-      //                 method: 'PUT',
-      //                 data: {
-      //                   "customer_program_id": value1,
-      //                   "client_id": customer_ids[0]
-      //                 },
-      //                 headers: {
-      //                   'Authorization': 'JWT ' + token
-      //                 }
-      //               })
-
-      //               }).then(function (response) {
-
-      //                 console.log("success ondemand");
-      //               }).
-      //                catch(function(error){
-      //                   console.log('an error occurred...'+JSON.stringify(error));
-
-      //                });
-
-
-      //             })
-
-      //         }
-                 
-
-
-      //   }).catch(function(error){
-      //     console.log('an error occurred...'+JSON.stringify(error));
-
-      //   });
-
-
-    
-
-
-      // $q.all(program_ids).then(function(result) {
-
-      //   console.log("program ids = "+JSON.stringify(program_ids));
-      //     angular.forEach(program_ids, function(value, index) {
-      //   $http({
-      //     url: '/api/upgrid/update/whoops/ondemand/',
-      //     method: 'GET',
-      //     data: {
-      //       "object_id": value,
-      //     },
-      //     headers: {
-      //       'Authorization': 'JWT ' + token
-      //     }
-      //   }).then(function (response) {
-
-
-      //     return $http({
-      //     url: '/api/upgrid/update/enhancement/ondemand/',
-      //     method: 'GET',
-      //     data: {
-      //       "object_id": value,
-      //     },
-      //     headers: {
-      //       'Authorization': 'JWT ' + token
-      //     }
-      //   })
-
-      //   }).then(function (response) {
-
-      //     console.log("success ondemand");
-      //   }).
-      //    catch(function(error){
-      //       console.log('an error occurred...'+JSON.stringify(error));
-
-      //    });
-
-
-      //  })
-        
-      // });
-
-
      }
 
      //end of testOnDemand
@@ -3677,3 +3601,12 @@ admin.controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localS
 
   }
 ]);
+
+admin.filter('keylength', function(){
+     return function(input){
+     if(!angular.isObject(input)){
+          return '0';
+      }
+     return Object.keys(input).length;
+  }
+})

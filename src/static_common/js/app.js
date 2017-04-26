@@ -44,112 +44,6 @@ var App = angular.module('myApp', [
 App.config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider.
-  state('reset', {
-    url: '/upgrid/reset/:param1/:param2/',
-    templateUrl: '/static/views/Login/resetpassword.html',
-    controller: 'ResetController',
-
-  }).
-  state('shareAll', {
-    url: '/upgrid/share_selected_report/:param1/:param2/',
-    templateUrl: '/static/views/Home/share_all.html',
-    controller: 'ShareAllController',
-    
-
-  }).
-
-  state('shareWhoops', {
-    url: '/upgrid/share_whoops_report/:param1/:param2/:param3/',
-    templateUrl: '/static/views/Login/whoops_report.html',
-    controller: 'ShareWhoopsController',
-    resolve: {
-
-      auth: function($q, authenticationSvc) {
-
-        var userInfo = authenticationSvc.getUserInfo();
-        console.log("userInfo= "+userInfo)
-        if (userInfo) {
-          console.log("whoops page authenticated");
-          //console.log(userInfo);
-          console.log('-------------');
-          return $q.when(userInfo);
-        } else {
-          console.log('fail to see the page, route change error');
-          return $q.reject({
-            authenticated: false
-          });
-        }
-      },
-
-      List: function(apiService, authenticationSvc) {
-        var userInfo = authenticationSvc.getUserInfo();
-        console.log('*************');
-        return apiService.getProfileList(userInfo.accessToken);
-
-      },
-
-     
-    }
-
-
-  }).
-  state('shareWhoopsReport', {
-    url: '/shared_whoops_report/:param1/:param2/',
-    templateUrl: '/static/views/Share/shared_whoops_report.html',
-    controller: 'ShareWhoopsController',
-   
-  }).
-  state('shareEnhancementReport', {
-    url: '/shared_enhancement_report/:param1/:param2/',
-    templateUrl: '/static/views/Share/shared_enhancement_report.html',
-    controller: 'ShareEnhancementController',
-   
-  }).
-
-  state('shareEnhancement', {
-    url: '/upgrid/share_enhancement_report/:param1/:param2/:param3/',
-    templateUrl: '/static/views/Login/enhancement_report.html',
-    controller: 'ShareEnhancementController',
-    resolve: {
-
-      auth: function($q, authenticationSvc) {
-
-        var userInfo = authenticationSvc.getUserInfo();
-        console.log("userInfo= "+userInfo)
-        if (userInfo) {
-          console.log("whoops page authenticated");
-          //console.log(userInfo);
-          console.log('-------------');
-          return $q.when(userInfo);
-        } else {
-          console.log('fail to see the page, route change error');
-          return $q.reject({
-            authenticated: false
-          });
-        }
-      },
-
-      List: function(apiService, authenticationSvc) {
-        var userInfo = authenticationSvc.getUserInfo();
-        console.log('*************');
-        return apiService.getProfileList(userInfo.accessToken);
-
-      },
-
-     
-    }
-
-
-  }).
-
-  state('adminInterface', {
-   
-    templateUrl: '/static/views/Admin/Dashboard.html',
-    controller: 'AdminController',
-    abstract: true,
-
-
-  }).
 
   state('admin', {
     url: '/admin',
@@ -285,20 +179,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
 
-
-   state('form', {
-    url: '/form',
-    params: {
-      url: null
-    },
-    templateUrl: '/static/views/Admin/Form.html',
-    controller: 'FormController',
-    //parent: 'admin',
-
-
-
-  }).
-
+  //Client pages
    state('intro', {
     url: '/',
     templateUrl: '/static/views/Login/intro.html',
@@ -322,7 +203,16 @@ App.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: '/static/views/Login/forgot.html',
     controller: 'LoginController',
 
-  }).state('success_demo', {
+  })
+
+  .state('reset', {
+    url: '/upgrid/reset/:param1/:param2/',
+    templateUrl: '/static/views/Login/resetpassword.html',
+    controller: 'ResetController',
+
+  }).
+  
+  state('success_demo', {
     templateUrl: '/static/views/Home/success_demo.html',
     controller: 'SuccessController',
     abstract: true,
@@ -354,64 +244,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
 
-  //success as a parent template
-  // state('success', {
-  //   templateUrl: '/static/views/Home/success.html',
-  //   controller: 'SuccessController',
-  //   abstract: true,
-  //   resolve: {
-  //     auth: function($q, authenticationSvc) {
-
-  //       var userInfo = authenticationSvc.getUserInfo();
-  //       if (userInfo) {
-  //         console.log("start logout");
-  //         //console.log(userInfo);
-  //         return $q.when(userInfo);
-  //       } else {
-  //         return $q.reject({
-  //           authenticated: false
-  //         });
-  //       }
-  //     }
-
-
-  //   }
-
-  // }).
-  state('profile', {
-
-    url: '/profile',
-    templateUrl: '/static/views/Home/profile.html',
-    controller: 'ProfileController',
-    parent: 'success_demo',
-    resolve: {
-      auth: function($q, authenticationSvc) {
-
-        var userInfo = authenticationSvc.getUserInfo();
-        if (userInfo) {
-          console.log("authenticated");
-          //console.log(userInfo);
-          return $q.when(userInfo);
-        } else {
-          console.log('fail to see the page, route change error');
-          return $q.reject({
-            authenticated: false
-          });
-        }
-      },
-
-
-      //get raw data
-      List: function(apiService, authenticationSvc) {
-        var userInfo = authenticationSvc.getUserInfo();
-        console.log('*************');
-        return apiService.getProfileList(userInfo.accessToken);
-
-      }
-
-    }
-
-  }).state('dashboard', {
+  state('dashboard', {
 
     url: '/dashboard',
     templateUrl: '/static/views/Home/dashboard.html',
@@ -453,30 +286,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
       },
 
-      ReleasedWhoops: function(apiService, authenticationSvc){
-        var token = authenticationSvc.getUserInfo().accessToken;
-        return apiService.getNewWhoops(token);
-
-      },
-
-      ReleasedEnhancement: function(apiService, authenticationSvc){
-        var token = authenticationSvc.getUserInfo().accessToken;
-        return apiService.getNewEnhancement(token);
-
-      }
-      // //get raw data
-      // List: function(apiService, authenticationSvc) {
-      //   var userInfo = authenticationSvc.getUserInfo();
-      //   console.log('*************');
-      //   return apiService.getList(userInfo.username, userInfo.accessToken);
-
-      // },
-
-      // Acc: function(reportService, authenticationSvc) {
-      //   var userInfo = authenticationSvc.getUserInfo();
-
-      //   return reportService.accessControl(userInfo.username, userInfo.accessToken);
-      // }
+    
     }
 
 
@@ -508,14 +318,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
-      // //get raw data
-      // List: function(apiService, authenticationSvc) {
-      //   var userInfo = authenticationSvc.getUserInfo();
-      //   console.log('*************');
-      //   return apiService.getList(userInfo.username, userInfo.accessToken);
-
-      // },
-
     
     }
 
@@ -543,12 +345,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
-      // List: function(apiService, authenticationSvc) {
-      //   var userInfo = authenticationSvc.getUserInfo();
-      //   console.log('*************');
-      //   return apiService.getList(userInfo.username, userInfo.accessToken);
-
-      // }
 
       //get raw data
       List: function(apiService, authenticationSvc) {
@@ -597,13 +393,75 @@ App.config(function($stateProvider, $urlRouterProvider) {
       }
     }
 
-  }).state('help', {
+  }).
+  state('profile', {
+
+    url: '/profile',
+    templateUrl: '/static/views/Home/profile.html',
+    controller: 'ProfileController',
+    parent: 'success_demo',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo) {
+          console.log("authenticated");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+        } else {
+          console.log('fail to see the page, route change error');
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+
+      //get raw data
+      List: function(apiService, authenticationSvc) {
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log('*************');
+        return apiService.getProfileList(userInfo.accessToken);
+
+      }
+
+    }
+
+  }).
+
+  state('help', {
     url: '/support',
     templateUrl: '/static/views/Home/help.html',
     controller: 'SuccessController',
     parent: 'success_demo'
 
-  }).state('500', {
+  }).
+
+  //share the report(s)
+  state('shareWhoopsReport', {
+    url: '/shared_whoops_report/:param1/:param2/',
+    templateUrl: '/static/views/Share/shared_whoops_report.html',
+    controller: 'ShareWhoopsController',
+   
+  }).
+  state('shareEnhancementReport', {
+    url: '/shared_enhancement_report/:param1/:param2/',
+    templateUrl: '/static/views/Share/shared_enhancement_report.html',
+    controller: 'ShareEnhancementController',
+   
+  }).
+
+  state('shareAll', {
+    url: '/upgrid/share_selected_report/:param1/:param2/',
+    templateUrl: '/static/views/Home/share_all.html',
+    controller: 'ShareAllController',
+    
+
+  }).
+
+
+  //error pages
+  state('500', {
     url: '/500',
     templateUrl: '/static/views/Errors/500.html',
     controller: 'ErrorController',
@@ -631,13 +489,6 @@ App.config(function($httpProvider) {
 
 });
 
-App.config(['$uibTooltipProvider',
-  function($uibTooltipProvider) {
-    $uibTooltipProvider.options({
-      appendToBody: true
-    });
-  }
-]);
 
 //enable right click
 App.config( [
@@ -1106,14 +957,6 @@ App.directive('stPaginationScroll', ['$timeout', function (timeout) {
 //   };
 // });
 
-// Tooltips and Popovers configuration
-App.config(['$uibTooltipProvider',
-    function ($uibTooltipProvider) {
-        $uibTooltipProvider.options({
-            appendToBody: true
-        });
-    }
-]);
 
 App.directive('scrollOnClick', function() {
   return {
@@ -1291,14 +1134,6 @@ App.directive('selectOnClick', ['$window', function ($window) {
 //         };
 //     });
 
-// Tooltips and Popovers configuration
-App.config(['$uibTooltipProvider',
-    function ($uibTooltipProvider) {
-        $uibTooltipProvider.options({
-            appendToBody: true
-        });
-    }
-]);
 
 // Custom UI helper functions
 App.factory('uiHelpers', function () {
