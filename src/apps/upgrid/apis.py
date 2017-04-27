@@ -1899,6 +1899,7 @@ class EnhancementReportsUpdateAPI(APIView):
             diff = {}
             new_diff = {}
             old_diff = {}
+            
             diff["new"] = new_diff
             diff["old"] = old_diff
             # base case
@@ -1913,6 +1914,7 @@ class EnhancementReportsUpdateAPI(APIView):
                 print('...................')
                 print(b.keys())
                 print('...................')
+
                 for k, v in a.items():  # top level
                     if k in b.keys():
                         v_of_b = b[k]
@@ -1929,6 +1931,8 @@ class EnhancementReportsUpdateAPI(APIView):
                     elif isinstance(v, dict):  # if top is dict
                         new_diff[k] = {}
                         old_diff[k] = {}
+                        print(';====')
+                        print(v_of_b)
                         for k2, v2 in v.items():
                             if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
                                 if v2 == '' and v_of_b[k2] is None:
@@ -2123,10 +2127,14 @@ class ManagerEnhancementDiffConfirmation(APIView):
         update_diff = EnhancementReportsUpdateAPI.\
             compare_enhancement_report(JSONParser().parse(BytesIO(zlib.decompress(eru.existing_report))),
                                        request.data['cache_report'])
+        
         eru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
         eru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
         eru.last_edit_time = timezone.now()
         eru.save()
+        print(eru.update_diff)
+        print(eru.object_id)
+        print('....update')
 
         return Response({"success": _("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
 
@@ -2157,6 +2165,7 @@ class ClientViewEnhancementUpdate(APIView):
         try:
             update_report = EnhancementUpdate.objects.get(customer_program=customer_program, customer=user,
                                                           most_recent=True)
+            print(update_report.update_diff)
         except EnhancementUpdate.DoesNotExist:
             return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
@@ -2183,13 +2192,21 @@ class ClientViewEnhancementUpdate(APIView):
             else:
                 update_diff = "None"
 
+            print(update_diff)
+            print('diff1')
+
         else:
             if update_report.existing_report and not zlib.decompress(update_report.existing_report) == b'':
                 existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
+                print('0.2')
+                print(update_report.object_id)
+                print(update_report.update_diff)
             else:
                 existing_report = "None"
+                print('0.1')
             if update_report.update_diff and client_id and not zlib.decompress(update_report.update_diff)==b'':  # if manager view report before client and has updates
                 update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
+                print('0.3')
             elif update_report.prev_diff:
                 if not zlib.decompress(update_report.prev_diff) == b'':
                     update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.prev_diff)))
@@ -2202,6 +2219,8 @@ class ClientViewEnhancementUpdate(APIView):
                 print(3)
                 update_diff = "None"
 
+            print(update_diff)
+            print('diff2')
         # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
         context = {'existing_report': existing_report, 'update_diff': update_diff,
                    'enhancement_final_release_time': customer_program.enhancement_final_release_time,
