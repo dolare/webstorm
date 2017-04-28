@@ -1291,9 +1291,11 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
     def get_queryset(self, *args, **kwargs):
         ceeb = self.request.GET.get("ceeb")
         department = self.request.GET.get("dep")
-
+        print(department)
         total_ceeb = ceeb.split('/')
         if self.is_manager(self.request):
+            print(len(total_ceeb))
+            print('.....')
             query_list = Program.objects.all()
             if total_ceeb:
                 query_list = query_list.filter(
@@ -1899,10 +1901,10 @@ class EnhancementReportsUpdateAPI(APIView):
             diff = {}
             new_diff = {}
             old_diff = {}
-            
+
             diff["new"] = new_diff
             diff["old"] = old_diff
-            # base case
+            # base caseCustomerAndCompetingProgramAPI
             # if not a or not b:
             #     return None
             if isinstance(a, dict) and isinstance(b, dict):
