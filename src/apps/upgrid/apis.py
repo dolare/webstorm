@@ -1147,7 +1147,13 @@ class UniversityCustomerProgramCRUD(APIView):
             total_program = request.data['customer_program_id'].split('/')
             for i in total_program:
                 CustomerCompetingProgram.objects.filter(customer_program=i).delete()
+                EnhancementUpdate.objects.filter(customer_program=i).delete()
+                WhoopsUpdate.objects.filter(customer_program=i).delete()
+                WhoopsReportsRepo.objects.filter(wr_customer_program=i).delete()
+                EnhancementReportsRepo.objects.filter(er_customer_program=i).delete()
+                ClientAndProgramRelation.objects.filter(client_program=i).delete()
                 UniversityCustomerProgram.objects.get(object_id=i).delete()
+
             return Response({"success": _("User programs has been deleted.")}, status=HTTP_204_NO_CONTENT)
 
 
