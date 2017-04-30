@@ -122,7 +122,7 @@ class ResetPassword(generics.GenericAPIView):
                                     "Please click <a>here</a> to reset your password"
                                     "at Upgrid!<br>Please go to the following page and choose a new"
                                     "password: https://%s/#/upgrid/reset/%s/.<br>")
-                    message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.username,
+                    message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.contact_name,
                                            request.META['HTTP_HOST'], token), to=[request.data['email']])
                     message.content_subtype = 'html'
                     message.send()
@@ -249,7 +249,7 @@ class CustomerCompetingProgramAPI(APIView):
                 return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
     def get(self, request, object_id, client_id=None):
-        customer_program = self.get_valiva(request, object_id, client_id)
+        customer_program = self.get_object(request, object_id, client_id)
         serializer = CustomerCompetingProgramSerializer(customer_program)
         return Response(data=serializer.data)
 
@@ -945,8 +945,8 @@ class ClientCRUD(APIView):
                 position_level=self.request.data['position_level'],
                 phone=self.request.data['phone'],
                 service_until=main_user.service_until,
-                password=decoded_new_password
                 )
+            client.password = decoded_new_password
         # create main client object
         else:
             university_school = UniversitySchool.objects.get(object_id=self.request.data['ceeb'])
@@ -965,13 +965,16 @@ class ClientCRUD(APIView):
                 position_level=self.request.data['position_level'],
                 phone=self.request.data['phone'],
                 service_until=self.request.data['service_until'],
-                password=decoded_new_password
                 )
         
+        print(client.password)
+        client.password = decoded_new_password
         # decoded_new_password = self.decode_password(self.request.data['password'])
         # client.set_password(decoded_new_password)
         client.save()
         print(decoded_new_password)
+        print('password_create')
+        print(client.password)
         # for main user add competing_schools
 
         for cp in self.request.data['competing_schools']:
@@ -1148,7 +1151,7 @@ class UniversityCustomerProgramCRUD(APIView):
                 try:          
                     customer_program_object = UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id'))
                 except UniversityCustomer.DoesNotExist:
-                    return
+                    raise ValidationError('Bad request!')
 
                 # if not customer_program_object.exists():
                 #     raise 
