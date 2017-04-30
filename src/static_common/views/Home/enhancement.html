@@ -304,8 +304,9 @@
                 <colgroup>
                   <col width="5%"/>
                   <col width="9%"/>
-                  <col width="60%"/>
+                  <col width="45%"/>
                   <col width="26%"/>
+                  <col width="15%"/>
                 </colgroup>
 
                 <thead>
@@ -324,19 +325,21 @@
                         <th></th>
                         <th st-sort="programName" class="text-primary font-w400">Program</th>
                         <th st-sort="degreeName" class="text-center text-primary font-w400">Degree</th>
+                        <th st-sort="hasCompeting" class="text-center text-primary font-w400">Status</th>
                         
                     </tr>
                 </thead>
                 <tbody class="js-table-sections-header bg-gray-lighter" ng-repeat-start="row in displayeddata1"  ng-click="openCompeting(row.objectId,$index, row.competing)">
                     <tr>
                         <td>
-                              <label class="css-input css-checkbox css-checkbox-primary" >
-                                <input type="checkbox" ng-model="$storage.confirmation[row.objectId].checked" ng-click="confirmCheckOne()"><span></span>
+                              <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.hasCompeting===false}" >
+                                <input type="checkbox" ng-model="$storage.confirmation[row.objectId].checked" ng-click="confirmCheckOne()" ng-disabled = "row.hasCompeting===false"><span></span>
                               </label>
 
                         </td>
                         <!-- angle -->
                         <td class="text-center">
+                          
                             <i class="fa fa-angle-right text-primary"></i>
                         </td>
 
@@ -344,6 +347,15 @@
                         <td class="font-w500 text-center">
                             <span >{{row.degreeName}}</span>
                             <!-- <button ng-click="$event.stopPropagation();">click</button> -->
+                        </td>
+                        <td class="text-center">
+
+                          <label class="label label-success label-done" ng-show="row.hasCompeting===true"><i class="fa fa-check"></i> &nbsp;Done</label>
+                          </label>
+
+                          <label class="label label-default" ng-show="row.hasCompeting===false"><i class="fa fa-refresh"></i> &nbsp;In Progress</label>
+                          </label>
+                          
                         </td>
                        
                     </tr>

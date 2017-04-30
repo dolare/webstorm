@@ -1378,10 +1378,11 @@ ul.help-ul>li {
     border-radius: 0;
 }
 
-.table .label.label-default, .table .label.label-info {
+.table .label.label-default, .table .label.label-info, .table .label.label-success {
   border-radius: 28px;
   font-weight:400;
 }
+
 
 .search-icon {
   color: #999;

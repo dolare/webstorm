@@ -12,7 +12,7 @@ admin.controller('AdminMainController',
     $scope.client_data = Client;
     //sorting in alphabetical order
     $scope.client_data.sort(function(a, b) {
-      return (a.contact_name.toLowerCase() > b.contact_name.toLowerCase()) ? 1 : ((b.contact_name.toLowerCase() > a.contact_name.toLowerCase()) ? -1 : 0);
+      return ((a.contact_name||"").toLowerCase() > (b.contact_name||"").toLowerCase()) ? 1 : (((b.contact_name||"").toLowerCase() > (a.contact_name||"").toLowerCase()) ? -1 : 0);
     });
 
     console.log("client_data=" + JSON.stringify($scope.client_data));
@@ -366,7 +366,7 @@ admin.controller('AdminMainController',
       $scope.showtable = true;
       $scope.dep_pro_table = null;
       $scope.dep_pro_table_displayed = null;
-      
+      $scope.account_type = "main";
       //angular.element(document.getElementsByClassName("nav nav-tabs nav-justified").getElementsByTagName("li")).addClass('active');
 
 
@@ -1119,8 +1119,10 @@ admin.controller('AdminMainController',
         competing_string = competing_string + competing_list.options[i].value + '/';
       }
       console.log("competing_string=" + JSON.stringify(competing_string));
-
+      $scope.competing_program_array = [];
       if (competing_string !== "") {
+        console.log("competing_string now = "+ JSON.stringify(competing_string.slice(0, -1)));
+
         $http({
           url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + competing_string.slice(0, -1),
           method: 'GET',
@@ -1129,17 +1131,20 @@ admin.controller('AdminMainController',
           }
         }).then(function(response) {
 
-          $scope.competing_program_array = [];
+          console.log("result now ="+JSON.stringify(response.data))
+          
 
-          console.log("comepting_programs" + JSON.stringify(response.data));
-          $scope.comepting_programs = response.data;
+          //console.log("competing_programs" + JSON.stringify(response.data));
+          $scope.competing_programs = response.data;
 
-          for (i = 0; i < $scope.comepting_programs.length; i++) {
+          for (i = 0; i < $scope.competing_programs.length; i++) {
             $scope.competing_program_array.push({
-              "object_id": $scope.comepting_programs[i].object_id,
-              "display": $scope.comepting_programs[i].Ceeb + " - " + $scope.comepting_programs[i].program_university + " - " + $scope.comepting_programs[i].program_school + " - " + $scope.comepting_programs[i].program_name + " - " + $scope.comepting_programs[i].program_degree
+              "object_id": $scope.competing_programs[i].object_id,
+              "display": $scope.competing_programs[i].Ceeb + " - " + $scope.competing_programs[i].program_university + " - " + $scope.competing_programs[i].program_school + " - " + $scope.competing_programs[i].program_name + " - " + $scope.competing_programs[i].program_degree
             })
           }
+
+          console.log("competing_program_array now="+JSON.stringify($scope.competing_program_array))
 
         }).
         catch(function(error) {
@@ -1147,6 +1152,9 @@ admin.controller('AdminMainController',
 
         });
 
+      } else {
+
+        $scope.competing_program_array = [];
       }
 
     }
@@ -1498,7 +1506,7 @@ admin.controller('AdminMainController',
 
           } else {
 
-            //has delete comepting
+            //has delete competing
             if ($scope.delete_customer_program_string === "" && $scope.delete_competing_program_array.length !== 0) {
 
 

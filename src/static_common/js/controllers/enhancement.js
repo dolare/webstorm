@@ -196,7 +196,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
           $scope.displayeddata1 = tableDataService.getEnhancementConfirm(result.data);
           console.log("confirm data ="+JSON.stringify($scope.displayeddata1));
           tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
-          
+         
           //$scope.isLoadingConfirm = false;
           App.blocks('#confirmloading', 'state_normal');
 

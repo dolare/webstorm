@@ -118,8 +118,8 @@ class ResetPassword(generics.GenericAPIView):
             if token:
                 try:
                     # username = user_reset.username
-                    html_content = ("Hello, %s! <br>You're receiving this email"
-                                    "because you requested a password reset for your user account"
+                    html_content = ("Hello, %s! <br>We have just received a password reset request for this email account."
+                                    "Please click <a>here</a> to reset your password"
                                     "at Upgrid!<br>Please go to the following page and choose a new"
                                     "password: https://%s/#/upgrid/reset/%s/.<br>")
                     message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.username,
@@ -127,8 +127,14 @@ class ResetPassword(generics.GenericAPIView):
                     message.content_subtype = 'html'
                     message.send()
                 except BadHeaderError:
-                    return HttpResponse(text, status=HTTP_200_OK)
+                    raise ValidationError('Please provide the refer code!')
+                print('sent email success')
+
+                if request.is_create == True:
+                    return
+
                 return HttpResponse(text, status=HTTP_200_OK)
+
         return HttpResponse(text, status=HTTP_200_OK)
 
     def validate(self, data):
@@ -137,9 +143,13 @@ class ResetPassword(generics.GenericAPIView):
 
     def put(self, request):
         user = request.user
-        encoded_password = request.data['password']
-        password = self.validate(encoded_password)
-        user.set_password(password)
+        password = request.data['password']
+        print(password)
+        #print(self.validate(password).decode("utf-8"))
+        #user.set_password(self.validate(password).decode("utf-8"))
+        #password = zlib.decompress(self.validate(password))
+        user.password = self.validate(password)
+        user.save()
         #user.save()
         return Response({"success": _("New password has been saved.")}, status=HTTP_202_ACCEPTED)
 
@@ -239,7 +249,7 @@ class CustomerCompetingProgramAPI(APIView):
                 return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
     def get(self, request, object_id, client_id=None):
-        customer_program = self.get_object(request, object_id, client_id)
+        customer_program = self.get_valiva(request, object_id, client_id)
         serializer = CustomerCompetingProgramSerializer(customer_program)
         return Response(data=serializer.data)
 
@@ -596,8 +606,11 @@ class CreateOrChangeSubUser(APIView):
             service_until=sub_service_until,
             password=decoded_new_password)
 
+        
         #user.set_password(decoded_new_password)
         user.save()
+
+
 
         # create corresponding customer programs of subuser
         programs_id = self.request.data['customer_programs']
@@ -954,15 +967,20 @@ class ClientCRUD(APIView):
                 service_until=self.request.data['service_until'],
                 password=decoded_new_password
                 )
-
+        
         # decoded_new_password = self.decode_password(self.request.data['password'])
         # client.set_password(decoded_new_password)
         client.save()
+        print(decoded_new_password)
         # for main user add competing_schools
 
         for cp in self.request.data['competing_schools']:
             school = UniversitySchool.objects.get(object_id=cp.get('object_id'))
             client.competing_schools.add(school)
+
+        request.is_create = True
+        ResetPassword().post(request)
+
         return Response({'client_id': client.id}, status=HTTP_201_CREATED)
 
     def put(self, request):
@@ -1126,7 +1144,16 @@ class UniversityCustomerProgramCRUD(APIView):
                     enhancement_final_release=p.get('enhancement_final_release'),
                     customer_confirmation=p.get('customer_confirmation'),
                 )
-                customer_program_object = UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id'))
+
+                try:          
+                    customer_program_object = UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id'))
+                except UniversityCustomer.DoesNotExist:
+                    return
+
+                # if not customer_program_object.exists():
+                #     raise 
+                print(customer_program_object)
+                print('customer_program_object and its final rel')
                 print(customer_program_object.enhancement_final_release)
                 if customer_program_object.whoops_final_release_time is None and customer_program_object.whoops_final_release == 'True':
                     customer_program_object.whoops_final_release_time = timezone.now()
@@ -1486,7 +1513,7 @@ class WhoopsReportsUpdateAPI(APIView):
                 query_fields = ('additional_note_type', 'additional_note_url',
                                 'additional_note_url2', 'additional_note_url3', 'additional_note')
                 # database data=>json string stored in json_data dict
-                print("#####eam type####", type(ean))
+                print("#####team type####", type(ean))
                 for k, v in json_data.items():
                     query_set = ean.filter(additional_note_type=k)
                     json_data[k] = serialize("json", query_set, fields=query_fields)
@@ -1961,6 +1988,8 @@ class EnhancementReportsUpdateAPI(APIView):
                                 continue
                             new_diff[k] = v_of_b
                             old_diff[k] = v
+                print(diff)
+                print('diff.....')
                 return diff
 
         res_dict = compare(a, b)

@@ -800,7 +800,9 @@
                                                        
                                                         <div class="col-md-12">
                                                             
-                                                            <select  ng-if="pwhide" data-js-select2 ng-model="row1.program_id" class="form-control" id="example-select2" name="example-select2" style="width: 100%;" data-placeholder="Choose one.." ng-options="p.object_id as p.display for p in competing_program_array" ng-change="put_competing(row1.object_id, row.customer_program_id, row1.program_id, row1.order, row1.enhancement_status)">
+                                                            <select  ng-if="pwhide" data-js-select2 ng-model="row1.program_id" class="form-control" id="example-select2" name="example-select2" style="width: 100%;" data-placeholder="Choose one.." ng-options="p.object_id as p.display for p in competing_program_array" 
+
+                                                            ng-change="put_competing(row1.object_id, row.customer_program_id, row1.program_id, row1.order, row1.enhancement_status)">
                                                                 <option></option>
                                                                 
                                                             </select>

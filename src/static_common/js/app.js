@@ -687,7 +687,7 @@ App.directive('ngConfirmClick', [
                 link: function (scope, element, attr) {
                     var msg = attr.ngConfirmClick || "Are you sure?";
                     var clickAction = attr.confirmedClick;
-                    console.log("msg="+msg)
+                    
                     element.bind('click',function (event) {
                         // if ( window.confirm(msg) ) {
                         //     scope.$eval(clickAction)
@@ -795,7 +795,6 @@ App.directive('jsTableSectionsFixed', function () {
             var table      = jQuery(element);
             var tableRows  = jQuery('.js-table-sections-header > tr', table);
 
-            console.log("in the directive");
             table.delegate('.js-table-sections-header > tr', 'click', function(e) {
                 if (e.target.type !== 'checkbox'
                         && e.target.type !== 'button'
