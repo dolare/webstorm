@@ -120,8 +120,8 @@ class ResetPassword(generics.GenericAPIView):
                     # username = user_reset.username
                     html_content = ("Hello, %s! <br>We have just received a password reset request for this email account."
                                     "Please click <a href='https://%s/#/upgrid/reset/%s/'> here</a> to reset your Upgrid password"
-                                    "!<br>Please go to the following page and choose a new"
-                                    "password: https://%s/#/upgrid/reset/%s/<br>")
+                                    "!<br>If the above link does not work for you, please copy and paste the following into your browser address "
+                                    "bar: https://%s/#/upgrid/reset/%s/<br>")
                     message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.contact_name,
                                            request.META['HTTP_HOST'], token,request.META['HTTP_HOST'],token), to=[request.data['email']])
                     message.content_subtype = 'html'
@@ -1336,7 +1336,8 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
         arr = self.request.get_full_path()
         arr = arr.split('&')
         print(arr)
-        department = department.replace('!','&')
+        if department != None:
+            department = department.replace('!','&')
         # print('arr')
         # if len(arr) >=3:
         #     temp = department + '&'

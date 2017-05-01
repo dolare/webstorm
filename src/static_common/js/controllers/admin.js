@@ -741,10 +741,10 @@ admin.controller('AdminMainController',
         //$scope.dep_pro_table is the loaded dep lost. i.e. [{"department":"Applied Physics and Applied Mathematics","isTrue":false},{"department":"Computer Science","isTrue":false},{"department":"Other","isTrue":false}]
         angular.forEach($scope.dep_pro_table, function(value, index) {
           var dep = value.department;
-          dep = dep.replace('&','!')
+          var depTemp = dep.replace('&','!')
           console.log("value=" + value.department)
           $http({
-            url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + ((dep === 'All') ? '' : ('&dep=' + (dep === 'Other' ? 'Others' : dep))),
+            url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + ((depTemp === 'All') ? '' : ('&dep=' + (depTemp === 'Other' ? 'Others' : depTemp))),
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
@@ -936,9 +936,9 @@ admin.controller('AdminMainController',
         angular.forEach($scope.dep_pro_table, function(value, index) {
           var dep = value.department;
           console.log("value=" + value.department)
-          dep = dep.replace('&','!')
+          depTemp = dep.replace('&','!')
           $http({
-            url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + ((dep === 'All') ? '' : ('&dep=' + (dep === 'Other' ? 'Others' : dep))),
+            url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + ((depTemp === 'All') ? '' : ('&dep=' + (depTemp === 'Other' ? 'Others' : depTemp))),
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
@@ -1113,7 +1113,6 @@ admin.controller('AdminMainController',
       //if competing school has selection
       if (competing_string !== "") {
         console.log("competing_string now = "+ JSON.stringify(competing_string.slice(0, -1)));
-        dep = dep.replace('&','!')
         $http({
           url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + competing_string.slice(0, -1),
           method: 'GET',
