@@ -11,7 +11,7 @@ from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-
+import urllib.request
 # 3rd party lib
 from rest_framework import generics
 from rest_framework.decorators import permission_classes
@@ -89,7 +89,7 @@ class PasswordChangeView(generics.GenericAPIView):
             if user.check_password(decoded_old_password):
                 decoded_new_password = self.check_new_password(request.data['new_password'])
 
-                user.set_password(decoded_new_password)
+                user.password = decoded_new_password
                 user.save()
                 return Response({"success": _("New password has been saved.")}, status=HTTP_202_ACCEPTED)
             return Response({"Failed": _("Please input valid old password.")}, status=HTTP_403_FORBIDDEN)
@@ -119,19 +119,24 @@ class ResetPassword(generics.GenericAPIView):
                 try:
                     # username = user_reset.username
                     html_content = ("Hello, %s! <br>We have just received a password reset request for this email account."
-                                    "Please click <a>here</a> to reset your password"
-                                    "at Upgrid!<br>Please go to the following page and choose a new"
-                                    "password: https://%s/#/upgrid/reset/%s/.<br>")
+                                    "Please click <a href='https://%s/#/upgrid/reset/%s/'> here</a> to reset your Upgrid password"
+                                    "!<br>Please go to the following page and choose a new"
+                                    "password: https://%s/#/upgrid/reset/%s/<br>")
                     message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.contact_name,
-                                           request.META['HTTP_HOST'], token), to=[request.data['email']])
+                                           request.META['HTTP_HOST'], token,request.META['HTTP_HOST'],token), to=[request.data['email']])
                     message.content_subtype = 'html'
                     message.send()
                 except BadHeaderError:
                     raise ValidationError('Please provide the refer code!')
                 print('sent email success')
 
-                if request.is_create == True:
-                    return
+                try:
+                    if request.is_create == True:
+                        return
+                except AttributeError:
+                    print('go on reset')
+
+                
 
                 return HttpResponse(text, status=HTTP_200_OK)
 
@@ -1325,13 +1330,32 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
             return False
 
     def get_queryset(self, *args, **kwargs):
+        print('start')
         ceeb = self.request.GET.get("ceeb")
         department = self.request.GET.get("dep")
+        arr = self.request.get_full_path()
+        arr = arr.split('&')
+        print(arr)
+        department = department.replace('!','&')
+        # print('arr')
+        # if len(arr) >=3:
+        #     temp = department + '&'
+        #     for i, val in enumerate(arr):
+        #         if i >=2:
+        #             temp = temp + val 
+        # if "%20" in temp:
+        #     print('that is true')
+        #     temp = temp.split('%20')
+        #     print(temp)
+
+
         print(department)
+        print(type(department))
+        print('department')
+
+        
         total_ceeb = ceeb.split('/')
         if self.is_manager(self.request):
-            print(len(total_ceeb))
-            print('.....')
             query_list = Program.objects.all()
             if total_ceeb:
                 query_list = query_list.filter(
@@ -1341,7 +1365,6 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
             if department:
                 if department == 'Others':
                     query_list = query_list.filter(Q(department="") | Q(department__isnull=True))
-                    print(query_list)
                 else:
                     query_list = query_list.filter(
                         Q(department=department)

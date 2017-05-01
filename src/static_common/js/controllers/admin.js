@@ -741,6 +741,7 @@ admin.controller('AdminMainController',
         //$scope.dep_pro_table is the loaded dep lost. i.e. [{"department":"Applied Physics and Applied Mathematics","isTrue":false},{"department":"Computer Science","isTrue":false},{"department":"Other","isTrue":false}]
         angular.forEach($scope.dep_pro_table, function(value, index) {
           var dep = value.department;
+          dep = dep.replace('&','!')
           console.log("value=" + value.department)
           $http({
             url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + ((dep === 'All') ? '' : ('&dep=' + (dep === 'Other' ? 'Others' : dep))),
@@ -885,20 +886,7 @@ admin.controller('AdminMainController',
     //get depart on ceeb
     $scope.get_depart = function() {
 
-      // $http({
-      //       url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb,
-      //       method: 'GET',
-      //       headers: {
-      //         'Authorization': 'JWT ' + token
-      //       }
-      //     }).then(function(response) {
-      //       console.log("getall = " + JSON.stringify(response.data))
-            
-      //     }).
-      //     catch(function(error) {
-      //       console.log('an error occurred...' + JSON.stringify(error));
-
-      //     });
+      
 
       $http({
         url: '/api/upgrid/accountmanager/department/' + $scope.ceeb,
@@ -948,6 +936,7 @@ admin.controller('AdminMainController',
         angular.forEach($scope.dep_pro_table, function(value, index) {
           var dep = value.department;
           console.log("value=" + value.department)
+          dep = dep.replace('&','!')
           $http({
             url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + ((dep === 'All') ? '' : ('&dep=' + (dep === 'Other' ? 'Others' : dep))),
             method: 'GET',
@@ -1120,9 +1109,11 @@ admin.controller('AdminMainController',
       }
       console.log("competing_string=" + JSON.stringify(competing_string));
       $scope.competing_program_array = [];
+
+      //if competing school has selection
       if (competing_string !== "") {
         console.log("competing_string now = "+ JSON.stringify(competing_string.slice(0, -1)));
-
+        dep = dep.replace('&','!')
         $http({
           url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + competing_string.slice(0, -1),
           method: 'GET',
@@ -1133,15 +1124,20 @@ admin.controller('AdminMainController',
 
           console.log("result now ="+JSON.stringify(response.data))
           
-
           //console.log("competing_programs" + JSON.stringify(response.data));
           $scope.competing_programs = response.data;
 
           for (i = 0; i < $scope.competing_programs.length; i++) {
+            console.log("$scope.displayeddata1 =" +JSON.stringify($scope.displayeddata1));
+
             $scope.competing_program_array.push({
               "object_id": $scope.competing_programs[i].object_id,
               "display": $scope.competing_programs[i].Ceeb + " - " + $scope.competing_programs[i].program_university + " - " + $scope.competing_programs[i].program_school + " - " + $scope.competing_programs[i].program_name + " - " + $scope.competing_programs[i].program_degree
             })
+
+            console.log("$scope.displayeddata1 after = " +JSON.stringify($scope.displayeddata1));
+
+
           }
 
           console.log("competing_program_array now="+JSON.stringify($scope.competing_program_array))
