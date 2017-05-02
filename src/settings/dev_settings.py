@@ -86,23 +86,15 @@ DATABASES = {
     #     'PASSWORD': '12345678',
     # }
 
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'ceebdev',
-    #     'HOST': 'localhost',
-    #     'PORT': '',
-    #     'USER': 'localuser',
-    #     'PASSWORD': db_pass,
-    #     },
-
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test-ceeb',
-        'HOST': ' test-ceeb.czaefnaupx0d.us-east-1.rds.amazonaws.com',
-        'PORT': '8443',
-        'USER': 'gradgridadmin',
-        'PASSWORD': 'pwWQ5OE3Rr',
+        'NAME': 'upgriddemo',
+        'HOST': 'localhost',
+        'PORT': '',
+        'USER': 'localuser',
+        'PASSWORD': db_pass,
         },
+
 
 }
 # Application definition

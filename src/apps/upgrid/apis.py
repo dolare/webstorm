@@ -609,7 +609,8 @@ class CreateOrChangeSubUser(APIView):
             position_level=request.data['position_level'],
             phone=request.data['phone'],
             service_until=sub_service_until,
-            password=decoded_new_password)
+        )
+        user.password = decoded_new_password
 
         
         #user.set_password(decoded_new_password)

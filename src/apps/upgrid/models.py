@@ -37,8 +37,6 @@ class UpgridBaseUserManager(models.Manager):
     def get_by_natural_key(self, username):
         return self.get(**{self.model.USERNAME_FIELD: username})
         
-# class UpgridBaseUser(AbstractUser):
-
 
 class UpgridBaseUser(models.Model):
     username = models.CharField(max_length=150, null=True, unique=True, blank=False)
@@ -78,8 +76,6 @@ class UpgridBaseUser(models.Model):
         #     self.password = make_password(self.password)
         #     print(self.password)
 
-
-
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
         self._password = raw_password
@@ -89,16 +85,17 @@ class UpgridBaseUser(models.Model):
         Return a boolean of whether the raw_password was correct. Handles
         hashing formats behind the scenes.
         """
+
         def setter(raw_password):
             self.set_password(raw_password)
             # Password hash upgrades shouldn't be considered password changes.
             self._password = None
             self.save(update_fields=["password"])
+
         return check_password(raw_password, self.password, setter)
 
     def __str__(self):
         return '{0} - {1}'.format(self.username, self.email)
-
 
     @property
     def is_authenticated(self):
@@ -178,7 +175,6 @@ class UniversityCustomerProgram(UpgridAbstractDatedObject):
 
     Status = (('in_progress', 'In_Progress'), ('done', 'Done'))
 
-
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT)
     program = models.ForeignKey(Program, on_delete=models.PROTECT)
@@ -195,8 +191,6 @@ class UniversityCustomerProgram(UpgridAbstractDatedObject):
     whoops = models.BooleanField(default=True)
     enhancement = models.BooleanField(default=True)
     none_degree = models.BooleanField(default=True)
-   
-
 
     class Meta(UpgridAbstractDatedObject.Meta):
         unique_together = ('customer', 'program')

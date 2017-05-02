@@ -5,6 +5,7 @@ import base64
 import zlib
 
 # 3rd party lib
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.parsers import JSONParser
 from django.utils.six import BytesIO
 from rest_framework import serializers
@@ -50,7 +51,6 @@ class Login2Serializer(serializers.Serializer):
 
         username = self.get_username(attrs)
         password = base64.b64decode(attrs.get('password'))
-
         if username:
             user = UpgridBaseUser.objects.get(username=username)
             if user.check_password(password):
@@ -311,7 +311,7 @@ class MainUserDetailSerializer(serializers.ModelSerializer):
                   'email', 'competing_schools', 'sub_user_list')
 
     def get_sub_user_list(self, obj):
-        sub_user_list = UniversityCustomer.objects.filter(Ceeb=obj.Ceeb, account_type='sub',)
+        sub_user_list = UniversityCustomer.objects.filter(main_user_id=obj.id, account_type='sub',)
         return SubuserListSerializer(sub_user_list, many=True).data
 
     def get_competing_schools(self,obj):
