@@ -344,7 +344,7 @@
 
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-prefix">Prefix</label>
+                  <label class="col-md-4 control-label" for="val-prefix">Title</label>
                   <div class="col-md-7">
                     <select ng-options="p for p in prefix" ng-model="subuser.form_contract_prefix" class="form-control" name="val-prefix">
                       <option value="">Please select</option>
@@ -361,7 +361,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-title">Title <span class="text-danger">*</span></label>
+                  <label class="col-md-4 control-label" for="val-title">Position <span class="text-danger">*</span></label>
                   <div class="col-md-7">
                     <input ng-model="subuser.title" class="form-control" type="text"  name="val-title" placeholder="Please enter the title..">
                   </div>
@@ -458,7 +458,7 @@
                             
 
                             <tr ng-if="subuserdetail.contract_prefix">
-                              <td class="text-right"><p class="font-w600">Prefix: </p></td>
+                              <td class="text-right"><p class="font-w600">Title: </p></td>
                               <td ><p>{{subuserdetail.contract_prefix}}</p>
                               </td>
 
@@ -478,7 +478,7 @@
                             
 
                             <tr>
-                              <td class="text-right"><p class="font-w600">Title: </p></td>
+                              <td class="text-right"><p class="font-w600">Position: </p></td>
                               <td ><p>{{subuserdetail.contract_title}}</p>
                               </td>
 
