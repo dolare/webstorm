@@ -86,15 +86,6 @@ DATABASES = {
     #     'PASSWORD': '12345678',
     # }
 
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'ceebdev',
-    #     'HOST': 'localhost',
-    #     'PORT': '',
-    #     'USER': 'localuser',
-    #     'PASSWORD': db_pass,
-    #     },
-
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'upgriddemo',
@@ -103,6 +94,7 @@ DATABASES = {
         'USER': 'localuser',
         'PASSWORD': db_pass,
         },
+
 
 }
 # Application definition
