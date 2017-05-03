@@ -467,7 +467,7 @@ class ProgramSerializer(serializers.ModelSerializer):
         fields = ('object_id', 'Ceeb', 'program_display', 'department')
 
     def get_program_display(self, obj):
-        return "{0} -- {1} -- {2}".format(obj.university_school, obj.program_name, obj.degree)
+        return "{0} -- {1} -- {2}".format(obj.university_school, obj.program_name, obj.degree.name)
 
     def get_Ceeb(self, obj):
         return obj.university_school.ceeb

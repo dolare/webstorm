@@ -1336,7 +1336,6 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
         department = self.request.GET.get("dep")
         arr = self.request.get_full_path()
         arr = arr.split('&')
-        print(arr)
         if department != None:
             department = department.replace('!','&')
         # print('arr')
@@ -1350,12 +1349,6 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
         #     temp = temp.split('%20')
         #     print(temp)
 
-
-        print(department)
-        print(type(department))
-        print('department')
-
-        
         total_ceeb = ceeb.split('/')
         if self.is_manager(self.request):
             query_list = Program.objects.all()
