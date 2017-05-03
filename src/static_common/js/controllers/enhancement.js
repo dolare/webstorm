@@ -11,6 +11,15 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
     var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
+    /////////
+    
+
+
+
+    /////////
+
+
+
     // $scope.$route = $route;
 
     $scope.$storage = $localStorage;
@@ -45,6 +54,31 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
               //load modal when not confirmed
               if ($scope.unconfirmedprogram_nums !== 0) {
                   $("#myModalConfirm").modal('show');
+
+                  App.blocks('#confirmloading', 'state_loading');
+
+                  //api
+                  $http({
+                        url: '/api/upgrid/user/unenhancement/programs/',
+                        method: 'GET',
+                        headers: {
+                          'Authorization': 'JWT ' + token
+                        }
+                  }).then(function (response) {
+                    console.log("unconfirmed_enhancement"+ JSON.stringify(response.data));
+                    $scope.displayeddata1 = response.data
+
+                    $scope.rowCollection = [].concat($scope.displayeddata1);
+
+                    App.blocks('#confirmloading', 'state_normal');
+                  }).
+                   catch(function(error){
+                      console.log('an error occurred...'+JSON.stringify(error));
+                      App.blocks('#confirmloading', 'state_normal');
+                   });
+
+
+
               };
               
           }
@@ -187,21 +221,41 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
           var avatar = avatarService.getClientId() ? "&cid="+ avatarService.getClientId(): "";
 
-        ajaxService.getResult(start, number, tableState, token, "&cs=No", avatar).then(function (result) {
-          console.log("AJAX service called !");
+        // ajaxService.getResult(start, number, tableState, token, "&cs=No", avatar).then(function (result) {
+        //   console.log("AJAX service called !");
 
           
-          console.log("ajaxService.getResult confirm = "+JSON.stringify(result.data));
+        //   console.log("ajaxService.getResult confirm = "+JSON.stringify(result.data));
           
-          $scope.displayeddata1 = tableDataService.getEnhancementConfirm(result.data);
-          console.log("confirm data ="+JSON.stringify($scope.displayeddata1));
-          tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
+        //   $scope.displayeddata1 = tableDataService.getEnhancementConfirm(result.data);
+        //   console.log("confirm data ="+JSON.stringify($scope.displayeddata1));
+        //   tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
          
-          //$scope.isLoadingConfirm = false;
+        //   //$scope.isLoadingConfirm = false;
+        //   App.blocks('#confirmloading', 'state_normal');
+
+
+        // });
+
+        //api
+        $http({
+              url: '/api/upgrid/user/unenhancement/programs/',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+        }).then(function (response) {
+          console.log("unconfirmed_enhancement"+ JSON.stringify(response.data));
+          $scope.displayeddata1 = response.data
+
+          $scope.rowCollection = [].concat($scope.displayeddata1);
+
           App.blocks('#confirmloading', 'state_normal');
-
-
-        });
+        }).
+         catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+            App.blocks('#confirmloading', 'state_normal');
+         });
 
     }
 
@@ -262,18 +316,17 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
     }
     
 
-    $scope.openCompeting = function (id, index, competing){
+    $scope.openCompeting = function (id, index){
 
-        console.log("competing="+JSON.stringify(competing));
         
         console.log("storage check"+JSON.stringify($scope.$storage.confirmation));
 
-        if(competing.length === 0){
 
             //alert("triggered");
             $http({
                   url: '/api/upgrid/user/'+ avatar_value +'competing_program/'+id+'/',
                   method: 'GET',
+                  cache: true,
                   headers: {
                     'Authorization': 'JWT ' + token
                   }
@@ -300,7 +353,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
              });
 
-        }
+
 
     }
 
@@ -441,6 +494,29 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
         // {"sort":{},"search":{},"pagination":{"start":0,"totalItemCount":0}}
 
         console.log("confirm dialog works");
+
+        App.blocks('#confirmloading', 'state_loading');
+
+        //api
+        $http({
+              url: '/api/upgrid/user/unenhancement/programs/',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+        }).then(function (response) {
+          console.log("unconfirmed_enhancement"+ JSON.stringify(response.data));
+          $scope.displayeddata1 = response.data
+
+          App.blocks('#confirmloading', 'state_normal');
+        }).
+         catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+            App.blocks('#confirmloading', 'state_normal');
+         });
+
+
+
     }
 
 
@@ -490,26 +566,33 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
                 $scope.finalreleased_enhancement = response.data.final_released_enhancement;
                 $scope.unconfirmedprogram_nums = response.data.unconfirmed_program_nums;
                 //console.log("customerprogram_nums = "+$scope.customerprogram_nums);
-                $scope.width = 100 * $scope.finalreleased_enhancement / $scope.customerprogram_nums;
 
-                setTimeout(function(){jQuery('.chart-1').data('easyPieChart').update($scope.width);}, 100);
+                console.log("$scope.unconfirmedprogram_nums="+$scope.unconfirmedprogram_nums);
+
+                if($scope.unconfirmedprogram_nums === 0) {
+                    $scope.width = 100 * $scope.finalreleased_enhancement / $scope.customerprogram_nums;
+
+                    setTimeout(function(){jQuery('.chart-1').data('easyPieChart').update($scope.width);}, 100);
+                    
+                   $.notify({
+
+                  // options
+                   icon: "fa fa-check",
+                   message: 'The programs have been confirmed successfully.'
+                    }, {
+                      // settings
+                      type: 'success',
+                      placement: {
+                        from: "top",
+                        align: "center"
+                      },
+                      z_index: 1999,
+                    });
+                }
+
                 $("#myModalConfirm").modal('toggle');
                 $scope.$broadcast('refreshProducts');
-
-               $.notify({
-
-              // options
-               icon: "fa fa-check",
-               message: 'The programs have been confirmed successfully.'
-                }, {
-                  // settings
-                  type: 'success',
-                  placement: {
-                    from: "top",
-                    align: "center"
-                  },
-                  z_index: 1999,
-                });
+                
 
                 // if(response.status === 204){
                 //   console.log("===204");

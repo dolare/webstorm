@@ -229,7 +229,7 @@ class CustomerProgram(generics.ListAPIView):
 class CustomerCompetingProgramAPI(APIView):
 
     def get_object(self, request, object_id, client_id):
-
+        print('enter get_object')
         try:
             user = UniversityCustomer.objects.get(id=request.user.id)
         except UniversityCustomer.DoesNotExist:
@@ -255,6 +255,8 @@ class CustomerCompetingProgramAPI(APIView):
 
     def get(self, request, object_id, client_id=None):
         customer_program = self.get_object(request, object_id, client_id)
+        print(customer_program)
+        print('customer progtams')
         serializer = CustomerCompetingProgramSerializer(customer_program)
         return Response(data=serializer.data)
 
@@ -816,6 +818,9 @@ class EnhancementReportsAPI(APIView):
 
     def get_listobjects(self, request):
         total_program = request.data['object_id'].split('/')
+        if len(total_program) <= 0:
+            raise ValidationError('Bad request!')
+        print(total_program)
         program_list = []
         try:
             for p in total_program:
@@ -2321,6 +2326,19 @@ class GetID(APIView):
 
 
 class UnconfirmedPrograms(generics.ListAPIView):
+    serializer_class = UnconfirmedProgramsSerializer
 
-    def get_queryset():
-        return
+    def is_manager(self, request):
+        try:
+            UpgridAccountManager.objects.get(id=request.user.id)
+            return True
+        except UpgridAccountManager.DoesNotExist:
+            return False
+
+    def get_queryset(self, *args, **kwargs):
+        #if is_manager(self.request):
+        client_id = self.request.user.id
+        print(client_id)
+        query_set = UniversityCustomerProgram.objects.filter(Q(customer = client_id)&Q(customer_confirmation = 'No'))
+
+        return query_set

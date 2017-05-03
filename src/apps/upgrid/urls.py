@@ -166,6 +166,6 @@ urlpatterns=[
     url(r'api/upgrid/getid/$', apis.GetID.as_view()),
 
     #Get return unconfirmed enhancement program
-    url(r'api/upgrid/user/unenhancement/programs$', apis.UnconfirmedPrograms.as_view()),
+    url(r'api/upgrid/user/unenhancement/programs/$', apis.UnconfirmedPrograms.as_view()),
 
 ]
