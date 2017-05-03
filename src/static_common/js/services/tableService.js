@@ -131,9 +131,7 @@ angular.module('tableServiceModule', [])
 
       
       var data = [];
-
-
-
+      
       angular.forEach(List, function(value, index) {
 
         $http({

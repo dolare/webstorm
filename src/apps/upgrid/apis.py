@@ -2317,3 +2317,9 @@ class GetID(APIView):
     def get(self, request):
         res = request.user.id
         return Response(res)
+
+
+class UnconfirmedPrograms(generics.ListAPIView):
+
+    def get_queryset():
+        return
