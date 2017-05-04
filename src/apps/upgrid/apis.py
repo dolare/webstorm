@@ -108,7 +108,7 @@ class ResetPassword(generics.GenericAPIView):
             user_reset = UniversityCustomer.objects.get(email=request.data['email'])
         except UniversityCustomer.DoesNotExist:
             try:
-                user_reset = UpgridAccountManager.objects.get(email = request.data['email'])
+                user_reset = UpgridAccountManager.objects.get(email=request.data['email'])
             except UpgridAccountManager.DoesNotExist:
                 return HttpResponse(text, HTTP_200_OK)
         if user_reset:
@@ -135,8 +135,6 @@ class ResetPassword(generics.GenericAPIView):
                         return
                 except AttributeError:
                     print('go on reset')
-
-                
 
                 return HttpResponse(text, status=HTTP_200_OK)
 
@@ -259,7 +257,7 @@ class CustomerCompetingProgramAPI(APIView):
         return Response(data=serializer.data)
 
 
-# numbers of finalreleased whoops reports
+# numbers of final released whoops reports
 class FinalReleasedWhoops(APIView):
 
     def get_object(self, request, client_id):
@@ -874,8 +872,8 @@ class AccountManager(APIView):
 
     def get(self, request):
         manager = self.get_object(request)
-        serializer = AccountManagerSerializer(manager)
         if manager:
+            serializer = AccountManagerSerializer(manager)
             return Response(data=serializer.data, status=HTTP_200_OK)
         else:
             return Response({"Failed": _("Pleas login first!")}, status=HTTP_403_FORBIDDEN)

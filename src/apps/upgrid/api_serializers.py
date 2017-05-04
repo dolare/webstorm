@@ -376,7 +376,8 @@ class ClientListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('id', 'is_demo', 'contact_name', 'is_active', 'university', 'department', 'email')
+        fields = ('id', 'is_demo', 'contact_name', 'is_active', 'university', 'department', 'email', 'account_type',
+                  'main_user_id',)
 
     def get_university(self, obj):
         return '{0} - {1}'.format(obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
