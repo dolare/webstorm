@@ -1,8 +1,6 @@
 angular.module('tableServiceModule', [])
-  .factory('tableDataService', function(avatarService, $http, authenticationSvc) {
+  .factory('tableDataService', function() {
 
-    var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
-    var token = authenticationSvc.getUserInfo().accessToken;
 
     var getWhoops = function(List) {
 
@@ -131,51 +129,55 @@ angular.module('tableServiceModule', [])
 
       
       var data = [];
+      console.log("confirm list = "+JSON.stringify(List));
+
+      for (i = 0; i < List.length; i++) {
+
+        data[i] = {
+          "checked": null,
+          //"programId": List.customerprogram[i].program.split('#')[0],
+          "programName": List[i].program_name,
+          "degreeName": List[i].program_degree,
+          //"status": List.customerprogram[i].FinalRelease_Status,
+
+
+          "objectId": List[i].object_id,
+          "competing": []
+          // "confirm": List[i].customerconfirmation_status,
+          //Y and N
+          //"confirm": "Y",
+          // "competing": (function() {
+
+
+          //   var competingArray = [];
+          //   for (j = 0; j < List[i].competingprogram.length; j++) {
+
+          //     competingArray[j] = {
+          //       "programId": List[i].competingprogram[j].program.split('#')[0],
+          //       "university": List[i].competingprogram[j].program.split('#')[3],
+          //       "school": List[i].competingprogram[j].program.split('#')[4],
+          //       "programName": List[i].competingprogram[j].program.split('#')[1],
+          //       "degreeName": List[i].competingprogram[j].program.split('#')[2],
+          //       "order": List[i].competingprogram[j].order
+          //     }
+          //   }
+          //   competingArray.sort(function(a, b) {
+          //       return parseInt(a.order) - parseInt(b.order);
+          //     }
+
+          //   );
+
+          //   return competingArray;
+
+          // })()
+
+
+        };
 
 
 
-      angular.forEach(List, function(value, index) {
+      }
 
-        $http({
-                  url: '/api/upgrid/user/'+ avatar_value +'competing_program/'+List[index].object_id+'/',
-                  method: 'GET',
-                  headers: {
-                    'Authorization': 'JWT ' + token
-                  }
-            }).then(function (response) {
-              console.log("response.data.competing_program"+JSON.stringify(response.data.competing_program));
-
-              if(response.data.competing_program.length===0){
-                data[index] = {
-                  "checked": null,
-                  "programName": List[index].program_name,
-                  "degreeName": List[index].program_degree,
-                  "objectId": List[index].object_id,
-                  "competing": [],
-                  "hasCompeting": false
-
-                };
-                
-              } else {
-                data[index] = {
-                  "checked": null,
-                  "programName": List[index].program_name,
-                  "degreeName": List[index].program_degree,
-                  "objectId": List[index].object_id,
-                  "competing": [],
-                  "hasCompeting": true
-
-                };
-              }
-
-                
-            }).
-             catch(function(error){
-                console.log('an error occurred...'+JSON.stringify(error));
-
-             });
-
-      });
 
       return data;
 

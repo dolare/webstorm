@@ -167,23 +167,23 @@
               </tbody>
          
 
-              <tfoot ng-show="data.length>25||data.length===25">
+              <tfoot ng-show="totalnum > 25">
                 <tr>
                   
 
                   
                   <td colspan="2">
-                    <br/><br/>
-                    <div class="btn-group pull-left ng-scope tablepagenum" >
-                     
-                      <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
-                      <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button>
+                    <br/>
+                    <div class="btn-group pull-left ng-scope tablepagenum push-5-t text-muted" >
+                     25 per page
+                      <!-- <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
+                      <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button> -->
                       <!-- data-toggle="tooltip" data-placement="top" title="25 per page" -->
                     </div>
                   </td>
 
-                  <td colspan="2" class="text-center">
-                    <br/><br/>
+                  <td colspan="3" class="text-center">
+                    <br/>
                     <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
                   </td>
 

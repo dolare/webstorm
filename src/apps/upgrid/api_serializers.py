@@ -653,3 +653,60 @@ class ClientWhoopsUpdateNumberSerializer(serializers.ModelSerializer):
             for v in res["new"]:
                 length += 1
             return length
+
+
+
+
+
+
+class UnconfirmedProgramsSerializer(serializers.ModelSerializer):
+    program_name = SerializerMethodField()
+    program_degree = SerializerMethodField()
+    has_expert_notes = SerializerMethodField()
+    enhancement_update = SerializerMethodField()
+    whoops_update = SerializerMethodField()
+    has_competing = SerializerMethodField()
+
+    class Meta:
+        model = UniversityCustomerProgram
+        fields = ('object_id', 'program_name', 'program_degree', 
+                  'whoops_final_release', 'enhancement_final_release', 'customer_confirmation',
+                  'has_expert_notes', 'enhancement_update', 'whoops_update','has_competing')
+    
+    def get_has_competing(self,obj):
+        return CustomerCompetingProgram.objects.filter(customer_program = obj.object_id).exists()
+        
+
+    def get_program_name(self, obj):
+        return obj.program.program_name
+
+    def get_program_degree(self, obj):
+        return obj.program.degree.name
+
+    def get_has_expert_notes(self, obj):
+        origin_program = Program.objects.get(object_id=obj.program.object_id)
+        qs = ExpertAdditionalNote.objects.filter(program=origin_program)
+        
+        expert_notes = ""
+        if len(qs) == 0:
+            expert_notes = False
+        else:
+            expert_notes = True
+
+        return expert_notes
+
+    def get_enhancement_update(self, obj):
+        try:
+            eu = EnhancementUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent='True')
+            serializer = ClientEnhancementUpdateNumberSerializer(eu)
+            return serializer.data
+        except EnhancementUpdate.DoesNotExist:
+            return 0
+
+    def get_whoops_update(self, obj):
+        try:
+            wu = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent='True')
+            serializer = ClientWhoopsUpdateNumberSerializer(wu)
+            return serializer.data
+        except WhoopsUpdate.DoesNotExist:
+            return 0

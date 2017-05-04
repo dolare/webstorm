@@ -198,6 +198,7 @@ whoops.controller('WhoopsController',
 
           var avatar = avatarService.getClientId() ? "&cid="+ avatarService.getClientId(): "";
           console.log("avatar = "+avatar);
+
         ajaxService.getResult(start, number, tableState, token, "", avatar).then(function (result) {
           console.log("AJAX service called !");
 
@@ -212,9 +213,12 @@ whoops.controller('WhoopsController',
 
           tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
 
+          //total num of programs
+          $scope.totalnum = result.raw.count;
 
           if($scope.width === undefined){
-              $scope.totalnum = result.raw.count;
+
+              
 
                     apiService.getReleasedWhoops(token).then(function(result) {
                         console.log("result="+result);

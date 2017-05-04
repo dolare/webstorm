@@ -24,7 +24,7 @@
                   <div style="margin-top:1.5em;" >
                     <button href="#myModalConfirm" id="openBtn1" data-toggle="modal" ng-click="confirmDialog()" ng-disabled="unconfirmedprogram_nums === 0" ng-class="{'css-input-disabled btn btn-success':unconfirmedprogram_nums === 0, 'btn btn-default': unconfirmedprogram_nums !== 0}" style="position:relative;" class="pull-right" >
 
-                  <i class="fa fa-list-ul text-warning" data-uib-tooltip="Please confirm the rest competing programs" data-tooltip-placement="top"></i>
+                  <i class="fa fa-list-ul text-warning"></i>
 
                   <span class="badge progress-bar-danger"  ng-if="unconfirmedprogram_nums !== 0" style="position:absolute;top:-10px;right:-10px;background:red;color:white;text-align:center;box-shadow:0 0 1px #333;">{{unconfirmedprogram_nums}}
                   </span>
@@ -201,14 +201,15 @@
                     
                    
                 </tbody>
-                <tfoot ng-show="displayeddata.length>25||displayeddata.length===25">
+                <!-- ng-show="totalnum > 25" -->
+                <tfoot ng-show="totalnum > 25">
                                   <tr>
                                     <td colspan="3" class="text-center" style="border-top:0">
                                       <br>
-                                      <div class="btn-group pull-left ng-scope">
-                                        
-                                        <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default" data-js-blur>25</button>
-                                        <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default" data-js-blur>50</button>
+                                      <div class="btn-group pull-left ng-scope push-5-t text-muted">
+                                        25 per page
+                                        <!-- <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default" data-js-blur>25</button>
+                                        <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default" data-js-blur>50</button> -->
                                       </div>
                                     </td>
                                     
@@ -299,7 +300,10 @@
                                 <h3 class="block-title">Please confirm programs first</h3>
                               </div>
                               <div class="block-content" style="max-height:70vh;overflow-y:auto;">
-            <table class="table table-hover" st-pipe="confirmpipe" st-table="displayeddata1" id="confirmtable" data-js-table-sections-fixed>
+
+
+
+            <table class="table table-hover" st-table="rowCollection" st-safe-src="displayeddata1" id="confirmtable" data-js-table-sections-fixed>
                 
                 <colgroup>
                   <col width="5%"/>
@@ -312,28 +316,28 @@
                 <thead>
                     <tr>
                         
-                        <th colspan="4" style="border-bottom:0; text-decoration: none; cursor: default;">
-                                      <!--  <input st-search="programName" placeholder="Search for the program..."  type="search"/ class="form-control" style="height:auto; width:100%;"> -->
+                        <th colspan="5" style="border-bottom:0; text-decoration: none; cursor: default;">
+                                      
                             <div class="input-group input-group-lg" style="width:100%">
                             <div class="input-group-addon" style="font-size:15px">Search</div>
-                            <input st-search="programName" class="js-icon-search form-control font-w400" type="text" placeholder="Program name...">
+                            <input st-search="program_name" class="js-icon-search form-control font-w400" type="text" placeholder="Program name...">
                         </div>
                          </th>
                     </tr>
                     <tr>
                         <th></th>
                         <th></th>
-                        <th st-sort="programName" class="text-primary font-w400">Program</th>
-                        <th st-sort="degreeName" class="text-center text-primary font-w400">Degree</th>
-                        <th st-sort="hasCompeting" class="text-center text-primary font-w400">Status</th>
+                        <th st-sort="program_name" class="text-primary font-w400">Program</th>
+                        <th st-sort="program_degree" class="text-center text-primary font-w400">Degree</th>
+                        <th st-sort="has_competing" class="text-center text-primary font-w400">Status</th>
                         
                     </tr>
                 </thead>
-                <tbody class="js-table-sections-header bg-gray-lighter" ng-repeat-start="row in displayeddata1"  ng-click="openCompeting(row.objectId,$index, row.competing)">
+                <tbody class="js-table-sections-header bg-gray-lighter" ng-repeat-start="row in rowCollection"  ng-click="openCompeting(row.object_id, $index)">
                     <tr>
                         <td>
-                              <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.hasCompeting===false}" >
-                                <input type="checkbox" ng-model="$storage.confirmation[row.objectId].checked" ng-click="confirmCheckOne()" ng-disabled = "row.hasCompeting===false"><span></span>
+                              <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.has_competing===false}" >
+                                <input type="checkbox" ng-model="$storage.confirmation[row.object_id].checked" ng-click="confirmCheckOne()" ng-disabled = "row.has_competing===false"><span></span>
                               </label>
 
                         </td>
@@ -343,17 +347,17 @@
                             <i class="fa fa-angle-right text-primary"></i>
                         </td>
 
-                        <td class="font-w500">{{row.programName}}</td>
+                        <td class="font-w500">{{row.program_name}}</td>
                         <td class="font-w500 text-center">
-                            <span >{{row.degreeName}}</span>
+                            <span >{{row.program_degree}}</span>
                             <!-- <button ng-click="$event.stopPropagation();">click</button> -->
                         </td>
                         <td class="text-center">
 
-                          <label class="label label-success label-done" ng-show="row.hasCompeting===true"><i class="fa fa-check"></i> &nbsp;Done</label>
+                          <label class="label label-success label-done" ng-show="row.has_competing===true"><i class="fa fa-check"></i> &nbsp;Complete</label>
                           </label>
 
-                          <label class="label label-default" ng-show="row.hasCompeting===false"><i class="fa fa-refresh"></i> &nbsp;In Progress</label>
+                          <label class="label label-default" ng-show="row.has_competing===false"><i class="fa fa-refresh"></i> &nbsp;Matching Programs</label>
                           </label>
                           
                         </td>
@@ -368,26 +372,30 @@
                           {{competing.program_name}}<br><span class="text-muted"><small>{{competing.school}}  ({{competing.university}})</small></span>
                         </td>
                         <td class="text-center font-w500 text-primary" style="vertical-align: top">{{competing.program_degree}}</td>
+                        <td></td>
                     </tr>
                    
                     
                    
                 </tbody>
-                <tfoot ng-show="displayeddata1.length>25||displayeddata1.length===25">
+                            <tfoot ng-show="rowCollection.length > 25"> 
                                   <tr>
-                                    <td colspan="2" class="text-center" style="border-top:0">
+                                    <td colspan="3" class="text-center" style="border-top:0">
                                       <br>
-                                      <div class="btn-group pull-left ng-scope">
+                                      <!-- 25 per page -->
+                                      <div class="btn-group pull-left ng-scope push-5-t text-muted">
                                         
-                                        <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default" data-js-blur>25</button>
-                                        <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default" data-js-blur>50</button>
+                                      25 per page
+                                        <!-- <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default" data-js-blur>25</button>
+                                        <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default" data-js-blur>50</button> -->
                                       </div>
                                     </td>
-                                    <td style="border-top:0"></td>
-                                    <td colspan="1" class="pull-right" style="border-top:0">
+
+
+                                    <td colspan="2" class="" style="border-top:0">
                                       <br>
                                     
-                                       <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="5" class="pull-left"></div>
+                                       <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="5" class="pull-right"></div>
                                     </td>
                                   </tr>
                                 </tfoot>

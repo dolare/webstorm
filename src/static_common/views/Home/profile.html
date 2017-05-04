@@ -65,14 +65,14 @@
             
             <!-- manage subaccounts -->
             <h3  ng-if="data.accountType ==='main'" class="block-title" style="padding-left:15px;">Colleague Accounts</h3>
-            <hr/ style="margin-left:15px;" ng-if="data.accountType ==='main'">
+            <hr style="margin-left:15px;" ng-if="data.accountType ==='main'">
 
             <!-- {{data.subuser}} -->
 
 
 
 
-            <div class="row push-10-t" style="padding-left:15px">
+            <div class="row push-10-t" style="padding-left:15px" ng-show="data.accountType ==='main'">
             
                     <div class="col-sm-6 col-md-4 col-lg-4 push-10-t" ng-repeat = "row in data.subuser" ng-if="row.contact_name && row.is_active" style="padding:0 20px">
                             <!-- Contact -->
@@ -125,7 +125,7 @@
                   </div>
 
 
-                  <button class="btn btn-white text-primary push-15-t push-50" type="button" style="margin-left:20px;" data-toggle="modal" data-target="#myModalSubuser" ng-click="triggersubuser()"><i class="fa fa-plus"></i> Add a Colleague</button>
+                  <button ng-show="data.accountType ==='main'" class="btn btn-white text-primary push-15-t push-50" type="button" style="margin-left:20px;" data-toggle="modal" data-target="#myModalSubuser" ng-click="triggersubuser()"><i class="fa fa-plus"></i> Add a Colleague</button>
                         
 
 
@@ -344,7 +344,7 @@
 
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-prefix">Prefix</label>
+                  <label class="col-md-4 control-label" for="val-prefix">Title</label>
                   <div class="col-md-7">
                     <select ng-options="p for p in prefix" ng-model="subuser.form_contract_prefix" class="form-control" name="val-prefix">
                       <option value="">Please select</option>
@@ -361,7 +361,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-title">Title <span class="text-danger">*</span></label>
+                  <label class="col-md-4 control-label" for="val-title">Position <span class="text-danger">*</span></label>
                   <div class="col-md-7">
                     <input ng-model="subuser.title" class="form-control" type="text"  name="val-title" placeholder="Please enter the title..">
                   </div>
@@ -458,7 +458,7 @@
                             
 
                             <tr ng-if="subuserdetail.contract_prefix">
-                              <td class="text-right"><p class="font-w600">Prefix: </p></td>
+                              <td class="text-right"><p class="font-w600">Title: </p></td>
                               <td ><p>{{subuserdetail.contract_prefix}}</p>
                               </td>
 
@@ -478,7 +478,7 @@
                             
 
                             <tr>
-                              <td class="text-right"><p class="font-w600">Title: </p></td>
+                              <td class="text-right"><p class="font-w600">Position: </p></td>
                               <td ><p>{{subuserdetail.contract_title}}</p>
                               </td>
 
