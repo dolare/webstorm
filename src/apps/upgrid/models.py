@@ -204,8 +204,7 @@ class CustomerCompetingProgram(UpgridAbstractDatedObject):
     Status = (('in_progress', 'In_Progress'), ('done', 'Done'))
 
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    customer_program = models.ForeignKey(UniversityCustomerProgram,
-                                         on_delete=models.PROTECT)
+    customer_program = models.ForeignKey(UniversityCustomerProgram, on_delete=models.PROTECT)
     program = models.ForeignKey(Program, on_delete=models.PROTECT)
     order = models.IntegerField(null=True, blank=True)
     enhancement_status = models.CharField(max_length=50, choices=Status, default='in_progress')
