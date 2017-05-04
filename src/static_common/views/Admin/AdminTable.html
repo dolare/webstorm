@@ -137,7 +137,7 @@
                     </tr>
                     <tbody>
                     </tbody>
-                    <tfoot ng-show="client_data.length>25">
+                    <tfoot ng-show="displayeddata.length>25">
                         <tr>
                             <td colspan="3">
                                 <br>
@@ -455,7 +455,7 @@
                                                                     <th style="padding-left:15px;vertical-align: middle;text-decoration: none; cursor: default;" class="h4 text-flat font-w700">Select the programs for the client</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody class="js-table-sections-header bg-white" ng-repeat-start="row in dep_pro_table">
+                                                            <tbody class="js-table-sections-header bg-white" ng-repeat-start="row in dep_pro_table_displayed">
                                                                 <tr>
                                                                     <td>
                                                                         <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.programs.length===0}">
@@ -588,6 +588,7 @@
                                                             <tbody ng-repeat-end>
                                                                 <tr class="bg-white" ng-repeat="row1 in row.competing_program">
                                                                     <td class="text-center">
+                                                                        
                                                                         <label ng-if="!pwhide">{{row1.order}}.</label>
                                                                         <select ng-if="pwhide" ng-model="row1.order" ng-options="num for num in orders" ng-change="put_competing(row1.object_id, row.customer_program_id, row1.program_id, row1.order, row1.enhancement_status)">
                                                                         </select>
@@ -596,9 +597,10 @@
                                                                         <form class="form-inline">
                                                                             <div class="form-group" style="margin-bottom:0">
                                                                                 <div class="col-md-12">
-                                                                                
+                            
                                                                                     <select ng-if="pwhide" data-js-select2 ng-model="row1.program_id" class="form-control" id="example-select2" name="example-select2" style="width: 100%;" data-placeholder="Choose one.." ng-options="p.object_id as p.display for p in competing_program_array" ng-change="put_competing(row1.object_id, row.customer_program_id, row1.program_id, row1.order, row1.enhancement_status)">
                                                                                         <option></option>
+
                                                                                     </select>
 
                                                                                     <select ng-if="!pwhide" data-js-select2 ng-model="row1.object_id" class="form-control" id="example-select2" name="example-select2" style="width: 100%;" data-placeholder="Choose one.." ng-options="p.object_id as p.display for p in competing_program_array">

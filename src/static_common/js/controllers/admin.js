@@ -16,7 +16,6 @@ admin.controller('AdminMainController',
     });
 
     console.log("client_data=" + JSON.stringify($scope.client_data));
-    $scope.displayeddata = [].concat($scope.client_data);
 
     //For stats
     $scope.active_num = 0;
@@ -365,7 +364,6 @@ admin.controller('AdminMainController',
 
       $scope.showtable = true;
       $scope.dep_pro_table = null;
-      $scope.dep_pro_table_displayed = null;
       $scope.account_type = "main";
       //angular.element(document.getElementsByClassName("nav nav-tabs nav-justified").getElementsByTagName("li")).addClass('active');
 
@@ -460,7 +458,6 @@ admin.controller('AdminMainController',
 
       $scope.showtable = true;
       $scope.dep_pro_table = null;
-      $scope.dep_pro_table_displayed = null;
 
       //***************************get ceebs****************************
       ///load for ceeb and competing schools
@@ -687,7 +684,7 @@ admin.controller('AdminMainController',
         }
 
         console.log("selected program is " + JSON.stringify($scope.selected_customprogram));
-        $scope.displayeddata1 = [].concat($scope.selected_customprogram);
+
 
         //*****************************GET DEPARTMENT LIST***********************************
 
@@ -731,7 +728,6 @@ admin.controller('AdminMainController',
         }
 
 
-        $scope.dep_pro_table_displayed = $scope.dep_pro_table;
 
         $scope.unselected_programs = [];
         $scope.all_programs = [];
@@ -932,7 +928,6 @@ admin.controller('AdminMainController',
           $scope.dep_pro_table[i].isTrue = false;
         }
 
-        $scope.dep_pro_table_displayed = $scope.dep_pro_table;
 
         angular.forEach($scope.dep_pro_table, function(value, index) {
           var dep = value.department;
@@ -1095,24 +1090,35 @@ admin.controller('AdminMainController',
         });
 
       }
-      $scope.displayeddata1 = [].concat($scope.selected_customprogram);
 
     }
 
 
+    var flag = true;
     //generate competing program list on table row click
     $scope.load_competing = function() {
-
+      
+      if(flag == false){
+        flag = !flag;
+        return;
+      }
+      flag = !flag;
+       var temp = JSON.stringify($scope.selected_customprogram);
+      // alert(JSON.stringify(temp));
       var competing_string = "";
+
       var competing_list = document.getElementById("bootstrap-duallistbox-selected-list_");
       for (i = 0; i < competing_list.options.length; i++) {
         competing_string = competing_string + competing_list.options[i].value + '/';
       }
-      console.log("competing_string=" + JSON.stringify(competing_string));
-      $scope.competing_program_array = [];
 
+      //console.log("competing_string=" + JSON.stringify(competing_string));
+      $scope.competing_program_array = [];
+      //alert(JSON.stringify($scope.selected_customprogram));
       //if competing school has selection
       if (competing_string !== "") {
+        // alert('start');
+        
         console.log("competing_string now = "+ JSON.stringify(competing_string.slice(0, -1)));
         $http({
           url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + competing_string.slice(0, -1),
@@ -1121,22 +1127,19 @@ admin.controller('AdminMainController',
             'Authorization': 'JWT ' + token
           }
         }).then(function(response) {
-
-          console.log("result now ="+JSON.stringify(response.data))
-          
           //console.log("competing_programs" + JSON.stringify(response.data));
           var load_competing_programs = response.data;
-
+          //alert(JSON.stringify($scope.selected_customprogram));
           for (var i = 0; i < load_competing_programs.length; i++) {
-
             $scope.competing_program_array.push({
               "object_id": load_competing_programs[i].object_id,
               "display": load_competing_programs[i].Ceeb + " - " + load_competing_programs[i].program_university + " - " + load_competing_programs[i].program_school + " - " + load_competing_programs[i].program_name + " - " + load_competing_programs[i].program_degree
             })
 
-
           }
-
+          //alert(JSON.stringify($scope.selected_customprogram));
+          $scope.selected_customprogram = JSON.parse(temp);
+          // alert(JSON.stringify($scope.displayeddata1));
           console.log("competing_program_array now="+JSON.stringify($scope.competing_program_array))
 
         }).
@@ -1178,7 +1181,8 @@ admin.controller('AdminMainController',
 
         for (var i = 0; i < $scope.put_customer_program_array.length; i++) {
 
-          if ($scope.selected_customprogram[index].customer_program_id === $scope.put_customer_program_array[i].customer_program_id) {
+          if ($scope.selected_customprogram[index].customer_program_id
+ === $scope.put_customer_program_array[i].customer_program_id) {
             isInArray = true;
             break;
           }
@@ -1246,23 +1250,6 @@ admin.controller('AdminMainController',
       if ($scope.pwhide) {
 
         console.log("editing");
-
-        // var competing_array = [];
-        //   var competing_list = document.getElementById("bootstrap-duallistbox-selected-list_");
-        //   for (i = 0; i < competing_list.options.length; i++) {
-        //     competing_array.push(competing_list.options[i].value);
-        //   }
-        //   console.log("competing_array=" + JSON.stringify(competing_array));
-
-        //   var competing_schools_obj = [];
-        //   for (i = 0; i < competing_array.length; i++) {
-        //     competing_schools_obj.push({
-        //       "object_id": competing_array[i]
-        //     })
-        //   }
-
-        //   console.log("competing_schools_obj" + JSON.stringify(competing_schools_obj));
-
 
         //create post_competing-program_array
         for (var i = 0; i < $scope.selected_customprogram.length; i++) {
@@ -1435,13 +1422,13 @@ admin.controller('AdminMainController',
 
           return $http({
             url: '/api/upgrid/accountmanager/client/competing_program/',
-            method: 'PUT',
+            method: 'POST',
             headers: {
               'Authorization': 'JWT ' + token,
               'Content-Type': 'application/json'
             },
             data: {
-              'customer_competing_program': $scope.put_competing_program_array
+              'customer_competing_program': $scope.post_competing_program_array
             }
 
           });
@@ -1451,13 +1438,13 @@ admin.controller('AdminMainController',
           return $http({
 
             url: '/api/upgrid/accountmanager/client/competing_program/',
-            method: 'POST',
+            method: 'PUT',
             headers: {
               'Authorization': 'JWT ' + token,
               'Content-Type': 'application/json'
             },
             data: {
-              'customer_competing_program': $scope.post_competing_program_array
+              'customer_competing_program': $scope.put_competing_program_array
             }
 
           });
@@ -1880,7 +1867,7 @@ admin.controller('AdminMainController',
 
 
           $scope.client_data = response.data.client_list
-            //$scope.displayeddata1 = [].concat($scope.selected_customprogram);
+            //$scope.() = [].concat($scope.selected_customprogram);
 
 
           jQuery('#modal-large').modal('toggle');
@@ -1977,7 +1964,7 @@ admin.controller('AdminMainController',
 
       //manually trigger put_competing to update order
       for (var i = id + 1; i < $scope.selected_customprogram[Pid].competing_program.length; i++) {
-
+        alert(i);
         $scope.selected_customprogram[Pid].competing_program[i].order = $scope.selected_customprogram[Pid].competing_program[i].order - 1;
         if ($scope.selected_customprogram[Pid].competing_program[i].object_id) {
 
