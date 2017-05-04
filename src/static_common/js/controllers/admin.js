@@ -566,6 +566,7 @@ admin.controller('AdminMainController',
         //generate selected_customprogram list
         $scope.selected_customprogram = [];
         $scope.selected_customprogram_copy = [];
+
         for (i = 0; i < $scope.customer_program.length; i++) {
 
           console.log("i=" + i)
@@ -574,7 +575,7 @@ admin.controller('AdminMainController',
             "customer_program_id": $scope.customer_program[i].object_id,
             "program_id": $scope.customer_program[i].program.object_id,
             "program_name": $scope.customer_program[i].program.program_display.split('--')[1],
-            "program_degree": $scope.customer_program[i].program.program_display.split('--')[2].split('-')[0],
+            "program_degree": $scope.customer_program[i].program.program_display.split('--')[2],
             "assignment_status": $scope.customer_program[i].program.assignment_status,
             "review_status": $scope.customer_program[i].program.review_status,
             "whoops_status": $scope.customer_program[i].whoops_status,
@@ -637,7 +638,7 @@ admin.controller('AdminMainController',
             "customer_program_id": $scope.customer_program[i].object_id,
             "program_id": $scope.customer_program[i].program.object_id,
             "program_name": $scope.customer_program[i].program.program_display.split('--')[1],
-            "program_degree": $scope.customer_program[i].program.program_display.split('--')[2].split('-')[0],
+            "program_degree": $scope.customer_program[i].program.program_display.split('--')[2],
             "assignment_status": $scope.customer_program[i].program.assignment_status,
             "review_status": $scope.customer_program[i].program.review_status,
             "whoops_status": $scope.customer_program[i].whoops_status,
@@ -1124,17 +1125,14 @@ admin.controller('AdminMainController',
           console.log("result now ="+JSON.stringify(response.data))
           
           //console.log("competing_programs" + JSON.stringify(response.data));
-          $scope.competing_programs = response.data;
+          var load_competing_programs = response.data;
 
-          for (i = 0; i < $scope.competing_programs.length; i++) {
-            console.log("$scope.displayeddata1 =" +JSON.stringify($scope.displayeddata1));
+          for (var i = 0; i < load_competing_programs.length; i++) {
 
             $scope.competing_program_array.push({
-              "object_id": $scope.competing_programs[i].object_id,
-              "display": $scope.competing_programs[i].Ceeb + " - " + $scope.competing_programs[i].program_university + " - " + $scope.competing_programs[i].program_school + " - " + $scope.competing_programs[i].program_name + " - " + $scope.competing_programs[i].program_degree
+              "object_id": load_competing_programs[i].object_id,
+              "display": load_competing_programs[i].Ceeb + " - " + load_competing_programs[i].program_university + " - " + load_competing_programs[i].program_school + " - " + load_competing_programs[i].program_name + " - " + load_competing_programs[i].program_degree
             })
-
-            console.log("$scope.displayeddata1 after = " +JSON.stringify($scope.displayeddata1));
 
 
           }

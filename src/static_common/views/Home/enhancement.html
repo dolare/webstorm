@@ -201,14 +201,15 @@
                     
                    
                 </tbody>
-                <tfoot ng-show="displayeddata.length>25||displayeddata.length===25">
+                <!-- ng-show="totalnum > 25" -->
+                <tfoot ng-show="totalnum > 25">
                                   <tr>
                                     <td colspan="3" class="text-center" style="border-top:0">
                                       <br>
-                                      <div class="btn-group pull-left ng-scope">
-                                        
-                                        <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default" data-js-blur>25</button>
-                                        <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default" data-js-blur>50</button>
+                                      <div class="btn-group pull-left ng-scope push-5-t text-muted">
+                                        25 per page
+                                        <!-- <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default" data-js-blur>25</button>
+                                        <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default" data-js-blur>50</button> -->
                                       </div>
                                     </td>
                                     
@@ -353,10 +354,10 @@
                         </td>
                         <td class="text-center">
 
-                          <label class="label label-success label-done" ng-show="row.has_competing===true"><i class="fa fa-check"></i> &nbsp;Done</label>
+                          <label class="label label-success label-done" ng-show="row.has_competing===true"><i class="fa fa-check"></i> &nbsp;Complete</label>
                           </label>
 
-                          <label class="label label-default" ng-show="row.has_competing===false"><i class="fa fa-refresh"></i> &nbsp;In Progress</label>
+                          <label class="label label-default" ng-show="row.has_competing===false"><i class="fa fa-refresh"></i> &nbsp;Matching Programs</label>
                           </label>
                           
                         </td>
@@ -377,21 +378,24 @@
                     
                    
                 </tbody>
-                <tfoot> 
-                                  <tr ng-show="displayeddata1.length>25">
-                                    <td colspan="2" class="text-center" style="border-top:0">
+                            <tfoot ng-show="rowCollection.length > 25"> 
+                                  <tr>
+                                    <td colspan="3" class="text-center" style="border-top:0">
                                       <br>
-                                      <div class="btn-group pull-left ng-scope">
+                                      <!-- 25 per page -->
+                                      <div class="btn-group pull-left ng-scope push-5-t text-muted">
                                         
-                                        <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default" data-js-blur>25</button>
-                                        <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default" data-js-blur>50</button>
+                                      25 per page
+                                        <!-- <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default" data-js-blur>25</button>
+                                        <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default" data-js-blur>50</button> -->
                                       </div>
                                     </td>
-                                    <td style="border-top:0"></td>
-                                    <td colspan="1" class="pull-right" style="border-top:0">
+
+
+                                    <td colspan="2" class="" style="border-top:0">
                                       <br>
                                     
-                                       <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="5" class="pull-left"></div>
+                                       <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="5" class="pull-right"></div>
                                     </td>
                                   </tr>
                                 </tfoot>

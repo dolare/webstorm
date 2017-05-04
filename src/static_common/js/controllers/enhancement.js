@@ -277,13 +277,17 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
         //ajaxService.getResult(start, number, tableState, token, "&cs=No").then(function (result) {
 
           var avatar = avatarService.getClientId() ? "&cid="+ avatarService.getClientId(): "";
+
         ajaxService.getResult(start, number, tableState, token, "&cs=Yes", avatar).then(function (result) {
           console.log("AJAX service called !");
 
           
           console.log("ajaxService.getResult = "+JSON.stringify(result));
           console.log("result.data="+JSON.stringify(result.data));
-
+          console.log("%%%result.raw="+JSON.stringify(result.raw));
+          //total num of programs
+          $scope.totalnum = result.raw.count;
+          
           $scope.displayeddata = tableDataService.getEnhancement(result.data);
 
           console.log("displayeddata="+JSON.stringify($scope.displayeddata));
