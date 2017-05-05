@@ -307,13 +307,51 @@ angular.module('tableServiceModule', [])
     };
 
 
+
+    var getClientList = function(List) {
+
+
+      var data = [];
+      var sub_data = []
+      console.log("LISTLIST="+JSON.stringify(List));
+
+      for(var i=0; i<List.length; i++){
+
+        if(List[i].account_type === 'main'){
+          data.push(List[i]);
+        } else if(List[i].account_type === 'sub'){
+          sub_data.push(List[i])
+        }
+      }
+
+      for(var i=0; i<data.length; i++){
+        data[i].subuser = [];
+      }
+
+      for(var i=0; i<sub_data.length; i++) {
+
+        for(var j=0; j<data.length; j++){
+          if(sub_data[i].main_user_id === data[j].id){
+            data[j].subuser.push(sub_data[i]);
+            break;
+          }
+        }
+
+      }
+      
+      return data;
+
+    };
+
+
     return {
       getWhoops: getWhoops,
       getEnhancement: getEnhancement,
       getProfile: getProfile,
       getProfileProgram: getProfileProgram,
       getCart: getCart,
-      getEnhancementConfirm: getEnhancementConfirm
+      getEnhancementConfirm: getEnhancementConfirm,
+      getClientList: getClientList
 
 
 

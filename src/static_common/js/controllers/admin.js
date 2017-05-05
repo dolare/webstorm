@@ -1,6 +1,6 @@
 var admin = angular.module('myApp.admin', [])
 admin.controller('AdminMainController',
-  function($sce, $timeout, $state, avatarService, Client, $http, authenticationSvc, $scope, $window) {
+  function(tableDataService, $sce, $timeout, $state, avatarService, Client, $http, authenticationSvc, $scope, $window) {
 
     var token = authenticationSvc.getUserInfo().accessToken;
 
@@ -9,19 +9,21 @@ admin.controller('AdminMainController',
 
     $scope.itemsByPage = 25;
     $scope.orders = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    $scope.client_data = Client;
+
+    $scope.client_data = tableDataService.getClientList(Client);
+
     //sorting in alphabetical order
     $scope.client_data.sort(function(a, b) {
       return ((a.contact_name||"").toLowerCase() > (b.contact_name||"").toLowerCase()) ? 1 : (((b.contact_name||"").toLowerCase() > (a.contact_name||"").toLowerCase()) ? -1 : 0);
     });
 
-    console.log("client_data=" + JSON.stringify($scope.client_data));
-
+    console.log("CLient = = = "+JSON.stringify(Client))
+    
     //For stats
     $scope.active_num = 0;
-    $scope.client_num = $scope.client_data.length;
-    for (i = 0; i < $scope.client_data.length; i++) {
-      if ($scope.client_data[i].is_active === true) {
+    $scope.client_num = Client.length;
+    for (var i = 0; i < Client.length; i++) {
+      if (Client[i].is_active === true) {
         $scope.active_num++;
       }
     }
