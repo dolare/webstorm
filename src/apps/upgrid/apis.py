@@ -18,7 +18,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.status import (
-    HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, HTTP_403_FORBIDDEN )
+    HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST)
 from rest_framework.views import APIView
 from django.utils.six import BytesIO
 from rest_framework.parsers import JSONParser
@@ -122,7 +122,7 @@ class ResetPassword(generics.GenericAPIView):
                                     "Please click <a href='https://%s/#/upgrid/reset/%s/'> here</a> to reset your Upgrid password"
                                     "!<br>If the above link does not work for you, please copy and paste the following into your browser address "
                                     "bar: https://%s/#/upgrid/reset/%s/<br>")
-                    message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.contact_name,
+                    message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
                                            request.META['HTTP_HOST'], token,request.META['HTTP_HOST'],token), to=[request.data['email']])
                     message.content_subtype = 'html'
                     message.send()
@@ -1406,27 +1406,30 @@ class WhoopsWebReports(APIView):
                 return False
 
     def get_object(self, object_id, client):
-
-        wur = WhoopsUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
-        cp = UniversityCustomerProgram.objects.get(object_id=object_id)
+        try:
+            wur = WhoopsUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
+        except WhoopsUpdate.DoesNotExist:
+            return None
+        cp = wur.customer_program
         if wur.existing_report:
             existing_report = JSONParser().parse(BytesIO(zlib.decompress(wur.existing_report)))
         else:
             existing_report = "None"
         if wur.update_diff:
             update_diff = JSONParser().parse(BytesIO(zlib.decompress(wur.update_diff)))
-            print(update_diff)
         else:
             update_diff = "None"
         context = {'existing_report': existing_report, 'update_diff': update_diff,
-                   'whoops_released_time':cp.whoops_final_release_time,
-                   'report_last_edit_time':wur.last_edit_time}
+                   'whoops_released_time': cp.whoops_final_release_time,
+                   'report_last_edit_time': wur.last_edit_time}
         return context
 
     def get(self, request, object_id, client_id=None):
         user = self.check_permission(request, object_id, client_id)
         if user:
             context = self.get_object(object_id, user)
+            if context is None:
+                return Response({"Failed": _("WhoopsUpdate does not found!")}, status=HTTP_400_BAD_REQUEST)
             return Response(context, status=HTTP_200_OK)
 
         else:
@@ -1653,7 +1656,7 @@ class WhoopsReportsUpdateAPI(APIView):
                     eru, created = WhoopsUpdate.objects.get_or_create(customer_program=customer_program,
                                                                       customer=user, most_recent=True)
                     print('second test')
-                    new_whoops_report_dict = self.get_programs_data(request,customer_program)
+                    new_whoops_report_dict = self.get_programs_data(request, customer_program)
                     if new_whoops_report_dict is not None:
                         json_str = JSONRenderer().render(new_whoops_report_dict)  # render to bytes with utf-8 encoding
                         raw_new_whoops_report = zlib.compress(json_str)
