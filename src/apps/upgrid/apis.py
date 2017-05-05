@@ -16,6 +16,7 @@ import urllib.request
 from rest_framework import generics
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.filters import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST)
@@ -40,7 +41,8 @@ from .models import (
     UpgridAccountManager, UniversityCustomer, UniversityCustomerProgram,
     CustomerCompetingProgram, ClientAndProgramRelation, WhoopsReports,
     EnhancementReports)
-from .api_serializers import * 
+from .api_serializers import *
+from .filter import UniversityCustomerFilter
 
 # used shared report
 import zlib
@@ -522,6 +524,23 @@ class CustomerDetail(APIView):
         else:
             serializer = SubUserDetailSerializer(customer)
             return Response(data=serializer.data)
+
+
+class UniversityCustomerListAPI(generics.ListAPIView):
+    """
+    Get list of sub user
+
+    """
+    filter_backends = (DjangoFilterBackend, )
+    serializer_class = SubuserListSerializer
+    filter_class = UniversityCustomerFilter
+
+    def get_queryset(self, *args, **kwargs):
+        user = self.request.user
+        if UpgridAccountManager.objects.filter(id=user.id).exists():
+            return UniversityCustomer.objects.filter(account_manager=user)
+        else:
+            return UniversityCustomer.objects.filter(main_user_id=str(user.id))
 
 
 # Post create new sub_user/ Put change sub_user's is_active status
