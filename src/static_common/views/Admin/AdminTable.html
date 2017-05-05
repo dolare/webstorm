@@ -66,32 +66,39 @@
                 <table class="table table-hover table-vcenter" st-pagination-scroll st-table="displayeddata" st-safe-src="client_data">
                     <colgroup>
                         <col width="5%" />
+                        <col width="5%" />
                         <col width="15%" />
                         <col width="10%" />
-                        <col width="25%" />
+                        <col width="22%" />
                         <col width="15%" />
+                        <col width="12%" />
                         <col width="13%" />
-                        <col width="14%" />
                         <col width="3%" />
                     </colgroup>
                     <thead>
+
                         <tr>
+                            <th class="text-center"><i class="icon-organization"></i></th>
                             <th class="text-center"><i class="icon-user"></i></th>
                             <th st-sort="contact_name" class="text-left">Name</th>
                             <th st-sort="is_active" class="text-left">Status</th>
                             <th st-sort="university" class="text-left">University</th>
                             <th st-sort="department" class="text-left">Department</th>
                             <th st-sort="email" class="text-left">Email</th>
-                            <th class="text-center">Actions</th>
+                            <th class="text-center" style="min-width: 95px">Actions</th>
                             <th class="text-center"><i class="icon-trash"></i></th>
                         </tr>
-                    </thead>
-                    <tr>
-                        <th colspan="8" class="bg-info-light">
+                        <tr>
+                        <th colspan="9" class="bg-info-light">
                             <input st-search="" class="form-control" placeholder="global search ..." type="text" />
                         </th>
-                    </tr>
-                    <tr ng-repeat="row in displayeddata">
+                        </tr>
+                    </thead>
+
+                    <tbody ng-repeat-start="row in displayeddata">
+                    
+                    <tr>
+                        <td><button ng-show="row.subuser.length !== 0" class="btn btn-info" ng-click="show_sub=!show_sub" type="button" style="position:relative;"><i ng-class="show_sub? 'fa fa-minus': 'fa fa-plus'"></i><span class="badge badge-danger pull-right programbadge" style="position: absolute;top:-8px;left:26px;background: #d9534f;color: white;">{{row.subuser.length}}</span></button></td>
                         <td class="text-center">
                             <img class="img-avatar img-avatar48" src="/static/img/avatar6.jpg" alt="">
                         </td>
@@ -135,9 +142,57 @@
                             </button>
                         </td>
                     </tr>
-                    <tbody>
+
+                    
+                    
                     </tbody>
-                    <tfoot ng-show="client_data.length>25">
+
+
+                    <tbody ng-repeat-end ng-show="show_sub">
+                        <tr class="bg-gray-light" ng-repeat="row1 in row.subuser">
+
+                        <td class="text-right">{{$index+1}}.</td>
+                        <td class="text-center">
+                            <img class="img-avatar img-avatar48" src="/static/img/avatar6.jpg" alt="">
+                        </td>
+                        <td>{{row1.contact_name}}</td>
+                        <td>
+                            <span ng-if="row1.is_active===true">
+                                            <span class="label label-info">active</span>
+                            </span>
+                            <span ng-if="row1.is_active===false">
+                                            <span class="label label-default">inactive</span>
+                            </span>
+                        </td>
+                        <td>{{row1.university}}</td>
+                        <td>{{row1.department}}
+                            <span ng-if="row1.department===null">
+                                            N/A
+                                        </span>
+                        </td>
+                        <td><a href="mailto:{{row1.email}}">{{row1.email}}</a></td>
+                        <td class="text-right">
+                            
+                            <div class="btn-group">
+                                <button class="btn btn-default" data-toggle="modal" data-target="#modal-large" ng-click="editold(row1.id)" data-js-blur>
+                                    <a data-uib-tooltip="Edit" data-tooltip-placement="top" class="fa fa-pencil text-success">
+                                    </a>
+                                </button>
+                                <button class="btn btn-default" data-toggle="modal" data-target="#myModal1" ng-click="impersonate(row1.id)" data-js-blur>
+                                    <a data-uib-tooltip="Impersonate" data-tooltip-placement="top" class="fa fa-user-secret text-info">
+                                    </a>
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <button ng-disabled="!row1.is_active" class="btn btn-default" confirmed-click="deactivate(row1.id)" ng-confirm-click="Do you really want to delete?" data-js-blur>
+                                <a data-uib-tooltip="Deactivate" data-tooltip-placement="top" class="fa fa-times text-danger">
+                                </a>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot ng-show="displayeddata.length>25">
                         <tr>
                             <td colspan="3">
                                 <br>
@@ -455,7 +510,7 @@
                                                                     <th style="padding-left:15px;vertical-align: middle;text-decoration: none; cursor: default;" class="h4 text-flat font-w700">Select the programs for the client</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody class="js-table-sections-header bg-white" ng-repeat-start="row in dep_pro_table">
+                                                            <tbody class="js-table-sections-header bg-white" ng-repeat-start="row in dep_pro_table_displayed">
                                                                 <tr>
                                                                     <td>
                                                                         <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.programs.length===0}">
@@ -588,6 +643,7 @@
                                                             <tbody ng-repeat-end>
                                                                 <tr class="bg-white" ng-repeat="row1 in row.competing_program">
                                                                     <td class="text-center">
+                                                                        
                                                                         <label ng-if="!pwhide">{{row1.order}}.</label>
                                                                         <select ng-if="pwhide" ng-model="row1.order" ng-options="num for num in orders" ng-change="put_competing(row1.object_id, row.customer_program_id, row1.program_id, row1.order, row1.enhancement_status)">
                                                                         </select>
@@ -596,9 +652,10 @@
                                                                         <form class="form-inline">
                                                                             <div class="form-group" style="margin-bottom:0">
                                                                                 <div class="col-md-12">
-                                                                                
+                            
                                                                                     <select ng-if="pwhide" data-js-select2 ng-model="row1.program_id" class="form-control" id="example-select2" name="example-select2" style="width: 100%;" data-placeholder="Choose one.." ng-options="p.object_id as p.display for p in competing_program_array" ng-change="put_competing(row1.object_id, row.customer_program_id, row1.program_id, row1.order, row1.enhancement_status)">
                                                                                         <option></option>
+
                                                                                     </select>
 
                                                                                     <select ng-if="!pwhide" data-js-select2 ng-model="row1.object_id" class="form-control" id="example-select2" name="example-select2" style="width: 100%;" data-placeholder="Choose one.." ng-options="p.object_id as p.display for p in competing_program_array">

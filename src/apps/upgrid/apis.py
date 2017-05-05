@@ -1214,6 +1214,8 @@ class CustomerCompetingProgramCRUD(APIView):
 
     def post(self, request):
         perm = self.is_manager(request)
+        print(request.data['customer_competing_program'])
+        print('post')
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         for p in request.data['customer_competing_program']:
@@ -1227,16 +1229,23 @@ class CustomerCompetingProgramCRUD(APIView):
 
     def put(self, request):
         perm = self.is_manager(request)
+        print(request.data['customer_competing_program'])
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         for p in request.data['customer_competing_program']:
             ccp = CustomerCompetingProgram.objects.filter(object_id=p.get('object_id'))
-            ccp.update(
-                customer_program=UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id')),
-                program=Program.objects.get(object_id=p.get('program_id')),
-                order=p.get('order'),
-                enhancement_status=p.get('enhancement_status')
-            )
+            print(p.get('program_id'))
+            print('program_id')
+            print(p.get('customer_program_id'))
+            try:
+                ccp.update(
+                    customer_program=UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id')),
+                    program=Program.objects.get(object_id=p.get('program_id')),
+                    order=p.get('order'),
+                    enhancement_status=p.get('enhancement_status')
+                )
+            except:
+                raise ValidationError('Bad request!')
 
         return Response({"success": _("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
 

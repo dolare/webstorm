@@ -68,7 +68,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
                     console.log("unconfirmed_enhancement"+ JSON.stringify(response.data));
                     $scope.displayeddata1 = response.data
 
-                    $scope.rowCollection = [].concat($scope.displayeddata1);
+                    
 
                     App.blocks('#confirmloading', 'state_normal');
                   }).
@@ -248,7 +248,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
           console.log("unconfirmed_enhancement"+ JSON.stringify(response.data));
           $scope.displayeddata1 = response.data
 
-          $scope.rowCollection = [].concat($scope.displayeddata1);
+          
 
           App.blocks('#confirmloading', 'state_normal');
         }).
@@ -287,7 +287,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
           console.log("%%%result.raw="+JSON.stringify(result.raw));
           //total num of programs
           $scope.totalnum = result.raw.count;
-          
+
           $scope.displayeddata = tableDataService.getEnhancement(result.data);
 
           console.log("displayeddata="+JSON.stringify($scope.displayeddata));
