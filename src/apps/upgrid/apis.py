@@ -1998,57 +1998,109 @@ class EnhancementReportsUpdateAPI(APIView):
                     print("b is :")
                     print(b)
 
-                for k, v in a.items():  # top level
-                    if k == 'length':
-                        continue
-                    if k in b.keys():
-                        v_of_b = b[k]
-                    else:
-                        if isinstance(v, dict):
+                    for k, v in a.items():  # top level
+                        if k == 'length':
+                            continue
+                        if k in b.keys():
+                            v_of_b = b[k]
+                        else:
+                            if isinstance(v, dict):
+                                new_diff[k] = {}
+                                old_diff[k] = {}
+
+                                for k2, v2 in v.items():
+                                    new_diff[k][k2] = v[k2]
+                                    old_diff[k][k2] = {}
+                            else:
+                                new_diff[k] = v
+                                old_diff[k] = {}
+                            continue
+
+                        # 3 list
+                        if (k in fk_list) and (v != v_of_b):  # if top is in fk_list, all 3 list handled here
+                            if v == '' and v_of_b is None:
+                                continue
+                            if v is None and v_of_b == '':
+                                continue
+                            old_diff[k] = v_of_b  # top level
+                            new_diff[k] = v
+                        # dictionary
+                        elif isinstance(v, dict):  # if top is dict
+                            old_diff[k] = {}
+                            new_diff[k] = {}
+
+                            for k2, v2 in v.items():
+                                if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
+                                    if v2 == '' and v_of_b[k2] is None:
+                                        continue
+                                    if v2 is None and v_of_b[k2] == '':
+                                        continue
+                                    old_diff[k][k2] = v_of_b[k2]
+                                    new_diff[k][k2] = v[k2]
+                            if len(old_diff[k]) == 0 and len(new_diff[k]) == 0:
+                                old_diff.pop(k, None)
+                                new_diff.pop(k, None)
+                        # other list and simple <key,value> pair
+                        else:
+                            if v != b[k]:
+                                if v == '' and b[k] is None:
+                                    continue
+                                if v is None and b[k] == '':
+                                    continue
+                                old_diff[k] = v_of_b
+                                new_diff[k] = v
+                if a['length'] > b['length'] or a['length'] == b['length']:
+                    for k, v in a.items():  # top level
+                        if k == 'length':
+                            continue
+                        if k in b.keys():
+                            v_of_b = b[k]
+                        else:
+                            if isinstance(v, dict):
+                                old_diff[k] = {}
+                                new_diff[k] = {}
+
+                                for k2, v2 in v.items():
+                                    old_diff[k][k2] = v[k2]
+                                    new_diff[k][k2] = {}
+                            else:
+                                old_diff[k] = v
+                                new_diff[k] = {}
+                            continue
+
+                        # 3 list
+                        if (k in fk_list) and (v != v_of_b):  # if top is in fk_list, all 3 list handled here
+                            if v == '' and v_of_b is None:
+                                continue
+                            if v is None and v_of_b == '':
+                                continue
+                            new_diff[k] = v_of_b  # top level
+                            old_diff[k] = v
+                        # dictionary
+                        elif isinstance(v, dict):  # if top is dict
                             new_diff[k] = {}
                             old_diff[k] = {}
 
                             for k2, v2 in v.items():
-                                new_diff[k][k2] = v[k2]
-                                old_diff[k][k2] = {}
+                                if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
+                                    if v2 == '' and v_of_b[k2] is None:
+                                        continue
+                                    if v2 is None and v_of_b[k2] == '':
+                                        continue
+                                    new_diff[k][k2] = v_of_b[k2]
+                                    old_diff[k][k2] = v[k2]
+                            if len(old_diff[k]) == 0 and len(new_diff[k]) == 0:
+                                new_diff.pop(k, None)
+                                old_diff.pop(k, None)
+                        # other list and simple <key,value> pair
                         else:
-                            new_diff[k] = v
-                            old_diff[k] = {}
-                        continue
-
-                    # 3 list
-                    if (k in fk_list) and (v != v_of_b):  # if top is in fk_list, all 3 list handled here
-                        if v == '' and v_of_b is None:
-                            continue
-                        if v is None and v_of_b == '':
-                            continue
-                        old_diff[k] = v_of_b  # top level
-                        new_diff[k] = v
-                    # dictionary
-                    elif isinstance(v, dict):  # if top is dict
-                        old_diff[k] = {}
-                        new_diff[k] = {}
-
-                        for k2, v2 in v.items():
-                            if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
-                                if v2 == '' and v_of_b[k2] is None:
+                            if v != b[k]:
+                                if v == '' and b[k] is None:
                                     continue
-                                if v2 is None and v_of_b[k2] == '':
+                                if v is None and b[k] == '':
                                     continue
-                                old_diff[k][k2] = v_of_b[k2]
-                                new_diff[k][k2] = v[k2]
-                        if len(old_diff[k]) == 0 and len(new_diff[k]) == 0:
-                            old_diff.pop(k, None)
-                            new_diff.pop(k, None)
-                    # other list and simple <key,value> pair
-                    else:
-                        if v != b[k]:
-                            if v == '' and b[k] is None:
-                                continue
-                            if v is None and b[k] == '':
-                                continue
-                            old_diff[k] = v_of_b
-                            new_diff[k] = v
+                                new_diff[k] = v_of_b
+                                old_diff[k] = v
                 print("diff is:")
                 print(diff)
                 return diff
