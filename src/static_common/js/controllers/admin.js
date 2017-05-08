@@ -1270,6 +1270,8 @@ admin.controller('AdminMainController',
 
         }
 
+        console.log("$scope.post_competing_program_array="+JSON.stringify($scope.post_competing_program_array));
+
         $scope.add_edit_program = [];
 
 
