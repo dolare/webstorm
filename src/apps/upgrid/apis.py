@@ -16,9 +16,10 @@ import urllib.request
 from rest_framework import generics
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.filters import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.status import (
-    HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, HTTP_403_FORBIDDEN )
+    HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST)
 from rest_framework.views import APIView
 from django.utils.six import BytesIO
 from rest_framework.parsers import JSONParser
@@ -40,7 +41,8 @@ from .models import (
     UpgridAccountManager, UniversityCustomer, UniversityCustomerProgram,
     CustomerCompetingProgram, ClientAndProgramRelation, WhoopsReports,
     EnhancementReports)
-from .api_serializers import * 
+from .api_serializers import *
+from .filter import UniversityCustomerFilter
 
 # used shared report
 import zlib
@@ -122,7 +124,7 @@ class ResetPassword(generics.GenericAPIView):
                                     "Please click <a href='https://%s/#/upgrid/reset/%s/'> here</a> to reset your Upgrid password"
                                     "!<br>If the above link does not work for you, please copy and paste the following into your browser address "
                                     "bar: https://%s/#/upgrid/reset/%s/<br>")
-                    message = EmailMessage(subject='Reset Password', body=html_content %(user_reset.contact_name,
+                    message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
                                            request.META['HTTP_HOST'], token,request.META['HTTP_HOST'],token), to=[request.data['email']])
                     message.content_subtype = 'html'
                     message.send()
@@ -524,6 +526,23 @@ class CustomerDetail(APIView):
         else:
             serializer = SubUserDetailSerializer(customer)
             return Response(data=serializer.data)
+
+
+class UniversityCustomerListAPI(generics.ListAPIView):
+    """
+    Get list of sub user
+
+    """
+    filter_backends = (DjangoFilterBackend, )
+    serializer_class = SubuserListSerializer
+    filter_class = UniversityCustomerFilter
+
+    def get_queryset(self, *args, **kwargs):
+        user = self.request.user
+        if UpgridAccountManager.objects.filter(id=user.id).exists():
+            return UniversityCustomer.objects.filter(account_manager=user)
+        else:
+            return UniversityCustomer.objects.filter(main_user_id=str(user.id))
 
 
 # Post create new sub_user/ Put change sub_user's is_active status
@@ -1417,27 +1436,30 @@ class WhoopsWebReports(APIView):
                 return False
 
     def get_object(self, object_id, client):
-
-        wur = WhoopsUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
-        cp = UniversityCustomerProgram.objects.get(object_id=object_id)
+        try:
+            wur = WhoopsUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
+        except WhoopsUpdate.DoesNotExist:
+            return None
+        cp = wur.customer_program
         if wur.existing_report:
             existing_report = JSONParser().parse(BytesIO(zlib.decompress(wur.existing_report)))
         else:
             existing_report = "None"
         if wur.update_diff:
             update_diff = JSONParser().parse(BytesIO(zlib.decompress(wur.update_diff)))
-            print(update_diff)
         else:
             update_diff = "None"
         context = {'existing_report': existing_report, 'update_diff': update_diff,
-                   'whoops_released_time':cp.whoops_final_release_time,
-                   'report_last_edit_time':wur.last_edit_time}
+                   'whoops_released_time': cp.whoops_final_release_time,
+                   'report_last_edit_time': wur.last_edit_time}
         return context
 
     def get(self, request, object_id, client_id=None):
         user = self.check_permission(request, object_id, client_id)
         if user:
             context = self.get_object(object_id, user)
+            if context is None:
+                return Response({"Failed": _("WhoopsUpdate does not found!")}, status=HTTP_400_BAD_REQUEST)
             return Response(context, status=HTTP_200_OK)
 
         else:
@@ -1661,14 +1683,14 @@ class WhoopsReportsUpdateAPI(APIView):
                 customer_whoops_programs = UniversityCustomerProgram.objects.all().\
                     filter(customer=user, whoops_final_release='True')
                 for customer_program in customer_whoops_programs:
-                    eru, created = WhoopsUpdate.objects.get_or_create(customer_program=customer_program,
+                    wru, created = WhoopsUpdate.objects.get_or_create(customer_program=customer_program,
                                                                       customer=user, most_recent=True)
                     print('second test')
-                    new_whoops_report_dict = self.get_programs_data(request,customer_program)
+                    new_whoops_report_dict = self.get_programs_data(request, customer_program)
                     if new_whoops_report_dict is not None:
                         json_str = JSONRenderer().render(new_whoops_report_dict)  # render to bytes with utf-8 encoding
                         raw_new_whoops_report = zlib.compress(json_str)
-                        self.whoops_compare_process(eru, raw_new_whoops_report, new_whoops_report_dict)
+                        self.whoops_compare_process(wru, raw_new_whoops_report, new_whoops_report_dict)
 
     def put(self, request):
         if not self.is_manager(request):
@@ -1764,10 +1786,7 @@ class ClientViewWhoopsUpdate(APIView):
         return user
 
     def get(self, request, object_id=None, client_id=None):
-        print(object_id)
-        print(client_id)
         user = self.get_user(request, object_id, client_id)
-        print(user)
         cust_pro = UniversityCustomerProgram.objects.get(object_id=object_id)
         if not user:
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
@@ -1788,7 +1807,6 @@ class ClientViewWhoopsUpdate(APIView):
                 prev_diff=update_report.update_diff,
                 last_edit_time=update_report.last_edit_time)
             new_wru.save()
-            print(update_report.existing_report)
             if new_wru.existing_report:
                 existing_report = JSONParser().parse(BytesIO(zlib.decompress(new_wru.existing_report)))
             else:
@@ -1798,29 +1816,26 @@ class ClientViewWhoopsUpdate(APIView):
             else:
                 update_diff = "None"
         else:
-            print('if2')
+
             if update_report.existing_report:
-                print('1')
+
                 existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
-                print(existing_report)
+
             else:
-                print('2')
+
                 existing_report = "None"
             if update_report.update_diff and client_id:
                 update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
             elif update_report.prev_diff:
-                print('end1')
-                print(zlib.decompress(update_report.prev_diff))
-                print(BytesIO(zlib.decompress(update_report.prev_diff)))
+
                 if not zlib.decompress(update_report.prev_diff) == b'':
                     update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.prev_diff)))
                 else:
                     update_diff = '' 
             else:
-                print('end2')
+
                 update_diff = "None"
 
-        print('end3')
         # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
         context = {'existing_report': existing_report, 'update_diff': update_diff,
                    'university': cust_pro.program.university_school.university_foreign_key.name,
@@ -1828,7 +1843,7 @@ class ClientViewWhoopsUpdate(APIView):
                    'program': cust_pro.program.program_name, 'degree': cust_pro.program.degree.name,
                    'whoops_final_release_time': cust_pro.whoops_final_release_time,
                    'report_last_edit_time': update_report.last_edit_time}
-        print(context)
+
         return Response(context, HTTP_200_OK)
 
 
@@ -1963,7 +1978,7 @@ class EnhancementReportsUpdateAPI(APIView):
                    'tuition_unit',  # second level dict{name,date} in t,t2,t3,t4,t5
                    'university_school',  # second level dict{university,school,date} in p,p2,p3,p4,p5
                    ]
-        ignore = ['date_modified']
+        ignore = ['date_modified','length']
 
         def compare(a, b):
             diff = {}
@@ -1976,55 +1991,120 @@ class EnhancementReportsUpdateAPI(APIView):
             # if not a or not b:
             #     return None
             if isinstance(a, dict) and isinstance(b, dict):
-                #print(a)
-                #print(b)
-                print('if')
-                print(len(a) == len(b))
-                print(a.keys())
-                print('...................')
-                print(b.keys())
-                print('...................')
+                if a['length'] < b['length']:
+                    temp = b
+                    b = a
+                    a = temp
+                    print("a is :")
+                    print(a)
+                    print("b is :")
+                    print(b)
 
-                for k, v in a.items():  # top level
-                    if k in b.keys():
-                        v_of_b = b[k]
+                    for k, v in a.items():  # top level
+                        if k == 'length':
+                            continue
+                        if k in b.keys():
+                            v_of_b = b[k]
+                        else:
+                            if isinstance(v, dict):
+                                new_diff[k] = {}
+                                old_diff[k] = {}
 
-                    # 3 list
-                    if (k in fk_list) and (v != v_of_b):  # if top is in fk_list, all 3 list handled here
-                        if v == '' and v_of_b is None:
+                                for k2, v2 in v.items():
+                                    new_diff[k][k2] = v[k2]
+                                    old_diff[k][k2] = {}
+                            else:
+                                new_diff[k] = v
+                                old_diff[k] = {}
                             continue
-                        if v is None and v_of_b == '':
+
+                        # 3 list
+                        if (k in fk_list) and (v != v_of_b):  # if top is in fk_list, all 3 list handled here
+                            if v == '' and v_of_b is None:
+                                continue
+                            if v is None and v_of_b == '':
+                                continue
+                            old_diff[k] = v_of_b  # top level
+                            new_diff[k] = v
+                        # dictionary
+                        elif isinstance(v, dict):  # if top is dict
+                            old_diff[k] = {}
+                            new_diff[k] = {}
+
+                            for k2, v2 in v.items():
+                                if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
+                                    if v2 == '' and v_of_b[k2] is None:
+                                        continue
+                                    if v2 is None and v_of_b[k2] == '':
+                                        continue
+                                    old_diff[k][k2] = v_of_b[k2]
+                                    new_diff[k][k2] = v[k2]
+                            if len(old_diff[k]) == 0 and len(new_diff[k]) == 0:
+                                old_diff.pop(k, None)
+                                new_diff.pop(k, None)
+                        # other list and simple <key,value> pair
+                        else:
+                            if v != b[k]:
+                                if v == '' and b[k] is None:
+                                    continue
+                                if v is None and b[k] == '':
+                                    continue
+                                old_diff[k] = v_of_b
+                                new_diff[k] = v
+                if a['length'] > b['length'] or a['length'] == b['length']:
+                    for k, v in a.items():  # top level
+                        if k == 'length':
                             continue
-                        new_diff[k] = v_of_b  # top level
-                        old_diff[k] = v
-                    # dictionary
-                    elif isinstance(v, dict):  # if top is dict
-                        new_diff[k] = {}
-                        old_diff[k] = {}
-                        print(';====')
-                        print(v_of_b)
-                        for k2, v2 in v.items():
-                            if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
-                                if v2 == '' and v_of_b[k2] is None:
-                                    continue
-                                if v2 is None and v_of_b[k2] == '':
-                                    continue
-                                new_diff[k][k2] = v_of_b[k2]
-                                old_diff[k][k2] = v[k2]
-                        if len(new_diff[k]) == 0 and len(old_diff[k]) == 0:
-                            new_diff.pop(k, None)
-                            old_diff.pop(k, None)
-                    # other list and simple <key,value> pair
-                    else:
-                        if v != b[k]:
-                            if v == '' and b[k] is None:
+                        if k in b.keys():
+                            v_of_b = b[k]
+                        else:
+                            if isinstance(v, dict):
+                                old_diff[k] = {}
+                                new_diff[k] = {}
+
+                                for k2, v2 in v.items():
+                                    old_diff[k][k2] = v[k2]
+                                    new_diff[k][k2] = {}
+                            else:
+                                old_diff[k] = v
+                                new_diff[k] = {}
+                            continue
+
+                        # 3 list
+                        if (k in fk_list) and (v != v_of_b):  # if top is in fk_list, all 3 list handled here
+                            if v == '' and v_of_b is None:
                                 continue
-                            if v is None and b[k] == '':
+                            if v is None and v_of_b == '':
                                 continue
-                            new_diff[k] = v_of_b
+                            new_diff[k] = v_of_b  # top level
                             old_diff[k] = v
+                        # dictionary
+                        elif isinstance(v, dict):  # if top is dict
+                            new_diff[k] = {}
+                            old_diff[k] = {}
+
+                            for k2, v2 in v.items():
+                                if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
+                                    if v2 == '' and v_of_b[k2] is None:
+                                        continue
+                                    if v2 is None and v_of_b[k2] == '':
+                                        continue
+                                    new_diff[k][k2] = v_of_b[k2]
+                                    old_diff[k][k2] = v[k2]
+                            if len(old_diff[k]) == 0 and len(new_diff[k]) == 0:
+                                new_diff.pop(k, None)
+                                old_diff.pop(k, None)
+                        # other list and simple <key,value> pair
+                        else:
+                            if v != b[k]:
+                                if v == '' and b[k] is None:
+                                    continue
+                                if v is None and b[k] == '':
+                                    continue
+                                new_diff[k] = v_of_b
+                                old_diff[k] = v
+                print("diff is:")
                 print(diff)
-                print('diff.....')
                 return diff
 
         res_dict = compare(a, b)
@@ -2078,8 +2158,6 @@ class EnhancementReportsUpdateAPI(APIView):
         else:
             users = UniversityCustomer.objects.filter(account_type='main')
             for user in users:
-                print("enhancement:")
-                print(user)
                 # login_time = user.last_login_time # get latest login time
                 customer_enhancement_programs = UniversityCustomerProgram.objects.all().\
                     filter(customer=user, enhancement_final_release='True', customer_confirmation='Yes')
@@ -2204,9 +2282,6 @@ class ManagerEnhancementDiffConfirmation(APIView):
         eru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
         eru.last_edit_time = timezone.now()
         eru.save()
-        print(eru.update_diff)
-        print(eru.object_id)
-        print('....update')
 
         return Response({"success": _("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
 
@@ -2231,18 +2306,18 @@ class ClientViewEnhancementUpdate(APIView):
     def get(self, request, object_id=None, client_id=None):
         user = self.get_user(request, object_id, client_id)
         customer_program = UniversityCustomerProgram.objects.get(object_id=object_id)
-        print (1)
+
         if not user:
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
             update_report = EnhancementUpdate.objects.get(customer_program=customer_program, customer=user,
                                                           most_recent=True)
-            print(update_report.update_diff)
+
         except EnhancementUpdate.DoesNotExist:
             return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
         if update_report.cache_report and not client_id:
-            print(2)
+
             update_report.existing_report = update_report.cache_report
             update_report.most_recent = False
             update_report.save()
@@ -2264,35 +2339,29 @@ class ClientViewEnhancementUpdate(APIView):
             else:
                 update_diff = "None"
 
-            print(update_diff)
-            print('diff1')
+
 
         else:
             if update_report.existing_report and not zlib.decompress(update_report.existing_report) == b'':
                 existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
-                print('0.2')
-                print(update_report.object_id)
-                print(update_report.update_diff)
+
             else:
                 existing_report = "None"
-                print('0.1')
+
             if update_report.update_diff and client_id and not zlib.decompress(update_report.update_diff)==b'':  # if manager view report before client and has updates
                 update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
-                print('0.3')
+
             elif update_report.prev_diff:
                 if not zlib.decompress(update_report.prev_diff) == b'':
                     update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.prev_diff)))
                 else:
                     update_diff = ''
-                print('update')
-                print(update_diff)
-                print('diff')
+
             else:
-                print(3)
+
                 update_diff = "None"
 
-            print(update_diff)
-            print('diff2')
+
         # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
         context = {'existing_report': existing_report, 'update_diff': update_diff,
                    'enhancement_final_release_time': customer_program.enhancement_final_release_time,
@@ -2305,7 +2374,6 @@ class SendEmail(APIView):
     def send_update_email(self):
         for user in UniversityCustomer.objects.filter(account_type='main'):
             total_programs = ConfirmedUpdateEmailQueue.objects.filter(customer=user).values('confirmed_program')
-
             if len(total_programs) != 0:
                 try:
                     html_content = "Hello, %s! <br>You have several updated programs:</br> %s"
@@ -2340,7 +2408,6 @@ class UnconfirmedPrograms(generics.ListAPIView):
     def get_queryset(self, *args, **kwargs):
         #if is_manager(self.request):
         client_id = self.request.user.id
-        print(client_id)
-        query_set = UniversityCustomerProgram.objects.filter(Q(customer = client_id)&Q(customer_confirmation = 'No'))
+        query_set = UniversityCustomerProgram.objects.filter(Q(customer = client_id)&Q(customer_confirmation='No'))
 
         return query_set

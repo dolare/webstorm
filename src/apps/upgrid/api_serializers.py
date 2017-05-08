@@ -563,9 +563,8 @@ class ManagerEnhancementUpdateNumberSerializer(serializers.ModelSerializer):
             res = JSONParser().parse(json_string)
             length = 0
             for k in res["new"]:
-                print(k)
-                # if k == 'length':
-                #     continue
+                if k == 'length':
+                    continue
                 for k2 in res["new"][k]:
                     length += 1
             print(length)

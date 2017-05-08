@@ -6,15 +6,15 @@ urlpatterns=[
     url(r'^$', apis.index, name='index'),
     ##############################################
     # --------------------------New Designed Upgrid API------------------------
-    
+
     # ---------------------------Login API----------------------------
-    
+
     # POST login +++
-    url(r'^api/upgrid/access_token/$', apis.CustomizeJWT.as_view()),  
+    url(r'^api/upgrid/access_token/$', apis.CustomizeJWT.as_view()),
 
     # PUT change password +++
-    url(r'^api/upgrid/user/password/$', apis.PasswordChangeView.as_view()), 
-    
+    url(r'^api/upgrid/user/password/$', apis.PasswordChangeView.as_view()),
+
     # PUT reset password and POST send reset password email
     url(r'^api/upgrid/user/password/reset/$', apis.ResetPassword.as_view()),
 
@@ -36,7 +36,7 @@ urlpatterns=[
 
     url(r'^api/upgrid/user/released_whoops/(?P<client_id>[0-9a-fA-F\-]+)/$', apis.FinalReleasedWhoops.as_view()),
 
-    # numbers of finalreleased enhancement reports status == "True" 
+    # numbers of finalreleased enhancement reports status == "True"
     url(r'^api/upgrid/user/released_enhancement/$', apis.FinalReleasedEnhancement.as_view()),
 
     url(r'^api/upgrid/user/released_enhancement/(?P<object_id>[0-9a-fA-F\-]+)/$',
@@ -45,6 +45,8 @@ urlpatterns=[
     # get customer detail information +++
     url(r'^api/upgrid/user/$', apis.CustomerDetail.as_view()),
     url(r'^api/upgrid/user/(?P<client_id>[0-9a-fA-F\-]+)/$', apis.CustomerDetail.as_view()),
+
+    url(r'^api/upgrid/user/UniversityCustomer$', apis.UniversityCustomerListAPI.as_view()),  # new
 
     # Put change subuser is_active status, Post create subuser
     url(r'^api/upgrid/user/subuser$', apis.CreateOrChangeSubUser.as_view()),
@@ -77,7 +79,7 @@ urlpatterns=[
         apis.ShareReports.as_view(),),
 
     # ------------------------------------Account Manager APIs-----------------------------------
-    
+
     # Check if the login user is manager. GET request
     url(r'^api/upgrid/accountmanager/is_manager/$', apis.IsAccountManager.as_view()),
 
@@ -99,7 +101,7 @@ urlpatterns=[
         apis.CustomerCompetingProgramCRUD.as_view()),
     url(r'^api/upgrid/accountmanager/client/competing_program/$', apis.CustomerCompetingProgramCRUD.as_view()),
 
-    # get all Ceebs in database. Used for accountmanager create client's Ceeb. GET request. 
+    # get all Ceebs in database. Used for accountmanager create client's Ceeb. GET request.
     url(r'api/upgrid/accountmanager/ceebs/$', apis.UniversitySchoolAPI.as_view()),
 
     # get all programs' object_id, ceeb code and name. GET request
