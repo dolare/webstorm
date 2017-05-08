@@ -1,6 +1,6 @@
 //for counting the number of program checked, then display the num on the cart
 
-angular.module('counterServiceModule', [])
+angular.module('myApp')
     .factory('cartCounter', function($localStorage, $sessionStorage) {
 
 

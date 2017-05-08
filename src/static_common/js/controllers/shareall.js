@@ -1,6 +1,6 @@
 //for the cart page
 
-angular.module('myApp.shareall', []).
+angular.module('myApp').
 controller('ShareAllController',
     function($stateParams, $location, $timeout, reportService, tableDataService, $scope, cartCounter, $window, $http, authenticationSvc, $state, $filter, $q, $localStorage, $sessionStorage) {
         var token = authenticationSvc.getUserInfo().accessToken;

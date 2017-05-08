@@ -1,6 +1,7 @@
 //for the success(Home) parent page
 
-var mainApp = angular.module('myApp.login.success', ['auth', 'ngCookies', 'ui.router', 'myApp.login.success.whoops', 'myApp.login.success.enhancement', 'myApp.login.success.cart']).
+//var mainApp = angular.module('myApp.login.success', ['auth', 'ngCookies', 'ui.router', 'myApp.login.success.whoops', 'myApp.login.success.enhancement', 'myApp.login.success.cart']).
+angular.module('myApp').
 controller('SuccessController',
     function(avatarService, $timeout, Ceeb, $scope, $window, $location, $http, authenticationSvc, $cookies, $state, apiService, $localStorage, $sessionStorage, cartCounter) {
         
@@ -218,37 +219,37 @@ controller('SuccessController',
  */
 
 // Side Overlay Controller
-mainApp.controller('SideOverlayCtrl', ['$scope', '$localStorage', '$window',
-    function($scope, $localStorage, $window) {
-        // When view content is loaded
-        $scope.$on('$includeContentLoaded', function() {
-            // Handle Scrolling
-            $scope.helpers.uiHandleScroll();
-        });
-    }
-]);
+// mainApp.controller('SideOverlayCtrl', ['$scope', '$localStorage', '$window',
+//     function($scope, $localStorage, $window) {
+//         // When view content is loaded
+//         $scope.$on('$includeContentLoaded', function() {
+//             // Handle Scrolling
+//             $scope.helpers.uiHandleScroll();
+//         });
+//     }
+// ]);
 
-// Sidebar Controller
-mainApp.controller('SidebarCtrl', ['$scope', '$localStorage', '$window', '$location',
-    function($scope, $localStorage, $window, $location) {
-        // When view content is loaded
-        $scope.$on('$includeContentLoaded', function() {
-            // Handle Scrolling
-            $scope.helpers.uiHandleScroll();
+// // Sidebar Controller
+// mainApp.controller('SidebarCtrl', ['$scope', '$localStorage', '$window', '$location',
+//     function($scope, $localStorage, $window, $location) {
+//         // When view content is loaded
+//         $scope.$on('$includeContentLoaded', function() {
+//             // Handle Scrolling
+//             $scope.helpers.uiHandleScroll();
 
-            // Get current path to use it for adding active classes to our submenus
-            $scope.path = $location.path();
-        });
-    }
-]);
+//             // Get current path to use it for adding active classes to our submenus
+//             $scope.path = $location.path();
+//         });
+//     }
+// ]);
 
-// Header Controller
-mainApp.controller('HeaderCtrl', ['$scope', '$localStorage', '$window',
-    function($scope, $localStorage, $window) {
-        // When view content is loaded
-        $scope.$on('$includeContentLoaded', function() {
-            // Transparent header functionality
-            $scope.helpers.uiHandleHeader();
-        });
-    }
-]);
+// // Header Controller
+// mainApp.controller('HeaderCtrl', ['$scope', '$localStorage', '$window',
+//     function($scope, $localStorage, $window) {
+//         // When view content is loaded
+//         $scope.$on('$includeContentLoaded', function() {
+//             // Transparent header functionality
+//             $scope.helpers.uiHandleHeader();
+//         });
+//     }
+// ]);

@@ -1,4 +1,4 @@
-angular.module('myApp.login.success.profile', []).
+angular.module('myApp').
 controller('ProfileController',
   function($log, avatarService, $timeout, ajaxService, $filter, tableDataService, List, $scope, $location, $window, $http, authenticationSvc, $state) {
 

@@ -1,6 +1,6 @@
 //for the login and forgot page
 
-angular.module('myApp.reset.controllers', []).
+angular.module('myApp').
 controller('ResetController',
     function($timeout, $stateParams, $scope, $location, $window, $http, authenticationSvc, $state) {
         console.log("reset password entered");

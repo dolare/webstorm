@@ -1,5 +1,5 @@
 //for the enhancement page
-angular.module('myApp.login.success.enhancement', []).
+angular.module('myApp').
 controller('EnhancementController', function(updateService, avatarService, ajaxService, List, reportService, apiService, tableDataService, $localStorage, $sessionStorage, $scope, $window, $location, $http, authenticationSvc, $state, $filter, $q) {
     // $scope.isActive = function(route) {
     //     return route === $location.path();
@@ -13,10 +13,6 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
     /////////
     
-
-
-
-    /////////
 
 
 
@@ -96,16 +92,11 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
      }
 
-
-
-
-   
     $scope.EnhancementViewer = function(Id){
       $scope.date = new Date();
       App.blocks('#enhancement_loading', 'state_loading');
-      //angular.element(document.getElementById('#testbutton')).focus();
-      //jQuery('#testbutton').focus();
-      
+            // App.blocks('#scrolltop_enhancement_page', 'state_loading');
+
       
           $http({
                 url: '/api/upgrid/update/view/enhancement/' + Id + '/' +avatarService.getClientId(),

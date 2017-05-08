@@ -3,40 +3,13 @@
 
 // Declare app level module which depends on filters, and services
 var App = angular.module('myApp', [
-  'ngRoute',
-  'myApp.reset.controllers',
-  'myApp.login.controllers',
-  'myApp.login.success',
-  'myApp.login.success.dashboard',
-  'myApp.login.success.whoops',
-  'myApp.login.success.enhancement',
-  'myApp.login.success.cart',
-  'myApp.login.success.profile',
-  'myApp.shareall',
-  'myApp.admin',
-  'myApp.ShareWhoops',
-  'myApp.ShareEnhancement',
-  'auth',
-  'avatar',
+  'ngCookies',
   'ui.router',
   'ngStorage',
-  'apiServiceModule',
-  'counterServiceModule',
-  'tableServiceModule',
   'ui.bootstrap',
-  'smart-table',
-  'reportServiceModule',
-  'updateServiceModule',
   'oc.lazyLoad',
-  'ajaxModule',
   'ngAnimate',
   'ngSanitize',
-  'ngProgress',
-  'frapontillo.bootstrap-duallistbox',
-  'duScroll',
-  'xeditable',
-  'mwl.confirm',
-  'angularMoment'
 
 ]);
 
@@ -56,8 +29,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
         var userInfo = authenticationSvc.getUserInfo();
         if (userInfo && userInfo.admin === "True") {
 
-          //console.log("start logout");
-          //console.log(userInfo);
           return $q.when(userInfo);
 
         } else {
@@ -66,8 +37,39 @@ App.config(function($stateProvider, $urlRouterProvider) {
           });
         }
       },
+
+      depsAdmin: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.css',
+                                '/static/js/third-party/bootstrap-duallistbox/bootstrap-duallistbox.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
+                                '/static/js/third-party/bootstrap-wizard/jquery.bootstrap.wizard.min.js',
+                                '/static/js/third-party/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js',
+                                '/static/js/third-party/angular-bootstrap-duallistbox.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
+                                '/static/js/third-party/masked-inputs/jquery.maskedinput.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js',
+                                '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js',
+                                '/static/js/services/tableService.js',
+                                '/static/js/services/apiService.js',
+                                '/static/js/controllers/admin.js',
+
+   
+                            ]
+                        });
+                    }], 
+
       //get client list
-      Client: function(apiService, authenticationSvc) {
+      Client: function(depsAdmin, apiService, authenticationSvc) {
         
         if(authenticationSvc.getUserInfo().admin === "True"){
             var token = authenticationSvc.getUserInfo().accessToken;
@@ -76,14 +78,10 @@ App.config(function($stateProvider, $urlRouterProvider) {
         } else {
             return null;
         }
-        
-
+      
       }
-
-
     }
     //end of resolve
-
 
   }).
 
@@ -107,7 +105,26 @@ App.config(function($stateProvider, $urlRouterProvider) {
             authenticated: false
           });
         }
-      }
+      },
+
+      depsAdminUpdates: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                '/static/js/third-party/angular-bootstrap-confirm.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                                '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                                '/static/js/services/updateService.js',
+                                '/static/js/controllers/admin-updates.js',
+   
+                            ]
+                        });
+                    }], 
 
 
     }
@@ -135,19 +152,28 @@ App.config(function($stateProvider, $urlRouterProvider) {
             authenticated: false
           });
         }
-      }
+      },
+
+      depsAdminQuote: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js',
+                                '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                                 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
+                                '/static/js/controllers/admin-quote.js',
+   
+                            ]
+                        });
+                    }], 
+
+
 
 
     }
-
-
-  }).
-
-  state('chart', {
-    url: '/chart',
-    parent: 'admin',
-    templateUrl: '/static/views/Admin/comp_charts.html',
-    controller: 'CompChartsCtrl',
 
 
   }).
@@ -172,7 +198,19 @@ App.config(function($stateProvider, $urlRouterProvider) {
             authenticated: false
           });
         }
-      }
+      },
+
+      depsAdminProfile: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                
+                                '/static/js/controllers/admin-profile.js',
+   
+                            ]
+                        });
+                    }], 
 
 
     }
@@ -184,6 +222,21 @@ App.config(function($stateProvider, $urlRouterProvider) {
     url: '/',
     templateUrl: '/static/views/Login/intro.html',
     controller: 'LoginController',
+    resolve: {
+                    depsIntro: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                '/static/js/controllers/login.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
 
 
   }).
@@ -195,6 +248,19 @@ App.config(function($stateProvider, $urlRouterProvider) {
     },
     templateUrl: '/static/views/Login/login.html',
     controller: 'LoginController',
+    resolve: {
+                    depsLogin: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/login.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
 
 
   }).
@@ -202,13 +268,38 @@ App.config(function($stateProvider, $urlRouterProvider) {
     url: '/forgot',
     templateUrl: '/static/views/Login/forgot.html',
     controller: 'LoginController',
+    resolve: {
+                    depsForgot: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                '/static/js/controllers/login.js',
+                                '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
+                            ]
+                        });
+                    }]
+                }
 
   })
 
   .state('reset', {
-    url: '/upgrid/reset/:param2/',
+    url: '/upgrid/reset/:param1/:param2/',
     templateUrl: '/static/views/Login/resetpassword.html',
     controller: 'ResetController',
+    resolve: {
+                    depsReset: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/reset.js',
+                              '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                            ]
+                        });
+                    }]
+                }
 
   }).
   
@@ -231,8 +322,25 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
+      depsSuccess: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [ 
+                                '/static/js/services/apiService.js',
+                                '/static/js/services/counterService.js',
+                                '/static/js/controllers/success.js',
+                                
+                                
+                               
+                            ]
+                        });
+                    }],
+
+
+
       //get raw data
-      Ceeb: function(apiService, authenticationSvc) {
+      Ceeb: function(depsSuccess, apiService, authenticationSvc) {
         var userInfo = authenticationSvc.getUserInfo();
         console.log('*************');
         return apiService.getCustomer(userInfo.accessToken);
@@ -271,7 +379,25 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
-      List: function(apiService, authenticationSvc) {
+      depsDashboard: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              '/static/js/third-party/easy-pie-chart/jquery.easypiechart.min.js',
+                              '/static/js/services/updateService.js',
+                              '/static/js/controllers/dashboard.js',
+                              
+                            ]
+                        });
+                    }],
+
+
+      List: function(depsDashboard, apiService, authenticationSvc) {
         var userInfo = authenticationSvc.getUserInfo();
         console.log('*************');
         return apiService.getProfileList(userInfo.accessToken);
@@ -279,14 +405,13 @@ App.config(function($stateProvider, $urlRouterProvider) {
       },
 
 
-      Dash: function(apiService, authenticationSvc) {
+      Dash: function(depsDashboard, apiService, authenticationSvc) {
         var token = authenticationSvc.getUserInfo().accessToken;
         console.log('*************');
         return apiService.getDashboard(token);
 
       },
-
-    
+      
     }
 
 
@@ -318,6 +443,27 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
+      depsWhoops: ['$ocLazyLoad','depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/services/tableService.js',
+                              '/static/js/services/reportService.js',
+                              '/static/js/services/ajaxService.js',
+                              '/static/js/third-party/clipboard.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              '/static/js/third-party/easy-pie-chart/jquery.easypiechart.min.js',
+                              '/static/js/controllers/whoops.js',
+                              
+                            ]
+                        });
+                    }]
+
     
     }
 
@@ -345,9 +491,31 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
+      depsEnhancement: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/services/tableService.js',
+                              '/static/js/services/reportService.js',
+                              '/static/js/services/ajaxService.js',
+                              '/static/js/services/updateService.js',
+                              '/static/js/third-party/clipboard.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              '/static/js/third-party/easy-pie-chart/jquery.easypiechart.min.js',
+                              '/static/js/controllers/enhancement.js',
+                             
+                              
+                            ]
+                        });
+                    }],
 
       //get raw data
-      List: function(apiService, authenticationSvc) {
+      List: function(depsEnhancement, apiService, authenticationSvc) {
         var userInfo = authenticationSvc.getUserInfo();
         console.log('*************');
         return apiService.getProfileList(userInfo.accessToken);
@@ -380,12 +548,37 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
-      Checked: function(cartCounter) {
+      depsReports: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            name: 'myApp.login.success.cart',
+                            files: [
+                              '/static/js/services/tableService.js',
+                              '/static/js/services/reportService.js',
+                              '/static/js/controllers/cart.js',
+                             
+                              '/static/js/third-party/clipboard.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                              
+                              
+                                
+                            ]
+                        });
+                    }],
+
+
+      Checked: function(depsReports, cartCounter) {
         
         return cartCounter.counter();
 
       },
-      List: function(apiService, authenticationSvc) {
+      List: function(depsReports, apiService, authenticationSvc) {
         var userInfo = authenticationSvc.getUserInfo();
         console.log('*************');
         return apiService.getProfileList(userInfo.accessToken);
@@ -416,9 +609,26 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
+      depsProfile: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/services/tableService.js',
+                              '/static/js/services/ajaxService.js',
+                              '/static/js/controllers/profile.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
+                              '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                              
+                            ]
+                        });
+                    }],
+
 
       //get raw data
-      List: function(apiService, authenticationSvc) {
+      List: function(depsProfile, apiService, authenticationSvc) {
         var userInfo = authenticationSvc.getUserInfo();
         console.log('*************');
         return apiService.getProfileList(userInfo.accessToken);
@@ -442,12 +652,44 @@ App.config(function($stateProvider, $urlRouterProvider) {
     url: '/shared_whoops_report/:param1/:param2/',
     templateUrl: '/static/views/Share/shared_whoops_report.html',
     controller: 'ShareWhoopsController',
+    resolve: {
+                    depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/share_whoops.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
    
   }).
   state('shareEnhancementReport', {
     url: '/shared_enhancement_report/:param1/:param2/',
     templateUrl: '/static/views/Share/shared_enhancement_report.html',
     controller: 'ShareEnhancementController',
+    resolve: {
+                    depsShareEnhancement: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/share_enhancement.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
    
   }).
 
@@ -455,10 +697,28 @@ App.config(function($stateProvider, $urlRouterProvider) {
     url: '/upgrid/share_selected_report/:param1/:param2/',
     templateUrl: '/static/views/Home/share_all.html',
     controller: 'ShareAllController',
-    
+    resolve: {
+                    depsShareAll: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/services/counterService.js',
+                              '/static/js/services/tableService.js',
+                              '/static/js/services/reportService.js',
+                              '/static/js/controllers/shareall.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                              
+                            ]
+                        });
+                    }]
+                }
 
   }).
-
 
   //error pages
   state('500', {
@@ -474,15 +734,11 @@ App.config(function($stateProvider, $urlRouterProvider) {
   });
 
   //default route
-  // $urlRouterProvider.otherwise('/login');
   $urlRouterProvider.otherwise('/');
 
 
 });
-//for the Blob.js, download file
-App.config(['$compileProvider', function($compileProvider) {
-  $compileProvider.aHrefSanitizationWhitelist(/^\s*(|blob|):/);
-}]);
+
 
 App.config(function($httpProvider) {
   $httpProvider.interceptors.push('AuthInterceptor');
@@ -510,12 +766,13 @@ App.run(["$rootScope", "$location", "$state", "authenticationSvc",
       //$anchorScroll();
     });
 
-    //when above route fails to resolve
-    //the commented was written for ng-route
-    //$rootScope.$on("$routeChangeError", function (event, current, previous, eventObj) {
+
     $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
 
       console.log('start to redirect');
+      
+      console.log('redirecting event is ...' + event);
+      console.log('redirecting fromState is ...' + JSON.stringify(fromState));
       console.log('redirecting error is ...' + error);
       if (error && !error.authenticated) {
         console.log("redirected");
@@ -577,20 +834,6 @@ App.factory('AuthInterceptor',
           
           // $.notify({
 
-          //     // options
-          //     icon: "fa fa-times",
-          //     message: 'Your session has expired. Please log in again.'
-          //   }, {
-          //     // settings
-          //     type: 'danger',
-          //     placement: {
-          //       from: "top",
-          //       align: "center"
-          //     },
-          //     z_index: 1999,
-          //   });
-
-
           $state.go('login', {
             url: $location.url()
           });
@@ -622,516 +865,6 @@ App.factory('AuthInterceptor',
 
     };
   });
-
-// view loader
-
-App.directive('jsViewLoaderPro', function (ngProgressFactory) {
-    return {
-        link: function (scope, element) {
-            var el = jQuery(element);
-
-            // Hide the view loader, populate it with content and style it
-            el
-                .hide()
-                .html('<i class="fa-fw fa fa-refresh fa-spin text-primary"></i>')
-                .css({
-                    'position': 'fixed',
-                    'top': '20px',
-                    'left': '50%',
-                    'height': '20px',
-                    'width': '20px',
-                    'margin-left': '-10px',
-                    'z-index': 99999
-                 });
-              
-              var progressbar = ngProgressFactory.createInstance();
-              progressbar.setColor("#5c90d2");
-              progressbar.setHeight("2px");
-            // On state change start event, show the element
-            scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-                //el.fadeIn(250);
-                //progressJs().start().autoIncrease(15, 500);
-                progressbar.start();
-            });
-
-            // On state change success event, hide the element
-            scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-                //el.fadeOut(250);
-                //progressJs().end();
-                //progressbar = ngProgressFactory.createInstance();
-                progressbar.complete();
-            });
-        }
-    };
-});
-
-
-
-
-App.directive('pageSelect', function() {
-  return {
-    restrict: 'E',
-    template: '<input type="text" class="select-page" ng-model="inputPage" ng-change="selectPage(inputPage)">',
-    link: function(scope, element, attrs) {
-      scope.$watch('currentPage', function(c) {
-        scope.inputPage = c;
-      });
-    }
-  }
-});
-
-
-App.directive('ngConfirmClick', [
-        function(){
-            return {
-                link: function (scope, element, attr) {
-                    var msg = attr.ngConfirmClick || "Are you sure?";
-                    var clickAction = attr.confirmedClick;
-                    
-                    element.bind('click',function (event) {
-                        // if ( window.confirm(msg) ) {
-                        //     scope.$eval(clickAction)
-                        // }
-
-                        bootbox.confirm({
-                          message: msg,
-                          title: "Confirm", 
-                          callback: function(result){ 
-                          if(result){
-
-                            scope.$eval(clickAction)
-
-                          }
-                        }
-                      })
-                    });
-                }
-            };
-    }])
-
-
-App.filter('unique', function() {
-  return function(arr, field) {
-    var o = {},
-      i, l = arr.length,
-      r = [];
-    for (i = 0; i < l; i += 1) {
-      o[arr[i][field]] = arr[i];
-    }
-    for (i in o) {
-      r.push(o[i]);
-    }
-    return r;
-  };
-});
-
-
-App.directive('csSelect', function() {
-  return {
-    require: '^stTable',
-    template: '<input type="checkbox"/>',
-    scope: {
-      row: '=csSelect'
-    },
-    link: function(scope, element, attr, ctrl) {
-
-      element.bind('change', function(evt) {
-        scope.$apply(function() {
-          ctrl.select(scope.row, 'multiple');
-        });
-      });
-
-      scope.$watch('row.isSelected', function(newValue, oldValue) {
-        if (newValue === true) {
-          element.parent().addClass('st-selected');
-        } else {
-          element.parent().removeClass('st-selected');
-        }
-      });
-    }
-  };
-});
-
-App.directive('scrollTo', function ($location, $anchorScroll) {
-  return function(scope, element, attrs) {
-
-    element.bind('click', function(event) {
-        event.stopPropagation();
-        var off = scope.$on('$locationChangeStart', function(ev) {
-            off();
-            ev.preventDefault();
-        });
-        var location = attrs.scrollTo;
-        $location.hash(location);
-        $anchorScroll();
-    });
-
-  };
-});
-
-App.directive('toggleClass', function() {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs, event) {
-            element.bind('click', function(e) {
-                console.log("class "+e);
-                    
-                    //for(var key in element)console.log(element[key])
-                    
-                    element.toggleClass(attrs.toggleClass);
-                 
-                
-            });
-        }
-    };
-});
-
-//customized_oneui_directive
-// Custom Table functionality: Section toggling
-// By adding the attribute 'data-js-table-sections' to your table
-App.directive('jsTableSectionsFixed', function () {
-    return {
-        link: function (scope, element) {
-            var table      = jQuery(element);
-            var tableRows  = jQuery('.js-table-sections-header > tr', table);
-
-            table.delegate('.js-table-sections-header > tr', 'click', function(e) {
-                if (e.target.type !== 'checkbox'
-                        && e.target.type !== 'button'
-                        && e.target.type !== 'radio'
-                        && e.target.tagName.toLowerCase() !== 'a'
-                        && e.target.tagName.toLowerCase() !== 'span'
-                        && !jQuery(e.target).parent('label').length) {
-                    var row    = jQuery(this);
-                    var tbody  = row.parent('tbody');
-
-                    if (! tbody.hasClass('open')) {
-                        jQuery('tbody', table).removeClass('open');
-                    }
-
-                    tbody.toggleClass('open');
-                }
-
-            });
-        }
-    };
-});
-
-
-//for create/edit table
-//customized_oneui_directive
-// Custom Table functionality: Section toggling
-// By adding the attribute 'data-js-table-sections' to your table
-App.directive('jsTableSectionsEdit', function () {
-    return {
-        link: function (scope, element) {
-            var table      = jQuery(element);
-            var tableRows  = jQuery('.js-table-sections-header > tr', table);
-
-            console.log("in the directive");
-            table.delegate('.js-table-sections-header > tr', 'click', function(e) {
-                if (e.target.type !== 'checkbox'
-                        && e.target.type !== 'button'
-                        && e.target.type !== 'radio'
-                        && e.target.tagName.toLowerCase() !== 'a'
-                        && e.target.tagName.toLowerCase() !== 'span'
-                        && e.target.tagName.toLowerCase() !== 'i'
-                        && !jQuery(e.target).parent('label').length) {
-                    var row    = jQuery(this);
-                    var tbody  = row.parent('tbody');
-
-                    if (! tbody.hasClass('open')) {
-                        jQuery('tbody', table).removeClass('open');
-                    }
-
-                    tbody.toggleClass('open');
-                }
-
-            });
-        }
-    };
-});
-
-
-
-//table for admin update
-App.directive('jsTableSectionsUpdate', function () {
-    return {
-        link: function (scope, element) {
-            var table      = jQuery(element);
-            var tableRows  = jQuery('.js-table-sections-header > tr', table);
-
-            console.log("in the directive");
-            table.delegate('.js-table-sections-header > tr', 'click', function(e) {
-                if (e.target.tagName.toLowerCase() === 'button'
-                  || e.target.type === 'button' 
-                  || e.target.tagName.toLowerCase() === 'i') {
-                    var row    = jQuery(this);
-                    var tbody  = row.parent('tbody');
-
-                    if (! tbody.hasClass('open')) {
-                        jQuery('tbody', table).removeClass('open');
-                    }
-
-                    tbody.toggleClass('open');
-                }
-
-            });
-        }
-    };
-});
-
-
-
-App.directive('slideToggle', function() {  
-  return {
-    restrict: 'A',      
-    scope:{},
-    controller: function ($scope) {}, 
-    link: function(scope, element, attr) {
-      element.bind('click', function() {                  
-        var $slideBox = angular.element(attr.slideToggle);
-        var slideDuration = parseInt(attr.slideToggleDuration, 10) || 200;
-        $slideBox.stop().slideToggle(slideDuration);
-      });
-    }
-  };  
-});
-
-
-App.directive('stPaginationScroll', ['$timeout', function (timeout) {
-        return{
-            require: 'stTable',
-            link: function (scope, element, attr, ctrl) {
-                var itemByPage = 20;
-                var pagination = ctrl.tableState().pagination;
-                var lengthThreshold = 50;
-                var timeThreshold = 400;
-                var handler = function () {
-                    //call next page
-                    ctrl.slice(pagination.start + itemByPage, itemByPage);
-                };
-                var promise = null;
-                var lastRemaining = 9999;
-                var container = angular.element(element.parent());
-
-                container.bind('scroll', function () {
-                    var remaining = container[0].scrollHeight - (container[0].clientHeight + container[0].scrollTop);
-
-                    //if we have reached the threshold and we scroll down
-                    if (remaining < lengthThreshold && (remaining - lastRemaining) < 0) {
-
-                        //if there is already a timer running which has no expired yet we have to cancel it and restart the timer
-                        if (promise !== null) {
-                            timeout.cancel(promise);
-                        }
-                        promise = timeout(function () {
-                            handler();
-
-                            //scroll a bit up
-                            container[0].scrollTop -= 500;
-
-                            promise = null;
-                        }, timeThreshold);
-                    }
-                    lastRemaining = remaining;
-                });
-            }
-
-        };
-   }]);
-
-
-// App.directive('toggle', function() {
-//   return {
-//     restrict: 'A',
-//     link: function(scope, element, attrs) {
-//       if (attrs.toggle == "tooltip") {
-//         $(element).tooltip();
-//       }
-//       if (attrs.toggle == "popover") {
-//         $(element).popover();
-//       }
-//     }
-//   };
-// });
-
-
-App.directive('scrollOnClick', function() {
-  return {
-    restrict: 'A',
-    link: function(scope, $elm, attrs) {
-      var idToScroll = attrs.href;
-      $elm.on('click', function() {
-        var $target;
-        if (idToScroll) {
-          $target = $(idToScroll);
-        } else {
-          $target = $elm;
-        }
-        $("body").animate({scrollTop: $target.offset().top}, "slow");
-      });
-    }
-  }
-});
-
-App.directive('scrollToItem', function() {                                                      
-    return {                                                                                 
-        restrict: 'A',                                                                       
-        scope: {                                                                             
-            scrollTo: "@"                                                                    
-        },                                                                                   
-        link: function(scope, $elm,attr) {                                                   
-
-            $elm.on('click', function() {                                                    
-                $('html,body').animate({scrollTop: $(scope.scrollTo).offset().top - 60 }, "slow");
-            });                                                                              
-        }                                                                                    
-    }})  
-
-
-App.directive('shake', ['$animate',
-  function($animate) {
-    return {
-      scope: {
-        count: '='
-      },
-      link: function(scope, element, attrs) {
-
-        scope.$watch('count', function(newValue, oldValue) {
-
-          // console.log("newValue= "+newValue);
-          // console.log("oldValue= "+oldValue);
-          if (newValue === oldValue) return;
-
-          if (newValue > oldValue)
-          {
-            $animate.addClass(element, 'pulseme').then(function() {
-               element.removeClass('pulseme');
-            });
-          }else{
-            $animate.addClass(element, 'shrinkeme').then(function() {
-               element.removeClass('shrinkeme');
-            });
-          }
-          
-        });
-      }
-    };
-  }
-]);
-
-// Custom Table functionality: Section toggling
-// By adding the attribute 'data-js-table-sections' to your table
-App.directive('jsTableSection', function () {
-    return {
-        link: function (scope, element) {
-            var table;
-            var tableRows;
-            angular.element(document).ready(function() {
-                //MANIPULATE THE DOM
-                table = jQuery(element);
-                tableRows  = jQuery('.js-table-sections-header > tr', table); 
-                console.log('rows:'+ JSON.stringify(tableRows));
-                
-                tableRows.on('click', function(e) {
-                if (e.target.type !== 'checkbox'
-                        && e.target.type !== 'button'
-                        && e.target.tagName.toLowerCase() !== 'a'
-                        && !jQuery(e.target).parent('label').length) {
-                    var row    = jQuery(this);
-                    var tbody  = row.parent('tbody');
-
-                    if (! tbody.hasClass('open')) {
-                        jQuery('tbody', table).removeClass('open');
-                    }
-
-                    tbody.toggleClass('open');
-                }
-            });
-            
-            });
-
-
-            
-             
-        }
-    };
-});
-
-App.directive("refreshTable", function(){
-    return {
-        require:'stTable',
-        restrict: "A",
-        link:function(scope,elem,attr,table){
-            scope.$on("refreshProducts", function() {
-                table.pipe(table.tableState());
-            });
-    }
-}});
-
-App.directive('selectOnClick', ['$window', function ($window) {
-    // Linker function
-    return function (scope, element, attrs) {
-      element.bind('click', function () {
-        if (!$window.getSelection().toString()) {
-          this.setSelectionRange(0, this.value.length)
-        }
-      });
-    };
-}]);
-
-
-// from OneUI
-
-// App.directive('slider', function () {
-//         return {
-//             restrict:'A',
-//             compile: function (element) {
-//                 // wrap tag
-//                 var contents = element.html();
-//                 element.html('<div class="slideable_content" style=" margin:0 !important; padding:0 !important" >' + contents + '</div>');
-
-//                 return function postLink(scope, element, attrs) {
-//                     var i = 0;
-//                     // default properties
-//                     scope.$watch(attrs.slider, (n, o) => {
-//                         if (n !== o) {
-//                             i++;
-//                             var target = element[0],
-//                                 content = target.querySelector('.slideable_content');
-//                             if(n) {
-//                                 content.style.border = '1px solid rgba(0,0,0,0)';
-//                                 var y = content.clientHeight, z = i;
-//                                 content.style.border = 0;
-//                                 target.style.height = y + 'px';
-//                                 setTimeout(() => {
-//                                     if (z === i) {
-//                                         target.style.height = 'auto';   
-//                                     }
-//                                 }, 500);
-//                             } else {
-//                                 target.style.height = target.clientHeight + 'px';
-//                                 setTimeout(() => {
-//                                     target.style.height = '0px';
-//                                 });
-//                             }
-//                         }
-//                     }); 
-
-//                     attrs.duration = (!attrs.duration) ? '0.5s' : attrs.duration;
-//                     attrs.easing = (!attrs.easing) ? 'ease-in-out' : attrs.easing;
-//                     element.css({
-//                         'overflow': 'hidden',
-//                         'height': '0px',
-//                         'transitionProperty': 'height',
-//                         'transitionDuration': attrs.duration,
-//                         'transitionTimingFunction': attrs.easing
-//                     });
-//                 };
-//             }
-//         };
-//     });
 
 
 // Custom UI helper functions
@@ -1444,9 +1177,6 @@ App.run(function($rootScope, uiHelpers) {
     });
 });
 
-App.run(function(editableOptions) {
-  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-});
 
 
 /*

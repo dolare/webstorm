@@ -328,7 +328,9 @@ class FinalReleasedEnhancement(APIView):
 class DashBoardAPI(APIView):
     def get_object(self, request, object_id):
         try:
+            print(request)
             user = UniversityCustomer.objects.get(id=request.user.id)
+
         except UniversityCustomer.DoesNotExist:
             try:
                 manager = UpgridAccountManager.objects.get(id=request.user.id)

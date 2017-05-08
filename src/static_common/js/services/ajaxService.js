@@ -1,4 +1,4 @@
-angular.module('ajaxModule', []).factory("ajaxService",
+angular.module('myApp').factory("ajaxService",
     function($http, $q, $filter, $timeout) {
 
 

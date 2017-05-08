@@ -1,6 +1,6 @@
 //for the dashboard page
 
-var dashboard = angular.module('myApp.login.success.dashboard', [])
+var dashboard = angular.module('myApp')
 dashboard.controller('DashboardController',
   function(updateService, avatarService, $sce, $timeout, $window, Dash, authenticationSvc, $http, List, $scope) {
     

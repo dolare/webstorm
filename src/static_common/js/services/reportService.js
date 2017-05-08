@@ -1,5 +1,5 @@
 //to generate report
-angular.module('reportServiceModule', [])
+angular.module('myApp')
   .factory('reportService', function($http, $q) {
 
 

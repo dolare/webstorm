@@ -1,6 +1,6 @@
 //for the cart page
 
-angular.module('myApp.login.success.cart', []).
+angular.module('myApp').
 controller('ReportsController',
   function(avatarService, $location, List, $timeout, Checked, reportService, tableDataService, $scope, cartCounter, $window, $http, authenticationSvc, $state, $filter, $q, $localStorage, $sessionStorage) {
     var token = authenticationSvc.getUserInfo().accessToken;

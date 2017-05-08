@@ -1,6 +1,6 @@
 //for the whoops page
 
-var whoops = angular.module('myApp.login.success.whoops', [])
+var whoops = angular.module('myApp')
 whoops.controller('WhoopsController',
   function(avatarService, ajaxService, reportService, $location, tableDataService, filterFilter, $scope, apiService, $window, $http, authenticationSvc, $localStorage, $sessionStorage, $state, $filter, $q) {
 

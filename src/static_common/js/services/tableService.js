@@ -1,4 +1,4 @@
-angular.module('tableServiceModule', [])
+angular.module('myApp')
   .factory('tableDataService', function() {
 
 
