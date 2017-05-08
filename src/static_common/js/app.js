@@ -285,7 +285,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   })
 
   .state('reset', {
-    url: '/upgrid/reset/:param1/:param2/',
+    url: '/upgrid/reset/:param2/',
     templateUrl: '/static/views/Login/resetpassword.html',
     controller: 'ResetController',
     resolve: {

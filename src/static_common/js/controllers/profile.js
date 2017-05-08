@@ -49,7 +49,7 @@ controller('ProfileController',
 
        console.log("firstpage"+ JSON.stringify(tableDataService.getWhoops(response.data.results)));
         $scope.program_permission = tableDataService.getWhoops(response.data.results);
-
+        console.log("$scope.program_permission+"+JSON.stringify($scope.program_permission))
 
         // if(response.status === 204){
         //   console.log("===204");
@@ -277,6 +277,7 @@ controller('ProfileController',
 
 
     $scope.checkvalue = function () {
+
       console.log("check set_permission = "+JSON.stringify($scope.set_permission));
       
 
@@ -301,6 +302,7 @@ controller('ProfileController',
           App.blocks('#addsubuser', 'state_loading');
           var subNum = null;
           
+          console.log("set_permission="+JSON.stringify($scope.set_permission));
           var object_ids = "";
             for(var key in $scope.set_permission){
 
@@ -348,11 +350,30 @@ controller('ProfileController',
             console.log("subuser data title = "+JSON.stringify($scope.subuser.title));
             console.log('success create!');
             console.log("&^&^&^confirm the timestamp"+subusertimestamp);
+
+            // var temp_subuser_programs = [];
+
+            // for(var key in $scope.set_permission){
+
+            //           if($scope.set_permission[key].checked) {
+            //               for(var i=0; i<$scope.data.customer_program.length; i++){
+            //                 if($scope.set_permission[key] === $scope.data.customer_program[i].object_id){
+            //                   temp_subuser_programs.push({
+            //                     "program": {
+            //                       "program_display" : $scope.data.customer_program[i].program.program_display
+            //                     }
+
+            //                   })
+            //                   break;
+            //                 }
+            //               }
+            //           }
+            //   }
+
+
             $scope.data.subuser.push({
                 "id": null,
                 "is_active": true,
-              
-             
               
                         
                 "email": $scope.subuser.email,
@@ -362,6 +383,8 @@ controller('ProfileController',
                 "position": $scope.subuser.title,
                 "position_level": $scope.data.contractLevel,
                 "phone": $scope.subuser.tel,
+
+
             });
 
 
@@ -482,7 +505,7 @@ controller('ProfileController',
 
           // options
           icon: "fa fa-check",
-          message: 'The user has been deleted successfully.'
+          message: 'The user has been successfully deleted.'
         }, {
           // settings
           type: 'success',

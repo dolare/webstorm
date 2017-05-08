@@ -1296,6 +1296,7 @@ angular.module('myApp').controller('AdminMainController',
 
                 console.log("$scope.is_demo = " + $scope.is_demo);
 
+                //PUT general data
                 $http({
                     url: '/api/upgrid/accountmanager/client/',
                     method: 'PUT',
@@ -1326,7 +1327,7 @@ angular.module('myApp').controller('AdminMainController',
                 }).then(function(response) {
 
 
-
+                    //POST customer programs for users
                     return $http({
                         url: '/api/upgrid/accountmanager/client/customer_program/',
                         method: 'POST',
@@ -1342,7 +1343,9 @@ angular.module('myApp').controller('AdminMainController',
 
                 }).then(function(response) {
 
+                    console.log("successfully added customer programs");
 
+                    //PUT customer programs for main and sub user
                     if ($scope.account_type === 'main') {
 
                         return $http({
@@ -1379,7 +1382,9 @@ angular.module('myApp').controller('AdminMainController',
 
 
                 }).then(function(response) {
+                    console.log("successfully edit customer programs")
 
+                    //POST competing
                     return $http({
                         url: '/api/upgrid/accountmanager/client/competing_program/',
                         method: 'POST',
@@ -1394,7 +1399,10 @@ angular.module('myApp').controller('AdminMainController',
                     });
                 }).then(function(response) {
 
+                    console.log("successfully added competing programs");
 
+                    console.log("PUT competing array = "+JSON.stringify($scope.put_competing_program_array))
+                    //PUT competing
                     return $http({
 
                         url: '/api/upgrid/accountmanager/client/competing_program/',
@@ -1413,6 +1421,7 @@ angular.module('myApp').controller('AdminMainController',
 
 
                     console.log("client_data= " + JSON.stringify($scope.client_data));
+
                     for (var i = 0; i < $scope.client_data.length; i++) {
                         if ($scope.client_data[i].id === $scope.pwhide) {
                             console.log("found it");
@@ -1424,6 +1433,7 @@ angular.module('myApp').controller('AdminMainController',
                     }
 
 
+                    //no delete action
                     if ($scope.delete_customer_program_string === "" && $scope.delete_competing_program_array.length === 0) {
                         console.log("success" + JSON.stringify(response));
 
@@ -1444,9 +1454,10 @@ angular.module('myApp').controller('AdminMainController',
                         });
 
 
+                    //delete action into 3 situations
                     } else {
 
-                        //has delete competing
+                        //has delete competing but no customer delete
                         if ($scope.delete_customer_program_string === "" && $scope.delete_competing_program_array.length !== 0) {
 
 
@@ -1491,7 +1502,7 @@ angular.module('myApp').controller('AdminMainController',
                         }
 
 
-                        //has delete customer
+                        //has delete customer but no need delete competing
                         if ($scope.delete_customer_program_string !== "" && $scope.delete_competing_program_array.length === 0) {
 
                             $http({
@@ -1537,6 +1548,7 @@ angular.module('myApp').controller('AdminMainController',
                         }
 
 
+                        //delete program and competing
                         if ($scope.delete_customer_program_string !== "" && $scope.delete_competing_program_array.length !== 0) {
 
                             $http({
@@ -1599,26 +1611,30 @@ angular.module('myApp').controller('AdminMainController',
 
                     } //end of else
 
+
+
                     //on demand for a single report
+                  
 
-                    for (var i = 0; i < $scope.selected_customprogram.length; i++) {
-                        if ($scope.selected_customprogram[i].whoops_final_release_alias === 'False' && $scope.selected_customprogram[i].whoops_final_release === 'True') {
+                    angular.forEach($scope.selected_customprogram, function(value, index) {
 
-                            console.log('num = ' + i + 'whoops customer_program_id=' + $scope.selected_customprogram[i].customer_program_id)
+                        if ($scope.selected_customprogram[index].whoops_final_release_alias === 'False' && $scope.selected_customprogram[index].whoops_final_release === 'True') {
+
+                            console.log('num = ' + index + 'whoops customer_program_id=' + $scope.selected_customprogram[index].customer_program_id)
 
 
                             $http({
                                 url: '/api/upgrid/update/whoops/ondemand/',
                                 method: 'PUT',
                                 data: {
-                                    "customer_program_id": $scope.selected_customprogram[i].customer_program_id,
+                                    "customer_program_id": $scope.selected_customprogram[index].customer_program_id,
                                     "client_id": $scope.pwhide
                                 },
                                 headers: {
                                     'Authorization': 'JWT ' + token
                                 }
                             }).then(function(response) {
-                                console.log(i + ' ' + 'Whoops released')
+                                console.log(index + ' ' + 'Whoops released')
 
                             }).
                             catch(function(error) {
@@ -1629,23 +1645,23 @@ angular.module('myApp').controller('AdminMainController',
                         }
 
 
-                        if ($scope.selected_customprogram[i].enhancement_final_release_alias === 'False' && $scope.selected_customprogram[i].enhancement_final_release === 'True') {
+                        if ($scope.selected_customprogram[index].enhancement_final_release_alias === 'False' && $scope.selected_customprogram[index].enhancement_final_release === 'True') {
 
-                            console.log('num = ' + i + 'enhancement customer_program_id=' + $scope.selected_customprogram[i].customer_program_id)
+                            console.log('num = ' + index + 'enhancement customer_program_id=' + $scope.selected_customprogram[index].customer_program_id)
 
 
                             $http({
                                 url: '/api/upgrid/update/enhancement/ondemand/',
                                 method: 'PUT',
                                 data: {
-                                    "customer_program_id": $scope.selected_customprogram[i].customer_program_id,
+                                    "customer_program_id": $scope.selected_customprogram[index].customer_program_id,
                                     "client_id": $scope.pwhide
                                 },
                                 headers: {
                                     'Authorization': 'JWT ' + token
                                 }
                             }).then(function(response) {
-                                console.log(i + ' ' + 'Enhancement released')
+                                console.log(index + ' ' + 'Enhancement released')
 
                             }).
                             catch(function(error) {
@@ -1655,7 +1671,7 @@ angular.module('myApp').controller('AdminMainController',
 
                         }
 
-                    }
+                    });
 
                     //console.log("submit program list = "+JSON.stringify($scope.selected_customprogram));
                 }).
@@ -1860,7 +1876,8 @@ angular.module('myApp').controller('AdminMainController',
 
             console.log("changing competing");
 
-            if ($scope.pwhide && obj) {
+            //existing competing has obj
+            if ($scope.pwhide && obj) { 
 
 
                 var isInCompeting = false;
