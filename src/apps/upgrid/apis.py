@@ -92,6 +92,7 @@ class PasswordChangeView(generics.GenericAPIView):
                 decoded_new_password = self.check_new_password(request.data['new_password'])
 
                 user.password = decoded_new_password
+                user._password = None
                 user.save()
                 return Response({"success": _("New password has been saved.")}, status=HTTP_202_ACCEPTED)
             return Response({"Failed": _("Please input valid old password.")}, status=HTTP_403_FORBIDDEN)
@@ -154,6 +155,7 @@ class ResetPassword(generics.GenericAPIView):
         #user.set_password(self.validate(password).decode("utf-8"))
         #password = zlib.decompress(self.validate(password))
         user.password = self.validate(password)
+        user._password = None
         user.save()
         #user.save()
         return Response({"success": _("New password has been saved.")}, status=HTTP_202_ACCEPTED)
