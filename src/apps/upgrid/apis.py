@@ -542,16 +542,30 @@ class UniversityCustomerListAPI(generics.ListAPIView):
         if UpgridAccountManager.objects.filter(id=user.id).exists():
             return UniversityCustomer.objects.filter(account_manager=user)
         else:
-            return UniversityCustomer.objects.filter(main_user_id=str(user.id))
+            return UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)) | Q(id=user.id))
 
 
-class ClientAndProgramRelationCreateAPI(generics.CreateAPIView):
+class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView):
     """
-    Create client and program relation
+    Get, Create and Delete client and program relation
 
     """
     serializer_class = ClientAndProgramRelationSerializer
+    filter_backends = (DjangoFilterBackend, )
+    filter_class = ClientAndProgramRelationFilter
     multiple_lookup_fields = ['client', 'client_program']
+
+    def get_queryset(self, *args, **kwargs):
+        user = self.request.user
+        if UpgridAccountManager.objects.filter(id=user.id).exists():
+            owned_users = UniversityCustomer.objects.filter(account_manager=user)
+        else:
+            owned_users = UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)) | Q(id=user.id))
+
+        return ClientAndProgramRelation.objects.filter(client__in=owned_users)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         user = request.user
@@ -570,47 +584,8 @@ class ClientAndProgramRelationCreateAPI(generics.CreateAPIView):
         if client not in [str(owned_user.id) for owned_user in owned_users] or \
            client_program not in [str(program.object_id) for program in university_customer_programs]:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
-        return super(ClientAndProgramRelationCreateAPI, self).create(request, *args, **kwargs)
 
-
-class ClientAndProgramRelationListAPI(generics.ListAPIView):
-    """
-    Get list of sub user
-
-    """
-    filter_backends = (DjangoFilterBackend, )
-    serializer_class = ClientAndProgramRelationSerializer
-    filter_class = ClientAndProgramRelationFilter
-
-    def get_queryset(self, *args, **kwargs):
-        user = self.request.user
-        if UpgridAccountManager.objects.filter(id=user.id).exists():
-            owned_users = UniversityCustomer.objects.filter(account_manager=user)
-        else:
-            owned_users = UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)) | Q(id=user.id))
-
-        return ClientAndProgramRelation.objects.filter(client__in=owned_users)
-
-
-class ClientAndProgramRelationDeleteAPI(APIView):
-    """
-    Delete client and program relation
-
-    """
-    # serializer_class = ClientAndProgramRelationSerializer
-    # multiple_lookup_fields = ['client', 'client_program']
-
-    # lookup_field = 'object_id'
-    # lookup_url_kwarg = 'object_id'
-
-    def get_queryset(self, *args, **kwargs):
-        user = self.request.user
-        if UpgridAccountManager.objects.filter(id=user.id).exists():
-            owned_users = UniversityCustomer.objects.filter(account_manager=user)
-        else:
-            owned_users = UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)) | Q(id=user.id))
-
-        return ClientAndProgramRelation.objects.filter(client__in=owned_users)
+        return super(ClientAndProgramRelationAPI, self).create(request, *args, **kwargs)
 
     def delete(self, request):
         object_id = self.request.POST.get('object_id', None)
@@ -691,7 +666,15 @@ class CreateOrChangeSubUser(APIView):
             except UniversityCustomer.DoesNotExist or UpgridAccountManager.DoesNotExist:
                 return Response({"failed": _("Permission Denied.")}, status=HTTP_403_FORBIDDEN)
 
-        if UniversityCustomer.objects.filter(main_user_id=main_user.id).count() > 10:
+        if 'email' not in request.data:
+            return Response({"failed": _("Email is required.")}, status=HTTP_400_BAD_REQUEST)
+
+        email_existed = UniversityCustomer.objects.filter(email=request.data['email']).exists()
+        if email_existed:
+            raise ValidationError('Email already existed!')
+
+        sub_user_number = UniversityCustomer.objects.filter(main_user_id=main_user.id).filter(is_active=True).count()
+        if sub_user_number >= 10:
             return Response({"failed": _("Can not create more than 10 sub user.")}, status=HTTP_400_BAD_REQUEST)
 
         sub_service_until = main_user.service_until
@@ -720,13 +703,14 @@ class CreateOrChangeSubUser(APIView):
         programs_id = self.request.data['customer_programs']
         customer_program_id = programs_id.split('/')
         for i in customer_program_id:
-            main_customer_program = UniversityCustomerProgram.objects.get(object_id=i)
-        
-            sub_customer_program = ClientAndProgramRelation.objects.create(
-                client=user,
-                client_program=main_customer_program,
-                )
-            sub_customer_program.save()
+            if i != '':
+                main_customer_program = UniversityCustomerProgram.objects.get(object_id=i)
+
+                sub_customer_program = ClientAndProgramRelation.objects.create(
+                    client=user,
+                    client_program=main_customer_program,
+                    )
+                sub_customer_program.save()
         return Response({"success": _("Sub user has been created.")}, status=HTTP_201_CREATED)
 
 
