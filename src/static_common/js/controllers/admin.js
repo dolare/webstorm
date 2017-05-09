@@ -1873,12 +1873,13 @@ angular.module('myApp').controller('AdminMainController',
 
         //put competing programs
         $scope.put_competing = function(obj, cid, pro, order, estatus) {
-
+            
             console.log("changing competing");
 
             //existing competing has obj
             if ($scope.pwhide && obj) { 
 
+                console.log('details-------='+ obj + ' ' + cid + ' ' + pro + ' ' + order + ' ' + estatus);
 
                 var isInCompeting = false;
 
