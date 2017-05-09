@@ -121,12 +121,9 @@ class ResetPassword(generics.GenericAPIView):
             if token:
                 try:
                     # username = user_reset.username
-                    html_content = ("Hello, %s! <br>We have just received a password reset request for this email account."
-                                    "Please click <a href='https://%s/#/upgrid/reset/%s/'> here</a> to reset your Upgrid password"
-                                    "!<br>If the above link does not work for you, please copy and paste the following into your browser address "
-                                    "bar: https://%s/#/upgrid/reset/%s/<br>")
+                    html_content = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'><img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' width='150px'></div><div style='background:white; padding: 20px 35px;border-radius: 8px '><div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div style='font-family: sans-serif;'><p>We have just received a password reset request for this email account. Please click <a href='https://%s/#/upgrid/reset/%s/'> here</a> to reset your Upgrid password.</p><p>If the above link does not work for you, please copy and paste the following into your browser address bar:</p><a href='https://%s/#/upgrid/reset/%s/'>https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!</div><h3>- Team Gridology</h3></div></div></div>")
                     message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
-                                           request.META['HTTP_HOST'], token,request.META['HTTP_HOST'],token), to=[request.data['email']])
+                                           request.META['HTTP_HOST'], token,request.META['HTTP_HOST'],token, request.META['HTTP_HOST'],token), to=[request.data['email']])
                     message.content_subtype = 'html'
                     message.send()
                 except BadHeaderError:
