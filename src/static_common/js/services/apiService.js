@@ -1,6 +1,6 @@
 //from username, to get the ceeb, program, and degree respectively
 
-angular.module('apiServiceModule', [])
+angular.module('myApp')
   .factory('apiService', function(avatarService, $http, $q, authenticationSvc) {
 
 
@@ -396,7 +396,10 @@ angular.module('apiServiceModule', [])
 
         var getDashboard = function(token) {
 
+          // alert(token)
+
           var promise =  $http({
+
               url: '/api/upgrid/user/dashboard/'+avatarService.getClientId(),
               method: 'GET',
               headers: {

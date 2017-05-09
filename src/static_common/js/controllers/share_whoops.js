@@ -1,5 +1,5 @@
 
-angular.module('myApp.ShareWhoops', []).
+angular.module('myApp').
 controller('ShareWhoopsController',
     function($timeout, $stateParams, $scope, $location, $window, $http, $state) {
         

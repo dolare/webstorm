@@ -1,5 +1,5 @@
 //for the enhancement page
-angular.module('myApp.login.success.enhancement', []).
+angular.module('myApp').
 controller('EnhancementController', function(updateService, avatarService, ajaxService, List, reportService, apiService, tableDataService, $localStorage, $sessionStorage, $scope, $window, $location, $http, authenticationSvc, $state, $filter, $q) {
     // $scope.isActive = function(route) {
     //     return route === $location.path();
@@ -10,13 +10,10 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
     $scope.emailadd = authenticationSvc.getUserInfo().username;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
     var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
+    var unenhancement_avatar = avatarService.getClientId() ? "?client_id="+avatarService.getClientId() : "";
 
     /////////
     
-
-
-
-    /////////
 
 
 
@@ -59,7 +56,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
                   //api
                   $http({
-                        url: '/api/upgrid/user/unenhancement/programs/',
+                        url: '/api/upgrid/user/unenhancement/programs/'+unenhancement_avatar,
                         method: 'GET',
                         headers: {
                           'Authorization': 'JWT ' + token
@@ -96,16 +93,11 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
      }
 
-
-
-
-   
     $scope.EnhancementViewer = function(Id){
       $scope.date = new Date();
       App.blocks('#enhancement_loading', 'state_loading');
-      //angular.element(document.getElementById('#testbutton')).focus();
-      //jQuery('#testbutton').focus();
-      
+            // App.blocks('#scrolltop_enhancement_page', 'state_loading');
+
       
           $http({
                 url: '/api/upgrid/update/view/enhancement/' + Id + '/' +avatarService.getClientId(),
@@ -239,7 +231,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
         //api
         $http({
-              url: '/api/upgrid/user/unenhancement/programs/',
+              url: '/api/upgrid/user/unenhancement/programs/'+unenhancement_avatar,
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
@@ -503,7 +495,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
         //api
         $http({
-              url: '/api/upgrid/user/unenhancement/programs/',
+              url: '/api/upgrid/user/unenhancement/programs/'+unenhancement_avatar,
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token

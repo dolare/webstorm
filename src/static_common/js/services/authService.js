@@ -1,6 +1,6 @@
 //authentication 
 
-angular.module('auth', ['ngCookies']).factory("authenticationSvc",
+angular.module('myApp').factory("authenticationSvc",
     function($http, $q, $window, $cookies) {
         var userInfo;
         // Create Base64 Object

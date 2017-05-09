@@ -332,7 +332,9 @@ class FinalReleasedEnhancement(APIView):
 class DashBoardAPI(APIView):
     def get_object(self, request, object_id):
         try:
+            print(request)
             user = UniversityCustomer.objects.get(id=request.user.id)
+
         except UniversityCustomer.DoesNotExist:
             try:
                 manager = UpgridAccountManager.objects.get(id=request.user.id)
@@ -2467,8 +2469,16 @@ class UnconfirmedPrograms(generics.ListAPIView):
             return False
 
     def get_queryset(self, *args, **kwargs):
-        #if is_manager(self.request):
-        client_id = self.request.user.id
+        if self.is_manager(self.request) == False:
+            client_id = self.request.user.id
+        elif 'client_id' in self.request.GET :
+            client_id = self.request.GET.get("client_id")
+            print(self.request.GET.get("client_id"))
+        print(self.request.user.id)
+        print(**kwargs)
+        #print(client_id)
+        # if is_manager(self.request):
+        #     client_id = self.request.GET.get("client_id")
         query_set = UniversityCustomerProgram.objects.filter(Q(customer = client_id)&Q(customer_confirmation='No'))
 
         return query_set

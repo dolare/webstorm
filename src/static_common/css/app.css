@@ -33,6 +33,11 @@ h1 {
   margin-top: 40px !important;
 }
 
+
+.font-s16 {
+  font-size: 16px !important;
+}
+
 .bootbox.modal {
   margin-top: 100px;
 }

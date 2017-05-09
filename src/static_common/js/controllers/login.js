@@ -1,6 +1,6 @@
 //for the login and forgot page
 
-var login = angular.module('myApp.login.controllers', ['ngCookies']);
+var login = angular.module('myApp');
 login.controller('LoginController',
     function(avatarService, $stateParams, $scope, $location, $window, $http, authenticationSvc, $cookies, $state) {
         //$scope.userInfo = null;

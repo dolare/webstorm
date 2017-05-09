@@ -1,4 +1,4 @@
-angular.module('updateServiceModule', [])
+angular.module('myApp')
   .factory('updateService', function($filter) {
 
 

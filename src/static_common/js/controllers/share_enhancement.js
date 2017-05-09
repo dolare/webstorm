@@ -1,5 +1,5 @@
 
-angular.module('myApp.ShareEnhancement', []).
+angular.module('myApp').
 controller('ShareEnhancementController',
     function($timeout, $stateParams, $scope, $location, $window, $http, $state) {
         

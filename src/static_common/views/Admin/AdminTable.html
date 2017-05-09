@@ -620,12 +620,16 @@
                                                                             <a data-uib-tooltip="Done" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_status='done';put_customer_program($index)" ng-class="{'active' : row.whoops_status==='done'}"><i class="fa fa-hourglass-end" aria-hidden="true"></i></a>
                                                                         </div>
                                                                     </td>
+
+                                                                    <!-- whoops release -->
                                                                     <td class="text-center" ng-show="pwhide">
                                                                         <div id="tab" class="btn-group" data-toggle="buttons-radio">
                                                                             <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='False';put_customer_program($index)" style="width:40px" ng-class="{'active' : row.whoops_final_release==='False'}"><i class="fa fa-times" aria-hidden="true"></i></a>
                                                                             <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='True';put_customer_program($index)" ng-class="{'active' : row.whoops_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
                                                                         </div>
                                                                     </td>
+
+                                                                    <!-- enhancement release -->
                                                                     <td class="text-center" ng-show="pwhide">
                                                                         <div id="tab" class="btn-group" data-toggle="buttons-radio">
                                                                             <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='False';put_customer_program($index)" ng-class="{'active' : row.enhancement_final_release==='False'}" style="width:40px"><i class="fa fa-times" aria-hidden="true"></i></a>
