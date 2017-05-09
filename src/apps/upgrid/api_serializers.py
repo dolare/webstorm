@@ -293,7 +293,7 @@ class SubuserListSerializer(serializers.ModelSerializer):
 
     def get_customer_program(self, obj):
         program_list = ClientAndProgramRelation.objects.filter(client=obj).values('client_program')
-        programs = UniversityCustomerProgram.objects.filter(object_id__in = program_list)
+        programs = UniversityCustomerProgram.objects.filter(object_id__in=program_list)
         serializer = ClientProgramSerializer(programs, many=True)
         return serializer.data
 
@@ -354,6 +354,13 @@ class SubUserDetailSerializer(serializers.ModelSerializer):
 
     def get_school(self, obj):
         return obj.Ceeb.school
+
+
+class ClientAndProgramRelationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClientAndProgramRelation
+        fields = ['object_id', 'client', 'client_program']
+
 
 # ----------------------------------Account Manager Serializer----------------------------------
 
