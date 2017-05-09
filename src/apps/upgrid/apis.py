@@ -2401,14 +2401,20 @@ class UnconfirmedPrograms(generics.ListAPIView):
     def is_manager(self, request):
         try:
             UpgridAccountManager.objects.get(id=request.user.id)
-            return client_id
+            return True
         except UpgridAccountManager.DoesNotExist:
             return False
 
     def get_queryset(self, *args, **kwargs):
-        client_id = self.request.user.id
-        if is_manager(self.request):
+        if self.is_manager(self.request) == False:
+            client_id = self.request.user.id
+        elif 'client_id' in self.request.GET :
             client_id = self.request.GET.get("client_id")
+        print(self.request)
+        print(**kwargs)
+        print(client_id)
+        # if is_manager(self.request):
+        #     client_id = self.request.GET.get("client_id")
         query_set = UniversityCustomerProgram.objects.filter(Q(customer = client_id)&Q(customer_confirmation='No'))
 
         return query_set
