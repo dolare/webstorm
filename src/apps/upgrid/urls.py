@@ -46,11 +46,12 @@ urlpatterns=[
     url(r'^api/upgrid/user/$', apis.CustomerDetail.as_view()),
     url(r'^api/upgrid/user/(?P<client_id>[0-9a-fA-F\-]+)/$', apis.CustomerDetail.as_view()),
 
-    url(r'^api/upgrid/user/UniversityCustomer$', apis.UniversityCustomerListAPI.as_view()),  # new
+    url(r'^api/upgrid/user/university_customer$', apis.UniversityCustomerListAPI.as_view()),  # new
 
     # Put change subuser is_active status, Post create subuser
     url(r'^api/upgrid/user/subuser$', apis.CreateOrChangeSubUser.as_view()),
 
+    url(r'^api/upgrid/user/client_and_program_relation$', apis.ClientAndProgramRelationAPI.as_view()),   # new
 
     # # Get Dashboard information for client +++
     url(r'^api/upgrid/user/dashboard/$', apis.DashBoardAPI.as_view()),

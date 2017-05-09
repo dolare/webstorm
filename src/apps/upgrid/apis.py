@@ -13,7 +13,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 import urllib.request
 # 3rd party lib
-from rest_framework import generics
+from rest_framework import generics, mixins
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.filters import DjangoFilterBackend
@@ -42,7 +42,7 @@ from .models import (
     CustomerCompetingProgram, ClientAndProgramRelation, WhoopsReports,
     EnhancementReports)
 from .api_serializers import *
-from .filter import UniversityCustomerFilter
+from .filter import UniversityCustomerFilter, ClientAndProgramRelationFilter
 
 # used shared report
 import zlib
@@ -541,7 +541,59 @@ class UniversityCustomerListAPI(generics.ListAPIView):
         if UpgridAccountManager.objects.filter(id=user.id).exists():
             return UniversityCustomer.objects.filter(account_manager=user)
         else:
-            return UniversityCustomer.objects.filter(main_user_id=str(user.id))
+            return UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)) | Q(id=user.id))
+
+
+class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView):
+    """
+    Get, Create and Delete client and program relation
+
+    """
+    serializer_class = ClientAndProgramRelationSerializer
+    filter_backends = (DjangoFilterBackend, )
+    filter_class = ClientAndProgramRelationFilter
+    multiple_lookup_fields = ['client', 'client_program']
+
+    def get_queryset(self, *args, **kwargs):
+        user = self.request.user
+        if UpgridAccountManager.objects.filter(id=user.id).exists():
+            owned_users = UniversityCustomer.objects.filter(account_manager=user)
+        else:
+            owned_users = UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)) | Q(id=user.id))
+
+        return ClientAndProgramRelation.objects.filter(client__in=owned_users)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        user = request.user
+        client = request.POST.get('client', None)
+        client_program = request.POST.get('client_program', None)
+
+        if client is None or client_program is None:
+            return Response({"Failed": _("client and client_program is required")}, status=HTTP_400_BAD_REQUEST)
+
+        if UpgridAccountManager.objects.filter(id=user.id):
+            owned_users = UniversityCustomer.objects.filter(account_manager=user)
+            university_customer_programs = UniversityCustomerProgram.objects.filter(customer__account_manager=user)
+        else:
+            owned_users = UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)) | Q(id=user.id))
+            university_customer_programs = UniversityCustomerProgram.objects.filter(customer=user)
+        if client not in [str(owned_user.id) for owned_user in owned_users] or \
+           client_program not in [str(program.object_id) for program in university_customer_programs]:
+            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+
+        return super(ClientAndProgramRelationAPI, self).create(request, *args, **kwargs)
+
+    def delete(self, request):
+        object_id = self.request.POST.get('object_id', None)
+        if object_id is None:
+            return Response({"Failed": _("object_id is required")}, status=HTTP_400_BAD_REQUEST)
+        queryset = self.get_queryset()
+        client_and_program_relation = queryset.filter(object_id=object_id)[0]
+        client_and_program_relation.delete()
+        return Response({"success": _("ClientAndProgramRelation has been deleted.")}, status=HTTP_204_NO_CONTENT)
 
 
 # Post create new sub_user/ Put change sub_user's is_active status
@@ -612,7 +664,18 @@ class CreateOrChangeSubUser(APIView):
                 main_user = UniversityCustomer.objects.get(id=request.data['main_user_id'])
             except UniversityCustomer.DoesNotExist or UpgridAccountManager.DoesNotExist:
                 return Response({"failed": _("Permission Denied.")}, status=HTTP_403_FORBIDDEN)
-        
+
+        if 'email' not in request.data:
+            return Response({"failed": _("Email is required.")}, status=HTTP_400_BAD_REQUEST)
+
+        email_existed = UniversityCustomer.objects.filter(email=request.data['email']).exists()
+        if email_existed:
+            raise ValidationError('Email already existed!')
+
+        sub_user_number = UniversityCustomer.objects.filter(main_user_id=main_user.id).filter(is_active=True).count()
+        if sub_user_number >= 10:
+            return Response({"failed": _("Can not create more than 10 sub user.")}, status=HTTP_400_BAD_REQUEST)
+
         sub_service_until = main_user.service_until
         university_school = UniversitySchool.objects.get(ceeb=main_user.Ceeb.ceeb)
         decoded_new_password = self.validate(self.request.data['password'])
@@ -632,23 +695,21 @@ class CreateOrChangeSubUser(APIView):
         )
         user.password = decoded_new_password
 
-        
         #user.set_password(decoded_new_password)
         user.save()
-
-
 
         # create corresponding customer programs of subuser
         programs_id = self.request.data['customer_programs']
         customer_program_id = programs_id.split('/')
         for i in customer_program_id:
-            main_customer_program = UniversityCustomerProgram.objects.get(object_id=i)
-        
-            sub_customer_program = ClientAndProgramRelation.objects.create(
-                client=user,
-                client_program=main_customer_program
-                )
-            sub_customer_program.save()
+            if i != '':
+                main_customer_program = UniversityCustomerProgram.objects.get(object_id=i)
+
+                sub_customer_program = ClientAndProgramRelation.objects.create(
+                    client=user,
+                    client_program=main_customer_program,
+                    )
+                sub_customer_program.save()
         return Response({"success": _("Sub user has been created.")}, status=HTTP_201_CREATED)
 
 
