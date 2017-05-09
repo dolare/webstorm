@@ -10,6 +10,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
     $scope.emailadd = authenticationSvc.getUserInfo().username;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
     var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
+    var unenhancement_avatar = avatarService.getClientId() ? "?client_id="+avatarService.getClientId() : "";
 
     /////////
     
@@ -55,7 +56,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
                   //api
                   $http({
-                        url: '/api/upgrid/user/unenhancement/programs/',
+                        url: '/api/upgrid/user/unenhancement/programs/'+unenhancement_avatar,
                         method: 'GET',
                         headers: {
                           'Authorization': 'JWT ' + token
@@ -230,7 +231,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
         //api
         $http({
-              url: '/api/upgrid/user/unenhancement/programs/',
+              url: '/api/upgrid/user/unenhancement/programs/'+unenhancement_avatar,
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
@@ -494,7 +495,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
         //api
         $http({
-              url: '/api/upgrid/user/unenhancement/programs/',
+              url: '/api/upgrid/user/unenhancement/programs/'+unenhancement_avatar,
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token

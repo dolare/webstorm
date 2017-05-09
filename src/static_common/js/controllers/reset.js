@@ -67,7 +67,7 @@ controller('ResetController',
 
                         // options
                         icon: "fa fa-check",
-                        message: 'Congratulations! Your password has been reset, please log in.'
+                        message: 'Your password has successfully been reset. You can now log in.'
                     }, {
                         // settings
                         type: 'success',
