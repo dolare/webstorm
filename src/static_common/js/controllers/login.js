@@ -298,10 +298,4 @@ login.controller('LoginController',
     });
 
 
-
-login.controller('ErrorController',
-    function() {
-
-
-});
     
