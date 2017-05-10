@@ -52,6 +52,10 @@ h1 {
   font-size: 60px !important;
 }
 
+.font-s100 {
+  font-size: 100px !important;
+}
+
 .bootbox.modal {
   margin-top: 100px;
 }
