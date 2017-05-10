@@ -423,6 +423,36 @@ angular.module('myApp')
 
 
 
+        var getSubuser = function(token, main_user_id, id) {
+
+          console.log("main_user_id = "+main_user_id);
+          console.log("id="+id);
+          console.log('/api/upgrid/user/university_customer/'+ (main_user_id ? ('?main_user_id=' + main_user_id + '&') : ('')) + (id ? ('?id=' + id + '&') : ('')) + '?is_active=true')
+          var promise =  $http({
+
+              url: '/api/upgrid/user/university_customer/'+ (main_user_id ? ('?main_user_id=' + main_user_id + '&') : ('')) + (id ? ('?id=' + id + '&') : ('')) + '?is_active=true',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            }).then(function (response) {
+
+               console.log("subuser is"+ JSON.stringify(response.data));
+                
+               return response.data;
+
+             }).
+             catch(function(error){
+                console.log('an error occurred...'+JSON.stringify(error));
+
+             });
+            return promise;
+
+
+        }
+
+
+
         
 
     return {
@@ -436,6 +466,7 @@ angular.module('myApp')
       getReleasedWhoops: getReleasedWhoops,
       getReleasedEnhancement: getReleasedEnhancement,
       getDashboard: getDashboard,
+      getSubuser: getSubuser
 
 
 

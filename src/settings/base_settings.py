@@ -33,7 +33,7 @@ INSTALLED_APPS = (
     'adminplus',    # add custom view to admin page, https://github.com/jsocol/django-adminplus
     'rest_framework',
     #'rest_framework.authtoken',
-    #'rest_framework_swagger',
+    # 'rest_framework_swagger',
     #'nested_admin',
     # our apps
     'ceeb_program',

@@ -633,6 +633,16 @@ App.config(function($stateProvider, $urlRouterProvider) {
         console.log('*************');
         return apiService.getProfileList(userInfo.accessToken);
 
+      },
+
+      //get raw data
+      SUB: function(depsProfile, apiService, authenticationSvc, avatarService) {
+        var userInfo = authenticationSvc.getUserInfo();
+        var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
+        console.log("client_id="+client_id)
+        console.log('*************');
+        return apiService.getSubuser(userInfo.accessToken, client_id);
+
       }
 
     }
@@ -720,16 +730,61 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
 
+
+  //error pages
+  state('404', {
+    url: '/404',
+    templateUrl: '/static/views/Errors/404.html',
+    controller: 'ErrorController',
+    resolve: {
+                    deps500: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/error.js',
+                             
+                            ]
+                        });
+                    }]
+                }
+   
+  }).
+
   //error pages
   state('500', {
     url: '/500',
     templateUrl: '/static/views/Errors/500.html',
     controller: 'ErrorController',
+    resolve: {
+                    deps500: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/error.js',
+                             
+                            ]
+                        });
+                    }]
+                }
    
   }).state('expired', {
     url: '/expired',
     templateUrl: '/static/views/Errors/expired.html',
     controller: 'ErrorController',
+    resolve: {
+                    depsExpired: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/error.js',
+                             
+                            ]
+                        });
+                    }]
+                }
    
   });
 
@@ -841,6 +896,9 @@ App.factory('AuthInterceptor',
         } else if(rejection.status === 500 && rejection.config.url !== '/login') {
           var $state = $injector.get('$state');
           $state.go('500');
+        } else if(rejection.status === 404 && rejection.config.url !== '/login') {
+          var $state = $injector.get('$state');
+          $state.go('404');
         } else if(rejection.status === 403 && rejection.config.url.substr(0,26) === '/api/upgrid/reports/shared') {
 
 

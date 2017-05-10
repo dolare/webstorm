@@ -19,7 +19,7 @@ marshmallow==2.7.3
 PyJWT==1.4.0
 PyYAML==3.11
 #django-nested-admin==3.0.8
-#django-rest-swagger==0.3.6
+#django-rest-swagger==2.1.1
 WeasyPrint==0.30
 
 # our packages are only listed here for information purpose
