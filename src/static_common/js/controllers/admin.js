@@ -1079,7 +1079,6 @@ angular.module('myApp').controller('AdminMainController',
             //if competing school has selection
             if (competing_string !== "") {
                 // alert('start');
-
                 console.log("competing_string now = " + JSON.stringify(competing_string.slice(0, -1)));
                 $http({
                     url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + competing_string.slice(0, -1),
@@ -1089,19 +1088,22 @@ angular.module('myApp').controller('AdminMainController',
                     }
                 }).then(function(response) {
                     //console.log("competing_programs" + JSON.stringify(response.data));
-                    var load_competing_programs = response.data;
+                    var temp1 = JSON.stringify(response.data);
+                    var load_competing_programs = JSON.parse(temp1);
                     //alert(JSON.stringify($scope.selected_customprogram));
                     for (var i = 0; i < load_competing_programs.length; i++) {
                         $scope.competing_program_array.push({
                             "object_id": load_competing_programs[i].object_id,
                             "display": load_competing_programs[i].Ceeb + " - " + load_competing_programs[i].program_university + " - " + load_competing_programs[i].program_school + " - " + load_competing_programs[i].program_name + " - " + load_competing_programs[i].program_degree
                         })
-
                     }
+
+                    $scope.isChange = true;
                     //alert(JSON.stringify($scope.selected_customprogram));
                     $scope.selected_customprogram = JSON.parse(temp);
                     // alert(JSON.stringify($scope.displayeddata1));
-                    console.log("competing_program_array now=" + JSON.stringify($scope.competing_program_array))
+                    console.log("load_competing_programs now=" + JSON.stringify(load_competing_programs));
+                    console.log("competing_program_array now=" + JSON.stringify($scope.competing_program_array));
 
                 }).
                 catch(function(error) {
@@ -1798,8 +1800,6 @@ angular.module('myApp').controller('AdminMainController',
                         "service_level": $scope.service_level,
                         "competing_schools": competing_schools_obj,
                         "isDemo": $scope.is_demo
-
-
                     },
                     headers: {
                         'Authorization': 'JWT ' + token,
@@ -1873,8 +1873,12 @@ angular.module('myApp').controller('AdminMainController',
 
         //put competing programs
         $scope.put_competing = function(obj, cid, pro, order, estatus) {
+           /* if($scope.isChange == true){
+                $scope.isChange = false;
+                return;
+            }*/
             
-            console.log("changing competing");
+            console.log("changing competing+++++++++++++++++");
 
             //existing competing has obj
             if ($scope.pwhide && obj) { 

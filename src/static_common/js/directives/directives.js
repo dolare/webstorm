@@ -513,6 +513,9 @@ App.directive('jsSelect2', function ($timeout) {
 
             scope.$watch(attrs.ngModel, function(){
                 $timeout(function(){
+                console.log(jQuery(element).select2());
+                console.log('=========');
+                console.log(scope)
                     element.trigger('change.select2');
                 },100);
             });
