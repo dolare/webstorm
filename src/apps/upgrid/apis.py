@@ -126,7 +126,7 @@ class ResetPassword(generics.GenericAPIView):
                                     "!<br>If the above link does not work for you, please copy and paste the following into your browser address "
                                     "bar: https://%s/#/upgrid/reset/%s/<br>")
                     message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
-                                           request.META['HTTP_HOST'], token,request.META['HTTP_HOST'],token), to=[request.data['email']])
+                                           request.META['HTTP_HOST'], token, request.META['HTTP_HOST'], token), to=[request.data['email']])
                     message.content_subtype = 'html'
                     message.send()
                 except BadHeaderError:
@@ -572,10 +572,14 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
     def create(self, request, *args, **kwargs):
         user = request.user
         client = request.POST.get('client', None)
-        client_program = request.POST.get('client_program', None)
+        client_programs = request.POST.get('client_program', None)
 
-        if client is None or client_program is None:
+        if client is None or client_programs is None or not client_programs:
+            print("is_None.............")
             return Response({"Failed": _("client and client_program is required")}, status=HTTP_400_BAD_REQUEST)
+
+        if type(client_programs) is not list:
+            return Response({"Failed": _("client_programs must be a list.")}, status=HTTP_400_BAD_REQUEST)
 
         if UpgridAccountManager.objects.filter(id=user.id):
             owned_users = UniversityCustomer.objects.filter(account_manager=user)
@@ -583,18 +587,37 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
         else:
             owned_users = UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)) | Q(id=user.id))
             university_customer_programs = UniversityCustomerProgram.objects.filter(customer=user)
-        if client not in [str(owned_user.id) for owned_user in owned_users] or \
-           client_program not in [str(program.object_id) for program in university_customer_programs]:
+
+        if client not in [str(owned_user.id) for owned_user in owned_users]:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
-        return super(ClientAndProgramRelationAPI, self).create(request, *args, **kwargs)
+        client_owned_programs = [str(program.object_id) for program in university_customer_programs]
+        print(client_owned_programs)
+        print(client_programs)
+        print(type(client_programs))
+        error_program = []
+        for program in client_programs:
+            print(program)
+            if program not in client_owned_programs:
+                error_program.append(program)
+                continue
+            data = {'client': client,
+                    'client_program': program, }
+            serializer = self.get_serializer(data=data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+
+        if error_program:
+            return Response({"error": "Permission Denied for {0}".format(",".join(error_program))},
+                            status=HTTP_201_CREATED)
+        return Response({"success": _("Client and Program relation has been created.")}, status=HTTP_201_CREATED)
 
     def delete(self, request):
         object_id = self.request.POST.get('object_id', None)
-        if object_id is None:
+        if object_id is None or not object_id:
             return Response({"Failed": _("object_id is required")}, status=HTTP_400_BAD_REQUEST)
         queryset = self.get_queryset()
-        client_and_program_relation = queryset.filter(object_id=object_id)[0]
+        client_and_program_relation = queryset.filter(object_id__in=object_id)
         client_and_program_relation.delete()
         return Response({"success": _("ClientAndProgramRelation has been deleted.")}, status=HTTP_204_NO_CONTENT)
 
@@ -635,10 +658,25 @@ class CreateOrChangeSubUser(APIView):
 
     def put(self, request):
         sub_user = self.get_subuser(request)
-        if request.data['is_active'] == 'False':
-            sub_user.is_active = False
-            sub_user.save()
-            return Response({"success": _("Sub user has been deactived.")}, status=HTTP_200_OK)
+        if 'is_active' in request.data:
+            if request.data['is_active'] == 'False':
+                sub_user.is_active = False
+                sub_user.save()
+                return Response({"success": _("Sub user has been deactived.")}, status=HTTP_200_OK)
+            if request.data['is_active'] == 'True':
+                sub_user.is_active = True
+                sub_user.save()
+                return Response({"success": _("Sub user has been actived.")}, status=HTTP_200_OK)
+
+        if 'customer_program_id' in request.data:
+            ClientAndProgramRelation.objects.filter(client=sub_user).delete()
+            for i in request.data['customer_program_id']:
+                selected_program = ClientAndProgramRelation.objects.create(
+                    client=sub_user,
+                    client_program=UniversityCustomerProgram.objects.get(object_id=i)
+                )
+                selected_program.save()
+
         else:
             sub_user.update(
                 title=request.data['title'],
@@ -650,13 +688,6 @@ class CreateOrChangeSubUser(APIView):
             )
             sub_user.save()
             # update Client And Program relation for sub user
-            ClientAndProgramRelation.objects.filter(client=sub_user).delete()
-            for i in request.data['customer_program_id']:
-                selected_program = ClientAndProgramRelation.objects.create(
-                    client=sub_user,
-                    client_program=UniversityCustomerProgram.objects.get(object_id=i)
-                )
-                selected_program.save()
 
     def post(self, request):
         try:
@@ -713,6 +744,22 @@ class CreateOrChangeSubUser(APIView):
                     client_program=main_customer_program,
                     )
                 sub_customer_program.save()
+
+        payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(payload)
+        if token:
+            html_content = ("Hello, %s! <br>We have just received a password reset request for this email account."
+                            "Please click <a href='https://%s/#/upgrid/reset/%s/'> here</a> to reset your Upgrid password"
+                            "!<br>If the above link does not work for you, please copy and paste the following into your browser address "
+                            "bar: https://%s/#/upgrid/reset/%s/<br>")
+            message = EmailMessage(subject='Reset Password', body=html_content % (user.contact_name,
+                                                                                  request.META['HTTP_HOST'], token,
+                                                                                  request.META['HTTP_HOST'], token),
+                                   to=[user.email])
+            # message = EmailMessage(subject='User created', body="User created!", to=['ckykokoko@gmail.com'])
+            message.content_subtype = 'html'
+            message.send()
+
         return Response({"success": _("Sub user has been created.")}, status=HTTP_201_CREATED)
 
 
