@@ -541,7 +541,7 @@ class UniversityCustomerListAPI(generics.ListAPIView):
         if UpgridAccountManager.objects.filter(id=user.id).exists():
             return UniversityCustomer.objects.filter(account_manager=user)
         else:
-            return UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)) | Q(id=user.id))
+            return UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)))
 
 
 class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView):
@@ -2518,6 +2518,6 @@ class UnconfirmedPrograms(generics.ListAPIView):
         #print(client_id)
         # if is_manager(self.request):
         #     client_id = self.request.GET.get("client_id")
-        query_set = UniversityCustomerProgram.objects.filter(Q(customer = client_id)&Q(customer_confirmation='No'))
+        query_set = UniversityCustomerProgram.objects.filter(Q(customer=client_id) & Q(customer_confirmation='No'))
 
         return query_set
