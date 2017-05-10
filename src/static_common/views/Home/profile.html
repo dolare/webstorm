@@ -16,12 +16,6 @@
                   User Profile
                 </h1>
                 
-               <!--  <div class="block-content block-content-full">
-                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Top Tooltip" type="button">Show Tooltip</button>
-                                </div> -->
-
-
-                
               </div>
             </div>
             <div class="block-content">
@@ -69,18 +63,15 @@
 
             <!-- {{data.subuser}} -->
 
-
-
-
             <div class="row push-10-t" style="padding-left:15px" ng-show="data.accountType ==='main'">
             
-                    <div class="col-sm-6 col-md-4 col-lg-4 push-10-t" ng-repeat = "row in data.subuser" ng-if="row.contact_name && row.is_active" style="padding:0 20px">
+                    <div class="col-sm-6 col-md-4 col-lg-4 push-10-t" ng-repeat = "row in subusers" style="padding:0 20px">
                             <!-- Contact -->
                             <div class="block block-rounded" style="border:1px solid #eee;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);">
                                 <div class="block-header">
                                     <ul class="block-options">
                                         <li>
-                                            <button type="button" ng-click="viewsubuser($index)" data-target="#myModalSubuserView" data-toggle="modal" data-js-blur>
+                                            <button type="button" ng-click="viewsubuser(row.id)" data-target="#myModalSubuserView" data-toggle="modal" data-js-blur>
                                                 <i class="si si-pencil text-primary"></i>
                                             </button>
                                         </li>
@@ -128,44 +119,6 @@
                   <button ng-show="data.accountType ==='main'" class="btn btn-white text-primary push-15-t push-50" type="button" style="margin-left:20px;" data-toggle="modal" data-target="#myModalSubuser" ng-click="triggersubuser()"><i class="fa fa-plus"></i> Add a Colleague</button>
                         
 
-
-
-<!-- 
-            <table class="table table-borderless" ng-if="data.accountType ==='main'">
-              <colgroup>
-              <col width="25%"/>
-              <col width="30%"/>
-              <col width="45%"/>
-              
-            </colgroup>        
-            <tbody>
-              <tr ng-repeat = "row in data.subuser" ng-if="row.contact_name">
-                <td class="text-right"><p class="font-w600">{{row.contact_name}}</p></td>
-                <td><p ng-cloak>{{row.email}}</p>
-                </td>
-
-                <td class="text-left"><p>
-                  <button class="btn btn-warning" type="button" ng-click="viewsubuser($index)" data-target="#myModalSubuserView" data-toggle="modal"><i class="fa fa-eye"></i></button>
-                  <button class="btn btn-danger" type="button" ng-click="removesubuser($index)"><i class="fa fa-times"></i></button>
-
-                  <button data-target="#myModalEdit" data-toggle="modal" class="btn btn-default" type="button" ng-click="editsubuser($index)"><i class="fa fa-pencil"></i></button>
-
-                  </p></td>
-                  
-                </tr>
-                
-
-                    <tr>
-                      <td>
-                        <p><button class="btn btn-success " type="button" style="margin-left:15px;" data-toggle="modal" data-target="#myModalSubuser" ng-click="triggersubuser()"><i class="fa fa-plus"></i> Add a Colleague</button>
-                        </p>
-                      </td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    
-                  </tbody>
-                </table> -->
 
                 <h3 class="block-title" style="padding-left:15px;">Service Subscription</h3>
                 <hr/ style="margin-left:15px;">
@@ -449,7 +402,7 @@
                           <tbody>
                             <tr>
                               <td class="text-right"><p class="font-w600">Email Address:</p></td>
-                              <td><p>{{subuserdetail.login_email}}</p>
+                              <td><p>{{subuser_raw[0].email}}</p>
                               </td>
 
                               
@@ -457,9 +410,9 @@
                             </tr>
                             
 
-                            <tr ng-if="subuserdetail.contract_prefix">
+                            <tr>
                               <td class="text-right"><p class="font-w600">Title: </p></td>
-                              <td ><p>{{subuserdetail.contract_prefix}}</p>
+                              <td ><p>{{subuser_raw[0].title}}</p>
                               </td>
 
                               
@@ -468,7 +421,7 @@
 
                             <tr>
                               <td class="text-right"><p class="font-w600">Name: </p></td>
-                              <td><p>{{subuserdetail.contract_name}}</p>
+                              <td><p>{{subuser_raw[0].contact_name}}</p>
                               </td>
 
                               
@@ -479,7 +432,7 @@
 
                             <tr>
                               <td class="text-right"><p class="font-w600">Position: </p></td>
-                              <td ><p>{{subuserdetail.contract_title}}</p>
+                              <td ><p>{{subuser_raw[0].position}}</p>
                               </td>
 
                               
@@ -488,7 +441,7 @@
 
                             <tr>
                               <td class="text-right"><p class="font-w600">Tel.: </p></td>
-                              <td><p>{{subuserdetail.contract_tel}}</p>
+                              <td><p>{{subuser_raw[0].phone}}</p>
                               </td>
 
                               
@@ -496,12 +449,14 @@
                             </tr>
 
                             <tr>
+
                               <td class="text-right" style="vertical-align: top"><p class="font-w600">Program access: </p></td>
+
                               <td>
                                 
-                                
+                               
                                 <div class="frame" style="width:100%; max-height:100px;">
-                                  <p ng-repeat="program in subuserdetail.customer_programs">{{$index+1}}.&nbsp;&nbsp;&nbsp;{{program.program.program_display.split('--')[1]}}  ({{program.program.program_display.split('--')[2].split('-')[0]}})</p>
+                                  <p ng-repeat = "row1 in subuser_raw[0].customer_program">{{$index+1}}.&nbsp;&nbsp;&nbsp;{{row1.program.program_display.split('--')[1]}}  ({{row1.program.program_display.split('--')[2].split('-')[0]}})</p>
                                 </div>
                               </td>
 

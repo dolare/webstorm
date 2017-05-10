@@ -633,6 +633,14 @@ App.config(function($stateProvider, $urlRouterProvider) {
         console.log('*************');
         return apiService.getProfileList(userInfo.accessToken);
 
+      },
+
+      //get raw data
+      SUB: function(depsProfile, apiService, authenticationSvc) {
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log('*************');
+        return apiService.getSubuser(userInfo.accessToken);
+
       }
 
     }
@@ -725,11 +733,35 @@ App.config(function($stateProvider, $urlRouterProvider) {
     url: '/500',
     templateUrl: '/static/views/Errors/500.html',
     controller: 'ErrorController',
+    resolve: {
+                    deps500: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/error.js',
+                             
+                            ]
+                        });
+                    }]
+                }
    
   }).state('expired', {
     url: '/expired',
     templateUrl: '/static/views/Errors/expired.html',
     controller: 'ErrorController',
+    resolve: {
+                    depsExpired: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/error.js',
+                             
+                            ]
+                        });
+                    }]
+                }
    
   });
 
