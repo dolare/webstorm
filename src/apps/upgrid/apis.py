@@ -568,14 +568,15 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
 
     def create(self, request, *args, **kwargs):
         user = request.user
-        client = request.POST.get('client', None)
-        client_programs = request.POST.get('client_program', None)
-
-        if client is None or client_programs is None or not client_programs:
+        if 'client' not in request.data or 'client_program' not in request.data:
             print("is_None.............")
             return Response({"Failed": _("client and client_program is required")}, status=HTTP_400_BAD_REQUEST)
-
+        client = request.data['client']
+        client_programs = request.data['client_program']
+        print(client)
+        print(client_programs)
         if type(client_programs) is not list:
+            print("not list")
             return Response({"Failed": _("client_programs must be a list.")}, status=HTTP_400_BAD_REQUEST)
 
         if UpgridAccountManager.objects.filter(id=user.id):
@@ -610,9 +611,9 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
         return Response({"success": _("Client and Program relation has been created.")}, status=HTTP_201_CREATED)
 
     def delete(self, request):
-        object_id = self.request.POST.get('object_id', None)
-        if object_id is None or not object_id:
+        if 'object_id' not in request.data:
             return Response({"Failed": _("object_id is required")}, status=HTTP_400_BAD_REQUEST)
+        object_id = request.data['object_id']
         queryset = self.get_queryset()
         client_and_program_relation = queryset.filter(object_id__in=object_id)
         client_and_program_relation.delete()
