@@ -259,6 +259,28 @@ controller('ProfileController',
       // $scope.subuser.password1 = null;
       // $scope.subuser.password2 = null;
       
+      if($scope.subusers.length < 10) {
+        jQuery('#myModalSubuser').modal('toggle');
+      } else {
+        $.notify({
+
+          // options
+          icon: "fa fa-warning",
+          message: 'You can only add up to 10 colleagues.'
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
+          },
+          z_index: 1999,
+        });
+      }
+
+      
+
+
       console.log($filter('date')(new Date(), 'yyyyMMddhhmmssa'));
 
       $scope.subuser = null;
@@ -350,24 +372,14 @@ controller('ProfileController',
             console.log('success create!');
             console.log("&^&^&^confirm the timestamp"+subusertimestamp);
 
-            // var temp_subuser_programs = [];
+            //reload subuser list
+            apiService.getSubuser(token, client_id).then(function (result) {
+          
+                $scope.subusers = result;
+                
+               
+            });
 
-            // for(var key in $scope.set_permission){
-
-            //           if($scope.set_permission[key].checked) {
-            //               for(var i=0; i<$scope.data.customer_program.length; i++){
-            //                 if($scope.set_permission[key] === $scope.data.customer_program[i].object_id){
-            //                   temp_subuser_programs.push({
-            //                     "program": {
-            //                       "program_display" : $scope.data.customer_program[i].program.program_display
-            //                     }
-
-            //                   })
-            //                   break;
-            //                 }
-            //               }
-            //           }
-            //   }
 
 
             $scope.data.subuser.push({
@@ -385,6 +397,7 @@ controller('ProfileController',
 
 
             });
+
 
 
             
@@ -431,9 +444,9 @@ controller('ProfileController',
 
     $scope.viewsubuser = function(id) {
 
-
-      
-      
+      App.blocks('#load_subuser', 'state_loading');
+        
+      console.log("ID+++"+id)
       // console.log("user is "+JSON.stringify( $scope.data.subuser[$index]));
       // $scope.subuserdetail = {
       //   "login_email": $scope.data.subuser[$index].email,
@@ -448,7 +461,26 @@ controller('ProfileController',
 
       apiService.getSubuser(token, client_id, id).then(function (result) {
           
-          $scope.subuser_raw = result
+          $scope.subuser_raw = result;
+
+          App.blocks('#load_subuser', 'state_normal');
+
+          $scope.title_readonly = true;
+          $scope.contact_name_readonly = true;
+          $scope.position_readonly = true;
+          $scope.phone_readonly = true;
+
+          $scope.subuser_title_old = $scope.subuser_raw[0].title
+          $scope.subuser_contact_name_old = $scope.subuser_raw[0].contact_name
+          $scope.subuser_position_old = $scope.subuser_raw[0].position
+          $scope.subuser_phone_old = $scope.subuser_raw[0].phone
+
+          $scope.subuser_programs_old = {};
+          for(var i=0; i<$scope.subuser_raw[0].customer_program.length; i++){
+            //$scope.subuser_programs_old.push($scope.subuser_raw[0].customer_program[i].object_id)
+            $scope.subuser_programs_old[$scope.subuser_raw[0].customer_program[i].object_id] = true;
+          }
+          console.log("$scope.subuser_programs_old="+JSON.stringify($scope.subuser_programs_old));
          
       });
 
@@ -479,17 +511,6 @@ controller('ProfileController',
     $scope.removesubuser = function($index) {
       console.log("index is " + $index);
 
-      // $http({
-      //   url: '/api/changestatus/' + $scope.data.subuser[$index].username + '/',
-      //   method: 'PUT',
-      //   headers: {
-      //     'Authorization': 'JWT ' + token
-      //   }
-
-      // })
-
-
-
       $http({
         url: '/api/upgrid/user/subuser',
         method: 'PUT',
@@ -510,6 +531,15 @@ controller('ProfileController',
 
         //update data
         $scope.data = tableDataService.getProfile(List);
+
+        apiService.getSubuser(token, client_id).then(function (result) {
+          
+                $scope.subusers = result;
+                
+               
+        });
+
+
 
         $.notify({
 

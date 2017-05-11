@@ -37,7 +37,9 @@ h1 {
   margin-top: 70px !important;
 }
 
-
+.font-s12 {
+  font-size: 12px !important;
+}
 
 .font-s16 {
   font-size: 16px !important;
@@ -1605,4 +1607,18 @@ ul.help-ul>li {
 .update-popover {
   width:100%;
   max-width: none;
+}
+
+
+
+.edit-pencil {
+  padding: 5px;
+}
+
+.edit-pencil>i {
+  cursor: pointer;
+}
+
+#subuserform input, #subuserform select {
+  cursor: inherit;;
 }

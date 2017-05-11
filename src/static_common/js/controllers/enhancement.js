@@ -95,8 +95,8 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
     $scope.EnhancementViewer = function(Id){
       $scope.date = new Date();
-      //App.blocks('#enhancement_loading', 'state_loading');
-            App.blocks('#my-block', 'state_loading');
+      App.blocks('#enhancement_loading', 'state_loading');
+            //App.blocks('#my-block', 'state_loading');
 
       
           $http({
@@ -173,7 +173,7 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
 
              angular.element(document).ready(function () {
-               //App.blocks('#enhancement_loading', 'state_normal');
+               App.blocks('#enhancement_loading', 'state_normal');
                //App.blocks('#my-block', 'state_normal');
              });
 

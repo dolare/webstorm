@@ -85,6 +85,8 @@
                                     <div class="block-title">{{row.contact_name}}</div>
                                 </div>
                                 <div class="block-content block-content-full bg-primary text-center">
+
+
                                     <img class="img-avatar img-avatar-thumb" src="/static/img/avatar6.jpg" alt="">
                                     <div class="font-s13 push-10-t">{{row.position}}</div>
                                 </div>
@@ -116,7 +118,7 @@
                   </div>
 
 
-                  <button ng-show="data.accountType ==='main'" class="btn btn-white text-primary push-15-t push-50" type="button" style="margin-left:20px;" data-toggle="modal" data-target="#myModalSubuser" ng-click="triggersubuser()"><i class="fa fa-plus"></i> Add a Colleague</button>
+                  <button ng-show="data.accountType ==='main'" class="btn btn-white text-primary push-15-t push-50" type="button" style="margin-left:20px;" ng-click="triggersubuser()"><i class="fa fa-plus"></i> Add a Colleague</button>
                         
 
 
@@ -379,7 +381,7 @@
                 <div class="modal fade" id="myModalSubuserView"  role="dialog" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
-                      <div class="block block-themed block-transparent remove-margin-b">
+                      <div class="block block-themed block-transparent remove-margin-b" id="load_subuser">
                         <div class="block-header bg-primary-dark">
                           <ul class="block-options">
                             <li>
@@ -392,7 +394,7 @@
 
                         <div class="block-content">
                           
-                          <table class="table table-borderless">
+                          <!-- <table class="table table-borderless">
                             <colgroup>
                             <col width="25%"/>
                             <col width="75%"/>
@@ -413,6 +415,13 @@
                             <tr>
                               <td class="text-right"><p class="font-w600">Title: </p></td>
                               <td ><p>{{subuser_raw[0].title}}</p>
+                                 
+                                    <select ng-options="p for p in prefix" ng-model="subuser.form_contract_prefix" class="form-control" name="val-prefix-edit">
+                                      <option value="">Please select</option>
+                                      
+                                    </select>
+                                  
+                                
                               </td>
 
                               
@@ -469,14 +478,103 @@
 
                             
                           </tbody>
-                        </table>
+                        </table> -->
+
+
+
+               <form class="form-horizontal" id="subuserform">
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="val-email-edit">Email</label>
+                  <div class="col-md-7">
+                    <input ng-model="subuser_raw[0].email" class="form-control" type="text" id="val-email-edit" name="val-email-edit" placeholder="" ng-disabled = "true">
+                  </div>
+                </div>
+              
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="val-prefix-edit">Title</label>
+                  <div class="col-md-7">
+                    <select ng-options="p for p in prefix" ng-model="subuser_raw[0].title" class="form-control" name="val-prefix-edit" ng-disabled = "title_readonly && subuser_title_old === subuser_raw[0].title">
+                      <option value="">Please select</option>
+                      
+                    </select>
+                  </div>
+                  <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_title_old === subuser_raw[0].title ? title_readonly = !title_readonly : title_readonly = title_readonly" ng-class="!title_readonly? 'text-primary' : ''"></i></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="val-username-edit">Name</label>
+                  <div class="col-md-7">
+                    <input ng-model="subuser_raw[0].contact_name" class="form-control" type="text" id="val-username-edit" name="val-username-edit" placeholder="Please enter the name.." ng-disabled = "contact_name_readonly && subuser_contact_name_old === subuser_raw[0].contact_name">
+                  </div>
+
+                  <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_contact_name_old === subuser_raw[0].contact_name ?  contact_name_readonly = !contact_name_readonly : contact_name_readonly = contact_name_readonly" ng-class="!contact_name_readonly? 'text-primary':''"></i></div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="val-title-edit">Position</label>
+                  <div class="col-md-7">
+                    <input ng-model="subuser_raw[0].position" class="form-control" type="text" id="val-title-edit" name="val-title-edit" placeholder="Please enter the title.. " ng-disabled = "position_readonly && subuser_position_old === subuser_raw[0].position">
+                  </div>
+                  <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_position_old === subuser_raw[0].position ? position_readonly = !position_readonly : position_readonly = position_readonly" ng-class="!position_readonly? 'text-primary':''"></i></div>
+
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-4 control-label" for="val-phone-edit">Tel.</label>
+                  <div class="col-md-7">
+                    <input ng-model="subuser_raw[0].phone"  class="form-control" type="text" id="val-phone-edit" name="val-phone-edit" placeholder="e.g. 200-111-2222" ng-disabled = "phone_readonly && subuser_phone_old === subuser_raw[0].phone">
+                  </div>
+
+                  <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_phone_old === subuser_raw[0].phone ? phone_readonly = !phone_readonly : phone_readonly = phone_readonly" ng-class="!phone_readonly ? 'text-primary' : ''"></i></div>
+
+                </div>
+
+
+                <div class="form-group" style="margin-bottom: 0">
+                  <label class="col-md-4 control-label" for="val-phone">Program access</label>
+                  <div class="col-md-7 frame" style="max-height: 140px">
+                    <table st-table="program_permission" class="table table-hover block">
+
+                      <tbody>
+                      <tr ng-repeat = "row in program_permission">
+                      
+                      <td style="padding-top:5px; padding-bottom: 5px"><label class="css-input css-checkbox css-checkbox-primary">
+
+                      <input type="checkbox" ng-model="subuser_programs_old[row.objectId]" ng-change="update_access(row.objectId)"><span></span>
+
+
+                      </label></td>
+
+                        <td style="padding-top:5px; padding-bottom: 5px">{{row.programName}} ({{row.degreeName}})</td>
+
+                      </tr>
+                      </tbody>
+                      
+                    </table>
+                  </div>
+                </div>
+
+
+              </form>
+
 
 
                       </div>
                     </div>
                     <div class="modal-footer">
                      
-                      <button data-dismiss="modal" class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> OK</button>
+                      <!-- <button data-dismiss="modal" class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> OK</button> -->
+
+                        <div class="col-md-7 col-md-offset-4">
+                          <button data-dismiss="modal" ng-click="createsubuser()" class="btn btn-block btn-primary" type="submit" 
+                          ng-disabled = "subuser_title_old === subuser_raw[0].title 
+                                          && subuser_contact_name_old === subuser_raw[0].contact_name
+                                            && subuser_position_old === subuser_raw[0].position
+                                              && subuser_phone_old === subuser_raw[0].phone">
+                                              <i class="fa fa-check"></i> Update</button>
+                        </div>
+              
                     </div>
                   </div>
                 </div>

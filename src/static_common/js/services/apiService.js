@@ -427,10 +427,10 @@ angular.module('myApp')
 
           console.log("main_user_id = "+main_user_id);
           console.log("id="+id);
-          console.log('/api/upgrid/user/university_customer/'+ (main_user_id ? ('?main_user_id=' + main_user_id + '&') : ('')) + (id ? ('?id=' + id + '&') : ('')) + '?is_active=true')
+          console.log('/api/upgrid/user/university_customer/?'+ (main_user_id ? ('main_user_id=' + main_user_id + '&') : ('')) + (id ? ('id=' + id + '&') : ('')) + 'is_active=true')
           var promise =  $http({
 
-              url: '/api/upgrid/user/university_customer/'+ (main_user_id ? ('?main_user_id=' + main_user_id + '&') : ('')) + (id ? ('?id=' + id + '&') : ('')) + '?is_active=true',
+              url: '/api/upgrid/user/university_customer/?'+ (main_user_id ? ('main_user_id=' + main_user_id + '&') : ('')) + (id ? ('id=' + id + '&') : ('')) + 'is_active=true',
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
@@ -452,8 +452,6 @@ angular.module('myApp')
         }
 
 
-
-        
 
     return {
       getList: getList,
