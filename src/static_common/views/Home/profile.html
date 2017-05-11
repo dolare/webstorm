@@ -15,7 +15,8 @@
                 <h1 class="page-heading">
                   User Profile
                 </h1>
-                
+               
+               
               </div>
             </div>
             <div class="block-content">
@@ -298,7 +299,7 @@
                 </div>
 
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label class="col-md-4 control-label" for="val-prefix">Title</label>
                   <div class="col-md-7">
                     <select ng-options="p for p in prefix" ng-model="subuser.form_contract_prefix" class="form-control" name="val-prefix">
@@ -306,24 +307,36 @@
                       
                     </select>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <label class="col-md-4 control-label" for="val-username">Name <span class="text-danger">*</span></label>
                   <div class="col-md-7">
-                    <input ng-model="subuser.name" class="form-control" type="text" id="val-username" name="val-username" placeholder="Please enter the name..">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <select ng-options="p for p in prefix" ng-model="subuser.form_contract_prefix" class="form-control" name="val-prefix">
+                          <option value="">Select...</option>
+                        
+                        </select>
+                      </div>
+
+                      <div class="col-sm-8" style="padding-left: 0">
+                        <input ng-model="subuser.name" class="form-control" type="text" id="val-username" name="val-username" placeholder="Please enter the name..">
+                      </div>
+                    </div>
+                    
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-title">Position <span class="text-danger">*</span></label>
+                  <label class="col-md-4 control-label" for="val-title">Position Title <span class="text-danger">*</span></label>
                   <div class="col-md-7">
-                    <input ng-model="subuser.title" class="form-control" type="text"  name="val-title" placeholder="Please enter the title..">
+                    <input ng-model="subuser.title" class="form-control" type="text"  name="val-title" placeholder="Please enter the position title..">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-phone">Tel. <span class="text-danger">*</span></label>
+                  <label class="col-md-4 control-label" for="val-phone">Telephone</label>
                   <div class="col-md-7">
                     <input ng-model="subuser.tel"  class="form-control" type="text" id="val-phone" name="val-phone" placeholder="e.g. 200-111-2222">
                   </div>
@@ -393,95 +406,7 @@
 
 
                         <div class="block-content">
-                          
-                          <!-- <table class="table table-borderless">
-                            <colgroup>
-                            <col width="25%"/>
-                            <col width="75%"/>
-                            
-                            
-                          </colgroup>        
-                          <tbody>
-                            <tr>
-                              <td class="text-right"><p class="font-w600">Email Address:</p></td>
-                              <td><p>{{subuser_raw[0].email}}</p>
-                              </td>
-
-                              
-                              
-                            </tr>
-                            
-
-                            <tr>
-                              <td class="text-right"><p class="font-w600">Title: </p></td>
-                              <td ><p>{{subuser_raw[0].title}}</p>
-                                 
-                                    <select ng-options="p for p in prefix" ng-model="subuser.form_contract_prefix" class="form-control" name="val-prefix-edit">
-                                      <option value="">Please select</option>
-                                      
-                                    </select>
-                                  
-                                
-                              </td>
-
-                              
-
-                            </tr>
-
-                            <tr>
-                              <td class="text-right"><p class="font-w600">Name: </p></td>
-                              <td><p>{{subuser_raw[0].contact_name}}</p>
-                              </td>
-
-                              
-
-                            </tr>
-
-                            
-
-                            <tr>
-                              <td class="text-right"><p class="font-w600">Position: </p></td>
-                              <td ><p>{{subuser_raw[0].position}}</p>
-                              </td>
-
-                              
-
-                            </tr>
-
-                            <tr>
-                              <td class="text-right"><p class="font-w600">Tel.: </p></td>
-                              <td><p>{{subuser_raw[0].phone}}</p>
-                              </td>
-
-                              
-
-                            </tr>
-
-                            <tr>
-
-                              <td class="text-right" style="vertical-align: top"><p class="font-w600">Program access: </p></td>
-
-                              <td>
-                                
-                               
-                                <div class="frame" style="width:100%; max-height:100px;">
-                                  <p ng-repeat = "row1 in subuser_raw[0].customer_program">{{$index+1}}.&nbsp;&nbsp;&nbsp;{{row1.program.program_display.split('--')[1]}}  ({{row1.program.program_display.split('--')[2].split('-')[0]}})</p>
-                                </div>
-                              </td>
-
-                              
-
-                            </tr>
-
-
-
-
-                            
-                          </tbody>
-                        </table> -->
-
-
-
+                        
                <form class="form-horizontal" id="subuserform">
                 <div class="form-group">
                   <label class="col-md-4 control-label" for="val-email-edit">Email</label>
@@ -512,7 +437,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-title-edit">Position</label>
+                  <label class="col-md-4 control-label" for="val-title-edit">Job Position</label>
                   <div class="col-md-7">
                     <input ng-model="subuser_raw[0].position" class="form-control" type="text" id="val-title-edit" name="val-title-edit" placeholder="Please enter the title.. " ng-disabled = "position_readonly && subuser_position_old === subuser_raw[0].position">
                   </div>
@@ -521,7 +446,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-phone-edit">Tel.</label>
+                  <label class="col-md-4 control-label" for="val-phone-edit">Telephone</label>
                   <div class="col-md-7">
                     <input ng-model="subuser_raw[0].phone"  class="form-control" type="text" id="val-phone-edit" name="val-phone-edit" placeholder="e.g. 200-111-2222" ng-disabled = "phone_readonly && subuser_phone_old === subuser_raw[0].phone">
                   </div>
@@ -530,7 +455,7 @@
 
                 </div>
 
-
+             
                 <div class="form-group" style="margin-bottom: 0">
                   <label class="col-md-4 control-label" for="val-phone">Program access</label>
                   <div class="col-md-7 frame" style="max-height: 140px">
@@ -541,7 +466,7 @@
                       
                       <td style="padding-top:5px; padding-bottom: 5px"><label class="css-input css-checkbox css-checkbox-primary">
 
-                      <input type="checkbox" ng-model="subuser_programs_old[row.objectId]" ng-change="update_access(row.objectId)"><span></span>
+                      <input type="checkbox" ng-model="subuser_programs[row.objectId]" ng-true-value="true" ng-false-value="undefined"><span></span>
 
 
                       </label></td>
@@ -567,11 +492,12 @@
                       <!-- <button data-dismiss="modal" class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> OK</button> -->
 
                         <div class="col-md-7 col-md-offset-4">
-                          <button data-dismiss="modal" ng-click="createsubuser()" class="btn btn-block btn-primary" type="submit" 
+                          <button data-dismiss="modal" ng-click="update_subuser()" class="btn btn-block btn-primary" type="submit" 
                           ng-disabled = "subuser_title_old === subuser_raw[0].title 
                                           && subuser_contact_name_old === subuser_raw[0].contact_name
                                             && subuser_position_old === subuser_raw[0].position
-                                              && subuser_phone_old === subuser_raw[0].phone">
+                                              && subuser_phone_old === subuser_raw[0].phone
+                                                && angular.equals(subuser_programs,subuser_programs_old)">
                                               <i class="fa fa-check"></i> Update</button>
                         </div>
               
@@ -682,105 +608,3 @@
               </div>
             </div>
             <!-- END view Subuser Modal -->
-
-
-
-
-
-
-<!-- Subuser Modal -->
-    <div class="modal fade" id="myModalEdit"  role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="block block-themed block-transparent remove-margin-b" id="addsubuser">
-            <div class="block-header bg-primary-dark">
-              <ul class="block-options">
-                <li>
-                  <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-                </li>
-              </ul>
-              <h3 class="block-title">Edit a Colleague</h3>
-            </div>
-            <div class="block-content">
-              
-              <form class="js-validation-bootstrap form-horizontal" id="subuserform">
-                
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-prefix">Prefix</label>
-                  <div class="col-md-7">
-                    <select ng-options="p for p in prefix" ng-model="subuserdetail.contract_prefix" class="form-control" name="val-prefix">
-                      <option value="">Please select</option>
-                      
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-username">Name <span class="text-danger">*</span></label>
-                  <div class="col-md-7">
-                    <input ng-model="subuserdetail.contract_name" class="form-control" type="text" id="val-username" name="val-username" placeholder="Please enter the name..">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-title">Title <span class="text-danger">*</span></label>
-                  <div class="col-md-7">
-                    <input ng-model="subuserdetail.contract_title" class="form-control" type="text"  name="val-title" placeholder="Please enter the title..">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-phone">Tel. <span class="text-danger">*</span></label>
-                  <div class="col-md-7">
-                    <input ng-model="subuserdetail.contract_tel"  class="form-control" type="text" id="val-phone" name="val-phone" placeholder="e.g. 200-111-2222">
-                  </div>
-                </div>
-
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-phone">Program access<span class="text-danger">*</span></label>
-                  <div class="col-md-7">
-
-                    <table st-table="program_permission" class="table table-hover block">
-
-                      <tbody>
-                      <tr ng-repeat = "row in program_permission">
-                      
-                      <td style="padding-top:5px; padding-bottom: 5px"><label class="css-input css-checkbox css-checkbox-primary">
-
-                      <input type="checkbox" ng-model="set_permission[row.objectId].checked" ng-change="checkvalue()"><span></span>
-
-
-                      </label></td>
-
-                        <td style="padding-top:5px; padding-bottom: 5px">{{row.programName}} ({{row.degreeName}})</td>
-
-                      </tr>
-                      </tbody>
-                      
-                    </table>
-                  </div>
-                </div>
-
-
-
-
-                <div class="form-group">
-                  <div class="col-md-8 col-md-offset-4">
-                    <button ng-click="createsubuser()" class="btn btn-sm btn-primary" type="submit">Submit</button>
-                  </div>
-                </div>
-              </form>
-
-
-            </div>
-          </div>
-                   <!--  <div class="modal-footer">
-                        <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
-                        <button ng-click="createsubuser()" class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> Submit</button>
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-                <!-- END Subuser Modal -->
