@@ -2,6 +2,7 @@ angular.module('myApp').
 controller('ProfileController',
   function(apiService, SUB, $log, avatarService, $timeout, ajaxService, $filter, tableDataService, List, $scope, $location, $window, $http, authenticationSvc, $state) {
 
+    $scope.angular = angular;
     var token = authenticationSvc.getUserInfo().accessToken;
     $scope.username = List.profile.email;
 
@@ -194,10 +195,7 @@ controller('ProfileController',
         'val-title': {
           required: true,
         },
-        'val-phone': {
-          required: true,
-        },
-
+        
       },
       messages: {
         'val-username': {
@@ -223,9 +221,6 @@ controller('ProfileController',
         },
         'val-title': {
           required: 'Please provide a title',
-        },
-        'val-phone': {
-          required: 'Please provide a telephone number',
         },
 
       }
@@ -297,6 +292,13 @@ controller('ProfileController',
     }
 
 
+    $scope.testvalue = function() {
+     
+
+      console.log("test subuser_programs="+JSON.stringify($scope.subuser_programs));
+    } 
+
+
     $scope.checkvalue = function () {
 
       console.log("check set_permission = "+JSON.stringify($scope.set_permission));
@@ -318,7 +320,7 @@ controller('ProfileController',
     $scope.createsubuser = function() {
       console.log("subuser is " + JSON.stringify($scope.subuser));
       if ($scope.subuser) {
-        if (patt.test($scope.subuser.email) && $scope.subuser.email && $scope.subuser.password1 && $scope.subuser.password2 && $scope.subuser.name && $scope.subuser.title && $scope.subuser.tel) {
+        if (patt.test($scope.subuser.email) && $scope.subuser.email && $scope.subuser.password1 && $scope.subuser.password2 && $scope.subuser.name && $scope.subuser.title) {
 
           App.blocks('#addsubuser', 'state_loading');
           var subNum = null;
@@ -353,7 +355,7 @@ controller('ProfileController',
                 "contact_name": $scope.subuser.name,
                 "position": $scope.subuser.title,
                 "position_level": $scope.data.contractLevel,
-                "phone": $scope.subuser.tel,
+                "phone": ($scope.subuser.tel === undefined) ? "" : $scope.subuser.tel,
                 "customer_programs": object_ids.slice(0,-1),
                 "main_user_id": client_id
                
@@ -447,17 +449,6 @@ controller('ProfileController',
       App.blocks('#load_subuser', 'state_loading');
         
       console.log("ID+++"+id)
-      // console.log("user is "+JSON.stringify( $scope.data.subuser[$index]));
-      // $scope.subuserdetail = {
-      //   "login_email": $scope.data.subuser[$index].email,
-      //   "contract_prefix": $scope.data.subuser[$index].title,
-      //   "contract_name": $scope.data.subuser[$index].contact_name,
-      //   "contract_title": $scope.data.subuser[$index].position,
-      //   "contract_tel": $scope.data.subuser[$index].phone,
-      //   "customer_programs": $scope.data.subuser[$index].customer_program
-      // }
-
-      // console.log("subuser detail..." + JSON.stringify($scope.subuserdetail));
 
       apiService.getSubuser(token, client_id, id).then(function (result) {
           
@@ -475,12 +466,14 @@ controller('ProfileController',
           $scope.subuser_position_old = $scope.subuser_raw[0].position
           $scope.subuser_phone_old = $scope.subuser_raw[0].phone
 
-          $scope.subuser_programs_old = {};
+          $scope.subuser_programs = {};
           for(var i=0; i<$scope.subuser_raw[0].customer_program.length; i++){
-            //$scope.subuser_programs_old.push($scope.subuser_raw[0].customer_program[i].object_id)
-            $scope.subuser_programs_old[$scope.subuser_raw[0].customer_program[i].object_id] = true;
+            $scope.subuser_programs[$scope.subuser_raw[0].customer_program[i].object_id] = true;
           }
-          console.log("$scope.subuser_programs_old="+JSON.stringify($scope.subuser_programs_old));
+
+          $scope.subuser_programs_old = angular.copy($scope.subuser_programs)
+
+          console.log("$scope.subuser_programs="+JSON.stringify($scope.subuser_programs));
          
       });
 
@@ -488,20 +481,44 @@ controller('ProfileController',
 
     }
 
-    $scope.editsubuser = function($index) {
+    $scope.update_subuser = function() {
 
-      
-      $scope.subuserdetail = {
-        "login_email": $scope.data.subuser[$index].email,
-        "contract_prefix": $scope.data.subuser[$index].title,
-        "contract_name": $scope.data.subuser[$index].contact_name,
-        "contract_title": $scope.data.subuser[$index].position,
-        "contract_tel": $scope.data.subuser[$index].phone
+      console.log($scope.subuser_raw[0].id)
+
+      var sub_program_addition = [];
+
+      for(var key in $scope.subuser_programs){
+
+        sub_program_addition.push(key);
+
+                
       }
 
-      console.log("subuser detail..." + JSON.stringify($scope.subuserdetail));
+      console.log("sub_program_addition="+JSON.stringify(sub_program_addition));
 
-    }
+
+      $http({
+          url: '/api/upgrid/user/client_and_program_relation/',
+          method: 'POST',
+          data: {
+            'client': $scope.subuser_raw[0].id,
+            'client_program': sub_program_addition
+          },
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+      }).then(function (response) {
+
+         console.log("return data"+ JSON.stringify(response.data));
+         
+      }).
+       catch(function(error){
+          console.log('an error occurred...'+JSON.stringify(error));
+
+       });
+
+
+    } 
 
 
 

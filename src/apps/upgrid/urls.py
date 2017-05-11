@@ -51,7 +51,7 @@ urlpatterns=[
     # Put change subuser is_active status, Post create subuser
     url(r'^api/upgrid/user/subuser$', apis.CreateOrChangeSubUser.as_view()),
 
-    url(r'^api/upgrid/user/client_and_program_relation$', apis.ClientAndProgramRelationAPI.as_view()),   # new
+    url(r'^api/upgrid/user/client_and_program_relation/$', apis.ClientAndProgramRelationAPI.as_view()),   # new
 
     # # Get Dashboard information for client +++
     url(r'^api/upgrid/user/dashboard/$', apis.DashBoardAPI.as_view()),
