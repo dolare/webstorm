@@ -299,7 +299,6 @@ class SubuserListSerializer(serializers.ModelSerializer):
 
 
 class MainUserDetailSerializer(serializers.ModelSerializer):
-    sub_user_list = SerializerMethodField()
     competing_schools = SerializerMethodField()
     university = SerializerMethodField()
     school = SerializerMethodField()
@@ -307,12 +306,7 @@ class MainUserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = UniversityCustomer
         fields = ('username', 'is_demo', 'Ceeb', 'university', 'school', 'service_level', 'service_until',
-                  'account_type', 'position', 'contact_name',
-                  'email', 'competing_schools', 'sub_user_list')
-
-    def get_sub_user_list(self, obj):
-        sub_user_list = UniversityCustomer.objects.filter(main_user_id=obj.id, account_type='sub',)
-        return SubuserListSerializer(sub_user_list, many=True).data
+                  'account_type', 'position', 'contact_name','email', 'competing_schools')
 
     def get_competing_schools(self,obj):
         serializer = UniversityAndSchoolSerializer(obj.competing_schools, many=True)
