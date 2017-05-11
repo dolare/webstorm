@@ -482,20 +482,35 @@ controller('ProfileController',
     }
 
     $scope.update_subuser = function() {
-
+      
       console.log($scope.subuser_raw[0].id)
 
+      console.log("$scope.subuser_programs"+JSON.stringify($scope.subuser_programs))
+
       var sub_program_addition = [];
+  
 
-      for(var key in $scope.subuser_programs){
+      angular.forEach($scope.subuser_programs, function(value, key) {
+        
+        if(value){
+          
+          console.log("key="+key);
+          
+          sub_program_addition.push(key);
+        } else {
+          console.log("false key="+key)
+        }
+        
 
-        sub_program_addition.push(key);
+      });
 
-                
-      }
+      var inverted1 = _.invert($scope.subuser_programs);
+      var inverted2 = _.invert($scope.subuser_programs_old);
 
-      console.log("sub_program_addition="+JSON.stringify(sub_program_addition));
+      
 
+      var trytest = _.difference(inverted1, inverted2);
+      console.log("trytest= "+JSON.stringify(trytest))
 
       $http({
           url: '/api/upgrid/user/client_and_program_relation/',

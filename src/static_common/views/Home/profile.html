@@ -1,305 +1,267 @@
-
 <!-- Page Content -->
 <div class="content content-boxed">
-  <!-- Table Sections (data-js-table-sections attribute is initialized in js/directives.js) -->
-  
-
-  <!-- Table Sections (data-js-table-checkable attribute is initialized in js/directives.js) -->
-  <div class="block block-rounded">
-    <div class="block-header">
+    <!-- Table Sections (data-js-table-sections attribute is initialized in js/directives.js) -->
+    <!-- Table Sections (data-js-table-checkable attribute is initialized in js/directives.js) -->
+    <div class="block block-rounded">
+        <div class="block-header">
             <!-- <div class="block-options">
                 <code>.data-js-table-checkable</code>
               </div> -->
-              <!-- <h3 class="block-title">Checkable Table</h3> -->
-              <div class="col-sm-7">
+            <!-- <h3 class="block-title">Checkable Table</h3> -->
+            <div class="col-sm-7">
                 <h1 class="page-heading">
                   User Profile
                 </h1>
-               
-               
-              </div>
             </div>
-            <div class="block-content">
-
-              <h3 class="block-title" style="padding-left:15px;">Account</h3>
-              <hr/ style="margin-left:15px;">
-              
-
-              <table class="table table-borderless">
-                <colgroup>
-                <col width="25%"/>
-                <col width="25%"/>
-                <col width="50%"/>
-                
-              </colgroup>        
-              <tbody>
-                <tr>
-                  <td class="text-right"><p class="font-w600 text-muted">Login:</p></td>
-                  <td ><p ng-bind="username"></p>
-                  </td>
-
-                  <td></td>
-                  
-                </tr>
-                
-
-                <tr>
-                  <td class="text-right"><p class="font-w600 text-muted">Password:</p></td>
-                  <td class="font-w600"><p>**********</p>
-                  </td>
-
-                  <td class="text-left"><p><a data-uib-tooltip="Change password" data-tooltip-placement="top"><button class="btn btn-white text-primary" type="button" data-toggle="modal" data-target="#pwModal" ng-click="changepw()"><i class="si si-pencil"></i></button></a></p></td>
-
-                </tr>
-
-                
-              </tbody>
-            </table>
-
-
-            
-            <!-- manage subaccounts -->
-            <h3  ng-if="data.accountType ==='main'" class="block-title" style="padding-left:15px;">Colleague Accounts</h3>
-            <hr style="margin-left:15px;" ng-if="data.accountType ==='main'">
-
-            <!-- {{data.subuser}} -->
-
-            <div class="row push-10-t" style="padding-left:15px" ng-show="data.accountType ==='main'">
-            
-                    <div class="col-sm-6 col-md-4 col-lg-4 push-10-t" ng-repeat = "row in subusers" style="padding:0 20px">
-                            <!-- Contact -->
-                            <div class="block block-rounded" style="border:1px solid #eee;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);">
-                                <div class="block-header">
-                                    <ul class="block-options">
-                                        <li>
-                                            <button type="button" ng-click="viewsubuser(row.id)" data-target="#myModalSubuserView" data-toggle="modal" data-js-blur>
-                                                <i class="si si-pencil text-primary"></i>
-                                            </button>
-                                        </li>
-
-                                        <li>
-                                            <button type="button" confirmed-click="removesubuser($index)"  ng-confirm-click="Do you really want to delete?" data-js-blur>
-                                                <i class="icon-trash text-danger"></i>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                    <div class="block-title">{{row.contact_name}}</div>
+        </div>
+        <div class="block-content">
+            <h3 class="block-title" style="padding-left:15px;">Account</h3>
+            <hr/ style="margin-left:15px;">
+                <table class="table table-borderless">
+                    <colgroup>
+                        <col width="25%" />
+                        <col width="25%" />
+                        <col width="50%" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td class="text-right">
+                                <p class="font-w600 text-muted">Login:</p>
+                            </td>
+                            <td>
+                                <p ng-bind="username"></p>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">
+                                <p class="font-w600 text-muted">Password:</p>
+                            </td>
+                            <td class="font-w600">
+                                <p>**********</p>
+                            </td>
+                            <td class="text-left">
+                                <p>
+                                    <a data-uib-tooltip="Change password" data-tooltip-placement="top">
+                                        <button class="btn btn-white text-primary" type="button" data-toggle="modal" data-target="#pwModal" ng-click="changepw()"><i class="si si-pencil"></i></button>
+                                    </a>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- manage subaccounts -->
+                <h3 ng-if="data.accountType ==='main'" class="block-title" style="padding-left:15px;">Colleague Accounts</h3>
+                <hr style="margin-left:15px;" ng-if="data.accountType ==='main'">
+                <!-- {{data.subuser}} -->
+                <div class="row push-10-t" style="padding-left:15px" ng-show="data.accountType ==='main'">
+                    <div class="col-sm-6 col-md-4 col-lg-4 push-10-t" ng-repeat="row in subusers" style="padding:0 20px">
+                        <!-- Contact -->
+                        <div class="block block-rounded" style="border:1px solid #eee;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);">
+                            <div class="block-header">
+                                <ul class="block-options">
+                                    <li>
+                                        <button type="button" ng-click="viewsubuser(row.id)" data-target="#myModalSubuserView" data-toggle="modal" data-js-blur>
+                                            <i class="si si-pencil text-primary"></i>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button type="button" confirmed-click="removesubuser($index)" ng-confirm-click="Do you really want to delete?" data-js-blur>
+                                            <i class="icon-trash text-danger"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                                <div class="block-title">{{row.contact_name}}</div>
+                            </div>
+                            <div class="block-content block-content-full bg-primary text-center">
+                                <img class="img-avatar img-avatar-thumb" src="/static/img/avatar6.jpg" alt="">
+                                <div class="font-s13 push-10-t">{{row.position}}</div>
+                            </div>
+                            <div class="block-content">
+                                <div class="text-center">
                                 </div>
-                                <div class="block-content block-content-full bg-primary text-center">
-
-
-                                    <img class="img-avatar img-avatar-thumb" src="/static/img/avatar6.jpg" alt="">
-                                    <div class="font-s13 push-10-t">{{row.position}}</div>
-                                </div>
-                                <div class="block-content">
-                                    <div class="text-center">
-                                        
-                                    </div>
-                                    <table class="table table-borderless table-striped font-s13 push-20">
-                                        <tbody>
-                                            <!-- <tr>
+                                <table class="table table-borderless table-striped font-s13 push-20">
+                                    <tbody>
+                                        <!-- <tr>
                                                 <td class="font-w600" style="width: 30%;">Category</td>
                                                 <td>Family</td>
                                             </tr> -->
-                                            <tr>
-                                                <td class="font-w600">Phone</td>
-                                                <td>{{row.phone}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="font-w600">Email</td>
-                                                <td>{{row.email}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        <tr>
+                                            <td class="font-w600">Phone</td>
+                                            <td>{{row.phone}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-w600">Email</td>
+                                            <td>{{row.email}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <!-- END Contact -->
                         </div>
-
-                  </div>
-
-
-                  <button ng-show="data.accountType ==='main'" class="btn btn-white text-primary push-15-t push-50" type="button" style="margin-left:20px;" ng-click="triggersubuser()"><i class="fa fa-plus"></i> Add a Colleague</button>
-                        
-
-
+                        <!-- END Contact -->
+                    </div>
+                </div>
+                <button ng-show="data.accountType ==='main'" class="btn btn-white text-primary push-15-t push-50" type="button" style="margin-left:20px;" ng-click="triggersubuser()"><i class="fa fa-plus"></i> Add a Colleague</button>
                 <h3 class="block-title" style="padding-left:15px;">Service Subscription</h3>
                 <hr/ style="margin-left:15px;">
-                
-
-                <table class="table table-borderless">
-                  <colgroup>
-                  <col width="25%"/>
-                  <col width="75%"/>
-                  
-                  
-                </colgroup>        
-                <tbody>
-                  <tr ng-if="data.accountType ==='main'">
-                    <td class="text-right"><p class="font-w600 text-muted">Service Package:</p></td>
-
-                    <!-- <td><p>{{data.contractLevel}}</p>
+                    <table class="table table-borderless">
+                        <colgroup>
+                            <col width="25%" />
+                            <col width="75%" />
+                        </colgroup>
+                        <tbody>
+                            <tr ng-if="data.accountType ==='main'">
+                                <td class="text-right">
+                                    <p class="font-w600 text-muted">Service Package:</p>
+                                </td>
+                                <!-- <td><p>{{data.contractLevel}}</p>
                     </td> -->
-
-                    <td ng-if="data.contractLevel==='basic'"><p><span class="text-primary text-center  service-badge" data-uib-tooltip="Basic service allows you to select 1 competing program to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-warning"></i>&nbsp;&nbsp;BASIC</span></p></td>
-
-                    <td ng-if="data.contractLevel==='silver'"><p><span class="text-primary text-center service-badge" data-uib-tooltip="Silver service allows you to select 2 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-warning"></i>&nbsp;&nbsp;SILVER</span></p></td>
-
-                    <td ng-if="data.contractLevel==='gold'"><p><span class="text-primary text-center service-badge" data-uib-tooltip="Gold service allows you to select 3 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-warning"></i>&nbsp;&nbsp;GOLD</span></p></td>
-
-                    <td ng-if="data.contractLevel==='platinum'"><p><span class="text-primary text-center service-badge" data-uib-tooltip="Platinum service allows you to select 4 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-warning"></i>&nbsp;&nbsp;PLATINUM</span></p></td>
-
-                    
-                  </tr>
-                  
-
-                  <tr>
-                    <td class="text-right"><p class="font-w600 text-muted">Expiration Date:</p></td>
-
-                    <td><p ng-bind="serviceUntilDate"></p>
-                    </td>
-
-                    
-
-                  </tr>
-
-                  <tr>
-                    <td class="text-right"><p class="font-w600 text-muted">Programs in Service:</p></td>
-
-                    <td ng-cloak><p><button type="button" class="btn btn-white" data-target="#myModalSelected" data-toggle="modal" class="md-raised pull-right"><i class="si si-list text-primary" aria-hidden="true" style="font-weight: 600"></i></button></p>
-                    </td>
-
-                    
-
-                  </tr>
-
-                  <tr ng-if="data.accountType ==='main'">
-                   <td class="text-right" style="vertical-align:top;"><p class="font-w600 text-muted">Competing Schools:</p></td>
-
-                   <td ng-cloak>
-                     
-                      <span ng-repeat="row in data.competingSchools">
+                                <td ng-if="data.contractLevel==='basic'">
+                                    <p><span class="text-primary text-center  service-badge" data-uib-tooltip="Basic service allows you to select 1 competing program to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-warning"></i>&nbsp;&nbsp;BASIC</span></p>
+                                </td>
+                                <td ng-if="data.contractLevel==='silver'">
+                                    <p><span class="text-primary text-center service-badge" data-uib-tooltip="Silver service allows you to select 2 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-warning"></i>&nbsp;&nbsp;SILVER</span></p>
+                                </td>
+                                <td ng-if="data.contractLevel==='gold'">
+                                    <p><span class="text-primary text-center service-badge" data-uib-tooltip="Gold service allows you to select 3 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-warning"></i>&nbsp;&nbsp;GOLD</span></p>
+                                </td>
+                                <td ng-if="data.contractLevel==='platinum'">
+                                    <p><span class="text-primary text-center service-badge" data-uib-tooltip="Platinum service allows you to select 4 competing programs to each of your programs selected." data-tooltip-placement="top" ng-cloak><i class="si si-badge text-warning"></i>&nbsp;&nbsp;PLATINUM</span></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">
+                                    <p class="font-w600 text-muted">Expiration Date:</p>
+                                </td>
+                                <td>
+                                    <p ng-bind="serviceUntilDate"></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">
+                                    <p class="font-w600 text-muted">Programs in Service:</p>
+                                </td>
+                                <td ng-cloak>
+                                    <p>
+                                        <button type="button" class="btn btn-white" data-target="#myModalSelected" data-toggle="modal" class="md-raised pull-right"><i class="si si-list text-primary" aria-hidden="true" style="font-weight: 600"></i></button>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr ng-if="data.accountType ==='main'">
+                                <td class="text-right" style="vertical-align:top;">
+                                    <p class="font-w600 text-muted">Competing Schools:</p>
+                                </td>
+                                <td ng-cloak>
+                                    <span ng-repeat="row in data.competingSchools">
 
                       <p><span class="font-w600">{{$index+1}}. {{row.university_school.split(':')[1].split('--')[1]}} <br>&nbsp;&nbsp;&nbsp;<span class="text-muted" style="font-weight:100;">{{row.university_school.split(':')[1].split('--')[0]}}</span></span>
-                      </p>
-                      </span>
-                      
-                    </td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-
-            
-          </div>
+                                    </p>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
         </div>
-        <!-- END Checkable Table -->
-      </div>
-      <!-- END Page Content -->
-
-
-      <!-- Password Change Modal -->
-      <div class="modal fade" id="pwModal"  role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="block block-themed block-transparent remove-margin-b">
-              <div class="block-header bg-primary-dark">
-                <ul class="block-options">
-                  <li>
-                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-                  </li>
-                </ul>
-                <h3 class="block-title">Change Password</h3>
-              </div>
-              <div class="block-content">
-                
-                <table class="table table-borderless">
-                  <colgroup>
-                  <col width="35%"/>
-                  <col width="65%"/>
-                  
-                  
-                </colgroup>        
-                <tbody>
-
-
-                  <tr>
-                    <td class="text-right"><div class="font-w600">Old Password:</div></td>
-                    <td><div><input ng-model="oldpw" class="form-control" type="password" id="lock1-password" name="lock1-password" ></div>
-                    </td>
-
-                    
-                    
-                  </tr>
-                  
-                  <tr>
-                    <td class="text-right"><div class="font-w600">New Password:</div></td>
-                    <td><div><input ng-model="newpw1" class="form-control" type="password" id="lock1-password" name="lock1-password" ></div>
-                    </td>
-
-                  </tr>
-
-                  <tr>
-                    <td class="text-right"><div class="font-w600">Confirm Password:</div></td>
-                    <td><div><input ng-model="newpw2" class="form-control" type="password" id="lock1-password" name="lock1-password" ></div>
-                    </td>
-
-                  </tr>
-                  
-                </tbody>
-              </table>
-
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
-            <button class="btn btn-sm btn-primary" type="button" ng-click="submitpassword()"><i class="fa fa-check"></i> Save</button>
-          </div>
-        </div>
-      </div>
     </div>
-    <!-- END Password Modal -->
-
-
-
-    <!-- Subuser Modal -->
-    <div class="modal fade" id="myModalSubuser"  role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
+    <!-- END Checkable Table -->
+</div>
+<!-- END Page Content -->
+<!-- Password Change Modal -->
+<div class="modal fade" id="pwModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-          <div class="block block-themed block-transparent remove-margin-b" id="addsubuser">
-            <div class="block-header bg-primary-dark">
-              <ul class="block-options">
-                <li>
-                  <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-                </li>
-              </ul>
-              <h3 class="block-title">Add a Colleague</h3>
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Change Password</h3>
+                </div>
+                <div class="block-content">
+                    <table class="table table-borderless">
+                        <colgroup>
+                            <col width="35%" />
+                            <col width="65%" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td class="text-right">
+                                    <div class="font-w600">Old Password:</div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <input ng-model="oldpw" class="form-control" type="password" id="lock1-password" name="lock1-password">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">
+                                    <div class="font-w600">New Password:</div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <input ng-model="newpw1" class="form-control" type="password" id="lock1-password" name="lock1-password">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">
+                                    <div class="font-w600">Confirm Password:</div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <input ng-model="newpw2" class="form-control" type="password" id="lock1-password" name="lock1-password">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="block-content">
-              
-              <form class="js-validation-bootstrap form-horizontal" id="subuserform">
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-email">Email <span class="text-danger">*</span></label>
-                  <div class="col-md-7">
-                    <input ng-model="subuser.email" class="form-control" type="text" id="val-email" name="val-email" placeholder="Please enter a valid email..">
-                  </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
+                <button class="btn btn-sm btn-primary" type="button" ng-click="submitpassword()"><i class="fa fa-check"></i> Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Password Modal -->
+<!-- Subuser Modal -->
+<div class="modal fade" id="myModalSubuser" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b" id="addsubuser">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Add a Colleague</h3>
                 </div>
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-password">Password <span class="text-danger">*</span></label>
-                  <div class="col-md-7">
-                    <input ng-model="subuser.password1" class="form-control" type="password" id="val-password" name="val-password" placeholder="Please enter a password..">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-confirm-password">Confirm Password <span class="text-danger">*</span></label>
-                  <div class="col-md-7">
-                    <input ng-model="subuser.password2" class="form-control" type="password" id="val-confirm-password" name="val-confirm-password" placeholder="Please confirm the password..">
-                  </div>
-                </div>
-
-
-                <!-- <div class="form-group">
+                <div class="block-content">
+                    <form class="js-validation-bootstrap form-horizontal" id="subuserform">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-email">Email <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input ng-model="subuser.email" class="form-control" type="text" id="val-email" name="val-email" placeholder="Please enter a valid email..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-password">Password <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input ng-model="subuser.password1" class="form-control" type="password" id="val-password" name="val-password" placeholder="Please enter a password..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-confirm-password">Confirm Password <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input ng-model="subuser.password2" class="form-control" type="password" id="val-confirm-password" name="val-confirm-password" placeholder="Please confirm the password..">
+                            </div>
+                        </div>
+                        <!-- <div class="form-group">
                   <label class="col-md-4 control-label" for="val-prefix">Title</label>
                   <div class="col-md-7">
                     <select ng-options="p for p in prefix" ng-model="subuser.form_contract_prefix" class="form-control" name="val-prefix">
@@ -308,303 +270,229 @@
                     </select>
                   </div>
                 </div> -->
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-username">Name <span class="text-danger">*</span></label>
-                  <div class="col-md-7">
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <select ng-options="p for p in prefix" ng-model="subuser.form_contract_prefix" class="form-control" name="val-prefix">
-                          <option value="">Select...</option>
-                        
-                        </select>
-                      </div>
-
-                      <div class="col-sm-8" style="padding-left: 0">
-                        <input ng-model="subuser.name" class="form-control" type="text" id="val-username" name="val-username" placeholder="Please enter the name..">
-                      </div>
-                    </div>
-                    
-                  </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-username">Name <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <select ng-options="p for p in prefix" ng-model="subuser.form_contract_prefix" class="form-control" name="val-prefix">
+                                            <option value="">Select..</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-8" style="padding-left: 0">
+                                        <input ng-model="subuser.name" class="form-control" type="text" id="val-username" name="val-username" placeholder="Please enter the name..">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-title">Position Title <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input ng-model="subuser.title" class="form-control" type="text" name="val-title" placeholder="Please enter the position title..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-phone">Telephone</label>
+                            <div class="col-md-7">
+                                <input ng-model="subuser.tel" class="form-control" type="text" id="val-phone" name="val-phone" placeholder="e.g. 200-111-2222">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-phone">Program access<span class="text-danger">*</span></label>
+                            <div class="col-md-7 frame" style="max-height: 140px">
+                                <table st-table="program_permission" class="table table-hover block">
+                                    <tbody>
+                                        <tr ng-repeat="row in program_permission">
+                                            <td style="padding-top:5px; padding-bottom: 5px">
+                                                <label class="css-input css-checkbox css-checkbox-primary">
+                                                    <input type="checkbox" ng-model="set_permission[row.objectId].checked" ng-change="checkvalue()"><span></span>
+                                                </label>
+                                            </td>
+                                            <td style="padding-top:5px; padding-bottom: 5px">{{row.programName}} ({{row.degreeName}})</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-7 col-md-offset-4">
+                                <button ng-click="createsubuser()" class="btn btn-block btn-primary" type="submit"><i class="fa fa-check"></i> Submit</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-title">Position Title <span class="text-danger">*</span></label>
-                  <div class="col-md-7">
-                    <input ng-model="subuser.title" class="form-control" type="text"  name="val-title" placeholder="Please enter the position title..">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-phone">Telephone</label>
-                  <div class="col-md-7">
-                    <input ng-model="subuser.tel"  class="form-control" type="text" id="val-phone" name="val-phone" placeholder="e.g. 200-111-2222">
-                  </div>
-                </div>
-
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-phone">Program access<span class="text-danger">*</span></label>
-                  <div class="col-md-7 frame" style="max-height: 140px">
-                    <table st-table="program_permission" class="table table-hover block">
-
-                      <tbody>
-                      <tr ng-repeat = "row in program_permission">
-                      
-                      <td style="padding-top:5px; padding-bottom: 5px"><label class="css-input css-checkbox css-checkbox-primary">
-
-                      <input type="checkbox" ng-model="set_permission[row.objectId].checked" ng-change="checkvalue()"><span></span>
-
-
-                      </label></td>
-
-                        <td style="padding-top:5px; padding-bottom: 5px">{{row.programName}} ({{row.degreeName}})</td>
-
-                      </tr>
-                      </tbody>
-                      
-                    </table>
-                  </div>
-                </div>
-
-
-
-
-                <div class="form-group">
-                  <div class="col-md-7 col-md-offset-4">
-                    <button ng-click="createsubuser()" class="btn btn-block btn-primary" type="submit"><i class="fa fa-check"></i> Submit</button>
-                  </div>
-                </div>
-              </form>
-
-
             </div>
-          </div>
-                   <!--  <div class="modal-footer">
+            <!--  <div class="modal-footer">
                         <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
                         <button ng-click="createsubuser()" class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> Submit</button>
                       </div> -->
-                    </div>
-                  </div>
+        </div>
+    </div>
+</div>
+<!-- END Subuser Modal -->
+<!-- view Subuser Modal -->
+<div class="modal fade" id="myModalSubuserView" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b" id="load_subuser">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title"><i class="fa fa-user-circle push-5-r"></i> User Details</h3>
                 </div>
-                <!-- END Subuser Modal -->
-
-
-                <!-- view Subuser Modal -->
-                <div class="modal fade" id="myModalSubuserView"  role="dialog" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="block block-themed block-transparent remove-margin-b" id="load_subuser">
-                        <div class="block-header bg-primary-dark">
-                          <ul class="block-options">
-                            <li>
-                              <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-                            </li>
-                          </ul>
-                          <h3 class="block-title"><i class="fa fa-user-circle push-5-r"></i> User Details</h3>
+                <div class="block-content">
+                    <form class="form-horizontal" id="subuserform">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-email-edit">Email</label>
+                            <div class="col-md-7">
+                                <input ng-model="subuser_raw[0].email" class="form-control" type="text" id="val-email-edit" name="val-email-edit" placeholder="" ng-disabled="true">
+                            </div>
                         </div>
-
-
-                        <div class="block-content">
-                        
-               <form class="form-horizontal" id="subuserform">
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-email-edit">Email</label>
-                  <div class="col-md-7">
-                    <input ng-model="subuser_raw[0].email" class="form-control" type="text" id="val-email-edit" name="val-email-edit" placeholder="" ng-disabled = "true">
-                  </div>
-                </div>
-              
-
-                <div class="form-group">
+                        <!-- <div class="form-group">
                   <label class="col-md-4 control-label" for="val-prefix-edit">Title</label>
                   <div class="col-md-7">
                     <select ng-options="p for p in prefix" ng-model="subuser_raw[0].title" class="form-control" name="val-prefix-edit" ng-disabled = "title_readonly && subuser_title_old === subuser_raw[0].title">
-                      <option value="">Please select</option>
-                      
+                      <option value="">Select..</option>
+
                     </select>
                   </div>
                   <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_title_old === subuser_raw[0].title ? title_readonly = !title_readonly : title_readonly = title_readonly" ng-class="!title_readonly? 'text-primary' : ''"></i></div>
+                </div> -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-username-edit">Name</label>
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <select ng-options="p for p in prefix" ng-model="subuser_raw[0].title" class="form-control" name="val-prefix-edit" ng-disabled="contact_name_readonly && subuser_title_old === subuser_raw[0].title">
+                                            <option value="">Select..</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-8" style="padding-left:0">
+                                        <input ng-model="subuser_raw[0].contact_name" class="form-control" type="text" id="val-username-edit" name="val-username-edit" placeholder="Please enter the name.." ng-disabled="contact_name_readonly && subuser_contact_name_old === subuser_raw[0].contact_name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="(subuser_contact_name_old === subuser_raw[0].contact_name && subuser_title_old === subuser_raw[0].title) ?  contact_name_readonly = !contact_name_readonly : contact_name_readonly = contact_name_readonly" ng-class="!contact_name_readonly? 'text-primary':''"></i></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-title-edit">Position Title</label>
+                            <div class="col-md-7">
+                                <input ng-model="subuser_raw[0].position" class="form-control" type="text" id="val-title-edit" name="val-title-edit" placeholder="Please enter the position title.. " ng-disabled="position_readonly && subuser_position_old === subuser_raw[0].position">
+                            </div>
+                            <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_position_old === subuser_raw[0].position ? position_readonly = !position_readonly : position_readonly = position_readonly" ng-class="!position_readonly? 'text-primary':''"></i></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-phone-edit">Telephone</label>
+                            <div class="col-md-7">
+                                <input ng-model="subuser_raw[0].phone" class="form-control" type="text" id="val-phone-edit" name="val-phone-edit" placeholder="e.g. 200-111-2222" ng-disabled="phone_readonly && subuser_phone_old === subuser_raw[0].phone">
+                            </div>
+                            <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_phone_old === subuser_raw[0].phone ? phone_readonly = !phone_readonly : phone_readonly = phone_readonly" ng-class="!phone_readonly ? 'text-primary' : ''"></i></div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0">
+                            <label class="col-md-4 control-label" for="val-phone">Program access</label>
+                            <div class="col-md-7 frame" style="max-height: 140px">
+                                <table st-table="program_permission" class="table table-hover block">
+                                    <tbody>
+                                        <tr ng-repeat="row in program_permission">
+                                            <td style="padding-top:5px; padding-bottom: 5px">
+                                                <label class="css-input css-checkbox css-checkbox-primary">
+                                                    <input type="checkbox" ng-model="subuser_programs[row.objectId]" ng-true-value="true" ng-false-value="undefined"><span></span>
+                                                </label>
+                                            </td>
+                                            <td style="padding-top:5px; padding-bottom: 5px">{{row.programName}} ({{row.degreeName}})</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-username-edit">Name</label>
-                  <div class="col-md-7">
-                    <input ng-model="subuser_raw[0].contact_name" class="form-control" type="text" id="val-username-edit" name="val-username-edit" placeholder="Please enter the name.." ng-disabled = "contact_name_readonly && subuser_contact_name_old === subuser_raw[0].contact_name">
-                  </div>
-
-                  <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_contact_name_old === subuser_raw[0].contact_name ?  contact_name_readonly = !contact_name_readonly : contact_name_readonly = contact_name_readonly" ng-class="!contact_name_readonly? 'text-primary':''"></i></div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-title-edit">Job Position</label>
-                  <div class="col-md-7">
-                    <input ng-model="subuser_raw[0].position" class="form-control" type="text" id="val-title-edit" name="val-title-edit" placeholder="Please enter the title.. " ng-disabled = "position_readonly && subuser_position_old === subuser_raw[0].position">
-                  </div>
-                  <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_position_old === subuser_raw[0].position ? position_readonly = !position_readonly : position_readonly = position_readonly" ng-class="!position_readonly? 'text-primary':''"></i></div>
-
-                </div>
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="val-phone-edit">Telephone</label>
-                  <div class="col-md-7">
-                    <input ng-model="subuser_raw[0].phone"  class="form-control" type="text" id="val-phone-edit" name="val-phone-edit" placeholder="e.g. 200-111-2222" ng-disabled = "phone_readonly && subuser_phone_old === subuser_raw[0].phone">
-                  </div>
-
-                  <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_phone_old === subuser_raw[0].phone ? phone_readonly = !phone_readonly : phone_readonly = phone_readonly" ng-class="!phone_readonly ? 'text-primary' : ''"></i></div>
-
-                </div>
-
-             
-                <div class="form-group" style="margin-bottom: 0">
-                  <label class="col-md-4 control-label" for="val-phone">Program access</label>
-                  <div class="col-md-7 frame" style="max-height: 140px">
-                    <table st-table="program_permission" class="table table-hover block">
-
-                      <tbody>
-                      <tr ng-repeat = "row in program_permission">
-                      
-                      <td style="padding-top:5px; padding-bottom: 5px"><label class="css-input css-checkbox css-checkbox-primary">
-
-                      <input type="checkbox" ng-model="subuser_programs[row.objectId]" ng-true-value="true" ng-false-value="undefined"><span></span>
-
-
-                      </label></td>
-
-                        <td style="padding-top:5px; padding-bottom: 5px">{{row.programName}} ({{row.degreeName}})</td>
-
-                      </tr>
-                      </tbody>
-                      
-                    </table>
-                  </div>
-                </div>
-
-
-              </form>
-
-
-
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                     
-                      <!-- <button data-dismiss="modal" class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> OK</button> -->
-
-                        <div class="col-md-7 col-md-offset-4">
-                          <button data-dismiss="modal" ng-click="update_subuser()" class="btn btn-block btn-primary" type="submit" 
-                          ng-disabled = "subuser_title_old === subuser_raw[0].title 
+            </div>
+            <div class="modal-footer">
+                <!-- <button data-dismiss="modal" class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> OK</button> -->
+                <div class="col-md-7 col-md-offset-4">
+                    <button data-dismiss="modal" ng-click="update_subuser()" class="btn btn-block btn-primary" type="submit" ng-disabled="subuser_title_old === subuser_raw[0].title 
                                           && subuser_contact_name_old === subuser_raw[0].contact_name
                                             && subuser_position_old === subuser_raw[0].position
                                               && subuser_phone_old === subuser_raw[0].phone
                                                 && angular.equals(subuser_programs,subuser_programs_old)">
-                                              <i class="fa fa-check"></i> Update</button>
-                        </div>
-              
-                    </div>
-                  </div>
+                        <i class="fa fa-check"></i> Update</button>
                 </div>
-              </div>
-              <!-- END view Subuser Modal -->
-
-
-
-              <!-- selected programs Modal -->
-              <div class="modal fade" id="myModalSelected"  role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="block block-themed block-transparent remove-margin-b">
-                      <div class="block-header bg-primary-dark">
-                        <ul class="block-options">
-                          <li>
-                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-                          </li>
-                        </ul>
-                        <h3 class="block-title">Programs in Service</h3>
-                      </div>
-                      <div class="block-content">
-                        
-
-                        <div class="block" id="profileloadingtable">
-                               
-                    <div class="block-content" style="overflow: auto">
-                  <table st-table="selecteddata" st-pipe="programpipe" class="table">
-                  <colgroup>
-                 
-                  <col width="70%"/>
-                  <col width="30%"/>
-                  
-                </colgroup>
-                <thead class="thead-inverse">
-               
-
-                  <tr class="cell-bordered text-primary font-w400" style="border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233);">
-                   
-                    <th st-sort="programName" style="padding-left:15px;" class="h4">program</th>
-                    <th st-sort="degreeName" style="padding-left:15px;" class="h4  text-center">degree</th>
-                   
-                    
-                  </tr>
-                  <tr class="cell-bordered">
-
-               
-               
-                <th>
-                 <input st-search="programName" placeholder="Search for a program..."  type="search" class="form-control font-w400" style="height:auto; width:100%;"/>
-               </th>
-
-               <th>
-               
-                <input st-search="degreeName" placeholder="And a degree..."  type="search" class="form-control font-w400" style="height:auto; width:100%;"/>
-              </th>
-             
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr ng-repeat="row in selecteddata" ng-class="{'bg-gray-lighter':!row.status}" class="cell-bordered">
-
-              <td class="font-w500" style="padding-left: 15px">{{row.programName}}</td>
-              <td style="text-align: center;" class="font-w500">{{row.degreeName}}</td>
-              
-              
-            </tr>
-          </tbody>
-            
-          <tfoot ng-show="selecteddata.length>25||selecteddata.length===25">
-            <tr>
-              
-
-              
-              <td colspan="1">
-                <br/><br/>
-                <div class="btn-group pull-left ng-scope tablepagenum" >
-                 
-                  <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default">25</button>
-                  <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default">50</button>
-                </div>
-              </td>
-
-              <td colspan="1" class="text-center">
-                <br/><br/>
-                <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="" style="text-align:right;"></div>
-              </td>
-
-
-            </tr>
-          </tfoot>
-        </table>  
-
-                    </div>
-                </div>
-
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                   
-                    <button data-dismiss="modal" class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> OK</button>
-                  </div>
-                </div>
-              </div>
             </div>
-            <!-- END view Subuser Modal -->
+        </div>
+    </div>
+</div>
+<!-- END view Subuser Modal -->
+<!-- selected programs Modal -->
+<div class="modal fade" id="myModalSelected" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Programs in Service</h3>
+                </div>
+                <div class="block-content">
+                    <div class="block" id="profileloadingtable">
+                        <div class="block-content" style="overflow: auto">
+                            <table st-table="selecteddata" st-pipe="programpipe" class="table">
+                                <colgroup>
+                                    <col width="70%" />
+                                    <col width="30%" />
+                                </colgroup>
+                                <thead class="thead-inverse">
+                                    <tr class="cell-bordered text-primary font-w400" style="border-top: 1px solid rgb(233, 233, 233); border-bottom: 1px solid rgb(233, 233, 233);">
+                                        <th st-sort="programName" style="padding-left:15px;" class="h4">program</th>
+                                        <th st-sort="degreeName" style="padding-left:15px;" class="h4  text-center">degree</th>
+                                    </tr>
+                                    <tr class="cell-bordered">
+                                        <th>
+                                            <input st-search="programName" placeholder="Search for a program..." type="search" class="form-control font-w400" style="height:auto; width:100%;" />
+                                        </th>
+                                        <th>
+                                            <input st-search="degreeName" placeholder="And a degree..." type="search" class="form-control font-w400" style="height:auto; width:100%;" />
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="row in selecteddata" ng-class="{'bg-gray-lighter':!row.status}" class="cell-bordered">
+                                        <td class="font-w500" style="padding-left: 15px">{{row.programName}}</td>
+                                        <td style="text-align: center;" class="font-w500">{{row.degreeName}}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot ng-show="selecteddata.length>25||selecteddata.length===25">
+                                    <tr>
+                                        <td colspan="1">
+                                            <br/>
+                                            <br/>
+                                            <div class="btn-group pull-left ng-scope tablepagenum">
+                                                <button type="button" ng-class="{'active':itemsByPage1==25}" ng-click="itemsByPage1=25" class="btn btn-default">25</button>
+                                                <button type="button" ng-class="{'active':itemsByPage1==50}" ng-click="itemsByPage1=50" class="btn btn-default">50</button>
+                                            </div>
+                                        </td>
+                                        <td colspan="1" class="text-center">
+                                            <br/>
+                                            <br/>
+                                            <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage1" st-displayed-pages="" style="text-align:right;"></div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END view Subuser Modal -->
