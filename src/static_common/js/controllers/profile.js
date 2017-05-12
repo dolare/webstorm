@@ -591,6 +591,16 @@ controller('ProfileController',
       }
 
 
+      apiService.getSubuser(token, client_id).then(function (result) {
+          
+                $scope.subusers = result;
+
+                console.log("result="+JSON.stringify(result));
+                
+               
+        });
+
+
     } 
 
 
