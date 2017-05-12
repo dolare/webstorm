@@ -150,11 +150,20 @@
                                         <tr>
                                             <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[0].length!==0, 'bg-green text-white': w_array_final[0].length===0}">1</td>
                                             <td colspan="2" ng-class="{'bg-info text-white': w_array_final[0].length!==0, 'bg-green text-white': w_array_final[0].length===0}">
-                                                <span class="font-w600" ng-click = "show_dead_link = !show_dead_link" ng-class="{'w_updated-text': w_update.dead_link}">DEAD LINK</span>
+                                                <span class="font-w600">DEAD LINK</span>
 
-                                                <span ng-if="w_array_final[0].length!==0" class="badge badge-primary pull-right">{{w_array_final[0].length}}</span>
 
-                                                <span ng-if="w_array_final[0].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+
+                                                <div class="pull-right">
+                                                    <span ng-if="w_array_final[0].length!==0" class="badge badge-primary pull-right">{{w_array_final[0].length}}</span>
+
+                                                    <span ng-if="w_array_final[0].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+
+                                                    <span class="pull-left">
+                                                        &nbsp;&nbsp;
+                                                        <button ng-show="w_update.dead_link" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="show_dead_link = !show_dead_link"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                                                    </span>
+                                                </div>
 
                                             </td>
                                             
@@ -230,67 +239,6 @@
                                     </tbody>
 
 
-
-                                    <tbody ng-repeat="row in w_array_final[0]">
-                                       <tr class="bg-warning-lighter">
-                                             <td class="text-right text-muted">{{$index+1}})</td>
-
-                                             <td>
-                                                <span class="font-w600 text-muted">Where</span>
-                                                
-                                            </td>
-
-                                            <td>
-                                                <a href="{{row.additional_note_url}}" target="_blank">{{row.additional_note_url}}</a>
-
-
-                                            </td>
-                                       </tr>
-
-                                       <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Dead link url</span>
-                                                
-                                            </td>
-                                            <td>
-                                                <a href="{{row.additional_note_url2}}" target="_blank">{{row.additional_note_url2}}</a>
-
-
-                                            </td>
-                                            
-                                        </tr>
-
-                                        <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Dead link url</span>
-                                                
-                                            </td>
-                                            <td>
-                                                <a href="{{row.additional_note_url3}}" target="_blank">{{row.additional_note_url3}}</a>
-
-
-                                            </td>
-                                            
-                                        </tr>
-
-                                        <tr class="bg-gray-lighterer" ng-if="row.additional_note">
-                                            <td class="text-center bg-white"></td>
-                                            <td>
-                                                <span class="font-w600 text-muted">Description</span>
-                                                
-                                            </td>
-                                            <td>
-                                               <pre><div ng-bind-html="row.additional_note | linky:'_blank'"></div></pre>
-
-
-                                            </td>
-                                            
-                                        </tr>
-
-                                    </tbody>
-
                                     <tbody ng-repeat="row in w_array_final[0]">
                                        <tr class="bg-warning-lighter">
                                              <td class="text-right text-muted">{{$index+1}})</td>
@@ -355,11 +303,20 @@
                                         <tr>
                                             <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[1].length!==0, 'bg-green text-white': w_array_final[1].length===0}">2</td>
                                             <td colspan="2" ng-class="{'bg-info text-white': w_array_final[1].length!==0, 'bg-green text-white': w_array_final[1].length===0}">
-                                                <span class="font-w600" ng-click = "show_typo = !show_typo" ng-class="{'w_updated-text': w_update.typo}">TYPO</span>
+                                                <span class="font-w600">TYPO</span>
 
-                                                <span ng-if="w_array_final[1].length!==0" class="badge badge-primary pull-right">{{w_array_final[1].length}}</span>
 
-                                                <span ng-if="w_array_final[1].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                                                <div class="pull-right">
+
+                                                    <span ng-if="w_array_final[1].length!==0" class="badge badge-primary pull-right">{{w_array_final[1].length}}</span>
+
+                                                    <span ng-if="w_array_final[1].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+
+                                                    <span class="pull-left">
+                                                        &nbsp;&nbsp;
+                                                        <button ng-show="w_update.typo" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="show_typo = !show_typo"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                                                    </span>
+                                                </div>
 
                                             </td>
                                             
@@ -500,11 +457,21 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[2].length!==0, 'bg-green text-white': w_array_final[2].length===0}">3</td>
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[2].length!==0, 'bg-green text-white': w_array_final[2].length===0}">
-                    <span class="font-w600" ng-click = "show_outdated_information = !show_outdated_information" ng-class="{'w_updated-text': w_update.outdated_information}" >OUTDATED INFORMATION</span>
+                    <span class="font-w600" >OUTDATED INFORMATION</span>
 
-                    <span ng-if="w_array_final[2].length!==0" class="badge badge-primary pull-right">{{w_array_final[2].length}}</span>
+                    <div class="pull-right">
+                        <span ng-if="w_array_final[2].length!==0" class="badge badge-primary pull-right">{{w_array_final[2].length}}</span>
 
-                    <span ng-if="w_array_final[2].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-if="w_array_final[2].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+
+                        <span class="pull-left">
+                            &nbsp;&nbsp;
+                            <button ng-show="w_update.outdated_information" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="show_outdated_information = !show_outdated_information"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                        </span>
+
+                    </div>
+
+
 
                 </td>
                 
@@ -641,11 +608,20 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[3].length!==0, 'bg-green text-white': w_array_final[3].length===0}">4</td>
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[3].length!==0, 'bg-green text-white': w_array_final[3].length===0}">
-                    <span class="font-w600" ng-click = "show_data_discrepancy = !show_data_discrepancy" ng-class="{'w_updated-text': w_update.data_discrepancy}">DATA DISCREPANCY</span>
+                    <span class="font-w600">DATA DISCREPANCY</span>
 
-                    <span ng-if="w_array_final[3].length!==0" class="badge badge-primary pull-right">{{w_array_final[3].length}}</span>
 
-                    <span ng-if="w_array_final[3].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                    <div class="pull-right">
+                        <span ng-if="w_array_final[3].length!==0" class="badge badge-primary pull-right">{{w_array_final[3].length}}</span>
+
+                        <span ng-if="w_array_final[3].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+
+                        <span class="pull-left">
+                                &nbsp;&nbsp;
+                            <button ng-show="w_update.data_discrepancy" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="show_data_discrepancy = !show_data_discrepancy"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                        </span>
+
+                    </div>
 
                 </td>
                 
@@ -785,11 +761,18 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[4].length!==0, 'bg-green text-white': w_array_final[4].length===0}">5</td>
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[4].length!==0, 'bg-green text-white': w_array_final[4].length===0}">
-                    <span class="font-w600" ng-click = "show_sidebars = !show_sidebars" ng-class="{'w_updated-text': w_update.sidebars}">MALFUNCTIONING SIDEBARS/MENU/HYPERLINK</span>
+                    <span class="font-w600">MALFUNCTIONING SIDEBARS/MENU/HYPERLINK</span>
 
-                    <span ng-if="w_array_final[4].length!==0" class="badge badge-primary pull-right">{{w_array_final[4].length}}</span>
+                    <div class="pull-right">
+                        <span ng-if="w_array_final[4].length!==0" class="badge badge-primary pull-right">{{w_array_final[4].length}}</span>
 
-                    <span ng-if="w_array_final[4].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-if="w_array_final[4].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+
+                        <span class="pull-left">
+                                    &nbsp;&nbsp;
+                                <button ng-show="w_update.sidebars" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="show_sidebars = !show_sidebars"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                        </span>
+                    </div>
 
                 </td>
                 
@@ -929,11 +912,18 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[5].length!==0, 'bg-green text-white': w_array_final[5].length===0}">6</td>
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[5].length!==0, 'bg-green text-white': w_array_final[5].length===0}">
-                    <span class="font-w600" ng-click = "show_infinite_loop = !show_infinite_loop" ng-class="{'w_updated-text': w_update.infinite_loop}">INFINITE LOOP</span>
+                    <span class="font-w600">INFINITE LOOP</span>
 
-                    <span ng-if="w_array_final[5].length!==0" class="badge badge-primary pull-right">{{w_array_final[5].length}}</span>
+                    <div class="pull-right">
+                        <span ng-if="w_array_final[5].length!==0" class="badge badge-primary pull-right">{{w_array_final[5].length}}</span>
 
-                    <span ng-if="w_array_final[5].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-if="w_array_final[5].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+
+                        <span class="pull-left">
+                                        &nbsp;&nbsp;
+                                    <button ng-show="w_update.infinite_loop" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="show_infinite_loop = !show_infinite_loop"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                            </span>
+                    </div>
 
                 </td>
                 
@@ -1071,11 +1061,23 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[6].length!==0, 'bg-green text-white': w_array_final[6].length===0}">7</td>
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[6].length!==0, 'bg-green text-white': w_array_final[6].length===0}">
-                    <span class="font-w600" ng-click = "show_floating_page = !show_floating_page" ng-class="{'w_updated-text': w_update.floating_page}">FLOATING PAGE</span>
+                    <span class="font-w600">FLOATING PAGE</span>
 
-                    <span ng-if="w_array_final[6].length!==0" class="badge badge-primary pull-right">{{w_array_final[6].length}}</span>
+                    <div class="pull-right">
 
-                    <span ng-if="w_array_final[6].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-if="w_array_final[6].length!==0" class="badge badge-primary pull-right">{{w_array_final[6].length}}</span>
+
+                        <span ng-if="w_array_final[6].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+
+                        <span class="pull-left">
+                                            &nbsp;&nbsp;
+                                        <button ng-show="w_update.floating_page" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="show_floating_page = !show_floating_page"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                        </span>
+
+
+                    </div>
+
+
 
                 </td>
                 
@@ -1213,11 +1215,19 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[7].length!==0, 'bg-green text-white': w_array_final[7].length===0}">8</td>
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[7].length!==0, 'bg-green text-white': w_array_final[7].length===0}">
-                    <span class="font-w600" ng-click = "show_confusing = !show_confusing" ng-class="{'w_updated-text': w_update.confusing}">CONFUSING AND/OR NOT CLEARLY PRESENTED</span>
+                    <span class="font-w600">CONFUSING AND/OR NOT CLEARLY PRESENTED</span>
 
-                    <span ng-if="w_array_final[7].length!==0" class="badge badge-primary pull-right">{{w_array_final[7].length}}</span>
+                    <div class="pull-right">
+                        <span ng-if="w_array_final[7].length!==0" class="badge badge-primary pull-right">{{w_array_final[7].length}}</span>
 
-                    <span ng-if="w_array_final[7].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-if="w_array_final[7].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+
+                        <span class="pull-left">
+                                                &nbsp;&nbsp;
+                                            <button ng-show="w_update.confusing" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="show_confusing = !show_confusing"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                            </span>
+
+                    </div>
 
                 </td>
                 
@@ -1355,11 +1365,21 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[8].length!==0, 'bg-green text-white': w_array_final[8].length===0}">9</td>
                 <td colspan="2" ng-class="{'bg-info text-white': w_array_final[8].length!==0, 'bg-green text-white': w_array_final[8].length===0}">
-                    <span class="font-w600" ng-click = "show_other_expert_note = !show_other_expert_note" ng-class="{'w_updated-text': w_update.other_expert_note}">OTHERS</span>
+                    <span class="font-w600">OTHERS</span>
 
-                    <span ng-if="w_array_final[8].length!==0" class="badge badge-primary pull-right">{{w_array_final[8].length}}</span>
+                    <div class="pull-right">
 
-                    <span ng-if="w_array_final[8].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-if="w_array_final[8].length!==0" class="badge badge-primary pull-right">{{w_array_final[8].length}}</span>
+
+                        <span ng-if="w_array_final[8].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+
+                        <span class="pull-left">
+                                                &nbsp;&nbsp;
+                                            <button ng-show="w_update.other_expert_note" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="show_other_expert_note = !show_other_expert_note"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                            </span>
+
+                    </div>
+
 
                 </td>
                 

@@ -488,49 +488,102 @@ controller('ProfileController',
       console.log("$scope.subuser_programs"+JSON.stringify($scope.subuser_programs))
 
       var sub_program_addition = [];
-  
+      var sub_program_removal = [];
 
-      angular.forEach($scope.subuser_programs, function(value, key) {
-        
-        if(value){
-          
-          console.log("key="+key);
-          
-          sub_program_addition.push(key);
-        } else {
-          console.log("false key="+key)
-        }
-        
-
-      });
-
-      var inverted1 = _.invert($scope.subuser_programs);
-      var inverted2 = _.invert($scope.subuser_programs_old);
-
-      
-
-      var trytest = _.difference(inverted1, inverted2);
-      console.log("trytest= "+JSON.stringify(trytest))
 
       $http({
-          url: '/api/upgrid/user/client_and_program_relation/',
-          method: 'POST',
-          data: {
-            'client': $scope.subuser_raw[0].id,
-            'client_program': sub_program_addition
-          },
-          headers: {
-            'Authorization': 'JWT ' + token
-          }
-      }).then(function (response) {
+        url: '/api/upgrid/user/subuser',
+        method: 'PUT',
+        data: {
+          'sub_user_id': $scope.subuser_raw[0].id,
+          'main_user_id': client_id,
+          ''
+          
+        },
+        headers: {
+          'Authorization': 'JWT ' + token
+        }
 
-         console.log("return data"+ JSON.stringify(response.data));
-         
-      }).
-       catch(function(error){
-          console.log('an error occurred...'+JSON.stringify(error));
+      }).then(function(response) {
+        console.log('success update!');
 
-       });
+     
+               
+      });
+
+
+      var keys_old = _.keys($scope.subuser_programs_old) 
+      var keys_new = _.keys($scope.subuser_programs) 
+
+      console.log("keys_old="+JSON.stringify(keys_old))
+      console.log("keys_new="+JSON.stringify(keys_new))
+
+      //check for newly addition
+     
+      for(var i=0; i<keys_new.length; i++){
+
+        if($scope.subuser_programs[keys_new[i]] && !$scope.subuser_programs_old[keys_new[i]]) {
+          sub_program_addition.push(keys_new[i]);
+        }
+
+      }
+
+      //check for newly removal
+      for(var i=0; i<keys_old.length; i++){
+
+        if(!$scope.subuser_programs[keys_old[i]]) {
+          sub_program_removal.push(keys_old[i]);
+        }
+
+      }
+
+      if(sub_program_addition.length !== 0){
+
+        $http({
+            url: '/api/upgrid/user/client_and_program_relation/',
+            method: 'POST',
+            data: {
+              'client': $scope.subuser_raw[0].id,
+              'client_program': sub_program_addition
+            },
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+        }).then(function (response) {
+
+           console.log("return data"+ JSON.stringify(response.data));
+           
+        }).
+         catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+         });
+      }
+
+      console.log("sub_program_removal= "+JSON.stringify(sub_program_removal));
+      if(sub_program_removal.length !== 0){
+          
+        $http({
+            url: '/api/upgrid/user/client_and_program_relation/',
+            method: 'DELETE',
+            data: {
+              'object_id': sub_program_removal
+            },
+            headers: {
+
+              'Authorization': 'JWT ' + token
+            }
+        }).then(function (response) {
+
+           console.log("return data"+ JSON.stringify(response.data));
+           
+        }).
+         catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+         });
+
+      }
 
 
     } 
@@ -547,7 +600,7 @@ controller('ProfileController',
         url: '/api/upgrid/user/subuser',
         method: 'PUT',
         data: {
-          'sub_user_id': $scope.data.subuser[$index].id,
+          'sub_user_id': $scope.subusers[$index].id,
           'is_active':'False',
           'main_user_id': client_id
           
@@ -559,7 +612,7 @@ controller('ProfileController',
       }).then(function(response) {
         console.log('success deactivate!');
 
-        $scope.data.subuser.splice($index, 1);
+        $scope.subusers.splice($index, 1);
 
         //update data
         $scope.data = tableDataService.getProfile(List);
