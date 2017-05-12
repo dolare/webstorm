@@ -603,15 +603,20 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
         return Response({"success": _("Client and Program relation has been created.")}, status=HTTP_201_CREATED)
 
     def delete(self, request):
+        print("delete in.........")
+        print(request.data)
         if 'object_id' not in request.data:
             return Response({"Failed": _("object_id is required")}, status=HTTP_400_BAD_REQUEST)
         object_id = request.data['object_id']
-
+        print("delete in22222222222222")
         if type(object_id) is not list:
+            print("delete in3333333333333")
             return Response({"Failed": _("client_programs must be a list.")}, status=HTTP_400_BAD_REQUEST)
-
+        print(object_id)
         queryset = self.get_queryset()
+        print(queryset)
         client_and_program_relation = queryset.filter(object_id__in=object_id)
+        print(client_and_program_relation)
         client_and_program_relation.delete()
         return Response({"success": _("ClientAndProgramRelation has been deleted.")}, status=HTTP_204_NO_CONTENT)
 

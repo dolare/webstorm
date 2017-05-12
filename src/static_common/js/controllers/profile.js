@@ -570,7 +570,7 @@ controller('ProfileController',
               'object_id': sub_program_removal
             },
             headers: {
-
+              'Content-Type': 'application/json',
               'Authorization': 'JWT ' + token
             }
         }).then(function (response) {
