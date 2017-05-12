@@ -2387,12 +2387,20 @@ class ClientViewEnhancementUpdate(APIView):
             user = UniversityCustomer.objects.get(id=client_id)
         except UpgridAccountManager.DoesNotExist:
             try:
+
                 user = UniversityCustomer.objects.get(id=request.user.id)
+
             except UniversityCustomer.DoesNotExist:
                 return False
         if user.account_type == 'sub':
             try:
+                print('sub user')
                 ClientAndProgramRelation.objects.get(client=user, client_program=object_id)
+                user = UniversityCustomer.objects.filter(id = user.main_user_id)
+                if user.exists():
+                    user = user.first()
+                else: 
+                    return False
             except ClientAndProgramRelation.DoesNotExist:
                 return False
         return user
@@ -2400,13 +2408,16 @@ class ClientViewEnhancementUpdate(APIView):
     def get(self, request, object_id=None, client_id=None):
         user = self.get_user(request, object_id, client_id)
         customer_program = UniversityCustomerProgram.objects.get(object_id=object_id)
-
         if not user:
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
-            update_report = EnhancementUpdate.objects.get(customer_program=customer_program, customer=user,
+            update_report_query = EnhancementUpdate.objects.filter(customer_program=customer_program, customer=user,
                                                           most_recent=True)
-
+            if update_report_query.exists():
+                update_report = update_report_query.first()
+            else:
+                return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
+                            status=HTTP_403_FORBIDDEN)
         except EnhancementUpdate.DoesNotExist:
             return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)

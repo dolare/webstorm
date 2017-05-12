@@ -179,6 +179,9 @@ controller('ProfileController',
         'val-username': {
           required: true,
         },
+        'val-username-edit': {
+          required: true,
+        },
         'val-email': {
           emailz: true,
           required: true,
@@ -195,12 +198,20 @@ controller('ProfileController',
         'val-title': {
           required: true,
         },
+        'val-title-edit': {
+          required: true,
+        },
         
       },
       messages: {
         'val-username': {
           required: 'Please provide a name',
         },
+
+        'val-username-edit': {
+          required: 'Please provide a name',
+        },
+
         'val-email': {
 
           required: 'Please enter a valid email address',
@@ -220,6 +231,10 @@ controller('ProfileController',
           equalTo: 'Please enter the same password as above'
         },
         'val-title': {
+          required: 'Please provide a title',
+        },
+
+        'val-title-edit': {
           required: 'Please provide a title',
         },
 
@@ -384,23 +399,6 @@ controller('ProfileController',
 
 
 
-            $scope.data.subuser.push({
-                "id": null,
-                "is_active": true,
-              
-                        
-                "email": $scope.subuser.email,
-               
-                "title": ($scope.subuser.form_contract_prefix === undefined)? "":$scope.subuser.form_contract_prefix,
-                "contact_name": $scope.subuser.name,
-                "position": $scope.subuser.title,
-                "position_level": $scope.data.contractLevel,
-                "phone": $scope.subuser.tel,
-
-
-            });
-
-
 
             
             // $timeout(function() {
@@ -511,9 +509,35 @@ controller('ProfileController',
       }).then(function(response) {
         console.log('success update!');
 
-     
+        apiService.getSubuser(token, client_id).then(function (result) {
+          
+                $scope.subusers = result;
+
+                console.log("result="+JSON.stringify(result));
+                
                
-      });
+          });
+
+
+
+        $.notify({
+
+          // options
+            icon: "fa fa-check",
+            message: 'The user has been successfully edited.'
+          }, {
+            // settings
+            type: 'success',
+            placement: {
+              from: "top",
+              align: "center"
+            },
+            z_index: 1999,
+          });
+
+       
+                 
+        });
 
 
       var keys_old = _.keys($scope.subuser_programs_old) 
@@ -556,6 +580,8 @@ controller('ProfileController',
         }).then(function (response) {
 
            console.log("return data"+ JSON.stringify(response.data));
+
+           
            
         }).
          catch(function(error){
@@ -591,14 +617,7 @@ controller('ProfileController',
       }
 
 
-      apiService.getSubuser(token, client_id).then(function (result) {
-          
-                $scope.subusers = result;
-
-                console.log("result="+JSON.stringify(result));
-                
-               
-        });
+      
 
 
     } 
