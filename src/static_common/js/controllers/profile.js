@@ -499,7 +499,7 @@ controller('ProfileController',
           'sub_user_id': $scope.subuser_raw[0].id,
           'main_user_id': client_id,
           'title': $scope.subuser_raw[0].title, 
-          'username': $scope.subuser_raw[0].contact_name,
+          'contact_name': $scope.subuser_raw[0].contact_name,
           'position': $scope.subuser_raw[0].position,
           'phone': $scope.subuser_raw[0].phone        
           
