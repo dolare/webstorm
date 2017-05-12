@@ -49,7 +49,7 @@ urlpatterns=[
     url(r'^api/upgrid/user/university_customer/$', apis.UniversityCustomerListAPI.as_view()),  # new
 
     # Put change subuser is_active status, Post create subuser
-    url(r'^api/upgrid/user/subuser$', apis.CreateOrChangeSubUser.as_view()),
+    url(r'^api/upgrid/user/subuser/$', apis.CreateOrChangeSubUser.as_view()),
 
     url(r'^api/upgrid/user/client_and_program_relation/$', apis.ClientAndProgramRelationAPI.as_view()),   # new
 
