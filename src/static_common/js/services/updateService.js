@@ -1545,7 +1545,7 @@ angular.module('myApp')
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_listening : e_raw['r'+(i===0?'':i+1)].toefl_ibt_listening) 
                     : '-')
                   + '/'
-                  (((
+                  + (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_speaking || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_speaking
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_speaking : e_raw['r'+(i===0?'':i+1)].toefl_ibt_speaking) 
@@ -1555,7 +1555,7 @@ angular.module('myApp')
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_speaking : e_raw['r'+(i===0?'':i+1)].toefl_ibt_speaking) 
                     : '-')
                   + '/'
-                  (((
+                  + (((
                       (((e_update_diff||{}).old||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_writing || 
                       (((e_update_diff||{}).new||{})['r'+(i===0?'':i+1)]||{}).toefl_ibt_writing
                     ) ? e_update_diff[ver]['r'+(i===0?'':i+1)].toefl_ibt_writing : e_raw['r'+(i===0?'':i+1)].toefl_ibt_writing) 
