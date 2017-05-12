@@ -491,25 +491,25 @@ controller('ProfileController',
       var sub_program_removal = [];
 
 
-      $http({
-        url: '/api/upgrid/user/subuser',
-        method: 'PUT',
-        data: {
-          'sub_user_id': $scope.subuser_raw[0].id,
-          'main_user_id': client_id,
-          ''
+      // $http({
+      //   url: '/api/upgrid/user/subuser',
+      //   method: 'PUT',
+      //   data: {
+      //     'sub_user_id': $scope.subuser_raw[0].id,
+      //     'main_user_id': client_id,
+      //     ''
           
-        },
-        headers: {
-          'Authorization': 'JWT ' + token
-        }
+      //   },
+      //   headers: {
+      //     'Authorization': 'JWT ' + token
+      //   }
 
-      }).then(function(response) {
-        console.log('success update!');
+      // }).then(function(response) {
+      //   console.log('success update!');
 
      
                
-      });
+      // });
 
 
       var keys_old = _.keys($scope.subuser_programs_old) 
