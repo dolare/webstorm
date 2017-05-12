@@ -567,7 +567,8 @@ controller('ProfileController',
             url: '/api/upgrid/user/client_and_program_relation/',
             method: 'DELETE',
             data: {
-              'object_id': sub_program_removal
+              'client': $scope.subuser_raw[0].id,
+              'client_program': sub_program_removal
             },
             headers: {
               'Content-Type': 'application/json',
