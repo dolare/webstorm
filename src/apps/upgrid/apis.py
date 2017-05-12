@@ -671,14 +671,20 @@ class CreateOrChangeSubUser(APIView):
                 selected_program.save()
 
         else:
-            sub_user.update(
-                title=request.data['title'],
-                contact_name=request.data['username'],
-                department=request.data['department'],
-                position=request.data['position'],
-                position_level=request.data['position_level'],
-                phone=request.data['phone'],
-            )
+            data = {}
+            if 'title' in request.data:
+                data['title'] = request.data['title']
+            if 'username' in request.data:
+                data['username'] = request.data['username']
+            if 'department' in request.data:
+                data['department'] = request.data['department']
+            if 'position' in request.data:
+                data['position'] = request.data['position']
+            if 'position_level' in request.data:
+                data['position_level'] = request.data['position_level']
+            if 'phone' in request.data:
+                data['phone'] = request.data['phone']
+            sub_user.update(**data)
             sub_user.save()
             # update Client And Program relation for sub user
 
