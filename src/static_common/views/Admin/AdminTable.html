@@ -136,7 +136,7 @@
                             </div>
                         </td>
                         <td>
-                            <button ng-disabled="!row.is_active" class="btn btn-default" confirmed-click="deactivate(row.id)" ng-confirm-click="Do you really want to delete?" data-js-blur>
+                            <button ng-disabled="!row.is_active" class="btn btn-default" confirmed-click="deactivate(row.id, $index)" ng-confirm-click="Do you really want to delete?" data-js-blur>
                                 <a data-uib-tooltip="Deactivate" data-tooltip-placement="top" class="fa fa-times text-danger">
                                 </a>
                             </button>
@@ -185,7 +185,7 @@
                             </div>
                         </td>
                         <td>
-                            <button ng-disabled="!row1.is_active" class="btn btn-default" confirmed-click="deactivate(row1.id)" ng-confirm-click="Do you really want to delete?" data-js-blur>
+                            <button ng-disabled="!row1.is_active" class="btn btn-default" confirmed-click="deactivate(row1.id, $parent.$index, $index)" ng-confirm-click="Do you really want to delete?" data-js-blur>
                                 <a data-uib-tooltip="Deactivate" data-tooltip-placement="top" class="fa fa-times text-danger">
                                 </a>
                             </button>

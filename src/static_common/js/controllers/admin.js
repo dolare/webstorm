@@ -179,8 +179,11 @@ angular.module('myApp').controller('AdminMainController',
         };
 
 
-        $scope.deactivate = function(id) {
+        $scope.deactivate = function(id, index, subindex) {
 
+            console.log("index = "+index)
+            console.log("subindex = "+subindex)
+            
             $http({
                 url: '/api/upgrid/accountmanager/client/',
                 method: 'DELETE',
@@ -197,16 +200,24 @@ angular.module('myApp').controller('AdminMainController',
 
                 console.log("deleted!" + JSON.stringify(response));
 
-                for (var i = 0; i < $scope.client_data.length; i++) {
-                    if ($scope.client_data[i].id === id) {
-                        console.log("found deactivated user");
-                        console.log("deactivated user status before=" + JSON.stringify($scope.client_data[i].is_active))
-                        $scope.client_data[i].is_active = false;
-                        console.log("deactivated user status after=" + JSON.stringify($scope.client_data[i].is_active))
-                        console.log("deactivated user = " + JSON.stringify($scope.client_data));
-                        break;
-                    }
+                // for (var i = 0; i < $scope.client_data.length; i++) {
+                //     if ($scope.client_data[i].id === id) {
+                //         console.log("found deactivated user");
+                //         console.log("deactivated user status before=" + JSON.stringify($scope.client_data[i].is_active))
+                //         $scope.client_data[i].is_active = false;
+                //         console.log("deactivated user status after=" + JSON.stringify($scope.client_data[i].is_active))
+                //         console.log("deactivated user = " + JSON.stringify($scope.client_data));
+                //         break;
+                //     }
+                // }
+
+                if(subindex){
+                    $scope.client_data[index].subuser[subindex].is_active = false;
+                } else {
+                    $scope.client_data[index].is_active = false;
                 }
+
+                
 
 
                 $.notify({
