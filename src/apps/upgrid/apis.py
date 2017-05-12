@@ -569,14 +569,10 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
     def create(self, request, *args, **kwargs):
         user = request.user
         if 'client' not in request.data or 'client_program' not in request.data:
-            print("is_None.............")
             return Response({"Failed": _("client and client_program is required")}, status=HTTP_400_BAD_REQUEST)
         client = request.data['client']
         client_programs = request.data['client_program']
-        print(client)
-        print(client_programs)
         if type(client_programs) is not list:
-            print("not list")
             return Response({"Failed": _("client_programs must be a list.")}, status=HTTP_400_BAD_REQUEST)
 
         if UpgridAccountManager.objects.filter(id=user.id):
@@ -590,12 +586,8 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
         client_owned_programs = [str(program.object_id) for program in university_customer_programs]
-        print(client_owned_programs)
-        print(client_programs)
-        print(type(client_programs))
         error_program = []
         for program in client_programs:
-            print(program)
             if program not in client_owned_programs:
                 error_program.append(program)
                 continue
@@ -614,6 +606,10 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
         if 'object_id' not in request.data:
             return Response({"Failed": _("object_id is required")}, status=HTTP_400_BAD_REQUEST)
         object_id = request.data['object_id']
+
+        if type(object_id) is not list:
+            return Response({"Failed": _("client_programs must be a list.")}, status=HTTP_400_BAD_REQUEST)
+
         queryset = self.get_queryset()
         client_and_program_relation = queryset.filter(object_id__in=object_id)
         client_and_program_relation.delete()
