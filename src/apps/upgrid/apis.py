@@ -671,22 +671,12 @@ class CreateOrChangeSubUser(APIView):
                 selected_program.save()
 
         else:
-            data = {}
-            if 'title' in request.data:
-                data['title'] = request.data['title']
-            if 'username' in request.data:
-                data['username'] = request.data['username']
-            if 'department' in request.data:
-                data['department'] = request.data['department']
-            if 'position' in request.data:
-                data['position'] = request.data['position']
-            if 'position_level' in request.data:
-                data['position_level'] = request.data['position_level']
-            if 'phone' in request.data:
-                data['phone'] = request.data['phone']
-            sub_user.update(**data)
-            sub_user.save()
-            # update Client And Program relation for sub user
+            update_field = ['title', 'contact_name', 'position', 'position_level', 'phone', ]
+            for field in update_field:
+                if field in request.data:
+                    setattr(sub_user, field, request.data[field])
+                    sub_user.save()
+            return Response({"success": _("Sub user has been update.")}, status=HTTP_200_OK)
 
     def post(self, request):
         try:

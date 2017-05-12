@@ -343,7 +343,7 @@ controller('ProfileController',
             console.log("subusertimestamp"+subusertimestamp);
             console.log("subuserNum="+subNum);
         $http({
-              url: '/api/upgrid/user/subuser',
+              url: '/api/upgrid/user/subuser/',
               method: 'POST',
               data: {
                 "username": $scope.data.username.split('@')[0] + "@S" + subusertimestamp,
@@ -491,25 +491,29 @@ controller('ProfileController',
       var sub_program_removal = [];
 
 
-      // $http({
-      //   url: '/api/upgrid/user/subuser',
-      //   method: 'PUT',
-      //   data: {
-      //     'sub_user_id': $scope.subuser_raw[0].id,
-      //     'main_user_id': client_id,
-      //     ''
-          
-      //   },
-      //   headers: {
-      //     'Authorization': 'JWT ' + token
-      //   }
+      $http({
+        url: '/api/upgrid/user/subuser/',
+        method: 'PUT',
+        data: {
 
-      // }).then(function(response) {
-      //   console.log('success update!');
+          'sub_user_id': $scope.subuser_raw[0].id,
+          'main_user_id': client_id,
+          'title': $scope.subuser_raw[0].title, 
+          'contact_name': $scope.subuser_raw[0].contact_name,
+          'position': $scope.subuser_raw[0].position,
+          'phone': $scope.subuser_raw[0].phone        
+          
+        },
+        headers: {
+          'Authorization': 'JWT ' + token
+        }
+
+      }).then(function(response) {
+        console.log('success update!');
 
      
                
-      // });
+      });
 
 
       var keys_old = _.keys($scope.subuser_programs_old) 
@@ -587,6 +591,16 @@ controller('ProfileController',
       }
 
 
+      apiService.getSubuser(token, client_id).then(function (result) {
+          
+                $scope.subusers = result;
+
+                console.log("result="+JSON.stringify(result));
+                
+               
+        });
+
+
     } 
 
 
@@ -598,7 +612,7 @@ controller('ProfileController',
       console.log("index is " + $index);
 
       $http({
-        url: '/api/upgrid/user/subuser',
+        url: '/api/upgrid/user/subuser/',
         method: 'PUT',
         data: {
           'sub_user_id': $scope.subusers[$index].id,
