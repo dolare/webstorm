@@ -116,7 +116,9 @@ urlpatterns=[
     url(r'api/upgrid/accountmanager/dropdown_menu/programs/$', apis.CustomerAndCompetingProgramAPI.as_view()),
 
     url(r'api/upgrid/wwr/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.WhoopsWebReports.as_view()),
+    url(r'api/upgrid/wwr/(?P<object_id>[0-9a-fA-F\-]+)/(?P<client_id>[0-9a-fA-F\-]+)/$', apis.WhoopsWebReports.as_view()),
     url(r'api/upgrid/ewr/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.EnhancementWebReports.as_view()),
+    url(r'api/upgrid/ewr/(?P<object_id>[0-9a-fA-F\-]+)/(?P<client_id>[0-9a-fA-F\-]+)/$', apis.EnhancementWebReports.as_view()),
 
     # --------------------------------Update API-----------------------------------------------
     # PUT. used for account manager on-demand compare customer enhancementprogram.
