@@ -13,7 +13,7 @@
                                         <tr>
                                             <td class="text-center font-w600" ng-class="{'bg-info text-white': report.w_array_final[0].length!==0, 'bg-green text-white': report.w_array_final[0].length===0}">1</td>
                                             <td colspan="2" ng-class="{'bg-info text-white': report.w_array_final[0].length!==0, 'bg-green text-white': report.w_array_final[0].length===0}">
-                                                <span class="font-w600">DEAD LINK &nbsp;<i class="fa fa-info-circle font-s13" data-uib-tooltip="When a page redirects to an unexpected page or returns an error when a link is accessed." data-tooltip-placement="top"></i></span>
+                                                <span class="font-w600">DEAD LINK &nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="When a page redirects to an unexpected page or returns an error when a link is accessed." data-tooltip-placement="top"></i></span>
 
                                                 <span class="pull-right">
                                                     <span ng-if="report.w_array_final[0].length!==0" class="badge badge-primary pull-right">{{report.w_array_final[0].length}}</span>
@@ -205,7 +205,7 @@
                                         <tr>
                                             <td class="text-center font-w600" ng-class="{'bg-info text-white': report.w_array_final[1].length!==0, 'bg-green text-white': report.w_array_final[1].length===0}">2</td>
                                             <td colspan="2" ng-class="{'bg-info text-white': report.w_array_final[1].length!==0, 'bg-green text-white': report.w_array_final[1].length===0}">
-                                                <span class="font-w600">TYPO &nbsp;<i class="fa fa-info-circle font-s13" data-uib-tooltip="A misspelled or repeated word or misuse of punctuation." data-tooltip-placement="top"></i></span>
+                                                <span class="font-w600">TYPO &nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="A misspelled or repeated word or misuse of punctuation." data-tooltip-placement="top"></i></span>
 
 
                                                 <span class="pull-right">
@@ -398,7 +398,7 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': report.w_array_final[2].length!==0, 'bg-green text-white': report.w_array_final[2].length===0}">3</td>
                 <td colspan="2" ng-class="{'bg-info text-white': report.w_array_final[2].length!==0, 'bg-green text-white': report.w_array_final[2].length===0}">
-                    <span class="font-w600">OUTDATED INFORMATION &nbsp;<i class="fa fa-info-circle font-s13" data-uib-tooltip="When a value or some information is updated on one or more pages and/or files, but not across all relevant pages and/or files." data-tooltip-placement="top"></i></span>
+                    <span class="font-w600">OUTDATED INFORMATION &nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="When a value or some information is updated on one or more pages and/or files, but not across all relevant pages and/or files." data-tooltip-placement="top"></i></span>
 
 
                     <span class="pull-right">
@@ -587,7 +587,7 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': report.w_array_final[3].length!==0, 'bg-green text-white': report.w_array_final[3].length===0}">4</td>
                 <td colspan="2" ng-class="{'bg-info text-white': report.w_array_final[3].length!==0, 'bg-green text-white': report.w_array_final[3].length===0}">
-                    <span class="font-w600">DATA DISCREPANCY &nbsp;<i class="fa fa-info-circle font-s13" data-uib-tooltip="When a difference in a data point, such as current-year tuition values, exists between two pages or files. (such as PDF files)" data-tooltip-placement="top"></i></span>
+                    <span class="font-w600">DATA DISCREPANCY &nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="When a difference in a data point, such as current-year tuition values, exists between two pages or files. (such as PDF files)" data-tooltip-placement="top"></i></span>
 
                     <span class="pull-right">
                         <span ng-if="report.w_array_final[3].length!==0" class="badge badge-primary pull-right">{{report.w_array_final[3].length}}</span>
@@ -781,7 +781,7 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': report.w_array_final[4].length!==0, 'bg-green text-white': report.w_array_final[4].length===0}">5</td>
                 <td colspan="2" ng-class="{'bg-info text-white': report.w_array_final[4].length!==0, 'bg-green text-white': report.w_array_final[4].length===0}">
-                    <span class="font-w600">MALFUNCTIONING SIDEBARS/MENU/HYPERLINK &nbsp;<i class="fa fa-info-circle font-s13" data-uib-tooltip="When a sidebar/menu/hyperlink is not functioning as desired." data-tooltip-placement="top"></i></span>
+                    <span class="font-w600">MALFUNCTIONING SIDEBARS/MENU/HYPERLINK &nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="When a sidebar/menu/hyperlink is not functioning as desired." data-tooltip-placement="top"></i></span>
 
                     <span class="pull-right">
                         <span ng-if="report.w_array_final[4].length!==0" class="badge badge-primary pull-right">{{report.w_array_final[4].length}}</span>
@@ -971,7 +971,7 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': report.w_array_final[5].length!==0, 'bg-green text-white': report.w_array_final[5].length===0}">6</td>
                 <td colspan="2" ng-class="{'bg-info text-white': report.w_array_final[5].length!==0, 'bg-green text-white': report.w_array_final[5].length===0}">
-                    <span class="font-w600">INFINITE LOOP &nbsp;<i class="fa fa-info-circle font-s13" data-uib-tooltip="When two or more pages redirect users to one another in pursuit of something that isn’t found on any of the indicated pages. (i.e. Page A says X is found on Page B, and Page B says X is found on page A, but neither page has X)" data-tooltip-placement="top"></i></span>
+                    <span class="font-w600">INFINITE LOOP &nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="When two or more pages redirect users to one another in pursuit of something that isn’t found on any of the indicated pages. (i.e. Page A says X is found on Page B, and Page B says X is found on page A, but neither page has X)" data-tooltip-placement="top"></i></span>
 
                     <span class="pull-right">
                         <span ng-if="report.w_array_final[5].length!==0" class="badge badge-primary pull-right">{{report.w_array_final[5].length}}</span>
@@ -1160,7 +1160,7 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': report.w_array_final[6].length!==0, 'bg-green text-white': report.w_array_final[6].length===0}">7</td>
                 <td colspan="2" ng-class="{'bg-info text-white': report.w_array_final[6].length!==0, 'bg-green text-white': report.w_array_final[6].length===0}">
-                    <span class="font-w600">FLOATING PAGE &nbsp;<i class="fa fa-info-circle font-s13" data-uib-tooltip="Page that is no longer meant to be accessible, but remains so, such as via a google search." data-tooltip-placement="top"></i></span>
+                    <span class="font-w600">FLOATING PAGE &nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="Page that is no longer meant to be accessible, but remains so, such as via a google search." data-tooltip-placement="top"></i></span>
 
                     <span class="pull-right">
 
@@ -1347,7 +1347,7 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': report.w_array_final[7].length!==0, 'bg-green text-white': report.w_array_final[7].length===0}">8</td>
                 <td colspan="2" ng-class="{'bg-info text-white': report.w_array_final[7].length!==0, 'bg-green text-white': report.w_array_final[7].length===0}">
-                    <span class="font-w600">CONFUSING AND/OR NOT CLEARLY PRESENTED &nbsp;<i class="fa fa-info-circle font-s13" data-uib-tooltip="When information is presented in a way that may hinder users’ understanding, that requires further clarification, or is expected, but not present." data-tooltip-placement="top"></i></span>
+                    <span class="font-w600">CONFUSING AND/OR NOT CLEARLY PRESENTED &nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="When information is presented in a way that may hinder users’ understanding, that requires further clarification, or is expected, but not present." data-tooltip-placement="top"></i></span>
 
                     <span class="pull-right">
                         <span ng-if="report.w_array_final[7].length!==0" class="badge badge-primary pull-right">{{report.w_array_final[7].length}}</span>
@@ -1534,7 +1534,7 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': report.w_array_final[8].length!==0, 'bg-green text-white': report.w_array_final[8].length===0}">9</td>
                 <td colspan="2" ng-class="{'bg-info text-white': report.w_array_final[8].length!==0, 'bg-green text-white': report.w_array_final[8].length===0}">
-                    <span class="font-w600">OTHERS &nbsp;<i class="fa fa-info-circle font-s13" data-uib-tooltip="Miscellaneous category for issues that don’t fall into other categories." data-tooltip-placement="top"></i></span>
+                    <span class="font-w600">OTHERS &nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="Miscellaneous category for issues that don’t fall into other categories." data-tooltip-placement="top"></i></span>
 
                     <span class="pull-right">
                         <span ng-if="report.w_array_final[8].length!==0" class="badge badge-primary pull-right">{{report.w_array_final[8].length}}</span>

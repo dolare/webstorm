@@ -1365,6 +1365,11 @@ ul.help-ul>li {
 }
 
 
+.btn-white:hover>a.text-primary.fa.fa-cloud-download, .btn-white:hover>a.text-orange.fa.fa-share-alt  {
+  opacity: 0.75;
+}
+
+
 .service-badge {
   border-radius: 5px;
   z-index: auto; 
@@ -1621,4 +1626,8 @@ ul.help-ul>li {
 
 #subuserform input, #subuserform select {
   cursor: inherit;;
+}
+
+.whoops-info {
+  cursor: pointer;
 }

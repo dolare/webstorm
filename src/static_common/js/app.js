@@ -85,6 +85,55 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
 
+
+  state('admin-reader', {
+    url: '/admin-reader/:type/:university/:school/:program/:degree/:client_id/:object_id',
+ 
+    templateUrl: '/static/views/Admin/Reader.html',
+    controller: 'AdminReaderController',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo && userInfo.admin === "True") {
+
+          //console.log("start logout");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+
+        } else {
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsAdminQuote: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                                '/static/js/controllers/admin-reader.js',
+   
+                            ]
+                        });
+                    }], 
+
+
+
+
+    }
+
+
+  }).
+
+
+
+
   state('updates', {
     url: '/updates',
     parent: 'success_demo',

@@ -557,22 +557,25 @@
                                                             <button class="btn btn-success" ng-click="add_in(additional_program)" type="button" data-js-blur><i class="fa fa-plus"></i> Add a program</button>
                                                         </div>
                                                         <br> 
+
                                                         <table st-table="displayeddata1" st-safe-src="selected_customprogram" class="table table-bordered table-hover block" style="table-layout: fixed;" class="formtable" data-js-table-sections-edit>
                                                             <colgroup>
                                                                 <col width="6%" />
-                                                                <col width="35%" />
+                                                                <col width="30%" />
                                                                 <col width="9%" />
                                                                 <col width="11%" />
                                                                 <col width="11%" />
                                                                 <col width="11%" />
                                                                 <col ng-if="pwhide" width="11%" />
+                                                                <col ng-if="pwhide" width="5%" />
                                                                 <col ng-if="pwhide" width="11%" />
+                                                                <col ng-if="pwhide" width="5%" />
                                                                 <col ng-if="pwhide" width="5%" />
                                                                 <col ng-if="!pwhide" width="100px" />
                                                             </colgroup>
                                                             <thead>
                                                                 <tr ng-show="pwhide">
-                                                                    <th colspan="9">
+                                                                    <th colspan="11">
                                                                         <input st-search="" class="form-control" placeholder="global search ..." type="text" />
                                                                     </th>
                                                                 </tr>
@@ -589,7 +592,9 @@
                                                                     <th st-sort="" class="text-center">2nd Review</th>
                                                                     <th st-sort="" class="text-center">Status</th>
                                                                     <th st-sort="" class="text-center" ng-show="pwhide">Whoops</th>
+                                                                    <th st-sort="" class="text-center" ng-show="pwhide"></th>
                                                                     <th st-sort="" class="text-center" ng-show="pwhide">Enhancement</th>
+                                                                    <th st-sort="" class="text-center" ng-show="pwhide"></th>
                                                                     <th class="text-right"></th>
                                                                 </tr>
                                                             </thead>
@@ -629,6 +634,15 @@
                                                                         </div>
                                                                     </td>
 
+                                                                    <!-- view whoops -->
+                                                                    <td class="text-center" ng-show="pwhide">
+                                                                        <a data-ui-sref="admin-reader({type: 'whoops', client_id: pwhide, object_id: row.customer_program_id, university: row.university, school: row.school, program: row.program_name, degree: row.program_degree})" target="_blank" type="button" class="btn btn-sm btn-info" data-uib-tooltip="View Whoops Report" data-tooltip-placement="top">
+                                                                            <i class="fa fa-file-text-o">
+                                                                                    </i>
+                                                                        </a>
+                                                                        
+                                                                    </td>
+
                                                                     <!-- enhancement release -->
                                                                     <td class="text-center" ng-show="pwhide">
                                                                         <div id="tab" class="btn-group" data-toggle="buttons-radio">
@@ -636,6 +650,15 @@
                                                                             <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='True';put_customer_program($index)" ng-class="{'active' : row.enhancement_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
                                                                         </div>
                                                                     </td>
+
+                                                                    <!-- view enhancement -->
+                                                                    <td class="text-center" ng-show="pwhide">
+                                                                        <a data-ui-sref="admin-reader({type: 'enhancement', client_id: pwhide, object_id: row.customer_program_id, university: row.university, school: row.school, program: row.program_name, degree: row.program_degree})" target="_blank" type="button" class="btn btn-sm btn-info" data-uib-tooltip="View Enhancement Report" data-tooltip-placement="top">
+                                                                            <i class="fa fa-file-text-o">
+                                                                                    </i>
+                                                                        </a>
+                                                                    </td>
+
                                                                     <td class="text-center">
                                                                         <button type="button" ng-click="removeItem($index)" class="btn btn-sm btn-danger" data-uib-tooltip="Delete" data-tooltip-placement="top">
                                                                             <i class="fa fa-trash-o">
@@ -701,7 +724,7 @@
                                                                             </button>
                                                                         </div>
                                                                     </td>
-                                                                    <td colspan="2" rowspan="{{row.competing_program.length}}" ng-show="$index===0&&pwhide" class="bg-gray-lighter text-center">
+                                                                    <td colspan="4" rowspan="{{row.competing_program.length}}" ng-show="$index===0&&pwhide" class="bg-gray-lighter text-center">
                                                                         <div id="tab" class="btn-group" data-toggle="buttons-radio">
                                                                             <a data-uib-tooltip="Unconfirmed" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.customerconfirmation_status='No';put_customer_program($parent.$index)" ng-class="{'active' : row.customerconfirmation_status==='No'}"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
                                                                             <a data-uib-tooltip="Confirmed" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.customerconfirmation_status='Yes';put_customer_program($parent.$index)" ng-class="{'active' : row.customerconfirmation_status==='Yes'}"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>

@@ -18,6 +18,26 @@ angular.module('myApp').controller('AdminMainController',
 
         console.log("CLient = = = " + JSON.stringify(Client))
 
+
+       
+        $http({
+              url: '/api/upgrid/wwr/dddf6392-eb45-43e0-b809-3998285b4920/82f0ee5c-17e2-4281-9855-ece7f79a605b/',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+        }).then(function (response) {
+
+           console.log("REPORT="+ JSON.stringify(response.data));
+           
+        }).
+         catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+         });
+
+
+
         //For stats
         $scope.active_num = 0;
         $scope.client_num = Client.length;
@@ -558,6 +578,8 @@ angular.module('myApp').controller('AdminMainController',
                         $scope.selected_customprogram.push({
                             "customer_program_id": $scope.customer_program[i].object_id,
                             "program_id": $scope.customer_program[i].program.object_id,
+                            "university": $scope.customer_program[i].program.program_display.split('--')[0].split('-')[0].split(':')[1],
+                            "school": $scope.customer_program[i].program.program_display.split('--')[0].split('-')[1],
                             "program_name": $scope.customer_program[i].program.program_display.split('--')[1],
                             "program_degree": $scope.customer_program[i].program.program_display.split('--')[2],
                             "assignment_status": $scope.customer_program[i].program.assignment_status,
