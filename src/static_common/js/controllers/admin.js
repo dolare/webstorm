@@ -19,24 +19,6 @@ angular.module('myApp').controller('AdminMainController',
         console.log("CLient = = = " + JSON.stringify(Client))
 
 
-       
-        $http({
-              url: '/api/upgrid/wwr/dddf6392-eb45-43e0-b809-3998285b4920/82f0ee5c-17e2-4281-9855-ece7f79a605b/',
-              method: 'GET',
-              headers: {
-                'Authorization': 'JWT ' + token
-              }
-        }).then(function (response) {
-
-           console.log("REPORT="+ JSON.stringify(response.data));
-           
-        }).
-         catch(function(error){
-            console.log('an error occurred...'+JSON.stringify(error));
-
-         });
-
-
 
         //For stats
         $scope.active_num = 0;
