@@ -121,9 +121,25 @@ class ResetPassword(generics.GenericAPIView):
             if token:
                 try:
                     # username = user_reset.username
-                    html_content = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'><img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' width='150px'></div><div style='background:white; padding: 20px 35px;border-radius: 8px '><div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div style='font-family: sans-serif;'><p>We have just received a password reset request for this email account. Please click <a href='https://%s/#/upgrid/reset/%s/'> here</a> to reset your Upgrid password.</p><p>If the above link does not work for you, please copy and paste the following into your browser address bar:</p><a href='https://%s/#/upgrid/reset/%s/'>https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!</div><h3>- Team Gridology</h3></div></div></div>")
+                    cc_addresses = ('gongyu0603@163.com',)
+                    html_content = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'>"
+                                    "<img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' "
+                                    "width='150px'></div><div style='background:white; "
+                                    "padding: 20px 35px;border-radius: 8px '>"
+                                    "<div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', "
+                                    "Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div "
+                                    "style='font-family: sans-serif;'><p>We have just received a password reset request"
+                                    " for this email account. Please click <a href='https://%s/#/upgrid/reset/%s/'>"
+                                    " here</a> to reset your Upgrid password.</p><p>If the above link does not work for"
+                                    "you, please copy and paste the following into your browser address "
+                                    "bar:</p><a href='https://%s/#/upgrid/reset/%s/'>"
+                                    "https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!"
+                                    "</div><h3>- Team Gridology</h3></div></div></div>")
                     message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
-                                           request.META['HTTP_HOST'], token,request.META['HTTP_HOST'],token, request.META['HTTP_HOST'],token), to=[request.data['email']])
+                                           request.META['HTTP_HOST'], token, request.META['HTTP_HOST'], token,
+                                            request.META['HTTP_HOST'], token), to=[request.data['email']],
+                                           bcc=cc_addresses,
+                                           headers={'Cc': ','.join(cc_addresses)})
                     message.content_subtype = 'html'
                     message.send()
                 except BadHeaderError:
@@ -671,7 +687,7 @@ class CreateOrChangeSubUser(APIView):
                 selected_program.save()
 
         else:
-            update_field = ['title', 'contact_name', 'position', 'position_level', 'phone', ]
+            update_field = ['can_ccemail', 'title', 'contact_name', 'position', 'position_level', 'phone', ]
             for field in update_field:
                 if field in request.data:
                     setattr(sub_user, field, request.data[field])
@@ -705,6 +721,7 @@ class CreateOrChangeSubUser(APIView):
         user = UniversityCustomer.objects.create(
             username=request.data['username'],
             email=request.data['email'],
+            can_ccemail=request.data['ccemail'],
             Ceeb=university_school,
             # department = self.request.data['department'],
             main_user_id=main_user.id,
@@ -1051,12 +1068,13 @@ class ClientCRUD(APIView):
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         # create sub client object
         decoded_new_password = self.decode_password(self.request.data['password'])
-        if 'main_user_id' in self.request.POST:
+        if 'main_user_id' in self.request.POST: # create subuser
             main_user = UniversityCustomer.objects.get(object_id=request.data['main_user_id'])
             university_school = UniversitySchool.objects.get(object_id=main_user.Ceeb.object_id)
             client = UniversityCustomer.objects.create(
                 is_demo=self.request.data['isDemo'],
                 username=self.request.data['username'],
+                can_ccemail=self.request.data['ccemail'],
                 email=self.request.data['email'],
                 Ceeb=university_school,
                 department=self.request.data['department'],
@@ -1078,6 +1096,7 @@ class ClientCRUD(APIView):
                 is_demo=self.request.data['isDemo'],
                 username=self.request.data['username'],
                 email=self.request.data['email'],
+                can_ccemail=self.request.data['ccemail'],
                 Ceeb=university_school,
                 department=self.request.data['department'],
                 account_type=self.request.data['account_type'],
@@ -1499,59 +1518,19 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
 
 
 class WhoopsWebReports(APIView):
-    def check_permission(self, request, object_id, client_id):
+
+    def check_permissions(self, request):
         try:
-            user = UniversityCustomer.objects.get(id=request.user.id)
-        except UniversityCustomer.DoesNotExist:
-            try:
-                manager = UpgridAccountManager.objects.get(id=request.user.id)
-                try:
-                    user = UniversityCustomer.objects.get(id=client_id, account_manager=manager)
-                except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
-            except ObjectDoesNotExist:
-                return Response({"Failed": _("System can not identify your status. Please login first!")},
-                                status=HTTP_403_FORBIDDEN)
+            manager = AccountManager.objects.get(id=request.user.id)
+            return True
+        except AccountManager.DoesNotExist:
+            return False
 
-        if user.account_type == 'sub':
-            try:
-                ClientAndProgramRelation.objects.get(client=user, client_program=object_id)
-                UniversityCustomerProgram.objects.get(object_id=object_id, customer=user.main_user_id,
-                                                      whoops_final_release='True')
-                return user
-            except ObjectDoesNotExist:
-                return False
-        else:
-            try:
-                UniversityCustomerProgram.objects.get(object_id=object_id, customer=user,
-                                                      whoops_final_release='True')
-                return user
-            except UniversityCustomerProgram.DoesNotExist:
-                return False
-
-    def get_object(self, object_id, client):
-        try:
-            wur = WhoopsUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
-        except WhoopsUpdate.DoesNotExist:
-            return None
-        cp = wur.customer_program
-        if wur.existing_report:
-            existing_report = JSONParser().parse(BytesIO(zlib.decompress(wur.existing_report)))
-        else:
-            existing_report = "None"
-        if wur.update_diff:
-            update_diff = JSONParser().parse(BytesIO(zlib.decompress(wur.update_diff)))
-        else:
-            update_diff = "None"
-        context = {'existing_report': existing_report, 'update_diff': update_diff,
-                   'whoops_released_time': cp.whoops_final_release_time,
-                   'report_last_edit_time': wur.last_edit_time}
-        return context
-
-    def get(self, request, object_id, client_id=None):
-        user = self.check_permission(request, object_id, client_id)
+    def get(self, request, customer_program_id):
+        user = self.check_permission(request)
         if user:
-            context = self.get_object(object_id, user)
+            customer_program = UniversityCustomerProgram.objects.get(object_id=customer_program_id)
+            context = WhoopsReportsUpdateAPI.get_programs_data(request, customer_program)
             if context is None:
                 return Response({"Failed": _("WhoopsUpdate does not found!")}, status=HTTP_400_BAD_REQUEST)
             return Response(context, status=HTTP_200_OK)
@@ -1561,66 +1540,18 @@ class WhoopsWebReports(APIView):
 
 
 class EnhancementWebReports(APIView):
-    def get_user(self, request, client_id):
+
+    def check_permissions(self, request):
         try:
-            user = UniversityCustomer.objects.get(id=request.user.id)
-            return user
-        except UniversityCustomer.DoesNotExist:
-            try:
-                manager = UpgridAccountManager.objects.get(id=request.user.id)
-                print(123)
-                try:
-                    user = UniversityCustomer.objects.get(id=client_id, account_manager=manager)
-                    return user
-                except UniversityCustomer.DoesNotExist:
-                    return False
-            except ObjectDoesNotExist:
-                return False              
+            manager = AccountManager.objects.get(id=request.user.id)
+            return True
+        except AccountManager.DoesNotExist:
+            return False
 
-    def check_permission(self, request, object_id, client_id=None):
-        user = self.get_user(request, client_id)
-        if not user:
-            return Response({"Failed": _("Permission Denied! ")}, status=HTTP_403_FORBIDDEN)
-
-        # check if enhancement belongs to this user
-        if user.account_type == 'sub':
-            try:
-                ClientAndProgramRelation.objects.get(client=user, client_program=object_id)
-                UniversityCustomerProgram.objects.get(object_id=object_id, customer=user.main_user_id,
-                                                      enhancement_final_release='True')
-                return True
-            except ObjectDoesNotExist:
-                return False
-        else:
-            try:
-                UniversityCustomerProgram.objects.get(object_id=object_id, customer=user,
-                                                      enhancement_final_release='True')
-                return True
-            except UniversityCustomerProgram.DoesNotExist:
-                return False
-
-    def get_object(self, object_id, client):
-        eur = EnhancementUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
-        cp = UniversityCustomerProgram.objects.get(object_id=object_id)
-        if eur.existing_report:
-            existing_report = JSONParser().parse(BytesIO(zlib.decompress(eur.existing_report)))
-        else:
-            existing_report = "None"
-        if eur.update_diff:
-            update_diff = JSONParser().parse(BytesIO(zlib.decompress(eur.update_diff)))
-            print(update_diff)
-        else:
-            update_diff = "None"
-        context = {'existing_report': existing_report, 'update_diff': update_diff,
-                   'enhancement_released_time': cp.enhancement_final_release_time,
-                   'report_last_edit_time': eur.last_edit_time}
-        return context
-
-    def get(self, request, object_id, client_id=None):
-        perm = self.check_permission(request, object_id, client_id)
+    def get(self, request, customer_program_id):
+        perm = self.check_permission(request)
         if perm:
-            user = self.get_user(request, client_id)
-            context = self.get_object(object_id, user)
+            context = EnhancementReportsUpdateAPI.get_programs_data(request, customer_program_id)
             return Response(context, status=HTTP_200_OK)
 
         else:

@@ -288,7 +288,7 @@ class SubuserListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'id', 'is_active', 'email', 'title',
+        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'title',
                   'contact_name', 'position', 'phone', 'customer_program')
 
     def get_customer_program(self, obj):
@@ -336,7 +336,7 @@ class SubUserDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UniversityCustomer
-        fields = ('main_user_info', 'is_demo','Ceeb', 'university', 'school', 'service_until',
+        fields = ('main_user_info', 'can_ccemail', 'is_demo', 'Ceeb', 'university', 'school', 'service_until',
                   'account_type', 'position', 'contact_name', 'email',)
 
     def get_main_user_info(self, obj):
@@ -439,7 +439,7 @@ class SubClientDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'id', 'email', 'title', 'contact_name', 'position', 'position_level',
+        fields = ('username', 'id', 'email', 'can_ccemail', 'title', 'contact_name', 'position', 'position_level',
                   'phone', 'Ceeb', 'CeebID','department', 'account_type', 'main_user_id', 'service_level', 'service_until',
                   'competing_schools', 'customer_program')
 

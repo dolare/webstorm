@@ -115,10 +115,11 @@ urlpatterns=[
     # Get program list for account manager to choice to create client's customer program. Based on Ceeb and department
     url(r'api/upgrid/accountmanager/dropdown_menu/programs/$', apis.CustomerAndCompetingProgramAPI.as_view()),
 
-    url(r'api/upgrid/wwr/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.WhoopsWebReports.as_view()),
-    url(r'api/upgrid/wwr/(?P<object_id>[0-9a-fA-F\-]+)/(?P<client_id>[0-9a-fA-F\-]+)/$', apis.WhoopsWebReports.as_view()),
-    url(r'api/upgrid/ewr/(?P<object_id>[0-9a-fA-F\-]+)/$', apis.EnhancementWebReports.as_view()),
-    url(r'api/upgrid/ewr/(?P<object_id>[0-9a-fA-F\-]+)/(?P<client_id>[0-9a-fA-F\-]+)/$', apis.EnhancementWebReports.as_view()),
+    #  For account manager preview reports before the reports are released.
+    url(r'api/upgrid/wwr/(?P<object_id>[0-9a-fA-F\-]+)/(?P<customer_program_id>[0-9a-fA-F\-]+)/$',
+        apis.WhoopsWebReports.as_view()),
+    url(r'api/upgrid/ewr/(?P<object_id>[0-9a-fA-F\-]+)/(?P<customer_program_id>[0-9a-fA-F\-]+)/$',
+        apis.EnhancementWebReports.as_view()),
 
     # --------------------------------Update API-----------------------------------------------
     # PUT. used for account manager on-demand compare customer enhancementprogram.
