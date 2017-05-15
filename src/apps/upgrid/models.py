@@ -138,6 +138,7 @@ class UniversityCustomer(UpgridBaseUser):
 
     objects = UserManager()
     is_demo = models.BooleanField(default=False)
+    can_ccemail = models.BooleanField(default=False)
     Ceeb = models.ForeignKey(UniversitySchool, to_field='ceeb', on_delete=models.SET_NULL,
                              db_constraint=False, null=True)
     department = models.CharField(max_length=255, null=True, blank=True)

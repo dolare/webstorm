@@ -104,20 +104,20 @@ class TuitionSerializer(serializers.ModelSerializer):
 class DeadlineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Deadline
-        fields = ('deadline_fall_early_month','deadline_fall_early_day',
-                  'get_deadline_fall_early_month_display','get_deadline_fall_early_day_display',
-                  'deadline_fall_late_month','deadline_fall_late_day',
-                  'get_deadline_fall_late_month_display','get_deadline_fall_late_day_display',
-                  'deadline_spring_early_month','deadline_spring_early_day',
-                  'get_deadline_spring_early_month_display','get_deadline_spring_early_day_display',
-                  'deadline_spring_late_month','deadline_spring_late_day',
+        fields = ('deadline_fall_early_month', 'deadline_fall_early_day',
+                  'get_deadline_fall_early_month_display', 'get_deadline_fall_early_day_display',
+                  'deadline_fall_late_month', 'deadline_fall_late_day',
+                  'get_deadline_fall_late_month_display', 'get_deadline_fall_late_day_display',
+                  'deadline_spring_early_month', 'deadline_spring_early_day',
+                  'get_deadline_spring_early_month_display', 'get_deadline_spring_early_day_display',
+                  'deadline_spring_late_month', 'deadline_spring_late_day',
                   'get_deadline_spring_late_month_display','get_deadline_spring_late_day_display',
-                  'deadline_summer_early_month','deadline_summer_early_day',
-                  'get_deadline_summer_early_month_display','get_deadline_summer_early_day_display',
-                  'deadline_summer_late_month','deadline_summer_late_day',
-                  'get_deadline_summer_late_month_display','get_deadline_summer_late_day_display',
+                  'deadline_summer_early_month', 'deadline_summer_early_day',
+                  'get_deadline_summer_early_month_display', 'get_deadline_summer_early_day_display',
+                  'deadline_summer_late_month', 'deadline_summer_late_day',
+                  'get_deadline_summer_late_month_display', 'get_deadline_summer_late_day_display',
                   'deadline_rolling', 'deadline_url',
-                  'scholarship_deadline_month','scholarship_deadline_day','international_deadline_month',
+                  'scholarship_deadline_month', 'scholarship_deadline_day', 'international_deadline_month',
                   'international_deadline_day')
 
 
