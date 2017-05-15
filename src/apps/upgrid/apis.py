@@ -721,7 +721,7 @@ class CreateOrChangeSubUser(APIView):
         user = UniversityCustomer.objects.create(
             username=request.data['username'],
             email=request.data['email'],
-            can_ccemail=request.data['ccemail'],
+            can_ccemail=request.data['can_ccemail'],
             Ceeb=university_school,
             # department = self.request.data['department'],
             main_user_id=main_user.id,
@@ -1096,7 +1096,6 @@ class ClientCRUD(APIView):
                 is_demo=self.request.data['isDemo'],
                 username=self.request.data['username'],
                 email=self.request.data['email'],
-                can_ccemail=self.request.data['ccemail'],
                 Ceeb=university_school,
                 department=self.request.data['department'],
                 account_type=self.request.data['account_type'],

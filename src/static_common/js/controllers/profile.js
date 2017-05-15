@@ -261,7 +261,7 @@ controller('ProfileController',
       $scope.newpw2 = "";
     }
 
-    $scope.subuser = {};
+    
     $scope.prefix = ["Master", "Mr", "Miss", "Ms", "Mrs", "Mx", "Dr"];
 
     //init subuser form
@@ -269,6 +269,10 @@ controller('ProfileController',
       // $scope.subuser.password1 = null;
       // $scope.subuser.password2 = null;
       
+
+      $scope.subuser = {};
+      $scope.subuser.autocc = true;
+
       if($scope.subusers.length < 10) {
         jQuery('#myModalSubuser').modal('toggle');
       } else {
@@ -293,7 +297,7 @@ controller('ProfileController',
 
       console.log($filter('date')(new Date(), 'yyyyMMddhhmmssa'));
 
-      $scope.subuser = null;
+      
       //$scope.set_permission = null;
       $scope.set_permission = {};
       console.log("clean adding subuser modal")
@@ -334,6 +338,8 @@ controller('ProfileController',
 
     $scope.createsubuser = function() {
       console.log("subuser is " + JSON.stringify($scope.subuser));
+
+
       if ($scope.subuser) {
         if (patt.test($scope.subuser.email) && $scope.subuser.email && $scope.subuser.password1 && $scope.subuser.password2 && $scope.subuser.name && $scope.subuser.title) {
 
@@ -371,6 +377,7 @@ controller('ProfileController',
                 "position": $scope.subuser.title,
                 "position_level": $scope.data.contractLevel,
                 "phone": ($scope.subuser.tel === undefined) ? "" : $scope.subuser.tel,
+                "can_ccemail": $scope.subuser.autocc,
                 "customer_programs": object_ids.slice(0,-1),
                 "main_user_id": client_id
                
@@ -451,7 +458,7 @@ controller('ProfileController',
       apiService.getSubuser(token, client_id, id).then(function (result) {
           
           $scope.subuser_raw = result;
-
+          console.log("subuser_raw = "+JSON.stringify($scope.subuser_raw));
           App.blocks('#load_subuser', 'state_normal');
 
           $scope.title_readonly = true;
@@ -463,6 +470,8 @@ controller('ProfileController',
           $scope.subuser_contact_name_old = $scope.subuser_raw[0].contact_name
           $scope.subuser_position_old = $scope.subuser_raw[0].position
           $scope.subuser_phone_old = $scope.subuser_raw[0].phone
+          $scope.subuser_ccemail_old = $scope.subuser_raw[0].can_ccemail
+
 
           $scope.subuser_programs = {};
           for(var i=0; i<$scope.subuser_raw[0].customer_program.length; i++){
@@ -499,7 +508,8 @@ controller('ProfileController',
           'title': $scope.subuser_raw[0].title, 
           'contact_name': $scope.subuser_raw[0].contact_name,
           'position': $scope.subuser_raw[0].position,
-          'phone': $scope.subuser_raw[0].phone        
+          'phone': $scope.subuser_raw[0].phone,  
+          'can_ccemail': $scope.subuser_raw[0].can_ccemail    
           
         },
         headers: {

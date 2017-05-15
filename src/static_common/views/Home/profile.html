@@ -297,6 +297,21 @@
                                 <input ng-model="subuser.tel" class="form-control" type="text" id="val-phone" name="val-phone" placeholder="e.g. 200-111-2222">
                             </div>
                         </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-ccemail">Auto CC reports? <i class="fa fa-question-circle" data-tooltip-trigger="'click'" data-uib-tooltip="Forward main-user report notification to this colleague upon report generation?" data-tooltip-placement="top"></i></label>
+                            <div class="col-md-7">
+                                <label class="css-input switch switch-sm switch-primary">
+                                    <input ng-model="subuser.autocc" type="checkbox" id="val-ccemail" name="val-ccemail"><span></span>
+                                </label>
+                            </div>
+                        </div>
+
+
+
+                        
+
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="val-phone">Program access<span class="text-danger">*</span></label>
                             <div class="col-md-7 frame" style="max-height: 140px">
@@ -382,6 +397,18 @@
                             </div>
                             <div class="col-md-1 edit-pencil"><i class="fa fa-pencil" ng-click="subuser_phone_old === subuser_raw[0].phone ? phone_readonly = !phone_readonly : phone_readonly = phone_readonly" ng-class="!phone_readonly ? 'text-primary' : ''"></i></div>
                         </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="val-ccemail-edit">Auto CC reports? <i class="fa fa-question-circle" data-tooltip-trigger="'click'" data-uib-tooltip="Forward main-user report notification to this colleague upon report generation?" data-tooltip-placement="top"></i></label>
+                            <div class="col-md-7">
+                                <label class="css-input switch switch-sm switch-primary">
+                                    <input ng-model="subuser_raw[0].can_ccemail" type="checkbox" id="val-ccemail-edit" name="val-ccemail-edit"><span></span>
+                                </label>
+                            </div>
+                        </div>
+
+
                         <div class="form-group" style="margin-bottom: 0">
                             <label class="col-md-4 control-label" for="val-phone">Program access</label>
                             <div class="col-md-7 frame" style="max-height: 140px">
@@ -417,7 +444,8 @@
                                           && subuser_contact_name_old === subuser_raw[0].contact_name
                                             && subuser_position_old === subuser_raw[0].position
                                               && subuser_phone_old === subuser_raw[0].phone
-                                                && angular.equals(subuser_programs,subuser_programs_old)">
+                                                && subuser_ccemail_old === subuser_raw[0].can_ccemail
+                                                    && angular.equals(subuser_programs,subuser_programs_old)">
                         <i class="fa fa-check"></i> Update</button>
                 </div>
             </div>
