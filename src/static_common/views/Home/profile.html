@@ -55,7 +55,7 @@
                 <hr style="margin-left:15px;" ng-if="data.accountType ==='main'">
                 
                 <div class="row push-10-t" style="padding-left:15px" ng-show="data.accountType ==='main'">
-                    <div class="col-sm-6 col-md-4 col-lg-4 push-10-t" ng-repeat="row in subusers" style="padding:0 20px">
+                    <div class="col-sm-6 col-md-4 col-lg-4 push-10-t" ng-repeat="row in subusers | orderBy:'contact_name'" style="padding:0 20px">
                         <!-- Contact -->
                         <div class="block block-rounded" style="border:1px solid #eee;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);">
                             <div class="block-header">
@@ -359,7 +359,7 @@
                     <h3 class="block-title"><i class="fa fa-user-circle push-5-r"></i> User Details</h3>
                 </div>
                 <div class="block-content">
-                    <form class="js-validation-bootstrap form-horizontal" id="subuserform">
+                    <form class="js-validation-bootstrap-edit form-horizontal" id="subuserform_edit">
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="val-email-edit">Email</label>
                             <div class="col-md-7">
@@ -432,13 +432,28 @@
                                 <button class="btn btn-block btn-primary" type="submit"><i class="fa fa-check"></i> Submit</button>
                             </div>
                         </div>
- -->
+ -->                 <div class="form-group">
+                            <div class="col-md-7 col-md-offset-4">
+                                <button ng-click="update_subuser()" class="btn btn-block btn-primary" type="submit" ng-disabled="subuser_title_old === subuser_raw[0].title 
+                                          && subuser_contact_name_old === subuser_raw[0].contact_name
+                                            && subuser_position_old === subuser_raw[0].position
+                                              && subuser_phone_old === subuser_raw[0].phone
+                                                && subuser_ccemail_old === subuser_raw[0].can_ccemail
+                                                    && angular.equals(subuser_programs,subuser_programs_old)">
+                        <i class="fa fa-check"></i> Update</button>
+                            </div>
+                        </div>
 
                     </form>
+
+
+
+
+
                 </div>
             </div>
-            <div class="modal-footer">
-                <!-- <button data-dismiss="modal" class="btn btn-sm btn-primary" type="submit"><i class="fa fa-check"></i> OK</button> -->
+            <!-- <div class="modal-footer">
+               
                 <div class="col-md-7 col-md-offset-4">
                     <button data-dismiss="modal" ng-click="update_subuser()" class="btn btn-block btn-primary" type="submit" ng-disabled="subuser_title_old === subuser_raw[0].title 
                                           && subuser_contact_name_old === subuser_raw[0].contact_name
@@ -448,7 +463,7 @@
                                                     && angular.equals(subuser_programs,subuser_programs_old)">
                         <i class="fa fa-check"></i> Update</button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

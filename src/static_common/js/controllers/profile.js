@@ -244,6 +244,58 @@ controller('ProfileController',
     //end subuser form validation
 
 
+
+
+
+    //subuser form validation
+    var validator_edit = jQuery('.js-validation-bootstrap-edit').validate({
+      ignore: [],
+      errorClass: 'help-block animated fadeInDown',
+      errorElement: 'div',
+      errorPlacement: function(error, e) {
+        jQuery(e).parents('.form-group > div').append(error);
+      },
+      highlight: function(e) {
+        var elem = jQuery(e);
+
+        elem.closest('.form-group').removeClass('has-error').addClass('has-error');
+        elem.closest('.help-block').remove();
+      },
+      success: function(e) {
+        var elem = jQuery(e);
+
+        elem.closest('.form-group').removeClass('has-error');
+        elem.closest('.help-block').remove();
+      },
+      rules: {
+        'val-username-edit': {
+          required: true,
+        },
+      
+        
+        'val-title-edit': {
+          required: true,
+        },
+       
+        
+      },
+      messages: {
+        'val-username-edit': {
+          required: 'Please provide a name',
+        },
+
+        'val-title-edit': {
+          required: 'Please provide a position title',
+        },
+
+     
+
+      }
+    });
+
+    //end subuser form validation
+
+
     //service until settings
 
     $scope.set_permission = {};
@@ -303,8 +355,8 @@ controller('ProfileController',
       console.log("clean adding subuser modal")
 
       angular.element(document.getElementById("subuserform").getElementsByClassName("form-group")).removeClass('has-error');
-      angular.element(document.getElementById("subuserform").getElementsByClassName("help-block")).remove();
-
+      // angular.element(document.getElementById("subuserform").getElementsByClassName("help-block")).remove();
+      validator.resetForm();
       // elem.closest('.form-group').removeClass('has-error');
       //          elem.closest('.help-block').remove();
 
@@ -452,7 +504,9 @@ controller('ProfileController',
     $scope.viewsubuser = function(id) {
 
       App.blocks('#load_subuser', 'state_loading');
-        
+      
+      validator_edit.resetForm();
+      angular.element(document.getElementById("subuserform_edit").getElementsByClassName("form-group")).removeClass('has-error');
       console.log("ID+++"+id)
 
       apiService.getSubuser(token, client_id, id).then(function (result) {
@@ -494,6 +548,11 @@ controller('ProfileController',
 
       console.log("$scope.subuser_programs"+JSON.stringify($scope.subuser_programs))
 
+      if ($scope.subuser_raw[0].contact_name && $scope.subuser_raw[0].position) {
+
+
+        jQuery('#myModalSubuserView').modal('toggle');
+        
       var sub_program_addition = [];
       var sub_program_removal = [];
 
@@ -628,7 +687,7 @@ controller('ProfileController',
 
 
       
-
+    }
 
     } 
 
