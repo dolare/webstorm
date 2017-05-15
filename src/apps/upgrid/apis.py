@@ -2177,7 +2177,15 @@ class EnhancementReportsUpdateAPI(APIView):
                             new_diff[k] = {}
                             old_diff[k] = {}
 
+                            print(v_of_b)
+                            print('111111111111111111111111111111111111111111111111111111111111111111111111111111111111')
+                            print(v)
+                           
                             for k2, v2 in v.items():
+                                # print('start');
+                                # print(v2)
+                                # print(v_of_b[k2])
+                                # print('end')
                                 if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
                                     if v2 == '' and v_of_b[k2] is None:
                                         continue
