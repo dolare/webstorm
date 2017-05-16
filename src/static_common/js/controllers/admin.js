@@ -19,7 +19,6 @@ angular.module('myApp').controller('AdminMainController',
         console.log("CLient = = = " + JSON.stringify(Client))
 
 
-
         //For stats
         $scope.active_num = 0;
         $scope.client_num = Client.length;
@@ -180,6 +179,23 @@ angular.module('myApp').controller('AdminMainController',
 
         };
 
+        //get ceebs
+        $http({
+          url: '/api/upgrid/accountmanager/ceebs/',
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+        }).then(function (response) {
+
+           $scope.get_ceebs = response.data;
+           console.log("ceebs got")
+        }).
+         catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+         });
+
 
         $scope.deactivate = function(id, index, subindex) {
 
@@ -202,16 +218,6 @@ angular.module('myApp').controller('AdminMainController',
 
                 console.log("deleted!" + JSON.stringify(response));
 
-                // for (var i = 0; i < $scope.client_data.length; i++) {
-                //     if ($scope.client_data[i].id === id) {
-                //         console.log("found deactivated user");
-                //         console.log("deactivated user status before=" + JSON.stringify($scope.client_data[i].is_active))
-                //         $scope.client_data[i].is_active = false;
-                //         console.log("deactivated user status after=" + JSON.stringify($scope.client_data[i].is_active))
-                //         console.log("deactivated user = " + JSON.stringify($scope.client_data));
-                //         break;
-                //     }
-                // }
 
                 if(subindex){
                     $scope.client_data[index].subuser[subindex].is_active = false;
@@ -361,21 +367,7 @@ angular.module('myApp').controller('AdminMainController',
             $scope.dep_pro_table = null;
             $scope.account_type = "main";
 
-            //tab 2
-            ///load for ceeb and competing schools
-            $http({
-                url: '/api/upgrid/accountmanager/ceebs/',
-                method: 'GET',
-                headers: {
-                    'Authorization': 'JWT ' + token
-                }
-            }).then(function(response) {
-
-                $scope.details = response.data;
-
-                console.log("all_ceebs" + JSON.stringify(response.data));
-                $scope.get_ceebs = response.data;
-
+            
                 $scope.listbox = $('#competingschools').bootstrapDualListbox({
                     nonSelectedListLabel: 'Available competing schools',
                     selectedListLabel: 'Chosen competing schools',
@@ -385,10 +377,6 @@ angular.module('myApp').controller('AdminMainController',
                     selectorMinimalHeight: 200
 
                 });
-
-                //  $scope.listbox.find('option').remove();
-                // $scope.listbox.bootstrapDualListbox('refresh', true);
-
 
 
                 var competing_schools_options = "";
@@ -403,11 +391,7 @@ angular.module('myApp').controller('AdminMainController',
                 jQuery('.js-wizard-simple').bootstrapWizard('first');
                 App.blocks('#client_block', 'state_normal');
                 // jQuery('.js-wizard-simple').find("a[href*='simple-classic-progress-step1']").trigger('click');
-            }).
-            catch(function(error) {
-                console.log('an error occurred...' + JSON.stringify(error));
-
-            });
+           
 
         }
 
@@ -449,16 +433,7 @@ angular.module('myApp').controller('AdminMainController',
                 $scope.dep_pro_table = null;
 
                 //***************************get ceebs****************************
-                ///load for ceeb and competing schools
-                $http({
-                    url: '/api/upgrid/accountmanager/ceebs/',
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'JWT ' + token
-                    }
-                }).then(function(response) {
-                    console.log("all_ceebs" + JSON.stringify(response.data));
-                    $scope.get_ceebs = response.data;
+             
 
                     //init duallistbox
                     $scope.listbox = $('#competingschools').bootstrapDualListbox({
@@ -476,14 +451,14 @@ angular.module('myApp').controller('AdminMainController',
 
 
                     //**************************get user info******************************
-                    return $http({
+                 $http({
                         url: '/api/upgrid/accountmanager/client/' + Id,
                         method: 'GET',
                         headers: {
                             'Authorization': 'JWT ' + token
                         }
 
-                    })
+                  
                 }).then(function(response) {
                     console.log("client is = " + JSON.stringify(response));
 

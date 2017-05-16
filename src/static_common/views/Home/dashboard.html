@@ -156,9 +156,10 @@
                                 </div>
                                 
                                 <div class="block-content frame" style="max-height: 270px">
+
                                     <ul class="nav-users push" ng-repeat="row in subuser" ng-if="subuser.length>0">
                                         <li>
-                                            <a href="javascript:void(0)">
+                                            <a href="javascript:void(0)" class="show-name-ellipsis">
                                                 <img class="img-avatar" src="/static/img/avatar6.jpg" alt="">
                                                 <i class="fa fa-circle text-success"></i> {{row.contact_name}}
                                                 <div class="font-w400 text-muted"><small>{{row.position}}</small></div>
@@ -167,6 +168,7 @@
                                        
                                         
                                     </ul>
+
                                     <div class="alert alert-warning alert-dismissable" ng-if="subuser.length === 0">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                         <p><i class="fa fa-info-circle"></i> Colleague user can be added in the <a class="alert-link" href="javascript:void(0)" data-ui-sref="profile">"Profile" page</a></p>
@@ -233,7 +235,7 @@
 
                                                         
                                                         <div class="pull-right" style="padding:2px 8px" ng-show="released_report.type==='whoops'&&released_report.has_expert_notes===false">
-                                                        <i class="fa fa-check-circle fa-2x" style="color:green"></i>
+                                                        <i class="fa fa-check-circle fa-2x text-success"></i>
                                                         </div>
 
 

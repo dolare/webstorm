@@ -1631,3 +1631,10 @@ ul.help-ul>li {
 .whoops-info {
   cursor: pointer;
 }
+
+.show-name-ellipsis {
+    width: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

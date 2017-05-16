@@ -2,7 +2,7 @@
 
 var dashboard = angular.module('myApp')
 dashboard.controller('DashboardController',
-  function(updateService, avatarService, $sce, $timeout, $window, Dash, authenticationSvc, $http, List, $scope) {
+  function(apiService, updateService, avatarService, $sce, $timeout, $window, Dash, authenticationSvc, $http, List, SUB, $scope) {
     
     var token = authenticationSvc.getUserInfo().accessToken;
     var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
@@ -467,7 +467,7 @@ dashboard.controller('DashboardController',
    //show the name and position
    $scope.contact_name = List.profile.contact_name;
    $scope.position = List.profile.position;
-   $scope.subuser = List.profile.sub_user_list;
+   $scope.subuser = SUB;
 
    //dashboard headline number
    
