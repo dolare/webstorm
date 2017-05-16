@@ -413,7 +413,7 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
         model = UniversityCustomer
         fields = ('username', 'id', 'is_demo', 'email', 'title', 'contact_name', 'position', 'position_level',
                   'phone', 'Ceeb', 'CeebID', 'department', 'account_type', 'service_level', 'service_until',
-                  'competing_schools', 'customer_program')
+                  'competing_schools', 'customer_program', 'is_active')
 
     def get_Ceeb(self, obj):
         return '{0} - {1} - {2}'.format(obj.Ceeb.ceeb, obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
@@ -439,9 +439,9 @@ class SubClientDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'id', 'email', 'can_ccemail', 'title', 'contact_name', 'position', 'position_level',
-                  'phone', 'Ceeb', 'CeebID','department', 'account_type', 'main_user_id', 'service_level', 'service_until',
-                  'competing_schools', 'customer_program')
+        fields = ('username', 'id', 'email', 'can_ccemail', 'is_active', 'title', 'contact_name', 'position',
+                  'position_level', 'phone', 'Ceeb', 'CeebID', 'department', 'account_type', 'main_user_id',
+                  'service_level', 'service_until', 'competing_schools', 'customer_program')
 
     def get_Ceeb(self, obj):
         return '{0} - {1} - {2}'.format( obj.Ceeb.ceeb, obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
