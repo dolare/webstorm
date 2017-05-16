@@ -1024,7 +1024,6 @@ class AccountManager(APIView):
 class ClientCRUD(APIView):
     def check_manager_permission(self, request, object_id):
         try:
-            temp = UpgridAccountManager.objects.filter(id=request.user.id)
             manager = UpgridAccountManager.objects.get(id=request.user.id)
             client = UniversityCustomer.objects.select_related('account_manager').get(id=object_id)
             if manager.id == client.account_manager.id:
