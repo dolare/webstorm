@@ -550,6 +550,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                               '/static/js/services/ajaxService.js',
                               '/static/js/services/updateService.js',
                               '/static/js/third-party/clipboard.min.js',
+                              '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',

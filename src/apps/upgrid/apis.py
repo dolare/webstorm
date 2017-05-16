@@ -106,7 +106,7 @@ class ResetPassword(generics.GenericAPIView):
     def post(self, request):
         text = "Password Reset email has been send! If you do not receive reset email within the next 5 minutes,"
         "please check your email address if it has registered."
-
+        cc_addresses = ['swang@gradgrid.com']
         try:
             user_reset = UniversityCustomer.objects.get(email=request.data['email'])
         except UniversityCustomer.DoesNotExist:
@@ -121,7 +121,12 @@ class ResetPassword(generics.GenericAPIView):
             if token:
                 try:
                     # username = user_reset.username
-                    cc_addresses = ('gongyu0603@163.com',)
+                    if user_reset.account_type == 'sub' and user_reset.can_ccemail == True:
+                        main_user_query = UniversityCustomer.objects.filter(pk = user_reset.main_user_id);
+                        if main_user_query.exists():
+                            cc_addresses.append(main_user_query.first().email)
+
+                    cc_addresses_tuple = tuple(cc_addresses)
                     html_content = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'>"
                                     "<img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' "
                                     "width='150px'></div><div style='background:white; "
@@ -138,8 +143,7 @@ class ResetPassword(generics.GenericAPIView):
                     message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
                                            request.META['HTTP_HOST'], token, request.META['HTTP_HOST'], token,
                                             request.META['HTTP_HOST'], token), to=[request.data['email']],
-                                           bcc=cc_addresses,
-                                           headers={'Cc': ','.join(cc_addresses)})
+                                           bcc=cc_addresses_tuple)
                     message.content_subtype = 'html'
                     message.send()
                 except BadHeaderError:
