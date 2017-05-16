@@ -460,6 +460,15 @@ App.config(function($stateProvider, $urlRouterProvider) {
         return apiService.getDashboard(token);
 
       },
+
+
+      SUB: function(depsDashboard, apiService, authenticationSvc, avatarService) {
+        var token = authenticationSvc.getUserInfo().accessToken;
+        var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
+        console.log('*************');
+        return apiService.getSubuser(token, client_id);
+
+      },
       
     }
 

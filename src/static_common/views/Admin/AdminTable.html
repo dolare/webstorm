@@ -98,7 +98,11 @@
                     <tbody ng-repeat-start="row in displayeddata">
                     
                     <tr>
-                        <td><button ng-show="row.subuser.length !== 0" class="btn btn-info" ng-click="show_sub=!show_sub" type="button" style="position:relative;"><i ng-class="show_sub? 'fa fa-minus': 'fa fa-plus'"></i><span class="badge badge-danger pull-right programbadge" style="position: absolute;top:-8px;left:26px;background: #d9534f;color: white;">{{row.subuser.length}}</span></button></td>
+                        <td><button ng-show="row.subuser.length !== 0" class="btn btn-info" ng-click="show_sub=!show_sub" type="button" style="position:relative;"><i ng-class="show_sub? 'fa fa-minus': 'fa fa-plus'"></i><span class="badge badge-danger pull-right programbadge" style="position: absolute;top:-8px;left:26px;background: #d9534f;color: white;">{{row.subuser.length}}</span></button>
+
+                        <button ng-show="row.subuser.length === 0" class="btn btn-default" type="button" style="position:relative;" ng-disabled="true"><i ng-class="show_sub? 'fa fa-minus': 'fa fa-plus'"></i></button>
+
+                        </td>
                         <td class="text-center">
                             <img class="img-avatar img-avatar48" src="/static/img/avatar6.jpg" alt="">
                         </td>
