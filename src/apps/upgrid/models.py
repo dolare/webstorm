@@ -118,6 +118,7 @@ class UpgridBaseUser(models.Model):
 class UpgridAccountManager(UpgridBaseUser):
 
     mobile = models.CharField(max_length=20, null=True)
+    modify_user = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Account Manager'

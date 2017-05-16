@@ -687,8 +687,8 @@ class CreateOrChangeSubUser(APIView):
                 selected_program.save()
 
         else:
-            update_field = ['can_ccemail', 'title', 'contact_name', 'position', 'position_level', 'phone', ]
-            for field in update_field:
+            update_fields = ['can_ccemail', 'title', 'contact_name', 'position', 'position_level', 'phone', ]
+            for field in update_fields:
                 if field in request.data:
                     setattr(sub_user, field, request.data[field])
                     sub_user.save()
@@ -1020,6 +1020,7 @@ class AccountManager(APIView):
 class ClientCRUD(APIView):
     def check_manager_permission(self, request, object_id):
         try:
+            temp = UpgridAccountManager.objects.filter(id=request.user.id)
             manager = UpgridAccountManager.objects.get(id=request.user.id)
             client = UniversityCustomer.objects.select_related('account_manager').get(id=object_id)
             if manager.id == client.account_manager.id:
@@ -1066,6 +1067,7 @@ class ClientCRUD(APIView):
         perm = self.is_manager(request)
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+
         # create sub client object
         decoded_new_password = self.decode_password(self.request.data['password'])
         if 'main_user_id' in self.request.POST: # create subuser
@@ -1109,14 +1111,10 @@ class ClientCRUD(APIView):
                 service_until=self.request.data['service_until'],
                 )
         
-        print(client.password)
         client.password = decoded_new_password
         # decoded_new_password = self.decode_password(self.request.data['password'])
         # client.set_password(decoded_new_password)
         client.save()
-        print(decoded_new_password)
-        print('password_create')
-        print(client.password)
         # for main user add competing_schools
 
         for cp in self.request.data['competing_schools']:
@@ -1133,50 +1131,36 @@ class ClientCRUD(APIView):
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
-        if not self.request.data['main_user_id'] is None:
-            main_user = UniversityCustomer.objects.get(object_id=request.data['main_user_id'])
-            university_school = UniversitySchool.objects.get(object_id=self.request.data['ceeb'])
+        if 'client_id' in self.request.data:
             client = UniversityCustomer.objects.filter(id=self.request.data['client_id'])
-            client.update(
-                is_demo=self.request.data['isDemo'],
-                username=self.request.data['username'],
-                email=self.request.data['email'],
-                Ceeb=university_school,
-                department=self.request.data['department'],
-                account_type=self.request.data['account_type'],
-                account_manager=self.request.user.id,
-                title=self.request.data['title'],
-                contact_name=self.request.data['contact_name'],
-                position=self.request.data['position'],
-                position_level=self.request.data['position_level'],
-                phone=self.request.data['phone'],
-                service_until=main_user.service_until,
-                )
-
+            if not client.exists():
+                return Response({"Failed": _("client_id is invalid!")}, status=HTTP_403_FORBIDDEN)
         else:
-            university_school = UniversitySchool.objects.get(object_id=self.request.data['ceeb'])
-            client = UniversityCustomer.objects.filter(id=self.request.data['client_id'])
-            client.update(
-                is_demo=self.request.data['isDemo'],
-                username=self.request.data['username'],
-                email=self.request.data['email'],
-                Ceeb=university_school,
-                department=self.request.data['department'],
-                account_type=self.request.data['account_type'],
-                service_level=self.request.data['service_level'],
-                account_manager=self.request.user.id,
-                title=self.request.data['title'],
-                contact_name=self.request.data['contact_name'],
-                position=self.request.data['position'],
-                position_level=self.request.data['position_level'],
-                phone=self.request.data['phone'],
-                service_until=self.request.data['service_until'],
-                )
+            return Response({"Failed": _("client_id is required!")}, status=HTTP_403_FORBIDDEN)
+        data = {}
 
-        client[:1].get().competing_schools.clear()
-        for cp in self.request.data['competing_schools']:
-            school = UniversitySchool.objects.get(object_id=cp['object_id'])
-            client[:1].get().competing_schools.add(school)
+        if 'main_user_id' in self.request.data:
+            main_users = UniversityCustomer.objects.filter(id=request.data['main_user_id'])
+            if main_users.exists():
+                data['service_until'] = main_users.first().service_until
+        if 'Ceeb' in self.request.data:
+            university_school = UniversitySchool.objects.filter(object_id=request.data['Ceeb'])
+            if university_school.exists():
+                data['Ceeb'] = university_school.first()
+
+        update_fields = ['is_demo', 'username', 'email', 'department', 'account_type', 'account_manager',
+                         'title', 'contact_name', 'position', 'position_level', 'phone', 'service_until', 'is_active']
+
+        for field in update_fields:
+            if field in self.request.data:
+                data[field] = self.request.data[field]
+        client.update(**data)
+
+        if 'competing_schools' in self.request.data:
+            client[:1].get().competing_schools.clear()
+            for cp in self.request.data['competing_schools']:
+                school = UniversitySchool.objects.get(object_id=cp['object_id'])
+                client[:1].get().competing_schools.add(school)
         return Response({"success": _("User has been modified.")}, status=HTTP_202_ACCEPTED)
 
     def delete(self, request):
@@ -1542,13 +1526,13 @@ class EnhancementWebReports(APIView):
 
     def check_permissions(self, request):
         try:
-            manager = AccountManager.objects.get(id=request.user.id)
+            manager = UpgridAccountManager.objects.get(id=request.user.id)
             return True
-        except AccountManager.DoesNotExist:
+        except UpgridAccountManager.DoesNotExist:
             return False
 
     def get(self, request, customer_program_id):
-        perm = self.check_permission(request)
+        perm = self.check_permissions(request)
         if perm:
             context = EnhancementReportsUpdateAPI.get_programs_data(request, customer_program_id)
             return Response(context, status=HTTP_200_OK)
