@@ -13,6 +13,7 @@ django-filter==1.0.2
 django-guardian==1.4.3
 django-cors-headers
 
+drfdocs==0.0.11
 Markdown==2.6.6
 whitenoise==3.0
 marshmallow==2.7.3
