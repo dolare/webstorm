@@ -695,7 +695,8 @@ class CreateOrChangeSubUser(APIView):
             for field in update_fields:
                 if field in request.data:
                     setattr(sub_user, field, request.data[field])
-                    sub_user.save()
+            sub_user._password = False
+            sub_user.save()
             return Response({"success": _("Sub user has been update.")}, status=HTTP_200_OK)
 
     def post(self, request):
@@ -1134,36 +1135,43 @@ class ClientCRUD(APIView):
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
-        if 'client_id' in self.request.data:
-            client = UniversityCustomer.objects.filter(id=self.request.data['client_id'])
-            if not client.exists():
-                return Response({"Failed": _("client_id is invalid!")}, status=HTTP_403_FORBIDDEN)
-        else:
+        if not 'client_id' in self.request.data:
             return Response({"Failed": _("client_id is required!")}, status=HTTP_403_FORBIDDEN)
-        data = {}
 
+        clients = UniversityCustomer.objects.filter(id=self.request.data['client_id'])
+        if not clients.exists():
+            return Response({"Failed": _("client_id is invalid!")}, status=HTTP_403_FORBIDDEN)
+        client = clients.first()
         if 'main_user_id' in self.request.data:
             main_users = UniversityCustomer.objects.filter(id=request.data['main_user_id'])
             if main_users.exists():
-                data['service_until'] = main_users.first().service_until
+                client.service_until = main_users.first().service_until
+                # data['service_until'] = main_users.first().service_until
         if 'Ceeb' in self.request.data:
             university_school = UniversitySchool.objects.filter(object_id=request.data['Ceeb'])
             if university_school.exists():
-                data['Ceeb'] = university_school.first()
+                client.Ceeb = university_school.first()
+                # data['Ceeb'] = university_school.first()
 
         update_fields = ['is_demo', 'username', 'email', 'department', 'account_type', 'account_manager',
                          'title', 'contact_name', 'position', 'position_level', 'phone', 'service_until', 'is_active']
-
         for field in update_fields:
-            if field in self.request.data:
-                data[field] = self.request.data[field]
-        client.update(**data)
+            if field in request.data:
+                setattr(client, field, request.data[field])
+        client._password = False
+        client.save()
+
+        # for field in update_fields:
+        #     if field in self.request.data:
+        #         setattr(client, field, request.data[field])
+                # data[field] = self.request.data[field]
+        # client.update(**data)
 
         if 'competing_schools' in self.request.data:
-            client[:1].get().competing_schools.clear()
+            client.competing_schools.clear()
             for cp in self.request.data['competing_schools']:
                 school = UniversitySchool.objects.get(object_id=cp['object_id'])
-                client[:1].get().competing_schools.add(school)
+                client.competing_schools.add(school)
         return Response({"success": _("User has been modified.")}, status=HTTP_202_ACCEPTED)
 
     def delete(self, request):
