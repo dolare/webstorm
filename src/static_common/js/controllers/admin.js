@@ -5,7 +5,7 @@ angular.module('myApp').controller('AdminMainController',
 
         $scope.htmlPopover = $sce.trustAsHtml('1. Program can be added in editing the user.<br>2. Page added - Updates.<br>3. Competing program can be added in editing the user programs.');
 
-
+        console.log("LIST==="+JSON.stringify(Client))
         $scope.itemsByPage = 25;
         $scope.orders = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -16,7 +16,7 @@ angular.module('myApp').controller('AdminMainController',
             return ((a.contact_name || "").toLowerCase() > (b.contact_name || "").toLowerCase()) ? 1 : (((b.contact_name || "").toLowerCase() > (a.contact_name || "").toLowerCase()) ? -1 : 0);
         });
 
-        console.log("CLient = = = " + JSON.stringify(Client))
+        console.log("CLient = = = " + JSON.stringify($scope.client_data))
 
 
         //For stats
@@ -335,7 +335,7 @@ angular.module('myApp').controller('AdminMainController',
 
 
 
-        //for add and edit
+         //for add and edit
         $scope.addnew = function(Id) {
             $scope.pwhide = Id;
             console.log("pwhide Id= " + Id)
@@ -368,7 +368,15 @@ angular.module('myApp').controller('AdminMainController',
             $scope.dep_pro_table = null;
             $scope.account_type = "main";
 
-            
+            //tab 2
+            ///load for ceeb and competing schools
+            $http({
+                url: '/',
+                method: 'GET',
+                
+            }).then(function(response) {
+
+               
                 $scope.listbox = $('#competingschools').bootstrapDualListbox({
                     nonSelectedListLabel: 'Available competing schools',
                     selectedListLabel: 'Chosen competing schools',
@@ -378,6 +386,10 @@ angular.module('myApp').controller('AdminMainController',
                     selectorMinimalHeight: 200
 
                 });
+
+                //  $scope.listbox.find('option').remove();
+                // $scope.listbox.bootstrapDualListbox('refresh', true);
+
 
 
                 var competing_schools_options = "";
@@ -392,7 +404,11 @@ angular.module('myApp').controller('AdminMainController',
                 jQuery('.js-wizard-simple').bootstrapWizard('first');
                 App.blocks('#client_block', 'state_normal');
                 // jQuery('.js-wizard-simple').find("a[href*='simple-classic-progress-step1']").trigger('click');
-           
+            }).
+            catch(function(error) {
+                console.log('an error occurred...' + JSON.stringify(error));
+
+            });
 
         }
 
@@ -1822,9 +1838,10 @@ angular.module('myApp').controller('AdminMainController',
           
                           
                     console.log("result===="+JSON.stringify(result))
-                    //$scope.client_data = result.data.client_list
+                    //$scope.client_data = result;
+                    $scope.client_data = tableDataService.getClientList(result);
                         //$scope.() = [].concat($scope.selected_customprogram);
-
+                    //$scope.$broadcast('refreshProducts');
 
                     jQuery('#modal-large').modal('toggle');
 
