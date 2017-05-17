@@ -74,6 +74,9 @@ REST_FRAMEWORK = {
             ),
 }
 
+REST_FRAMEWORK_DOCS = {
+    'HIDE_DOCS': True
+}
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', #default

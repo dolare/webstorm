@@ -99,3 +99,6 @@ DATABASES = {
 }
 # Application definition
 
+REST_FRAMEWORK_DOCS = {
+    'HIDE_DOCS': False
+}
