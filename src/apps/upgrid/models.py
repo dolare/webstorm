@@ -129,10 +129,10 @@ class UniversityCustomer(UpgridBaseUser):
     title = (('Master', 'Master.'), ('Dr', 'Dr'), ('Professor', 'Prof'), ('Mr', 'Mr.'), ('Miss', 'Miss.'),
              ('Ms', 'Ms.'), ('Mrs', 'Mrs.'), ('Mx', 'Mx.'))
 
-    positionlevel = (('University', 'University'), ('School', 'School'),
-                     ('Academic_Department', 'Academic_Department'),
-                     ('Administrative_Department', 'Administrative_Department'),
-                     ('Program', 'Program'),)
+    positionlevel = (('university', 'University'), ('School', 'School'),
+                     ('acd_dep', 'Academic_Department'),
+                     ('admin_dep', 'Administrative_Department'),
+                     ('program', 'Program'),)
     servicelevel = (('basic', 'Basic'), ('silver', 'Silver'), ('gold', 'Gold'),
                     ('platinum', 'Platinum'))
     accounttype = (('main', 'Main'), ('sub', 'Sub'))
