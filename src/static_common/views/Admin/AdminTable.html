@@ -66,20 +66,19 @@
                 <table class="table table-hover table-vcenter" st-pagination-scroll st-table="displayeddata" st-safe-src="client_data">
                     <colgroup>
                         <col width="5%" />
-                        <col width="5%" />
                         <col width="15%" />
                         <col width="10%" />
-                        <col width="22%" />
+                        <col width="25%" />
                         <col width="15%" />
                         <col width="12%" />
-                        <col width="13%" />
+                        <col width="15%" />
                         <col width="3%" />
                     </colgroup>
                     <thead>
 
                         <tr>
                             <th class="text-center"><i class="icon-organization"></i></th>
-                            <th class="text-center"><i class="icon-user"></i></th>
+                           <!--  <th class="text-center"><i class="icon-user"></i></th> -->
                             <th st-sort="contact_name" class="text-left">Name</th>
                             <th st-sort="is_active" class="text-left">Status</th>
                             <th st-sort="university" class="text-left">University</th>
@@ -89,7 +88,7 @@
                             <th class="text-center"><i class="icon-trash"></i></th>
                         </tr>
                         <tr>
-                        <th colspan="9" class="bg-info-light">
+                        <th colspan="8" class="bg-info-light">
                             <input st-search="" class="form-control" placeholder="global search ..." type="text" />
                         </th>
                         </tr>
@@ -103,9 +102,9 @@
                         <button ng-show="row.subuser.length === 0" class="btn btn-default" type="button" style="position:relative;" ng-disabled="true"><i ng-class="show_sub? 'fa fa-minus': 'fa fa-plus'"></i></button>
 
                         </td>
-                        <td class="text-center">
+                        <!-- <td class="text-center">
                             <img class="img-avatar img-avatar48" src="/static/img/avatar6.jpg" alt="">
-                        </td>
+                        </td> -->
                         <td>{{row.contact_name}}</td>
                         <td>
                             <span ng-if="row.is_active===true">
@@ -140,10 +139,12 @@
                             </div>
                         </td>
                         <td>
-                            <button ng-disabled="!row.is_active" class="btn btn-default" confirmed-click="deactivate(row.id, $index)" ng-confirm-click="Do you really want to delete?" data-js-blur>
-                                <a data-uib-tooltip="Deactivate" data-tooltip-placement="top" class="fa fa-times text-danger">
+                            <button class="btn btn-default" confirmed-click="deactivate(row.id, $index, null, !row.is_active)" ng-confirm-click="Do you really want to delete/re-activate?" data-js-blur>
+                                <a ng-class="row.is_active ? 'fa fa-times text-danger' : 'fa fa-undo text-info'">
                                 </a>
                             </button>
+
+                           
                         </td>
                     </tr>
 
@@ -156,9 +157,9 @@
                         <tr class="bg-gray-light" ng-repeat="row1 in row.subuser">
 
                         <td class="text-right">{{$index+1}}.</td>
-                        <td class="text-center">
+                        <!-- <td class="text-center">
                             <img class="img-avatar img-avatar48" src="/static/img/avatar6.jpg" alt="">
-                        </td>
+                        </td> -->
                         <td>{{row1.contact_name}}</td>
                         <td>
                             <span ng-if="row1.is_active===true">
@@ -189,10 +190,11 @@
                             </div>
                         </td>
                         <td>
-                            <button ng-disabled="!row1.is_active" class="btn btn-default" confirmed-click="deactivate(row1.id, $parent.$index, $index)" ng-confirm-click="Do you really want to delete?" data-js-blur>
-                                <a data-uib-tooltip="Deactivate" data-tooltip-placement="top" class="fa fa-times text-danger">
+                            <button class="btn btn-default" confirmed-click="deactivate(row1.id, $parent.$index, $index, !row1.is_active)" ng-confirm-click="Do you really want to delete/re-activate?" data-js-blur>
+                                <a ng-class="row.is_active ? 'fa fa-times text-danger' : 'fa fa-undo text-info'">
                                 </a>
                             </button>
+
                         </td>
                     </tr>
                     </tbody>

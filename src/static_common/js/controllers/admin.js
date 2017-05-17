@@ -1,5 +1,5 @@
 angular.module('myApp').controller('AdminMainController',
-    function(tableDataService, $sce, $timeout, $state, avatarService, Client, $http, authenticationSvc, $scope, $window) {
+    function(apiService, tableDataService, $sce, $timeout, $state, avatarService, Client, $http, authenticationSvc, $scope, $window) {
 
         var token = authenticationSvc.getUserInfo().accessToken;
 
@@ -197,16 +197,17 @@ angular.module('myApp').controller('AdminMainController',
          });
 
 
-        $scope.deactivate = function(id, index, subindex) {
+        $scope.deactivate = function(id, index, subindex, val) {
 
             console.log("index = "+index)
             console.log("subindex = "+subindex)
             
             $http({
                 url: '/api/upgrid/accountmanager/client/',
-                method: 'DELETE',
+                method: 'PUT',
                 data: {
-                    'client_id': id
+                    'client_id': id,
+                    'is_active': val
                 },
                 headers: {
                     'Authorization': 'JWT ' + token,
@@ -219,20 +220,20 @@ angular.module('myApp').controller('AdminMainController',
                 console.log("deleted!" + JSON.stringify(response));
 
 
-                if(subindex){
-                    $scope.client_data[index].subuser[subindex].is_active = false;
+                if(subindex !== null){
+                    $scope.client_data[index].subuser[subindex].is_active = val;
                 } else {
-                    $scope.client_data[index].is_active = false;
+                    $scope.client_data[index].is_active = val;
                 }
 
                 
-
+                var show_message = val ? 'The client has been re-activated.' : 'The client has been deactivated.'
 
                 $.notify({
 
                     // options
                     icon: "fa fa-check",
-                    message: 'The client has been deactivated.'
+                    message: show_message
                 }, {
                     // settings
                     type: 'success',
@@ -1298,7 +1299,7 @@ angular.module('myApp').controller('AdminMainController',
                         "main_user_id": null,
                         "username": $scope.account_name,
                         "email": $scope.email,
-                        "ceeb": $scope.ceeb,
+                        "Ceeb": $scope.ceeb,
                         "account_type": $scope.account_type,
                         "title": $scope.title,
                         "contact_name": $scope.client_name,
@@ -1309,7 +1310,7 @@ angular.module('myApp').controller('AdminMainController',
                         "department": $scope.department,
                         "service_level": $scope.service_level,
                         "competing_schools": competing_schools_obj,
-                        "isDemo": $scope.is_demo
+                        "is_demo": $scope.is_demo
 
                     },
                     headers: {
@@ -1816,19 +1817,12 @@ angular.module('myApp').controller('AdminMainController',
                 }).then(function(response) {
 
 
-
-                    return $http({
-                        url: '/api/upgrid/accountmanager/',
-                        method: 'GET',
-                        headers: {
-                            'Authorization': 'JWT ' + token
-                        }
-                    });
-
-                }).then(function(response) {
-
-
-                    $scope.client_data = response.data.client_list
+                    
+                    apiService.getClient(token).then(function (result) {
+          
+                          
+                    console.log("result===="+JSON.stringify(result))
+                    //$scope.client_data = result.data.client_list
                         //$scope.() = [].concat($scope.selected_customprogram);
 
 
@@ -1848,7 +1842,9 @@ angular.module('myApp').controller('AdminMainController',
                         },
                         z_index: 1999,
                     });
-
+                            
+                           
+                    });
 
 
                 }).
