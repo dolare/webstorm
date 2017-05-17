@@ -121,10 +121,10 @@ class ResetPassword(generics.GenericAPIView):
             if token:
                 try:
                     # username = user_reset.username
-                    if user_reset.account_type == 'sub' and user_reset.can_ccemail == True:
-                        main_user_query = UniversityCustomer.objects.filter(pk = user_reset.main_user_id);
-                        if main_user_query.exists():
-                            cc_addresses.append(main_user_query.first().email)
+                    # if user_reset.account_type == 'sub' and user_reset.can_ccemail == True:
+                    #     main_user_query = UniversityCustomer.objects.filter(pk = user_reset.main_user_id);
+                    #     if main_user_query.exists():
+                    #         cc_addresses.append(main_user_query.first().email)
 
                     cc_addresses_tuple = tuple(cc_addresses)
                     html_content = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'>"
@@ -1343,7 +1343,7 @@ class CustomerCompetingProgramCRUD(APIView):
     def post(self, request):
         perm = self.is_manager(request)
         print(request.data['customer_competing_program'])
-        print('post')
+        print('post============================================================')
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         for p in request.data['customer_competing_program']:
@@ -1891,9 +1891,12 @@ class EnhancementReportsUpdateAPI(APIView):
         program_list.append(self_program)
         competing_programs = customer_program.customercompetingprogram_set.all().select_related('program').order_by(
             'order')
+        print(competing_programs)
         for cp in competing_programs:
             program = Program.objects.get(object_id=cp.program.object_id)
             program_list.append(program)
+        # print(program_list)
+        print('program.................list')
         return program_list
 
     def get_programs_data(self, object_id):
@@ -2014,10 +2017,10 @@ class EnhancementReportsUpdateAPI(APIView):
                     temp = b
                     b = a
                     a = temp
-                    print("a is :")
-                    print(a)
-                    print("b is :")
-                    print(b)
+                    # print("a is :")
+                    # print(a)
+                    # print("b is :")
+                    # print(b)
 
                     for k, v in a.items():  # top level
                         if k == 'length':
@@ -2102,9 +2105,9 @@ class EnhancementReportsUpdateAPI(APIView):
                             new_diff[k] = {}
                             old_diff[k] = {}
 
-                            print(v_of_b)
-                            print('111111111111111111111111111111111111111111111111111111111111111111111111111111111111')
-                            print(v)
+                            # print(v_of_b)
+                            # print('111111111111111111111111111111111111111111111111111111111111111111111111111111111111')
+                            # print(v)
                            
                             for k2, v2 in v.items():
                                 # print('start');
@@ -2130,8 +2133,8 @@ class EnhancementReportsUpdateAPI(APIView):
                                     continue
                                 new_diff[k] = v_of_b
                                 old_diff[k] = v
-                print("diff is:")
-                print(diff)
+                # print("diff is:")
+                # print(diff)
                 return diff
 
         res_dict = compare(a, b)
@@ -2340,20 +2343,24 @@ class ClientViewEnhancementUpdate(APIView):
 
     def get(self, request, object_id=None, client_id=None):
         user = self.get_user(request, object_id, client_id)
+        print(user)
+        print(object_id)
+        print(client_id)
         customer_program = UniversityCustomerProgram.objects.get(object_id=object_id)
         if not user:
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
             update_report_query = EnhancementUpdate.objects.filter(customer_program=customer_program, customer=user,
                                                           most_recent=True)
+            print(update_report_query)
             if update_report_query.exists():
                 update_report = update_report_query.first()
             else:
                 return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
-                            status=HTTP_403_FORBIDDEN)
+                            status=HTTP_400_FORBIDDEN)
         except EnhancementUpdate.DoesNotExist:
             return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
-                            status=HTTP_403_FORBIDDEN)
+                            status=HTTP_400_FORBIDDEN)
         if update_report.cache_report and not client_id:
 
             update_report.existing_report = update_report.cache_report
