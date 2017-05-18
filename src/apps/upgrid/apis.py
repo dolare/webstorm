@@ -1471,23 +1471,12 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
             return False
 
     def get_queryset(self, *args, **kwargs):
-        print('start')
         ceeb = self.request.GET.get("ceeb")
         department = self.request.GET.get("dep")
         arr = self.request.get_full_path()
         arr = arr.split('&')
         if department != None:
             department = department.replace('!','&')
-        # print('arr')
-        # if len(arr) >=3:
-        #     temp = department + '&'
-        #     for i, val in enumerate(arr):
-        #         if i >=2:
-        #             temp = temp + val 
-        # if "%20" in temp:
-        #     print('that is true')
-        #     temp = temp.split('%20')
-        #     print(temp)
 
         total_ceeb = ceeb.split('/')
         if self.is_manager(self.request):
@@ -1504,9 +1493,30 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
                     query_list = query_list.filter(
                         Q(department=department)
                         )
+            
+            
             return query_list
         else:
             return Response({"Failed": _("You don't have permission to access!")}, status=HTTP_403_FORBIDDEN)
+
+
+    def list(self, request, *args, **kwargs):
+        import time
+        print('.......................start')
+        start1 = time.time()
+        queryset = self.filter_queryset(self.get_queryset())
+        start2 = time.time()
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        start3 = time.time()
+        serializer = self.get_serializer(queryset, many=True)
+        start4 = time.time()
+        print(start2- start1)
+        print(start3- start2)
+        print(start4- start3)
+        return Response(serializer.data)
 
 # Get whoops reports by UniversityCustomerProgram object_id
 
@@ -1515,18 +1525,26 @@ class WhoopsWebReports(APIView):
 
     def check_permissions(self, request):
         try:
-            manager = AccountManager.objects.get(id=request.user.id)
+            manager = UpgridAccountManager.objects.get(id=request.user.id)
             return True
-        except AccountManager.DoesNotExist:
+        except UpgridAccountManager.DoesNotExist:
             return False
 
     def get(self, request, customer_program_id):
-        user = self.check_permission(request)
+        user = self.check_permissions(request)
         if user:
-            customer_program = UniversityCustomerProgram.objects.get(object_id=customer_program_id)
-            context = WhoopsReportsUpdateAPI.get_programs_data(request, customer_program)
-            if context is None:
+            customer_program_query = UniversityCustomerProgram.objects.filter(object_id=customer_program_id)
+            if not customer_program_query.exists():
                 return Response({"Failed": _("WhoopsUpdate does not found!")}, status=HTTP_400_BAD_REQUEST)
+            customer_program = customer_program_query.first()
+            context = WhoopsReportsUpdateAPI().get_programs_data(request,customer_program)
+            if context is None:
+                context = {
+                    'dead_link': None, 'typo': None, 'outdated_information': None,
+                    'data_discrepancy': None, 'sidebars': None,
+                    'infinite_loop': None, 'floating_page': None,
+                    'confusing': None, 'other_expert_note': None
+                }
             return Response(context, status=HTTP_200_OK)
 
         else:
@@ -1568,7 +1586,11 @@ class WhoopsReportsUpdateAPI(APIView):
             program_id = UniversityCustomerProgram.objects.get(object_id=request.data['customer_program_id'])
         else:
             program_id = customer_program
-        program = Program.objects.get(object_id=program_id.program.object_id)
+        program_query = Program.objects.filter(object_id=program_id.program.object_id)
+        if not program_query.exists():
+            return Response({"Failed": _("WhoopsUpdate does not found!")}, status=HTTP_400_BAD_REQUEST)
+        program = program_query.first()
+        print(program)
         ean = program.expertadditionalnote_set.all()
         return ean, program
 
@@ -1578,6 +1600,7 @@ class WhoopsReportsUpdateAPI(APIView):
             return Response({"Failed": _("Permission denied!")}, status=HTTP_403_FORBIDDEN)
         else:
             ean, program = self.get_object(request, customer_program)
+            print(ean)
 
             # print(ean[0]._meta.get_fields())
             # print (model_to_dict(ean[0]))
