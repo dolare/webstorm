@@ -53,14 +53,14 @@
                             <hr class="hidden-print">
                             <div class="row items-push-2x">
                                 <!-- Company Info -->
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 push-30">
                                     <p class="h3 font-w400 push-15 push-10-t text-uppercase">Program Details</p>
                                     
                                     <address>
 
                                     <table>
                                     <tr>
-                                        <td class="text-muted" data-uib-popover="htmlPopover" data-popover-title="v1.4 Updates:" data-popover-placement="top" data-popover-trigger="'mouseenter'">University</td>
+                                        <td class="text-muted">University</td>
                                         <td class="text-muted">&nbsp;:&nbsp;&nbsp;</td>
                                         <td style="border-bottom: 1px solid #ccc">&nbsp;{{e_array_final[0][0].university_school.university}}&nbsp;</td>
                                     </tr>
@@ -92,6 +92,14 @@
                                         Program &nbsp;&nbsp;: Applied Linguistics<br>
                                         Degree &nbsp;&nbsp;&nbsp;&nbsp;: EdM<br> -->
                                     </address>
+
+
+                                    <label class="control-label" for="val-ccemail-edit-1" style="padding-left: 5px">Show only updates?  &nbsp;</label> 
+                           
+                                    <label class="css-input switch switch-sm switch-primary">
+                                        <input ng-model="only_update" type="checkbox" id="val-ccemail-edit" name="val-ccemail-edit"><span></span>
+                                    </label>
+
                                 </div>
                                 <!-- END Company Info -->
 
@@ -130,6 +138,9 @@
                             </div>
                             <!-- END Invoice Info -->
 
+                            
+                           
+
                             <!-- Table -->
                             <div class="table-responsive push-50">
                                 <table class="table report_table2 table-bordered table-hover" style="table-layout: fixed;">
@@ -148,19 +159,19 @@
                                                 message="{{e_show_update['university'+($index===0?'':$index+1)]}}"
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['university_school.university'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
                                                 cancel-button-type="default"
                                                 animation="true"
                                                 
-                                                
+
                                                 ng-show="e_show_update['university'+($index===0?'':$index+1)]"
-is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">                        
-    <span><i class="fa fa-check-circle"></i>
-    </span>                                   
-</div> 
+                                                is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">                        
+                                                    <span><i class="fa fa-check-circle"></i>
+                                                    </span>                                   
+                                                </div> 
                                                     <span ng-if="row.university_school.university">
                                                         {{row.university_school.university}}
                                                     </span>
@@ -183,7 +194,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
                                                 message="{{e_show_update['school'+($index===0?'':$index+1)]}}"
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['university_school.school'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -216,7 +227,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
                                                 message="{{e_show_update['program_name'+($index===0?'':$index+1)]}}"
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['program_name', 'url'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -262,7 +273,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['degree.name'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -298,7 +309,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                             confirm-text="{{popover.confirmText}}"
                                             cancel-text="{{popover.cancelText}}"
-                                            placement="top"
+                                            placement="top-right"
                                             on-confirm="confirm_update('p', $index, ['department'])"
                                             on-cancel=""
                                             confirm-button-type="danger"
@@ -335,7 +346,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['specialization'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -367,7 +378,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
                                             message="{{e_show_update['highlights'+($index===0?'':$index+1)]}}"
                                             confirm-text="{{popover.confirmText}}"
                                             cancel-text="{{popover.cancelText}}"
-                                            placement="top"
+                                            placement="top-right"
                                             on-confirm="confirm_update('p', $index, ['highlights'])"
                                             on-cancel=""
                                             confirm-button-type="danger"
@@ -399,7 +410,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['audience'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -434,7 +445,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['job_placement', 'job_placement_url'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -473,7 +484,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['online_program'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -514,7 +525,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['additional_url'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -554,7 +565,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['program_faq_url'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -593,7 +604,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('p', $index, ['stats_profile_url'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -643,7 +654,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('dura', $index, ['full_part_time'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -686,7 +697,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('dura', $index, ['part_time'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -723,7 +734,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
 
                                                 on-confirm="confirm_update('dura', $index, ['duration_min', 'duration_max', 'duration_conj', 'duration_unit.name', 'duration_addl', 'duration_addl_unit.name'])"
                                                 on-cancel=""
@@ -770,7 +781,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('dura', $index, ['durationtime_limit', 'duration_unit.name'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -814,7 +825,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
 
                                                 on-confirm="confirm_update('c', $index, ['min_total_unit', 'curriculum_unit.name'])"
                                                 on-cancel=""
@@ -853,7 +864,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('c', $index, ['max_transfer_unit', 'curriculum_unit.name'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -889,7 +900,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('c', $index, ['master_thesis_or_equivalent'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -928,7 +939,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('c', $index, ['thesis_notes'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -963,7 +974,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('c', $index, ['doctorate_dissertation_or_equivalent'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1001,7 +1012,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('c', $index, ['dissertation_notes'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1036,7 +1047,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('c', $index, ['curriculum_url'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1082,7 +1093,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
 
                                                 on-confirm="confirm_update('t', $index, ['tuition_per_unit', 'tuition_unit.name', 'school_cost_url', 'university_cost_url'])"
                                                 on-cancel=""
@@ -1127,7 +1138,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('t', $index, ['tuition_per_unit_out_state', 'tuition_unit.name', 'school_cost_url', 'university_cost_url'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1169,7 +1180,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('t', $index, ['program_faq_url'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1216,7 +1227,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
 
                                                 on-confirm="confirm_update('d', $index, ['deadline_url'])"
                                                 on-cancel=""
@@ -1257,7 +1268,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('d', $index, ['get_deadline_fall_early_month_display', 'get_deadline_fall_early_day_display'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1299,7 +1310,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
 
                                                 on-confirm="confirm_update('d', $index, ['get_deadline_fall_late_month_display', 'get_deadline_fall_late_day_display'])"
                                                 on-cancel=""
@@ -1337,7 +1348,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('d', $index, ['get_deadline_spring_early_month_display', 'get_deadline_spring_early_day_display'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1375,7 +1386,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('d', $index, ['get_deadline_spring_late_month_display', 'get_deadline_spring_late_day_display'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1411,7 +1422,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('d', $index, ['get_deadline_summer_early_month_display', 'get_deadline_summer_early_day_display'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1450,7 +1461,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('d', $index, ['get_deadline_summer_late_month_display', 'get_deadline_summer_late_day_display'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1489,7 +1500,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('d', $index, ['deadline_rolling'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1534,7 +1545,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('d', $index, ['scholarship_deadline_month', 'scholarship_deadline_day'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1587,7 +1598,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['special_reqs'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1622,7 +1633,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['apply_online'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1661,7 +1672,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['application_fee'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1698,7 +1709,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['application_fee_waiver'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1737,7 +1748,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['application_fee_waiver_notes'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1773,7 +1784,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['transcript_for_application'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1812,7 +1823,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['official_transcript_for_enrollment'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1851,7 +1862,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('ex', $index, [])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1893,7 +1904,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['essays'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1928,7 +1939,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['recommendation'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -1966,7 +1977,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['gpa_minimum', 'gpa_minimum_letter'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2009,7 +2020,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['gpa_average', 'gpa_average_letter'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2049,7 +2060,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['gpa_suggested', 'gpa_suggested_letter'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2090,7 +2101,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['school_interview'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2129,7 +2140,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['resume'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2167,7 +2178,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['sup_mat_writing_sample'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2208,7 +2219,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['sup_mat_writing_sample_notes'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2242,7 +2253,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['sup_mat_portfolio'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2284,7 +2295,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['sup_mat_portfolio_notes'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2319,7 +2330,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['program_req_url', 'school_req_url'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2371,7 +2382,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('Intl_transcript', $index, [])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2390,7 +2401,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                         <span ng-repeat="row1 in row">
 
-                                                        <span ng-if="row1" data-uib-tooltip="{{row1.description}}" data-tooltip-placement="top" style="border-bottom: 1px dashed #aaa;cursor: pointer;">{{row1.name}}<br></span>
+                                                        <span ng-if="row1" data-uib-tooltip="{{row1.description}}" data-tooltip-placement="top-right" style="border-bottom: 1px dashed #aaa;cursor: pointer;">{{row1.name}}<br></span>
 
                                                         </span>
 
@@ -2418,7 +2429,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['intl_lang_waiver'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2461,7 +2472,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['intl_lang_waiver_conditions'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2498,7 +2509,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['intl_english_test_required'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2535,7 +2546,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('Intl_eng_test', $index, [])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2577,7 +2588,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['toefl_ibt'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2616,7 +2627,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['toefl_ibt_reading', 'toefl_ibt_listening', 'toefl_ibt_speaking', 'toefl_ibt_writing'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2655,7 +2666,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['toefl_pbt'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2692,7 +2703,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['toefl_twe'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2728,7 +2739,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['toefl_tse'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2764,7 +2775,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['toefl_cbt'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2800,7 +2811,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['intl_ielts_reqs'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2836,7 +2847,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('r', $index, ['intl_other'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2879,7 +2890,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('s', $index, ['fully_funded'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2918,7 +2929,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('s', $index, ['fully_funded_notes'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2955,7 +2966,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('s', $index, ['scholarship_avail'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -2994,7 +3005,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('s', $index, ['scholarship_notes'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
@@ -3031,7 +3042,7 @@ is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
-                                                placement="top"
+                                                placement="top-right"
                                                 on-confirm="confirm_update('s', $index, ['scholarship_program_specific_url', 'scholarship_general_url'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
