@@ -19,7 +19,7 @@ angular.module('myApp').controller('AdminReaderController', ['authenticationSvc'
 
           $scope.date = new Date();
           $http({
-              url: '/api/upgrid/wwr/'+$scope.object_id + '/'+ $scope.client_id,
+              url: '/api/upgrid/wwr/'+$scope.object_id + '/',
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
@@ -111,7 +111,7 @@ angular.module('myApp').controller('AdminReaderController', ['authenticationSvc'
       
         //ewr
          $http({
-                url: '/api/upgrid/ewr/'+$scope.object_id + '/'+ $scope.client_id,
+                url: '/api/upgrid/ewr/'+$scope.object_id + '/',
                 method: 'GET',
                 headers: {
                   'Authorization': 'JWT ' + token

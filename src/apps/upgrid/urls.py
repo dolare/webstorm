@@ -116,9 +116,9 @@ urlpatterns=[
     url(r'api/upgrid/accountmanager/dropdown_menu/programs/$', apis.CustomerAndCompetingProgramAPI.as_view()),
 
     #  For account manager preview reports before the reports are released.
-    url(r'api/upgrid/wwr/(?P<object_id>[0-9a-fA-F\-]+)/(?P<customer_program_id>[0-9a-fA-F\-]+)/$',
+    url(r'api/upgrid/wwr/(?P<customer_program_id>[0-9a-fA-F\-]+)/$',
         apis.WhoopsWebReports.as_view()),
-    url(r'api/upgrid/ewr/(?P<object_id>[0-9a-fA-F\-]+)/(?P<customer_program_id>[0-9a-fA-F\-]+)/$',
+    url(r'api/upgrid/ewr/(?P<customer_program_id>[0-9a-fA-F\-]+)/$',
         apis.EnhancementWebReports.as_view()),
 
     # --------------------------------Update API-----------------------------------------------

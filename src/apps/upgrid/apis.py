@@ -1545,7 +1545,9 @@ class EnhancementWebReports(APIView):
     def get(self, request, customer_program_id):
         perm = self.check_permissions(request)
         if perm:
-            context = EnhancementReportsUpdateAPI.get_programs_data(request, customer_program_id)
+            context = EnhancementReportsUpdateAPI().get_programs_data(customer_program_id)
+            print(context)
+            print('return context')
             return Response(context, status=HTTP_200_OK)
 
         else:
