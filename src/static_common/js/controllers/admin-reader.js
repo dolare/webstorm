@@ -13,7 +13,7 @@ angular.module('myApp').controller('AdminReaderController', ['authenticationSvc'
 
     console.log($scope.type + ' ' + $scope.client_id  + ' ' + $scope.object_id)
 
-
+    App.blocks('#enhancement_loading', 'state_loading');
     //for whoops report
     if($scope.type === 'whoops'){
 
@@ -89,13 +89,14 @@ angular.module('myApp').controller('AdminReaderController', ['authenticationSvc'
                  })
 
             $scope.report.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];
-            
+            App.blocks('#enhancement_loading', 'state_normal');
             console.log('w_array_1='+JSON.stringify($scope.report.w_array_final));
 
 
 
           }).
          catch(function(error){
+            App.blocks('#enhancement_loading', 'state_normal');
             console.log('an error occurred...'+JSON.stringify(error));
 
          });
@@ -121,7 +122,7 @@ angular.module('myApp').controller('AdminReaderController', ['authenticationSvc'
             
 
              console.log("released report whoops"+ JSON.stringify(response.data));
-             $scope.e_raw = response.data.existing_report;
+             $scope.e_raw = response.data;
              
              $scope.report = {};
              var e_array_1 = [];
@@ -152,13 +153,14 @@ angular.module('myApp').controller('AdminReaderController', ['authenticationSvc'
 
              $scope.report.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10];
              
-
+             App.blocks('#enhancement_loading', 'state_normal');
              console.log('e_array_1='+JSON.stringify($scope.e_array_final));
 
               
           }).
            catch(function(error){
               console.log('an error occurred...'+JSON.stringify(error));
+              App.blocks('#enhancement_loading', 'state_normal');
 
            });
 

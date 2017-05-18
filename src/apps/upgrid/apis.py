@@ -648,22 +648,18 @@ class CreateOrChangeSubUser(APIView):
                 sub_user = UniversityCustomer.objects.get(id=request.data['sub_user_id'])
                 main_user = UniversityCustomer.objects.get(id=request.data['main_user_id'])
             except UniversityCustomer.DoesNotExist or UpgridAccountManager.DoesNotExist:
-                print(1111111111111111222222222222222222222222222)
-                return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+                raise ValidationError("Permission Denied!")
 
         if main_user.Ceeb == sub_user.Ceeb:
             if main_user.account_type == "main":
                 if sub_user.account_type == "sub":
                     return sub_user
                 else:
-                    print(1111111111111111111)
-                    return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+                    raise ValidationError("Permission Denied!")
             else:
-                print(22222222222222222222)
-                return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+                raise ValidationError("Permission Denied!")
         else:
-            print(33333333333333333333333333333333)
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            raise ValidationError("Permission Denied!")
 
     def validate(self, data):
         decoded_string = base64.b64decode(data)
@@ -671,15 +667,6 @@ class CreateOrChangeSubUser(APIView):
 
     def put(self, request):
         sub_user = self.get_subuser(request)
-        if 'is_active' in request.data:
-            if request.data['is_active'] == 'False':
-                sub_user.is_active = False
-                sub_user.save()
-                return Response({"success": _("Sub user has been deactived.")}, status=HTTP_200_OK)
-            if request.data['is_active'] == 'True':
-                sub_user.is_active = True
-                sub_user.save()
-                return Response({"success": _("Sub user has been actived.")}, status=HTTP_200_OK)
 
         if 'customer_program_id' in request.data:
             ClientAndProgramRelation.objects.filter(client=sub_user).delete()
@@ -691,7 +678,8 @@ class CreateOrChangeSubUser(APIView):
                 selected_program.save()
 
         else:
-            update_fields = ['can_ccemail', 'title', 'contact_name', 'position', 'position_level', 'phone', ]
+            update_fields = ['is_active', 'can_ccemail', 'title', 'contact_name', 'position', 'position_level',
+                             'phone', ]
             for field in update_fields:
                 if field in request.data:
                     setattr(sub_user, field, request.data[field])
@@ -712,8 +700,11 @@ class CreateOrChangeSubUser(APIView):
         if 'email' not in request.data:
             return Response({"failed": _("Email is required.")}, status=HTTP_400_BAD_REQUEST)
 
-        email_existed = UniversityCustomer.objects.filter(email=request.data['email']).exists()
-        if email_existed:
+        email_existed = UniversityCustomer.objects.filter(email=request.data['email'])
+        if email_existed.exists():
+            existed_user = email_existed.first()
+            if existed_user.main_user_id == str(main_user.id) and existed_user.is_active is False:
+                raise ValidationError('User was deleted, Please contact Admin for recover or create new!')
             raise ValidationError('Email already existed!')
 
         sub_user_number = UniversityCustomer.objects.filter(main_user_id=main_user.id).filter(is_active=True).count()
@@ -740,7 +731,6 @@ class CreateOrChangeSubUser(APIView):
         )
         user.password = decoded_new_password
 
-        #user.set_password(decoded_new_password)
         user.save()
 
         # create corresponding customer programs of subuser
@@ -1071,6 +1061,15 @@ class ClientCRUD(APIView):
         perm = self.is_manager(request)
         if not perm:
             return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+        manager = UpgridAccountManager.objects.get(id=request.user.id)
+        if 'email' not in request.data:
+            return Response({"Failed": _("Email is required!")}, status=HTTP_403_FORBIDDEN)
+        email_existed = UniversityCustomer.objects.filter(email=request.data['email'])
+        if email_existed.exists():
+            existed_user = email_existed.first()
+            if existed_user.account_manager == manager and existed_user.is_active is False:
+                raise ValidationError('User was inactive!')
+            raise ValidationError('Email already existed!')
 
         # create sub client object
         decoded_new_password = self.decode_password(self.request.data['password'])
@@ -1160,12 +1159,6 @@ class ClientCRUD(APIView):
                 setattr(client, field, request.data[field])
         client._password = False
         client.save()
-
-        # for field in update_fields:
-        #     if field in self.request.data:
-        #         setattr(client, field, request.data[field])
-                # data[field] = self.request.data[field]
-        # client.update(**data)
 
         if 'competing_schools' in self.request.data:
             client.competing_schools.clear()
