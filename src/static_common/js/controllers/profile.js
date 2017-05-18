@@ -374,7 +374,6 @@ controller('ProfileController',
 
       console.log("check set_permission = "+JSON.stringify($scope.set_permission));
       
-
       var object_ids = "";
       for(var key in $scope.set_permission){
 
@@ -552,7 +551,7 @@ controller('ProfileController',
 
 
         jQuery('#myModalSubuserView').modal('toggle');
-        
+
       var sub_program_addition = [];
       var sub_program_removal = [];
 
@@ -691,6 +690,32 @@ controller('ProfileController',
 
     } 
 
+    $scope.checkall = function(val){
+
+      for(var i=0; i<$scope.program_permission.length; i++){
+        console.log("i="+i);
+        console.log("$scope.program_permission[i].objectId="+$scope.program_permission[i].objectId);
+        
+        $scope.subuser_programs[$scope.program_permission[i].objectId] = val 
+
+      }
+
+
+    }
+
+    $scope.checkall_edit = function(val){
+
+      for(var i=0; i<$scope.program_permission.length; i++){
+        console.log("i="+i);
+        console.log("$scope.program_permission[i].objectId="+$scope.program_permission[i].objectId);
+        
+        $scope.set_permission[$scope.program_permission[i].objectId] = {};
+        $scope.set_permission[$scope.program_permission[i].objectId].checked = val 
+
+      }
+
+
+    }
 
 
 

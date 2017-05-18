@@ -63,7 +63,7 @@
         </div>
         <div class="block-content">
             <div class="table-responsive">
-            
+
                 <table class="table table-hover table-vcenter" st-pagination-scroll st-table="displayeddata" st-safe-src="client_data">
                     <colgroup>
                         <col width="5%" />
@@ -628,22 +628,22 @@
                                                                     </td>
                                                                     <td class="text-center">
                                                                         <div id="tab" class="btn-group" data-toggle="buttons-radio">
-                                                                            <a data-uib-tooltip="In progress" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_status='in progress';put_customer_program($index)" ng-class="{'active' : row.whoops_status==='in progress'||row.whoops_status==='in_progress'}" style="width:40px"><i class="fa fa-hourglass-start" aria-hidden="true"></i></a>
-                                                                            <a data-uib-tooltip="Done" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_status='done';put_customer_program($index)" ng-class="{'active' : row.whoops_status==='done'}"><i class="fa fa-hourglass-end" aria-hidden="true"></i></a>
+                                                                            <a data-uib-tooltip="In progress" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_status='in progress';put_customer_program($index); $event.stopPropagation();" ng-class="{'active' : row.whoops_status==='in progress'||row.whoops_status==='in_progress'}" style="width:40px"><i class="fa fa-hourglass-start" aria-hidden="true"></i></a>
+                                                                            <a data-uib-tooltip="Done" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_status='done';put_customer_program($index); $event.stopPropagation();" ng-class="{'active' : row.whoops_status==='done'}"><i class="fa fa-hourglass-end" aria-hidden="true"></i></a>
                                                                         </div>
                                                                     </td>
 
                                                                     <!-- whoops release -->
                                                                     <td class="text-center" ng-show="pwhide">
                                                                         <div id="tab" class="btn-group" data-toggle="buttons-radio">
-                                                                            <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='False';put_customer_program($index)" style="width:40px" ng-class="{'active' : row.whoops_final_release==='False'}"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                                            <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='True';put_customer_program($index)" ng-class="{'active' : row.whoops_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                                                                            <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='False';put_customer_program($index); $event.stopPropagation();" style="width:40px" ng-class="{'active' : row.whoops_final_release==='False'}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                                            <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='True';put_customer_program($index); $event.stopPropagation();" ng-class="{'active' : row.whoops_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
                                                                         </div>
                                                                     </td>
 
                                                                     <!-- view whoops -->
                                                                     <td class="text-center" ng-show="pwhide">
-                                                                        <a data-ui-sref="admin-reader({type: 'whoops', client_id: pwhide, object_id: row.customer_program_id, university: row.university, school: row.school, program: row.program_name, degree: row.program_degree})" target="_blank" type="button" class="btn btn-sm btn-info" data-uib-tooltip="View Whoops Report" data-tooltip-placement="top">
+                                                                        <a data-ui-sref="admin-reader({type: 'whoops', client_id: pwhide, object_id: row.customer_program_id, university: row.university, school: row.school, program: row.program_name, degree: row.program_degree})" target="_blank" type="button" class="btn btn-sm btn-info" data-uib-tooltip="View Whoops Report" data-tooltip-placement="top" ng-click="$event.stopPropagation();">
                                                                             <i class="fa fa-file-text-o">
                                                                                     </i>
                                                                         </a>
@@ -653,21 +653,21 @@
                                                                     <!-- enhancement release -->
                                                                     <td class="text-center" ng-show="pwhide">
                                                                         <div id="tab" class="btn-group" data-toggle="buttons-radio">
-                                                                            <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='False';put_customer_program($index)" ng-class="{'active' : row.enhancement_final_release==='False'}" style="width:40px"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                                            <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='True';put_customer_program($index)" ng-class="{'active' : row.enhancement_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                                                                            <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='False';put_customer_program($index); $event.stopPropagation();" ng-class="{'active' : row.enhancement_final_release==='False'}" style="width:40px"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                                            <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='True';put_customer_program($index); $event.stopPropagation();" ng-class="{'active' : row.enhancement_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
                                                                         </div>
                                                                     </td>
 
                                                                     <!-- view enhancement -->
                                                                     <td class="text-center" ng-show="pwhide">
-                                                                        <a data-ui-sref="admin-reader({type: 'enhancement', client_id: pwhide, object_id: row.customer_program_id, university: row.university, school: row.school, program: row.program_name, degree: row.program_degree})" target="_blank" type="button" class="btn btn-sm btn-info" data-uib-tooltip="View Enhancement Report" data-tooltip-placement="top">
+                                                                        <a data-ui-sref="admin-reader({type: 'enhancement', client_id: pwhide, object_id: row.customer_program_id, university: row.university, school: row.school, program: row.program_name, degree: row.program_degree})" target="_blank" type="button" class="btn btn-sm btn-info" data-uib-tooltip="View Enhancement Report" data-tooltip-placement="top" ng-click="$event.stopPropagation();">
                                                                             <i class="fa fa-file-text-o">
                                                                                     </i>
                                                                         </a>
                                                                     </td>
 
                                                                     <td class="text-center">
-                                                                        <button type="button" ng-click="removeItem($index)" class="btn btn-sm btn-danger" data-uib-tooltip="Delete" data-tooltip-placement="top">
+                                                                        <button type="button" ng-click="removeItem($index); $event.stopPropagation();" class="btn btn-sm btn-danger" data-uib-tooltip="Delete" data-tooltip-placement="top">
                                                                             <i class="fa fa-trash-o">
                                                         </i>
                                                                         </button>
