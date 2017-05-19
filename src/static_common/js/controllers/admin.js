@@ -19,6 +19,7 @@ angular.module('myApp').controller('AdminMainController',
         console.log("CLient = = = " + JSON.stringify($scope.client_data))
 
 
+    
         //For stats
         $scope.active_num = 0;
         $scope.client_num = Client.length;
@@ -297,41 +298,41 @@ angular.module('myApp').controller('AdminMainController',
         }, true);
 
 
-        $scope.removeItem = function(index) {
-            if ($scope.pwhide) {
+        // $scope.removeItem = function(index) {
+        //     if ($scope.pwhide) {
 
-                for (var i = 0; i < $scope.put_customer_program_array.length; i++) {
+        //         for (var i = 0; i < $scope.put_customer_program_array.length; i++) {
 
-                    if ($scope.selected_customprogram[index].customer_program_id === $scope.put_customer_program_array[i].customer_program_id) {
-                        $scope.put_customer_program_array.splice(i, 1)
-                        break;
-                    }
+        //             if ($scope.selected_customprogram[index].customer_program_id === $scope.put_customer_program_array[i].customer_program_id) {
+        //                 $scope.put_customer_program_array.splice(i, 1)
+        //                 break;
+        //             }
 
-                }
-
-
-                for (var i = 0; i < $scope.put_competing_program_array.length; i++) {
-
-                    if ($scope.selected_customprogram[index].customer_program_id === $scope.put_competing_program_array[i].customer_program_id) {
-                        $scope.put_competing_program_array.splice(i, 1)
-
-                    }
-
-                }
+        //         }
 
 
-                $scope.delete_customer_program_string = $scope.delete_customer_program_string + $scope.selected_customprogram[index].customer_program_id + '/'
-                $scope.selected_customprogram.splice(index, 1)
+        //         for (var i = 0; i < $scope.put_competing_program_array.length; i++) {
+
+        //             if ($scope.selected_customprogram[index].customer_program_id === $scope.put_competing_program_array[i].customer_program_id) {
+        //                 $scope.put_competing_program_array.splice(i, 1)
+
+        //             }
+
+        //         }
+
+
+        //         $scope.delete_customer_program_string = $scope.delete_customer_program_string + $scope.selected_customprogram[index].customer_program_id + '/'
+        //         $scope.selected_customprogram.splice(index, 1)
 
 
 
-            } else {
-                $scope.selected_customprogram.splice(index, 1)
-                console.log("index=" + index);
-                console.log("creating user")
-            }
+        //     } else {
+        //         $scope.selected_customprogram.splice(index, 1)
+        //         console.log("index=" + index);
+        //         console.log("creating user")
+        //     }
 
-        }
+        // }
 
 
 
@@ -439,6 +440,8 @@ angular.module('myApp').controller('AdminMainController',
                 $scope.generate_or_add = "Add program(s)"
                 $scope.pwhide = Id;
                 console.log("pwhide Id = " + Id);
+
+                $scope.editing_new = false
                 // Init simple wizard
                 initWizardSimple();
 
@@ -471,7 +474,7 @@ angular.module('myApp').controller('AdminMainController',
              
 
                     //init duallistbox
-                    $scope.listbox = $('#competingschools').bootstrapDualListbox({
+                    $scope.listbox = $('#competingschools2').bootstrapDualListbox({
                         nonSelectedListLabel: 'Available competing schools',
                         selectedListLabel: 'Chosen competing schools',
                         preserveSelectionOnMove: 'moved',
@@ -579,8 +582,7 @@ angular.module('myApp').controller('AdminMainController',
                             "whoops_status": $scope.customer_program[i].whoops_status,
                             "whoops_final_release": $scope.customer_program[i].whoops_final_release,
                             "enhancement_final_release": $scope.customer_program[i].enhancement_final_release,
-                            "whoops_final_release_alias": $scope.customer_program[i].whoops_final_release,
-                            "enhancement_final_release_alias": $scope.customer_program[i].enhancement_final_release,
+                            
                             "customerconfirmation_status": $scope.customer_program[i].customer_confirmation,
                             "competing_program": (function() {
                                 var programs = [];
@@ -594,8 +596,6 @@ angular.module('myApp').controller('AdminMainController',
                                     }
 
                                 }
-
-
 
                                 programs.sort(function(a, b) {
                                     return parseInt(a.order) - parseInt(b.order);
@@ -622,6 +622,9 @@ angular.module('myApp').controller('AdminMainController',
 
                     }
 
+
+
+                    console.log("$scope.selected_customprogram="+JSON.stringify($scope.selected_customprogram));
 
                     //only using for compare in submit to check new program
                     for (i = 0; i < $scope.customer_program.length; i++) {
@@ -736,6 +739,8 @@ angular.module('myApp').controller('AdminMainController',
                         var dep = value.department;
                         var depTemp = dep.replace('&', '!')
                         console.log("value=" + value.department)
+
+                        console.log('/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + ((depTemp === 'All') ? '' : ('&dep=' + (depTemp === 'Other' ? 'Others' : depTemp))))
                         $http({
                             url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.ceeb + ((depTemp === 'All') ? '' : ('&dep=' + (depTemp === 'Other' ? 'Others' : depTemp))),
                             method: 'GET',
@@ -751,28 +756,34 @@ angular.module('myApp').controller('AdminMainController',
 
                             console.log("each dep programs = " + JSON.stringify(response.data))
 
-                            for (var i = 0; i < response.data.length; i++)
-
+                            for (var i = 0; i < response.data.results.length; i++)
                             {
 
-                                $scope.all_programs.push(response.data[i])
+                                $scope.all_programs.push(response.data.results[i])
 
-                                var exist_in_selected = false
-                                for (var j = 0; j < $scope.selected_customprogram.length; j++) {
-                                    if (response.data[i].object_id === $scope.selected_customprogram[j].program_id) {
-                                        exist_in_selected = true;
-                                        break;
-                                    }
-                                }
+                                // var exist_in_selected = false
+                                // for (var j = 0; j < $scope.selected_customprogram.length; j++) {
+                                //     if (response.data[i].object_id === $scope.selected_customprogram[j].program_id) {
+                                //         exist_in_selected = true;
+                                //         break;
+                                //     }
+                                // }
 
-                                if (exist_in_selected === false) {
-                                    response.data[i].department = dep;
-                                    $scope.unselected_programs.push(response.data[i]);
-                                }
+                                // if (exist_in_selected === false) {
+                                //     response.data[i].department = dep;
+                                //     $scope.unselected_programs.push(response.data[i]);
+                                // }
+
+
+                                    response.data.results[i].department = dep;
+                                    $scope.unselected_programs.push(response.data.results[i]);
+                                console.log("$scope.unselected_programs="+JSON.stringify($scope.unselected_programs));
 
                             }
+
+                            
                             console.log("edit dep = " + dep);
-                            console.log("exist $scope.unselected_programs = " + JSON.stringify($scope.unselected_programs));
+                            //console.log("exist $scope.unselected_programs = " + JSON.stringify($scope.unselected_programs));
                             /////////
 
 
@@ -796,6 +807,79 @@ angular.module('myApp').controller('AdminMainController',
                         });
 
                     });
+
+
+
+
+
+
+                    //////
+
+
+                    $scope.competing_string = "";
+
+                    var competing_list = document.getElementById("bootstrap-duallistbox-selected-list_");
+                    for (i = 0; i < competing_list.options.length; i++) {
+                        $scope.competing_string = $scope.competing_string + competing_list.options[i].value + '/';
+                    }
+
+                    console.log('/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.competing_string.slice(0, -1));
+                    jQuery(".js-data-example-ajax").select2({
+                  ajax: {
+                    url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.competing_string.slice(0, -1),
+                    dataType: 'json',
+                    headers: {
+                            'Authorization': 'JWT ' + token
+                          },
+
+                    
+
+                    data: function (params) {
+                      var query = {
+                        search: params.term,
+                        page: params.page
+                      }
+
+                      console.log("query="+JSON.stringify(query));
+                      // Query paramters will be ?search=[term]&page=[page]
+                      return query;
+                    },
+
+                    processResults: function (data, params) {
+                      // parse the results into the format expected by Select2
+                      // since we are using custom formatting functions we do not need to
+                      // alter the remote JSON data, except to indicate that infinite
+                      // scrolling can be used
+                      params.page = params.page || 1;
+                      console.log("data="+JSON.stringify(data))
+                      console.log("params="+JSON.stringify(params))
+                      return {
+                        results: data.results.map(function(item){
+                            return {
+
+                                id: item.object_id,
+                                text: item.program_name + '(' +item.program_degree + ')'+ '['+item.program_university +'-'+ item.program_school +']',
+
+
+                            }
+                        }),
+
+                        pagination: {
+                          more: (params.page * 10) < data.count
+                        }
+                        
+                      };
+                    },
+                    cache: true
+                  },
+
+                  // minimumInputLength: 3,
+                  
+                  
+                });        //
+                
+
+
 
 
                     jQuery('.js-wizard-simple').bootstrapWizard('first');
@@ -969,6 +1053,7 @@ angular.module('myApp').controller('AdminMainController',
 
 
         }
+
 
 
         $scope.submit_add = function() {
@@ -1275,8 +1360,101 @@ angular.module('myApp').controller('AdminMainController',
         }
 
 
+        $scope.submit_edit = function() {
+            $scope.editing_new = true;
+
+
+            var competing_array = [];
+            var competing_list = document.getElementById("bootstrap-duallistbox-selected-list_");
+            for (i = 0; i < competing_list.options.length; i++) {
+                competing_array.push(competing_list.options[i].value);
+            }
+            console.log("competing_array=" + JSON.stringify(competing_array));
+
+            var competing_schools_obj = [];
+            for (i = 0; i < competing_array.length; i++) {
+                competing_schools_obj.push({
+                    "object_id": competing_array[i]
+                })
+            }
+
+            console.log("competing_schools_obj" + JSON.stringify(competing_schools_obj));
+
+
+                console.log("editing");
+
+
+                console.log("$scope.is_demo = " + $scope.is_demo);
+
+                //PUT general data
+                $http({
+                    url: '/api/upgrid/accountmanager/client/',
+                    method: 'PUT',
+                    data: {
+
+                        "client_id": $scope.pwhide,
+                        "main_user_id": null,
+                        "username": $scope.account_name,
+                        "email": $scope.email,
+                        "Ceeb": $scope.ceeb,
+                        "account_type": $scope.account_type,
+                        "title": $scope.title,
+                        "contact_name": $scope.client_name,
+                        "position": $scope.position,
+                        "position_level": $scope.position_level,
+                        "phone": $scope.phone,
+                        "service_until": '20' + $scope.expiration_date.split('/')[2] + '-' + $scope.expiration_date.split('/')[0] + '-' + $scope.expiration_date.split('/')[1] + 'T00:00:00+00:00',
+                        "department": $scope.department,
+                        "service_level": $scope.service_level,
+                        "competing_schools": competing_schools_obj,
+                        "is_demo": $scope.is_demo
+
+                    },
+                    headers: {
+                        'Authorization': 'JWT ' + token,
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function(response) {
+
+
+
+
+                     $.notify({
+
+                        // options
+                        icon: "fa fa-check",
+                        message: 'The client has been updated.'
+                    }, {
+                        // settings
+                        type: 'success',
+                        placement: {
+                            from: "top",
+                            align: "center"
+                        },
+                        z_index: 1999,
+                    });
+                         
+                    $scope.editing_new = false
+                    //console.log("submit program list = "+JSON.stringify($scope.selected_customprogram));
+                }).
+                catch(function(error) {
+                    console.log('an error occurred...' + JSON.stringify(error));
+                    $scope.editing_new = false
+
+                });
+
+            
+
+
+        }
+
+
+
+
+
 
         $scope.generate_table_add = function() {
+
             $scope.showtable = false;
 
 
@@ -1392,8 +1570,7 @@ angular.module('myApp').controller('AdminMainController',
                             "whoops_status": $scope.customer_program[i].whoops_status,
                             "whoops_final_release": $scope.customer_program[i].whoops_final_release,
                             "enhancement_final_release": $scope.customer_program[i].enhancement_final_release,
-                            "whoops_final_release_alias": $scope.customer_program[i].whoops_final_release,
-                            "enhancement_final_release_alias": $scope.customer_program[i].enhancement_final_release,
+                           
                             "customerconfirmation_status": $scope.customer_program[i].customer_confirmation,
                             "competing_program": (function() {
                                 var programs = [];
@@ -1531,58 +1708,58 @@ angular.module('myApp').controller('AdminMainController',
         }
 
 
-        $scope.put_customer_program = function(index) {
-            if ($scope.pwhide) {
-                console.log("changed program is " + JSON.stringify($scope.selected_customprogram[index]))
+        // $scope.put_customer_program = function(index) {
+        //     if ($scope.pwhide) {
+        //         console.log("changed program is " + JSON.stringify($scope.selected_customprogram[index]))
 
 
-                var isInArray = false;
+        //         var isInArray = false;
 
 
 
-                for (var i = 0; i < $scope.put_customer_program_array.length; i++) {
+        //         for (var i = 0; i < $scope.put_customer_program_array.length; i++) {
 
-                    if ($scope.selected_customprogram[index].customer_program_id === $scope.put_customer_program_array[i].customer_program_id) {
-                        isInArray = true;
-                        break;
-                    }
+        //             if ($scope.selected_customprogram[index].customer_program_id === $scope.put_customer_program_array[i].customer_program_id) {
+        //                 isInArray = true;
+        //                 break;
+        //             }
 
-                }
+        //         }
 
-                console.log("i=" + i)
+        //         console.log("i=" + i)
 
-                if (isInArray) {
-                    $scope.put_customer_program_array[i] = {
-                        'program_id': $scope.selected_customprogram[index].program_id,
-                        'customer_program_id': $scope.selected_customprogram[index].customer_program_id,
-                        'whoops_status': $scope.selected_customprogram[index].whoops_status,
-                        'whoops_final_release': $scope.selected_customprogram[index].whoops_final_release,
-                        'enhancement_final_release': $scope.selected_customprogram[index].enhancement_final_release,
-                        'customer_confirmation': $scope.selected_customprogram[index].customerconfirmation_status,
-                    }
+        //         if (isInArray) {
+        //             $scope.put_customer_program_array[i] = {
+        //                 'program_id': $scope.selected_customprogram[index].program_id,
+        //                 'customer_program_id': $scope.selected_customprogram[index].customer_program_id,
+        //                 'whoops_status': $scope.selected_customprogram[index].whoops_status,
+        //                 'whoops_final_release': $scope.selected_customprogram[index].whoops_final_release,
+        //                 'enhancement_final_release': $scope.selected_customprogram[index].enhancement_final_release,
+        //                 'customer_confirmation': $scope.selected_customprogram[index].customerconfirmation_status,
+        //             }
 
-                } else {
-                    $scope.put_customer_program_array.push({
-                        'program_id': $scope.selected_customprogram[index].program_id,
-                        'customer_program_id': $scope.selected_customprogram[index].customer_program_id,
-                        'whoops_status': $scope.selected_customprogram[index].whoops_status,
-                        'whoops_final_release': $scope.selected_customprogram[index].whoops_final_release,
-                        'enhancement_final_release': $scope.selected_customprogram[index].enhancement_final_release,
-                        'customer_confirmation': $scope.selected_customprogram[index].customerconfirmation_status,
-                    })
-                }
-
-
-                // if(put_customer_program_array)
-
-                // $scope.put_customer_program_array.push()
-                console.log("put_customer_program_array= " + JSON.stringify($scope.put_customer_program_array));
+        //         } else {
+        //             $scope.put_customer_program_array.push({
+        //                 'program_id': $scope.selected_customprogram[index].program_id,
+        //                 'customer_program_id': $scope.selected_customprogram[index].customer_program_id,
+        //                 'whoops_status': $scope.selected_customprogram[index].whoops_status,
+        //                 'whoops_final_release': $scope.selected_customprogram[index].whoops_final_release,
+        //                 'enhancement_final_release': $scope.selected_customprogram[index].enhancement_final_release,
+        //                 'customer_confirmation': $scope.selected_customprogram[index].customerconfirmation_status,
+        //             })
+        //         }
 
 
-            } else {
-                console.log("creating user")
-            }
-        }
+        //         // if(put_customer_program_array)
+
+        //         // $scope.put_customer_program_array.push()
+        //         console.log("put_customer_program_array= " + JSON.stringify($scope.put_customer_program_array));
+
+
+        //     } else {
+        //         console.log("creating user")
+        //     }
+        // }
 
 
         $scope.submit = function() {
@@ -2368,6 +2545,338 @@ angular.module('myApp').controller('AdminMainController',
                 "order": $scope.selected_customprogram[Pid].competing_program[id].order + 1,
                 "enhancement_status": "in progress"
             });
+
+        }
+
+
+        $scope.post_customer_program = function (added){
+
+            $scope.add_edit_program = [];
+
+            $scope.add_edit_program.push({
+                    "program_id": added.object_id,
+                    "program_name": added.program_name,
+                    "program_degree": added.program_degree,
+                    "assignment_status": added.assignment_status,
+                    "review_status": added.review_status,
+                    "whoops_status": "in progress",
+                    "whoops_final_release": "False",
+                    "enhancement_final_release": "False",
+
+                    "competing_program": (function() {
+                        var programs = [];
+                        for (var j = 0; j < 1; j++) {
+                            programs[j] = {
+
+                                "object_id": "",
+                                "order": j + 1,
+                                "enhancement_status": "in progress"
+                            }
+
+                        }
+                       
+                       
+                        return programs;
+
+                    })(),
+
+                });
+
+
+            // $scope.add_edit_program.push({
+            //                 "program_id": $scope.selected_customprogram[i].program_id,
+            //                 "program_name": $scope.selected_customprogram[i].program_name,
+            //                 "program_degree": $scope.selected_customprogram[i].program_degree,
+            //                 "assignment_status": $scope.selected_customprogram[i].assignment_status,
+            //                 "review_status": $scope.selected_customprogram[i].review_status,
+            //                 "whoops_status": "in progress",
+            //                 "whoops_final_release": "False",
+            //                 "enhancement_final_release": "False",
+
+            //                 "competing_program": (function() {
+            //                     var programs = [];
+            //                     for (var k = 0; k < 1; k++) {
+            //                         programs[k] = {
+
+            //                             "object_id": "",
+            //                             "order": k + 1,
+            //                             "enhancement_status": "in progress"
+            //                         }
+
+            //                     }
+            //                     // programs.sort(function(a, b) {
+            //                     //   return (a.programName.toLowerCase() > b.programName.toLowerCase()) ? 1 : ((b.programName.toLowerCase() > a.programName.toLowerCase()) ? -1 : 0);
+            //                     // });
+            //                     return programs;
+
+            //                 })(),
+
+            //             });
+
+
+            
+                 $http({
+                        url: '/api/upgrid/accountmanager/client/customer_program/',
+                        method: 'POST',
+                        data: {
+                            'client_id': $scope.pwhide,
+                            "selected_customer_program": $scope.add_edit_program
+                        },
+                        headers: {
+                            'Authorization': 'JWT ' + token
+                        }
+                  
+                }).then(function(response) {
+
+
+            console.log("success add customer program" + JSON.stringify(response));
+
+
+            return  $http({
+                        url: '/api/upgrid/accountmanager/client/' + $scope.pwhide,
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'JWT ' + token
+                        }
+
+                  
+                     });
+
+                }).then(function(response) {
+
+
+                    $scope.customer_program = response.data.customer_program;
+                    console.log("$scope.customer_program="+JSON.stringify($scope.customer_program));
+
+                //generate selected_customprogram list
+                    $scope.selected_customprogram = [];
+                   
+
+                    for (i = 0; i < $scope.customer_program.length; i++) {
+
+                        console.log("i=" + i)
+
+                        $scope.selected_customprogram.push({
+                            "customer_program_id": $scope.customer_program[i].object_id,
+                            "program_id": $scope.customer_program[i].program.object_id,
+                            "university": $scope.customer_program[i].program.program_display.split('--')[0].split('-')[0].split(':')[1],
+                            "school": $scope.customer_program[i].program.program_display.split('--')[0].split('-')[1],
+                            "program_name": $scope.customer_program[i].program.program_display.split('--')[1],
+                            "program_degree": $scope.customer_program[i].program.program_display.split('--')[2],
+                            "assignment_status": $scope.customer_program[i].program.assignment_status,
+                            "review_status": $scope.customer_program[i].program.review_status,
+                            "whoops_status": $scope.customer_program[i].whoops_status,
+                            "whoops_final_release": $scope.customer_program[i].whoops_final_release,
+                            "enhancement_final_release": $scope.customer_program[i].enhancement_final_release,
+                           
+                            "customerconfirmation_status": $scope.customer_program[i].customer_confirmation,
+                            "competing_program": (function() {
+                                var programs = [];
+                                //to fix
+                                for (j = 0; j < $scope.customer_program[i].competing_program.length; j++) {
+                                    programs[j] = {
+                                        "object_id": $scope.customer_program[i].competing_program[j].object_id,
+                                        "program_id": $scope.customer_program[i].competing_program[j].program_id,
+                                        "order": $scope.customer_program[i].competing_program[j].order,
+                                        "enhancement_status": $scope.customer_program[i].competing_program[j].enhancement_status
+                                    }
+
+                                }
+
+
+
+                                programs.sort(function(a, b) {
+                                    return parseInt(a.order) - parseInt(b.order);
+                                });
+
+                                if (programs.length === 0) {
+                                    programs.push({
+                                        "object_id": null,
+                                        "program_id": null,
+                                        "order": 1,
+                                        "enhancement_status": "in progress"
+
+                                    })
+                                }
+
+                                // programs.sort(function(a, b) {
+                                //   return (a.order.toLowerCase() > b.programName.toLowerCase()) ? 1 : ((b.programName.toLowerCase() > a.programName.toLowerCase()) ? -1 : 0);
+                                // });
+                                return programs;
+
+                            })(),
+
+                        });
+
+                    }
+
+
+                    console.log("$scope.selected_customprogram="+JSON.stringify($scope.selected_customprogram));
+
+
+
+        }).
+        catch(function(error) {
+            console.log('an error occurred...' + JSON.stringify(error));
+
+        });
+
+        }
+
+
+
+
+        $scope.put_customer_program = function(index) {
+            
+
+            $scope.put_customer_program_array.push({
+                'program_id': $scope.selected_customprogram[index].program_id,
+                'customer_program_id': $scope.selected_customprogram[index].customer_program_id,
+                'whoops_status': $scope.selected_customprogram[index].whoops_status,
+                'whoops_final_release': $scope.selected_customprogram[index].whoops_final_release,
+                'enhancement_final_release': $scope.selected_customprogram[index].enhancement_final_release,
+                'customer_confirmation': $scope.selected_customprogram[index].customerconfirmation_status,
+            })
+        
+            console.log("$scope.put_customer_program_array="+JSON.stringify($scope.put_customer_program_array));
+
+            $http({
+
+                url: '/api/upgrid/accountmanager/client/customer_program/',
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'JWT ' + token
+                },
+                data: {
+                    "client_id": $scope.pwhide,
+                    'selected_customer_program': $scope.put_customer_program_array
+                }
+
+            }).then(function (response) {
+
+               $scope.details = response.data;
+
+               console.log("return data"+ JSON.stringify(response.data));
+               
+            }).
+             catch(function(error){
+                console.log('an error occurred...'+JSON.stringify(error));
+
+             });
+
+        }
+
+
+
+        $scope.delete_customer_program = function (index){
+
+            $scope.delete_customer_program_string = $scope.selected_customprogram[index].customer_program_id
+
+            $http({
+                url: '/api/upgrid/accountmanager/client/customer_program/',
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'JWT ' + token,
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    'client_id': $scope.pwhide,
+                    'customer_program_id': $scope.delete_customer_program_string
+                }
+
+            }).then(function(response) {
+
+            console.log("success delete customer program" + JSON.stringify(response));
+
+
+            return  $http({
+                        url: '/api/upgrid/accountmanager/client/' + $scope.pwhide,
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'JWT ' + token
+                        }
+
+                  
+                     });
+
+                }).then(function(response) {
+
+
+                    $scope.customer_program = response.data.customer_program;
+                    console.log("$scope.customer_program="+JSON.stringify($scope.customer_program));
+
+                //generate selected_customprogram list
+                    $scope.selected_customprogram = [];
+                    $scope.selected_customprogram_copy = [];
+
+                    for (i = 0; i < $scope.customer_program.length; i++) {
+
+                        console.log("i=" + i)
+
+                        $scope.selected_customprogram.push({
+                            "customer_program_id": $scope.customer_program[i].object_id,
+                            "program_id": $scope.customer_program[i].program.object_id,
+                            "university": $scope.customer_program[i].program.program_display.split('--')[0].split('-')[0].split(':')[1],
+                            "school": $scope.customer_program[i].program.program_display.split('--')[0].split('-')[1],
+                            "program_name": $scope.customer_program[i].program.program_display.split('--')[1],
+                            "program_degree": $scope.customer_program[i].program.program_display.split('--')[2],
+                            "assignment_status": $scope.customer_program[i].program.assignment_status,
+                            "review_status": $scope.customer_program[i].program.review_status,
+                            "whoops_status": $scope.customer_program[i].whoops_status,
+                            "whoops_final_release": $scope.customer_program[i].whoops_final_release,
+                            "enhancement_final_release": $scope.customer_program[i].enhancement_final_release,
+                           
+                            "customerconfirmation_status": $scope.customer_program[i].customer_confirmation,
+                            "competing_program": (function() {
+                                var programs = [];
+                                //to fix
+                                for (j = 0; j < $scope.customer_program[i].competing_program.length; j++) {
+                                    programs[j] = {
+                                        "object_id": $scope.customer_program[i].competing_program[j].object_id,
+                                        "program_id": $scope.customer_program[i].competing_program[j].program_id,
+                                        "order": $scope.customer_program[i].competing_program[j].order,
+                                        "enhancement_status": $scope.customer_program[i].competing_program[j].enhancement_status
+                                    }
+
+                                }
+
+
+
+                                programs.sort(function(a, b) {
+                                    return parseInt(a.order) - parseInt(b.order);
+                                });
+
+                                if (programs.length === 0) {
+                                    programs.push({
+                                        "object_id": null,
+                                        "program_id": null,
+                                        "order": 1,
+                                        "enhancement_status": "in progress"
+
+                                    })
+                                }
+
+                                // programs.sort(function(a, b) {
+                                //   return (a.order.toLowerCase() > b.programName.toLowerCase()) ? 1 : ((b.programName.toLowerCase() > a.programName.toLowerCase()) ? -1 : 0);
+                                // });
+                                return programs;
+
+                            })(),
+
+                        });
+
+                    }
+
+
+                    console.log("$scope.selected_customprogram="+JSON.stringify($scope.selected_customprogram));
+
+
+
+        }).
+        catch(function(error) {
+            console.log('an error occurred...' + JSON.stringify(error));
+
+        });
 
         }
 

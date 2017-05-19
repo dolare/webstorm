@@ -41,7 +41,7 @@ from ceeb_program.models import (
     )
 
 # lib in same project
-from .pagination import CustomerPageNumberPagination
+from .pagination import CustomerPageNumberPagination,CompetingPageNumberPagination
 from .models import (
     UpgridAccountManager, UniversityCustomer, UniversityCustomerProgram,
     CustomerCompetingProgram, ClientAndProgramRelation, WhoopsReports,
@@ -1459,8 +1459,8 @@ class DepartmentAPI(APIView):
 class CustomerAndCompetingProgramAPI(generics.ListAPIView):
     serializer_class = CustomerAndCompetingProgramSerializer
     permission_classes = ((IsAuthenticated,))
-    pagination_class = CustomerPageNumberPagination
-    search_fields = ['program_name','program_degree']    # pagination_class = CustomerPageNumberPagination
+    pagination_class = CompetingPageNumberPagination
+    #search_fields = ['program_name','program_degree']    # pagination_class = CustomerPageNumberPagination
     filter_backend = [SearchFilter,OrderingFilter]
 
     def is_manager(self, request):
@@ -1471,8 +1471,16 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
             return False
 
     def get_queryset(self, *args, **kwargs):
-        ceeb = self.request.GET.get("ceeb")
-        department = self.request.GET.get("dep")
+        ceeb = ""
+        department = ""
+        search = ""
+        if 'ceeb' in self.request.GET.keys():
+            ceeb = self.request.GET.get("ceeb")
+        if 'dep' in self.request.GET.keys():
+            department = self.request.GET.get("dep")
+        if 'search' in self.request.GET.keys():
+            search = self.request.GET.get('search')
+
         arr = self.request.get_full_path()
         arr = arr.split('&')
         if department != None:
@@ -1481,6 +1489,11 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
         total_ceeb = ceeb.split('/')
         if self.is_manager(self.request):
             query_list = Program.objects.all()
+            query_list = query_list.filter(Q(program_name__icontains = search)|
+                    Q(university_school__university__icontains = search)|
+                    Q(degree__description__icontains = search)|
+                    Q(degree__name__icontains = search)|
+                    Q(university_school__school__icontains = search))
             if total_ceeb:
                 query_list = query_list.filter(
                     Q(university_school__in=total_ceeb)
