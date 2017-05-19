@@ -337,6 +337,13 @@ angular.module('myApp').controller('AdminMainController',
 
          //for add and edit
         $scope.addnew = function(Id) {
+
+            $scope.show_program = false
+            $scope.success_client_id = null;
+
+            $scope.adding_new = false;
+            //$scope.success_client_id = "ec77b4dd-d80f-4ee1-9ed3-df826ce37749";
+
             $scope.pwhide = Id;
             console.log("pwhide Id= " + Id)
             App.blocks('#client_block', 'state_loading');
@@ -377,7 +384,17 @@ angular.module('myApp').controller('AdminMainController',
             }).then(function(response) {
 
                
-                $scope.listbox = $('#competingschools').bootstrapDualListbox({
+                // $scope.listbox = $('#competingschools').bootstrapDualListbox({
+                //     nonSelectedListLabel: 'Available competing schools',
+                //     selectedListLabel: 'Chosen competing schools',
+                //     preserveSelectionOnMove: 'moved',
+                //     moveOnSelect: false,
+                //     infoText: 'Total: {0}',
+                //     selectorMinimalHeight: 200
+
+                // });
+
+                $scope.listbox = $('#competingschools1').bootstrapDualListbox({
                     nonSelectedListLabel: 'Available competing schools',
                     selectedListLabel: 'Chosen competing schools',
                     preserveSelectionOnMove: 'moved',
@@ -397,6 +414,7 @@ angular.module('myApp').controller('AdminMainController',
                 for (i = 0; i < $scope.get_ceebs.length; i++) {
                     competing_schools_options = competing_schools_options + "<option value='" + $scope.get_ceebs[i].object_id + "'>" + $scope.get_ceebs[i].university_school + "</option>";
                 }
+                console.log("competing_schools_options = "+competing_schools_options)
 
                 $scope.listbox.find('option').remove().end().append(competing_schools_options);
                 $scope.listbox.bootstrapDualListbox('refresh', true);
@@ -947,6 +965,195 @@ angular.module('myApp').controller('AdminMainController',
         }
 
 
+        $scope.submit_add = function() {
+
+            $scope.adding_new = true;
+            var competing_array = [];
+            var competing_list = document.getElementById("bootstrap-duallistbox-selected-list_");
+            for (i = 0; i < competing_list.options.length; i++) {
+                competing_array.push(competing_list.options[i].value);
+            }
+            console.log("competing_array=" + JSON.stringify(competing_array));
+
+            var competing_schools_obj = [];
+            for (i = 0; i < competing_array.length; i++) {
+                competing_schools_obj.push({
+                    "object_id": competing_array[i]
+                })
+            }
+
+            console.log("competing_schools_obj" + JSON.stringify(competing_schools_obj));
+
+
+
+
+            // adding
+            var Base64 = {
+                    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+                    encode: function(e) {
+                        var t = "";
+                        var n, r, i, s, o, u, a;
+                        var f = 0;
+                        e = Base64._utf8_encode(e);
+                        while (f < e.length) {
+                            n = e.charCodeAt(f++);
+                            r = e.charCodeAt(f++);
+                            i = e.charCodeAt(f++);
+                            s = n >> 2;
+                            o = (n & 3) << 4 | r >> 4;
+                            u = (r & 15) << 2 | i >> 6;
+                            a = i & 63;
+                            if (isNaN(r)) {
+                                u = a = 64
+                            } else if (isNaN(i)) {
+                                a = 64
+                            }
+                            t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
+                        }
+                        return t
+                    },
+                    decode: function(e) {
+                        var t = "";
+                        var n, r, i;
+                        var s, o, u, a;
+                        var f = 0;
+                        e = e.replace(/[^A-Za-z0-9+/=]/g, "");
+                        while (f < e.length) {
+                            s = this._keyStr.indexOf(e.charAt(f++));
+                            o = this._keyStr.indexOf(e.charAt(f++));
+                            u = this._keyStr.indexOf(e.charAt(f++));
+                            a = this._keyStr.indexOf(e.charAt(f++));
+                            n = s << 2 | o >> 4;
+                            r = (o & 15) << 4 | u >> 2;
+                            i = (u & 3) << 6 | a;
+                            t = t + String.fromCharCode(n);
+                            if (u != 64) {
+                                t = t + String.fromCharCode(r)
+                            }
+                            if (a != 64) {
+                                t = t + String.fromCharCode(i)
+                            }
+                        }
+                        t = Base64._utf8_decode(t);
+                        return t
+                    },
+                    _utf8_encode: function(e) {
+                        e = e.replace(/rn/g, "n");
+                        var t = "";
+                        for (var n = 0; n < e.length; n++) {
+                            var r = e.charCodeAt(n);
+                            if (r < 128) {
+                                t += String.fromCharCode(r)
+                            } else if (r > 127 && r < 2048) {
+                                t += String.fromCharCode(r >> 6 | 192);
+                                t += String.fromCharCode(r & 63 | 128)
+                            } else {
+                                t += String.fromCharCode(r >> 12 | 224);
+                                t += String.fromCharCode(r >> 6 & 63 | 128);
+                                t += String.fromCharCode(r & 63 | 128)
+                            }
+                        }
+                        return t
+                    },
+                    _utf8_decode: function(e) {
+                        var t = "";
+                        var n = 0;
+                        var r = c1 = c2 = 0;
+                        while (n < e.length) {
+                            r = e.charCodeAt(n);
+                            if (r < 128) {
+                                t += String.fromCharCode(r);
+                                n++
+                            } else if (r > 191 && r < 224) {
+                                c2 = e.charCodeAt(n + 1);
+                                t += String.fromCharCode((r & 31) << 6 | c2 & 63);
+                                n += 2
+                            } else {
+                                c2 = e.charCodeAt(n + 1);
+                                c3 = e.charCodeAt(n + 2);
+                                t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+                                n += 3
+                            }
+                        }
+                        return t
+                    }
+                }
+
+
+                console.log("is_demo=" + $scope.is_demo);
+                //*************************************************create user
+                //"selected_customerprogram": $scope.selected_customprogram
+                $http({
+                    url: '/api/upgrid/accountmanager/client/',
+                    method: 'POST',
+                    data: {
+                        "username": $scope.account_name + "@M",
+                        "email": $scope.email,
+                        "ceeb": $scope.ceeb,
+                        "account_type": $scope.account_type,
+                        "title": $scope.title,
+                        "contact_name": $scope.client_name,
+                        "position": $scope.position,
+                        "position_level": $scope.position_level,
+                        "phone": $scope.phone,
+                        "service_until": '20' + $scope.expiration_date.split('/')[2] + '-' + $scope.expiration_date.split('/')[0] + '-' + $scope.expiration_date.split('/')[1] + 'T00:00:00+00:00',
+                        "password": Base64.encode($scope.password_confirm),
+                        "department": $scope.department,
+                        "service_level": $scope.service_level,
+                        "competing_schools": competing_schools_obj,
+                        "isDemo": $scope.is_demo
+                    },
+                    headers: {
+                        'Authorization': 'JWT ' + token,
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function(response) {
+
+
+                    $scope.success_client_id = response.data.client_id;
+
+                    apiService.getClient(token).then(function (result) {
+            
+                    console.log("$scope.success_client_id="+$scope.success_client_id)
+                          
+                    console.log("result===="+JSON.stringify(result))
+                    //$scope.client_data = result;
+                    $scope.client_data = tableDataService.getClientList(result);
+                        //$scope.() = [].concat($scope.selected_customprogram);
+                    //$scope.$broadcast('refreshProducts');
+
+                    //jQuery('#modal-large').modal('toggle');
+
+                    $scope.adding_new = false;
+
+                    $.notify({
+
+                        // options
+                        icon: "fa fa-check",
+                        message: 'The client has been created.'
+                    }, {
+                        // settings
+                        type: 'success',
+                        placement: {
+                            from: "top",
+                            align: "center"
+                        },
+                        z_index: 1999,
+                    });
+                            
+                           
+                    });
+
+
+                }).
+                catch(function(error) {
+                    console.log('an error occurred...' + JSON.stringify(error));
+
+                });
+
+        }
+
+
 
         $scope.observe_checkbox = function(Pid, Id) {
             console.log(Pid + ' ' + Id);
@@ -1058,6 +1265,181 @@ angular.module('myApp').controller('AdminMainController',
                 });
 
             }
+
+        }
+
+
+
+        $scope.generate_table_add = function() {
+            $scope.showtable = false;
+
+
+            $scope.rowCollection_new = [];
+
+            for (var i = 0; i < $scope.dep_pro_table.length; i++) {
+
+                for (j = 0; j < $scope.dep_pro_table[i].programs.length; j++) {
+                    if ($scope.dep_pro_table[i].programs[j].isTrue === true) {
+                        $scope.rowCollection_new.push($scope.dep_pro_table[i].programs[j]);
+                    }
+                }
+
+            }
+
+
+            console.log("$scope.rowCollection_new = " + JSON.stringify($scope.rowCollection_new));
+
+
+
+            $scope.selected_customprogram = [];
+
+            for (i = 0; i < $scope.rowCollection_new.length; i++) {
+
+                console.log("i=" + i)
+                    //"customerconfirmation_status": "",
+                $scope.selected_customprogram.push({
+                    "program_id": $scope.rowCollection_new[i].object_id,
+                    "program_name": $scope.rowCollection_new[i].program_name,
+                    "program_degree": $scope.rowCollection_new[i].program_degree,
+                    "assignment_status": $scope.rowCollection_new[i].assignment_status,
+                    "review_status": $scope.rowCollection_new[i].review_status,
+                    "whoops_status": "in progress",
+                    "whoops_final_release": "False",
+                    "enhancement_final_release": "False",
+
+                    "competing_program": (function() {
+                        var programs = [];
+                        for (var j = 0; j < 1; j++) {
+                            programs[j] = {
+
+                                "object_id": "",
+                                "order": j + 1,
+                                "enhancement_status": "in progress"
+                            }
+
+                        }
+                        // programs.sort(function(a, b) {
+                        //   return (a.programName.toLowerCase() > b.programName.toLowerCase()) ? 1 : ((b.programName.toLowerCase() > a.programName.toLowerCase()) ? -1 : 0);
+                        // });
+                        return programs;
+
+                    })(),
+
+                });
+
+            } // end of loop
+
+
+
+
+               $http({
+                        url: '/api/upgrid/accountmanager/client/customer_program/',
+                        method: 'POST',
+                        data: {
+                            'client_id': $scope.success_client_id,
+                            "selected_customer_program": $scope.selected_customprogram
+                        },
+                        headers: {
+                            'Authorization': 'JWT ' + token
+                        }
+                    
+
+                }).then(function(response) {
+
+
+                    
+                   console.log("programsadded....")
+
+                   return  $http({
+                        url: '/api/upgrid/accountmanager/client/' + $scope.success_client_id,
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'JWT ' + token
+                        }
+
+                  
+                     });
+
+                }).then(function(response) {
+
+
+                    $scope.customer_program = response.data.customer_program;
+
+
+                //generate selected_customprogram list
+                    $scope.selected_customprogram = [];
+                    $scope.selected_customprogram_copy = [];
+
+                    for (i = 0; i < $scope.customer_program.length; i++) {
+
+                        console.log("i=" + i)
+
+                        $scope.selected_customprogram.push({
+                            "customer_program_id": $scope.customer_program[i].object_id,
+                            "program_id": $scope.customer_program[i].program.object_id,
+                            "university": $scope.customer_program[i].program.program_display.split('--')[0].split('-')[0].split(':')[1],
+                            "school": $scope.customer_program[i].program.program_display.split('--')[0].split('-')[1],
+                            "program_name": $scope.customer_program[i].program.program_display.split('--')[1],
+                            "program_degree": $scope.customer_program[i].program.program_display.split('--')[2],
+                            "assignment_status": $scope.customer_program[i].program.assignment_status,
+                            "review_status": $scope.customer_program[i].program.review_status,
+                            "whoops_status": $scope.customer_program[i].whoops_status,
+                            "whoops_final_release": $scope.customer_program[i].whoops_final_release,
+                            "enhancement_final_release": $scope.customer_program[i].enhancement_final_release,
+                            "whoops_final_release_alias": $scope.customer_program[i].whoops_final_release,
+                            "enhancement_final_release_alias": $scope.customer_program[i].enhancement_final_release,
+                            "customerconfirmation_status": $scope.customer_program[i].customer_confirmation,
+                            "competing_program": (function() {
+                                var programs = [];
+                                //to fix
+                                for (j = 0; j < $scope.customer_program[i].competing_program.length; j++) {
+                                    programs[j] = {
+                                        "object_id": $scope.customer_program[i].competing_program[j].object_id,
+                                        "program_id": $scope.customer_program[i].competing_program[j].program_id,
+                                        "order": $scope.customer_program[i].competing_program[j].order,
+                                        "enhancement_status": $scope.customer_program[i].competing_program[j].enhancement_status
+                                    }
+
+                                }
+
+
+
+                                programs.sort(function(a, b) {
+                                    return parseInt(a.order) - parseInt(b.order);
+                                });
+
+                                if (programs.length === 0) {
+                                    programs.push({
+                                        "object_id": null,
+                                        "program_id": null,
+                                        "order": 1,
+                                        "enhancement_status": "in progress"
+
+                                    })
+                                }
+
+                                // programs.sort(function(a, b) {
+                                //   return (a.order.toLowerCase() > b.programName.toLowerCase()) ? 1 : ((b.programName.toLowerCase() > a.programName.toLowerCase()) ? -1 : 0);
+                                // });
+                                return programs;
+
+                            })(),
+
+                        });
+
+                    }
+
+
+
+
+                }).
+                catch(function(error) {
+                    console.log('an error occurred...' + JSON.stringify(error));
+
+                });
+
+
+
 
         }
 
@@ -1843,7 +2225,7 @@ angular.module('myApp').controller('AdminMainController',
                         //$scope.() = [].concat($scope.selected_customprogram);
                     //$scope.$broadcast('refreshProducts');
 
-                    jQuery('#modal-large').modal('toggle');
+                    //jQuery('#modal-large').modal('toggle');
 
                     $.notify({
 
