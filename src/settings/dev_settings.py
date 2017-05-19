@@ -72,20 +72,7 @@ except KeyError:
     print("Error: environment variable DB_PASS must be set.")
     exit(1)
 
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     #'NAME': 'gradgridPostgres',
-    #     'NAME': 'ceeb',
-    #     #'HOST': 'gradgriddev.cryyuzm8ck27.us-west-2.rds.amazonaws.com',
-    #     #'HOST': '172.31.30.99',
-    #     'HOST': 'test-ceeb.czaefnaupx0d.us-east-1.rds.amazonaws.com',
-    #     'PORT': '8443',
-    #     #'USER': 'gradgridDev',
-    #     'USER': 'upgridadmin',
-    #     'PASSWORD': '9J9wNZ7sK2',
-    # }
-
+DATABASES = {  
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'upgriddemo',
@@ -94,8 +81,6 @@ DATABASES = {
         'USER': 'localuser',
         'PASSWORD': db_pass,
         },
-
-
 }
 # Application definition
 

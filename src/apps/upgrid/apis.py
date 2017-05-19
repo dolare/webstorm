@@ -28,6 +28,11 @@ from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import ObtainJSONWebToken
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+from rest_framework.filters import (
+    SearchFilter,
+    OrderingFilter,
+)
+
 
 # Our lib
 from ceeb_program.models import (
@@ -1454,7 +1459,9 @@ class DepartmentAPI(APIView):
 class CustomerAndCompetingProgramAPI(generics.ListAPIView):
     serializer_class = CustomerAndCompetingProgramSerializer
     permission_classes = ((IsAuthenticated,))
-    # pagination_class = CustomerPageNumberPagination
+    pagination_class = CustomerPageNumberPagination
+    search_fields = ['program_name','program_degree']    # pagination_class = CustomerPageNumberPagination
+    filter_backend = [SearchFilter,OrderingFilter]
 
     def is_manager(self, request):
         try:   
@@ -1486,8 +1493,7 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
                     query_list = query_list.filter(
                         Q(department=department)
                         )
-            
-            
+
             return query_list
         else:
             return Response({"Failed": _("You don't have permission to access!")}, status=HTTP_403_FORBIDDEN)
