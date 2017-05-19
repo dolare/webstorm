@@ -1753,24 +1753,17 @@ li.active span.round-tabs.five{
     color: #999;
 }
 
+
+
+
 .nav-tabs > li.active > a span.round-tabs{
     background: #fafafa;
 }
 .nav-tabs > li {
     width: 50%;
 }
-/*li.active:before {
-    content: " ";
-    position: absolute;
-    left: 45%;
-    opacity:0;
-    margin: 0 auto;
-    bottom: -2px;
-    border: 10px solid transparent;
-    border-bottom-color: #fff;
-    z-index: 1;
-    transition:0.2s ease-in-out;
-}*/
+
+
 .nav-tabs > li:after {
     content: " ";
     position: absolute;
@@ -1786,7 +1779,7 @@ li.active span.round-tabs.five{
 .nav-tabs > li.active:after {
     content: " ";
     position: absolute;
-    left: 47%;
+    left: 48%;
    opacity:1;
     margin: 0 auto;
     bottom: 0px;
