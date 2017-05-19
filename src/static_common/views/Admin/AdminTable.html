@@ -1172,14 +1172,16 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody class="js-table-sections-header" ng-repeat-start="row in displayeddata1 track by $index" ng-click="load_competing()">
+
                                                                 <tr class="text-primary font-w600" >
                                                                     <td class="text-center">
                                                                         <i class="fa fa-angle-right"></i>
                                                                     </td>
                                                                     <td>{{row.program_name}}</td>
                                                                     <td class="text-center">{{row.program_degree}}</td>
+
                                                                     <td class="text-center">
-                                                                        {{row.assignment_status}}
+                                                                        
                                                                         <span ng-if="row.assignment_status==='Assigned'"><span class="label label-info"><i class="fa fa-flag"></i> Assigned</span></span>
                                                                         <span ng-if="row.assignment_status==='In_Progress'"><span class="label label-default"><i class="fa fa-refresh"></i>  In progress</span></span>
                                                                         <span ng-if="row.assignment_status==='Need update'"><span class="label label-warning"><i class="fa fa-cloud-upload"></i> Need update</span></span>
@@ -1187,7 +1189,7 @@
                                                                         <span ng-if="row.assignment_status==='-'"><span class="label label-warning"><i class="fa fa-question-circle"></i> N/A</span></span>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                    {{row.review_status}}
+                                                                    
                                                                         <span ng-if="row.review_status==='Assigned'"><span class="label label-info"><i class="fa fa-flag"></i> Assigned</span></span>
                                                                         <span ng-if="row.review_status==='In_Progress'"><span class="label label-default"><i class="fa fa-refresh"></i>  In progress</span></span>
                                                                         <span ng-if="row.review_status==='None'"><span class="label label-warning"><i class="fa fa-question-circle"></i> None</span></span>

@@ -869,6 +869,12 @@ angular.module('myApp').controller('AdminMainController',
 
         }
 
+
+
+
+
+
+
         //get depart on ceeb
         $scope.get_depart = function() {
 
@@ -1330,7 +1336,7 @@ angular.module('myApp').controller('AdminMainController',
             } // end of loop
 
 
-
+            console.log("$scope.selected_customprogram="+JSON.stringify($scope.selected_customprogram));
 
                $http({
                         url: '/api/upgrid/accountmanager/client/customer_program/',
@@ -1364,7 +1370,7 @@ angular.module('myApp').controller('AdminMainController',
 
 
                     $scope.customer_program = response.data.customer_program;
-
+                    console.log("$scope.customer_program="+JSON.stringify($scope.customer_program));
 
                 //generate selected_customprogram list
                     $scope.selected_customprogram = [];
@@ -1428,6 +1434,9 @@ angular.module('myApp').controller('AdminMainController',
                         });
 
                     }
+
+
+                    console.log("$scope.selected_customprogram="+JSON.stringify($scope.selected_customprogram));
 
 
 
@@ -2364,3 +2373,8 @@ angular.module('myApp').controller('AdminMainController',
 
 
     });
+
+
+// loading of ceeb
+// loading of competing
+// 2 hrs token
