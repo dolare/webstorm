@@ -27,7 +27,7 @@ angular.module('myApp').controller('AdminReaderController', ['authenticationSvc'
         }).then(function (response) {
 
             console.log("wwr"+JSON.stringify(response.data));
-            $scope.w_raw = response.data.existing_report;
+            $scope.w_raw = response.data;
             
             console.log("$scope.w_raw"+JSON.stringify($scope.w_raw));
             $scope.report = {};

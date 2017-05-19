@@ -76,14 +76,14 @@ DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     #'NAME': 'gradgridPostgres',
-    #     'NAME': 'upgridpostgres',
+    #     'NAME': 'ceeb',
     #     #'HOST': 'gradgriddev.cryyuzm8ck27.us-west-2.rds.amazonaws.com',
     #     #'HOST': '172.31.30.99',
-    #     'HOST': '54.70.183.15',
-    #     'PORT': '',
+    #     'HOST': 'test-ceeb.czaefnaupx0d.us-east-1.rds.amazonaws.com',
+    #     'PORT': '8443',
     #     #'USER': 'gradgridDev',
-    #     'USER': 'upgriddev',
-    #     'PASSWORD': '12345678',
+    #     'USER': 'upgridadmin',
+    #     'PASSWORD': '9J9wNZ7sK2',
     # }
 
     'default': {
