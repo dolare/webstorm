@@ -150,7 +150,7 @@ class UniversityCustomer(UpgridBaseUser):
     title = models.CharField(max_length=50, choices=title, null=True, blank=False)
     contact_name = models.CharField(max_length=50, null=True)
     position = models.CharField(max_length=50, null=True)
-    position_level = models.CharField(max_length=20, choices=positionlevel, default='University', null=True)
+    position_level = models.CharField(max_length=50, choices=positionlevel, default='University', null=True)
     phone = models.CharField(max_length=20, null=True)
     account_type = models.CharField(max_length=20, choices=accounttype, default='sub', null=True)
     service_until = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
