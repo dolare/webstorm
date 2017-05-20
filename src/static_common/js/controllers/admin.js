@@ -18,8 +18,6 @@ angular.module('myApp').controller('AdminMainController',
 
         console.log("CLient = = = " + JSON.stringify($scope.client_data))
 
-
-    
         //For stats
         $scope.active_num = 0;
         $scope.client_num = Client.length;
@@ -591,6 +589,10 @@ angular.module('myApp').controller('AdminMainController',
                                     programs[j] = {
                                         "object_id": $scope.customer_program[i].competing_program[j].object_id,
                                         "program_id": $scope.customer_program[i].competing_program[j].program_id,
+                                        "university": $scope.customer_program[i].competing_program[j].university,
+                                        "school": $scope.customer_program[i].competing_program[j].school,
+                                        "program_name": $scope.customer_program[i].competing_program[j].program_name,
+                                        "program_degree": $scope.customer_program[i].competing_program[j].program_degree,
                                         "order": $scope.customer_program[i].competing_program[j].order,
                                         "enhancement_status": $scope.customer_program[i].competing_program[j].enhancement_status
                                     }
@@ -605,6 +607,10 @@ angular.module('myApp').controller('AdminMainController',
                                     programs.push({
                                         "object_id": null,
                                         "program_id": null,
+                                        "university": null,
+                                        "school": null,
+                                        "program_name": null,
+                                        "program_degree": null,
                                         "order": 1,
                                         "enhancement_status": "in progress"
 
@@ -824,6 +830,10 @@ angular.module('myApp').controller('AdminMainController',
                     }
 
                     console.log('/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.competing_string.slice(0, -1));
+                    
+
+
+                    //select2 init
                     jQuery(".js-data-example-ajax").select2({
                   ajax: {
                     url: '/api/upgrid/accountmanager/dropdown_menu/programs/?ceeb=' + $scope.competing_string.slice(0, -1),
@@ -832,7 +842,6 @@ angular.module('myApp').controller('AdminMainController',
                             'Authorization': 'JWT ' + token
                           },
 
-                    
 
                     data: function (params) {
                       var query = {
@@ -873,14 +882,11 @@ angular.module('myApp').controller('AdminMainController',
                     cache: true
                   },
 
-                  // minimumInputLength: 3,
+                  minimumInputLength: 1,
                   
                   
                 });        //
                 
-
-
-
 
                     jQuery('.js-wizard-simple').bootstrapWizard('first');
                     App.blocks('#client_block', 'state_normal');
@@ -892,6 +898,9 @@ angular.module('myApp').controller('AdminMainController',
 
 
             } //end of editold
+
+
+
 
         $scope.add_in = function(added) {
             console.log("added = " + JSON.stringify(added));
@@ -1498,6 +1507,10 @@ angular.module('myApp').controller('AdminMainController',
 
                                 "object_id": "",
                                 "order": j + 1,
+                                "university": null,
+                                "school": null,
+                                "program_name": null,
+                                "program_degree": null,
                                 "enhancement_status": "in progress"
                             }
 
@@ -1579,6 +1592,10 @@ angular.module('myApp').controller('AdminMainController',
                                     programs[j] = {
                                         "object_id": $scope.customer_program[i].competing_program[j].object_id,
                                         "program_id": $scope.customer_program[i].competing_program[j].program_id,
+                                        "university": $scope.customer_program[i].competing_program[j].university,
+                                        "school": $scope.customer_program[i].competing_program[j].school,
+                                        "program_name": $scope.customer_program[i].competing_program[j].program_name,
+                                        "program_degree": $scope.customer_program[i].competing_program[j].program_degree,
                                         "order": $scope.customer_program[i].competing_program[j].order,
                                         "enhancement_status": $scope.customer_program[i].competing_program[j].enhancement_status
                                     }
@@ -1595,6 +1612,10 @@ angular.module('myApp').controller('AdminMainController',
                                     programs.push({
                                         "object_id": null,
                                         "program_id": null,
+                                        "university": null,
+                                        "school": null,
+                                        "program_name": null,
+                                        "program_degree": null,
                                         "order": 1,
                                         "enhancement_status": "in progress"
 
@@ -2677,6 +2698,10 @@ angular.module('myApp').controller('AdminMainController',
                                     programs[j] = {
                                         "object_id": $scope.customer_program[i].competing_program[j].object_id,
                                         "program_id": $scope.customer_program[i].competing_program[j].program_id,
+                                        "university": $scope.customer_program[i].competing_program[j].university,
+                                        "school": $scope.customer_program[i].competing_program[j].school,
+                                        "program_name": $scope.customer_program[i].competing_program[j].program_name,
+                                        "program_degree": $scope.customer_program[i].competing_program[j].program_degree,
                                         "order": $scope.customer_program[i].competing_program[j].order,
                                         "enhancement_status": $scope.customer_program[i].competing_program[j].enhancement_status
                                     }
@@ -2768,7 +2793,7 @@ angular.module('myApp').controller('AdminMainController',
 
 
 
-        $scope.delete_customer_program = function (index){
+        $scope.delete_customer_program = function (index) {
 
             $scope.delete_customer_program_string = $scope.selected_customprogram[index].customer_program_id
 
@@ -2834,6 +2859,10 @@ angular.module('myApp').controller('AdminMainController',
                                     programs[j] = {
                                         "object_id": $scope.customer_program[i].competing_program[j].object_id,
                                         "program_id": $scope.customer_program[i].competing_program[j].program_id,
+                                        "university": $scope.customer_program[i].competing_program[j].university,
+                                        "school": $scope.customer_program[i].competing_program[j].school,
+                                        "program_name": $scope.customer_program[i].competing_program[j].program_name,
+                                        "program_degree": $scope.customer_program[i].competing_program[j].program_degree,
                                         "order": $scope.customer_program[i].competing_program[j].order,
                                         "enhancement_status": $scope.customer_program[i].competing_program[j].enhancement_status
                                     }
@@ -2877,6 +2906,48 @@ angular.module('myApp').controller('AdminMainController',
             console.log('an error occurred...' + JSON.stringify(error));
 
         });
+
+        }
+
+
+
+        $scope.post_competing_program = function(parentId, Id, order) {
+
+            $scope.post_competing_program_array = [];
+            $scope.post_competing_program_array.push({
+                                'customer_program_id': parentId,
+                                'program_id': Id,
+                                'order': order,
+                                'enhancement_status': 'in progress',
+
+            })
+
+
+            console.log("parentId="+parentId+' '+'Id='+Id);
+            
+                 $http({
+                        url: '/api/upgrid/accountmanager/client/competing_program/',
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'JWT ' + token,
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            'customer_competing_program': $scope.post_competing_program_array
+                        }
+
+                   
+                }).then(function(response) {
+
+                        console.log("success add")
+                    }).
+                    catch(function(error) {
+                        console.log('an error occurred...' + JSON.stringify(error));
+
+                    });
+
+
+
 
         }
 

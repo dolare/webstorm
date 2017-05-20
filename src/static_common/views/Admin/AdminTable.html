@@ -1655,12 +1655,8 @@
                                                                 
                                                               <option value="WY">Wyoming</option>
                                                             </select> -->
-
-                                                            <select class="js-data-example-ajax" style="width: 100%">
-                                                                  <option value="3620194" selected="selected">select2/select2</option>
-                                                                </select>
-
-                                                               
+                                                            
+                                                            
                                                                     <select data-js-select2 ng-model="additional_program"  class="form-control" id="example-select2" name="example-select2" style="width: 100%;" data-placeholder="Choose one.." ng-options="p.program_name + '(' + p.program_degree + ')' + '-' + '[Department: '+p.department + ']' for p in unselected_programs ">
                                                                         <option></option>
                                                                     </select>
@@ -1709,7 +1705,7 @@
                                                                     <th class="text-right"></th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody class="js-table-sections-header" ng-repeat-start="row in displayeddata1 track by $index" ng-click="load_competing()">
+                                                            <tbody class="js-table-sections-header" ng-repeat-start="row in displayeddata1 track by $index">
 
                                                                 <tr class="text-primary font-w600" >
                                                                     <td class="text-center">
@@ -1796,6 +1792,8 @@
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
+
+
                                                             <tbody ng-repeat-end>
                                                                 <tr class="bg-white" ng-repeat="row1 in row.competing_program">
                                                                     <td class="text-center">
@@ -1805,7 +1803,7 @@
                                                                         </select>
                                                                     </td>
                                                                     <td colspan="2">
-                                                                        <form class="form-inline">
+                                                                        <!-- <form class="form-inline">
                                                                             <div class="form-group" style="margin-bottom:0">
                                                                                 <div class="col-md-12">
                             
@@ -1818,8 +1816,21 @@
                                                                                     <select ng-if="!pwhide" data-js-select2 ng-model="row1.object_id" class="form-control" id="example-select2" name="example-select2" style="width: 100%;" data-placeholder="Choose one.." ng-options="p.object_id as p.display for p in competing_program_array">
                                                                                         <option></option>
                                                                                     </select>
+
+                                                                                   
                                                                                 </div>
-                                                                        </form>
+                                                                        </form> -->
+                                                                        
+                                                                            <div>
+                                                                            {{row1.program_name}} ({{row1.program_degree}})
+
+                                                                            </div>
+                                                                            
+                                                                            <div>
+                                                                                  <select ng-model="row1.program_id" class="js-data-example-ajax" style="width: 100%" ng-change="post_competing_program(row.customer_program_id, row1.program_id, row1.order)">
+                                                                                        <option value="3620194" selected="selected">select2/select2</option>
+                                                                                    </select>
+                                                                            </div>
                                                                     </td>
                                                                     <td>
                                                                         <span ng-if="abc==='Assigned'"><span class="label label-info">Assigned</span></span>
