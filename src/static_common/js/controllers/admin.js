@@ -785,7 +785,7 @@ angular.module('myApp').controller('AdminMainController',
             }, 100);
                 
 
-                    jQuery('.js-wizard-simple').bootstrapWizard('first');
+                    //jQuery('.js-wizard-simple').bootstrapWizard('first');
                     App.blocks('#client_block', 'state_normal');
 
                 }).catch(function(error) {
