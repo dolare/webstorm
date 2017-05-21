@@ -246,7 +246,7 @@ angular.module('myApp')
               }
             }).then(function (response) {
 
-               console.log("!!!GOT! detail="+ JSON.stringify(response.data.client_list));
+               console.log("all client is="+ JSON.stringify(response.data.client_list));
                 
                return response.data.client_list;
 

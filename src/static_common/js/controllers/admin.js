@@ -1045,36 +1045,36 @@ angular.module('myApp').controller('AdminMainController',
 
                     apiService.getClient(token).then(function (result) {
             
-                    console.log("$scope.success_client_id="+$scope.success_client_id)
-                          
-                    console.log("result===="+JSON.stringify(result))
-                    //$scope.client_data = result;
-                    $scope.client_data = tableDataService.getClientList(result);
-                        //$scope.() = [].concat($scope.selected_customprogram);
-                    //$scope.$broadcast('refreshProducts');
+                            console.log("$scope.success_client_id="+$scope.success_client_id)
+                                  
+                            console.log("result===="+JSON.stringify(result))
+                            //$scope.client_data = result;
+                            $scope.client_data = tableDataService.getClientList(result);
+                                //$scope.() = [].concat($scope.selected_customprogram);
+                            //$scope.$broadcast('refreshProducts');
 
-                    //jQuery('#modal-large').modal('toggle');
+                            //jQuery('#modal-large').modal('toggle');
 
-                    $scope.adding_new = false;
+                            $scope.adding_new = false;
 
-                    jQuery('#modal-large-add').modal('toggle');
+                            jQuery('#modal-large-add').modal('toggle');
 
 
-                    $.notify({
+                            $.notify({
 
-                        // options
-                        icon: "fa fa-check",
-                        message: "The client has been created. Please modify the client program(s) in the 'Edit' window"
-                    }, {
-                        // settings
-                        type: 'success',
-                        placement: {
-                            from: "top",
-                            align: "center"
-                        },
-                        z_index: 1999,
-                    });
-                            
+                                // options
+                                icon: "fa fa-check",
+                                message: "The client has been created. Please modify the client program(s) in the 'Edit' window"
+                            }, {
+                                // settings
+                                type: 'success',
+                                placement: {
+                                    from: "top",
+                                    align: "center"
+                                },
+                                z_index: 1999,
+                            });
+                                    
                            
                     });
 

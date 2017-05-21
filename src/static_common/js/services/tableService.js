@@ -324,6 +324,8 @@ angular.module('myApp')
         }
       }
 
+      //console.log("sub_data="+JSON.stringify(sub_data));
+
       for(var i=0; i<data.length; i++){
         data[i].subuser = [];
       }
@@ -338,6 +340,8 @@ angular.module('myApp')
         }
 
       }
+
+      console.log("client data="+JSON.stringify(data))
       
       return data;
 

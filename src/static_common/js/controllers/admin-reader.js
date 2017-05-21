@@ -11,6 +11,9 @@ angular.module('myApp').controller('AdminReaderController', ['authenticationSvc'
     $scope.program = $stateParams.program;
     $scope.degree = $stateParams.degree;
 
+
+    $scope.message = null; 
+    
     console.log($scope.type + ' ' + $scope.client_id  + ' ' + $scope.object_id)
 
     App.blocks('#enhancement_loading', 'state_loading');
@@ -43,40 +46,74 @@ angular.module('myApp').controller('AdminReaderController', ['authenticationSvc'
              var w_array_10 = [];
              
 
-                for(var i=0; i<$scope.w_raw.dead_link.length; i++){
+
+                if($scope.w_raw.dead_link){
+                  for(var i=0; i<$scope.w_raw.dead_link.length; i++){
                   w_array_1.push($scope.w_raw.dead_link[i]);
                  }
+                }
+                  
 
-                 for(var i=0; i<$scope.w_raw.typo.length; i++){
+                if($scope.w_raw.typo) {
+                  for(var i=0; i<$scope.w_raw.typo.length; i++){
                   w_array_2.push($scope.w_raw.typo[i]);
                  }
+                }
 
-                 for(var i=0; i<$scope.w_raw.outdated_information.length; i++){
+                if($scope.w_raw.outdated_information) {
+                  for(var i=0; i<$scope.w_raw.outdated_information.length; i++){
                   w_array_3.push($scope.w_raw.outdated_information[i]);
                  }
+                }
 
-                 for(var i=0; i<$scope.w_raw.data_discrepancy.length; i++){
+                if($scope.w_raw.data_discrepancy) {
+                  for(var i=0; i<$scope.w_raw.data_discrepancy.length; i++){
                   w_array_4.push($scope.w_raw.data_discrepancy[i]);
                  }
+                }
 
-                 for(var i=0; i<$scope.w_raw.sidebars.length; i++){
+                if($scope.w_raw.sidebars) {
+                  for(var i=0; i<$scope.w_raw.sidebars.length; i++){
                   w_array_5.push($scope.w_raw.sidebars[i]);
                  }
+                }
 
-                 for(var i=0; i<$scope.w_raw.infinite_loop.length; i++){
+                if($scope.w_raw.infinite_loop) {
+                  for(var i=0; i<$scope.w_raw.infinite_loop.length; i++){
                   w_array_6.push($scope.w_raw.infinite_loop[i]);
                  }
+                }
 
-                 for(var i=0; i<$scope.w_raw.floating_page.length; i++){
+                if($scope.w_raw.floating_page) {
+                  for(var i=0; i<$scope.w_raw.floating_page.length; i++){
                   w_array_7.push($scope.w_raw.floating_page[i]);
                  }
-
-                 for(var i=0; i<$scope.w_raw.confusing.length; i++){
+                }
+                 
+                if($scope.w_raw.confusing) {
+                  for(var i=0; i<$scope.w_raw.confusing.length; i++){
                   w_array_8.push($scope.w_raw.confusing[i]);
                  }
+                }
 
-                 for(var i=0; i<$scope.w_raw.other_expert_note.length; i++){
+                if($scope.w_raw.other_expert_note) {
+                  for(var i=0; i<$scope.w_raw.other_expert_note.length; i++){
                   w_array_9.push($scope.w_raw.other_expert_note[i]);
+                 }
+                }
+
+                 if(!$scope.w_raw.dead_link 
+                  && !$scope.w_raw.typo 
+                  && !$scope.w_raw.outdated_information 
+                  && !$scope.w_raw.data_discrepancy
+                  && !$scope.w_raw.sidebars
+                  && !$scope.w_raw.infinite_loop
+                  && !$scope.w_raw.floating_page
+                  && !$scope.w_raw.confusing
+                  && !$scope.w_raw.other_expert_note) {
+
+                    $scope.message = "No errors have been found in this program's website content at present."
+
                  }
 
                  w_array_10.push(
