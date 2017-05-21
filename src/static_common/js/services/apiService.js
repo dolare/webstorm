@@ -311,32 +311,7 @@ angular.module('myApp')
                          });
 
 
-                        //   var promise =  $http({
-                        //       url: '/api/customerDetail/',
-                        //       method: 'POST',
-                        //       data: {
-                        //          email: email
-                        //       },
-                        //       headers: {
-                        //         'Authorization': 'JWT ' + token
-                        //       }
-                        // }).then(function (response) {
-
-                        //    Ceeb = response.data.Ceeb;
-
-                        //    console.log("!!!GOT! from apiservice="+ JSON.stringify(Ceeb));
-                        //     // if(response.status === 204){
-                        //     //   console.log("===204");
-                        //     // }
-
-                        //     return {
-                        //             Ceeb: Ceeb
-                        //           }
-                        // }).catch(function(error){
-                        //     console.log('an error occurred...'+JSON.stringify(error));
-
-                        //  });
-
+                      
 
 
         return deferred.promise;
