@@ -11,8 +11,10 @@ from django.utils.six import BytesIO
 from rest_framework import serializers
 from rest_framework.serializers import *
 from rest_framework_jwt.settings import api_settings
+from rest_framework_jwt.serializers import RefreshJSONWebTokenSerializer
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
 
 # our lib
 from ceeb_program.models import Program, UniversitySchool, ExpertAdditionalNote
@@ -72,6 +74,28 @@ class Login2Serializer(serializers.Serializer):
         else:
             msg = _('Must include "email" and "password".')
             raise serializers.ValidationError(msg)
+
+
+class RefreshJWTSerializer(RefreshJSONWebTokenSerializer):
+    def _check_user(self, payload):
+        username = jwt_get_username_from_payload(payload)
+
+        if not username:
+            msg = _('Invalid payload.')
+            raise serializers.ValidationError(msg)
+
+        # Make sure user exists
+        try:
+            user = UpgridBaseUser.objects.get_by_natural_key(username)
+        except UpgridBaseUser.DoesNotExist:
+            msg = _("User doesn't exist.")
+            raise serializers.ValidationError(msg)
+
+        if not user.is_active:
+            msg = _('User account is disabled.')
+            raise serializers.ValidationError(msg)
+
+        return user
 
 
 # -------------------------User API Serializers------------------------------------
