@@ -1764,6 +1764,10 @@ li.active span.round-tabs.five{
 }
 
 
+#modal-large-edit .nav-tabs > li {
+    width: 33%;
+}
+
 .nav-tabs > li:after {
     content: " ";
     position: absolute;
