@@ -1133,6 +1133,7 @@ class ClientCRUD(APIView):
         client.password = decoded_new_password
         # decoded_new_password = self.decode_password(self.request.data['password'])
         # client.set_password(decoded_new_password)
+        
         client.save()
         # for main user add competing_schools
 
@@ -1396,7 +1397,13 @@ class CustomerCompetingProgramCRUD(APIView):
 
 
 # Returns all the university and School in the database for Ceeb drop down menu
-class UniversitySchoolAPI(APIView):
+class UniversitySchoolAPI(generics.ListAPIView):
+    serializer_class = UniversityAndSchoolSerializer
+    permission_classes = ((IsAuthenticated,))
+    pagination_class = CompetingPageNumberPagination
+    #search_fields = ['program_name','program_degree']    # pagination_class = CustomerPageNumberPagination
+    filter_backend = [SearchFilter,OrderingFilter]
+
     def is_manager(self, request):
         try:
             UpgridAccountManager.objects.get(id=request.user.id)
@@ -1404,18 +1411,29 @@ class UniversitySchoolAPI(APIView):
         except UpgridAccountManager.DoesNotExist:
             return False
 
-    def get_object(self):
-
-        return UniversitySchool.objects.all()    
-    
-    def get(self, request):
-        is_manager = self.is_manager(request)
+     
+    def get_queryset(self, *args, **kwargs):
+        is_manager = self.is_manager(self.request)
         if not is_manager:
             return Response({"Failed": _("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
 
-        ceebs = self.get_object()
-        serializer = UniversityAndSchoolSerializer(ceebs, many=True)
-        return Response(serializer.data, status=HTTP_200_OK)
+        queryset = UniversitySchool.objects.all()   
+
+        if 'search' in self.request.GET.keys():
+            search = self.request.GET.get('search')
+            queryset = queryset.filter(Q(university__icontains = search)|
+                    Q(school__icontains = search)) 
+
+        return queryset
+
+    # def get(self, request):
+    #     is_manager = self.is_manager(request)
+    #     if not is_manager:
+    #         return Response({"Failed": _("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
+
+    #     ceebs = self.get_object()
+    #     serializer = UniversityAndSchoolSerializer(ceebs, many=True)
+    #     return Response(serializer.data, status=HTTP_200_OK)
 
 
 class ProgramAPI(APIView):
