@@ -68,6 +68,7 @@ LOGGING = {
 #databas settings
 try:
     db_pass = os.environ["DB_PASS"]
+    upgridAdmin = os.environ["upgridAdmin"]
 except KeyError:
     print("Error: environment variable DB_PASS must be set.")
     exit(1)
@@ -75,13 +76,24 @@ except KeyError:
 DATABASES = {  
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'upgriddemo',
-        'HOST': 'localhost',
-        'PORT': '',
-        'USER': 'localuser',
-        'PASSWORD': db_pass,
+        'NAME': 'ceeb',
+        'HOST': 'test-ceeb.czaefnaupx0d.us-east-1.rds.amazonaws.com',
+        'PORT': '8443',
+        'USER': 'upgridadmin',
+        'PASSWORD': upgridAdmin,
         },
 }
+
+# DATABASES = {  
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'upgriddemo',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#         'USER': 'localuser',
+#         'PASSWORD': db_pass,
+#         },
+# }
 # Application definition
 
 REST_FRAMEWORK_DOCS = {

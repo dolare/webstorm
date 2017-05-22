@@ -46,6 +46,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 try:
     email_pass = os.environ["EMAIL_PASS"]
+    cc_email = os.environ["CC_EMAIL"]
 except KeyError:
     print("Error: environment variable EMAIL_PASS must be set.")
     exit(1)

@@ -2,9 +2,11 @@
 ####################################################
 from django.shortcuts import render,get_object_or_404
 from django.template import loader
+
 #####################################################
 import base64
 import logging
+import os
 from django.core.serializers import serialize
 from django.core.mail import BadHeaderError, EmailMessage
 from django.db.models import Q
@@ -32,7 +34,12 @@ from rest_framework.filters import (
     SearchFilter,
     OrderingFilter,
 )
-
+#email settings
+# try:
+#     db_pass = os.environ["CC_EMAIL"]
+# except KeyError:
+#     print("Error: environment variable CC_EMAIL must be set.")
+#     exit(1)
 
 # Our lib
 from ceeb_program.models import (
