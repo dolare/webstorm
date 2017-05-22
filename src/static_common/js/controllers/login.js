@@ -230,7 +230,7 @@ login.controller('LoginController',
                         console.log("avatarService.getClientId()= "+avatarService.getClientId());
 
                         angular.element(document.getElementById("loginform").getElementsByClassName("form-group")).removeClass('has-error');
-                        console.log("if it is admin"+authenticationSvc.getUserInfo().admin);
+                        console.log("if it is admin"+JSON.stringify(authenticationSvc.getUserInfo().admin));
                         
                             
                             
@@ -239,6 +239,7 @@ login.controller('LoginController',
                                 $state.go('admin')
                             }else if(authenticationSvc.getUserInfo().admin === "False"){
 
+                                console.log("authenticationSvc.getUserInfo().admin === False")
                                 if ($stateParams.url) {
                                 //$location.url($stateParams.url);
                                 $state.go('dashboard');
