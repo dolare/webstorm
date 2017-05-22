@@ -25,7 +25,7 @@ from django.utils.six import BytesIO
 from rest_framework.parsers import JSONParser
 
 from rest_framework_jwt.settings import api_settings
-from rest_framework_jwt.views import ObtainJSONWebToken
+from rest_framework_jwt.views import ObtainJSONWebToken, RefreshJSONWebToken
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 from rest_framework.filters import (
@@ -41,7 +41,7 @@ from ceeb_program.models import (
     )
 
 # lib in same project
-from .pagination import CustomerPageNumberPagination,CompetingPageNumberPagination
+from .pagination import CustomerPageNumberPagination, CompetingPageNumberPagination
 from .models import (
     UpgridAccountManager, UniversityCustomer, UniversityCustomerProgram,
     CustomerCompetingProgram, ClientAndProgramRelation, WhoopsReports,
@@ -76,6 +76,10 @@ def index(request):
 # api/access_token/
 class CustomizeJWT(ObtainJSONWebToken):
     serializer_class = Login2Serializer
+
+
+class JWTRefresh(RefreshJSONWebToken):
+    serializer_class = RefreshJWTSerializer
 
 
 # api/password/

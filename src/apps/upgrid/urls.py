@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from . import apis
 
+
 urlpatterns=[
     ##############################################
     url(r'^$', apis.index, name='index'),
@@ -11,6 +12,7 @@ urlpatterns=[
 
     # POST login +++
     url(r'^api/upgrid/access_token/$', apis.CustomizeJWT.as_view()),
+    url(r'^api/upgrid/token_refresh/$', apis.JWTRefresh.as_view()),
 
     # PUT change password +++
     url(r'^api/upgrid/user/password/$', apis.PasswordChangeView.as_view()),
