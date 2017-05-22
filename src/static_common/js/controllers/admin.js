@@ -360,6 +360,8 @@ angular.module('myApp').controller('AdminMainController',
 
 
                 var competing_schools_options = "";
+
+                console.log("get_ceebs = "+JSON.stringify($scope.get_ceebs))
                 //get competing school list e.g. format: <option value='5e7a795b-2ee2-49dd-9a08-60c48d76f27b'>2120: None - School of Journalism</option>
                 for (i = 0; i < $scope.get_ceebs.length; i++) {
                     competing_schools_options = competing_schools_options + "<option value='" + $scope.get_ceebs[i].object_id + "'>" + $scope.get_ceebs[i].university_school + "</option>";
