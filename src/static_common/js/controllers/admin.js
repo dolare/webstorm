@@ -187,7 +187,7 @@ angular.module('myApp').controller('AdminMainController',
           }
         }).then(function (response) {
 
-           $scope.get_ceebs = response.data;
+           $scope.get_ceebs = response.data.results;
            console.log("ceebs got")
         }).
          catch(function(error){
@@ -339,13 +339,100 @@ angular.module('myApp').controller('AdminMainController',
             $scope.dep_pro_table = null;
             $scope.account_type = "main";
 
+
+
+            $timeout(function () {
+                //alert('initing');
+            //select2 init
+
+                    jQuery(".js-data-ceeb").select2({
+                  ajax: {
+                    url: '/api/upgrid/accountmanager/ceebs/',
+                    dataType: 'json',
+                    headers: {
+                            'Authorization': 'JWT ' + token
+                          },
+
+
+                    data: function (params) {
+                      var query = {
+                        search: params.term,
+                        page: params.page
+                      }
+
+                      console.log("query="+JSON.stringify(query));
+                      // Query paramters will be ?search=[term]&page=[page]
+                      return query;
+                    },
+
+                    processResults: function (data, params) {
+                      // parse the results into the format expected by Select2
+                      // since we are using custom formatting functions we do not need to
+                      // alter the remote JSON data, except to indicate that infinite
+                      // scrolling can be used
+                      params.page = params.page || 1;
+                      console.log("data="+JSON.stringify(data))
+                      console.log("params="+JSON.stringify(params))
+                      return {
+                        results: data.results.map(function(item){
+                            return {
+
+                                id: item.object_id,
+                                text: item.university_school,
+
+
+                            }
+                        }),
+
+                        pagination: {
+                          more: (params.page * 10) < data.count
+                        }
+                        
+                      };
+                    },
+                    cache: true
+                  },
+
+                  minimumInputLength: 1,
+                  
+                  
+                });        //
+
+                    $scope.show_select2 = true
+
+            }, 100);
+
+
+            //get ceebs
+        // $http({
+        //   url: '/api/upgrid/accountmanager/ceebs/',
+        //   method: 'GET',
+        //   headers: {
+        //     'Authorization': 'JWT ' + token
+        //   }
+        // }).then(function (response) {
+
+        //    $scope.get_ceebs = response.data;
+        //    console.log("ceebs got")
+        // }).
+        //  catch(function(error){
+        //     console.log('an error occurred...'+JSON.stringify(error));
+
+        //  });
+            var get_ceebs_url = $scope.get_ceebs ? '/' :  '/api/upgrid/accountmanager/ceebs/'
+
             //tab 2
             ///load for ceeb and competing schools
             $http({
-                url: '/',
+                url: get_ceebs_url,
                 method: 'GET',
+                headers: {
+                    'Authorization': 'JWT ' + token
+                },
                 
             }).then(function(response) {
+
+                console.log("get ceebs success")
 
 
                 $scope.listbox = $('#competingschools1').bootstrapDualListbox({
@@ -594,6 +681,19 @@ angular.module('myApp').controller('AdminMainController',
                     
 
                     console.log("selected program is " + JSON.stringify($scope.selected_customprogram));
+
+                     return $http({
+                        url: '/api/upgrid/accountmanager/ceebs/?object_id=' + $scope.ceeb,
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'JWT ' + token
+                        }
+                    })
+                 }).then(function(response) {
+
+
+                    $scope.ceeb_to_school = response.data.results[0].university_school
+                    console.log("ceeb name = "+JSON.stringify(response.data.results[0].university_school))
 
 
                     //*****************************GET DEPARTMENT LIST***********************************

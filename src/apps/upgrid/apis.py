@@ -1418,11 +1418,18 @@ class UniversitySchoolAPI(generics.ListAPIView):
             return Response({"Failed": _("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
 
         queryset = UniversitySchool.objects.all()   
-
+        if 'object_id' in self.request.GET.keys():
+            object_id = self.request.GET.get('object_id')
+            queryset = queryset.filter(pk = object_id)
+            if queryset.exists():
+                return queryset
+            else:
+                return None
         if 'search' in self.request.GET.keys():
             search = self.request.GET.get('search')
             queryset = queryset.filter(Q(university__icontains = search)|
-                    Q(school__icontains = search)) 
+                    Q(school__icontains = search)|
+                    Q(ceeb__icontains = search)) 
 
         return queryset
 

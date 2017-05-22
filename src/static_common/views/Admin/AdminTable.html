@@ -412,9 +412,20 @@
                                                           
                                                         </select> -->
 
+                                                        <!-- <select class="js-data-ceeb" style="width: 100%" ng-model="ceebs1" ng-change="get_depart()">
+                                                            <option value="3620194" selected="selected">select2/select2</option>
+                                                        </select> -->
+                                                        
+                                                        <select class="js-data-ceeb" style="width: 100%" ng-model="ceeb" ng-change="get_depart()">
+                                                            <option value="3620194" selected="selected">select2/select2</option>
+                                                        </select>
+<!-- 
                                                         <select ng-model="ceeb" ng-change="get_depart()" class="form-control" id="simple-classic-ceeb" name="simple-classic-progress-ceeb" style="width:100%" ng-options="p.object_id as p.university_school for p in get_ceebs">
                                                             <option value="">Please select the Ceeb</option>
                                                         </select>
+ -->
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -981,10 +992,10 @@
                                                             <!-- <select ng-options="p for p in prefix" multiple="multiple" size="10" ng-model="schools" id="competingschools">
                                                           
                                                         </select> -->
-
-                                                        <select ng-model="ceeb" ng-change="get_depart()" class="form-control" id="simple-classic-ceeb" name="simple-classic-progress-ceeb" style="width:100%" ng-options="p.object_id as p.university_school for p in get_ceebs">
+                                                        <div style="padding-top: 7px">{{ceeb_to_school}}</div>
+                                                        <!-- <select ng-model="ceeb" ng-change="get_depart()" class="form-control" id="simple-classic-ceeb" name="simple-classic-progress-ceeb" style="width:100%" ng-options="p.object_id as p.university_school for p in get_ceebs">
                                                             <option value="">Please select the Ceeb</option>
-                                                        </select>
+                                                        </select> -->
                                                     </div>
                                                 </div>
                                             </div>
