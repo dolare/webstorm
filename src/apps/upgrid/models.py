@@ -58,11 +58,12 @@ class UpgridBaseUser(models.Model):
         super(UpgridBaseUser, self).__init__(*args, **kwargs)
         # store the raw password if set_password() is called so that it can be passed to
         # password_changed() after the model is saved.
-        self._password = 'initial_password'
+        self._password = None
 
     def save(self, *args, **kwargs):
         print(self.password)
         if self._password == None:
+            print('_password == none')
             self.set_password(self.password)
         super(UpgridBaseUser, self).save(*args, **kwargs)
         # if self._password is not None:
