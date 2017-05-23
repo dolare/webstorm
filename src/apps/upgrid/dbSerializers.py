@@ -118,7 +118,8 @@ class DeadlineSerializer(serializers.ModelSerializer):
                   'get_deadline_summer_late_month_display', 'get_deadline_summer_late_day_display',
                   'deadline_rolling', 'deadline_url',
                   'scholarship_deadline_month', 'scholarship_deadline_day', 'international_deadline_month',
-                  'international_deadline_day')
+                  'get_international_deadline_month_display', 'international_deadline_day',
+                  'get_international_deadline_day_display')
 
 
 class RequirementSerializer(serializers.ModelSerializer):

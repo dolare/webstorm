@@ -2430,10 +2430,10 @@ class ClientViewEnhancementUpdate(APIView):
                 update_report = update_report_query.first()
             else:
                 return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
-                            status=HTTP_400_FORBIDDEN)
+                            status=HTTP_403_FORBIDDEN)
         except EnhancementUpdate.DoesNotExist:
             return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
-                            status=HTTP_400_FORBIDDEN)
+                            status=HTTP_403_FORBIDDEN)
         if update_report.cache_report and not client_id:
 
             update_report.existing_report = update_report.cache_report
