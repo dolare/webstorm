@@ -146,13 +146,15 @@ controller('ProfileController',
 
     //regex for validating the form of user email address 
     //console.log("@@@@@@@@@@"+$scope.username.split("@")[1].split(".")[$scope.username.split("@")[1].split(".").length-2]);
-    var patt = new RegExp('^[a-zA-Z0-9._-]+@' + $scope.username.split("@")[1].split(".")[$scope.username.split("@")[1].split(".").length - 2] + '.' + $scope.username.split("@")[1].split(".")[$scope.username.split("@")[1].split(".").length - 1] + '$', 'i');
+    //var patt = new RegExp('^[a-zA-Z0-9._-]+@' + $scope.username.split("@")[1].split(".")[$scope.username.split("@")[1].split(".").length - 2] + '.' + $scope.username.split("@")[1].split(".")[$scope.username.split("@")[1].split(".").length - 1] + '$', 'i');
+    var patt = new RegExp('[a-zA-Z0-9.+-]+\.edu$', 'i');
+
     console.log("patt=" + patt);
     console.log("value= " + patt.test("jjsk@gmail.com"));
 
     $.validator.addMethod("emailz", function(value, element) {
       return this.optional(element) || patt.test(value);
-    }, 'Only email containing ' + $scope.username.split("@")[1].split(".")[$scope.username.split("@")[1].split(".").length - 2] + '.' + $scope.username.split("@")[1].split(".")[$scope.username.split("@")[1].split(".").length - 1] + ' is acceptable');
+    }, 'Only email containing .edu is acceptable');
     ////////
 
     //subuser form validation
@@ -216,7 +218,7 @@ controller('ProfileController',
 
           required: 'Please enter a valid email address',
           email: 'Please enter a valid email address',
-          emailz: 'Only email containing ' + $scope.username.split("@")[1].split(".")[$scope.username.split("@")[1].split(".").length - 2] + '.' + $scope.username.split("@")[1].split(".")[$scope.username.split("@")[1].split(".").length - 1] + ' is acceptable',
+          emailz: 'Only email containing .edu is acceptable',
 
 
 
