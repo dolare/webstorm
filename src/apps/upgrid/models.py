@@ -65,6 +65,7 @@ class UpgridBaseUser(models.Model):
         if self._password == None:
             print('_password == none')
             self.set_password(self.password)
+            print(self.password)
         super(UpgridBaseUser, self).save(*args, **kwargs)
         # if self._password is not None:
         #     password_validation.password_changed(self._password, self)
