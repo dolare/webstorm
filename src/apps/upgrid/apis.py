@@ -152,7 +152,7 @@ class ResetPassword(generics.GenericAPIView):
                                     "style='font-family: sans-serif;'><p>We have just received a password reset request"
                                     " for this email account. Please click <a href='https://%s/#/upgrid/reset/%s/'>"
                                     " here</a> to reset your Upgrid password.</p><p>If the above link does not work for"
-                                    "you, please copy and paste the following into your browser address "
+                                    " you, please copy and paste the following into your browser address "
                                     "bar:</p><a href='https://%s/#/upgrid/reset/%s/'>"
                                     "https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!"
                                     "</div><h3>- Team Gridology</h3></div></div></div>")
@@ -1108,9 +1108,7 @@ class ClientCRUD(APIView):
                 position_level=self.request.data['position_level'],
                 phone=self.request.data['phone'],
                 service_until=main_user.service_until,
-                )
-            client.password = decoded_new_password
-        # create main client object
+                )      
         else:
             university_school = UniversitySchool.objects.get(object_id=self.request.data['ceeb'])
             client = UniversityCustomer.objects.create(
@@ -1130,11 +1128,15 @@ class ClientCRUD(APIView):
                 service_until=self.request.data['service_until'],
                 )
         
-        client.password = decoded_new_password
+      
+        client.set_password(decoded_new_password)
         # decoded_new_password = self.decode_password(self.request.data['password'])
         # client.set_password(decoded_new_password)
-        
+        print(client.password)
+        print('raw')
         client.save()
+        print(client.password)
+        print('rawed')
         # for main user add competing_schools
 
         for cp in self.request.data['competing_schools']:
