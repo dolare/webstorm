@@ -151,9 +151,8 @@ class ResetPassword(generics.GenericAPIView):
                     message.send()
                 except (BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
                         SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
-                    app_logger.exception('{0} when sending email. content: {1}'.format(type(e).__name__, html_content))
-
-                print('sent email success')
+                    app_logger.exception('{0} when sending email. Error: {1}'.format(type(e).__name__, html_content))
+                    raise ValidationError("Failed to send Email. {0}".format(type(e).__name__, html_content))
 
                 try:
                     if request.is_create is True:
