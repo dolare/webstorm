@@ -511,10 +511,10 @@ class CustomerAndCompetingProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = ('object_id', 'Ceeb', 'assignment_status', 'review_status',
-                  'program_university', 'program_school', 'program_name', 'program_degree')
+                  'program_university', 'program_school', 'program_name', 'program_degree','department')
 
     def get_program_university(self, obj):
-        return obj.university_school.university
+        return obj.university_school.university_foreign_key.name
 
     def get_program_school(self, obj):
         return obj.university_school.school

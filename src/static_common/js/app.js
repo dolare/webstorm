@@ -924,6 +924,8 @@ App.factory('AuthInterceptor',
       'responseError': function(rejection) {
         
         console.log("url before redirect1..." + $location.url());
+
+        //401
         if (rejection.status === 401 && rejection.config.url !== '/login') {
           var $state = $injector.get('$state');
           
@@ -952,12 +954,17 @@ App.factory('AuthInterceptor',
             url: $location.url()
           });
         
+        //500
         } else if(rejection.status === 500 && rejection.config.url !== '/login') {
           var $state = $injector.get('$state');
           $state.go('500');
+
+        //404
         } else if(rejection.status === 404 && rejection.config.url !== '/login') {
           var $state = $injector.get('$state');
           $state.go('404');
+
+        //403
         } else if(rejection.status === 403 && rejection.config.url.substr(0,26) === '/api/upgrid/reports/shared') {
 
 
