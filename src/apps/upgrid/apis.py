@@ -1,12 +1,6 @@
 # System lib
-####################################################
-from django.shortcuts import render,get_object_or_404
-from django.template import loader
-
-#####################################################
-import base64
 import logging
-import os
+from django.shortcuts import render, get_object_or_404
 from django.core.serializers import serialize
 from django.core.mail import BadHeaderError, EmailMessage
 from django.db.models import Q
@@ -15,7 +9,6 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from smtplib import SMTPServerDisconnected,  SMTPSenderRefused, SMTPRecipientsRefused, \
     SMTPDataError, SMTPConnectError, SMTPHeloError, SMTPAuthenticationError
-import urllib.request
 # 3rd party lib
 from rest_framework import generics, mixins
 from rest_framework.decorators import permission_classes
@@ -30,19 +23,11 @@ from rest_framework.parsers import JSONParser
 
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import ObtainJSONWebToken, RefreshJSONWebToken
-jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+
 from rest_framework.filters import (
     SearchFilter,
     OrderingFilter,
 )
-#email settings
-# try:
-#     db_pass = os.environ["CC_EMAIL"]
-# except KeyError:
-#     print("Error: environment variable CC_EMAIL must be set.")
-#     exit(1)
-
 # Our lib
 from ceeb_program.models import (
     Curriculum, Deadline, Duration, Program, Requirement, Scholarship, Tuition,
@@ -66,9 +51,9 @@ from json import dumps, loads
 from rest_framework.renderers import JSONRenderer
 from django.core.exceptions import ObjectDoesNotExist
 
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 app_logger = logging.getLogger('app')
-# app_logger.info("This is a INFO level message")
-# app_logger.error("This is an ERROR level message")
 
 # ----------------------Login / Password ----------------------------------------
 # index
@@ -114,7 +99,7 @@ class PasswordChangeView(generics.GenericAPIView):
                 user.save()
                 return Response({"success": _("New password has been saved.")}, status=HTTP_202_ACCEPTED)
             return Response({"Failed": _("Please input valid old password.")}, status=HTTP_403_FORBIDDEN)
-        return Response({"Failed": _("System can not identify your status. Please login first!")}, status=HTTP_403_FORBIDDEN)        
+        return Response({"Failed": _("System can not identify your status. Please login first!")}, status=HTTP_403_FORBIDDEN)
 
 
 # api/password/reset/send_email/
@@ -166,7 +151,6 @@ class ResetPassword(generics.GenericAPIView):
                     message.send()
                 except (BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
                         SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
-                    # messages.info(request, "Notification Email was not sending success. " + e.type)
                     app_logger.info('{0} when sending email. content: {1}'.format(type(e).__name__, html_content))
                     app_logger.exception()
 
@@ -264,7 +248,7 @@ class CustomerProgram(generics.ListAPIView):
                 Q(customer_confirmation=confirmation_status)
                 ).order_by(order_dict[order])
         return query_list
-        
+
 
 # api/user/competing_program
 class CustomerCompetingProgramAPI(APIView):
@@ -287,7 +271,7 @@ class CustomerCompetingProgramAPI(APIView):
         if user.account_type == 'sub':
             program_list = UniversityCustomerProgram.objects.get(customer=user.main_user_id, object_id=object_id)
             return program_list
-        else:            
+        else:
             try:
                 program_list = UniversityCustomerProgram.objects.get(object_id=object_id, customer=user)
                 return program_list
@@ -384,7 +368,7 @@ class DashBoardAPI(APIView):
             except ObjectDoesNotExist:
                 return Response({"Failed": _("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
- 
+
         return user
 
     def get_program_list(self, customer):
@@ -420,7 +404,7 @@ class DashBoardAPI(APIView):
         program_list = self.get_program_list(customer)
         programs = program_list.filter(customer_confirmation='No').count()
         return programs
-    
+
     def get(self, request, object_id=None):
         customer = self.get_object(request, object_id)
         final_released_enhancement = self.get_final_released_enhancement_nums(customer)
@@ -541,7 +525,7 @@ class UpdatedReportsList(APIView):
         return Response(context, status=HTTP_200_OK)
 
 
-# Get user's basic information / 
+# Get user's basic information /
 class CustomerDetail(APIView):
     def get_object(self, request, client_id):
         try:
@@ -769,7 +753,7 @@ class CreateOrChangeSubUser(APIView):
                     )
                 sub_customer_program.save()
 
-        ResetPassword.post(request)
+        ResetPassword().post(request)
 
         return Response({"success": _("Sub user has been created.")}, status=HTTP_201_CREATED)
 
