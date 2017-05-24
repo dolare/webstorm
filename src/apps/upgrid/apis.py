@@ -746,6 +746,7 @@ class CreateOrChangeSubUser(APIView):
             service_until=sub_service_until,
         )
 
+
         user.set_password(decoded_new_password)
 
         user.save()
@@ -2083,6 +2084,10 @@ class EnhancementReportsUpdateAPI(APIView):
             # if not a or not b:
             #     return None
             if isinstance(a, dict) and isinstance(b, dict):
+                print(a)
+                print('[[[[[[]]]]]]')
+                print(b)
+
                 if a['length'] < b['length']:
                     temp = b
                     b = a
