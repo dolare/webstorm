@@ -13,6 +13,8 @@ from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
+from smtplib import SMTPServerDisconnected,  SMTPSenderRefused, SMTPRecipientsRefused, \
+    SMTPDataError, SMTPConnectError, SMTPHeloError, SMTPAuthenticationError
 import urllib.request
 # 3rd party lib
 from rest_framework import generics, mixins
@@ -162,12 +164,16 @@ class ResetPassword(generics.GenericAPIView):
                                            bcc=cc_addresses_tuple)
                     message.content_subtype = 'html'
                     message.send()
-                except BadHeaderError:
-                    raise ValidationError('Please provide the refer code!')
+                except (BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
+                        SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
+                    # messages.info(request, "Notification Email was not sending success. " + e.type)
+                    app_logger.info('{0} when sending email. content: {1}'.format(type(e).__name__, html_content))
+                    app_logger.exception()
+
                 print('sent email success')
 
                 try:
-                    if request.is_create == True:
+                    if request.is_create is True:
                         return
                 except AttributeError:
                     print('go on reset')
@@ -763,15 +769,7 @@ class CreateOrChangeSubUser(APIView):
                     )
                 sub_customer_program.save()
 
-        payload = jwt_payload_handler(user)
-        token = jwt_encode_handler(payload)
-        if token:
-            html_content = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'><img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' width='150px'></div><div style='background:white; padding: 20px 35px;border-radius: 8px '><div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s </div><div style='font-family: sans-serif;'><p>We have just received a password reset request for this email account. Please click <a href='https://%s/#/upgrid/reset/%s/'> here</a> to reset your Upgrid password.</p><p>If the above link does not work for you, please copy and paste the following into your browser address bar:</p><a href='https://%s/#/upgrid/reset/%s/'>https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!</div><h3>- Team Gridology</h3></div></div></div>")
-            message = EmailMessage(subject='Reset Password', body=html_content % (user.contact_name,
-                                                                                  request.META['HTTP_HOST'], token,request.META['HTTP_HOST'],token, request.META['HTTP_HOST'],token), to=[request.data['email']])
-            # message = EmailMessage(subject='User created', body="User created!", to=['ckykokoko@gmail.com'])
-            message.content_subtype = 'html'
-            message.send()
+        ResetPassword.post(request)
 
         return Response({"success": _("Sub user has been created.")}, status=HTTP_201_CREATED)
 
