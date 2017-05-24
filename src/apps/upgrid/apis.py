@@ -745,7 +745,8 @@ class CreateOrChangeSubUser(APIView):
             phone=request.data['phone'],
             service_until=sub_service_until,
         )
-        user.password = decoded_new_password
+
+        user.set_password(decoded_new_password)
 
         user.save()
 
@@ -1130,14 +1131,8 @@ class ClientCRUD(APIView):
         
       
         client.set_password(decoded_new_password)
-        # decoded_new_password = self.decode_password(self.request.data['password'])
-        # client.set_password(decoded_new_password)
-        print(client.password)
-        print('raw')
+
         client.save()
-        print(client.password)
-        print('rawed')
-        # for main user add competing_schools
 
         for cp in self.request.data['competing_schools']:
             school = UniversitySchool.objects.get(object_id=cp.get('object_id'))
