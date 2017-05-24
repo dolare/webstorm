@@ -1,19 +1,14 @@
 # System lib
-####################################################
-from django.shortcuts import render,get_object_or_404
-from django.template import loader
-
-#####################################################
-import base64
 import logging
-import os
+from django.shortcuts import render, get_object_or_404
 from django.core.serializers import serialize
 from django.core.mail import BadHeaderError, EmailMessage
 from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
-import urllib.request
+from smtplib import SMTPServerDisconnected,  SMTPSenderRefused, SMTPRecipientsRefused, \
+    SMTPDataError, SMTPConnectError, SMTPHeloError, SMTPAuthenticationError
 # 3rd party lib
 from rest_framework import generics, mixins
 from rest_framework.decorators import permission_classes
@@ -28,19 +23,11 @@ from rest_framework.parsers import JSONParser
 
 from rest_framework_jwt.settings import api_settings
 from rest_framework_jwt.views import ObtainJSONWebToken, RefreshJSONWebToken
-jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+
 from rest_framework.filters import (
     SearchFilter,
     OrderingFilter,
 )
-#email settings
-# try:
-#     db_pass = os.environ["CC_EMAIL"]
-# except KeyError:
-#     print("Error: environment variable CC_EMAIL must be set.")
-#     exit(1)
-
 # Our lib
 from ceeb_program.models import (
     Curriculum, Deadline, Duration, Program, Requirement, Scholarship, Tuition,
@@ -64,9 +51,9 @@ from json import dumps, loads
 from rest_framework.renderers import JSONRenderer
 from django.core.exceptions import ObjectDoesNotExist
 
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 app_logger = logging.getLogger('app')
-# app_logger.info("This is a INFO level message")
-# app_logger.error("This is an ERROR level message")
 
 # ----------------------Login / Password ----------------------------------------
 # index
@@ -112,7 +99,7 @@ class PasswordChangeView(generics.GenericAPIView):
                 user.save()
                 return Response({"success": _("New password has been saved.")}, status=HTTP_202_ACCEPTED)
             return Response({"Failed": _("Please input valid old password.")}, status=HTTP_403_FORBIDDEN)
-        return Response({"Failed": _("System can not identify your status. Please login first!")}, status=HTTP_403_FORBIDDEN)        
+        return Response({"Failed": _("System can not identify your status. Please login first!")}, status=HTTP_403_FORBIDDEN)
 
 
 # api/password/reset/send_email/
@@ -162,12 +149,13 @@ class ResetPassword(generics.GenericAPIView):
                                            bcc=cc_addresses_tuple)
                     message.content_subtype = 'html'
                     message.send()
-                except BadHeaderError:
-                    raise ValidationError('Please provide the refer code!')
-                print('sent email success')
+                except (BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
+                        SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
+                    app_logger.exception('{0} when sending email. Error: {1}'.format(type(e).__name__, html_content))
+                    raise ValidationError("Failed to send Email. {0}".format(type(e).__name__, html_content))
 
                 try:
-                    if request.is_create == True:
+                    if request.is_create is True:
                         return
                 except AttributeError:
                     print('go on reset')
@@ -258,7 +246,7 @@ class CustomerProgram(generics.ListAPIView):
                 Q(customer_confirmation=confirmation_status)
                 ).order_by(order_dict[order])
         return query_list
-        
+
 
 # api/user/competing_program
 class CustomerCompetingProgramAPI(APIView):
@@ -281,7 +269,7 @@ class CustomerCompetingProgramAPI(APIView):
         if user.account_type == 'sub':
             program_list = UniversityCustomerProgram.objects.get(customer=user.main_user_id, object_id=object_id)
             return program_list
-        else:            
+        else:
             try:
                 program_list = UniversityCustomerProgram.objects.get(object_id=object_id, customer=user)
                 return program_list
@@ -378,7 +366,7 @@ class DashBoardAPI(APIView):
             except ObjectDoesNotExist:
                 return Response({"Failed": _("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
- 
+
         return user
 
     def get_program_list(self, customer):
@@ -414,7 +402,7 @@ class DashBoardAPI(APIView):
         program_list = self.get_program_list(customer)
         programs = program_list.filter(customer_confirmation='No').count()
         return programs
-    
+
     def get(self, request, object_id=None):
         customer = self.get_object(request, object_id)
         final_released_enhancement = self.get_final_released_enhancement_nums(customer)
@@ -535,7 +523,7 @@ class UpdatedReportsList(APIView):
         return Response(context, status=HTTP_200_OK)
 
 
-# Get user's basic information / 
+# Get user's basic information /
 class CustomerDetail(APIView):
     def get_object(self, request, client_id):
         try:
@@ -764,15 +752,7 @@ class CreateOrChangeSubUser(APIView):
                     )
                 sub_customer_program.save()
 
-        payload = jwt_payload_handler(user)
-        token = jwt_encode_handler(payload)
-        if token:
-            html_content = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'><img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' width='150px'></div><div style='background:white; padding: 20px 35px;border-radius: 8px '><div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s </div><div style='font-family: sans-serif;'><p>We have just received a password reset request for this email account. Please click <a href='https://%s/#/upgrid/reset/%s/'> here</a> to reset your Upgrid password.</p><p>If the above link does not work for you, please copy and paste the following into your browser address bar:</p><a href='https://%s/#/upgrid/reset/%s/'>https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!</div><h3>- Team Gridology</h3></div></div></div>")
-            message = EmailMessage(subject='Reset Password', body=html_content % (user.contact_name,
-                                                                                  request.META['HTTP_HOST'], token,request.META['HTTP_HOST'],token, request.META['HTTP_HOST'],token), to=[request.data['email']])
-            # message = EmailMessage(subject='User created', body="User created!", to=['ckykokoko@gmail.com'])
-            message.content_subtype = 'html'
-            message.send()
+        ResetPassword().post(request)
 
         return Response({"success": _("Sub user has been created.")}, status=HTTP_201_CREATED)
 

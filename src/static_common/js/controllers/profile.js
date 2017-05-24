@@ -457,10 +457,6 @@ controller('ProfileController',
                
             });
 
-
-
-
-            
             // $timeout(function() {
             //      jQuery('#myModalSubuser').modal('toggle');
             // }, 1000);
@@ -481,9 +477,6 @@ controller('ProfileController',
               z_index: 1999,
             });
 
-
-
-            
 
           }).
           catch(function(error) {
