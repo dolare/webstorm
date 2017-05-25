@@ -147,11 +147,11 @@
                             <!-- Followers -->
                             <div class="block block-opt-refresh-icon6" ng-if="customer.profile.account_type==='main'">
                                 <div class="block-header bg-info text-white">
-                                    <ul class="block-options">
+                                    <!-- <ul class="block-options">
                                         <li>
                                             <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
                                         </li>
-                                    </ul>
+                                    </ul> -->
                                     <h3 class="block-title"><i class="fa fa-fw fa-share-alt"></i> Colleagues</h3>
                                 </div>
                                 
@@ -161,7 +161,7 @@
                                         <li>
                                             <a href="javascript:void(0)" class="show-name-ellipsis">
                                                 <img class="img-avatar" src="/static/img/avatar6.jpg" alt="">
-                                                <i class="fa fa-circle text-success"></i> {{row.contact_name}}
+                                                <!-- <i class="fa fa-circle text-success"></i> --> {{row.contact_name}}
                                                 <div class="font-w400 text-muted"><small>{{row.position}}</small></div>
                                             </a>
                                         </li>
@@ -200,14 +200,14 @@
 
 
                             <!-- Timeline -->
-                            <div class="block block-opt-refresh-icon6" id="timeline">
+                            <div class="block block-opt-refresh-icon1" id="timeline-release">
                                 <div class="block-header bg-info text-white">
                                     <ul class="block-options">
                                         <li>
                                             <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
                                         </li>
                                         <li>
-                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
+                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo" ng-click="newly_released_function(true)"><i class="si si-refresh text-white"></i></button>
                                         </li>
                                     </ul>
                                     <h3 class="block-title"><i class="fa fa-check-circle" style="color: #c8e6ca"></i>&nbsp;&nbsp;Newly Released Reports</h3>
@@ -270,14 +270,14 @@
 
 
                             <!-- updated reports -->
-                           <div class="block block-opt-refresh-icon6" id="timeline" ng-if="customer.profile.account_type==='main'">
+                           <div class="block block-opt-refresh-icon1" id="timeline-update" ng-if="customer.profile.account_type==='main'">
                                 <div class="block-header bg-info text-white">
                                     <ul class="block-options">
                                         <li>
                                             <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
                                         </li>
                                         <li>
-                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
+                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo" ng-click="newly_updated_function(true)"><i class="si si-refresh text-white"></i></button>
                                         </li>
                                     </ul>
                                     <h3 class="block-title"><i class="fa fa-certificate" style="color: #FFEEA3"></i>&nbsp;&nbsp;Updated Reports</h3>
