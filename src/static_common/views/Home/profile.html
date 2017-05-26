@@ -80,7 +80,7 @@
                             <div class="block-content">
                                 <div class="text-center">
                                 </div>
-                                <table class="table table-borderless table-striped font-s13 push-20">
+                                <table class="table table-borderless table-striped font-s13 push-15">
                                     <tbody>
                                         <!-- <tr>
                                                 <td class="font-w600" style="width: 30%;">Category</td>
@@ -315,7 +315,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="val-phone">Program access 
                             
-                            <p class="push-10-t"><a href ng-click="checkall_edit(true)"><i class="fa fa-check-square-o"></i> All</a> | <a href ng-click="checkall_edit(false)"><i class="fa fa-square-o"></i> None</a></p></label>
+                            <p class="push-10-t"><a href ng-click="checkall_edit(true)">All</a> | <a href ng-click="checkall_edit(false)">None</a></p></label>
                             <div class="col-md-7 frame" style="max-height: 140px">
                                 <table st-table="program_permission" class="table table-hover block">
                                     <tbody>
@@ -403,7 +403,7 @@
 
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="val-ccemail-edit">Auto CC reports? <i class="fa fa-question-circle" data-tooltip-trigger="'click'" data-uib-tooltip="Forward main-user report notification to this colleague upon report generation?" data-tooltip-placement="top"></i></label>
+                            <label class="col-md-4 control-label" for="val-ccemail-edit-1">Auto CC reports? <i class="fa fa-question-circle" data-tooltip-trigger="'click'" data-uib-tooltip="Forward main-user report notification to this colleague upon report generation?" data-tooltip-placement="top"></i></label>
                             <div class="col-md-7">
                                 <label class="css-input switch switch-sm switch-primary">
                                     <input ng-model="subuser_raw[0].can_ccemail" type="checkbox" id="val-ccemail-edit" name="val-ccemail-edit"><span></span>
@@ -414,7 +414,7 @@
 
                         <div class="form-group" style="margin-bottom: 0">
                             <label class="col-md-4 control-label" for="val-phone">Program access
-                            <p class="push-10-t"><a href ng-click="checkall(true)"><i class="fa fa-check-square-o"></i> All</a> | <a href ng-click="checkall(undefined)"><i class="fa fa-square-o"></i> None</a></p>
+                            <p class="push-10-t"><a href ng-click="checkall(true)">All</a> | <a href ng-click="checkall(undefined)">None</a></p>
                             </label>
                             <div class="col-md-7 frame" style="max-height: 140px">
                                 <table st-table="program_permission" class="table table-hover block">
@@ -437,7 +437,7 @@
                                 <button class="btn btn-block btn-primary" type="submit"><i class="fa fa-check"></i> Submit</button>
                             </div>
                         </div>
- -->                 <div class="form-group">
+ -->                 <div class="form-group push-15-t">
                             <div class="col-md-7 col-md-offset-4">
                                 <button ng-click="update_subuser()" class="btn btn-block btn-primary" type="submit" ng-disabled="subuser_title_old === subuser_raw[0].title 
                                           && subuser_contact_name_old === subuser_raw[0].contact_name

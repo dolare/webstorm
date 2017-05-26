@@ -27,158 +27,6 @@ angular.module('myApp').controller('AdminMainController',
             }
         }
 
-        var initWizardSimple = function() {
-            jQuery('.js-wizard-simple').bootstrapWizard({
-                'tabClass': '',
-                'firstSelector': '.wizard-first',
-                'previousSelector': '.wizard-prev',
-                'nextSelector': '.wizard-next',
-                'lastSelector': '.wizard-last',
-                'onTabShow': function(tab, navigation, index) {
-                    var total = navigation.find('li').length;
-                    var current = index + 1;
-                    var percent = (current / total) * 100;
-
-                    // Get vital wizard elements
-                    var wizard = navigation.parents('.block');
-                    var progress = wizard.find('.wizard-progress > .progress-bar');
-                    var btnPrev = wizard.find('.wizard-prev');
-                    var btnNext = wizard.find('.wizard-next');
-                    var btnFinish = wizard.find('.wizard-finish');
-
-                    // Update progress bar if there is one
-                    if (progress) {
-                        progress.css({
-                            width: percent + '%'
-                        });
-                    }
-
-                    // If it's the last tab then hide the last button and show the finish instead
-                    if (current >= total) {
-                        btnNext.hide();
-                        btnFinish.show();
-                    } else {
-                        btnNext.show();
-                        btnFinish.hide();
-                    }
-                }
-            });
-
-        };
-
-        // Init wizards with validation, for more examples you can check out http://vadimg.com/twitter-bootstrap-wizard-example/
-        var initWizardValidation = function() {
-            // Get forms
-            var form1 = jQuery('.js-form1');
-
-            // Prevent forms from submitting on enter key press
-            form1.on('keyup keypress', function(e) {
-                var code = e.keyCode || e.which;
-
-                if (code === 13) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-
-            // Init form validation on classic wizard form
-            var validator1 = form1.validate({
-                errorClass: 'help-block text-center animated fadeInUp',
-                errorElement: 'div',
-                errorPlacement: function(error, e) {
-                    jQuery(e).parents('.form-group > div').append(error);
-                },
-                highlight: function(e) {
-                    jQuery(e).closest('.form-group').removeClass('has-error').addClass('has-error');
-                    jQuery(e).closest('.help-block').remove();
-                },
-                success: function(e) {
-                    jQuery(e).closest('.form-group').removeClass('has-error');
-                    jQuery(e).closest('.help-block').remove();
-                },
-                rules: {
-                    'simple-classic-progress-account-name': {
-                        required: true,
-                        minlength: 5
-                    },
-                    'validation-classic-lastname': {
-                        required: true,
-                        minlength: 2
-                    },
-                    'validation-classic-email': {
-                        required: true,
-                        email: true
-                    },
-                    'validation-classic-details': {
-                        required: true,
-                        minlength: 5
-                    },
-                    'validation-classic-city': {
-                        required: true
-                    },
-                    'validation-classic-skills': {
-                        required: true
-                    },
-                    'validation-classic-terms': {
-                        required: true
-                    }
-                },
-                messages: {
-                    'simple-classic-progress-account-name': {
-                        required: 'Please enter a name',
-                        minlength: 'The name must consist of at least 5 characters'
-                    },
-                    'validation-classic-lastname': {
-                        required: 'Please enter a lastname',
-                        minlength: 'Your lastname must consist of at least 2 characters'
-                    },
-                    'validation-classic-email': 'Please enter a valid email address',
-                    'validation-classic-details': 'Let us know a few thing about yourself',
-                    'validation-classic-skills': 'Please select a skill!',
-                    'validation-classic-terms': 'You must agree to the service terms!'
-                }
-            });
-
-            // Init classic wizard with validation
-            jQuery('.js-wizard-simple').bootstrapWizard({
-                'tabClass': '',
-                'previousSelector': '.wizard-prev',
-                'nextSelector': '.wizard-next',
-                'onTabShow': function(tab, nav, index) {
-                    var total = nav.find('li').length;
-                    var current = index + 1;
-
-                    // Get vital wizard elements
-                    var wizard = nav.parents('.block');
-                    var btnNext = wizard.find('.wizard-next');
-                    var btnFinish = wizard.find('.wizard-finish');
-
-                    // If it's the last tab then hide the last button and show the finish instead
-                    if (current >= total) {
-                        btnNext.hide();
-                        btnFinish.show();
-                    } else {
-                        btnNext.show();
-                        btnFinish.hide();
-                    }
-                },
-                'onNext': function(tab, navigation, index) {
-                    var valid = form1.valid();
-
-                    if (!valid) {
-                        validator1.focusInvalid();
-
-                        return false;
-                    }
-                },
-                onTabClick: function(tab, navigation, index) {
-                    return false;
-                }
-            });
-
-        };
-
-
         $scope.deactivate = function(id, index, subindex, val) {
 
             console.log("index = "+index)
@@ -284,9 +132,8 @@ angular.module('myApp').controller('AdminMainController',
 
          //for add and edit
         $scope.addnew = function(Id) {
-
+             $timeout(function () { jQuery('#myTab a:first').tab('show') }, 100);
             
-
             $scope.show_program = false
             $scope.success_client_id = null;
 
@@ -298,8 +145,6 @@ angular.module('myApp').controller('AdminMainController',
             App.blocks('#client_block', 'state_loading');
             $scope.modaltitle = "Add a new client";
             
-
-
             //init ng-model
             $scope.account_name = null;
             $scope.email = null;
@@ -327,7 +172,7 @@ angular.module('myApp').controller('AdminMainController',
 
 
 
-            $timeout(function () {
+            $timeout(function () { 
                 //alert('initing');
             //select2 init
 
@@ -467,8 +312,6 @@ angular.module('myApp').controller('AdminMainController',
 
                 console.log("get ceebs success")
 
-                jQuery('#myTab a:first').tab('show')
-                // jQuery('.js-wizard-simple').find("a[href*='simple-classic-progress-step1']").trigger('click');
             }).
             catch(function(error) {
                 console.log('an error occurred...' + JSON.stringify(error));
@@ -481,7 +324,7 @@ angular.module('myApp').controller('AdminMainController',
 
         $scope.editold = function(Id) {
 
-                jQuery('#myTab1 a:first').tab('show'); 
+                $timeout(function () { jQuery('#myTab1 a:first').tab('show');  }, 100);
 
                 App.blocks('#client_block2', 'state_loading');
                 
@@ -491,8 +334,6 @@ angular.module('myApp').controller('AdminMainController',
                 console.log("pwhide Id = " + Id);
 
                 $scope.editing_new = false
-                // Init simple wizard
-                initWizardSimple();
 
                 //init ng-model
                 $scope.account_name = null;
@@ -693,14 +534,11 @@ angular.module('myApp').controller('AdminMainController',
 
                     console.log("competing_edit= " + JSON.stringify($scope.competing_edit));
 
-                    
-
                     console.log("edit customer program = " + JSON.stringify($scope.customer_program));
 
 
                     //generate selected_customprogram list
                     $scope.selected_customprogram = [];
-                    $scope.selected_customprogram_copy = [];
 
                     for (i = 0; i < $scope.customer_program.length; i++) {
 
@@ -766,12 +604,6 @@ angular.module('myApp').controller('AdminMainController',
 
                     }
 
-
-
-                    console.log("$scope.selected_customprogram="+JSON.stringify($scope.selected_customprogram));
-
-                    
-
                     console.log("selected program is " + JSON.stringify($scope.selected_customprogram));
 
                      return $http({
@@ -815,8 +647,6 @@ angular.module('myApp').controller('AdminMainController',
                     $scope.get_departments = response.data;
 
                     $scope.all_programs = [];
-
-                    //////
 
 
                     $scope.competing_string = "";
@@ -892,8 +722,6 @@ angular.module('myApp').controller('AdminMainController',
 
             }, 100);
                 
-
-                    //jQuery('.js-wizard-simple').bootstrapWizard('first');
                     App.blocks('#client_block2', 'state_normal');
 
                 }).catch(function(error) {
@@ -905,12 +733,8 @@ angular.module('myApp').controller('AdminMainController',
             } //end of editold
 
 
-
-
         //get depart on ceeb
         $scope.get_depart = function() {
-
-
 
             $http({
                 url: '/api/upgrid/accountmanager/department/' + $scope.ceeb,
@@ -920,10 +744,6 @@ angular.module('myApp').controller('AdminMainController',
                 }
             }).then(function(response) {
 
-                $scope.details = response.data;
-
-
-
                 response.data.unshift({
                     "department": "All"
                 });
@@ -932,12 +752,9 @@ angular.module('myApp').controller('AdminMainController',
                     "department": "Other"
                 });
 
-
                 console.log("all_depart" + JSON.stringify(response.data));
 
                 $scope.get_departments = response.data;
-
-
 
             }).
             catch(function(error) {
@@ -1134,8 +951,6 @@ angular.module('myApp').controller('AdminMainController',
         }
 
 
-
-
         $scope.client_programs = [];
      
         
@@ -1182,7 +997,6 @@ angular.module('myApp').controller('AdminMainController',
 
         }
 
-     
 
         $scope.submit_edit = function() {
             $scope.editing_new = true;
@@ -1443,32 +1257,6 @@ angular.module('myApp').controller('AdminMainController',
 
         }
 
-
-        $scope.insert_competing = function(Pid, id) {
-            //order after, +1 respectively
-            for (var i = id + 1; i < $scope.selected_customprogram[Pid].competing_program.length; i++) {
-
-                $scope.selected_customprogram[Pid].competing_program[i].order = $scope.selected_customprogram[Pid].competing_program[i].order + 1;
-
-                //if existing
-                if ($scope.selected_customprogram[Pid].competing_program[i].object_id) {
-
-                    $scope.put_competing($scope.selected_customprogram[Pid].competing_program[i].object_id, $scope.selected_customprogram[Pid].customer_program_id, $scope.selected_customprogram[Pid].competing_program[i].program_id, $scope.selected_customprogram[Pid].competing_program[i].order, $scope.selected_customprogram[Pid].competing_program[i].enhancement_status);
-
-                }
-
-            }
-
-            $scope.selected_customprogram[Pid].competing_program.splice(id + 1, 0, {
-                "object_id": null,
-                "program_id": null,
-                "order": $scope.selected_customprogram[Pid].competing_program[id].order + 1,
-                "enhancement_status": "in progress"
-            });
-
-        }
-
-
         $scope.add_competing_line = function(Pid, id) {
 
             $scope.show_select2 = false
@@ -1563,9 +1351,6 @@ angular.module('myApp').controller('AdminMainController',
         }
 
 
-
-
-
         $scope.post_customer_program = function (added){
 
 
@@ -1620,13 +1405,6 @@ angular.module('myApp').controller('AdminMainController',
                     console.log("success add customer program" + JSON.stringify(response));
 
 
-
-           
-
-                    //console.log("$scope.selected_customprogram="+JSON.stringify($scope.selected_customprogram));
-
-
-
                 }).
                 catch(function(error) {
                     console.log('an error occurred...' + JSON.stringify(error));
@@ -1666,8 +1444,6 @@ angular.module('myApp').controller('AdminMainController',
 
             }).then(function (response) {
 
-               $scope.details = response.data;
-
                console.log("return data"+ JSON.stringify(response.data));
                
             }).
@@ -1677,7 +1453,6 @@ angular.module('myApp').controller('AdminMainController',
              });
 
         }
-
 
 
         $scope.delete_customer_program = function (index) {

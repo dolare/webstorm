@@ -14,90 +14,138 @@ dashboard.controller('DashboardController',
     $scope.htmlPopover = $sce.trustAsHtml('1. Confirmation dialog added for delete actions.<br>2. Report template simplified.<br>3. Redesigned the style of the Reports template.<br>4. The release time and update time were integrated into the reports.');
 
 
-    //dashboard sections
-    //for api test
-    $http({
-          url: '/api/upgrid/user/dashboard/newly_released/'+client_id,
-          method: 'GET',
-          headers: {
-            'Authorization': 'JWT ' + token
-          }
-    }).then(function (response) {
-
-       var newly_released_raw = response.data;
-
-       $scope.newly_released = [];
-
-       for(var i=0; i<newly_released_raw.FinalReleasedWhoops.length; i++){
-
-          if(newly_released_raw.FinalReleasedWhoops[i].whoops_final_release_time){
-              newly_released_raw.FinalReleasedWhoops[i].type = 'whoops';
-              newly_released_raw.FinalReleasedWhoops[i].released_time = newly_released_raw.FinalReleasedWhoops[i].whoops_final_release_time;
-              $scope.newly_released.push(newly_released_raw.FinalReleasedWhoops[i]);
-          }
-
-       }
 
 
-       for(var i=0; i<newly_released_raw.FinalReleasedEnhancement.length; i++){
+     $scope.newly_released_function = function(refresh) {
 
-          if(newly_released_raw.FinalReleasedEnhancement[i].enhancement_final_release_time){
-              newly_released_raw.FinalReleasedEnhancement[i].type = 'enhancement';
-              newly_released_raw.FinalReleasedEnhancement[i].released_time = newly_released_raw.FinalReleasedEnhancement[i].enhancement_final_release_time;
-              $scope.newly_released.push(newly_released_raw.FinalReleasedEnhancement[i]);
-          }
-       }
+        console.log("refresh="+refresh)
+        if(refresh){
+          App.blocks('#timeline-release', 'state_loading');
+          
+        }
 
-       console.log("$scope.newly_released = "+ JSON.stringify($scope.newly_released));
-       
-    }).
-     catch(function(error){
-        console.log('an error occurred...'+JSON.stringify(error));
+        //dashboard sections
+        //for api test
+        $http({
+              url: '/api/upgrid/user/dashboard/newly_released/'+client_id,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+        }).then(function (response) {
 
-     });
+           var newly_released_raw = response.data;
 
+           $scope.newly_released = [];
 
-     //for api test
-    $http({
-          url: '/api/upgrid/user/dashboard/newly_updated/'+client_id,
-          method: 'GET',
-          headers: {
-            'Authorization': 'JWT ' + token
-          }
-    }).then(function (response) {
+           for(var i=0; i<newly_released_raw.FinalReleasedWhoops.length; i++){
 
-       
-       var newly_updated_raw = response.data;
+              if(newly_released_raw.FinalReleasedWhoops[i].whoops_final_release_time){
+                  newly_released_raw.FinalReleasedWhoops[i].type = 'whoops';
+                  newly_released_raw.FinalReleasedWhoops[i].released_time = newly_released_raw.FinalReleasedWhoops[i].whoops_final_release_time;
+                  $scope.newly_released.push(newly_released_raw.FinalReleasedWhoops[i]);
+              }
 
-       $scope.newly_updated = [];
-
-       for(var i=0; i<newly_updated_raw.WhoopsUpdateList.length; i++){
-
-          if(newly_updated_raw.WhoopsUpdateList[i].last_edit_time){
-              newly_updated_raw.WhoopsUpdateList[i].type = 'whoops';
-              $scope.newly_updated.push(newly_updated_raw.WhoopsUpdateList[i]);
-          }
-
-       }
+           }
 
 
-       for(var i=0; i<newly_updated_raw.EnhancementUpdateList.length; i++){
+           for(var i=0; i<newly_released_raw.FinalReleasedEnhancement.length; i++){
 
-          if(newly_updated_raw.EnhancementUpdateList[i].last_edit_time){
-              newly_updated_raw.EnhancementUpdateList[i].type = 'enhancement';
-              $scope.newly_updated.push(newly_updated_raw.EnhancementUpdateList[i]);
-          }
-       }
+              if(newly_released_raw.FinalReleasedEnhancement[i].enhancement_final_release_time){
+                  newly_released_raw.FinalReleasedEnhancement[i].type = 'enhancement';
+                  newly_released_raw.FinalReleasedEnhancement[i].released_time = newly_released_raw.FinalReleasedEnhancement[i].enhancement_final_release_time;
+                  $scope.newly_released.push(newly_released_raw.FinalReleasedEnhancement[i]);
+              }
+           }
 
-       console.log("$scope.newly_updated = "+ JSON.stringify($scope.newly_updated));
+           if(refresh){
+             App.blocks('#timeline-release', 'state_normal');
+           }
+           
+           console.log("$scope.newly_released = "+ JSON.stringify($scope.newly_released));
+
+           
+        }).
+         catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+            if(refresh){
+             App.blocks('#timeline-release', 'state_normal');
+           }
+
+         });
 
 
 
-    }).
-     catch(function(error){
-        console.log('an error occurred...'+JSON.stringify(error));
+     }
 
-     });
+
+     $scope.newly_released_function();
+
+
+
+     $scope.newly_updated_function = function(refresh) {
+
+        if(refresh){
+          App.blocks('#timeline-update', 'state_loading');
+          
+        }
+
+        //for api test
+        $http({
+              url: '/api/upgrid/user/dashboard/newly_updated/'+client_id,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+        }).then(function (response) {
+
+           
+           var newly_updated_raw = response.data;
+
+           $scope.newly_updated = [];
+
+           for(var i=0; i<newly_updated_raw.WhoopsUpdateList.length; i++){
+
+              if(newly_updated_raw.WhoopsUpdateList[i].last_edit_time){
+                  newly_updated_raw.WhoopsUpdateList[i].type = 'whoops';
+                  $scope.newly_updated.push(newly_updated_raw.WhoopsUpdateList[i]);
+              }
+
+           }
+
+
+           for(var i=0; i<newly_updated_raw.EnhancementUpdateList.length; i++){
+
+              if(newly_updated_raw.EnhancementUpdateList[i].last_edit_time){
+                  newly_updated_raw.EnhancementUpdateList[i].type = 'enhancement';
+                  $scope.newly_updated.push(newly_updated_raw.EnhancementUpdateList[i]);
+              }
+           }
+
+           if(refresh){
+             App.blocks('#timeline-update', 'state_normal');
+           }
+
+           console.log("$scope.newly_updated = "+ JSON.stringify($scope.newly_updated));
+
+
+
+        }).
+         catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+            if(refresh){
+             App.blocks('#timeline-update', 'state_normal');
+           }
+
+         });
+     }
+
+
+
+     $scope.newly_updated_function();
+     
 
 
 
@@ -116,24 +164,7 @@ dashboard.controller('DashboardController',
       angular.element(document.getElementById('scrolltop_enhancement_update')).scrollTop(0);
     }
 
-    //test
-    // $http({
-    //       url: '/api/upgrid/user/dashboard/newly_released/',
-    //       method: 'GET',
-    //       headers: {
-    //         'Authorization': 'JWT ' + token
-    //       }
-    // }).then(function (response) {
 
-     
-
-    //    console.log("released!!!"+ JSON.stringify(response.data));
-       
-    // }).
-    //  catch(function(error){
-    //     console.log('an error occurred...'+JSON.stringify(error));
-
-    //  });
 
     //console.log("ceeb result is"+JSON.stringify(List.profile.Ceeb));
    console.log("dashboard result is"+JSON.stringify(List));
@@ -143,26 +174,6 @@ dashboard.controller('DashboardController',
    ///test update report
 
    console.log("clientid = "+ avatarService.getClientId());
-
-   // //for api test
-    // $http({
-    //       url: '/api/upgrid/update/view/enhancement/' + 'f434bdb5-7b29-4ffe-a0d2-93b0147e3497' + '/' +avatarService.getClientId(),
-    //       method: 'GET',
-    //       headers: {
-    //         'Authorization': 'JWT ' + token
-    //       }
-    // }).then(function (response) {
-
-    //    $scope.details = response.data;
-
-    //    console.log("data returned"+ JSON.stringify(response.data));
-       
-    // }).
-    //  catch(function(error){
-    //     console.log('an error occurred...'+JSON.stringify(error));
-
-    //  });
-
 
   
     $scope.WhoopsViewer = function(Id){
