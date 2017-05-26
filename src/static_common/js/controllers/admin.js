@@ -1775,7 +1775,6 @@ angular.module('myApp').controller('AdminMainController',
     });
 
 
-
 // loading of ceeb
 // loading of competing
 // 2 hrs token

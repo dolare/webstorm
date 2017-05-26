@@ -1399,7 +1399,7 @@ ul.help-ul>li {
 }
 
 
-#timeline .nav-users a > img {
+#timeline-release .nav-users a > img, #timeline-update .nav-users a > img {
     position: absolute;
     left: 12px;
     top: inherit;
