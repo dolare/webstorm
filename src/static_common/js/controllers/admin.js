@@ -1107,9 +1107,7 @@ angular.module('myApp').controller('AdminMainController',
 
                             jQuery('#modal-large-add').modal('toggle');
 
-
                             $.notify({
-
                                 // options
                                 icon: "fa fa-check",
                                 message: "The client has been created. Please modify the client program(s) in the 'Edit' window"

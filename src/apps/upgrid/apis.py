@@ -1505,7 +1505,7 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
             query_list = Program.objects.all()
             query_list = query_list.filter(Q(program_name__icontains = search)|
                     Q(university_school__university__icontains = search)|
-                    Q(degree__description__icontains = search)|
+                    #Q(degree__description__icontains = search)|
                     Q(degree__name__icontains = search)|
                     Q(university_school__school__icontains = search))
             if total_ceeb:
@@ -2053,6 +2053,8 @@ class EnhancementReportsUpdateAPI(APIView):
                    ]
         ignore = ['date_modified','length']
 
+
+
         def compare(a, b):
             diff = {}
             new_diff = {}
@@ -2064,9 +2066,36 @@ class EnhancementReportsUpdateAPI(APIView):
             # if not a or not b:
             #     return None
             if isinstance(a, dict) and isinstance(b, dict):
-                print(a)
+                print(a['length'])
+                print(len(a))
                 print('[[[[[[]]]]]]')
-                print(b)
+                print(b['length'])
+                print(len(b))
+
+                #confirm key , keep a and b have the same keys
+                # for k, v in a.items():
+                #     if k == 'length':
+                #         continue
+                #     else:
+                #         if k in b.keys() and len(v) == len(b[k]):
+                #             continue
+                #         elif k in b.keys() and isinstance(v,dict):
+                #             for k1,v1 in v.items():
+                #                 #print(k1)
+                #                 #print('print k1')
+                #                 if not k1 in b[k].keys():
+                #                     print(k1)
+                #                     print('print k1')
+                #                     b[k][k1] = None
+
+                #             for k1,v1 in b[k].items():
+                #                 #print(k1)
+                #                 #print('print k1')
+                #                 if not k1 in v.keys():
+                #                     print(k1)
+                #                     print('print k1')
+                #                     v[k1] = None
+
 
                 if a['length'] < b['length']:
                     temp = b
@@ -2128,6 +2157,8 @@ class EnhancementReportsUpdateAPI(APIView):
                                     continue
                                 old_diff[k] = v_of_b
                                 new_diff[k] = v
+
+
                 if a['length'] > b['length'] or a['length'] == b['length']:
                     for k, v in a.items():  # top level
                         if k == 'length':
