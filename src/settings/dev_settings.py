@@ -66,6 +66,8 @@ LOGGING = {
 
 
 #databas settings
+upgridAdmin = None
+ceebAdmin = None
 try:
     db_pass = os.environ["DB_PASS"]
 except KeyError:
@@ -74,6 +76,12 @@ except KeyError:
 
 try:
     upgridAdmin = os.environ["upgridAdmin"]
+except KeyError:
+    upgridAdmin = None
+
+
+try:
+    ceebAdmin = os.environ["ceebAdmin"]
 except KeyError:
     upgridAdmin = None
 
@@ -86,6 +94,17 @@ if not upgridAdmin == None:
             'PORT': '8443',
             'USER': 'upgridadmin',
             'PASSWORD': upgridAdmin,
+            },
+    }
+elif not ceebAdmin == None:
+    DATABASES = {  
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'ceeb',
+            'HOST': 'test-ceeb.czaefnaupx0d.us-east-1.rds.amazonaws.com',
+            'PORT': '8443',
+            'USER': 'ceebadmin',
+            'PASSWORD': ceebAdmin,
             },
     }
 else:
