@@ -1864,3 +1864,13 @@ left: 35%;
 
 
 /*end customized tabs*/
+
+
+#client-email {
+  display:none;
+}
+
+
+.table-hover.client-table > tbody > tr:hover>td:nth-child(2) #client-email{
+    display: inline-block;
+}

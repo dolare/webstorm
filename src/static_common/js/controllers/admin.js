@@ -18,6 +18,13 @@ angular.module('myApp').controller('AdminMainController',
 
         console.log("CLient = = = " + JSON.stringify($scope.client_data))
 
+        var school_list_raw_unordered = _.sortBy($scope.client_data, 'university');
+        var school_list_raw = _.pluck(school_list_raw_unordered, 'university');
+
+        $scope.school_list = _.uniq(school_list_raw);
+        console.log("$scope.school_list = "+JSON.stringify($scope.school_list))
+
+
         //For stats
         $scope.active_num = 0;
         $scope.client_num = Client.length;
@@ -1059,6 +1066,7 @@ angular.module('myApp').controller('AdminMainController',
 
                     console.log("Updated the competing list");
 
+
                     $timeout(function () {
                         //alert('initing');
                     //select2 init
@@ -1136,6 +1144,18 @@ angular.module('myApp').controller('AdminMainController',
                             align: "center"
                         },
                         z_index: 1999,
+                    });
+
+
+
+                     apiService.getClient(token).then(function (result) {
+            
+                            console.log("$scope.success_client_id="+$scope.success_client_id)
+                                  
+                            console.log("result===="+JSON.stringify(result))
+                            //$scope.client_data = result;
+                            $scope.client_data = tableDataService.getClientList(result);
+                         
                     });
                          
                     $scope.editing_new = false

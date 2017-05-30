@@ -64,24 +64,17 @@
                 <div class="block-content">
                     <div class="table-responsive">
                     
-                        <table class="table table-hover table-vcenter" st-pagination-scroll st-table="displayeddata" st-safe-src="client_data">
+                        <table class="table table-hover table-vcenter client-table" st-pagination-scroll st-table="displayeddata" st-safe-src="client_data">
                             <colgroup>
                             <col width="5%" />
-                            <col width="15%" />
-                            <col width="10%" />
                             <col width="25%" />
                             <col width="15%" />
-                            <col width="12%" />
+                            <col width="30%" />
                             <col width="15%" />
-                            <col width="3%" />
+                            <col width="10%" />
                         </colgroup>
                         <thead>
-                            <tr>
-                                <th colspan="8" class="bg-info-light">
-                                    <input st-search="" class="form-control" placeholder="global search ..." type="text" />
-                                </th>
-
-                            </tr>
+                           
 
 
                             <tr>
@@ -89,16 +82,27 @@
                                 <!--  <th class="text-center"><i class="icon-user"></i></th> -->
                                 <th st-sort="contact_name" class="text-left">Name</th>
                                 <th st-sort="is_active" class="text-left">Status</th>
-                                <th st-sort="university" class="text-left">University</th>
+                                <!-- <th st-sort="university" class="text-left">University</th> -->
                                 <th st-sort="department" class="text-left">Department</th>
-                                <th st-sort="email" class="text-left">Email</th>
+                                <!-- <th st-sort="email" class="text-left">Email</th> -->
                                 <th class="text-center" style="min-width: 95px">Actions</th>
-                                <th class="text-center"><i class="icon-trash"></i></th>
+                                <th class="text-right"><i class="icon-trash"></i></th>
                             </tr>
                             <tr>
-                                <th colspan="8" class="bg-info-light">
+                                <th colspan="3" class="border-l border-r" style="background: #f0f4f8;">
+                               
+                                    <select st-search="university" class="form-control" id="select-school" name="select-school">
+                                        <option value="">show all schools...</option>
+                                        <option ng-repeat="row in school_list" value="{{row}}">{{row}}</option>
+                                    </select>
+                                                            
+                                </th>
+
+                                <th colspan="3" class="border-r" style="background: #f0f4f8;">
                                     <input st-search="" class="form-control" placeholder="global search ..." type="text" />
                                 </th>
+
+                                
                             </tr>
                         </thead>
 
@@ -116,7 +120,9 @@
                         <!-- <td class="text-center">
                             <img class="img-avatar img-avatar48" src="/static/img/avatar6.jpg" alt="">
                         </td> -->
-                        <td>{{row.contact_name}}</td>
+                        <td>
+                                {{row.contact_name}} &nbsp;<a href="mailto:{{row.email}}" id="client-email"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                        </td>
                         <td>
                             <span ng-if="row.is_active===true">
                                 <span class="label label-info">active</span>
@@ -125,14 +131,17 @@
                                 <span class="label label-default">inactive</span>
                             </span>
                         </td>
-                        <td>{{row.university}}</td>
-                        <td>{{row.department}}
+                        
+                        <td>
+                            <div>{{row.university}}</div>
+
+                            <div class="text-muted push-5-t" style="font-size:80%">DEP: {{row.department}}
                             <span ng-if="row.department===null">
                                 N/A
-                            </span>
+                            </span></div>
                         </td>
-                        <td><a href="mailto:{{row.email}}">{{row.email}}</a></td>
-                        <td class="text-right">
+                       <!--  <td><a href="mailto:{{row.email}}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></td> -->
+                        <td class="text-center">
                             <!-- <button class="btn btn-xs btn-default" type="button">
                                             <i class="fa fa-pencil push-5-r text-success"></i>Edit
                                         </button>
@@ -149,7 +158,7 @@
                                                 </button>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="text-right">
                                             <button class="btn btn-default" confirmed-click="deactivate(row.id, $index, null, !row.is_active)" ng-confirm-click="Do you really want to delete/re-activate?" data-js-blur>
                                                 <a ng-class="row.is_active ? 'fa fa-times text-danger' : 'fa fa-undo text-info'">
                                                 </a>
@@ -165,7 +174,7 @@
 
 
                                 <tbody ng-repeat-end ng-show="show_sub">
-                                    <tr class="bg-gray-light" ng-repeat="row1 in row.subuser">
+                                    <tr class="bg-gray-lighter" ng-repeat="row1 in row.subuser">
 
                                         <td class="text-right">{{$index+1}}.</td>
                         <!-- <td class="text-center">
@@ -180,14 +189,18 @@
                                 <span class="label label-default">inactive</span>
                             </span>
                         </td>
-                        <td>{{row1.university}}</td>
-                        <td>{{row1.department}}
+                        <!-- <td>{{row1.university}}</td> -->
+                        <td>
+                            <div>{{row1.university}}</div>
+
+                            <div class="text-muted push-5-t" style="font-size:80%">DEP: {{row1.department}}
                             <span ng-if="row1.department===null">
                                 N/A
-                            </span>
+                            </span></div>
+
                         </td>
-                        <td><a href="mailto:{{row1.email}}">{{row1.email}}</a></td>
-                        <td class="text-right">
+                        <!-- <td><a href="mailto:{{row1.email}}">{{row1.email}}</a></td> -->
+                        <td class="text-center">
 
                             <div class="btn-group">
                                 <button class="btn btn-default" data-toggle="modal" data-target="#modal-large-edit" ng-click="editold(row1.id)" data-js-blur>
@@ -200,7 +213,7 @@
                                 </button>
                             </div>
                         </td>
-                        <td>
+                        <td class="text-right">
                             <button class="btn btn-default" confirmed-click="deactivate(row1.id, $parent.$index, $index, !row1.is_active)" ng-confirm-click="Do you really want to delete/re-activate?" data-js-blur>
                                 <a ng-class="row.is_active ? 'fa fa-times text-danger' : 'fa fa-undo text-info'">
                                 </a>
