@@ -826,18 +826,13 @@ class ShareReports(APIView):
         return eur
 
     def get(self, request, object_id, token):
-
-        expired_period = 3600*48
         obj = get_object_or_404(SharedReportsRelation, object_id=object_id)
         if str(obj.access_token) != str(token):
             return Response("Invalid Token !", status=HTTP_403_FORBIDDEN)
         else:
-            # final_res = {}
             res_whoops = []
             res_enhancement = []
-            date = obj.created_time
-            period = timezone.now()-date
-            if period.total_seconds() > expired_period:
+            if timezone.now() > obj.expired_time:
                 return Response("Token Expired!", status=HTTP_403_FORBIDDEN)
             else:
                 whoops_report_list = obj.whoopsreportsrepo_set.all().filter(wr_share_relation=object_id)
@@ -870,9 +865,18 @@ class ShareReports(APIView):
             except UniversityCustomer.DoesNotExist:
                 user = UniversityCustomer.objects.get(id=request.data['client_id'])
             time_now = timezone.now()
+            if 'expired_time' in request.data:
+                if request.data['expired_time'] > 30:
+                    return Response({"Failed": _("Expired_time can not greater than 30 days.")},
+                                    status=HTTP_400_BAD_REQUEST)
+                else:
+                    expired_time = time_now + timezone.timedelta(days=request.data['expired_time'])
+            else:
+                expired_time = time_now + timezone.timedelta(days=2)
             relation_ship = SharedReportsRelation.objects.create(
                 created_by=request.user,
                 created_time=time_now,
+                expired_time=expired_time,
             )
             relation_ship.save()
 
