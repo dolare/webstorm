@@ -1955,6 +1955,8 @@ class EnhancementReportsUpdateAPI(APIView):
         get customer program and competing program
            return: dictionary
         """
+
+
         total_program = self.get_programs(object_id)
         length = len(total_program)
         res_obj = {}
@@ -2039,7 +2041,7 @@ class EnhancementReportsUpdateAPI(APIView):
         return res_obj
 
     @classmethod
-    def compare_enhancement_report(cls, a, b):
+    def compare_enhancement_report(self,a, b):
         fk_list = ['ex', 'ex2', 'ex3', 'ex4', 'ex5',  # top level list in format of [{name,date}]
                    'Intl_eng_test', 'Intl_eng_test2', 'Intl_eng_test3', 'Intl_eng_test4', 'Intl_eng_test5',
                    # top level list
@@ -2105,6 +2107,7 @@ class EnhancementReportsUpdateAPI(APIView):
                     # print(a)
                     # print("b is :")
                     # print(b)
+                    #a----new   b-----old
 
                     for k, v in a.items():  # top level
                         if k == 'length':
@@ -2138,7 +2141,7 @@ class EnhancementReportsUpdateAPI(APIView):
                             new_diff[k] = {}
 
                             for k2, v2 in v.items():
-                                if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
+                                if k2 in v_of_b and v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
                                     if v2 == '' and v_of_b[k2] is None:
                                         continue
                                     if v2 is None and v_of_b[k2] == '':
@@ -2200,7 +2203,7 @@ class EnhancementReportsUpdateAPI(APIView):
                                 # print(v2)
                                 # print(v_of_b[k2])
                                 # print('end')
-                                if v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
+                                if k2 in v_of_b and v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
                                     if v2 == '' and v_of_b[k2] is None:
                                         continue
                                     if v2 is None and v_of_b[k2] == '':
@@ -2240,7 +2243,6 @@ class EnhancementReportsUpdateAPI(APIView):
             existing_report_dict = JSONParser().parse(enhancement_json_string)
             diff = EnhancementReportsUpdateAPI.compare_enhancement_report(existing_report_dict,
                                                                           new_enhancement_report_dict)
-
             if diff:
                 diff = zlib.compress(JSONRenderer().render(diff))
                 eru.initial_diff = diff
