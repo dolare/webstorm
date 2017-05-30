@@ -1937,7 +1937,10 @@ class EnhancementReportsUpdateAPI(APIView):
            return: object list
         """
         program_list = []
-        customer_program = UniversityCustomerProgram.objects.select_related('program').get(object_id=customer_program_id)
+        customer_program_query = UniversityCustomerProgram.objects.select_related('program').filter(object_id=customer_program_id)
+        if not customer_program_query.exists():
+            return None
+        customer_program = customer_program_query.first()
         self_program = Program.objects.get(object_id=customer_program.program.object_id)
         program_list.append(self_program)
         competing_programs = customer_program.customercompetingprogram_set.all().select_related('program').order_by(
@@ -1955,23 +1958,24 @@ class EnhancementReportsUpdateAPI(APIView):
         get customer program and competing program
            return: dictionary
         """
-
-
         total_program = self.get_programs(object_id)
-        length = len(total_program)
+        length = len(total_program) - 1
         res_obj = {}
-        for i in range(1, length + 1):
-            program = "p" + (str(i) if i > 1 else "")
-            curriculum = "c" + (str(i) if i > 1 else "")
-            tuition = "t" + (str(i) if i > 1 else "")
-            deadline = "d" + (str(i) if i > 1 else "")
-            requirement = "r" + (str(i) if i > 1 else "")
-            required_exam = "ex" + (str(i) if i > 1 else "")
-            intl_transcript = "Intl_transcript" + (str(i) if i > 1 else "")
-            intl_eng_test = "Intl_eng_test" + (str(i) if i > 1 else "")
-            scholarship = "s" + (str(i) if i > 1 else "")
-            duration = "dura" + (str(i) if i > 1 else "")
+        arr_0 = []
+        arr_1= []
 
+        for i in range(1, length + 1):
+            # program = "p" + (str(i) if i > 1 else "")
+            # curriculum = "c" + (str(i) if i > 1 else "")
+            # tuition = "t" + (str(i) if i > 1 else "")
+            # deadline = "d" + (str(i) if i > 1 else "")
+            # requirement = "r" + (str(i) if i > 1 else "")
+            # required_exam = "ex" + (str(i) if i > 1 else "")
+            # intl_transcript = "Intl_transcript" + (str(i) if i > 1 else "")
+            # intl_eng_test = "Intl_eng_test" + (str(i) if i > 1 else "")
+            # scholarship = "s" + (str(i) if i > 1 else "")
+            # duration = "dura" + (str(i) if i > 1 else "")
+            temp = {}
             empty = None
             try:
                 p_value = total_program[i - 1]
@@ -2025,19 +2029,27 @@ class EnhancementReportsUpdateAPI(APIView):
             s_value = dbLizer.ScholarshipSerializer(s_value)
             dura_value = dbLizer.DurationSerializer(dura_value)
 
-            res_obj[program] = p_value.data  # return unordered map if empty would be a empty list
-            res_obj[curriculum] = c_value.data
-            res_obj[tuition] = t_value.data
-            res_obj[deadline] = d_value.data
-            res_obj[requirement] = r_value.data
-            res_obj[required_exam] = r_e_value.data
-            res_obj[intl_transcript] = i_value.data
-            res_obj[intl_eng_test] = i_e_t_value.data
-            res_obj[scholarship] = s_value.data
-            res_obj[duration] = dura_value.data
+            temp['program_detail'] = p_value.data  # return unordered map if empty would be a empty list
+            temp['curriculum'] = c_value.data
+            temp['tuition'] = t_value.data
+            temp['deadline'] = d_value.data
+            temp['requirement'] = r_value.data
+            temp['required_exam'] = r_e_value.data
+            temp['intl_transcript'] = i_value.data
+            temp['intl_eng_test'] = i_e_t_value.data
+            temp['scholarship'] = s_value.data
+            temp['duration'] = dura_value.data
+
+            if i == 1:
+                arr_0.append(temp)
+            else:
+                arr_1.append(temp)
+
+        res_obj["competing_programs"] = arr_1;
+        res_obj["program"] = arr_0
 
         res_obj["length"] = length
-
+        
         return res_obj
 
     @classmethod
@@ -2056,7 +2068,7 @@ class EnhancementReportsUpdateAPI(APIView):
         ignore = ['date_modified','length']
 
 
-
+        print()
         def compare(a, b):
             diff = {}
             new_diff = {}
