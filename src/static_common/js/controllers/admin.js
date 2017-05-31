@@ -1515,7 +1515,8 @@ angular.module('myApp').controller('AdminMainController',
                     'Authorization': 'JWT ' + token
                   }
                 }).then(function (response) {
-                  console.log(i + ' ' + 'Enhancement released')
+                    console.log($scope.selected_customprogram[index].customer_program_id + '$scope.selected_customprogram[index].customer_program_id')
+                    console.log(i + ' ' + 'Enhancement released')
 
                 }).
                  catch(function(error){

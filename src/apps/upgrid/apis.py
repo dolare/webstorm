@@ -2252,14 +2252,17 @@ class EnhancementReportsUpdateAPI(APIView):
             return None  # return None if no difference
 
     def compare_enhancement_process(self, eru, raw_new_enhancement_report, new_enhancement_report_dict):
-        if eru.existing_report is None and eru.cache_report is None:  # For the very first EnhancementUpdate object
+        if eru.existing_report is None and eru.cache_report is None: 
+         # For the very first EnhancementUpdate object
+            print('existing_report ')
             eru.existing_report = raw_new_enhancement_report  # raw binary data
         elif eru.cache_report is None:
             binary_data = zlib.decompress(eru.existing_report)
             enhancement_json_string = BytesIO(binary_data)
             existing_report_dict = JSONParser().parse(enhancement_json_string)
             diff = EnhancementReportsUpdateAPI.compare_enhancement_report(existing_report_dict,
-                                                                          new_enhancement_report_dict)
+                                                                            new_enhancement_report_dict)
+            print('cache_report ')
             if diff:
                 diff = zlib.compress(JSONRenderer().render(diff))
                 eru.initial_diff = diff
@@ -2268,7 +2271,8 @@ class EnhancementReportsUpdateAPI(APIView):
             enhancement_json_string = BytesIO(binary_data)
             cache_report_dict = JSONParser().parse(enhancement_json_string)
             diff = EnhancementReportsUpdateAPI.compare_enhancement_report(cache_report_dict,
-                                                                          new_enhancement_report_dict)
+                                                                         new_enhancement_report_dict)
+            print('generate diff ')
             if diff:
                 diff = zlib.compress(JSONRenderer().render(diff))
                 eru.initial_diff = diff
@@ -2276,9 +2280,13 @@ class EnhancementReportsUpdateAPI(APIView):
 
     def enhancement_schedule_compare(self, request):
         """call this method each day at 04:00 or any other time, update EnhancementReports each day for all users"""
-
-        university_customer_program = request.POST.get('customer_program_id', 0)
+        if 'customer_program_id' in request.data:
+            university_customer_program = request.data['customer_program_id']
+        else:
+            university_customer_program = 0
+        
         if university_customer_program != 0:  # Account Manager on demand compare
+            print('release............on_demand')
             # print(request.user.id)
             # print(UniversityCustomer.objects.get(id=request.user.id))
             customer_program = UniversityCustomerProgram.objects.get(object_id=university_customer_program)
