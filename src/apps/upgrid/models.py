@@ -295,10 +295,15 @@ class EnhancementReports(models.Model):
         super(EnhancementReports, self).save(*args, **kwargs)
 
 
+def one_day_hence():
+    return timezone.now() + timezone.timedelta(days=1)
+
+
 class SharedReportsRelation(models.Model):
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_by = models.ForeignKey(UpgridBaseUser, on_delete=models.PROTECT)
     created_time = models.DateTimeField(default=datetime.now, blank=True)
+    expired_time = models.DateTimeField(default=one_day_hence, blank=True)
     access_token = models.UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
 
     def __str__(self):
