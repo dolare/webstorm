@@ -166,7 +166,7 @@ App.directive('jsTableSectionsFixed', function () {
                         && !jQuery(e.target).parent('label').length) {
                     var row    = jQuery(this);
                     var tbody  = row.parent('tbody');
-
+                    console.log("in it")
                     if (! tbody.hasClass('open')) {
                         jQuery('tbody', table).removeClass('open');
                     }

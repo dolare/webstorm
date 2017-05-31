@@ -334,19 +334,19 @@ whoops.controller('WhoopsController',
 
 
     $scope.printReport = function() {
-      window.print();
-      // $('#scrolltop_whoops_page').printThis({ 
-      //     debug: false,              
-      //     importCSS: true,             
-      //     importStyle: true,         
-      //     printContainer: true,       
-      //     loadCSS: "css/oneui.css", 
-      //     pageTitle: "My Modal",             
-      //     removeInline: false,        
-      //     printDelay: 333,            
-      //     header: null,             
-      //     formValues: true          
-      // }); 
+      
+      $("#printWhoops").printThis({ 
+          debug: false,              
+          importCSS: true,             
+          importStyle: true,         
+          printContainer: true,       
+          loadCSS: "../static/css/print.css", 
+          pageTitle: "Upgrid Whoops Report",             
+          removeInline: false,        
+          printDelay: 333,            
+          header: null,             
+          formValues: true          
+      }); 
    }  
 
 

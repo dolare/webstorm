@@ -34,7 +34,22 @@ controller('ReportsController',
 
     // alert('wahaha[0]='+$scope.obj1.wahaha[0]);
     $scope.printReport = function() {
-      window.print();
+      
+    $scope.printReport = function() {
+      
+      $("#top-report").printThis({ 
+          debug: false,              
+          importCSS: true,             
+          importStyle: true,         
+          printContainer: true,       
+          loadCSS: "../static/css/print.css", 
+          pageTitle: "Upgrid Reports",             
+          removeInline: false,        
+          printDelay: 333,            
+          header: null,             
+          formValues: true          
+      }); 
+   }  
 
     }
 

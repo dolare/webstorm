@@ -1,0 +1,38 @@
+@media print {
+           
+
+    a[href]:after {
+        content: none !important;
+      }            
+
+
+      pre {
+            font-family: inherit;
+            background-color: inherit;
+            border: 0 ! important;
+            color: inherit;
+            line-height: inherit;
+            padding: 0;
+            vertical-align: top;
+            word-break: break-word;
+            margin: 0;
+            white-space: pre-wrap;
+            font-size: inherit;
+        } 
+
+
+        .report_table2 pre {
+
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }  
+
+
+
+}

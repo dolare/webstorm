@@ -425,8 +425,41 @@ dashboard.controller('DashboardController',
    $scope.test1 = 25;
    $scope.customer = List;
 
-   $scope.printReport = function() {
-      window.print();
+   $scope.printReport = function(type) {
+
+      if(type==='whoops'){
+
+        $("#printWhoops").printThis({ 
+            debug: false,              
+            importCSS: true,             
+            importStyle: true,         
+            printContainer: true,       
+            loadCSS: "../static/css/print.css", 
+            pageTitle: "Upgrid Whoops Report",             
+            removeInline: false,        
+            printDelay: 333,            
+            header: null,             
+            formValues: true          
+        }); 
+
+      } else if(type==='enhancement'){
+
+        $("#printEnhancement").printThis({ 
+            debug: false,              
+            importCSS: true,             
+            importStyle: true,         
+            printContainer: true,       
+            loadCSS: "../static/css/print.css", 
+            pageTitle: "Upgrid Enhancement Report",             
+            removeInline: false,        
+            printDelay: 333,            
+            header: null,             
+            formValues: true          
+        }); 
+
+      }
+
+      
       
    }
 

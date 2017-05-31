@@ -213,7 +213,19 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
     }
 
     $scope.printReport = function() {
-      window.print();
+
+      $("#printEnhancement").printThis({ 
+          debug: false,              
+          importCSS: true,             
+          importStyle: true,         
+          printContainer: true,       
+          loadCSS: "../static/css/print.css", 
+          pageTitle: "Upgrid Enhancement Report",             
+          removeInline: false,        
+          printDelay: 333,            
+          header: null,             
+          formValues: true          
+      }); 
       
    }
 

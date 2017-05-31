@@ -17,22 +17,6 @@
                         </div>
                         <!-- END Basic Info -->
                         
-    <!-- <div class="btn-group" data-toggle="buttons">
-  <label class="btn btn-primary">
-    <input type="radio" name="options" id="option1"> Option 1
-  </label>
-  <label class="btn btn-primary">
-    <input type="radio" name="options" id="option2"> Option 2
-  </label>
-  <label class="btn btn-primary">
-    <input type="radio" name="options" id="option3"> Option 3
-  </label>
-</div> -->
-
-            <!--  <button data-toggle="modal" data-target="#WhoopsReport">click</button>
-
-             <button data-toggle="modal" data-target="#EnhancementReport">click</button>
-      -->
                         <!-- Stats -->
                         
                         <div class="block-content text-center">
@@ -365,7 +349,7 @@
           <div class="block-header bg-primary-dark">
             <ul class="block-options">
                                 <li>
-                                    <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
+                                    <button ng-click="printReport('whoops')" type="button" data-js-blur><i class="si si-printer"></i></button>
                                  </li>
 
                                 <li>
@@ -381,7 +365,7 @@
                               
                               <div class="block-content fullscreen-container frame" style="width:auto;padding:0; " id="scrolltop_whoops">
 
-                                <div class="block whoops_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+                                <div class="block whoops_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="printWhoops">
                 
 
 
@@ -406,7 +390,7 @@
           <div class="block-header bg-primary-dark">
             <ul class="block-options">
                                 <li>
-                                    <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
+                                    <button ng-click="printReport('enhancement')" type="button" data-js-blur><i class="si si-printer"></i></button>
                                  </li>
 
                                 <li>
@@ -422,11 +406,8 @@
                               
                               <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" id="scrolltop_enhancement">
 
-           
-                    <!-- SlimScroll Container -->
-                    <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
 
-                    <div class="block enhancement_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+                    <div class="block enhancement_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="printEnhancement">
 
                     <div ng-include src="'/static/views/Home/partials/enhancement_template.html'"></div>
                     </div>
