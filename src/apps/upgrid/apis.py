@@ -1963,7 +1963,7 @@ class EnhancementReportsUpdateAPI(APIView):
            return: dictionary
         """
         total_program = self.get_programs(object_id)
-        length = len(total_program) - 1
+        length = len(total_program)
         res_obj = {}
         arr_0 = []
         arr_1= []
@@ -2044,6 +2044,7 @@ class EnhancementReportsUpdateAPI(APIView):
             temp['scholarship'] = s_value.data
             temp['duration'] = dura_value.data
 
+            print(i)
             if i == 1:
                 arr_0.append(temp)
             else:
