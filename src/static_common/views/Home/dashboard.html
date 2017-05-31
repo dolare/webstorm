@@ -46,11 +46,14 @@
                         <!-- 1 -->
                         <div class="col-xs-6 col-sm-4">
                            
-                            <div class="push-20 font-w600 text-dark animated fadeIn">Programs</div>
+                            
 
                             <div class="pie-chart chart-1" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{customer_num}} programs in service" data-tooltip-placement="bottom">{{customer_num}} <br><small class="text-muted">/{{total_num}}</small></span>
                             </div>
+
+
+                            <div class="push-10-t push-5 font-w600 animated fadeIn">Programs</div>
 
                             
                         </div>
@@ -58,11 +61,15 @@
                         <!-- 2 -->
                         <div class="col-xs-6 col-sm-4" style="border-right: 1px solid #e5e5e5; border-left: 1px solid #e5e5e5">
                             
-                            <div class="push-20 font-w600 text-dark animated fadeIn">"Whoops!" Report</div>
+                            
 
                             <div class="pie-chart chart-2" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{whoops_num}} out of {{customer_num}} 'Whoops!' Reports are available" data-tooltip-placement="bottom">{{whoops_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
+
                             </div>
+
+
+                            <div class="push-10-t push-5 font-w600 animated fadeIn">"Whoops!" Report</div>
 
                             
                         </div>
@@ -75,11 +82,13 @@
                         <!-- 3 -->
                         <div class="col-xs-6 col-sm-4" ng-show="unconfirmed_num===0">
                             
-                            <div class="push-20 font-w600 text-dark animated fadeIn">Enhancement Report</div>
+                            
 
                             <div class="pie-chart chart-3" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{enhancement_num}} out of {{customer_num}} Enhancement Reports are available" data-tooltip-placement="bottom">{{enhancement_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
                             </div>
+
+                            <div class="push-10-t push-5 font-w600 animated fadeIn">Enhancement Report</div>
 
                             
                         </div>
@@ -92,11 +101,14 @@
                         <!-- 4 -->
                         <div class="col-xs-6 col-sm-4" ng-hide="unconfirmed_num===0">
                             
-                            <div class="push-20 font-w600 text-dark animated fadeIn">Confirmed</div>
+                            
 
                             <div class="pie-chart chart-4" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#abe37d', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
                                 <span data-uib-tooltip="{{customer_num-unconfirmed_num}} out of {{customer_num}} programs are confirmed for the Enhancement Reports" data-tooltip-placement="bottom">{{customer_num-unconfirmed_num}} <br><small class="text-muted">/{{customer_num}}</small></span>
                             </div>
+
+
+                            <div class="push-10-t push-5 font-w600 animated fadeIn">Confirmed</div>
 
                             
                         </div>
@@ -147,11 +159,11 @@
                             <!-- Followers -->
                             <div class="block block-opt-refresh-icon6" ng-if="customer.profile.account_type==='main'">
                                 <div class="block-header bg-info text-white">
-                                    <!-- <ul class="block-options">
+                                    <ul class="block-options">
                                         <li>
                                             <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
                                         </li>
-                                    </ul> -->
+                                    </ul>
                                     <h3 class="block-title"><i class="fa fa-fw fa-share-alt"></i> Colleagues</h3>
                                 </div>
                                 
@@ -161,7 +173,7 @@
                                         <li>
                                             <a href="javascript:void(0)" class="show-name-ellipsis">
                                                 <img class="img-avatar" src="/static/img/avatar6.jpg" alt="">
-                                                <!-- <i class="fa fa-circle text-success"></i> --> {{row.contact_name}}
+                                                <i class="fa fa-circle text-success"></i> {{row.contact_name}}
                                                 <div class="font-w400 text-muted"><small>{{row.position}}</small></div>
                                             </a>
                                         </li>
@@ -200,14 +212,14 @@
 
 
                             <!-- Timeline -->
-                            <div class="block block-opt-refresh-icon1" id="timeline-release">
+                            <div class="block block-opt-refresh-icon6" id="timeline-release">
                                 <div class="block-header bg-info text-white">
                                     <ul class="block-options">
                                         <li>
                                             <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
                                         </li>
                                         <li>
-                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo" ng-click="newly_released_function(true)"><i class="si si-refresh text-white"></i></button>
+                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
                                         </li>
                                     </ul>
                                     <h3 class="block-title"><i class="fa fa-check-circle" style="color: #c8e6ca"></i>&nbsp;&nbsp;Newly Released Reports</h3>
@@ -270,14 +282,14 @@
 
 
                             <!-- updated reports -->
-                           <div class="block block-opt-refresh-icon1" id="timeline-update" ng-if="customer.profile.account_type==='main'">
+                           <div class="block block-opt-refresh-icon6" id="timeline-update" ng-if="customer.profile.account_type==='main'">
                                 <div class="block-header bg-info text-white">
                                     <ul class="block-options">
                                         <li>
                                             <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
                                         </li>
                                         <li>
-                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo" ng-click="newly_updated_function(true)"><i class="si si-refresh text-white"></i></button>
+                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
                                         </li>
                                     </ul>
                                     <h3 class="block-title"><i class="fa fa-certificate" style="color: #FFEEA3"></i>&nbsp;&nbsp;Updated Reports</h3>
