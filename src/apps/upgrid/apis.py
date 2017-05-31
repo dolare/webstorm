@@ -1639,7 +1639,7 @@ class WhoopsReportsUpdateAPI(APIView):
                     'dead_link': None, 'typo': None, 'outdated_information': None,
                     'data_discrepancy': None, 'sidebars': None,
                     'infinite_loop': None, 'floating_page': None,
-                    'confusing': None, 'other_expert_note': None
+                    'confusing': None, 'other_expert_note': None,
                 }
                 query_fields = ('additional_note_type', 'additional_note_url',
                                 'additional_note_url2', 'additional_note_url3', 'additional_note')
@@ -1657,6 +1657,9 @@ class WhoopsReportsUpdateAPI(APIView):
                         new_list.append(
                             record[field_dict_idx].get('fields'))  # if get failed, None value would be return
                     obj_data[k] = new_list
+
+                #define the object_id
+                obj_data['object_id'] = program.object_id
                 return obj_data
             else:
                 return None
@@ -1730,8 +1733,10 @@ class WhoopsReportsUpdateAPI(APIView):
 
     def whoops_schedule_compare(self, request):
         """call this method each day at 04:00 or any other time, update WhoopsReports each day for all users"""
-        customer_program_id = request.POST.get('customer_program_id', 0)
-        print(customer_program_id)
+        if 'customer_program_id' in request.data:
+            customer_program_id = request.data['customer_program_id']
+        else:
+            customer_program_id = 0
         if customer_program_id != 0:  # Account Manager on demand compare
             # print(request.user.id)
             # print(UniversityCustomer.objects.get(id=request.user.id))
@@ -2011,6 +2016,7 @@ class EnhancementReportsUpdateAPI(APIView):
             except ObjectDoesNotExist:
                 s_value = empty
 
+
             if r_value:
                 r_e_value = r_value.exam.all()  # get django queryset
                 i_value = r_value.intl_transcript.all()
@@ -2043,6 +2049,7 @@ class EnhancementReportsUpdateAPI(APIView):
             temp['intl_eng_test'] = i_e_t_value.data
             temp['scholarship'] = s_value.data
             temp['duration'] = dura_value.data
+            temp['object_id'] = total_program[i - 1].object_id
 
             print(i)
             if i == 1:
