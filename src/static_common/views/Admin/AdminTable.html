@@ -83,22 +83,29 @@
                                 <th st-sort="contact_name" class="text-left">Name</th>
                                 <th st-sort="is_active" class="text-left">Status</th>
                                 <!-- <th st-sort="university" class="text-left">University</th> -->
-                                <th st-sort="department" class="text-left">Department</th>
+                                <th class="text-left">
+
+                                    <select st-search="university" class="form-control" id="select-school" name="select-school">
+                                        <option value="">SCHOOLS...</option>
+                                        <option ng-repeat="row in school_list" value="{{row}}">{{row}}</option>
+                                    </select>
+
+                                    </th>
                                 <!-- <th st-sort="email" class="text-left">Email</th> -->
                                 <th class="text-center" style="min-width: 95px">Actions</th>
                                 <th class="text-right"><i class="icon-trash"></i></th>
                             </tr>
                             <tr>
-                                <th colspan="3" class="border-l border-r" style="background: #f0f4f8;">
+                                <!-- <th colspan="2" class="border-l border-r" style="background: #f0f4f8;">
                                
                                     <select st-search="university" class="form-control" id="select-school" name="select-school">
                                         <option value="">show all schools...</option>
                                         <option ng-repeat="row in school_list" value="{{row}}">{{row}}</option>
                                     </select>
                                                             
-                                </th>
+                                </th> -->
 
-                                <th colspan="3" class="border-r" style="background: #f0f4f8;">
+                                <th colspan="6" class="border-r" style="background: #f0f4f8;">
                                     <input st-search="" class="form-control" placeholder="global search ..." type="text" />
                                 </th>
 
