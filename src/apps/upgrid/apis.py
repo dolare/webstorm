@@ -1941,7 +1941,10 @@ class EnhancementReportsUpdateAPI(APIView):
            return: object list
         """
         program_list = []
-        customer_program = UniversityCustomerProgram.objects.select_related('program').get(object_id=customer_program_id)
+        customer_program_query = UniversityCustomerProgram.objects.select_related('program').filter(object_id=customer_program_id)
+        if not customer_program_query.exists():
+            return None
+        customer_program = customer_program_query.first()
         self_program = Program.objects.get(object_id=customer_program.program.object_id)
         program_list.append(self_program)
         competing_programs = customer_program.customercompetingprogram_set.all().select_related('program').order_by(
@@ -1959,23 +1962,24 @@ class EnhancementReportsUpdateAPI(APIView):
         get customer program and competing program
            return: dictionary
         """
-
-
         total_program = self.get_programs(object_id)
         length = len(total_program)
         res_obj = {}
-        for i in range(1, length + 1):
-            program = "p" + (str(i) if i > 1 else "")
-            curriculum = "c" + (str(i) if i > 1 else "")
-            tuition = "t" + (str(i) if i > 1 else "")
-            deadline = "d" + (str(i) if i > 1 else "")
-            requirement = "r" + (str(i) if i > 1 else "")
-            required_exam = "ex" + (str(i) if i > 1 else "")
-            intl_transcript = "Intl_transcript" + (str(i) if i > 1 else "")
-            intl_eng_test = "Intl_eng_test" + (str(i) if i > 1 else "")
-            scholarship = "s" + (str(i) if i > 1 else "")
-            duration = "dura" + (str(i) if i > 1 else "")
+        arr_0 = []
+        arr_1= []
 
+        for i in range(1, length + 1):
+            # program = "p" + (str(i) if i > 1 else "")
+            # curriculum = "c" + (str(i) if i > 1 else "")
+            # tuition = "t" + (str(i) if i > 1 else "")
+            # deadline = "d" + (str(i) if i > 1 else "")
+            # requirement = "r" + (str(i) if i > 1 else "")
+            # required_exam = "ex" + (str(i) if i > 1 else "")
+            # intl_transcript = "Intl_transcript" + (str(i) if i > 1 else "")
+            # intl_eng_test = "Intl_eng_test" + (str(i) if i > 1 else "")
+            # scholarship = "s" + (str(i) if i > 1 else "")
+            # duration = "dura" + (str(i) if i > 1 else "")
+            temp = {}
             empty = None
             try:
                 p_value = total_program[i - 1]
@@ -2029,19 +2033,28 @@ class EnhancementReportsUpdateAPI(APIView):
             s_value = dbLizer.ScholarshipSerializer(s_value)
             dura_value = dbLizer.DurationSerializer(dura_value)
 
-            res_obj[program] = p_value.data  # return unordered map if empty would be a empty list
-            res_obj[curriculum] = c_value.data
-            res_obj[tuition] = t_value.data
-            res_obj[deadline] = d_value.data
-            res_obj[requirement] = r_value.data
-            res_obj[required_exam] = r_e_value.data
-            res_obj[intl_transcript] = i_value.data
-            res_obj[intl_eng_test] = i_e_t_value.data
-            res_obj[scholarship] = s_value.data
-            res_obj[duration] = dura_value.data
+            temp['program_detail'] = p_value.data  # return unordered map if empty would be a empty list
+            temp['curriculum'] = c_value.data
+            temp['tuition'] = t_value.data
+            temp['deadline'] = d_value.data
+            temp['requirement'] = r_value.data
+            temp['required_exam'] = r_e_value.data
+            temp['intl_transcript'] = i_value.data
+            temp['intl_eng_test'] = i_e_t_value.data
+            temp['scholarship'] = s_value.data
+            temp['duration'] = dura_value.data
+
+            print(i)
+            if i == 1:
+                arr_0.append(temp)
+            else:
+                arr_1.append(temp)
+
+        res_obj["competing_programs"] = arr_1;
+        res_obj["program"] = arr_0
 
         res_obj["length"] = length
-
+        
         return res_obj
 
     @classmethod
@@ -2060,7 +2073,7 @@ class EnhancementReportsUpdateAPI(APIView):
         ignore = ['date_modified','length']
 
 
-
+        print()
         def compare(a, b):
             diff = {}
             new_diff = {}
@@ -2239,14 +2252,17 @@ class EnhancementReportsUpdateAPI(APIView):
             return None  # return None if no difference
 
     def compare_enhancement_process(self, eru, raw_new_enhancement_report, new_enhancement_report_dict):
-        if eru.existing_report is None and eru.cache_report is None:  # For the very first EnhancementUpdate object
+        if eru.existing_report is None and eru.cache_report is None: 
+         # For the very first EnhancementUpdate object
+            print('existing_report ')
             eru.existing_report = raw_new_enhancement_report  # raw binary data
         elif eru.cache_report is None:
             binary_data = zlib.decompress(eru.existing_report)
             enhancement_json_string = BytesIO(binary_data)
             existing_report_dict = JSONParser().parse(enhancement_json_string)
             diff = EnhancementReportsUpdateAPI.compare_enhancement_report(existing_report_dict,
-                                                                          new_enhancement_report_dict)
+                                                                            new_enhancement_report_dict)
+            print('cache_report ')
             if diff:
                 diff = zlib.compress(JSONRenderer().render(diff))
                 eru.initial_diff = diff
@@ -2255,7 +2271,8 @@ class EnhancementReportsUpdateAPI(APIView):
             enhancement_json_string = BytesIO(binary_data)
             cache_report_dict = JSONParser().parse(enhancement_json_string)
             diff = EnhancementReportsUpdateAPI.compare_enhancement_report(cache_report_dict,
-                                                                          new_enhancement_report_dict)
+                                                                         new_enhancement_report_dict)
+            print('generate diff ')
             if diff:
                 diff = zlib.compress(JSONRenderer().render(diff))
                 eru.initial_diff = diff
@@ -2263,9 +2280,13 @@ class EnhancementReportsUpdateAPI(APIView):
 
     def enhancement_schedule_compare(self, request):
         """call this method each day at 04:00 or any other time, update EnhancementReports each day for all users"""
-
-        university_customer_program = request.POST.get('customer_program_id', 0)
+        if 'customer_program_id' in request.data:
+            university_customer_program = request.data['customer_program_id']
+        else:
+            university_customer_program = 0
+        
         if university_customer_program != 0:  # Account Manager on demand compare
+            print('release............on_demand')
             # print(request.user.id)
             # print(UniversityCustomer.objects.get(id=request.user.id))
             customer_program = UniversityCustomerProgram.objects.get(object_id=university_customer_program)

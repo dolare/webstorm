@@ -1475,6 +1475,62 @@ angular.module('myApp').controller('AdminMainController',
         }
 
 
+        $scope.ondemand_single = function(type, index) {
+
+
+            if(type==='whoops') {
+
+                $http({
+                  url: '/api/upgrid/update/whoops/ondemand/',
+                  method: 'PUT',
+                  data: {
+                    "customer_program_id": $scope.selected_customprogram[index].customer_program_id,
+                    "client_id": $scope.pwhide
+                  },
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  }
+                }).then(function (response) {
+                   console.log(i + ' ' + 'Whoops released')
+
+                }).
+                 catch(function(error){
+                    console.log('an error occurred...'+JSON.stringify(error));
+
+                 });
+
+            }
+
+
+            if(type==='enhancement') {
+
+                $http({
+                  url: '/api/upgrid/update/enhancement/ondemand/',
+                  method: 'PUT',
+                  data: {
+                    "customer_program_id": $scope.selected_customprogram[index].customer_program_id,
+                    "client_id": $scope.pwhide
+                  },
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  }
+                }).then(function (response) {
+                    console.log($scope.selected_customprogram[index].customer_program_id + '$scope.selected_customprogram[index].customer_program_id')
+                    console.log(i + ' ' + 'Enhancement released')
+
+                }).
+                 catch(function(error){
+                    console.log('an error occurred...'+JSON.stringify(error));
+
+                 });
+
+
+            }
+
+
+        }
+
+
         $scope.delete_customer_program = function (index) {
 
             $scope.delete_customer_program_string = $scope.selected_customprogram[index].customer_program_id

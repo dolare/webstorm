@@ -1101,7 +1101,7 @@
                                                             <td class="text-center">
                                                                 <div id="tab" class="btn-group" data-toggle="buttons-radio">
                                                                     <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='False';put_customer_program($index);" style="width:40px" ng-class="{'active' : row.whoops_final_release==='False'}"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                                    <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='True';put_customer_program($index);" ng-class="{'active' : row.whoops_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                                                                    <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.whoops_final_release='True';put_customer_program($index);ondemand_single('whoops', $index)" ng-class="{'active' : row.whoops_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
                                                                 </div>
                                                             </td>
 
@@ -1118,7 +1118,7 @@
                                                             <td class="text-center">
                                                                 <div id="tab" class="btn-group" data-toggle="buttons-radio">
                                                                     <a data-uib-tooltip="Unrelease" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='False';put_customer_program($index);" ng-class="{'active' : row.enhancement_final_release==='False'}" style="width:40px"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                                    <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='True';put_customer_program($index);" ng-class="{'active' : row.enhancement_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
+                                                                    <a data-uib-tooltip="Release" data-tooltip-placement="top" href="javascript:void(0)" class="btn btn-large btn-default" data-toggle="tab" ng-click="row.enhancement_final_release='True';put_customer_program($index);ondemand_single('enhancement', $index)" ng-class="{'active' : row.enhancement_final_release==='True'}"><i class="fa fa-check" aria-hidden="true"></i></a>
                                                                 </div>
                                                             </td>
 

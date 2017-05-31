@@ -32,8 +32,9 @@ controller('ShareEnhancementController',
              var report_last_edit_time = response.data[1].enhancement[0].report_last_edit_time;
 
              console.log("raw enhancement"+ JSON.stringify(response.data[1].enhancement[0]));
-             $scope.e_raw = response.data[1].enhancement[0];
-             
+             //$scope.e_raw = response.data[1].enhancement[0];
+             $scope.e_raw = response.data[1].enhancement[0].program.concat(response.data[1].enhancement[0].competing_programs);
+
              $scope.report = {};
              var e_array_1 = [];
              var e_array_2 = [];
@@ -47,18 +48,33 @@ controller('ShareEnhancementController',
              var e_array_10 = [];
              var e_array_11 = [];
 
-             for(i=0; i<$scope.e_raw.length; i++)
-             {
-               e_array_1.push($scope.e_raw['p'+(i===0?'':i+1)]);
-               e_array_2.push($scope.e_raw['c'+(i===0?'':i+1)]);
-               e_array_3.push($scope.e_raw['t'+(i===0?'':i+1)]);
-               e_array_4.push($scope.e_raw['d'+(i===0?'':i+1)]);
-               e_array_5.push($scope.e_raw['r'+(i===0?'':i+1)]);
-               e_array_6.push($scope.e_raw['ex'+(i===0?'':i+1)]);
-               e_array_7.push($scope.e_raw['Intl_transcript'+(i===0?'':i+1)]);
-               e_array_8.push($scope.e_raw['Intl_eng_test'+(i===0?'':i+1)]);
-               e_array_9.push($scope.e_raw['s'+(i===0?'':i+1)]);
-               e_array_10.push($scope.e_raw['dura'+(i===0?'':i+1)]);
+             // for(i=0; i<$scope.e_raw.length; i++)
+             // {
+             //   e_array_1.push($scope.e_raw['p'+(i===0?'':i+1)]);
+             //   e_array_2.push($scope.e_raw['c'+(i===0?'':i+1)]);
+             //   e_array_3.push($scope.e_raw['t'+(i===0?'':i+1)]);
+             //   e_array_4.push($scope.e_raw['d'+(i===0?'':i+1)]);
+             //   e_array_5.push($scope.e_raw['r'+(i===0?'':i+1)]);
+             //   e_array_6.push($scope.e_raw['ex'+(i===0?'':i+1)]);
+             //   e_array_7.push($scope.e_raw['Intl_transcript'+(i===0?'':i+1)]);
+             //   e_array_8.push($scope.e_raw['Intl_eng_test'+(i===0?'':i+1)]);
+             //   e_array_9.push($scope.e_raw['s'+(i===0?'':i+1)]);
+             //   e_array_10.push($scope.e_raw['dura'+(i===0?'':i+1)]);
+
+             // }
+
+             for(i=0; i<$scope.e_raw.length; i++){
+
+                 e_array_1.push($scope.e_raw[i]['program_detail']);
+                 e_array_2.push($scope.e_raw[i]['curriculum']);
+                 e_array_3.push($scope.e_raw[i]['tuition']);
+                 e_array_4.push($scope.e_raw[i]['deadline']);
+                 e_array_5.push($scope.e_raw[i]['requirement']);
+                 e_array_6.push($scope.e_raw[i]['required_exam']);
+                 e_array_7.push($scope.e_raw[i]['intl_transcript']);
+                 e_array_8.push($scope.e_raw[i]['intl_eng_test']);
+                 e_array_9.push($scope.e_raw[i]['scholarship']);
+                 e_array_10.push($scope.e_raw[i]['duration']);
 
              }
 
