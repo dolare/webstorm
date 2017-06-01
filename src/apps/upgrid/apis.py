@@ -1974,16 +1974,6 @@ class EnhancementReportsUpdateAPI(APIView):
         arr_1= []
 
         for i in range(1, length + 1):
-            # program = "p" + (str(i) if i > 1 else "")
-            # curriculum = "c" + (str(i) if i > 1 else "")
-            # tuition = "t" + (str(i) if i > 1 else "")
-            # deadline = "d" + (str(i) if i > 1 else "")
-            # requirement = "r" + (str(i) if i > 1 else "")
-            # required_exam = "ex" + (str(i) if i > 1 else "")
-            # intl_transcript = "Intl_transcript" + (str(i) if i > 1 else "")
-            # intl_eng_test = "Intl_eng_test" + (str(i) if i > 1 else "")
-            # scholarship = "s" + (str(i) if i > 1 else "")
-            # duration = "dura" + (str(i) if i > 1 else "")
             temp = {}
             empty = None
             try:
@@ -2051,7 +2041,6 @@ class EnhancementReportsUpdateAPI(APIView):
             temp['duration'] = dura_value.data
             temp['object_id'] = total_program[i - 1].object_id
 
-            print(i)
             if i == 1:
                 arr_0.append(temp)
             else:
@@ -2064,197 +2053,72 @@ class EnhancementReportsUpdateAPI(APIView):
         
         return res_obj
 
+    #generate diff
     @classmethod
     def compare_enhancement_report(self,a, b):
-        fk_list = ['ex', 'ex2', 'ex3', 'ex4', 'ex5',  # top level list in format of [{name,date}]
-                   'Intl_eng_test', 'Intl_eng_test2', 'Intl_eng_test3', 'Intl_eng_test4', 'Intl_eng_test5',
-                   # top level list
-                   'Intl_transcript', 'Intl_transcript2', 'Intl_transcript3', 'Intl_transcript4', 'Intl_transcript5',
-                   # top level list
-                   ]
-        fk_dict = ['curriculum_unit',  # second level dict{name,date} in c,c2,c3,c4,c5
-                   'degree',  # second level dict in format of {name,date} in p, p2,p3,p4,p5
-                   'tuition_unit',  # second level dict{name,date} in t,t2,t3,t4,t5
-                   'university_school',  # second level dict{university,school,date} in p,p2,p3,p4,p5
-                   ]
-        ignore = ['date_modified','length']
+     
+        #cause order by order, so store them in a list
+        def compare_program_list(old_program_list,new_program_list):
+            result = []
+            for i1,val1 in enumerate(old_program_list):
+                for i2,val2 in enumerate(new_program_list):
+                    print(type(val1['object_id']))
+                    print(val2['object_id'])
+                    if str(val1['object_id']) == str(val2['object_id']):
+                        print('++++++')
+                        result.append(compare_program(val1,val2))
+                    else:
+                        print('{0}!====={1}'.format(val1['object_id'],val2['object_id']))
+            print(result)
+            print('result list')
+            return result
 
-
-        print()
-        def compare(a, b):
-            diff = {}
-            new_diff = {}
-            old_diff = {}
-
-            diff["new"] = new_diff
-            diff["old"] = old_diff
-            # base caseCustomerAndCompetingProgramAPI
-            # if not a or not b:
-            #     return None
-            if isinstance(a, dict) and isinstance(b, dict):
-                print(a['length'])
-                print(len(a))
-                print('[[[[[[]]]]]]')
-                print(b['length'])
-                print(len(b))
-
-                #confirm key , keep a and b have the same keys
-                # for k, v in a.items():
-                #     if k == 'length':
-                #         continue
-                #     else:
-                #         if k in b.keys() and len(v) == len(b[k]):
-                #             continue
-                #         elif k in b.keys() and isinstance(v,dict):
-                #             for k1,v1 in v.items():
-                #                 #print(k1)
-                #                 #print('print k1')
-                #                 if not k1 in b[k].keys():
-                #                     print(k1)
-                #                     print('print k1')
-                #                     b[k][k1] = None
-
-                #             for k1,v1 in b[k].items():
-                #                 #print(k1)
-                #                 #print('print k1')
-                #                 if not k1 in v.keys():
-                #                     print(k1)
-                #                     print('print k1')
-                #                     v[k1] = None
-
-
-                if a['length'] < b['length']:
-                    temp = b
-                    b = a
-                    a = temp
-                    # print("a is :")
-                    # print(a)
-                    # print("b is :")
-                    # print(b)
-                    #a----new   b-----old
-
-                    for k, v in a.items():  # top level
-                        if k == 'length':
-                            continue
-                        if k in b.keys():
-                            v_of_b = b[k]
+        def compare_program(old_program,new_program):
+            result = {}
+            for k1,v1 in new_program.items():
+                #if k1 == 'object_id':
+                #   continue
+                if k1 in old_program.keys() and isinstance(v1,dict):
+                    for k2,v2 in v1.items():
+                        if k2 in old_program[k1].keys():
+                            if v2 != old_program[k1][k2]:
+                                if str(k2) == 'specialization':
+                                    print(v2)
+                                    print(old_program[k1][k2]) 
+                                if not k1 in result.keys():
+                                    result[k1] = {}
+                                result[k1][k2] = v2
                         else:
-                            if isinstance(v, dict):
-                                new_diff[k] = {}
-                                old_diff[k] = {}
-
-                                for k2, v2 in v.items():
-                                    new_diff[k][k2] = v[k2]
-                                    old_diff[k][k2] = {}
-                            else:
-                                new_diff[k] = v
-                                old_diff[k] = {}
-                            continue
-
-                        # 3 list
-                        if (k in fk_list) and (v != v_of_b):  # if top is in fk_list, all 3 list handled here
-                            if v == '' and v_of_b is None:
-                                continue
-                            if v is None and v_of_b == '':
-                                continue
-                            old_diff[k] = v_of_b  # top level
-                            new_diff[k] = v
-                        # dictionary
-                        elif isinstance(v, dict):  # if top is dict
-                            old_diff[k] = {}
-                            new_diff[k] = {}
-
-                            for k2, v2 in v.items():
-                                if k2 in v_of_b and v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
-                                    if v2 == '' and v_of_b[k2] is None:
-                                        continue
-                                    if v2 is None and v_of_b[k2] == '':
-                                        continue
-                                    old_diff[k][k2] = v_of_b[k2]
-                                    new_diff[k][k2] = v[k2]
-                            if len(old_diff[k]) == 0 and len(new_diff[k]) == 0:
-                                old_diff.pop(k, None)
-                                new_diff.pop(k, None)
-                        # other list and simple <key,value> pair
-                        else:
-                            if v != b[k]:
-                                if v == '' and b[k] is None:
-                                    continue
-                                if v is None and b[k] == '':
-                                    continue
-                                old_diff[k] = v_of_b
-                                new_diff[k] = v
+                            result[k1][k2] = v2
+                elif not k1 in old_program.keys() and isinstance(v1,dict): 
+                    result[k1] = v1
+                elif k1 in old_program.keys() and not isinstance(v1,dict):
+                    if v1 != old_program[k1]:
+                        result[k1] = v1
+                else:
+                    result[k1] = v1
+            return result
+            print(result)
+            print('result pro')
 
 
-                if a['length'] > b['length'] or a['length'] == b['length']:
-                    for k, v in a.items():  # top level
-                        if k == 'length':
-                            continue
-                        if k in b.keys():
-                            v_of_b = b[k]
-                        else:
-                            if isinstance(v, dict):
-                                old_diff[k] = {}
-                                new_diff[k] = {}
+        #a is old and b is new 
+        old_program = a['program']
+        new_program = b['program']
 
-                                for k2, v2 in v.items():
-                                    old_diff[k][k2] = v[k2]
-                                    new_diff[k][k2] = {}
-                            else:
-                                old_diff[k] = v
-                                new_diff[k] = {}
-                            continue
+        old_competing_programs = a['competing_programs']
+        new_competing_programs = b['competing_programs']
 
-                        # 3 list
-                        if (k in fk_list) and (v != v_of_b):  # if top is in fk_list, all 3 list handled here
-                            if v == '' and v_of_b is None:
-                                continue
-                            if v is None and v_of_b == '':
-                                continue
-                            new_diff[k] = v_of_b  # top level
-                            old_diff[k] = v
-                        # dictionary
-                        elif isinstance(v, dict):  # if top is dict
-                            new_diff[k] = {}
-                            old_diff[k] = {}
+        diff_result = {}
+        
+        diff_result['competing_programs'] = compare_program_list(old_program,new_program)
+        diff_result['program'] = compare_program_list(old_competing_programs,new_competing_programs)
 
-                            # print(v_of_b)
-                            # print('111111111111111111111111111111111111111111111111111111111111111111111111111111111111')
-                            # print(v)
-                           
-                            for k2, v2 in v.items():
-                                # print('start');
-                                # print(v2)
-                                # print(v_of_b[k2])
-                                # print('end')
-                                if k2 in v_of_b and v2 != v_of_b[k2]:  # compare two small dict or simple str value of given key
-                                    if v2 == '' and v_of_b[k2] is None:
-                                        continue
-                                    if v2 is None and v_of_b[k2] == '':
-                                        continue
-                                    new_diff[k][k2] = v_of_b[k2]
-                                    old_diff[k][k2] = v[k2]
-                            if len(old_diff[k]) == 0 and len(new_diff[k]) == 0:
-                                new_diff.pop(k, None)
-                                old_diff.pop(k, None)
-                        # other list and simple <key,value> pair
-                        else:
-                            if v != b[k]:
-                                if v == '' and b[k] is None:
-                                    continue
-                                if v is None and b[k] == '':
-                                    continue
-                                new_diff[k] = v_of_b
-                                old_diff[k] = v
-                # print("diff is:")
-                # print(diff)
-                return diff
-
-        res_dict = compare(a, b)
-        if res_dict:
-            for _, v in res_dict.items():
-                if len(v) != 0:
-                    return res_dict
+        
+        print(diff_result)
+        print('diff_result')
+        if diff_result and len(diff_result) > 0:
+            return diff_result
         else:
             return None  # return None if no difference
 
@@ -2306,7 +2170,7 @@ class EnhancementReportsUpdateAPI(APIView):
             raw_new_enhancement_report = zlib.compress(json_str)
             self.compare_enhancement_process(eru, raw_new_enhancement_report, new_enhancement_report_dict)
         else:
-            users = UniversityCustomer.objects.filter(account_type='main')
+            users = UniversityCustomer.objects.filter(account_type='main',account_manager = request.user.id)
             for user in users:
                 # login_time = user.last_login_time # get latest login time
                 customer_enhancement_programs = UniversityCustomerProgram.objects.all().\
