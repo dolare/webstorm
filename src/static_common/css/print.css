@@ -34,5 +34,27 @@
         }  
 
 
+        .report_table1.table-bordered > tbody > tr > td {
+            border-color: #777 !important;
+        }
+
+
+        .report_table2.table-bordered td {
+                border-color: #777 !important;
+            }
+
+            address td:nth-child(3) {
+
+                border-bottom: 1px solid #777 !important;
+            }
+
+
+            address>.pull-right tr.pull-right>td {
+
+                border-bottom: 1px solid #777 !important;
+            }
+
+
+
 
 }
