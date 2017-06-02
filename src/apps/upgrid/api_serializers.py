@@ -586,13 +586,9 @@ class ManagerEnhancementUpdateNumberSerializer(serializers.ModelSerializer):
             json_string = zlib.decompress(obj.initial_diff)
             json_string = BytesIO(json_string)
             res = JSONParser().parse(json_string)
-            length = 0
-            for k in res["new"]:
-                if k == 'length':
-                    continue
-                for k2 in res["new"][k]:
-                    length += 1
-            print(length)
+            print('diff_count')
+            print(res)
+            length = res['diff_count']
             return length
 
     def get_customer_program(self, obj):
