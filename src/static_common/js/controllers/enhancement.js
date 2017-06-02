@@ -1,6 +1,6 @@
 //for the enhancement page
 angular.module('myApp').
-controller('EnhancementController', function(updateService, avatarService, ajaxService, List, reportService, apiService, tableDataService, $localStorage, $sessionStorage, $scope, $window, $location, $http, authenticationSvc, $state, $filter, $q) {
+controller('EnhancementController', function($timeout, updateService, avatarService, ajaxService, List, reportService, apiService, tableDataService, $localStorage, $sessionStorage, $scope, $window, $location, $http, authenticationSvc, $state, $filter, $q) {
     // $scope.isActive = function(route) {
     //     return route === $location.path();
     // };
@@ -21,6 +21,12 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
     $scope.$storage = $localStorage;
 
+    $scope.clearSharedValue = function (){
+      $scope.enhancementSharedId = null;
+      $scope.url = null;
+    }
+
+    $scope.clearSharedValue();
 
     $scope.scrolltop = function(){
       
@@ -461,8 +467,6 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
     $scope.selectOne = function(Name, Degree, Id,  WStatus, EStatus, Confirm, Notes) {
         
-       
-
             $scope.$storage.upgrid[Name+'|'+ Degree]['Id'] = Id;
             $scope.$storage.upgrid[Name+'|'+ Degree]['WStatus'] = WStatus
             $scope.$storage.upgrid[Name+'|'+ Degree]['EStatus'] = EStatus
@@ -474,7 +478,19 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
 
     };
 
-    $scope.htmlShare = function(Id) {
+    $scope.setLinkValue= function(id) {
+      $scope.enhancementSharedId = id;
+      
+
+      jQuery('.myTab-share a:first').tab('show')
+
+
+    }
+
+    $scope.htmlShare = function(day) {
+
+        jQuery('.myTab-share a:last').tab('show')
+
         $scope.url = {
             text: null
         };
@@ -488,10 +504,10 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
             method: 'POST',
             data: {
               "whoops_id": null,
-              "enhancement_id": Id,
+              "enhancement_id": $scope.enhancementSharedId,
               "client_id":client_id,
-              "expired_day": 0,
-              "expired_sec": 10,
+              "expired_day": day,
+              "expired_sec": 0,
             },
             headers: {
                 'Authorization': 'JWT ' + token
@@ -501,9 +517,10 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
         }).then(function(response) {
             console.log("shared link RESPONSE is "+JSON.stringify(response.data));
             $scope.shareLoading = false;
-            $scope.shared_id = response.data[0].split('/')[0];
-            $scope.shared_token = response.data[0].split('/')[1];
+            $scope.shared_id = response.data.link.split('/')[0];
+            $scope.shared_token = response.data.link.split('/')[1];
 
+            $scope.expired_time = response.data.expired_time;
             $scope.url = {
                 text: 'https://'+location.host + '/#/shared_enhancement_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
             };

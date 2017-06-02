@@ -1874,3 +1874,29 @@ left: 35%;
 .table-hover.client-table > tbody > tr:hover>td:nth-child(2) #client-email{
     display: inline-block;
 }
+
+.tab-share .tab-pane{
+  padding: 0;
+}
+
+
+.tab-share .block.block-link-hover3 {
+  margin-bottom: 0;
+}
+
+
+.content-grid .day-grid:first-child .day-number{
+  color:hsl(204, 75%, 68%);
+}
+
+.content-grid .day-grid:nth-child(2) .day-number{
+  color:hsl(204, 75%, 60%);
+}
+
+.content-grid .day-grid:nth-child(3) .day-number{
+  color:hsl(204, 75%, 52%);
+}
+
+.content-grid .day-grid:nth-child(4) .day-number{
+  color:hsl(204, 75%, 44%);
+}
