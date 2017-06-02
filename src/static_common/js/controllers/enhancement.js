@@ -489,7 +489,9 @@ controller('EnhancementController', function(updateService, avatarService, ajaxS
             data: {
               "whoops_id": null,
               "enhancement_id": Id,
-              "client_id":client_id
+              "client_id":client_id,
+              "expired_day": 0,
+              "expired_sec": 10,
             },
             headers: {
                 'Authorization': 'JWT ' + token
