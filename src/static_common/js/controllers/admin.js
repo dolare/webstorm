@@ -232,6 +232,7 @@ angular.module('myApp').controller('AdminMainController',
                   },
 
                   minimumInputLength: 1,
+                  placeholder: "Please select a Ceeb",
                   
                   
                 });        //
@@ -297,6 +298,7 @@ angular.module('myApp').controller('AdminMainController',
                       },
 
                       minimumInputLength: 1,
+                      placeholder: "Please select the competing schools",
                       
                       
                     });        //
@@ -424,6 +426,7 @@ angular.module('myApp').controller('AdminMainController',
                       },
 
                       minimumInputLength: 1,
+                      placeholder: "Please select the competing schools",
                       
                       
                     });        //
@@ -522,6 +525,7 @@ angular.module('myApp').controller('AdminMainController',
                               },
 
                               minimumInputLength: 1,
+                              placeholder: "Search for the program in the Ceeb",
                               
                               
                             });        //
@@ -721,6 +725,8 @@ angular.module('myApp').controller('AdminMainController',
                   },
 
                   minimumInputLength: 1,
+                  placeholder: "Select a competing program",
+
                   
                   
                 });        //
@@ -1121,6 +1127,7 @@ angular.module('myApp').controller('AdminMainController',
                           },
 
                           minimumInputLength: 1,
+                          placeholder: "Select a competing program",
                           
                           
                         });        //
@@ -1358,6 +1365,7 @@ angular.module('myApp').controller('AdminMainController',
                   },
 
                   minimumInputLength: 1,
+                  placeholder: "Select a competing program",
                   
                   
                 });        //
@@ -1663,6 +1671,7 @@ angular.module('myApp').controller('AdminMainController',
                               },
 
                               minimumInputLength: 1,
+                              placeholder: "Select a competing program",
                               
                               
                             });        //
@@ -1824,6 +1833,7 @@ angular.module('myApp').controller('AdminMainController',
                               },
 
                               minimumInputLength: 1,
+                              placeholder: "Select a competing program",
                               
                               
                             });        //
