@@ -1759,7 +1759,7 @@ class WhoopsReportsUpdateAPI(APIView):
                 raw_new_whoops_report = None
             self.whoops_compare_process(wru, raw_new_whoops_report, new_whoops_report_dict)
         else:
-            users = UniversityCustomer.objects.filter(account_type='main')
+            users = UniversityCustomer.objects.filter(account_type='main',account_manager = request.user.id)
             print(12356)
             for user in users:
                 print(user)
@@ -1973,6 +1973,8 @@ class EnhancementReportsUpdateAPI(APIView):
            return: dictionary
         """
         total_program = self.get_programs(object_id)
+        print(total_program)
+        print('tatal Program')
         length = len(total_program)
         res_obj = {}
         arr_0 = []
@@ -2071,7 +2073,9 @@ class EnhancementReportsUpdateAPI(APIView):
                     print(val2['object_id'])
                     if str(val1['object_id']) == str(val2['object_id']):
                         print('++++++')
-                        result.append(compare_program(val1,val2))
+                        temp = compare_program(val1,val2)
+                        if temp != None:
+                            result.append(temp)
                     else:
                         print('{0}!====={1}'.format(val1['object_id'],val2['object_id']))
             print(result)
@@ -2102,9 +2106,15 @@ class EnhancementReportsUpdateAPI(APIView):
                         result[k1] = v1
                 else:
                     result[k1] = v1
-            return result
-            print(result)
-            print('result pro')
+
+            #diff not only contains the object_id
+            if len(result) > 1:
+                print('len > 1')
+                print(result)
+                return result
+            else:
+                return None
+
 
 
         #a is old and b is new 
@@ -2116,13 +2126,25 @@ class EnhancementReportsUpdateAPI(APIView):
 
         diff_result = {}
         
+
         diff_result['competing_programs'] = compare_program_list(old_program,new_program)
         diff_result['program'] = compare_program_list(old_competing_programs,new_competing_programs)
 
-        
-        print(diff_result)
-        print('diff_result')
-        if diff_result and len(diff_result) > 0:
+        #count how many diffs in the result_diff
+        diff_count = 0
+        for d in diff_result['program']:
+            diff_count = diff_count + len(d) - 1
+        for d in diff_result['competing_programs']:
+                for k,v in d.items():
+                    if k == 'object_id':
+                        continue
+                    if isinstance(v,dict):
+                        diff_count = diff_count + len(v)
+
+        diff_result['diff_count'] = diff_count
+        if diff_result and (len(diff_result['program']) != 0 or len(diff_result['competing_programs']) != 0):
+            print('diff_result_ len > 1')
+            print(diff_result)
             return diff_result
         else:
             return None  # return None if no difference
@@ -2138,7 +2160,7 @@ class EnhancementReportsUpdateAPI(APIView):
             existing_report_dict = JSONParser().parse(enhancement_json_string)
             diff = EnhancementReportsUpdateAPI.compare_enhancement_report(existing_report_dict,
                                                                             new_enhancement_report_dict)
-            print('cache_report ')
+            print('cache_report is none')
             if diff:
                 diff = zlib.compress(JSONRenderer().render(diff))
                 eru.initial_diff = diff
@@ -2176,6 +2198,8 @@ class EnhancementReportsUpdateAPI(APIView):
             self.compare_enhancement_process(eru, raw_new_enhancement_report, new_enhancement_report_dict)
         else:
             users = UniversityCustomer.objects.filter(account_type='main',account_manager = request.user.id)
+            print('account manager')
+            print(users)
             for user in users:
                 # login_time = user.last_login_time # get latest login time
                 customer_enhancement_programs = UniversityCustomerProgram.objects.all().\
