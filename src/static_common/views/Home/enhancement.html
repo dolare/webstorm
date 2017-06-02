@@ -238,17 +238,15 @@
 <div class="modal fade push-100-t" id="myModal1"  role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="block block-themed block-transparent remove-margin-b">
+      <div class="block block-themed block-transparent remove-margin-b" id="shareEnhancement">
         <div class="block-header bg-primary-dark">
           <ul class="block-options">
-                                <!-- <li>
-                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
-                                  </li> -->
+                               
                                   <li>
                                     <button data-dismiss="modal" type="button" ng-click="clearSharedValue()"><i class="si si-close"></i></button>
                                   </li>
                                 </ul>
-                                <h3 class="block-title">Share the Report</h3>
+                                <h3 class="block-title"><i class="fa fa-share-alt"></i>&nbsp; Share the Report</h3>
                               </div>
 
 
@@ -347,14 +345,6 @@
 
                                               <div class="block-content">
                                                 <div class="form-group">
-                                                  <div class="spinner" style="position:absolute;margin:0 auto;top:85px;left:280px;" ng-show="shareLoading">
-                                                    <div class="rect1"></div>
-                                                    <div class="rect2"></div>
-                                                    <div class="rect3"></div>
-                                                    <div class="rect4"></div>
-                                                    <div class="rect5"></div>
-                                                  </div>
-
                                                   <label for="reportlink">Link: </label> 
                                                   <label style="float:right" ng-show="copied">Copied!</label>
                                                   <input type="url" ng-copy="copied=true" class="form-control" id="reportlink" ng-model= "url.text" select-on-click spellcheck="false">
