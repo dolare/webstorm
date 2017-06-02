@@ -2127,8 +2127,8 @@ class EnhancementReportsUpdateAPI(APIView):
         diff_result = {}
         
 
-        diff_result['competing_programs'] = compare_program_list(old_program,new_program)
-        diff_result['program'] = compare_program_list(old_competing_programs,new_competing_programs)
+        diff_result['program'] = compare_program_list(old_program,new_program)
+        diff_result['competing_programs'] = compare_program_list(old_competing_programs,new_competing_programs)
 
         #count how many diffs in the result_diff
         diff_count = 0
