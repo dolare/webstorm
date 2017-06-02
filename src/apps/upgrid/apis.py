@@ -864,15 +864,19 @@ class ShareReports(APIView):
                 user = UniversityCustomer.objects.get(id=request.user.id)
             except UniversityCustomer.DoesNotExist:
                 user = UniversityCustomer.objects.get(id=request.data['client_id'])
+
             time_now = timezone.now()
-            if 'expired_time' in request.data:
-                if request.data['expired_time'] > 30:
-                    return Response({"Failed": _("Expired_time can not greater than 30 days.")},
+            if 'expired_day' in request.data:
+                if request.data['expired_day'] > 30:
+                    return Response({"Failed": _("expired_day can not greater than 30 days.")},
                                     status=HTTP_400_BAD_REQUEST)
                 else:
-                    expired_time = time_now + timezone.timedelta(days=request.data['expired_time'])
+                    expired_time = time_now + timezone.timedelta(days=request.data['expired_day'])
             else:
                 expired_time = time_now + timezone.timedelta(days=2)
+            if 'expired_sec' in request.data:
+                expired_time = expired_time + timezone.timedelta(seconds=request.data['expired_sec'])
+
             relation_ship = SharedReportsRelation.objects.create(
                 created_by=request.user,
                 created_time=time_now,
