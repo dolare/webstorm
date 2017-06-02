@@ -926,7 +926,8 @@ class ShareReports(APIView):
 
                         e_obj.save()
 
-            res = {'{0}/{1}'.format(relation_ship.object_id, relation_ship.access_token)}
+            res = {'link': '{0}/{1}'.format(relation_ship.object_id, relation_ship.access_token),
+                   'expired_time': expired_time}
             return Response(res)
 
 
