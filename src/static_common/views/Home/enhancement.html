@@ -13,6 +13,7 @@
               <div class="col-sm-6 col-xs-6">
                 <h1 class="page-heading">
                   Enhancement Report <br><small> &nbsp;&nbsp;- Stay abreast of competing programs.</small>
+                  
                 </h1>
 
               </div>
@@ -59,7 +60,7 @@
               
               <div class="block block-rounded" id="loadingtable">
               <div class="block-content" style="padding-left: 30px; padding-right: 30px">
-
+              
                 <table class="table table-hover push-30" refresh-table st-pipe="enhancementpipe" st-table="displayeddata" style="table-layout: fixed;" data-js-table-sections-fixed>
                 
                 <colgroup>
@@ -157,7 +158,7 @@
                             </a>
                             </button>
 
-                            <button class="btn btn-default btn-white" type="button" data-toggle="modal" data-target="#myModal1" ng-click = "htmlShare(row.objectId);" data-js-blur>
+                            <button class="btn btn-default btn-white" type="button" data-toggle="modal" data-target="#myModal1" ng-click = "setLinkValue(row.objectId);" data-js-blur>
                                <a class="fa fa-share-alt text-orange">
                           
                             </a>
@@ -244,55 +245,150 @@
                                     <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
                                   </li> -->
                                   <li>
-                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                    <button data-dismiss="modal" type="button" ng-click="clearSharedValue()"><i class="si si-close"></i></button>
                                   </li>
                                 </ul>
                                 <h3 class="block-title">Share the Report</h3>
                               </div>
 
-                              <div class="block-content">
-                                <div class="form-group">
-                                  <div class="spinner" style="position:absolute;margin:0 auto;top:85px;left:280px;" ng-show="shareLoading">
-                                    <div class="rect1"></div>
-                                    <div class="rect2"></div>
-                                    <div class="rect3"></div>
-                                    <div class="rect4"></div>
-                                    <div class="rect5"></div>
-                                  </div>
-
-                                  <label for="reportlink">Link: </label> 
-                                  <label style="float:right" ng-show="copied">Copied!</label>
-                                  <input type="url" ng-copy="copied=true" class="form-control" id="reportlink" ng-model= "url.text" select-on-click spellcheck="false">
-                                  
-
-                                </div>
-                                <!-- Target -->
-                                <!-- Trigger -->
-
-                              </div>
-
-
-                              <div class="modal-footer">
-
-
-                                <span class="pull-left text-city">The report will expire in 48 hours</span>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                <button data-clipboard-target="#reportlink" type="button" class="btn btn-primary">Copy</button>
 
 
 
-                              </div>
-
-                              <!-- <div class="modal-footer">
+                              <div class="block-content" style="padding:0">
 
 
-                                <span class="pull-left text-city">The report will expire in 48 hours</span>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                <button data-clipboard-target="#reportlink" type="button" class="btn btn-primary">Copy</button>
+
+                                <div class="board">
+                                    <div class="board-inner">
+                                        <ul class="nav myTab-share">
+                                            
+                                            <li class="active">
+                                                <a href="#enhancement-days" data-toggle="tab" title="days" style="padding:0">
+                                                   
+                                                </a>
+                                            </li>
+
+
+                                            <li>
+                                                <a href="#enhancement-link" data-toggle="tab" title="link" style="padding:0">
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+
+
+                                        <!-- TABS -->
+
+
+
+                                        <div class="tab-content tab-share">
+
+                                            <!-- TAB 1 -->
+                                            <div class="tab-pane  in active" id="enhancement-days">
+
+                                              <div class="block-content" style="padding: 10px 12px;">
+                                                  <div class="form-group">
+                                                    <div class="pull-left font-w600" style="padding-left: 8px;">I want this report link to expire in:</div>
+                                                    
+
+                                                  </div>
+                                                  
+
+                                                </div>
+
+
+                                                <div class="content-grid bg-gray-light" style="margin-bottom: 0; padding: 8px 10px 10px 10px">
+                                                    <div class="row">
+                                                      <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                                                          <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(1)">
+                                                              <div class="block-content block-content-full">
+                                                                  <div class="font-w600 day-number" style="font-size: 49px">1</div>
+                                                                  <div class="font-w600 push-15-t text-muted">Days</div>
+                                                              </div>
+                                                          </a>
+                                                      </div>
+                                                      <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                                                          <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(2)">
+                                                              <div class="block-content block-content-full">
+                                                                  <div class="font-w600 day-number" style="font-size: 49px">2</div>
+                                                                  <div class="font-w600 push-15-t text-muted">Days</div>
+                                                              </div>
+                                                          </a>
+                                                      </div>
+                                                      <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                                                          <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(7)">
+                                                              <div class="block-content block-content-full">
+                                                                  <div class="font-w600 day-number" style="font-size: 49px">7</div>
+                                                                  <div class="font-w600 push-15-t text-muted">Days</div>
+                                                              </div>
+                                                          </a>
+                                                      </div>
+                                                      <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                                                          <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(14)">
+                                                              <div class="block-content block-content-full">
+                                                                  <div class="font-w600 day-number" style="font-size: 49px">14</div>
+                                                                  <div class="font-w600 push-15-t text-muted">Days</div>
+                                                              </div>
+                                                          </a>
+                                                      </div>
+
+
+                                                    </div>
+                                                  </div>
+
+                                            </div>
+
+
+
+                                            <!-- TAB 2 -->
+                                            <div class="tab-pane" id="enhancement-link">
+
+                                              <div class="block-content">
+                                                <div class="form-group">
+                                                  <div class="spinner" style="position:absolute;margin:0 auto;top:85px;left:280px;" ng-show="shareLoading">
+                                                    <div class="rect1"></div>
+                                                    <div class="rect2"></div>
+                                                    <div class="rect3"></div>
+                                                    <div class="rect4"></div>
+                                                    <div class="rect5"></div>
+                                                  </div>
+
+                                                  <label for="reportlink">Link: </label> 
+                                                  <label style="float:right" ng-show="copied">Copied!</label>
+                                                  <input type="url" ng-copy="copied=true" class="form-control" id="reportlink" ng-model= "url.text" select-on-click spellcheck="false">
+                                                  
+
+                                                </div>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
 
 
                                 
-                              </div> -->
+                                
+
+                              </div>
+
+
+                              <div class="modal-footer" ng-show="url">
+
+
+                                <span class="pull-left text-city">The link will be expired on {{expired_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY HH:mm'}}</span>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearSharedValue()">Cancel</button>
+                                <button data-clipboard-target="#reportlink" type="button" class="btn btn-primary">Copy</button>
+
+
+
+                              </div>
+
+
                             </div>
                           </div>
                         </div>
