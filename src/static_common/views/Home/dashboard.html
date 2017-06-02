@@ -144,9 +144,9 @@
                             <div class="block block-opt-refresh-icon6" ng-if="customer.profile.account_type==='main'">
                                 <div class="block-header bg-info text-white">
                                     <ul class="block-options">
-                                        <li>
+                                        <!-- <li>
                                             <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                     <h3 class="block-title"><i class="fa fa-fw fa-share-alt"></i> Colleagues</h3>
                                 </div>
@@ -184,7 +184,7 @@
 
                         <div class="col-sm-7 col-sm-pull-5 col-lg-8 col-lg-pull-4">
 
-                        <div class="">
+                        <!-- <div class="">
                         <div class="alert alert-info alert-dismissable push-30">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                     
@@ -192,18 +192,18 @@
                                         
                                     </div>
                                     
-                        </div>
+                        </div> -->
 
 
                             <!-- Timeline -->
-                            <div class="block block-opt-refresh-icon6" id="timeline-release">
+                            <div class="block block-opt-refresh-icon1" id="timeline-release">
                                 <div class="block-header bg-info text-white">
                                     <ul class="block-options">
                                         <li>
                                             <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
                                         </li>
                                         <li>
-                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
+                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo" ng-click="newly_released_function(true)"><i class="si si-refresh text-white"></i></button>
                                         </li>
                                     </ul>
                                     <h3 class="block-title"><i class="fa fa-check-circle" style="color: #c8e6ca"></i>&nbsp;&nbsp;Newly Released Reports</h3>
@@ -266,14 +266,14 @@
 
 
                             <!-- updated reports -->
-                           <div class="block block-opt-refresh-icon6" id="timeline-update" ng-if="customer.profile.account_type==='main'">
+                           <div class="block block-opt-refresh-icon1" id="timeline-update" ng-if="customer.profile.account_type==='main'">
                                 <div class="block-header bg-info text-white">
                                     <ul class="block-options">
                                         <li>
                                             <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
                                         </li>
                                         <li>
-                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh text-white"></i></button>
+                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo" ng-click="newly_updated_function(true)"><i class="si si-refresh text-white"></i></button>
                                         </li>
                                     </ul>
                                     <h3 class="block-title"><i class="fa fa-certificate" style="color: #FFEEA3"></i>&nbsp;&nbsp;Updated Reports</h3>
