@@ -2082,6 +2082,7 @@ class EnhancementReportsUpdateAPI(APIView):
             print('result list')
             return result
 
+        #compare a single program key by key
         def compare_program(old_program,new_program):
             result = {}
             for k1,v1 in new_program.items():
@@ -2133,17 +2134,29 @@ class EnhancementReportsUpdateAPI(APIView):
         #count how many diffs in the result_diff
         diff_count = 0
         for d in diff_result['program']:
-            diff_count = diff_count + len(d) - 1
-        for d in diff_result['competing_programs']:
-                for k,v in d.items():
-                    if k == 'object_id':
-                        continue
-                    if isinstance(v,dict):
-                        diff_count = diff_count + len(v)
+            for k,v in d.items():
+                if k == 'object_id':
+                    continue
+                if isinstance(v,dict):
+                    diff_count = diff_count + len(v)
+                    print(v)
+                    print(len(v))
+                else:
+                    diff_count = diff_count + 1
 
+
+        for d in diff_result['competing_programs']:
+            for k,v in d.items():
+                if k == 'object_id':
+                    continue
+                if isinstance(v,dict):
+                    diff_count = diff_count + len(v)
+                else:
+                    diff_count = diff_count + 1
+
+        #struct the diff and return it
         diff_result['diff_count'] = diff_count
         if diff_result and (len(diff_result['program']) != 0 or len(diff_result['competing_programs']) != 0):
-            print('diff_result_ len > 1')
             print(diff_result)
             return diff_result
         else:
