@@ -11,6 +11,16 @@ whoops.controller('WhoopsController',
 
     var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
+    $scope.$storage = $localStorage;
+
+    $scope.clearSharedValue = function (){
+      $scope.whoopsSharedId = null;
+      $scope.url = null;
+    }
+
+    $scope.clearSharedValue();
+
+
     console.log("host 1 is "+location.host);
     //for api test
     // $http({
@@ -174,7 +184,7 @@ whoops.controller('WhoopsController',
 
     //$scope.data = tableDataService.getWhoops(List);
     //console.log("DATA = ~~~~~~" + JSON.stringify($scope.data));
-    $scope.$storage = $localStorage;
+    
 
     
     // App.blocks('#loading', 'state_loading');
@@ -277,25 +287,36 @@ whoops.controller('WhoopsController',
       
     };
 
+    $scope.setLinkValue= function(id) {
 
-    $scope.htmlShare = function(Id) {
+      $scope.whoopsSharedId = id;
+      
+      jQuery('.myTab-share a:first').tab('show')
+
+
+    }
+
+
+    $scope.htmlShare = function(day) {
+      
+      jQuery('.myTab-share a:last').tab('show')
       
       $scope.url = {
             text: null
         };
-        $scope.shareLoading = true;
+        App.blocks('#shareWhoops', 'state_loading');
         $scope.copied = false;
         new Clipboard('.btn');
-
-
         
       $http({
         url: '/api/upgrid/reports/shared/',
         method: 'POST',
         data: {
-          "whoops_id": Id,
+          "whoops_id": $scope.whoopsSharedId,
           "enhancement_id": null,
-          "client_id": client_id
+          "client_id": client_id,
+          "expired_day": day,
+          "expired_sec": 0,
           
         },
         headers: {
@@ -306,11 +327,13 @@ whoops.controller('WhoopsController',
       }).then(function(response) {
         console.log("share html RESPONSE is "+JSON.stringify(response.data));
      
-          $scope.shareLoading = false;
+          App.blocks('#shareWhoops', 'state_normal');
 
 
-            $scope.shared_id = response.data[0].split('/')[0];
-            $scope.shared_token = response.data[0].split('/')[1];
+            $scope.shared_id = response.data.link.split('/')[0];
+            $scope.shared_token = response.data.link.split('/')[1];
+
+            $scope.expired_time = response.data.expired_time;
 
             $scope.url = {
                 text: 'https://'+location.host + '/#/shared_whoops_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
@@ -319,7 +342,7 @@ whoops.controller('WhoopsController',
       }).
       catch(function(error) {
         console.log('an error occurred...' + JSON.stringify(error));
-       
+        App.blocks('#shareWhoops', 'state_normal');
       });
 
     };

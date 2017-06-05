@@ -481,7 +481,6 @@ controller('EnhancementController', function($timeout, updateService, avatarServ
     $scope.setLinkValue= function(id) {
       $scope.enhancementSharedId = id;
       
-
       jQuery('.myTab-share a:first').tab('show')
 
 
