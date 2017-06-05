@@ -494,7 +494,7 @@ controller('EnhancementController', function($timeout, updateService, avatarServ
         $scope.url = {
             text: null
         };
-        $scope.shareLoading = true;
+        App.blocks('#shareEnhancement', 'state_loading');
         $scope.copied = false;
         new Clipboard('.btn');
         
@@ -516,7 +516,7 @@ controller('EnhancementController', function($timeout, updateService, avatarServ
             //responseType: 'arraybuffer'
         }).then(function(response) {
             console.log("shared link RESPONSE is "+JSON.stringify(response.data));
-            $scope.shareLoading = false;
+            App.blocks('#shareEnhancement', 'state_normal');
             $scope.shared_id = response.data.link.split('/')[0];
             $scope.shared_token = response.data.link.split('/')[1];
 
@@ -528,7 +528,7 @@ controller('EnhancementController', function($timeout, updateService, avatarServ
         }).
         catch(function(error) {
             console.log('an error occurred...' + JSON.stringify(error));
-            $scope.shareLoading = false;
+            App.blocks('#shareEnhancement', 'state_normal');
         });
     }
 
