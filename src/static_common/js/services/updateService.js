@@ -2,7 +2,7 @@ angular.module('myApp')
   .factory('updateService', function($filter) {
 
 
-    var updateEnhancement = function(raw_data, user) {
+    var updateEnhancement = function(raw_data, user, order) {
 
 
             var e_raw = raw_data.existing_report;
@@ -19,6 +19,7 @@ angular.module('myApp')
             }
 
 
+            console.log("e_update_diff= "+JSON.stringify(e_update_diff))
 
               for(i=0; i<e_raw.length; i++)
               {
@@ -89,6 +90,7 @@ angular.module('myApp')
                 }
 
 
+
                 // Program objectives (audience)
                 if((((e_update_diff||{}).old||{})['p'+(i===0?'':i+1)]||{}).audience || (((e_update_diff||{}).new||{})['p'+(i===0?'':i+1)]||{}).audience){
                   e_show_update['audience'+(i===0?'':i+1)] = e_update_diff[ver]['p'+(i===0?'':i+1)].audience;
@@ -97,6 +99,10 @@ angular.module('myApp')
                     e_show_update['audience'+(i===0?'':i+1)] = "N/A";
                   }
                 }
+
+
+
+
 
                 // Job placement (job_placement)
                 if((((e_update_diff||{}).old||{})['p'+(i===0?'':i+1)]||{}).job_placement || (((e_update_diff||{}).new||{})['p'+(i===0?'':i+1)]||{}).job_placement){

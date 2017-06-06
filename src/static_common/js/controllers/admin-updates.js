@@ -280,9 +280,17 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              var report_last_edit_time = response.data.report_last_edit_time;
 
 
+
              $scope.e_update = response.data.initial_diff.new;
              
              $scope.e_raw = response.data.existing_report.program.concat(response.data.existing_report.competing_programs);
+
+             var program_order = [];
+             for(var i=0; i<$scope.e_raw.length; i++){
+              program_order.push($scope.e_raw[i].object_id)
+             }
+
+             console.log("program_order="+JSON.stringify(program_order));
 
              $scope.e_array_final = [];
              var e_array_1 = [];
@@ -297,21 +305,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              var e_array_10 = [];
              var e_array_11 = [];
              console.log("$scope.e_raw"+JSON.stringify($scope.e_raw));
-             // for(i=0; i<$scope.e_raw.length; i++)
-             // {
-             //   e_array_1.push($scope.e_raw['p'+(i===0?'':i+1)]);
-             //   e_array_2.push($scope.e_raw['c'+(i===0?'':i+1)]);
-             //   e_array_3.push($scope.e_raw['t'+(i===0?'':i+1)]);
-             //   e_array_4.push($scope.e_raw['d'+(i===0?'':i+1)]);
-             //   e_array_5.push($scope.e_raw['r'+(i===0?'':i+1)]);
-             //   e_array_6.push($scope.e_raw['ex'+(i===0?'':i+1)]);
-             //   e_array_7.push($scope.e_raw['Intl_transcript'+(i===0?'':i+1)]);
-             //   e_array_8.push($scope.e_raw['Intl_eng_test'+(i===0?'':i+1)]);
-             //   e_array_9.push($scope.e_raw['s'+(i===0?'':i+1)]);
-             //   e_array_10.push($scope.e_raw['dura'+(i===0?'':i+1)]);
-
-             // }
-
+             
 
              for(i=0; i<$scope.e_raw.length; i++){
 
@@ -340,7 +334,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              $scope.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10, e_array_11];
              $scope.Object = Object;
 
-             $scope.e_show_update = updateService.updateEnhancement(response.data, 'admin');
+             $scope.e_show_update = updateService.updateEnhancement(response.data, 'admin', program_order);
              console.log('$scope.e_show_update = '+JSON.stringify($scope.e_show_update));
 
              App.blocks('#enhancement_loading', 'state_normal');
@@ -436,24 +430,6 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
      ////////////
 
-     // $http({
-     //      url: '/api/upgrid/update/enhancement/diff_confirmation/'+"5cf6ea38-8881-4d9c-80a9-5fbefdc63c33",
-     //      method: 'GET',
-     //      headers: {
-     //        'Authorization': 'JWT ' + token
-     //      }
-     //      }).then(function (response) {
-
-     //         //$scope.update_client = response.data;
-
-     //         console.log("init data =  "+ JSON.stringify(response.data));
-             
-     //      }).
-     //       catch(function(error){
-     //          console.log('an error occurred...'+JSON.stringify(error));
-
-     //       });
-     //test
      $scope.number = 0
      
      $scope.dynamicPopover = {
