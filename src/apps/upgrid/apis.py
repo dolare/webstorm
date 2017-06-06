@@ -2066,7 +2066,7 @@ class EnhancementReportsUpdateAPI(APIView):
      
         #cause order by order, so store them in a list
         def compare_program_list(old_program_list,new_program_list):
-            result = []
+            result = {}
             for i1,val1 in enumerate(old_program_list):
                 for i2,val2 in enumerate(new_program_list):
                     print(type(val1['object_id']))
@@ -2075,7 +2075,10 @@ class EnhancementReportsUpdateAPI(APIView):
                         print('++++++')
                         temp = compare_program(val1,val2)
                         if temp != None:
-                            result.append(temp)
+                            object_id = str(temp['object_id'])
+                            del temp['object_id']
+                            result[object_id] = temp; 
+
                     else:
                         print('{0}!====={1}'.format(val1['object_id'],val2['object_id']))
             print(result)
@@ -2133,32 +2136,35 @@ class EnhancementReportsUpdateAPI(APIView):
 
         #count how many diffs in the result_diff
         diff_count = 0
-        for d in diff_result['program']:
-            for k,v in d.items():
-                if k == 'object_id':
-                    continue
-                if isinstance(v,dict):
-                    diff_count = diff_count + len(v)
-                    print(v)
-                    print(len(v))
+        for k,v in diff_result['program'].items():
+            for k1,v1 in v.items():
+                if isinstance(v1,dict):
+                    diff_count = diff_count + len(v1)
+                    print(v1)
+                    print(len(v1))
                 else:
                     diff_count = diff_count + 1
 
 
-        for d in diff_result['competing_programs']:
-            for k,v in d.items():
-                if k == 'object_id':
-                    continue
-                if isinstance(v,dict):
-                    diff_count = diff_count + len(v)
+        for k,v in diff_result['competing_programs'].items():
+            for k1,v1 in v.items():
+                if isinstance(v1,dict):
+                    diff_count = diff_count + len(v1)
+                    print(v1)
+                    print(len(v1))
                 else:
                     diff_count = diff_count + 1
+
+        #combine two dict program and competing programs
+        diff_return  = {}
+        diff_return.update(diff_result['program'])
+        diff_return.update(diff_result['competing_programs'])
 
         #struct the diff and return it
-        diff_result['diff_count'] = diff_count
-        if diff_result and (len(diff_result['program']) != 0 or len(diff_result['competing_programs']) != 0):
-            print(diff_result)
-            return diff_result
+        diff_return['diff_count'] = diff_count
+        if diff_return and diff_count != 0:
+            print(diff_return)
+            return diff_return
         else:
             return None  # return None if no difference
 
