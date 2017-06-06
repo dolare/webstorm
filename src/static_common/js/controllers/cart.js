@@ -6,6 +6,14 @@ controller('ReportsController',
     var token = authenticationSvc.getUserInfo().accessToken;
     //init the ngStorage
     $scope.$storage = $localStorage;
+
+    $scope.clearSharedValue = function (){
+      
+      $scope.url = null;
+    }
+
+    $scope.clearSharedValue();
+
     //console.log("result========"+JSON.stringify(List));
     var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
@@ -59,41 +67,32 @@ controller('ReportsController',
 
     }
 
-    $scope.ShareAllSelected = function() {
-      $scope.url = {
-        text: null
-      };
+    $scope.setLinkValue= function() {
 
+      $scope.whoops_ids = "";
+      $scope.enhancement_ids = "";
 
-      $scope.copied = false;
-      new Clipboard('.btn');
-
-
-      $scope.share_counter = cartCounter.counter();
-
-
-      var whoops_ids = "";
-      var enhancement_ids = "";
+       $scope.share_counter = cartCounter.counter();
 
       console.log("share_counter"+JSON.stringify($scope.share_counter));
+
 
       angular.forEach($scope.share_counter, function(value, index) {
 
         if($scope.share_counter[index].whoops){
-          whoops_ids = whoops_ids + $scope.share_counter[index].Id + '/';
+          $scope.whoops_ids = $scope.whoops_ids + $scope.share_counter[index].Id + '/';
         }
 
         if($scope.share_counter[index].enhancement){
-          enhancement_ids = enhancement_ids + $scope.share_counter[index].Id + '/';
+          $scope.enhancement_ids = $scope.enhancement_ids + $scope.share_counter[index].Id + '/';
         }
 
 
       });
 
-      console.log("whoops_ids="+whoops_ids);
-      console.log("enhancement_ids="+enhancement_ids);
+     
 
-      if(whoops_ids === "" && enhancement_ids === ""){
+      if($scope.whoops_ids === "" && $scope.enhancement_ids === ""){
         $.notify({
 
               // options
@@ -112,7 +111,30 @@ controller('ReportsController',
       } else {
 
          $("#myModal1").modal('toggle');
-         $scope.shareLoading = true;
+         jQuery('.myTab-share a:first').tab('show')
+
+
+       }
+
+
+    }
+
+
+    $scope.htmlShare = function(day) {
+
+
+      $scope.url = {
+        text: null
+      };
+
+
+      $scope.copied = false;
+      new Clipboard('.btn');
+
+
+         jQuery('.myTab-share a:last').tab('show')
+
+         App.blocks('#shareReports', 'state_loading');
         //  $scope.url = {
         // text: $location.absUrl().split('#')[0] + '#/upgrid/share_selected_report/asd3dhu38dj93jdj93/',
 
@@ -121,9 +143,12 @@ controller('ReportsController',
         url: '/api/upgrid/reports/shared/',
         method: 'POST',
         data: {
-          "whoops_id": (whoops_ids === ""? null: whoops_ids.slice(0,-1)),
-          "enhancement_id": (enhancement_ids === ""? null: enhancement_ids.slice(0,-1)),
-          "client_id": client_id
+          "whoops_id": ($scope.whoops_ids === ""? null: $scope.whoops_ids.slice(0,-1)),
+          "enhancement_id": ($scope.enhancement_ids === ""? null: $scope.enhancement_ids.slice(0,-1)),
+          "client_id": client_id,
+          "expired_day": day,
+          "expired_sec": 0,
+
         },
         headers: {
           'Authorization': 'JWT ' + token
@@ -133,9 +158,11 @@ controller('ReportsController',
       }).then(function(response) {
         
 
-        $scope.shared_id = response.data[0].split('/')[0];
-        $scope.shared_token = response.data[0].split('/')[1];
-        $scope.shareLoading = false;
+        $scope.shared_id = response.data.link.split('/')[0];
+        $scope.shared_token = response.data.link.split('/')[1];
+        $scope.expired_time = response.data.expired_time;
+
+        App.blocks('#shareReports', 'state_normal');
         $scope.url = {
           text: 'https://'+location.host + '/#/upgrid/share_selected_report/' + $scope.shared_id + '/' + $scope.shared_token + '/',
         };
@@ -146,10 +173,11 @@ controller('ReportsController',
       }).
       catch(function(error) {
         console.log('an error occurred...' + JSON.stringify(error));
+        App.blocks('#shareReports', 'state_normal');
 
       });
 
-      }
+      
 
     }
 
@@ -316,21 +344,6 @@ controller('ReportsController',
              var e_array_11 = [];
 
 
-             // for(i=0; i<$scope.e_raw.length; i++)
-             // {
-             //   e_array_1.push($scope.e_raw['p'+(i===0?'':i+1)]);
-             //   e_array_2.push($scope.e_raw['c'+(i===0?'':i+1)]);
-             //   e_array_3.push($scope.e_raw['t'+(i===0?'':i+1)]);
-             //   e_array_4.push($scope.e_raw['d'+(i===0?'':i+1)]);
-             //   e_array_5.push($scope.e_raw['r'+(i===0?'':i+1)]);
-             //   e_array_6.push($scope.e_raw['ex'+(i===0?'':i+1)]);
-             //   e_array_7.push($scope.e_raw['Intl_transcript'+(i===0?'':i+1)]);
-             //   e_array_8.push($scope.e_raw['Intl_eng_test'+(i===0?'':i+1)]);
-             //   e_array_9.push($scope.e_raw['s'+(i===0?'':i+1)]);
-             //   e_array_10.push($scope.e_raw['dura'+(i===0?'':i+1)]);
-
-             // }
-
              for(i=0; i<$scope.e_raw.length; i++){
 
                  e_array_1.push($scope.e_raw[i]['program_detail']);
@@ -445,97 +458,6 @@ controller('ReportsController',
 
       ///////////////////////////////////
 
-
-      $scope.ShareAll = function() {
-          // console.log("In the storage: "+JSON.stringify($scope.$storage.upgrid));
-          // var deferred = $q.defer();
-          // var fileSystem = "<h1>Upgrid Reports</h1><hr/>";
-          $scope.url = {
-            text: null
-          };
-          $scope.shareLoading = true;
-
-          $scope.copied = false;
-          new Clipboard('.btn');
-
-          var fileArray = [];
-
-
-          for (i = 0; i < $scope.data.length; i++) {
-
-
-            if ($scope.$storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName] !== undefined) {
-              //console.log("found one checked PROGRAM");
-              //either is true
-              if ($scope.$storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName].whoops === true || $scope.$storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName].enhancement === true) {
-                fileArray.push(i);
-                // fileSystem += $scope.data[i].programName+ " (" +$scope.data[i].degreeName + ") ";
-                //check if has true value
-                if ($scope.$storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName].whoops === true) {
-
-                  //console.log("found one checked WHOOPS");
-                  //get the report link
-                  fileArray.push("W");
-                  fileArray.push(reportService.getWhoops($scope.data[i].programId, token));
-
-                }
-                //end of whoops
-
-
-                if ($scope.$storage.upgrid[$scope.data[i].programName + $scope.data[i].degreeName].enhancement === true) {
-
-                  fileArray.push("E");
-                  //get the report link
-                  fileArray.push(reportService.getEnhancement($scope.data[i].programId, $scope.data[i].competing, token));
-
-
-
-                }
-                //end of enhancement
-
-
-
-              }
-            }
-            //end of one defined program
-
-          }
-          //end of program loop
-
-          $q.all(fileArray).then(function(result) {
-            // var fileSystemBlob = new Blob([fileSystem], {type: 'text/html'});
-            // var fileSystemURL = (window.URL||window.webkitURL).createObjectURL(fileSystemBlob);
-            console.log("array is " + JSON.stringify(result));
-            var fileSystem = "<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' integrity='sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1' crossorigin='anonymous'><h2>Upgrid Service Reports</h2><hr/>";
-            for (i = 0; i < result.length; i++) {
-              if (!isNaN(result[i])) {
-                fileSystem += "<i class='fa fa-folder-open-o' aria-hidden='true'></i>" + "&nbsp;&nbsp;" + $scope.data[result[i]].programName + " (" + $scope.data[result[i]].degreeName + ") <br/>";
-              }
-
-              if (result[i] === "W") {
-                fileSystem += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-file-text' aria-hidden='true'></i>&nbsp;&nbsp;<a href='" + result[i + 1] + "' download>Whoops Report</a><br/>"
-              }
-
-              if (result[i] === "E") {
-                fileSystem += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-file-text' aria-hidden='true'></i>&nbsp;&nbsp;<a href='" + result[i + 1] + "' download>Enhancement Report</a><br/>"
-              }
-            }
-
-            var fileSystemBlob = new Blob([fileSystem], {
-              type: 'text/html'
-            });
-            var fileSystemURL = (window.URL || window.webkitURL).createObjectURL(fileSystemBlob);
-            $scope.shareLoading = false;
-
-            $scope.url = {
-              text: fileSystemURL
-            };
-            console.log("fileSystem url is = " + fileSystemURL);
-
-          });
-
-
-        } //end of ShareAll
 
       //checkbox sync with previous pages
       $scope.checkbox = function() {

@@ -147,7 +147,7 @@
         <button class="font-w400 btn btn-lg btn-square bg-info" ng-click="ViewAll()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0" data-toggle="modal" data-target="#ViewAll">
           View [{{count}}]
         </button>
-        <button class="font-w400 btn btn-lg pull-right btn-square bg-city-light" ng-click="ShareAllSelected()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0">
+        <button class="font-w400 btn btn-lg pull-right btn-square bg-city-light" ng-click="setLinkValue()" style="width:48%;color:white;margin-bottom:30px;" ng-if="Checked.length>0">
           Share [{{count}}]
         </button>
 
@@ -155,151 +155,146 @@
       </div>
     </div>
   </div>
-  <!-- Modal of Whoops Pdf Viewer-->
-  <div class="modal fade" id="myModal"  role="dialog" aria-labelledby="myModalLabel" >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="block block-themed block-transparent remove-margin-b">
-          <div class="block-header bg-primary-dark">
-            <ul class="block-options">
-                                <!-- <li>
-                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
-                                  </li> -->
-                                  <li>
-                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-                                  </li>
-                                </ul>
-                                <h3 class="block-title">Report Viewer</h3>
-                              </div>
-                              
-                              <div class="block-content" style="width:auto;height:500px;padding:0;">
-
-                                <!-- progress circle -->
-                                <div class="sk-fading-circle" ng-show="viewerLoading">
-                                  <div class="sk-circle1 sk-circle"></div>
-                                  <div class="sk-circle2 sk-circle"></div>
-                                  <div class="sk-circle3 sk-circle"></div>
-                                  <div class="sk-circle4 sk-circle"></div>
-                                  <div class="sk-circle5 sk-circle"></div>
-                                  <div class="sk-circle6 sk-circle"></div>
-                                  <div class="sk-circle7 sk-circle"></div>
-                                  <div class="sk-circle8 sk-circle"></div>
-                                  <div class="sk-circle9 sk-circle"></div>
-                                  <div class="sk-circle10 sk-circle"></div>
-                                  <div class="sk-circle11 sk-circle"></div>
-                                  <div class="sk-circle12 sk-circle"></div>
-                                </div>
-
-
-                                <div id = "my-container"></div>
-
-                              </div>
-                            </div>
-      <!-- <div class="modal-footer">
-       
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-       
-      </div> -->
-    </div>
-  </div>
-</div>
 
 
 <!-- Modal of Share the Link-->
-<div class="modal fade" id="myModal1"  role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade push-100-t" id="myModal1"  role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="block block-themed block-transparent remove-margin-b">
+      <div class="block block-themed block-transparent remove-margin-b" id="shareReports">
         <div class="block-header bg-primary-dark">
           <ul class="block-options">
                                 <!-- <li>
                                     <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
                                   </li> -->
                                   <li>
-                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                    <button data-dismiss="modal" type="button" ng-click="clearSharedValue()"><i class="si si-close"></i></button>
                                   </li>
                                 </ul>
-                                <h3 class="block-title">Share the Reports</h3>
+                                <h3 class="block-title"><i class="fa fa-share-alt"></i>&nbsp; Share the Reports</h3>
                               </div>
-                              <div class="block-content">
-                                <div class="form-group">
-                                  <div class="spinner" style="position:absolute;margin:0 auto;top:85px;left:280px;" ng-show="shareLoading">
-                                    <div class="rect1"></div>
-                                    <div class="rect2"></div>
-                                    <div class="rect3"></div>
-                                    <div class="rect4"></div>
-                                    <div class="rect5"></div>
-                                  </div>
 
-                                  <label for="reportlink">Link: </label> 
 
-                                  <label style="float:right" ng-show="copied">Copied!</label>
-                                  <input type="url" ng-copy="copied=true" class="form-control" id="reportlink" ng-model= "url.text" select-on-click spellcheck="false">
-                                  
+                              <div class="block-content" style="padding:0">
 
-                                </div>
-                                <!-- Target -->
-                                <!-- Trigger -->
+
+                                  <div class="board">
+                                    <div class="board-inner">
+                                        <ul class="nav myTab-share">
+                                            
+                                            <li class="active">
+                                                <a href="#reports-days" data-toggle="tab" title="days" style="padding:0">
+                                                   
+                                                </a>
+                                            </li>
+
+
+                                            <li>
+                                                <a href="#reports-link" data-toggle="tab" title="link" style="padding:0">
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+
+
+
+                                        <!-- TABS -->
+
+
+
+                                        <div class="tab-content tab-share">
+
+                                            <!-- TAB 1 -->
+                                            <div class="tab-pane  in active" id="reports-days">
+
+                                              <div class="block-content" style="padding: 10px 12px;">
+                                                  <div class="form-group">
+                                                    <div class="pull-left font-w600" style="padding-left: 8px;">I want this report link to expire in:</div>
+                                                    
+
+                                                  </div>
+                                                  
+
+                                                </div>
+
+
+                                                <div class="content-grid bg-gray-light" style="margin-bottom: 0; padding: 8px 10px 10px 10px">
+                                                    <div class="row">
+                                                      <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                                                          <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(1)">
+                                                              <div class="block-content block-content-full">
+                                                                  <div class="font-w600 day-number" style="font-size: 49px">1</div>
+                                                                  <div class="font-w600 push-15-t text-muted">Days</div>
+                                                              </div>
+                                                          </a>
+                                                      </div>
+                                                      <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                                                          <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(2)">
+                                                              <div class="block-content block-content-full">
+                                                                  <div class="font-w600 day-number" style="font-size: 49px">2</div>
+                                                                  <div class="font-w600 push-15-t text-muted">Days</div>
+                                                              </div>
+                                                          </a>
+                                                      </div>
+                                                      <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                                                          <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(7)">
+                                                              <div class="block-content block-content-full">
+                                                                  <div class="font-w600 day-number" style="font-size: 49px">7</div>
+                                                                  <div class="font-w600 push-15-t text-muted">Days</div>
+                                                              </div>
+                                                          </a>
+                                                      </div>
+                                                      <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                                                          <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(14)">
+                                                              <div class="block-content block-content-full">
+                                                                  <div class="font-w600 day-number" style="font-size: 49px">14</div>
+                                                                  <div class="font-w600 push-15-t text-muted">Days</div>
+                                                              </div>
+                                                          </a>
+                                                      </div>
+
+
+                                                    </div>
+                                                  </div>
+
+                                            </div>
+
+
+
+                                            <!-- TAB 2 -->
+                                            <div class="tab-pane" id="reports-link">
+
+                                              <div class="block-content">
+                                                <div class="form-group">
+                                                  <label for="reportlink">Link: </label> 
+
+                                                  <label style="float:right" ng-show="copied">Copied!</label>
+                                                  <input type="url" ng-copy="copied=true" class="form-control" id="reportlink" ng-model= "url.text" select-on-click spellcheck="false">
+                                                  
+
+                                                </div>
+
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                               </div>
-                              <div class="modal-footer">
-                                <span class="pull-left text-city">The report will expire in 48 hours</span>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+                              <div class="modal-footer" ng-show="url">
+                                <span class="pull-left text-city">The link will be expired on {{expired_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY HH:mm'}}</span>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearSharedValue()">Cancel</button>
                                 <button data-clipboard-target="#reportlink" type="button" class="btn btn-primary">Copy</button>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-
-                      <!-- Modal of Enhancement Pdf Viewer-->
-                      <div class="modal fade" id="myModalEnhan"  role="dialog" aria-labelledby="myModalLabel" >
-                        <div class="modal-dialog modal-lg" role="document">
-                          <div class="modal-content">
-                            <div class="block block-themed block-transparent remove-margin-b">
-                              <div class="block-header bg-primary-dark">
-                                <ul class="block-options">
-                                <!-- <li>
-                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
-                                  </li> -->
-                                  <li>
-                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-                                  </li>
-                                </ul>
-                                <h3 class="block-title">Whoops Report</h3>
-                              </div>
-                              
-                              <div class="block-content" style="width:auto;height:500px;padding:0;">
-
-                                <!-- progress circle -->
-                                <div class="sk-fading-circle" ng-show="viewerLoading">
-                                  <div class="sk-circle1 sk-circle"></div>
-                                  <div class="sk-circle2 sk-circle"></div>
-                                  <div class="sk-circle3 sk-circle"></div>
-                                  <div class="sk-circle4 sk-circle"></div>
-                                  <div class="sk-circle5 sk-circle"></div>
-                                  <div class="sk-circle6 sk-circle"></div>
-                                  <div class="sk-circle7 sk-circle"></div>
-                                  <div class="sk-circle8 sk-circle"></div>
-                                  <div class="sk-circle9 sk-circle"></div>
-                                  <div class="sk-circle10 sk-circle"></div>
-                                  <div class="sk-circle11 sk-circle"></div>
-                                  <div class="sk-circle12 sk-circle"></div>
-                                </div>
-
-
-                                <div id = "my-container1" style=""></div>
-
-                              </div>
-                            </div>
-      <!-- <div class="modal-footer">
-       
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-       
-      </div> -->
-    </div>
-  </div>
-</div>
 
 
 

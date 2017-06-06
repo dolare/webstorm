@@ -615,8 +615,8 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             files: [
                               '/static/js/services/tableService.js',
                               '/static/js/services/reportService.js',
+                              '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
                               '/static/js/controllers/cart.js',
-                             
                               '/static/js/third-party/clipboard.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
