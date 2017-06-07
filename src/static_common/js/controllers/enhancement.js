@@ -190,7 +190,7 @@ controller('EnhancementController', function($timeout, updateService, avatarServ
              //console.log("$scope.e_array_final[10][0]= "+$scope.e_array_final[10][0].e_release_time);
 
 
-             $scope.e_show_update = updateService.updateEnhancement(response.data, 'client');
+             $scope.e_show_update = updateService.updateEnhancement($scope.e_raw, 'client');
              console.log('$scope.e_show_update = '+JSON.stringify($scope.e_show_update));
              // $scope.e_show_update = {};
 
@@ -251,21 +251,6 @@ controller('EnhancementController', function($timeout, updateService, avatarServ
 
           var avatar = avatarService.getClientId() ? "&cid="+ avatarService.getClientId(): "";
 
-        // ajaxService.getResult(start, number, tableState, token, "&cs=No", avatar).then(function (result) {
-        //   console.log("AJAX service called !");
-
-          
-        //   console.log("ajaxService.getResult confirm = "+JSON.stringify(result.data));
-          
-        //   $scope.displayeddata1 = tableDataService.getEnhancementConfirm(result.data);
-        //   console.log("confirm data ="+JSON.stringify($scope.displayeddata1));
-        //   tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
-         
-        //   //$scope.isLoadingConfirm = false;
-        //   App.blocks('#confirmloading', 'state_normal');
-
-
-        // });
 
         //api
         $http({

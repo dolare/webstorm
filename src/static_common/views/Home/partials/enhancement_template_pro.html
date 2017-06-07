@@ -156,7 +156,7 @@
 
                                                 mwl-confirm
                                                 title="{{popover.title}}"
-                                                message="{{e_show_update['university'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['university'][$index]}}"
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
                                                 placement="top-right"
@@ -167,8 +167,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['university'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['university'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['university'][$index]"
+                                                is-disabled = "!e_show_update['university'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -191,7 +191,7 @@
 
                                                 mwl-confirm
                                                 title="{{popover.title}}"
-                                                message="{{e_show_update['school'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['school'][$index]}}"
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
                                                 placement="top-right"
@@ -201,8 +201,8 @@
                                                 cancel-button-type="default"
                                                 animation="true"
                                                 
-                                                ng-show="e_show_update['school'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['school'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['school'][$index]"
+                                                is-disabled = "!e_show_update['school'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -224,7 +224,7 @@
 
                                                 mwl-confirm
                                                 title="{{popover.title}}"
-                                                message="{{e_show_update['program_name'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['program_name'][$index]}}"
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
                                                 placement="top-right"
@@ -234,8 +234,8 @@
                                                 cancel-button-type="default"
                                                 animation="true"
                                                 
-                                                ng-show="e_show_update['program_name'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['program_name'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['program_name'][$index]"
+                                                is-disabled = "!e_show_update['program_name'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -269,7 +269,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['degree'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['degree'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -281,8 +281,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['degree'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['degree'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['degree'][$index]"
+                                                is-disabled = "!e_show_update['degree'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -305,7 +305,7 @@
                                             mwl-confirm
                                             title="{{popover.title}}"
 
-                                            message="{{e_show_update['department'+($index===0?'':$index+1)]}}"
+                                            message="{{e_show_update['department'][$index]}}"
 
                                             confirm-text="{{popover.confirmText}}"
                                             cancel-text="{{popover.cancelText}}"
@@ -317,8 +317,8 @@
                                             animation="true"
                                             
 
-                                            ng-show="e_show_update['department'+($index===0?'':$index+1)]"
-                                            is-disabled = "!e_show_update['department'+($index===0?'':$index+1)]">                        
+                                            ng-show="e_show_update['department'][$index]"
+                                            is-disabled = "!e_show_update['department'][$index]">                        
                                                 <span><i class="fa fa-check-circle"></i>
                                                 </span>                                   
                                             </div> 
@@ -342,7 +342,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['specialization'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['specialization'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -354,8 +354,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['specialization'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['specialization'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['specialization'][$index]"
+                                                is-disabled = "!e_show_update['specialization'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -375,7 +375,7 @@
 
                                             mwl-confirm
                                             title="{{popover.title}}"
-                                            message="{{e_show_update['highlights'+($index===0?'':$index+1)]}}"
+                                            message="{{e_show_update['highlights'][$index]}}"
                                             confirm-text="{{popover.confirmText}}"
                                             cancel-text="{{popover.cancelText}}"
                                             placement="top-right"
@@ -385,8 +385,8 @@
                                             cancel-button-type="default"
                                             animation="true"
                                             
-                                            ng-show="e_show_update['highlights'+($index===0?'':$index+1)]"
-                                            is-disabled = "!e_show_update['highlights'+($index===0?'':$index+1)]">                        
+                                            ng-show="e_show_update['highlights'][$index]"
+                                            is-disabled = "!e_show_update['highlights'][$index]">                        
                                                 <span><i class="fa fa-check-circle"></i>
                                                 </span>                                   
                                             </div> 
@@ -406,7 +406,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['audience'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['audience'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -418,8 +418,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['audience'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['audience'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['audience'][$index]"
+                                                is-disabled = "!e_show_update['audience'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -441,7 +441,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['job_placement'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['job_placement'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -453,8 +453,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['job_placement'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['job_placement'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['job_placement'][$index]"
+                                                is-disabled = "!e_show_update['job_placement'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -480,7 +480,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['online_program'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['online_program'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -492,8 +492,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['online_program'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['online_program'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['online_program'][$index]"
+                                                is-disabled = "!e_show_update['online_program'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -521,7 +521,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['additional_url'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['additional_url'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -533,8 +533,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['additional_url'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['additional_url'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['additional_url'][$index]"
+                                                is-disabled = "!e_show_update['additional_url'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -561,7 +561,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['program_faq_url'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['program_faq_url'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -573,8 +573,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['program_faq_url'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['program_faq_url'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['program_faq_url'][$index]"
+                                                is-disabled = "!e_show_update['program_faq_url'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -600,7 +600,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['stats_profile_url'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['stats_profile_url'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -612,8 +612,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['stats_profile_url'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['stats_profile_url'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['stats_profile_url'][$index]"
+                                                is-disabled = "!e_show_update['stats_profile_url'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -650,7 +650,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['full_part_time'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['full_part_time'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -662,8 +662,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['full_part_time'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['full_part_time'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['full_part_time'][$index]"
+                                                is-disabled = "!e_show_update['full_part_time'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -693,7 +693,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['part_time'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['part_time'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -705,8 +705,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['part_time'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['part_time'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['part_time'][$index]"
+                                                is-disabled = "!e_show_update['part_time'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -730,7 +730,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['program_duration'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['program_duration'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -743,8 +743,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['program_duration'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['program_duration'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['program_duration'][$index]"
+                                                is-disabled = "!e_show_update['program_duration'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -777,7 +777,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['durationtime_limit'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['durationtime_limit'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -789,8 +789,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['durationtime_limit'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['durationtime_limit'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['durationtime_limit'][$index]"
+                                                is-disabled = "!e_show_update['durationtime_limit'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -821,7 +821,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['min_total_unit'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['min_total_unit'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -834,8 +834,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['min_total_unit'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['min_total_unit'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['min_total_unit'][$index]"
+                                                is-disabled = "!e_show_update['min_total_unit'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -860,7 +860,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['max_transfer_unit'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['max_transfer_unit'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -872,8 +872,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['max_transfer_unit'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['max_transfer_unit'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['max_transfer_unit'][$index]"
+                                                is-disabled = "!e_show_update['max_transfer_unit'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -896,7 +896,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['master_thesis_or_equivalent'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['master_thesis_or_equivalent'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -908,8 +908,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['master_thesis_or_equivalent'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['master_thesis_or_equivalent'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['master_thesis_or_equivalent'][$index]"
+                                                is-disabled = "!e_show_update['master_thesis_or_equivalent'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -935,7 +935,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['thesis_notes'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['thesis_notes'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -947,8 +947,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['thesis_notes'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['thesis_notes'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['thesis_notes'][$index]"
+                                                is-disabled = "!e_show_update['thesis_notes'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -970,7 +970,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['doctorate_dissertation_or_equivalent'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['doctorate_dissertation_or_equivalent'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -982,8 +982,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['doctorate_dissertation_or_equivalent'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['doctorate_dissertation_or_equivalent'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['doctorate_dissertation_or_equivalent'][$index]"
+                                                is-disabled = "!e_show_update['doctorate_dissertation_or_equivalent'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1008,7 +1008,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['dissertation_notes'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['dissertation_notes'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1020,8 +1020,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['dissertation_notes'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['dissertation_notes'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['dissertation_notes'][$index]"
+                                                is-disabled = "!e_show_update['dissertation_notes'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1043,7 +1043,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['curriculum_url'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['curriculum_url'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1055,8 +1055,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['curriculum_url'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['curriculum_url'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['curriculum_url'][$index]"
+                                                is-disabled = "!e_show_update['curriculum_url'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1089,7 +1089,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['tuition_per_unit'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['tuition_per_unit'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1102,8 +1102,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['tuition_per_unit'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['tuition_per_unit'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['tuition_per_unit'][$index]"
+                                                is-disabled = "!e_show_update['tuition_per_unit'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1134,7 +1134,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['tuition_per_unit_out_state'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['tuition_per_unit_out_state'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1146,8 +1146,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['tuition_per_unit_out_state'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['tuition_per_unit_out_state'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['tuition_per_unit_out_state'][$index]"
+                                                is-disabled = "!e_show_update['tuition_per_unit_out_state'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1176,7 +1176,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['fee_included'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['fee_included'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1188,8 +1188,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['fee_included'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['fee_included'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['fee_included'][$index]"
+                                                is-disabled = "!e_show_update['fee_included'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1223,7 +1223,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['deadline_url'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['deadline_url'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1236,8 +1236,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['deadline_url'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['deadline_url'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['deadline_url'][$index]"
+                                                is-disabled = "!e_show_update['deadline_url'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1264,7 +1264,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['deadline_fall_early'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['deadline_fall_early'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1276,8 +1276,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['deadline_fall_early'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['deadline_fall_early'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['deadline_fall_early'][$index]"
+                                                is-disabled = "!e_show_update['deadline_fall_early'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1306,7 +1306,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['deadline_fall_late'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['deadline_fall_late'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1319,8 +1319,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['deadline_fall_late'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['deadline_fall_late'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['deadline_fall_late'][$index]"
+                                                is-disabled = "!e_show_update['deadline_fall_late'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1344,7 +1344,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['deadline_spring_early'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['deadline_spring_early'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1356,8 +1356,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['deadline_spring_early'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['deadline_spring_early'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['deadline_spring_early'][$index]"
+                                                is-disabled = "!e_show_update['deadline_spring_early'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1382,7 +1382,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['deadline_spring_late'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['deadline_spring_late'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1394,8 +1394,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['deadline_spring_late'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['deadline_spring_late'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['deadline_spring_late'][$index]"
+                                                is-disabled = "!e_show_update['deadline_spring_late'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1418,7 +1418,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['deadline_summer_early'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['deadline_summer_early'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1430,8 +1430,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['deadline_summer_early'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['deadline_summer_early'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['deadline_summer_early'][$index]"
+                                                is-disabled = "!e_show_update['deadline_summer_early'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1457,7 +1457,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['deadline_summer_late'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['deadline_summer_late'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1469,8 +1469,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['deadline_summer_late'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['deadline_summer_late'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['deadline_summer_late'][$index]"
+                                                is-disabled = "!e_show_update['deadline_summer_late'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1496,7 +1496,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['deadline_rolling'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['deadline_rolling'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1508,8 +1508,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['deadline_rolling'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['deadline_rolling'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['deadline_rolling'][$index]"
+                                                is-disabled = "!e_show_update['deadline_rolling'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1541,7 +1541,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['scholarship_deadline'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['scholarship_deadline'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1553,8 +1553,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['scholarship_deadline'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['scholarship_deadline'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['scholarship_deadline'][$index]"
+                                                is-disabled = "!e_show_update['scholarship_deadline'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1594,7 +1594,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['special_reqs'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['special_reqs'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1606,8 +1606,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['special_reqs'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['special_reqs'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['special_reqs'][$index]"
+                                                is-disabled = "!e_show_update['special_reqs'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1629,7 +1629,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['apply_online'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['apply_online'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1641,8 +1641,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['apply_online'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['apply_online'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['apply_online'][$index]"
+                                                is-disabled = "!e_show_update['apply_online'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1668,7 +1668,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['application_fee'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['application_fee'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1680,8 +1680,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['application_fee'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['application_fee'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['application_fee'][$index]"
+                                                is-disabled = "!e_show_update['application_fee'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1705,7 +1705,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['application_fee_waiver'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['application_fee_waiver'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1717,8 +1717,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['application_fee_waiver'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['application_fee_waiver'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['application_fee_waiver'][$index]"
+                                                is-disabled = "!e_show_update['application_fee_waiver'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1744,7 +1744,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['application_fee_waiver_notes'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['application_fee_waiver_notes'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1756,8 +1756,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['application_fee_waiver_notes'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['application_fee_waiver_notes'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['application_fee_waiver_notes'][$index]"
+                                                is-disabled = "!e_show_update['application_fee_waiver_notes'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1780,7 +1780,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['transcript_for_application'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['transcript_for_application'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1792,8 +1792,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['transcript_for_application'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['transcript_for_application'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['transcript_for_application'][$index]"
+                                                is-disabled = "!e_show_update['transcript_for_application'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1819,7 +1819,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['official_transcript_for_enrollment'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['official_transcript_for_enrollment'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1831,8 +1831,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['official_transcript_for_enrollment'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['official_transcript_for_enrollment'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['official_transcript_for_enrollment'][$index]"
+                                                is-disabled = "!e_show_update['official_transcript_for_enrollment'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1858,7 +1858,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['required_admissions_exam'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['required_admissions_exam'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1870,8 +1870,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['required_admissions_exam'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['required_admissions_exam'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['required_admissions_exam'][$index]"
+                                                is-disabled = "!e_show_update['required_admissions_exam'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1900,7 +1900,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['essays'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['essays'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1912,8 +1912,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['essays'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['essays'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['essays'][$index]"
+                                                is-disabled = "!e_show_update['essays'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1935,7 +1935,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['recommendation'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['recommendation'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1947,8 +1947,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['recommendation'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['recommendation'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['recommendation'][$index]"
+                                                is-disabled = "!e_show_update['recommendation'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -1973,7 +1973,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['gpa_minimum'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['gpa_minimum'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -1985,8 +1985,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['gpa_minimum'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['gpa_minimum'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['gpa_minimum'][$index]"
+                                                is-disabled = "!e_show_update['gpa_minimum'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2016,7 +2016,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['gpa_average'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['gpa_average'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2028,8 +2028,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['gpa_average'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['gpa_average'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['gpa_average'][$index]"
+                                                is-disabled = "!e_show_update['gpa_average'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2056,7 +2056,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['gpa_suggested'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['gpa_suggested'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2068,8 +2068,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['gpa_suggested'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['gpa_suggested'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['gpa_suggested'][$index]"
+                                                is-disabled = "!e_show_update['gpa_suggested'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2097,7 +2097,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['school_interview'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['school_interview'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2109,8 +2109,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['school_interview'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['school_interview'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['school_interview'][$index]"
+                                                is-disabled = "!e_show_update['school_interview'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2136,7 +2136,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['resume'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['resume'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2148,8 +2148,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['resume'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['resume'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['resume'][$index]"
+                                                is-disabled = "!e_show_update['resume'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2174,7 +2174,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['sup_mat_writing_sample'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['sup_mat_writing_sample'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2186,8 +2186,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['sup_mat_writing_sample'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['sup_mat_writing_sample'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['sup_mat_writing_sample'][$index]"
+                                                is-disabled = "!e_show_update['sup_mat_writing_sample'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2215,7 +2215,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['sup_mat_writing_sample_notes'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['sup_mat_writing_sample_notes'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2227,8 +2227,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['sup_mat_writing_sample_notes'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['sup_mat_writing_sample_notes'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['sup_mat_writing_sample_notes'][$index]"
+                                                is-disabled = "!e_show_update['sup_mat_writing_sample_notes'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2249,7 +2249,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['sup_mat_portfolio'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['sup_mat_portfolio'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2261,8 +2261,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['sup_mat_portfolio'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['sup_mat_portfolio'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['sup_mat_portfolio'][$index]"
+                                                is-disabled = "!e_show_update['sup_mat_portfolio'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2291,7 +2291,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['sup_mat_portfolio_notes'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['sup_mat_portfolio_notes'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2303,8 +2303,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['sup_mat_portfolio_notes'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['sup_mat_portfolio_notes'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['sup_mat_portfolio_notes'][$index]"
+                                                is-disabled = "!e_show_update['sup_mat_portfolio_notes'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2326,7 +2326,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['additional_admissions_requirements'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['additional_admissions_requirements'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2338,8 +2338,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['additional_admissions_requirements'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['additional_admissions_requirements'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['additional_admissions_requirements'][$index]"
+                                                is-disabled = "!e_show_update['additional_admissions_requirements'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2378,7 +2378,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['Intl_transcript'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['Intl_transcript'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2390,8 +2390,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['Intl_transcript'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['Intl_transcript'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['Intl_transcript'][$index]"
+                                                is-disabled = "!e_show_update['Intl_transcript'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2425,7 +2425,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['intl_lang_waiver'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['intl_lang_waiver'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2437,8 +2437,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['intl_lang_waiver'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['intl_lang_waiver'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['intl_lang_waiver'][$index]"
+                                                is-disabled = "!e_show_update['intl_lang_waiver'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2468,7 +2468,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['intl_lang_waiver_conditions'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['intl_lang_waiver_conditions'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2480,8 +2480,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['intl_lang_waiver_conditions'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['intl_lang_waiver_conditions'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['intl_lang_waiver_conditions'][$index]"
+                                                is-disabled = "!e_show_update['intl_lang_waiver_conditions'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2505,7 +2505,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['intl_english_test_required'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['intl_english_test_required'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2517,8 +2517,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['intl_english_test_required'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['intl_english_test_required'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['intl_english_test_required'][$index]"
+                                                is-disabled = "!e_show_update['intl_english_test_required'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2542,7 +2542,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['Intl_eng_test'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['Intl_eng_test'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2554,8 +2554,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['Intl_eng_test'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['Intl_eng_test'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['Intl_eng_test'][$index]"
+                                                is-disabled = "!e_show_update['Intl_eng_test'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2584,7 +2584,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['toefl_ibt'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['toefl_ibt'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2596,8 +2596,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['toefl_ibt'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['toefl_ibt'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['toefl_ibt'][$index]"
+                                                is-disabled = "!e_show_update['toefl_ibt'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2623,7 +2623,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['toefl_ibt_scores'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['toefl_ibt_scores'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2635,8 +2635,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['toefl_ibt_scores'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['toefl_ibt_scores'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['toefl_ibt_scores'][$index]"
+                                                is-disabled = "!e_show_update['toefl_ibt_scores'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2662,7 +2662,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['toefl_pbt'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['toefl_pbt'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2674,8 +2674,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['toefl_pbt'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['toefl_pbt'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['toefl_pbt'][$index]"
+                                                is-disabled = "!e_show_update['toefl_pbt'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2699,7 +2699,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['toefl_twe'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['toefl_twe'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2711,8 +2711,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['toefl_twe'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['toefl_twe'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['toefl_twe'][$index]"
+                                                is-disabled = "!e_show_update['toefl_twe'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2735,7 +2735,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['toefl_tse'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['toefl_tse'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2747,8 +2747,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['toefl_tse'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['toefl_tse'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['toefl_tse'][$index]"
+                                                is-disabled = "!e_show_update['toefl_tse'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2771,7 +2771,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['toefl_cbt'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['toefl_cbt'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2783,8 +2783,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['toefl_cbt'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['toefl_cbt'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['toefl_cbt'][$index]"
+                                                is-disabled = "!e_show_update['toefl_cbt'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2807,7 +2807,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['intl_ielts_reqs'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['intl_ielts_reqs'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2819,8 +2819,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['intl_ielts_reqs'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['intl_ielts_reqs'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['intl_ielts_reqs'][$index]"
+                                                is-disabled = "!e_show_update['intl_ielts_reqs'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2843,7 +2843,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['intl_other'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['intl_other'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2855,8 +2855,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['intl_other'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['intl_other'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['intl_other'][$index]"
+                                                is-disabled = "!e_show_update['intl_other'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2886,7 +2886,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['fully_funded'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['fully_funded'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2898,8 +2898,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['fully_funded'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['fully_funded'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['fully_funded'][$index]"
+                                                is-disabled = "!e_show_update['fully_funded'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2925,7 +2925,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['fully_funded_notes'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['fully_funded_notes'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2937,8 +2937,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['fully_funded_notes'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['fully_funded_notes'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['fully_funded_notes'][$index]"
+                                                is-disabled = "!e_show_update['fully_funded_notes'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -2962,7 +2962,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['scholarship_avail'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['scholarship_avail'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -2974,8 +2974,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['scholarship_avail'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['scholarship_avail'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['scholarship_avail'][$index]"
+                                                is-disabled = "!e_show_update['scholarship_avail'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -3001,7 +3001,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['scholarship_notes'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['scholarship_notes'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -3013,8 +3013,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['scholarship_notes'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['scholarship_notes'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['scholarship_notes'][$index]"
+                                                is-disabled = "!e_show_update['scholarship_notes'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
@@ -3038,7 +3038,7 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['scholarship_url'+($index===0?'':$index+1)]}}"
+                                                message="{{e_show_update['scholarship_url'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
@@ -3050,8 +3050,8 @@
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['scholarship_url'+($index===0?'':$index+1)]"
-                                                is-disabled = "!e_show_update['scholarship_url'+($index===0?'':$index+1)]">                        
+                                                ng-show="e_show_update['scholarship_url'][$index]"
+                                                is-disabled = "!e_show_update['scholarship_url'][$index]">                        
                                                     <span><i class="fa fa-check-circle"></i>
                                                     </span>                                   
                                                 </div> 
