@@ -42,6 +42,7 @@ from .models import (
     EnhancementReports)
 from .api_serializers import *
 from .filter import UniversityCustomerFilter, ClientAndProgramRelationFilter
+import os
 
 # used shared report
 import zlib
@@ -51,6 +52,7 @@ from json import dumps, loads
 from rest_framework.renderers import JSONRenderer
 from django.core.exceptions import ObjectDoesNotExist
 
+
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 app_logger = logging.getLogger('app')
@@ -58,6 +60,12 @@ app_logger = logging.getLogger('app')
 # ----------------------Login / Password ----------------------------------------
 # index
 ###################################################
+
+try:
+    cc_email = os.environ["CC_EMAIL"]
+    #cc_email = os.environ["CC_EMAIL"]
+except KeyError:
+    cc_email = "swang@gradgrid.com"
 
 
 def index(request):
@@ -109,7 +117,7 @@ class ResetPassword(generics.GenericAPIView):
     def post(self, request):
         text = "Password Reset email has been send! If you do not receive reset email within the next 5 minutes,"
         "please check your email address if it has registered."
-        cc_addresses = ['swang@gradgrid.com']
+        cc_addresses = [cc_email]
         try:
             user_reset = UniversityCustomer.objects.get(email=request.data['email'])
         except UniversityCustomer.DoesNotExist:
@@ -130,25 +138,57 @@ class ResetPassword(generics.GenericAPIView):
                     #         cc_addresses.append(main_user_query.first().email)
 
                     cc_addresses_tuple = tuple(cc_addresses)
-                    html_content = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'>"
-                                    "<img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' "
-                                    "width='150px'></div><div style='background:white; "
-                                    "padding: 20px 35px;border-radius: 8px '>"
-                                    "<div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', "
-                                    "Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div "
-                                    "style='font-family: sans-serif;'><p>We have just received a password reset request"
-                                    " for this email account. Please click <a href='https://%s/#/upgrid/reset/%s/'>"
-                                    " here</a> to reset your Upgrid password.</p><p>If the above link does not work for"
-                                    " you, please copy and paste the following into your browser address "
-                                    "bar:</p><a href='https://%s/#/upgrid/reset/%s/'>"
-                                    "https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!"
-                                    "</div><h3>- Team Gridology</h3></div></div></div>")
-                    message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
-                                           request.META['HTTP_HOST'], token, request.META['HTTP_HOST'], token,
-                                            request.META['HTTP_HOST'], token), to=[request.data['email']],
-                                           bcc=cc_addresses_tuple)
-                    message.content_subtype = 'html'
-                    message.send()
+
+                    if request.is_create is True:
+                        html_verify = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'>"
+                                        "<img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' "
+                                        "width='150px'></div><div style='background:white; "
+                                        "padding: 20px 35px;border-radius: 8px '>"
+                                        "<div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', "
+                                        "Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div "
+                                        "style='font-family: sans-serif;'><p>please click <a href='https://%s/#/upgrid/user/verify/%s/'>here</a>"                                        ""
+                                        "to verify you account"
+                                        "<p>If the above link does not work for"
+                                        " you, please copy and paste the following into your browser address "
+                                        "bar:</p><a href='https://%s/#/upgrid/user/verify/%s/'>"
+                                        "https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!"
+                                        "</div><h3>- Team Gridology</h3></div></div></div>")
+
+                        html_content = html_verify
+
+
+
+                        message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
+                                               request.META['HTTP_HOST'], token,  request.META['HTTP_HOST'], token,
+                                                request.META['HTTP_HOST'], token), 
+                                                to=[request.data['email']],bcc=cc_addresses_tuple)
+                        message.content_subtype = 'html'
+                        message.send()
+                    else:
+                        hmtl_resetPassword = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'>"
+                                        "<img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' "
+                                        "width='150px'></div><div style='background:white; "
+                                        "padding: 20px 35px;border-radius: 8px '>"
+                                        "<div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', "
+                                        "Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div "
+                                        "style='<font-f></font-f>amily: sans-serif;'><p>We have just received a password reset request"
+                                        " for this email account. Please click <a href='https://%s/#/upgrid/reset/%s/'>"
+                                        " here</a> to reset your Upgrid password.</p><p>If the above link does not work for"
+                                        " you, please copy and paste the following into your browser address "
+                                        "bar:</p><a href='https://%s/#/upgrid/reset/%s/'>"
+                                        "https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!"
+                                        "</div><h3>- Team Gridology</h3></div></div></div>")
+
+                        html_content = hmtl_resetPassword
+
+
+
+                        message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
+                                               request.META['HTTP_HOST'], token, request.META['HTTP_HOST'], token,
+                                                request.META['HTTP_HOST'], token), to=[request.data['email']],
+                                               bcc=cc_addresses_tuple)
+                        message.content_subtype = 'html'
+                        message.send()
                 except (BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
                         SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
                     app_logger.exception('{0} when sending email. Error: {1}'.format(type(e).__name__, html_content))
@@ -174,7 +214,7 @@ class ResetPassword(generics.GenericAPIView):
         print(password)
         #print(self.validate(password).decode("utf-8"))
         #user.set_password(self.validate(password).decode("utf-8"))
-        #password = zlib.decompress(self.validate(password))
+        #password = zlib.decompress(self.validate(password))                                                                                                                                
         user.password = self.validate(password)
         user._password = None
         user.save()
@@ -183,6 +223,16 @@ class ResetPassword(generics.GenericAPIView):
 
 
 # ------------------------------User API--------------------------------------------
+# api/user/verify
+class CustomerVerify(APIView):
+    def put(self,request):
+        user_query = UniversityCustomer.objects.filter(pk = request.user)
+        if not user_query.exists():
+            return Response({"data": _("verify failed, please")}, status=HTTP_400_BAD_REQUEST)
+        user.is_active = True
+        user._password = None
+        user.save()
+        return Response({"success": _("You account has been verified.")}, status=HTTP_202_ACCEPTED)
 
 # api/user/program
 class CustomerProgram(generics.ListAPIView):
@@ -2345,7 +2395,8 @@ class ManagerEnhancementDiffConfirmation(APIView):
         eru = EnhancementUpdate.objects.get(customer_program=request.data['customer_program_id'],
                                             customer=request.data['client_id'], most_recent=True)
         eru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
-
+        print(request.data['cache_report'])
+        
         update_diff = EnhancementReportsUpdateAPI.\
             compare_enhancement_report(JSONParser().parse(BytesIO(zlib.decompress(eru.existing_report))),
                                        request.data['cache_report'])

@@ -64,7 +64,7 @@ class BaseJSONWebTokenAuthentication(BaseAuthentication):
             raise exceptions.AuthenticationFailed(msg)
 
         if not user.is_active:
-            msg = _('User account is disabled.')
+            msg = _('User account is not verified or disabled.')
             raise exceptions.AuthenticationFailed(msg)
 
         return user

@@ -51,6 +51,13 @@ except KeyError:
     print("Error: environment variable EMAIL_PASS must be set.")
     exit(1)
 
+try:
+    cc_email = os.environ["CC_EMAIL"]
+    #cc_email = os.environ["CC_EMAIL"]
+except KeyError:
+    cc_email = "swang@gradgrid.com"
+
+
 EMAIL_HOST = 'smtp.1and1.com'
 EMAIL_HOST_USER = 'no-reply@upgrid.gridet.com'
 EMAIL_HOST_PASSWORD = email_pass
