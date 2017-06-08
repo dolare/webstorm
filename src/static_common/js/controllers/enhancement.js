@@ -128,7 +128,7 @@ controller('EnhancementController', function($timeout, updateService, avatarServ
              for(var i=0; i<$scope.e_raw.length; i++){
               $scope.program_order.push($scope.e_raw[i].object_id)
              }
-             
+
              //console.log("$scope.e_raw="+JSON.stringify($scope.e_raw[0]));
              $scope.report = {};
              var e_array_1 = [];
@@ -195,7 +195,7 @@ controller('EnhancementController', function($timeout, updateService, avatarServ
              //console.log("$scope.e_array_final[10][0]= "+$scope.e_array_final[10][0].e_release_time);
 
 
-             $scope.e_show_update = updateService.updateEnhancement($scope.e_raw, 'client');
+             $scope.e_show_update = updateService.updateEnhancement(response.data, 'client', $scope.program_order);
              console.log('$scope.e_show_update = '+JSON.stringify($scope.e_show_update));
              // $scope.e_show_update = {};
 

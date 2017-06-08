@@ -845,7 +845,32 @@ App.config(function($stateProvider, $urlRouterProvider) {
                     }]
                 }
    
-  });
+  }).
+  //share the report(s)
+  state('xdf', {
+    url: '/xdf',
+    templateUrl: '/static/views/Share/XDF.html',
+    controller: 'xdf',
+    resolve: {
+                    depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/xdf.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
+   
+  })
+
+  ;
 
   //default route
   $urlRouterProvider.otherwise('/');

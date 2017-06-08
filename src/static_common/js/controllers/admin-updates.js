@@ -652,6 +652,12 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
                   $scope.confirmed_diff_raw[$scope.program_order[index]][category] = {};
                 }
 
+
+
+                console.log("$scope.e_update[$scope.program_order[index]]= "+JSON.stringify($scope.e_update[$scope.program_order[index]]))
+                console.log("$scope.e_update[$scope.program_order[index]][category]"+JSON.stringify($scope.e_update[$scope.program_order[index]][category]))
+
+
                 $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
                 $scope.e_raw[index][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
 

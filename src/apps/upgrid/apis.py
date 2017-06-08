@@ -1903,6 +1903,7 @@ class ManagerWhoopsDiffConfirmation(APIView):
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         wru = WhoopsUpdate.objects.get(customer_program=request.data['customer_program_id'],
                                        most_recent=True)
+
         wru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
 
         update_diff = WhoopsReportsUpdateAPI.\
@@ -1910,6 +1911,15 @@ class ManagerWhoopsDiffConfirmation(APIView):
                                        request.data['cache_report'])
         wru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
         wru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
+        diff_count = 0
+        for k1,v1 in wru.confirmed_diff.items():
+            if isinstance(v1,dict):
+                diff_count = diff_count + len(v1)
+                print(v1)
+                print(len(v1))
+            else:
+                diff_count = diff_count + 1
+        wru.confirmed_diff['diff_count'] = diff_count
         wru.last_edit_time = timezone.now()
         wru.save()
 
