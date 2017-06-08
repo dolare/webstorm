@@ -19,10 +19,7 @@ angular.module('myApp')
 
 
             console.log("e_update_diff= "+JSON.stringify(e_update_diff))
-            angular.forEach(order, function(value, key) {
-              console.log("value = " + value+ ' '+"key = "+key)
-
-              })
+           
             angular.forEach(order, function(value, key) {
 
 

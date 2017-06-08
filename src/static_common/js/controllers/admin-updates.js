@@ -349,7 +349,6 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
       }
 
-
      }
 
 
@@ -785,7 +784,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
             data: {
               "customer_program_id": id,
               "confirmed_diff": $scope.confirmed_diff_raw,
-              "cache_report": $scope.e_raw,
+              "cache_report": $scope.e_raw_update,
               "client_id": $scope.client_id_alias
             },
             headers: {
