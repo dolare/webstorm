@@ -139,7 +139,7 @@ class ResetPassword(generics.GenericAPIView):
 
                     cc_addresses_tuple = tuple(cc_addresses)
 
-                    if request.is_create is True:
+                    if hasattr(request,'is_create') and request.is_create is True:
                         html_verify = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'>"
                                         "<img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' "
                                         "width='150px'></div><div style='background:white; "
@@ -864,16 +864,28 @@ class ShareReports(APIView):
         return True
 
     def get_whoops_object(self, object_id, client):
+        print(object_id)
+        print(client)
         program_id = UniversityCustomerProgram.objects.get(object_id=object_id)
         program = Program.objects.get(object_id=program_id.program.object_id)
 
-        wur = WhoopsUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
+        wur_query = WhoopsUpdate.objects.filter(customer_program=object_id, customer=client, most_recent='True')
+        print(wur_query)
+        if not wur_query.exists():
+            return None
+        else:
+            wur = wur_query.first()
+
 
         return wur, program
 
     def get_enhancement_object(self, object_id, client):
-        eur = EnhancementUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
-        return eur
+        print(object_id)
+        print(client)
+        eur_query = EnhancementUpdate.objects.filter(customer_program=object_id, customer=client, most_recent='True')
+        if not eur_query.exists():
+            return None
+        return eur_query.first()
 
     def get(self, request, object_id, token):
         obj = get_object_or_404(SharedReportsRelation, object_id=object_id)
