@@ -349,7 +349,6 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
       }
 
-
      }
 
 
