@@ -866,26 +866,24 @@ class ShareReports(APIView):
     def get_whoops_object(self, object_id, client):
         print(object_id)
         print(client)
-        program_id = UniversityCustomerProgram.objects.get(object_id=object_id)
-        program = Program.objects.get(object_id=program_id.program.object_id)
-
-        wur_query = WhoopsUpdate.objects.filter(customer_program=object_id, customer=client, most_recent='True')
-        print(wur_query)
-        if not wur_query.exists():
+       
+        try:
+            program_id = UniversityCustomerProgram.objects.get(object_id=object_id)
+            program = Program.objects.get(object_id=program_id.program.object_id)
+            wur = WhoopsUpdate.objects.get(customer=client.main_user_id,customer_program=object_id,most_recent='True')
+        except:
             return None
-        else:
-            wur = wur_query.first()
-
-
         return wur, program
 
     def get_enhancement_object(self, object_id, client):
         print(object_id)
         print(client)
-        eur_query = EnhancementUpdate.objects.filter(customer_program=object_id, customer=client, most_recent='True')
-        if not eur_query.exists():
+
+        try:
+            eur = EnhancementUpdate.objects.filter(customer_program=object_id, customer=client.main_user_id, most_recent='True')
+        except:
             return None
-        return eur_query.first()
+        return eur
 
     def get(self, request, object_id, token):
         obj = get_object_or_404(SharedReportsRelation, object_id=object_id)
