@@ -866,10 +866,15 @@ class ShareReports(APIView):
     def get_whoops_object(self, object_id, client):
         print(object_id)
         print(client)
+        print(type(client))
         program_id = UniversityCustomerProgram.objects.get(object_id=object_id)
         program = Program.objects.get(object_id=program_id.program.object_id)
+        # wur_query = WhoopsUpdate.objects.filter(customer=client)
+        # print(wur_query)
+        wur_query = WhoopsUpdate.objects.filter(customer=client)
+        # print(wur_query)
+        # wur_query = wur_query.objects.filter(customer_program=object_id, customer=client, most_recent='True')
 
-        wur_query = WhoopsUpdate.objects.filter(customer_program=object_id, customer=client, most_recent='True')
         print(wur_query)
         if not wur_query.exists():
             return None
