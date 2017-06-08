@@ -23,6 +23,7 @@ from ..record_management.models import ProgramAssignment, ProgramProof
 from .models import *
 # from apps.upgrid.forms import ChangePasswordForm
 
+#CustomerProgram
 
 # ----------------------------Login Serializer---------------------------------
 
@@ -644,12 +645,8 @@ class ClientEnhancementUpdateNumberSerializer(serializers.ModelSerializer):
             json_string = BytesIO(json_string)
             res = JSONParser().parse(json_string)
             length = 0
-            for k in res["new"]:
-                print(k)
-                # if k == 'length':
-                #     continue
-                for k2 in res["new"][k]:
-                    length += 1
+            print(res)
+            length = res['diff_count']
             print(length)
             return length
 

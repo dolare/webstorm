@@ -4,7 +4,7 @@ angular.module('myApp')
     var e_show_update = {};
     var updateEnhancement = function(raw_data, user, order) {
 
-            var e_raw = raw_data;
+            
             var e_raw = raw_data.existing_report.program.concat(raw_data.existing_report.competing_programs);
             //var e_update_diff = raw_data.update_diff;
             console.log("raw_data="+JSON.stringify(raw_data))
@@ -24,7 +24,7 @@ angular.module('myApp')
 
 
                 // University school (university_school.university)
-                if(((((e_update_diff||{})[value]||{})['program_detail']||{}).university_school||{}).university ){
+                if(((((e_update_diff||{})[value]||{})['program_detail']||{}).university_school||{}).hasOwnProperty('university')){
 
                   create_array('university', order);
 
@@ -35,7 +35,7 @@ angular.module('myApp')
 
 
                 // School name (university_school.school)
-                if(((((e_update_diff||{})[value]||{})['program_detail']||{}).university_school||{}).school){
+                if(((((e_update_diff||{})[value]||{})['program_detail']||{}).university_school||{}).hasOwnProperty('school')){
                   
                   create_array('school', order);
 
@@ -45,7 +45,7 @@ angular.module('myApp')
                 }
 
                 // Program (program_name)
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).program_name){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('program_name')){
                   
                   create_array('program_name', order);
 
@@ -55,7 +55,7 @@ angular.module('myApp')
                 }
 
                 // Degree (degree.name)
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).degree){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('degree')){
                   
                   create_array('degree', order);
 
@@ -67,7 +67,7 @@ angular.module('myApp')
 
 
                 // Department (department)
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).department){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('department')){
 
                   create_array('department', order);
 
@@ -78,7 +78,7 @@ angular.module('myApp')
                 }
                   
                 // Specialization (specialization)
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).specialization){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('specialization')){
 
                   create_array('specialization', order);
 
@@ -89,7 +89,7 @@ angular.module('myApp')
                 }
 
                 // Highlights (highlights)
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).highlights){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('highlights')){
                   
                   create_array('highlights', order);
 
@@ -101,8 +101,9 @@ angular.module('myApp')
 
 
                 // Program objectives (audience)
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).audience){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('audience')){
 
+                  
                   create_array('audience', order);
 
                   e_show_update['audience'][key] = e_update_diff[value]['program_detail'].audience;
@@ -112,7 +113,9 @@ angular.module('myApp')
 
 
                 // Job placement (job_placement)
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).job_placement){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('job_placement') || 
+                    (((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('job_placement_url')
+                  ){
 
                   create_array('job_placement', order);
 
@@ -122,7 +125,7 @@ angular.module('myApp')
                 }
 
                 // Online program (online_program)
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).online_program){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('online_program')){
 
                   create_array('online_program', order);
 
@@ -132,7 +135,7 @@ angular.module('myApp')
                 }
 
                 // Handbook (additional_url)
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).additional_url){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('additional_url')){
 
                   create_array('additional_url', order);
 
@@ -143,7 +146,7 @@ angular.module('myApp')
                 }
 
                 // FAQ (program_faq_url) 
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).program_faq_url){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('program_faq_url')){
 
                   create_array('program_faq_url', order);
 
@@ -154,7 +157,7 @@ angular.module('myApp')
                 }
 
                 // Admissions statistics (stats_profile_url)
-                if((((e_update_diff||{})[value]||{})['program_detail']||{}).stats_profile_url){
+                if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('stats_profile_url')){
 
                   create_array('stats_profile_url', order);
 
@@ -165,7 +168,7 @@ angular.module('myApp')
                 }
 
                 // Full-time (full_part_time)
-                if((((e_update_diff||{})[value]||{})['duration']||{}).full_part_time){
+                if((((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('full_part_time')){
 
                   create_array('full_part_time', order);
 
@@ -185,7 +188,7 @@ angular.module('myApp')
                 }
 
                 // Part-time (part_time)
-                if((((e_update_diff||{})[value]||{})['duration']||{}).part_time){
+                if((((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('part_time')){
 
                   create_array('part_time', order);
 
@@ -208,12 +211,12 @@ angular.module('myApp')
 
                 // Program duration
                 if(
-                  (((e_update_diff||{})[value]||{})['duration']||{}).duration_min || 
-                  (((e_update_diff||{})[value]||{})['duration']||{}).duration_max ||
-                  (((e_update_diff||{})[value]||{})['duration']||{}).duration_conj ||
-                  (((e_update_diff||{})[value]||{})['duration']||{}).duration_unit ||
-                  (((e_update_diff||{})[value]||{})['duration']||{}).duration_addl ||
-                  (((e_update_diff||{})[value]||{})['duration']||{}).duration_addl_unit
+                  (((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('duration_min') || 
+                  (((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('duration_max') ||
+                  (((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('duration_conj') ||
+                  (((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('duration_unit') ||
+                  (((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('duration_addl') ||
+                  (((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('duration_addl_unit')
                   )
                 {
                   
@@ -249,8 +252,8 @@ angular.module('myApp')
 
                 //Duration time limit
                 if(
-                  (((e_update_diff||{})[value]||{})['duration']||{}).durationtime_limit || 
-                  (((e_update_diff||{})[value]||{})['duration']||{}).duration_unit 
+                  (((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('durationtime_limit') || 
+                  (((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('duration_unit') 
                   )
                 {
 
@@ -272,8 +275,8 @@ angular.module('myApp')
 
                 // Required curriculum units
                 if(
-                  (((e_update_diff||{})[value]||{})['curriculum']||{}).min_total_unit || 
-                  (((e_update_diff||{})[value]||{})['curriculum']||{}).curriculum_unit 
+                  (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('min_total_unit') || 
+                  (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('curriculum_unit') 
                   ){
 
                   create_array('min_total_unit', order);
@@ -291,8 +294,8 @@ angular.module('myApp')
 
                 // Max transfer units
                 if(
-                  (((e_update_diff||{})[value]||{})['curriculum']||{}).max_transfer_unit || 
-                  (((e_update_diff||{})[value]||{})['curriculum']||{}).curriculum_unit
+                  (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('max_transfer_unit') || 
+                  (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('curriculum_unit')
                   ){
 
                   create_array('max_transfer_unit', order);
@@ -311,7 +314,7 @@ angular.module('myApp')
 
                 //Master thesis or equivalent
                 if(
-                  (((e_update_diff||{})[value]||{})['curriculum']||{}).master_thesis_or_equivalent 
+                  (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('master_thesis_or_equivalent') 
                  ){
 
                   create_array('master_thesis_or_equivalent', order);
@@ -341,7 +344,7 @@ angular.module('myApp')
 
                 // Thesis notes
                 if(
-                  (((e_update_diff||{})[value]||{})['curriculum']||{}).thesis_notes 
+                  (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('thesis_notes') 
                  ){
 
                   create_array('thesis_notes', order);
@@ -356,7 +359,7 @@ angular.module('myApp')
 
                 // Doctorate dissertation or equivalent
                 if(
-                  (((e_update_diff||{})[value]||{})['curriculum']||{}).doctorate_dissertation_or_equivalent 
+                  (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('doctorate_dissertation_or_equivalent') 
                  ){
 
                   create_array('doctorate_dissertation_or_equivalent', order);
@@ -384,7 +387,7 @@ angular.module('myApp')
 
                 // Dissertation notes
                 if(
-                  (((e_update_diff||{})[value]||{})['curriculum']||{}).dissertation_notes 
+                  (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('dissertation_notes') 
                  ){
 
                   create_array('dissertation_notes', order);
@@ -399,7 +402,7 @@ angular.module('myApp')
 
                 // Curriculums
                 if(
-                  (((e_update_diff||{})[value]||{})['curriculum']||{}).curriculum_url 
+                  (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('curriculum_url') 
                  ){
 
                   create_array('curriculum_url', order);
@@ -413,10 +416,10 @@ angular.module('myApp')
 
                 // Tuition (in state)
                 if(
-                  (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit || 
-                  (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url || 
-                  (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_unit || 
-                  (((e_update_diff||{})[value]||{})['tuition']||{}).university_cost_url 
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('tuition_per_unit') || 
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('school_cost_url') || 
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('tuition_unit') || 
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('university_cost_url') 
                  ){
 
                   create_array('tuition_per_unit', order);
@@ -439,10 +442,10 @@ angular.module('myApp')
 
               //  Tuition (out of state)
               if(
-                  (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit_out_state || 
-                  (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url || 
-                  (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_unit || 
-                  (((e_update_diff||{})[value]||{})['tuition']||{}).university_cost_url 
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('tuition_per_unit_out_state') || 
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('school_cost_url') || 
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('tuition_unit') || 
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('university_cost_url') 
                  ){
 
                   create_array('tuition_per_unit_out_state', order);
@@ -467,7 +470,7 @@ angular.module('myApp')
 
                 // Other fees included
                 if(
-                  (((e_update_diff||{})[value]||{})['tuition']||{}).fee_included 
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('fee_included') 
                  ){
 
                   create_array('fee_included', order);
@@ -492,7 +495,7 @@ angular.module('myApp')
 
                 // Application deadlines link 
                 if(
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).deadline_url 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('deadline_url') 
                  ){
 
                   create_array('deadline_url', order);
@@ -506,8 +509,8 @@ angular.module('myApp')
 
                 // Deadline - Fall, early
                 if(
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_early_month_display ||
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_early_day_display 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_fall_early_month_display') ||
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_fall_early_day_display') 
                  ){
 
                   create_array('deadline_fall_early', order);
@@ -532,8 +535,8 @@ angular.module('myApp')
 
                 // Deadline - Fall, late
                 if(
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_late_month_display || 
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_late_day_display 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_fall_late_month_display') || 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_fall_late_day_display') 
                  ){
 
                   create_array('deadline_fall_late', order);
@@ -559,8 +562,8 @@ angular.module('myApp')
 
                // Deadline - Spring, early
               if(
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_spring_early_month_display || 
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_spring_early_day_display 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_spring_early_month_display') || 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_spring_early_day_display') 
                  ){
 
                   create_array('deadline_spring_early', order);
@@ -586,8 +589,8 @@ angular.module('myApp')
 
                 // Deadline - Spring, late
                 if(
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_spring_late_month_display || 
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_spring_late_day_display 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_spring_late_month_display') || 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_spring_late_day_display') 
                  ){
 
                   create_array('deadline_spring_late', order);
@@ -612,8 +615,8 @@ angular.module('myApp')
 
                 // Deadline - summer, early
               if(
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_summer_early_month_display || 
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_summer_early_day_display 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_summer_early_month_display') || 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_summer_early_day_display') 
                  ){
 
                   create_array('deadline_summer_early', order);
@@ -639,8 +642,8 @@ angular.module('myApp')
 
                 // Deadline - summer, late
                 if(
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_summer_late_month_display || 
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_summer_late_day_display 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_summer_late_month_display') || 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_summer_late_day_display') 
                  ){
 
                   create_array('deadline_summer_late', order);
@@ -666,7 +669,7 @@ angular.module('myApp')
 
                // Rolling deadline
                if(
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).deadline_rolling 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('deadline_rolling') 
                  ){
 
                   create_array('deadline_rolling', order);
@@ -690,8 +693,8 @@ angular.module('myApp')
 
                 // Scholarship deadline
                 if(
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).scholarship_deadline_month || 
-                  (((e_update_diff||{})[value]||{})['deadline']||{}).scholarship_deadline_day 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('scholarship_deadline_month') || 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('scholarship_deadline_day') 
                  ){
 
                   create_array('scholarship_deadline', order);
@@ -715,7 +718,7 @@ angular.module('myApp')
 
                 // Special requirements (special_reqs)
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).special_reqs 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('special_reqs') 
                  ){
 
                   create_array('special_reqs', order);
@@ -729,7 +732,7 @@ angular.module('myApp')
 
                 // Online Application - apply_online
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).apply_online 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('apply_online') 
                  ){
 
                   create_array('apply_online', order);
@@ -754,7 +757,7 @@ angular.module('myApp')
 
                 // Application fee
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).application_fee 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('application_fee') 
                  ){
 
                   create_array('application_fee', order);
@@ -774,7 +777,7 @@ angular.module('myApp')
 
                 // Application fee waiver
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).application_fee_waiver 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('application_fee_waiver') 
                  ){
                   create_array('application_fee_waiver', order);
 
@@ -798,7 +801,7 @@ angular.module('myApp')
 
                 // Application fee waiver notes
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).application_fee_waiver_notes 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('application_fee_waiver_notes') 
                  ){
                   create_array('application_fee_waiver_notes', order);
 
@@ -811,7 +814,7 @@ angular.module('myApp')
 
                 // Transcripts required for application
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).transcript_for_application 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('transcript_for_application') 
                  ){
 
                   create_array('transcript_for_application', order);
@@ -835,7 +838,7 @@ angular.module('myApp')
 
                 // Transcripts required for enrollment
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).official_transcript_for_enrollment 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('official_transcript_for_enrollment') 
                  ){
 
                   create_array('official_transcript_for_enrollment', order);
@@ -858,7 +861,7 @@ angular.module('myApp')
 
                 // Required admissions exam
                 if(
-                  (((e_update_diff||{})[value]||{})['required_exam']) 
+                  (((e_update_diff||{})[value]||{}).hasOwnProperty('required_exam')) 
                  ){
 
                   create_array('required_admissions_exam', order);
@@ -879,7 +882,7 @@ angular.module('myApp')
 
                 // Personal statement or equivalent
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).essays 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('essays') 
                  ){
 
                   create_array('essays', order);
@@ -893,7 +896,7 @@ angular.module('myApp')
 
                 // Letters of recommendation
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).recommendation 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('recommendation') 
                  ){
 
                   create_array('recommendation', order);
@@ -907,8 +910,8 @@ angular.module('myApp')
 
                 // Minimum GPA
                 if(
-                  gpa_minimum_gpa_minimum || 
-                  gpa_minimum_gpa_minimum_letter 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('gpa_minimum') || 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('gpa_minimum_letter') 
                  ){
 
                   create_array('gpa_minimum', order);
@@ -939,8 +942,8 @@ angular.module('myApp')
 
                 // Average GPA
                 if(
-                  gpa_average_gpa_average || 
-                  gpa_average_gpa_average_letter 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('gpa_average') || 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('gpa_average_letter') 
                  ){
 
                   create_array('gpa_average', order);
@@ -970,8 +973,8 @@ angular.module('myApp')
 
                 // Suggested GPA
                 if(
-                  gpa_suggested_gpa_suggested || 
-                  gpa_suggested_gpa_suggested_letter 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('gpa_suggested') || 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('gpa_suggested_letter') 
                  ){
 
                   create_array('gpa_suggested', order);
@@ -1001,7 +1004,7 @@ angular.module('myApp')
 
                 // School interview
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).school_interview 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('school_interview') 
                  ){
 
                   create_array('school_interview', order);
@@ -1024,7 +1027,7 @@ angular.module('myApp')
 
                 // Résumé/ Curriculum Vitae
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).resume 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('resume') 
                  ){
 
                   create_array('resume', order);
@@ -1052,7 +1055,7 @@ angular.module('myApp')
                 // Writing sample
 
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).sup_mat_writing_sample 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('sup_mat_writing_sample') 
                  ){
 
                   create_array('sup_mat_writing_sample', order);
@@ -1079,7 +1082,7 @@ angular.module('myApp')
                 // Writing sample notes
 
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).sup_mat_writing_sample_notes 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('sup_mat_writing_sample_notes') 
                  ){
 
                   create_array('sup_mat_writing_sample_notes', order);
@@ -1093,7 +1096,7 @@ angular.module('myApp')
 
                 // Portfolio
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).sup_mat_portfolio 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('sup_mat_portfolio') 
                  ){
 
                   create_array('sup_mat_portfolio', order);
@@ -1119,7 +1122,7 @@ angular.module('myApp')
 
                 // Portfolio notes
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).sup_mat_portfolio_notes 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('sup_mat_portfolio_notes') 
                  ){
 
                   create_array('sup_mat_portfolio_notes', order);
@@ -1138,8 +1141,8 @@ angular.module('myApp')
 
                 // Additional admissions requirements
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).program_req_url || 
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).school_req_url 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('program_req_url') || 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('school_req_url') 
                  ){
 
                   create_array('additional_admissions_requirements', order);
@@ -1158,7 +1161,7 @@ angular.module('myApp')
 
                 // International transcript
                 if(
-                  (((e_update_diff||{})[value]||{})['intl_transcript']) 
+                  (((e_update_diff||{})[value]||{}).hasOwnProperty('intl_transcript')) 
                  ){
 
                   create_array('intl_transcript', order);
@@ -1179,7 +1182,7 @@ angular.module('myApp')
 
                 // Foreign language waiver
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).intl_lang_waiver 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('intl_lang_waiver') 
                  ){
 
                   create_array('intl_lang_waiver', order);
@@ -1202,7 +1205,7 @@ angular.module('myApp')
 
                 // Foreign language waiver notes
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).intl_lang_waiver_conditions 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('intl_lang_waiver_conditions') 
                  ){
                   create_array('intl_lang_waiver_conditions', order);
 
@@ -1215,7 +1218,7 @@ angular.module('myApp')
 
                 // English language test required (Non-native speakers)
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).intl_english_test_required 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('intl_english_test_required') 
                  ){
                   create_array('intl_english_test_required', order);
 
@@ -1237,7 +1240,7 @@ angular.module('myApp')
 
                 // English language test
                 if(
-                  (((e_update_diff||{})[value]||{})['intl_eng_test']) 
+                  (((e_update_diff||{})[value]||{}).hasOwnProperty('intl_eng_test')) 
                  ){
 
                   create_array('intl_eng_test', order);
@@ -1258,7 +1261,7 @@ angular.module('myApp')
 
                 // TOEFL iBT
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_ibt 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_ibt') 
                  ){
                   create_array('toefl_ibt', order);
 
@@ -1271,10 +1274,10 @@ angular.module('myApp')
 
                 // TOEFL iBT reading /listening /speaking /writing Scores
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_ibt_reading || 
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_ibt_listening ||
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_ibt_speaking ||
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_ibt_writing 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_ibt_reading') || 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_ibt_listening') ||
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_ibt_speaking') ||
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_ibt_writing') 
                  ){
 
                   create_array('toefl_ibt_scores', order);
@@ -1311,7 +1314,7 @@ angular.module('myApp')
 
                 // TOEFL PBT
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_pbt 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_pbt') 
                  ){
                   create_array('toefl_pbt', order);
 
@@ -1325,7 +1328,7 @@ angular.module('myApp')
 
                 // TOEFL TWE
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_twe 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_twe') 
                  ){
                   create_array('toefl_twe', order);
 
@@ -1338,7 +1341,7 @@ angular.module('myApp')
 
                 // TOEFL TSE
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_tse 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_tse') 
                  ){
                   create_array('toefl_tse', order);
 
@@ -1353,7 +1356,7 @@ angular.module('myApp')
                 // TOEFL CBT
 
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_cbt 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_cbt') 
                  ){
 
                   create_array('toefl_cbt', order);
@@ -1366,7 +1369,7 @@ angular.module('myApp')
 
                 // IELTS requirements
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).intl_ielts_reqs 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('intl_ielts_reqs') 
                  ){
                   create_array('intl_ielts_reqs', order);
 
@@ -1380,7 +1383,7 @@ angular.module('myApp')
 
                 // Misc. /other international notes
                 if(
-                  (((e_update_diff||{})[value]||{})['requirement']||{}).intl_other 
+                  (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('intl_other') 
                  ){
                   create_array('intl_other', order);
 
@@ -1394,7 +1397,7 @@ angular.module('myApp')
 
                 // Fully funded
                 if(
-                  (((e_update_diff||{})[value]||{})['scholarship']||{}).fully_funded 
+                  (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('fully_funded') 
                  ){
                   create_array('fully_funded', order);
 
@@ -1417,7 +1420,7 @@ angular.module('myApp')
 
                 // Notes regarding full funding
                 if(
-                  (((e_update_diff||{})[value]||{})['scholarship']||{}).fully_funded_notes 
+                  (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('fully_funded_notes') 
                  ){
                   create_array('fully_funded_notes', order);
 
@@ -1431,7 +1434,7 @@ angular.module('myApp')
 
                 // Scholarship
                 if(
-                  (((e_update_diff||{})[value]||{})['scholarship']||{}).scholarship_avail 
+                  (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('scholarship_avail') 
                  ){
                   create_array('scholarship_avail', order);
 
@@ -1454,7 +1457,7 @@ angular.module('myApp')
 
                 // Scholarship notes
                 if(
-                  (((e_update_diff||{})[value]||{})['scholarship']||{}).scholarship_notes 
+                  (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('scholarship_notes') 
                  ){
                   create_array('scholarship_notes', order);
 
@@ -1467,8 +1470,8 @@ angular.module('myApp')
 
                 // Scholarship url
                 if(
-                  (((e_update_diff||{})[value]||{})['scholarship']||{}).scholarship_program_specific_url ||
-                  (((e_update_diff||{})[value]||{})['scholarship']||{}).scholarship_general_url  
+                  (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('scholarship_program_specific_url') ||
+                  (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('scholarship_general_url')  
                  ){
 
                   create_array('scholarship_url', order);
