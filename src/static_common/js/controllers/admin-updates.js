@@ -749,6 +749,29 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
       console.log("customer program id = "+id);
 
 
+
+       $scope.e_raw_update = {
+          "program": [],
+          "competing_programs": [],
+          "length": $scope.e_raw.length,
+        }
+
+
+      for(var i=0; i<$scope.e_raw.length; i++){
+
+
+        if(i===0){
+          $scope.e_raw_update.program.push($scope.e_raw[i])
+
+        } else {
+          $scope.e_raw_update.competing_programs.push($scope.e_raw[i])
+        } 
+
+
+      }
+
+      console.log("$scope.e_raw_update="+JSON.stringify($scope.e_raw_update))
+
       // $scope.confirmed_diff = {
       //   "old": $scope.confirmed_diff_raw,
       //   "new": $scope.confirmed_diff_raw
