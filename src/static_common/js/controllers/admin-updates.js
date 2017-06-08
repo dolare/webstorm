@@ -281,16 +281,16 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
 
 
-             $scope.e_update = response.data.initial_diff.new;
+             $scope.e_update = response.data.initial_diff;
              
              $scope.e_raw = response.data.existing_report.program.concat(response.data.existing_report.competing_programs);
 
-             var program_order = [];
+             $scope.program_order = [];
              for(var i=0; i<$scope.e_raw.length; i++){
-              program_order.push($scope.e_raw[i].object_id)
+              $scope.program_order.push($scope.e_raw[i].object_id)
              }
 
-             console.log("program_order="+JSON.stringify(program_order));
+             console.log("$scope.program_order="+JSON.stringify($scope.program_order));
 
              $scope.e_array_final = [];
              var e_array_1 = [];
@@ -334,7 +334,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              $scope.e_array_final = [e_array_1, e_array_2, e_array_3, e_array_4, e_array_5, e_array_6, e_array_7, e_array_8, e_array_9, e_array_10, e_array_11];
              $scope.Object = Object;
 
-             $scope.e_show_update = updateService.updateEnhancement(response.data, 'admin', program_order);
+             $scope.e_show_update = updateService.updateEnhancement(response.data, 'admin', $scope.program_order);
              console.log('$scope.e_show_update = '+JSON.stringify($scope.e_show_update));
 
              App.blocks('#enhancement_loading', 'state_normal');
@@ -601,10 +601,10 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
         console.log(keys.length);
 
         //init if does not exist -> e.g. xxx.p = {}
-        if($scope.confirmed_diff_raw[category+(index===0?'':index+1)] === undefined) {
+        if($scope.confirmed_diff_raw[$scope.program_order[index]] === undefined) {
           console.log("not existing");
-          $scope.confirmed_diff_raw[category+(index===0?'':index+1)] = {};
-        }
+          $scope.confirmed_diff_raw[$scope.program_order[index]] = {};
+        } 
 
 
         //console.log("confirm the raw = "+ JSON.stringify($scope.e_raw));
@@ -614,19 +614,21 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
         if(keys.length === 0){
 
                  //test if it exists in the update diff
-                if($scope.e_update[category+(index===0?'':index+1)])
-                {
+                // if($scope.e_update[category+(index===0?'':index+1)])
+                // {
 
-                  //console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])
-                  $scope.confirmed_diff_raw[category+(index===0?'':index+1)] = $scope.e_update[category+(index===0?'':index+1)];
-
-
-                  $scope.e_raw[category+(index===0?'':index+1)] = $scope.e_update[category+(index===0?'':index+1)];
+                //   //console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])
+                //   $scope.confirmed_diff_raw[category+(index===0?'':index+1)] = $scope.e_update[category+(index===0?'':index+1)];
 
 
-                }
+                //   $scope.e_raw[category+(index===0?'':index+1)] = $scope.e_update[category+(index===0?'':index+1)];
 
 
+                // }
+
+
+                $scope.confirmed_diff_raw[$scope.program_order[index]][category] = $scope.e_update[$scope.program_order[index]][category];
+                $scope.e_raw[index][category] = $scope.e_update[$scope.program_order[index]][category];
 
 
         } else {
@@ -637,39 +639,55 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
               if(keys[i].split(".").length === 1){
 
                 //test if it exists in the update diff
-                if($scope.e_update[category+(index===0?'':index+1)][keys[i]]||$scope.e_update[category+(index===0?'':index+1)][keys[i]]===''||$scope.e_update[category+(index===0?'':index+1)][keys[i]]===null)
-                {
+                // if($scope.e_update[category+(index===0?'':index+1)][keys[i]]||$scope.e_update[category+(index===0?'':index+1)][keys[i]]===''||$scope.e_update[category+(index===0?'':index+1)][keys[i]]===null)
+                // {
 
-                  console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])
-                  $scope.confirmed_diff_raw[category+(index===0?'':index+1)][keys[i]] = $scope.e_update[category+(index===0?'':index+1)][keys[i]];
+                //   console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])
+                //   $scope.confirmed_diff_raw[category+(index===0?'':index+1)][keys[i]] = $scope.e_update[category+(index===0?'':index+1)][keys[i]];
 
-                  $scope.e_raw[category+(index===0?'':index+1)][keys[i]] = $scope.e_update[category+(index===0?'':index+1)][keys[i]];
+                //   $scope.e_raw[category+(index===0?'':index+1)][keys[i]] = $scope.e_update[category+(index===0?'':index+1)][keys[i]];
 
+                // }
+
+                if($scope.confirmed_diff_raw[$scope.program_order[index]][category]===undefined){
+                  $scope.confirmed_diff_raw[$scope.program_order[index]][category] = {};
                 }
 
+                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
+                $scope.e_raw[index][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
 
-              } 
-              else if (keys[i].split(".").length === 2) {
+
+
+
+              } else if (keys[i].split(".").length === 2) {
 
                 console.log("nested");
 
-                if($scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]||$scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]===''||$scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]===null)
-                {
+                // if($scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]||$scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]===''||$scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]===null)
+                // {
 
-                  //console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])
+                //   //console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])
                   
-                  $scope.confirmed_diff_raw[category+(index===0?'':index+1)][keys[i].split(".")[0]] = {};
+                //   $scope.confirmed_diff_raw[category+(index===0?'':index+1)][keys[i].split(".")[0]] = {};
 
-                  $scope.confirmed_diff_raw[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]];
-
-
-                  //// pushed into e_raw
-                  $scope.e_raw[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]];
-
-                  
+                //   $scope.confirmed_diff_raw[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]];
 
 
+                //   //// pushed into e_raw
+                //   $scope.e_raw[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]];
+
+                // }
+
+                if($scope.confirmed_diff_raw[$scope.program_order[index]][category]===undefined){
+                  $scope.confirmed_diff_raw[$scope.program_order[index]][category] = {};
                 }
+
+
+                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]] = {};
+                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
+                $scope.e_raw[index][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
+
+
 
 
               }
@@ -677,7 +695,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
 
               console.log("confirm the raw after= "+ JSON.stringify($scope.e_raw));
-              console.log("result = "+JSON.stringify($scope.confirmed_diff_raw));
+              console.log("oooresult = "+JSON.stringify($scope.confirmed_diff_raw));
               
                 
 
@@ -731,10 +749,10 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
       console.log("customer program id = "+id);
 
 
-      $scope.confirmed_diff = {
-        "old": $scope.confirmed_diff_raw,
-        "new": $scope.confirmed_diff_raw
-      } 
+      // $scope.confirmed_diff = {
+      //   "old": $scope.confirmed_diff_raw,
+      //   "new": $scope.confirmed_diff_raw
+      // } 
 
 
       //for api test
@@ -743,7 +761,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
             method: 'PUT',
             data: {
               "customer_program_id": id,
-              "confirmed_diff": $scope.confirmed_diff,
+              "confirmed_diff": $scope.confirmed_diff_raw,
               "cache_report": $scope.e_raw,
               "client_id": $scope.client_id_alias
             },

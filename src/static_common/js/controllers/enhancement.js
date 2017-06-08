@@ -124,6 +124,11 @@ controller('EnhancementController', function($timeout, updateService, avatarServ
              //$scope.e_raw = response.data;    
              $scope.e_raw = response.data.existing_report.program.concat(response.data.existing_report.competing_programs);
 
+             $scope.program_order = [];
+             for(var i=0; i<$scope.e_raw.length; i++){
+              $scope.program_order.push($scope.e_raw[i].object_id)
+             }
+             
              //console.log("$scope.e_raw="+JSON.stringify($scope.e_raw[0]));
              $scope.report = {};
              var e_array_1 = [];
