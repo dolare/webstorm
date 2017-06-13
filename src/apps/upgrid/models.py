@@ -8,7 +8,7 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.hashers import make_password, check_password
 # 3rd party lib
 # our lib
-from ceeb_program.models import Program, UniversitySchool
+from ceeb_program.models import Program, UniversitySchool, AbstractSimpleObject
 from datetime import datetime   # used for shared link models
 
 # Create your models here.
@@ -392,3 +392,15 @@ class ConfirmedUpdateEmailQueue(models.Model):
     update_report_type = models.CharField(max_length=20, choices=(('whoops', 'Whoops'),
                                                                   ('enhancement', 'Enhancement')),
                                           null=True, blank=True)
+#customer table 
+class CustomerFeature(AbstractSimpleObject):
+    pass
+
+#customer feature mapping table
+class CustomerFeatureMapping(models.Model):
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT)
+    feature = models.ManyToManyField(CustomerFeature)
+
+
+    

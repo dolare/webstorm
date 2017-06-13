@@ -350,7 +350,6 @@ class FinalReleasedWhoops(APIView):
             except ObjectDoesNotExist:
                 return Response({"Failed": _("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
-
         return user
 
     def get(self, request, client_id=None):
@@ -1896,7 +1895,6 @@ class ManagerWhoopsDiffConfirmation(APIView):
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         wru = WhoopsUpdate.objects.get(customer_program=request.data['customer_program_id'],
                                        most_recent=True)
-
         wru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
 
         update_diff = WhoopsReportsUpdateAPI.\
@@ -1904,19 +1902,13 @@ class ManagerWhoopsDiffConfirmation(APIView):
                                        request.data['cache_report'])
         wru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
         wru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
-        diff_count = 0
-        for k1,v1 in wru.confirmed_diff.items():
-            if isinstance(v1,dict):
-                diff_count = diff_count + len(v1)
-                print(v1)
-                print(len(v1))
-            else:
-                diff_count = diff_count + 1
-        wru.confirmed_diff['diff_count'] = diff_count
         wru.last_edit_time = timezone.now()
         wru.save()
 
         return Response({"success": _("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
+
+        
+       
 
 
 class ClientViewWhoopsUpdate(APIView):
@@ -2405,14 +2397,22 @@ class ManagerEnhancementDiffConfirmation(APIView):
         eru = EnhancementUpdate.objects.get(customer_program=request.data['customer_program_id'],
                                             customer=request.data['client_id'], most_recent=True)
         eru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
-        print(request.data['cache_report'])
-        
+       
         update_diff = EnhancementReportsUpdateAPI.\
             compare_enhancement_report(JSONParser().parse(BytesIO(zlib.decompress(eru.existing_report))),
                                        request.data['cache_report'])
         
         eru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
         eru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
+        diff_count = 0
+        print(request.data['confirmed_diff'])
+        for k1,v1 in eru.confirmed_diff.items():
+            if isinstance(v1,dict):
+                diff_count = diff_count + len(v1)
+            else:
+                diff_count = diff_count + 1
+        eru.confirmed_diff['diff_count'] = diff_count
+        print(eru.confirmed_diff)
         eru.last_edit_time = timezone.now()
         eru.save()
 

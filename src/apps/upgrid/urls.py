@@ -21,7 +21,9 @@ urlpatterns=[
     url(r'^api/upgrid/user/password/reset/$', apis.ResetPassword.as_view()),
 
     # --------------------------User API------------------------------
-
+    #Verify user
+    
+    url(r'^api/upgrid/user/verify/$', apis.CustomerVerify.as_view()),
     # Get user's customer program +++
     url(r'^api/upgrid/user/program/$', apis.CustomerProgram.as_view()),
 
