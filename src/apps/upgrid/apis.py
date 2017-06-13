@@ -189,6 +189,7 @@ class ResetPassword(generics.GenericAPIView):
                                                bcc=cc_addresses_tuple)
                         message.content_subtype = 'html'
                         message.send()
+                        
                 except (BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
                         SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
                     app_logger.exception('{0} when sending email. Error: {1}'.format(type(e).__name__, html_content))
