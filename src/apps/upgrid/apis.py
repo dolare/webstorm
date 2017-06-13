@@ -146,12 +146,12 @@ class ResetPassword(generics.GenericAPIView):
                                         "padding: 20px 35px;border-radius: 8px '>"
                                         "<div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', "
                                         "Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div "
-                                        "style='font-family: sans-serif;'><p>please click <a href='https://%s/#/upgrid/user/verify/%s/'>here</a>"                                        ""
+                                        "style='font-family: sans-serif;'><p>please click <a href='https://%s/#/upgrid/verify/%s/'>here</a>"                                        ""
                                         "to verify you account"
                                         "<p>If the above link does not work for"
                                         " you, please copy and paste the following into your browser address "
-                                        "bar:</p><a href='https://%s/#/upgrid/user/verify/%s/'>"
-                                        "https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!"
+                                        "bar:</p><a href='https://%s/#/upgrid/verify/%s/'>"
+                                        "https://%s/#/upgrid/verify/%s/</a><br><br><div>Thanks!"
                                         "</div><h3>- Team Gridology</h3></div></div></div>")
 
                         html_content = html_verify
@@ -228,12 +228,13 @@ class ResetPassword(generics.GenericAPIView):
 class CustomerVerify(APIView):
     def put(self,request):
         user_query = UniversityCustomer.objects.filter(pk = request.user)
-        if not user_query.exists():
-            return Response({"data": _("verify failed, please")}, status=HTTP_400_BAD_REQUEST)
+        if user_query.first().is_active is True:
+            return Response({"data": _("You has been verified before!")}, status=HTTP_400_BAD_REQUEST)
+        user = user_query.first()
         user.is_active = True
         user._password = None
         user.save()
-        return Response({"success": _("You account has been verified.")}, status=HTTP_202_ACCEPTED)
+        return Response({"success": _("Your account has been verified successfully.")}, status=HTTP_202_ACCEPTED)
 
 # api/user/program
 class CustomerProgram(generics.ListAPIView):

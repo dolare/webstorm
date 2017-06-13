@@ -1,0 +1,44 @@
+<!-- Reminder Content -->
+<div class="content overflow-hidden">
+	<div class="row push-60-t">
+		<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+
+			<div class="block" href="javascript:void(0)" style="box-shadow: 0 0 12px rgba(0, 0, 0, 0.07);opacity: 1;">
+				
+				<div class="block-content block-content-full text-center" ng-class="success? 'bg-success': 'bg-danger'">
+
+					<div class="item item-2x item-circle bg-crystal-op push-20-t push-20">
+						<i class="fa-lg text-white-op" ng-class="'success': 'fa fa-check ': 'fa fa-times'"></i>
+					</div>
+
+				</div>
+				<div class="block-content block-content-full text-center">
+
+
+					<h4 class="push-30">{{msg}}</h4>
+
+					<h2 ng-show="success" class="h2 font-w300 text-primary push-15" style="font-size: 70px">{{counter}}</h2>
+
+					<div ng-show="success" class="text-muted">You will be redirect to the reset password page after 10s, or click <a ng-click="goReset()" href="javascript:void(0)">reset password</a>
+
+					</div>
+
+
+				</div>
+			</div>
+		
+
+
+</div>
+</div>
+</div>
+
+
+<!-- END Reminder Content -->
+
+<!-- Reminder Footer -->
+<div class="push-10-t text-center animated fadeInUp">
+	<small class="text-muted font-w600"><span class="js-year-copy"></span> Copyright &copy; 2016 <a href="http://gridet.com" style="color:#5c90d2;">Gridology Education & Technology, Inc.</a></small>
+</div>
+<!-- END Reminder Footer -->
+
