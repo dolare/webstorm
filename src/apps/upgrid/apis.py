@@ -1,4 +1,8 @@
 # System lib
+import jwt
+from rest_framework_jwt.settings import api_settings
+jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
+jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
 import logging
 from django.shortcuts import render, get_object_or_404
 from django.core.serializers import serialize
@@ -51,7 +55,7 @@ from . import dbSerializers as dbLizer
 from json import dumps, loads
 from rest_framework.renderers import JSONRenderer
 from django.core.exceptions import ObjectDoesNotExist
-
+from .authentication import BaseJSONWebTokenAuthentication
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -146,7 +150,7 @@ class ResetPassword(generics.GenericAPIView):
                                         "padding: 20px 35px;border-radius: 8px '>"
                                         "<div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', "
                                         "Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div "
-                                        "style='font-family: sans-serif;'><p>please click <a href='https://%s/#/upgrid/verify/%s/'>here</a>"                                        ""
+                                        "style='font-family: sans-serif;'><p>please click <a href='https://%s/#/upgrid/verify/%s/'>here</a> "                                        ""
                                         "to verify you account"
                                         "<p>If the above link does not work for"
                                         " you, please copy and paste the following into your browser address "
@@ -225,15 +229,30 @@ class ResetPassword(generics.GenericAPIView):
 # ------------------------------User API--------------------------------------------
 # api/user/verify
 class CustomerVerify(APIView):
+    permission_classes = (AllowAny,)
+    
     def put(self,request):
-        user_query = UniversityCustomer.objects.filter(pk = request.user)
-        if user_query.first().is_active is True:
-            return Response({"data": _("You has been verified before!")}, status=HTTP_400_BAD_REQUEST)
-        user = user_query.first()
+        jwt_value = request.data['token']
+
+        try:
+            payload = jwt_decode_handler(jwt_value)
+        except jwt.ExpiredSignature:
+            msg = _('Signature has expired.')
+            raise exceptions.AuthenticationFailed(msg)
+        except jwt.DecodeError:
+            msg = _('Error decoding signature.')
+            raise exceptions.AuthenticationFailed(msg)
+        except jwt.InvalidTokenError:
+            raise exceptions.AuthenticationFailed()
+        username = jwt_get_username_from_payload(payload)
+       
+        user =  UniversityCustomer.objects.get(username = username) 
+        if user.is_active is True:
+            return Response({"Failed": _("have been verified before!")}, status=HTTP_400_BAD_REQUEST)
         user.is_active = True
         user._password = None
         user.save()
-        return Response({"success": _("Your account has been verified successfully.")}, status=HTTP_202_ACCEPTED)
+        return Response({"success": _("Your account has been verified.")}, status=HTTP_202_ACCEPTED)
 
 # api/user/program
 class CustomerProgram(generics.ListAPIView):
