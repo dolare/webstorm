@@ -521,7 +521,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             ]
                         });
                     }]
-
     
     }
 
@@ -857,11 +856,90 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                              '/static/js/third-party/easy-pie-chart/jquery.easypiechart.min.js',
                               '/static/js/controllers/xdf.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
+   
+  }).
+  //share the report(s)
+  state('xdf_2', {
+    url: '/xdf_2',
+    templateUrl: '/static/views/Share/XDF.html',
+    controller: 'xdf_2',
+    resolve: {
+                    depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/third-party/easy-pie-chart/jquery.easypiechart.min.js',
+                              '/static/js/controllers/xdf.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
+   
+  }).
+  //share the report(s)
+  state('xdf_3', {
+    url: '/xdf_3',
+    templateUrl: '/static/views/Share/XDF.html',
+    controller: 'xdf_3',
+    resolve: {
+                    depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/third-party/easy-pie-chart/jquery.easypiechart.min.js',
+                              '/static/js/controllers/xdf.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
+   
+  })
+
+  .
+  //share the report(s)
+  state('xdf_4', {
+    url: '/xdf_4',
+    templateUrl: '/static/views/Share/XDF.html',
+    controller: 'xdf_4',
+    resolve: {
+                    depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/third-party/easy-pie-chart/jquery.easypiechart.min.js',
+                              '/static/js/controllers/xdf.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                                 
                             ]
                         });
