@@ -350,7 +350,6 @@ class FinalReleasedWhoops(APIView):
             except ObjectDoesNotExist:
                 return Response({"Failed": _("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
-
         return user
 
     def get(self, request, client_id=None):
