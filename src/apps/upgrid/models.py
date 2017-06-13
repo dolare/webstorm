@@ -31,7 +31,7 @@ class UpgridBaseUserManager(models.Manager):
         return user
 
     def create_user(self, username, email=None, password=None, **extra_fields):
-        extra_fields.setdefault(self.is_active, True)
+        extra_fields.setdefault(self.is_active, False)
         return self._create_user(username, email, password, **extra_fields)
 
     def get_by_natural_key(self, username):
@@ -43,7 +43,7 @@ class UpgridBaseUser(models.Model):
     password = models.CharField(max_length=128)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(max_length=254, unique=True, null=True, blank=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     data_joined = models.DateTimeField(default=timezone.now)
     # last_login = models.DateTimeField(default=timezone.now, blank=True, null=True)
 

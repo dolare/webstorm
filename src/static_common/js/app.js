@@ -313,6 +313,28 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
 
   }).
+
+
+  state('verify', {
+    url: '/upgrid/verify/:param1/',
+    templateUrl: '/static/views/Login/verify.html',
+    controller: 'VerifyController',
+    resolve: {
+                    depsReset: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/controllers/verify.js',
+                             
+                            ]
+                        });
+                    }]
+                }
+
+  }).
+
+
   state('forgot', {
     url: '/forgot',
     templateUrl: '/static/views/Login/forgot.html',
@@ -351,6 +373,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                 }
 
   }).
+
   
   state('success_demo', {
     templateUrl: '/static/views/Home/success_demo.html',
@@ -845,12 +868,33 @@ App.config(function($stateProvider, $urlRouterProvider) {
                 }
    
   }).
+
+
+  // XDF
   //share the report(s)
   state('xdf', {
     url: '/xdf',
     templateUrl: '/static/views/Share/XDF.html',
     controller: 'xdf',
-    resolve: {
+    resolve: {      
+
+
+                    auth: function($q, authenticationSvc) {
+
+                      var userInfo = authenticationSvc.getUserInfo();
+                      if (userInfo && userInfo.admin === "True") {
+
+                        //console.log("start logout");
+                        //console.log(userInfo);
+                        return $q.when(userInfo);
+
+                      } else {
+                        return $q.reject({
+                          authenticated: false
+                        });
+                      }
+                    },
+
                     depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             insertBefore: '#css-bootstrap',
@@ -875,7 +919,23 @@ App.config(function($stateProvider, $urlRouterProvider) {
     url: '/xdf_2',
     templateUrl: '/static/views/Share/XDF.html',
     controller: 'xdf_2',
-    resolve: {
+    resolve: {  
+                    auth: function($q, authenticationSvc) {
+
+                      var userInfo = authenticationSvc.getUserInfo();
+                      if (userInfo && userInfo.admin === "True") {
+
+                        //console.log("start logout");
+                        //console.log(userInfo);
+                        return $q.when(userInfo);
+
+                      } else {
+                        return $q.reject({
+                          authenticated: false
+                        });
+                      }
+                    },
+
                     depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             insertBefore: '#css-bootstrap',
@@ -900,7 +960,24 @@ App.config(function($stateProvider, $urlRouterProvider) {
     url: '/xdf_3',
     templateUrl: '/static/views/Share/XDF.html',
     controller: 'xdf_3',
-    resolve: {
+    resolve: {      
+                    auth: function($q, authenticationSvc) {
+
+                      var userInfo = authenticationSvc.getUserInfo();
+                      if (userInfo && userInfo.admin === "True") {
+
+                        //console.log("start logout");
+                        //console.log(userInfo);
+                        return $q.when(userInfo);
+
+                      } else {
+                        return $q.reject({
+                          authenticated: false
+                        });
+                      }
+                    },
+
+
                     depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             insertBefore: '#css-bootstrap',
@@ -927,7 +1004,25 @@ App.config(function($stateProvider, $urlRouterProvider) {
     url: '/xdf_4',
     templateUrl: '/static/views/Share/XDF.html',
     controller: 'xdf_4',
-    resolve: {
+    resolve: {        
+
+                    auth: function($q, authenticationSvc) {
+
+                        var userInfo = authenticationSvc.getUserInfo();
+                        if (userInfo && userInfo.admin === "True") {
+
+                          //console.log("start logout");
+                          //console.log(userInfo);
+                          return $q.when(userInfo);
+
+                        } else {
+                          return $q.reject({
+                            authenticated: false
+                          });
+                        }
+                      },
+
+
                     depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             insertBefore: '#css-bootstrap',
