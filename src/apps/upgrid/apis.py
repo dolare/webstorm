@@ -150,7 +150,7 @@ class ResetPassword(generics.GenericAPIView):
                                         "padding: 20px 35px;border-radius: 8px '>"
                                         "<div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', "
                                         "Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div "
-                                        "style='font-family: sans-serif;'><p>please click <a href='https://%s/#/upgrid/verify/%s/'>here</a>"                                        ""
+                                        "style='font-family: sans-serif;'><p>please click <a href='https://%s/#/upgrid/verify/%s/'>here</a> "                                         ""
                                         "to verify you account"
                                         "<p>If the above link does not work for"
                                         " you, please copy and paste the following into your browser address "
