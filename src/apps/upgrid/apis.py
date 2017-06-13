@@ -51,7 +51,7 @@ from . import dbSerializers as dbLizer
 from json import dumps, loads
 from rest_framework.renderers import JSONRenderer
 from django.core.exceptions import ObjectDoesNotExist
-
+from .authentication import BaseJSONWebTokenAuthentication
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -189,7 +189,6 @@ class ResetPassword(generics.GenericAPIView):
                                                bcc=cc_addresses_tuple)
                         message.content_subtype = 'html'
                         message.send()
-                        
                 except (BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
                         SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
                     app_logger.exception('{0} when sending email. Error: {1}'.format(type(e).__name__, html_content))
@@ -226,15 +225,32 @@ class ResetPassword(generics.GenericAPIView):
 # ------------------------------User API--------------------------------------------
 # api/user/verify
 class CustomerVerify(APIView):
+    permission_classes = (AllowAny,)
+    
     def put(self,request):
-        user_query = UniversityCustomer.objects.filter(pk = request.user)
-        if user_query.first().is_active is True:
-            return Response({"data": _("You has been verified before!")}, status=HTTP_400_BAD_REQUEST)
-        user = user_query.first()
+        jwt_value = self.get_jwt_value(request)
+        if jwt_value is None:
+            return None
+
+        try:
+            payload = jwt_decode_handler(jwt_value)
+        except jwt.ExpiredSignature:
+            msg = _('Signature has expired.')
+            raise exceptions.AuthenticationFailed(msg)
+        except jwt.DecodeError:
+            msg = _('Error decoding signature.')
+            raise exceptions.AuthenticationFailed(msg)
+        except jwt.InvalidTokenError:
+            raise exceptions.AuthenticationFailed()
+        username = jwt_get_username_from_payload(payload)
+       
+        user =  UniversityCustomer.objects.get(username = username) 
+        if user.is_active is True:
+            return Response({"success": _("Your account has been verified before.")}, status=HTTP_202_ACCEPTED)
         user.is_active = True
         user._password = None
         user.save()
-        return Response({"success": _("Your account has been verified successfully.")}, status=HTTP_202_ACCEPTED)
+        return Response({"success": _("Your account has been verified.")}, status=HTTP_202_ACCEPTED)
 
 # api/user/program
 class CustomerProgram(generics.ListAPIView):
