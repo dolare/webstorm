@@ -8,10 +8,38 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.hashers import make_password, check_password
 # 3rd party lib
 # our lib
-from ceeb_program.models import Program, UniversitySchool, AbstractSimpleObject
+from ceeb_program.models import Program, UniversitySchool
 from datetime import datetime   # used for shared link models
 
 # Create your models here.
+
+
+#---------------------------based models-------------------------------
+class BasedDatedObject(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+  
+    class Meta:
+        abstract = True
+        default_permissions = ('add', 'change', 'delete', 'view_only')
+
+
+class BasedSimpleObject(BasedDatedObject):
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    name = models.CharField(max_length=40, null=False, unique=True)
+    description = models.TextField(null=True, blank=True)
+
+    class Meta(AbstractDatedObject.Meta):
+        abstract = True
+        ordering = [
+            'name'
+        ]
+
+    def __str__(self):
+        return "{0}".format(self.name)
+
+
 
 # ------------------------Custom Base User-----------------------------------------
 
@@ -393,14 +421,13 @@ class ConfirmedUpdateEmailQueue(models.Model):
                                                                   ('enhancement', 'Enhancement')),
                                           null=True, blank=True)
 #customer table 
-class CustomerFeature(AbstractSimpleObject):
+class CustomerFeature(BasedSimpleObject):
     pass
 
 #customer feature mapping table
-class CustomerFeatureMapping(models.Model):
-    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT)
-    feature = models.ManyToManyField(CustomerFeature)
+class CustomerFeatureMapping(BasedSimpleObject):
+    customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT, null = True, blank = True)
+    feature = models.ForeignKey(CustomerFeature, on_delete=models.PROTECT, null = True, blank = True)
 
 
     

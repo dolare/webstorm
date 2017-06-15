@@ -821,6 +821,7 @@ class CreateOrChangeSubUser(APIView):
                     )
                 sub_customer_program.save()
 
+        request.is_create = True
         ResetPassword().post(request)
 
         return Response({"success": _("Sub user has been created.")}, status=HTTP_201_CREATED)
