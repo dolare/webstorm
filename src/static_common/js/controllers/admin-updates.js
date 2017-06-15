@@ -18,6 +18,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
     $scope.ondemand = false;
     $scope.update_client = [];
 
+    $scope.only_update = true;
 
     $http({
           url: '/api/upgrid/update/dashboard/',

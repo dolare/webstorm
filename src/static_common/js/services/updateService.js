@@ -105,7 +105,7 @@ angular.module('myApp')
                 // Program objectives (audience)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('audience')){
 
-                  
+                  console.log("audience value = "+value+ " key = "+key);
                   create_array('audience', order);
 
                   e_show_update['audience'][key] = e_update_diff[value]['program_detail'].audience;
