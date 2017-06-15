@@ -195,7 +195,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
              $scope.e_update = response.data.initial_diff;
              
-             $scope.e_raw = response.data.existing_report.program.concat(response.data.existing_report.competing_programs);
+             $scope.e_raw = response.data.existing_or_cache_report.program.concat(response.data.existing_report.competing_programs);
 
              $scope.program_order = [];
              for(var i=0; i<$scope.e_raw.length; i++){
