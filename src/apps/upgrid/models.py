@@ -30,7 +30,7 @@ class BasedSimpleObject(BasedDatedObject):
     name = models.CharField(max_length=40, null=False, unique=True)
     description = models.TextField(null=True, blank=True)
 
-    class Meta(AbstractDatedObject.Meta):
+    class Meta(BasedDatedObject.Meta):
         abstract = True
         ordering = [
             'name'
@@ -425,7 +425,8 @@ class CustomerFeature(BasedSimpleObject):
     pass
 
 #customer feature mapping table
-class CustomerFeatureMapping(BasedSimpleObject):
+class CustomerFeatureMapping(BasedDatedObject):
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT, null = True, blank = True)
     feature = models.ForeignKey(CustomerFeature, on_delete=models.PROTECT, null = True, blank = True)
 

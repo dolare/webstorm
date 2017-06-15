@@ -2424,15 +2424,18 @@ class ManagerEnhancementDiffConfirmation(APIView):
                                        request.data['cache_report'])
         
         eru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
-        eru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
+        confirmed_diff = request.data['confirmed_diff']
+        
         diff_count = 0
         print(request.data['confirmed_diff'])
-        for k1,v1 in eru.confirmed_diff.items():
+        print(';;;;')
+        for k1,v1 in confirmed_diff.items():
             if isinstance(v1,dict):
                 diff_count = diff_count + len(v1)
             else:
                 diff_count = diff_count + 1
-        eru.confirmed_diff['diff_count'] = diff_count
+        confirmed_diff['diff_count'] = diff_count
+        eru.confirmed_diff = zlib.compress(JSONRenderer().render(confirmed_diff))
         print(eru.confirmed_diff)
         eru.last_edit_time = timezone.now()
         eru.save()
