@@ -1,22 +1,24 @@
 angular.module('myApp')
   .factory('updateService', function($filter) {
 
-    var e_show_update = {};
+    
     var updateEnhancement = function(raw_data, user, order) {
 
-            
-            var e_raw = raw_data.existing_report.program.concat(raw_data.existing_report.competing_programs);
-            //var e_update_diff = raw_data.update_diff;
-            console.log("raw_data="+JSON.stringify(raw_data))
-            
+            var e_show_update = {};
+
+
             if(user === 'client'){
+              var e_raw = raw_data.existing_report.program.concat(raw_data.existing_report.competing_programs);
               var e_update_diff = raw_data.update_diff;
               var ver = 'old'
             } else if (user === 'admin'){
+              var e_raw = raw_data.existing_or_cache_report.program.concat(raw_data.existing_or_cache_report.competing_programs);
               var e_update_diff = raw_data.initial_diff;
               var ver = 'new'
+
             }
 
+            console.log("raw_data="+JSON.stringify(raw_data))
 
             console.log("e_update_diff= "+JSON.stringify(e_update_diff))
            
@@ -26,42 +28,42 @@ angular.module('myApp')
                 // University school (university_school.university)
                 if(((((e_update_diff||{})[value]||{})['program_detail']||{}).university_school||{}).hasOwnProperty('university')){
 
-                  create_array('university', order);
+                  create_array(e_show_update,'university', order);
 
                   e_show_update['university'][key] = e_update_diff[value]['program_detail'].university_school.university;
                   
-                  set_null('university', key)
+                  set_null(e_show_update,'university', key)
                 }
 
 
                 // School name (university_school.school)
                 if(((((e_update_diff||{})[value]||{})['program_detail']||{}).university_school||{}).hasOwnProperty('school')){
                   
-                  create_array('school', order);
+                  create_array(e_show_update,'school', order);
 
                   e_show_update['school'][key] = e_update_diff[value]['program_detail'].university_school.school;
                   
-                  set_null('school', key)
+                  set_null(e_show_update,'school', key)
                 }
 
                 // Program (program_name)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('program_name')){
                   
-                  create_array('program_name', order);
+                  create_array(e_show_update,'program_name', order);
 
                   e_show_update['program_name'][key] = e_update_diff[value]['program_detail'].program_name;
                   
-                  set_null('program_name', key)
+                  set_null(e_show_update,'program_name', key)
                 }
 
                 // Degree (degree.name)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('degree')){
                   
-                  create_array('degree', order);
+                  create_array(e_show_update,'degree', order);
 
                   e_show_update['degree'][key] = e_update_diff[value]['program_detail'].degree.name;
                   
-                  set_null('degree', key)
+                  set_null(e_show_update,'degree', key)
                   
                 }
 
@@ -69,11 +71,11 @@ angular.module('myApp')
                 // Department (department)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('department')){
 
-                  create_array('department', order);
+                  create_array(e_show_update,'department', order);
 
                   e_show_update['department'][key] = e_update_diff[value]['program_detail'].department;
 
-                  set_null('department', key)
+                  set_null(e_show_update,'department', key)
                   
                 }
                   
@@ -82,22 +84,22 @@ angular.module('myApp')
 
                   console.log("specialization value="+value);
                   console.log("specialization value from ..."+JSON.stringify(e_update_diff));
-                  create_array('specialization', order);
+                  create_array(e_show_update,'specialization', order);
 
                   e_show_update['specialization'][key] = e_update_diff[value]['program_detail'].specialization;
                   
-                  set_null('specialization', key)
+                  set_null(e_show_update,'specialization', key)
                   
                 }
 
                 // Highlights (highlights)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('highlights')){
                   
-                  create_array('highlights', order);
+                  create_array(e_show_update,'highlights', order);
 
                   e_show_update['highlights'][key] = e_update_diff[value]['program_detail'].highlights;
                  
-                  set_null('highlights', key)
+                  set_null(e_show_update,'highlights', key)
                 }
 
 
@@ -106,11 +108,11 @@ angular.module('myApp')
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('audience')){
 
                   console.log("audience value = "+value+ " key = "+key);
-                  create_array('audience', order);
+                  create_array(e_show_update,'audience', order);
 
                   e_show_update['audience'][key] = e_update_diff[value]['program_detail'].audience;
                   
-                  set_null('audience', key)
+                  set_null(e_show_update,'audience', key)
                 }
 
 
@@ -119,60 +121,61 @@ angular.module('myApp')
                     (((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('job_placement_url')
                   ){
 
-                  create_array('job_placement', order);
+                  create_array(e_show_update,'job_placement', order);
 
                   e_show_update['job_placement'][key] = e_update_diff[value]['program_detail'].job_placement;
                   
-                  set_null('job_placement', key)
+                  set_null(e_show_update,'job_placement', key)
                 }
 
                 // Online program (online_program)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('online_program')){
 
-                  create_array('online_program', order);
+                  create_array(e_show_update,'online_program', order);
 
                   e_show_update['online_program'][key] = e_update_diff[value]['program_detail'].online_program;
                   
-                  set_null('online_program', key)
+                  set_null(e_show_update,'online_program', key)
                 }
 
                 // Handbook (additional_url)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('additional_url')){
 
-                  create_array('additional_url', order);
+                  create_array(e_show_update,'additional_url', order);
 
                   e_show_update['additional_url'][key] = e_update_diff[value]['program_detail'].additional_url;
                   
-                  set_null('additional_url', key)
+                  set_null(e_show_update,'additional_url', key)
 
                 }
 
                 // FAQ (program_faq_url) 
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('program_faq_url')){
 
-                  create_array('program_faq_url', order);
+                  console.log("e_update_diff^="+JSON.stringify(e_update_diff));
+                  create_array(e_show_update,'program_faq_url', order);
 
                   e_show_update['program_faq_url'][key] = e_update_diff[value]['program_detail'].program_faq_url;
                   
-                  set_null('program_faq_url', key)
+                  set_null(e_show_update,'program_faq_url', key)
                   
                 }
 
                 // Admissions statistics (stats_profile_url)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('stats_profile_url')){
 
-                  create_array('stats_profile_url', order);
+                  create_array(e_show_update,'stats_profile_url', order);
 
                   e_show_update['stats_profile_url'][key] = e_update_diff[value]['program_detail'].stats_profile_url;
                   
-                  set_null('stats_profile_url', key)
+                  set_null(e_show_update,'stats_profile_url', key)
 
                 }
 
                 // Full-time (full_part_time)
                 if((((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('full_part_time')){
 
-                  create_array('full_part_time', order);
+                  create_array(e_show_update,'full_part_time', order);
 
                   e_show_update['full_part_time'][key] = e_update_diff[value]['duration'].full_part_time;
 
@@ -185,14 +188,14 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('full_part_time', key)
+                  set_null(e_show_update,'full_part_time', key)
 
                 }
 
                 // Part-time (part_time)
                 if((((e_update_diff||{})[value]||{})['duration']||{}).hasOwnProperty('part_time')){
 
-                  create_array('part_time', order);
+                  create_array(e_show_update,'part_time', order);
 
                   e_show_update['part_time'][key] = e_update_diff[value]['duration'].part_time;
                  
@@ -207,7 +210,7 @@ angular.module('myApp')
 
                   }
 
-                  set_null('part_time', key)
+                  set_null(e_show_update,'part_time', key)
 
                 }
 
@@ -223,7 +226,7 @@ angular.module('myApp')
                 {
                   
 
-                  create_array('program_duration', order);
+                  create_array(e_show_update,'program_duration', order);
 
                   var program_duration_duration_min = (((e_update_diff||{})[value]||{})['duration']||{}).duration_min;
                   var program_duration_duration_max = (((e_update_diff||{})[value]||{})['duration']||{}).duration_max;
@@ -259,7 +262,7 @@ angular.module('myApp')
                   )
                 {
 
-                  create_array('durationtime_limit', order);
+                  create_array(e_show_update,'durationtime_limit', order);
 
                   var durationtime_limit_durationtime_limit = (((e_update_diff||{})[value]||{})['duration']||{}).durationtime_limit;
                   var durationtime_limit_duration_unit = (((e_update_diff||{})[value]||{})['duration']||{}).duration_unit;
@@ -281,7 +284,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('curriculum_unit') 
                   ){
 
-                  create_array('min_total_unit', order);
+                  create_array(e_show_update,'min_total_unit', order);
 
                   var min_total_unit_min_total_unit = (((e_update_diff||{})[value]||{})['curriculum']||{}).min_total_unit;
                   var min_total_unit_curriculum_unit = (((e_update_diff||{})[value]||{})['curriculum']||{}).curriculum_unit;
@@ -300,7 +303,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('curriculum_unit')
                   ){
 
-                  create_array('max_transfer_unit', order);
+                  create_array(e_show_update,'max_transfer_unit', order);
 
                   var max_transfer_unit_max_transfer_unit = (((e_update_diff||{})[value]||{})['curriculum']||{}).max_transfer_unit;
                   var max_transfer_unit_curriculum_unit = (((e_update_diff||{})[value]||{})['curriculum']||{}).curriculum_unit;
@@ -319,7 +322,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('master_thesis_or_equivalent') 
                  ){
 
-                  create_array('master_thesis_or_equivalent', order);
+                  create_array(e_show_update,'master_thesis_or_equivalent', order);
 
                   e_show_update['master_thesis_or_equivalent'][key] 
                     = e_update_diff[value]['curriculum'].master_thesis_or_equivalent
@@ -339,7 +342,7 @@ angular.module('myApp')
 
                   }
 
-                  set_null('master_thesis_or_equivalent', key)
+                  set_null(e_show_update,'master_thesis_or_equivalent', key)
 
                 }
 
@@ -349,12 +352,12 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('thesis_notes') 
                  ){
 
-                  create_array('thesis_notes', order);
+                  create_array(e_show_update,'thesis_notes', order);
 
                   e_show_update['thesis_notes'][key] 
                     = e_update_diff[value]['curriculum'].thesis_notes
 
-                  set_null('thesis_notes', key)
+                  set_null(e_show_update,'thesis_notes', key)
 
 
                 }
@@ -364,7 +367,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('doctorate_dissertation_or_equivalent') 
                  ){
 
-                  create_array('doctorate_dissertation_or_equivalent', order);
+                  create_array(e_show_update,'doctorate_dissertation_or_equivalent', order);
 
                   e_show_update['doctorate_dissertation_or_equivalent'][key] 
                     = e_update_diff[value]['curriculum'].doctorate_dissertation_or_equivalent
@@ -383,7 +386,7 @@ angular.module('myApp')
 
                   }
 
-                  set_null('doctorate_dissertation_or_equivalent', key)
+                  set_null(e_show_update,'doctorate_dissertation_or_equivalent', key)
 
                 }
 
@@ -392,12 +395,12 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('dissertation_notes') 
                  ){
 
-                  create_array('dissertation_notes', order);
+                  create_array(e_show_update,'dissertation_notes', order);
 
                   e_show_update['dissertation_notes'][key] 
                     = e_update_diff[value]['curriculum'].dissertation_notes
 
-                  set_null('dissertation_notes', key)
+                  set_null(e_show_update,'dissertation_notes', key)
 
 
                 }
@@ -407,12 +410,12 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['curriculum']||{}).hasOwnProperty('curriculum_url') 
                  ){
 
-                  create_array('curriculum_url', order);
+                  create_array(e_show_update,'curriculum_url', order);
 
                   e_show_update['curriculum_url'][key] 
                     = e_update_diff[value]['curriculum'].curriculum_url
 
-                  set_null('curriculum_url', key)
+                  set_null(e_show_update,'curriculum_url', key)
 
                 }
 
@@ -424,7 +427,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('university_cost_url') 
                  ){
 
-                  create_array('tuition_per_unit', order);
+                  create_array(e_show_update,'tuition_per_unit', order);
 
                   var tuition_per_unit_tuition_per_unit = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit;
                   var tuition_per_unit_school_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url;
@@ -450,7 +453,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('university_cost_url') 
                  ){
 
-                  create_array('tuition_per_unit_out_state', order);
+                  create_array(e_show_update,'tuition_per_unit_out_state', order);
 
                   var tuition_per_unit_out_state_tuition_per_unit_out_state = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit_out_state;
                   var tuition_per_unit_out_state_school_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url;
@@ -475,7 +478,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('fee_included') 
                  ){
 
-                  create_array('fee_included', order);
+                  create_array(e_show_update,'fee_included', order);
 
                   e_show_update['fee_included'][key] 
                     = e_update_diff[value]['tuition'].fee_included
@@ -490,7 +493,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('fee_included', key)
+                  set_null(e_show_update,'fee_included', key)
 
                 }
 
@@ -500,12 +503,12 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('deadline_url') 
                  ){
 
-                  create_array('deadline_url', order);
+                  create_array(e_show_update,'deadline_url', order);
 
                   e_show_update['deadline_url'][key] 
                     = e_update_diff[value]['deadline'].deadline_url
 
-                  set_null('deadline_url', key)
+                  set_null(e_show_update,'deadline_url', key)
 
                 }
 
@@ -515,7 +518,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_fall_early_day_display') 
                  ){
 
-                  create_array('deadline_fall_early', order);
+                  create_array(e_show_update,'deadline_fall_early', order);
 
                   var deadline_fall_early_get_deadline_fall_early_month_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_early_month_display
                   var deadline_fall_early_get_deadline_fall_early_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_early_day_display 
@@ -530,7 +533,7 @@ angular.module('myApp')
                     : "")
                   
 
-                  set_null('deadline_fall_early', key)
+                  set_null(e_show_update,'deadline_fall_early', key)
 
                 }
 
@@ -541,7 +544,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_fall_late_day_display') 
                  ){
 
-                  create_array('deadline_fall_late', order);
+                  create_array(e_show_update,'deadline_fall_late', order);
 
                   var deadline_fall_late_get_deadline_fall_late_month_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_late_month_display
                   var deadline_fall_late_get_deadline_fall_late_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_late_day_display 
@@ -557,7 +560,7 @@ angular.module('myApp')
                     : "")
                   
 
-                  set_null('deadline_fall_late', key)
+                  set_null(e_show_update,'deadline_fall_late', key)
 
                 }
 
@@ -568,7 +571,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_spring_early_day_display') 
                  ){
 
-                  create_array('deadline_spring_early', order);
+                  create_array(e_show_update,'deadline_spring_early', order);
 
                   var deadline_spring_early_get_deadline_spring_early_month_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_spring_early_month_display
                   var deadline_spring_early_get_deadline_spring_early_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_spring_early_day_display 
@@ -584,7 +587,7 @@ angular.module('myApp')
                     : "")
                   
 
-                  set_null('deadline_spring_early', key)
+                  set_null(e_show_update,'deadline_spring_early', key)
 
                 }
 
@@ -595,7 +598,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_spring_late_day_display') 
                  ){
 
-                  create_array('deadline_spring_late', order);
+                  create_array(e_show_update,'deadline_spring_late', order);
 
                   var deadline_spring_late_get_deadline_spring_late_month_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_spring_late_month_display
                   var deadline_spring_late_get_deadline_spring_late_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_spring_late_day_display 
@@ -611,7 +614,7 @@ angular.module('myApp')
                     : "")
                   
 
-                  set_null('deadline_spring_late', key)
+                  set_null(e_show_update,'deadline_spring_late', key)
 
                 }
 
@@ -621,7 +624,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_summer_early_day_display') 
                  ){
 
-                  create_array('deadline_summer_early', order);
+                  create_array(e_show_update,'deadline_summer_early', order);
 
                   var deadline_summer_early_get_deadline_summer_early_month_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_summer_early_month_display
                   var deadline_summer_early_get_deadline_summer_early_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_summer_early_day_display 
@@ -637,7 +640,7 @@ angular.module('myApp')
                     : "")
                   
 
-                  set_null('deadline_summer_early', key)
+                  set_null(e_show_update,'deadline_summer_early', key)
 
                 }
 
@@ -648,7 +651,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_deadline_summer_late_day_display') 
                  ){
 
-                  create_array('deadline_summer_late', order);
+                  create_array(e_show_update,'deadline_summer_late', order);
 
                   var deadline_summer_late_get_deadline_summer_late_month_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_summer_late_month_display
                   var deadline_summer_late_get_deadline_summer_late_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_summer_late_day_display 
@@ -664,7 +667,7 @@ angular.module('myApp')
                     : "")
                   
 
-                  set_null('deadline_summer_late', key)
+                  set_null(e_show_update,'deadline_summer_late', key)
 
                 }
 
@@ -674,7 +677,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('deadline_rolling') 
                  ){
 
-                  create_array('deadline_rolling', order);
+                  create_array(e_show_update,'deadline_rolling', order);
 
                   e_show_update['deadline_rolling'][key] 
                     = e_update_diff[value]['deadline'].deadline_rolling
@@ -689,7 +692,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('deadline_rolling', key)
+                  set_null(e_show_update,'deadline_rolling', key)
 
                 }
 
@@ -699,7 +702,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('scholarship_deadline_day') 
                  ){
 
-                  create_array('scholarship_deadline', order);
+                  create_array(e_show_update,'scholarship_deadline', order);
 
                   var scholarship_deadline_scholarship_deadline_month = (((e_update_diff||{})[value]||{})['deadline']||{}).scholarship_deadline_month
                   var scholarship_deadline_scholarship_deadline_day = (((e_update_diff||{})[value]||{})['deadline']||{}).scholarship_deadline_day 
@@ -713,7 +716,7 @@ angular.module('myApp')
                     ? (scholarship_deadline_scholarship_deadline_day ? e_update_diff[value]['deadline'].scholarship_deadline_day : e_raw[key]['deadline'].scholarship_deadline_day)
                     : "")
 
-                  set_null('scholarship_deadline', key)
+                  set_null(e_show_update,'scholarship_deadline', key)
 
                 }
 
@@ -723,12 +726,12 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('special_reqs') 
                  ){
 
-                  create_array('special_reqs', order);
+                  create_array(e_show_update,'special_reqs', order);
 
                   e_show_update['special_reqs'][key] 
                     = e_update_diff[value]['requirement'].special_reqs
 
-                  set_null('special_reqs', key)
+                  set_null(e_show_update,'special_reqs', key)
                 }
 
 
@@ -737,7 +740,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('apply_online') 
                  ){
 
-                  create_array('apply_online', order);
+                  create_array(e_show_update,'apply_online', order);
 
                   e_show_update['apply_online'][key] 
                     = e_update_diff[value]['requirement'].apply_online
@@ -752,7 +755,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('apply_online', key)
+                  set_null(e_show_update,'apply_online', key)
 
                 }
 
@@ -762,7 +765,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('application_fee') 
                  ){
 
-                  create_array('application_fee', order);
+                  create_array(e_show_update,'application_fee', order);
 
                   e_show_update['application_fee'][key] 
                     = $filter('currency')(e_update_diff[value]['requirement'].application_fee, '$')
@@ -772,7 +775,7 @@ angular.module('myApp')
                     e_show_update['application_fee'] = "N/A";
                   }
 
-                  set_null('application_fee', key)
+                  set_null(e_show_update,'application_fee', key)
 
                 }
 
@@ -781,7 +784,7 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('application_fee_waiver') 
                  ){
-                  create_array('application_fee_waiver', order);
+                  create_array(e_show_update,'application_fee_waiver', order);
 
                   e_show_update['application_fee_waiver'][key] 
                     = e_update_diff[value]['requirement'].application_fee_waiver
@@ -796,7 +799,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('application_fee_waiver', key)
+                  set_null(e_show_update,'application_fee_waiver', key)
 
                 }
 
@@ -805,12 +808,12 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('application_fee_waiver_notes') 
                  ){
-                  create_array('application_fee_waiver_notes', order);
+                  create_array(e_show_update,'application_fee_waiver_notes', order);
 
                   e_show_update['application_fee_waiver_notes'][key] 
                     = e_update_diff[value]['requirement'].application_fee_waiver_notes
 
-                  set_null('application_fee_waiver_notes', key)
+                  set_null(e_show_update,'application_fee_waiver_notes', key)
 
                 }
 
@@ -819,7 +822,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('transcript_for_application') 
                  ){
 
-                  create_array('transcript_for_application', order);
+                  create_array(e_show_update,'transcript_for_application', order);
 
                   e_show_update['transcript_for_application'][key] 
                     = e_update_diff[value]['requirement'].transcript_for_application
@@ -833,7 +836,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('transcript_for_application', key)
+                  set_null(e_show_update,'transcript_for_application', key)
 
                 }
 
@@ -843,7 +846,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('official_transcript_for_enrollment') 
                  ){
 
-                  create_array('official_transcript_for_enrollment', order);
+                  create_array(e_show_update,'official_transcript_for_enrollment', order);
 
                   e_show_update['official_transcript_for_enrollment'][key] 
                     = e_update_diff[value]['requirement'].official_transcript_for_enrollment
@@ -857,7 +860,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('official_transcript_for_enrollment', key)
+                  set_null(e_show_update,'official_transcript_for_enrollment', key)
 
                 }
 
@@ -866,7 +869,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{}).hasOwnProperty('required_exam')) 
                  ){
 
-                  create_array('required_admissions_exam', order);
+                  create_array(e_show_update,'required_admissions_exam', order);
 
                    var exams = [];
                   
@@ -877,7 +880,7 @@ angular.module('myApp')
                     e_show_update['required_admissions_exam'][key] 
                     = exams.join(", ")
 
-                  set_null('required_admissions_exam', key)
+                  set_null(e_show_update,'required_admissions_exam', key)
 
                 }
 
@@ -887,12 +890,12 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('essays') 
                  ){
 
-                  create_array('essays', order);
+                  create_array(e_show_update,'essays', order);
 
                   e_show_update['essays'][key] 
                     = e_update_diff[value]['requirement'].essays
 
-                  set_null('essays', key)
+                  set_null(e_show_update,'essays', key)
 
                 }
 
@@ -901,12 +904,12 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('recommendation') 
                  ){
 
-                  create_array('recommendation', order);
+                  create_array(e_show_update,'recommendation', order);
 
                   e_show_update['recommendation'][key] 
                     = e_update_diff[value]['requirement'].recommendation
 
-                  set_null('recommendation', key)
+                  set_null(e_show_update,'recommendation', key)
 
                 }
 
@@ -916,7 +919,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('gpa_minimum_letter') 
                  ){
 
-                  create_array('gpa_minimum', order);
+                  create_array(e_show_update,'gpa_minimum', order);
 
                   var gpa_minimum_gpa_minimum = (((e_update_diff||{})[value]||{})['requirement']||{}).gpa_minimum
                   var gpa_minimum_gpa_minimum_letter = (((e_update_diff||{})[value]||{})['requirement']||{}).gpa_minimum_letter 
@@ -937,7 +940,7 @@ angular.module('myApp')
                     : ""
                   )
 
-                  set_null('gpa_minimum', key)
+                  set_null(e_show_update,'gpa_minimum', key)
 
                 }
 
@@ -948,7 +951,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('gpa_average_letter') 
                  ){
 
-                  create_array('gpa_average', order);
+                  create_array(e_show_update,'gpa_average', order);
 
                   var gpa_average_gpa_average = (((e_update_diff||{})[value]||{})['requirement']||{}).gpa_average
                   var gpa_average_gpa_average_letter = (((e_update_diff||{})[value]||{})['requirement']||{}).gpa_average_letter 
@@ -969,7 +972,7 @@ angular.module('myApp')
                     : ""
                   )
 
-                  set_null('gpa_average', key)
+                  set_null(e_show_update,'gpa_average', key)
 
                 }
 
@@ -979,7 +982,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('gpa_suggested_letter') 
                  ){
 
-                  create_array('gpa_suggested', order);
+                  create_array(e_show_update,'gpa_suggested', order);
 
                   var gpa_suggested_gpa_suggested = (((e_update_diff||{})[value]||{})['requirement']||{}).gpa_suggested
                   var gpa_suggested_gpa_suggested_letter = (((e_update_diff||{})[value]||{})['requirement']||{}).gpa_suggested_letter 
@@ -1000,7 +1003,7 @@ angular.module('myApp')
                     : ""
                   )
 
-                  set_null('gpa_suggested', key)
+                  set_null(e_show_update,'gpa_suggested', key)
 
                 }
 
@@ -1009,7 +1012,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('school_interview') 
                  ){
 
-                  create_array('school_interview', order);
+                  create_array(e_show_update,'school_interview', order);
 
                   e_show_update['school_interview'][key] 
                     = e_update_diff[value]['requirement'].school_interview
@@ -1023,7 +1026,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('school_interview', key)
+                  set_null(e_show_update,'school_interview', key)
 
                 }
 
@@ -1032,7 +1035,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('resume') 
                  ){
 
-                  create_array('resume', order);
+                  create_array(e_show_update,'resume', order);
 
                   e_show_update['resume'][key] 
                     = e_update_diff[value]['requirement'].resume
@@ -1050,7 +1053,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('resume', key)
+                  set_null(e_show_update,'resume', key)
 
                 }
 
@@ -1060,7 +1063,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('sup_mat_writing_sample') 
                  ){
 
-                  create_array('sup_mat_writing_sample', order);
+                  create_array(e_show_update,'sup_mat_writing_sample', order);
 
                   e_show_update['sup_mat_writing_sample'][key] 
                     = e_update_diff[value]['requirement'].sup_mat_writing_sample
@@ -1077,7 +1080,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('sup_mat_writing_sample', key)
+                  set_null(e_show_update,'sup_mat_writing_sample', key)
 
                 }
 
@@ -1087,12 +1090,12 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('sup_mat_writing_sample_notes') 
                  ){
 
-                  create_array('sup_mat_writing_sample_notes', order);
+                  create_array(e_show_update,'sup_mat_writing_sample_notes', order);
 
                   e_show_update['sup_mat_writing_sample_notes'][key] 
                     = e_update_diff[value]['requirement'].sup_mat_writing_sample_notes
 
-                  set_null('sup_mat_writing_sample_notes', key)
+                  set_null(e_show_update,'sup_mat_writing_sample_notes', key)
 
                 }
 
@@ -1101,7 +1104,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('sup_mat_portfolio') 
                  ){
 
-                  create_array('sup_mat_portfolio', order);
+                  create_array(e_show_update,'sup_mat_portfolio', order);
 
                   e_show_update['sup_mat_portfolio'][key] 
                     = e_update_diff[value]['requirement'].sup_mat_portfolio
@@ -1118,7 +1121,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('sup_mat_portfolio', key)
+                  set_null(e_show_update,'sup_mat_portfolio', key)
 
                 }
 
@@ -1127,7 +1130,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('sup_mat_portfolio_notes') 
                  ){
 
-                  create_array('sup_mat_portfolio_notes', order);
+                  create_array(e_show_update,'sup_mat_portfolio_notes', order);
 
                   e_show_update['sup_mat_portfolio_notes'][key] 
                     = e_update_diff[value]['requirement'].sup_mat_portfolio_notes
@@ -1136,7 +1139,7 @@ angular.module('myApp')
                     e_show_update['sup_mat_portfolio_notes'] = "N/A";
                   }
 
-                  set_null('sup_mat_portfolio_notes', key)
+                  set_null(e_show_update,'sup_mat_portfolio_notes', key)
 
                 }
 
@@ -1147,7 +1150,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('school_req_url') 
                  ){
 
-                  create_array('additional_admissions_requirements', order);
+                  create_array(e_show_update,'additional_admissions_requirements', order);
 
                   var additional_admissions_requirements_program_req_url = (((e_update_diff||{})[value]||{})['requirement']||{}).program_req_url
                   var additional_admissions_requirements_school_req_url = (((e_update_diff||{})[value]||{})['requirement']||{}).school_req_url
@@ -1157,7 +1160,7 @@ angular.module('myApp')
                     ? (additional_admissions_requirements_program_req_url ? e_update_diff[value]['requirement'].program_req_url : e_raw[key]['requirement'].program_req_url )
                     : (additional_admissions_requirements_school_req_url ? e_update_diff[value]['requirement'].school_req_url : e_raw[key]['requirement'].school_req_url )
 
-                  set_null('additional_admissions_requirements', key)
+                  set_null(e_show_update,'additional_admissions_requirements', key)
 
                 }
 
@@ -1166,7 +1169,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{}).hasOwnProperty('intl_transcript')) 
                  ){
 
-                  create_array('intl_transcript', order);
+                  create_array(e_show_update,'intl_transcript', order);
 
                    var tests = [];
                   
@@ -1177,7 +1180,7 @@ angular.module('myApp')
                     e_show_update['intl_transcript'][key] 
                     = tests.join("/ ")
 
-                  set_null('intl_transcript', key)
+                  set_null(e_show_update,'intl_transcript', key)
 
                 }
 
@@ -1187,7 +1190,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('intl_lang_waiver') 
                  ){
 
-                  create_array('intl_lang_waiver', order);
+                  create_array(e_show_update,'intl_lang_waiver', order);
 
                   e_show_update['intl_lang_waiver'][key] 
                     = e_update_diff[value]['requirement'].intl_lang_waiver
@@ -1201,7 +1204,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('intl_lang_waiver', key)
+                  set_null(e_show_update,'intl_lang_waiver', key)
 
                 }
 
@@ -1209,12 +1212,12 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('intl_lang_waiver_conditions') 
                  ){
-                  create_array('intl_lang_waiver_conditions', order);
+                  create_array(e_show_update,'intl_lang_waiver_conditions', order);
 
                   e_show_update['intl_lang_waiver_conditions'][key] 
                     = e_update_diff[value]['requirement'].intl_lang_waiver_conditions
 
-                  set_null('intl_lang_waiver_conditions', key)
+                  set_null(e_show_update,'intl_lang_waiver_conditions', key)
 
                 }
 
@@ -1222,7 +1225,7 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('intl_english_test_required') 
                  ){
-                  create_array('intl_english_test_required', order);
+                  create_array(e_show_update,'intl_english_test_required', order);
 
                   e_show_update['intl_english_test_required'][key] 
                     = e_update_diff[value]['requirement'].intl_english_test_required
@@ -1236,7 +1239,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('intl_english_test_required', key)
+                  set_null(e_show_update,'intl_english_test_required', key)
 
                 }
 
@@ -1245,7 +1248,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{}).hasOwnProperty('intl_eng_test')) 
                  ){
 
-                  create_array('intl_eng_test', order);
+                  create_array(e_show_update,'intl_eng_test', order);
 
                    var eng_tests = [];
                   
@@ -1256,7 +1259,7 @@ angular.module('myApp')
                     e_show_update['intl_eng_test'][key] 
                     = eng_tests.join(", ")
 
-                  set_null('intl_eng_test', key)
+                  set_null(e_show_update,'intl_eng_test', key)
 
                 }
 
@@ -1265,12 +1268,12 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_ibt') 
                  ){
-                  create_array('toefl_ibt', order);
+                  create_array(e_show_update,'toefl_ibt', order);
 
                   e_show_update['toefl_ibt'][key] 
                     = e_update_diff[value]['requirement'].toefl_ibt
 
-                  set_null('toefl_ibt', key)
+                  set_null(e_show_update,'toefl_ibt', key)
 
                 }
 
@@ -1282,7 +1285,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_ibt_writing') 
                  ){
 
-                  create_array('toefl_ibt_scores', order);
+                  create_array(e_show_update,'toefl_ibt_scores', order);
 
                   var toefl_ibt_scores_toefl_ibt_reading = (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_ibt_reading
                   var toefl_ibt_scores_toefl_ibt_listening = (((e_update_diff||{})[value]||{})['requirement']||{}).toefl_ibt_listening
@@ -1318,12 +1321,12 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_pbt') 
                  ){
-                  create_array('toefl_pbt', order);
+                  create_array(e_show_update,'toefl_pbt', order);
 
                   e_show_update['toefl_pbt'][key] 
                     = e_update_diff[value]['requirement'].toefl_pbt
 
-                  set_null('toefl_pbt', key)
+                  set_null(e_show_update,'toefl_pbt', key)
 
                 }
 
@@ -1332,12 +1335,12 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_twe') 
                  ){
-                  create_array('toefl_twe', order);
+                  create_array(e_show_update,'toefl_twe', order);
 
                   e_show_update['toefl_twe'][key] 
                     = e_update_diff[value]['requirement'].toefl_twe
 
-                  set_null('toefl_twe', key)
+                  set_null(e_show_update,'toefl_twe', key)
 
                 }
 
@@ -1345,12 +1348,12 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_tse') 
                  ){
-                  create_array('toefl_tse', order);
+                  create_array(e_show_update,'toefl_tse', order);
 
                   e_show_update['toefl_tse'][key] 
                     = e_update_diff[value]['requirement'].toefl_tse
 
-                  set_null('toefl_tse', key)
+                  set_null(e_show_update,'toefl_tse', key)
 
                 }
 
@@ -1361,11 +1364,11 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('toefl_cbt') 
                  ){
 
-                  create_array('toefl_cbt', order);
+                  create_array(e_show_update,'toefl_cbt', order);
                   e_show_update['toefl_cbt'][key] 
                     = e_update_diff[value]['requirement'].toefl_cbt
 
-                  set_null('toefl_cbt', key)
+                  set_null(e_show_update,'toefl_cbt', key)
 
                 }
 
@@ -1373,12 +1376,12 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('intl_ielts_reqs') 
                  ){
-                  create_array('intl_ielts_reqs', order);
+                  create_array(e_show_update,'intl_ielts_reqs', order);
 
                   e_show_update['intl_ielts_reqs'][key] 
                     = e_update_diff[value]['requirement'].intl_ielts_reqs
 
-                  set_null('intl_ielts_reqs', key)
+                  set_null(e_show_update,'intl_ielts_reqs', key)
 
                 }
 
@@ -1387,12 +1390,12 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('intl_other') 
                  ){
-                  create_array('intl_other', order);
+                  create_array(e_show_update,'intl_other', order);
 
                   e_show_update['intl_other'][key] 
                     = e_update_diff[value]['requirement'].intl_other
 
-                  set_null('intl_other', key)
+                  set_null(e_show_update,'intl_other', key)
 
                 }
 
@@ -1401,7 +1404,7 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('fully_funded') 
                  ){
-                  create_array('fully_funded', order);
+                  create_array(e_show_update,'fully_funded', order);
 
                   e_show_update['fully_funded'][key] 
                     = e_update_diff[value]['scholarship'].fully_funded
@@ -1415,7 +1418,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('fully_funded', key)
+                  set_null(e_show_update,'fully_funded', key)
 
                 }
 
@@ -1424,12 +1427,12 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('fully_funded_notes') 
                  ){
-                  create_array('fully_funded_notes', order);
+                  create_array(e_show_update,'fully_funded_notes', order);
 
                   e_show_update['fully_funded_notes'][key] 
                     = e_update_diff[value]['scholarship'].fully_funded_notes
 
-                  set_null('fully_funded_notes', key)
+                  set_null(e_show_update,'fully_funded_notes', key)
 
                 }
 
@@ -1438,7 +1441,7 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('scholarship_avail') 
                  ){
-                  create_array('scholarship_avail', order);
+                  create_array(e_show_update,'scholarship_avail', order);
 
                   e_show_update['scholarship_avail'][key] 
                     = e_update_diff[value]['scholarship'].scholarship_avail
@@ -1452,7 +1455,7 @@ angular.module('myApp')
                     }
                   }
 
-                  set_null('scholarship_avail', key)
+                  set_null(e_show_update,'scholarship_avail', key)
 
                 }
 
@@ -1461,12 +1464,12 @@ angular.module('myApp')
                 if(
                   (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('scholarship_notes') 
                  ){
-                  create_array('scholarship_notes', order);
+                  create_array(e_show_update,'scholarship_notes', order);
 
                   e_show_update['scholarship_notes'][key] 
                     = e_update_diff[value]['scholarship'].scholarship_notes
 
-                  set_null('scholarship_notes', key)
+                  set_null(e_show_update,'scholarship_notes', key)
 
                 }
 
@@ -1476,7 +1479,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['scholarship']||{}).hasOwnProperty('scholarship_general_url')  
                  ){
 
-                  create_array('scholarship_url', order);
+                  create_array(e_show_update,'scholarship_url', order);
                   var scholarship_url_scholarship_program_specific_url = (((e_update_diff||{})[value]||{})['scholarship']||{}).scholarship_program_specific_url
                   var scholarship_url_scholarship_general_url = (((e_update_diff||{})[value]||{})['scholarship']||{}).scholarship_general_url 
 
@@ -1486,7 +1489,7 @@ angular.module('myApp')
                     : (scholarship_url_scholarship_general_url ? e_update_diff[value]['scholarship'].scholarship_general_url : e_raw[key]['scholarship'].scholarship_general_url)
 
 
-                  set_null('scholarship_url', key)
+                  set_null(e_show_update,'scholarship_url', key)
 
                 }
 
@@ -1507,7 +1510,7 @@ angular.module('myApp')
     };
 
 
-    var create_array = function(name, order) {
+    var create_array = function(e_show_update, name, order) {
 
       if(!e_show_update[name]){
           e_show_update[name] = [];
@@ -1519,7 +1522,7 @@ angular.module('myApp')
 
     }
 
-    var set_null = function(name, key){
+    var set_null = function(e_show_update, name, key){
       if(!e_show_update[name][key]){
         e_show_update[name][key] = "N/A";
       }

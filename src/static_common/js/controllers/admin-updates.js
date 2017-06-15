@@ -186,7 +186,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
              //$scope.update_client = response.data;
              console.log("init data =  "+ JSON.stringify(response.data));
-             console.log("init enhancement data =  "+ JSON.stringify(response.data.existing_report));
+             // console.log("init enhancement data =  "+ JSON.stringify(response.data.existing_report));
               
              var enhancement_final_release_time = response.data.enhancement_final_release_time;
              var report_last_edit_time = response.data.report_last_edit_time;
@@ -195,7 +195,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
              $scope.e_update = response.data.initial_diff;
              
-             $scope.e_raw = response.data.existing_or_cache_report.program.concat(response.data.existing_report.competing_programs);
+             $scope.e_raw = response.data.existing_or_cache_report.program.concat(response.data.existing_or_cache_report.competing_programs);
 
              $scope.program_order = [];
              for(var i=0; i<$scope.e_raw.length; i++){
