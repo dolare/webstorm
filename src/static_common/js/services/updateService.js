@@ -80,6 +80,8 @@ angular.module('myApp')
                 // Specialization (specialization)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('specialization')){
 
+                  console.log("specialization value="+value);
+                  console.log("specialization value from ..."+JSON.stringify(e_update_diff));
                   create_array('specialization', order);
 
                   e_show_update['specialization'][key] = e_update_diff[value]['program_detail'].specialization;

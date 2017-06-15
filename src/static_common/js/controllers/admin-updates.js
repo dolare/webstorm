@@ -19,8 +19,6 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
     $scope.update_client = [];
 
 
-    $scope.testObject = {'name': 'Siyang', 'age':'26', 'bool': true};
-
     $http({
           url: '/api/upgrid/update/dashboard/',
           method: 'GET',
@@ -48,94 +46,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
      });
 
-     $scope.baba=[1,2,3];
-
-
-     $scope.ondemand_one = function (id, type, client_id) {
-
-        console.log("id= "+id);
-        console.log("type= "+type);
-        console.log("client_id= "+client_id)
-        $scope.ondemand_single = true;
-        if(type==="whoops"){
-
-             $http({
-                  url: '/api/upgrid/update/whoops/ondemand/',
-                  method: 'PUT',
-                  data: {
-                    "customer_program_id": id,
-                    "client_id": client_id
-                  },
-                  headers: {
-                    'Authorization': 'JWT ' + token
-                  }
-                }).then(function (response) {
-                   console.log('Whoops released')
-                   $scope.ondemand_single = false;
-                    $.notify({
-
-                        // options
-                        icon: "fa fa-check",
-                        message: 'On-demand for a single program completed.'
-                      }, {
-                        // settings
-                        type: 'success',
-                        placement: {
-                          from: "top",
-                          align: "center"
-                        },
-                        z_index: 1999,
-                      });
-
-                }).
-                 catch(function(error){
-                    console.log('an error occurred...'+JSON.stringify(error));
-                    $scope.ondemand_single = false;
-                 });
-
-        }
-
-        if(type==="enhancement"){
-
-             $http({
-                  url: '/api/upgrid/update/enhancement/ondemand/',
-                  method: 'PUT',
-                  data: {
-                    "customer_program_id": id,
-                    "client_id": client_id
-                  },
-                  headers: {
-                    'Authorization': 'JWT ' + token
-                  }
-                }).then(function (response) {
-                  console.log('Enhancement released')
-                  $scope.ondemand_single = false;
-                   $.notify({
-
-                        // options
-                        icon: "fa fa-check",
-                        message: 'On-demand for a single program completed.'
-                      }, {
-                        // settings
-                        type: 'success',
-                        placement: {
-                          from: "top",
-                          align: "center"
-                        },
-                        z_index: 1999,
-                      });
-
-                }).
-                 catch(function(error){
-                    console.log('an error occurred...'+JSON.stringify(error));
-                    $scope.ondemand_single = false;
-                 });
-        }
-
-     }
-
-
-
+     //prepare for the modal report w/e
      $scope.need_for_confirm = function(id, type, program, client_id){
 
       console.log("id= "+id);
@@ -412,40 +323,13 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
      }
 
 
-     $scope.alertme = function () {
-      alert("confirmed")
-     }
-
-     $scope.scrolltop1 = function(){
-      
-      angular.element(document.getElementById('scrolltop_whoops_page')).scrollTop(0);
-    }
-
-     $scope.scrolltop2 = function(){
-      
-      angular.element(document.getElementById('scrolltop_enhancement_page')).scrollTop(0);
-    }
-
-
-     ////////////
-
-     $scope.number = 0
-     
      $scope.dynamicPopover = {
         content: 'Hello, World!',
         templateUrl: 'myPopoverTemplate.html',
         title: 'Title'
       };
 
-      $scope.confirm = function(){
-        alert("clicked");
-      }
-
-      $scope.update_data = function(index){
-        console.log("index="+index);
-        
-      }
-
+    
      $scope.updated_whoops = function(id) {
         $scope.dropdown_list = [];
         $http({
@@ -513,6 +397,200 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
            });
      }
+
+
+     $scope.confirm_update = function(category, index, keys) {
+
+        console.log(category + ' '+ index + ' ' + keys);
+
+        console.log(keys.length);
+
+        //init if does not exist -> e.g. xxx.p = {}
+        if($scope.confirmed_diff_raw[$scope.program_order[index]] === undefined) {
+          console.log("not existing");
+          $scope.confirmed_diff_raw[$scope.program_order[index]] = {};
+        } 
+
+
+        //console.log("confirm the raw = "+ JSON.stringify($scope.e_raw));
+
+        //push into array
+        //for 'ex', Intl_transcript' and 'Intl_eng_test'
+        if(keys.length === 0){
+
+
+                $scope.confirmed_diff_raw[$scope.program_order[index]][category] = $scope.e_update[$scope.program_order[index]][category];
+                $scope.e_raw[index][category] = $scope.e_update[$scope.program_order[index]][category];
+
+
+        } else {
+
+            for(var i=0; i<keys.length; i++) {
+
+              //each key
+              if(keys[i].split(".").length === 1){
+
+                if($scope.confirmed_diff_raw[$scope.program_order[index]][category]===undefined){
+                  $scope.confirmed_diff_raw[$scope.program_order[index]][category] = {};
+                }
+
+
+
+                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
+                $scope.e_raw[index][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
+
+
+
+
+              } else if (keys[i].split(".").length === 2) {
+
+                console.log("nested");
+
+             
+                if($scope.confirmed_diff_raw[$scope.program_order[index]][category]===undefined){
+                  $scope.confirmed_diff_raw[$scope.program_order[index]][category] = {};
+                }
+
+
+                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]] = {};
+                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
+                $scope.e_raw[index][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
+
+              }
+
+              console.log("confirm the raw after= "+ JSON.stringify($scope.e_raw));
+              console.log("oooresult = "+JSON.stringify($scope.confirmed_diff_raw));
+              
+              
+         }
+
+       }
+
+   }
+
+
+   //release updates for whoops and enhancement
+
+   $scope.w_release_updates = function(id) {
+      $scope.w_confirmed_diff = {
+        "old": $scope.confirmed_diff_raw,
+        "new": $scope.confirmed_diff_raw
+      } 
+
+
+      //for api test
+      $http({
+            url: '/api/upgrid/update/whoops/diff_confirmation/',
+            method: 'PUT',
+            data: {
+              "customer_program_id": id,
+              "confirmed_diff": $scope.w_confirmed_diff,
+              "cache_report": $scope.w_raw
+            },
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+      }).then(function (response) {
+
+        
+
+         console.log("confirmed!!!"+ JSON.stringify(response.data));
+         
+      }).
+       catch(function(error){
+          console.log('an error occurred...'+JSON.stringify(error));
+
+       });
+   }
+
+
+   $scope.release_updates = function(id) {
+
+      console.log("confirm the raw after= "+ JSON.stringify($scope.e_raw));
+      console.log("result = "+JSON.stringify($scope.confirmed_diff_raw));
+      console.log("customer program id = "+id);
+
+
+
+       $scope.e_raw_update = {
+          "program": [],
+          "competing_programs": [],
+          "length": $scope.e_raw.length,
+        }
+
+
+      for(var i=0; i<$scope.e_raw.length; i++){
+
+
+        if(i===0){
+          $scope.e_raw_update.program.push($scope.e_raw[i])
+
+        } else {
+          $scope.e_raw_update.competing_programs.push($scope.e_raw[i])
+        } 
+
+
+      }
+
+      console.log("$scope.e_raw_update="+JSON.stringify($scope.e_raw_update))
+
+
+      //for api test
+      $http({
+            url: '/api/upgrid/update/enhancement/diff_confirmation/',
+            method: 'PUT',
+            data: {
+              "customer_program_id": id,
+              "confirmed_diff": $scope.confirmed_diff_raw,
+              "cache_report": $scope.e_raw_update,
+              "client_id": $scope.client_id_alias
+            },
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+      }).then(function (response) {
+
+        
+
+         console.log("confirmed!!!"+ JSON.stringify(response.data));
+         
+      }).
+       catch(function(error){
+          console.log('an error occurred...'+JSON.stringify(error));
+
+       });
+
+
+   }
+
+
+
+
+
+
+
+///////////////////
+     $scope.togglefull = function(){
+      angular.element(document.getElementById("WhoopsReport")).toggleClass('fullscreen-modal');
+      
+
+      }
+
+      $scope.togglefullen = function(){
+        angular.element(document.getElementById("EnhancementReport")).toggleClass('fullscreen-modal');
+        
+
+      }
+
+        $scope.scrolltop1 = function(){
+      
+      angular.element(document.getElementById('scrolltop_whoops_page')).scrollTop(0);
+    }
+
+     $scope.scrolltop2 = function(){
+      
+      angular.element(document.getElementById('scrolltop_enhancement_page')).scrollTop(0);
+    }
 
 
 
@@ -593,240 +671,94 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
      //end of testOnDemand
 
-     $scope.confirm_update = function(category, index, keys) {
 
-        console.log(category + ' '+ index + ' ' + keys);
+         $scope.ondemand_one = function (id, type, client_id) {
+
+        console.log("id= "+id);
+        console.log("type= "+type);
+        console.log("client_id= "+client_id)
+        $scope.ondemand_single = true;
+        if(type==="whoops"){
+
+             $http({
+                  url: '/api/upgrid/update/whoops/ondemand/',
+                  method: 'PUT',
+                  data: {
+                    "customer_program_id": id,
+                    "client_id": client_id
+                  },
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  }
+                }).then(function (response) {
+                   console.log('Whoops released')
+                   $scope.ondemand_single = false;
+                    $.notify({
+
+                        // options
+                        icon: "fa fa-check",
+                        message: 'On-demand for a single program completed.'
+                      }, {
+                        // settings
+                        type: 'success',
+                        placement: {
+                          from: "top",
+                          align: "center"
+                        },
+                        z_index: 1999,
+                      });
+
+                }).
+                 catch(function(error){
+                    console.log('an error occurred...'+JSON.stringify(error));
+                    $scope.ondemand_single = false;
+                 });
 
-        console.log(keys.length);
-
-        //init if does not exist -> e.g. xxx.p = {}
-        if($scope.confirmed_diff_raw[$scope.program_order[index]] === undefined) {
-          console.log("not existing");
-          $scope.confirmed_diff_raw[$scope.program_order[index]] = {};
-        } 
-
-
-        //console.log("confirm the raw = "+ JSON.stringify($scope.e_raw));
-
-        //push into array
-        //for 'ex', Intl_transcript' and 'Intl_eng_test'
-        if(keys.length === 0){
-
-                 //test if it exists in the update diff
-                // if($scope.e_update[category+(index===0?'':index+1)])
-                // {
-
-                //   //console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])
-                //   $scope.confirmed_diff_raw[category+(index===0?'':index+1)] = $scope.e_update[category+(index===0?'':index+1)];
-
-
-                //   $scope.e_raw[category+(index===0?'':index+1)] = $scope.e_update[category+(index===0?'':index+1)];
-
-
-                // }
-
-
-                $scope.confirmed_diff_raw[$scope.program_order[index]][category] = $scope.e_update[$scope.program_order[index]][category];
-                $scope.e_raw[index][category] = $scope.e_update[$scope.program_order[index]][category];
-
-
-        } else {
-
-            for(var i=0; i<keys.length; i++) {
-
-              //each key
-              if(keys[i].split(".").length === 1){
-
-                //test if it exists in the update diff
-                // if($scope.e_update[category+(index===0?'':index+1)][keys[i]]||$scope.e_update[category+(index===0?'':index+1)][keys[i]]===''||$scope.e_update[category+(index===0?'':index+1)][keys[i]]===null)
-                // {
-
-                //   console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])
-                //   $scope.confirmed_diff_raw[category+(index===0?'':index+1)][keys[i]] = $scope.e_update[category+(index===0?'':index+1)][keys[i]];
-
-                //   $scope.e_raw[category+(index===0?'':index+1)][keys[i]] = $scope.e_update[category+(index===0?'':index+1)][keys[i]];
-
-                // }
-
-                if($scope.confirmed_diff_raw[$scope.program_order[index]][category]===undefined){
-                  $scope.confirmed_diff_raw[$scope.program_order[index]][category] = {};
-                }
-
-
-
-                console.log("$scope.e_update[$scope.program_order[index]]= "+JSON.stringify($scope.e_update[$scope.program_order[index]]))
-                console.log("$scope.e_update[$scope.program_order[index]][category]"+JSON.stringify($scope.e_update[$scope.program_order[index]][category]))
-
-
-                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
-                $scope.e_raw[index][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
-
-
-
-
-              } else if (keys[i].split(".").length === 2) {
-
-                console.log("nested");
-
-                // if($scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]||$scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]===''||$scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]]===null)
-                // {
-
-                //   //console.log('i= '+i + 'value = '+ $scope.e_update[category+(index===0?'':index+1)][keys[i]])
-                  
-                //   $scope.confirmed_diff_raw[category+(index===0?'':index+1)][keys[i].split(".")[0]] = {};
-
-                //   $scope.confirmed_diff_raw[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]];
-
-
-                //   //// pushed into e_raw
-                //   $scope.e_raw[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[category+(index===0?'':index+1)][keys[i].split(".")[0]][keys[i].split(".")[1]];
-
-                // }
-
-                if($scope.confirmed_diff_raw[$scope.program_order[index]][category]===undefined){
-                  $scope.confirmed_diff_raw[$scope.program_order[index]][category] = {};
-                }
-
-
-                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]] = {};
-                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
-                $scope.e_raw[index][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
-
-
-
-
-              }
-
-
-
-              console.log("confirm the raw after= "+ JSON.stringify($scope.e_raw));
-              console.log("oooresult = "+JSON.stringify($scope.confirmed_diff_raw));
-              
-                
-
-         }
-
-
-       }
-
-
-
-
-   }
-
-   $scope.w_release_updates = function(id) {
-      $scope.w_confirmed_diff = {
-        "old": $scope.confirmed_diff_raw,
-        "new": $scope.confirmed_diff_raw
-      } 
-
-
-      //for api test
-      $http({
-            url: '/api/upgrid/update/whoops/diff_confirmation/',
-            method: 'PUT',
-            data: {
-              "customer_program_id": id,
-              "confirmed_diff": $scope.w_confirmed_diff,
-              "cache_report": $scope.w_raw
-            },
-            headers: {
-              'Authorization': 'JWT ' + token
-            }
-      }).then(function (response) {
-
-        
-
-         console.log("confirmed!!!"+ JSON.stringify(response.data));
-         
-      }).
-       catch(function(error){
-          console.log('an error occurred...'+JSON.stringify(error));
-
-       });
-   }
-
-
-   $scope.release_updates = function(id) {
-
-      console.log("confirm the raw after= "+ JSON.stringify($scope.e_raw));
-      console.log("result = "+JSON.stringify($scope.confirmed_diff_raw));
-      console.log("customer program id = "+id);
-
-
-
-       $scope.e_raw_update = {
-          "program": [],
-          "competing_programs": [],
-          "length": $scope.e_raw.length,
         }
 
+        if(type==="enhancement"){
 
-      for(var i=0; i<$scope.e_raw.length; i++){
+             $http({
+                  url: '/api/upgrid/update/enhancement/ondemand/',
+                  method: 'PUT',
+                  data: {
+                    "customer_program_id": id,
+                    "client_id": client_id
+                  },
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  }
+                }).then(function (response) {
+                  console.log('Enhancement released')
+                  $scope.ondemand_single = false;
+                   $.notify({
 
+                        // options
+                        icon: "fa fa-check",
+                        message: 'On-demand for a single program completed.'
+                      }, {
+                        // settings
+                        type: 'success',
+                        placement: {
+                          from: "top",
+                          align: "center"
+                        },
+                        z_index: 1999,
+                      });
 
-        if(i===0){
-          $scope.e_raw_update.program.push($scope.e_raw[i])
+                }).
+                 catch(function(error){
+                    console.log('an error occurred...'+JSON.stringify(error));
+                    $scope.ondemand_single = false;
+                 });
+        }
 
-        } else {
-          $scope.e_raw_update.competing_programs.push($scope.e_raw[i])
-        } 
-
-
-      }
-
-      console.log("$scope.e_raw_update="+JSON.stringify($scope.e_raw_update))
-
-      // $scope.confirmed_diff = {
-      //   "old": $scope.confirmed_diff_raw,
-      //   "new": $scope.confirmed_diff_raw
-      // } 
-
-
-      //for api test
-      $http({
-            url: '/api/upgrid/update/enhancement/diff_confirmation/',
-            method: 'PUT',
-            data: {
-              "customer_program_id": id,
-              "confirmed_diff": $scope.confirmed_diff_raw,
-              "cache_report": $scope.e_raw_update,
-              "client_id": $scope.client_id_alias
-            },
-            headers: {
-              'Authorization': 'JWT ' + token
-            }
-      }).then(function (response) {
-
-        
-
-         console.log("confirmed!!!"+ JSON.stringify(response.data));
-         
-      }).
-       catch(function(error){
-          console.log('an error occurred...'+JSON.stringify(error));
-
-       });
+     }
 
 
-   }
-
-
-     $scope.togglefull = function(){
-      angular.element(document.getElementById("WhoopsReport")).toggleClass('fullscreen-modal');
-      
-
-      }
-
-      $scope.togglefullen = function(){
-        angular.element(document.getElementById("EnhancementReport")).toggleClass('fullscreen-modal');
-        
-
-      }
 
   }
 ]);
-
 
 
 
