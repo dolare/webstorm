@@ -2407,8 +2407,14 @@ class ManagerEnhancementDiffConfirmation(APIView):
             confirmed_diff = JSONParser().parse(confirmed_diff)
         else:
             confirmed_diff = None
-        result = {"initial_diff": initial_diff, "confirmed_diff": confirmed_diff, "existing_report": existing_report}
 
+        if update_report.cache_report == None:
+            result = {"initial_diff": initial_diff, "confirmed_diff": confirmed_diff, "existing__or_cache_report": existing_report}
+        else:
+            cache_report = zlib.decompress(update_report.cache_report)
+            cache_report = BytesIO(cache_report)
+            cache_report = JSONParser().parse(cache_report)  
+            result = {"initial_diff": initial_diff, "confirmed_diff": confirmed_diff, "existing__or_cache_report": cache_report}  
         return Response(result, HTTP_200_OK)
 
     def put(self, request):
