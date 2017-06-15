@@ -2158,9 +2158,8 @@ class EnhancementReportsUpdateAPI(APIView):
                         print('++++++')
                         temp = compare_program(val1,val2)
                         if temp != None:
-                            object_id = str(temp['object_id'])
-                            del temp['object_id']
-                            result[object_id] = temp; 
+                            object_id = val1['object_id']
+                            result[object_id] = temp
 
                     else:
                         print('{0}!====={1}'.format(val1['object_id'],val2['object_id']))
@@ -2194,8 +2193,12 @@ class EnhancementReportsUpdateAPI(APIView):
                 else:
                     result[k1] = v1
 
+            print(result)
+            print('test')
+
+
             #diff not only contains the object_id
-            if len(result) > 1:
+            if len(result) >= 1:
                 print('len > 1')
                 print(result)
                 return result
@@ -2217,6 +2220,7 @@ class EnhancementReportsUpdateAPI(APIView):
         diff_result['program'] = compare_program_list(old_program,new_program)
         diff_result['competing_programs'] = compare_program_list(old_competing_programs,new_competing_programs)
 
+        print(diff_result)
         #count how many diffs in the result_diff
         diff_count = 0
         for k,v in diff_result['program'].items():
@@ -2426,15 +2430,15 @@ class ManagerEnhancementDiffConfirmation(APIView):
         eru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
        
         update_diff = EnhancementReportsUpdateAPI.\
-            compare_enhancement_report(JSONParser().parse(BytesIO(zlib.decompress(eru.existing_report))),
-                                       request.data['cache_report'])
+            compare_enhancement_report(request.data['cache_report'],JSONParser().parse(BytesIO(zlib.decompress(eru.existing_report))))
         
+        print(update_diff)
+        print('update_diff')
         eru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
         confirmed_diff = request.data['confirmed_diff']
         
         diff_count = 0
-        print(request.data['confirmed_diff'])
-        print(';;;;')
+    
         for k1,v1 in confirmed_diff.items():
             if isinstance(v1,dict):
                 diff_count = diff_count + len(v1)
@@ -2475,17 +2479,15 @@ class ClientViewEnhancementUpdate(APIView):
         return user
 
     def get(self, request, object_id=None, client_id=None):
+
         user = self.get_user(request, object_id, client_id)
-        print(user)
-        print(object_id)
-        print(client_id)
+
         customer_program = UniversityCustomerProgram.objects.get(object_id=object_id)
         if not user:
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
             update_report_query = EnhancementUpdate.objects.filter(customer_program=customer_program, customer=user,
                                                           most_recent=True)
-            print(update_report_query)
             if update_report_query.exists():
                 update_report = update_report_query.first()
             else:
@@ -2507,6 +2509,7 @@ class ClientViewEnhancementUpdate(APIView):
                 prev_diff=update_report.update_diff,
                 last_edit_time=update_report.last_edit_time)
             new_eru.save()
+
         # print(update_report.existing_report)
             if new_eru.existing_report and not zlib.decompress(new_eru.existing_report) == b'':
                 existing_report = JSONParser().parse(BytesIO(zlib.decompress(new_eru.existing_report)))
@@ -2534,7 +2537,6 @@ class ClientViewEnhancementUpdate(APIView):
                     update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.prev_diff)))
                 else:
                     update_diff = ''
-
             else:
 
                 update_diff = "None"
