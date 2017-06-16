@@ -1614,11 +1614,38 @@ ul.help-ul>li {
     background-color: #ea6c6c;
 }
 
+
 .ribbon-update.ribbon-danger.ribbon-modern .ribbon-box:before {
     border-color: #ea6c6c;
     border-left-color: transparent;
     border-bottom-color: transparent;
 }
+
+
+/*ribbon-city*/
+.ribbon-update.ribbon-city .ribbon-box {
+    background-color: #ff6b6b;
+}
+
+.ribbon-update.ribbon-city.ribbon-modern .ribbon-box:before {
+    border-color: #ff6b6b;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+}
+
+
+/*ribbon-flat*/
+.ribbon-update.ribbon-flat .ribbon-box {
+    background-color: #44b4a6;
+}
+
+.ribbon-update.ribbon-flat.ribbon-modern .ribbon-box:before {
+    border-color: #44b4a6;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+}
+
+
 
 .ribbon-update.ribbon-modern .ribbon-box:before {
     top: 0;
