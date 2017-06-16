@@ -2003,6 +2003,7 @@ class ClientViewWhoopsUpdate(APIView):
             else:
 
                 update_diff = "None"
+        print(update_diff)
 
         # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
         context = {'existing_report': existing_report, 'update_diff': update_diff,
@@ -2159,6 +2160,8 @@ class EnhancementReportsUpdateAPI(APIView):
                         print('++++++')
                         temp = compare_program(val1,val2)
                         if temp != None:
+                            if 'object_id' in temp:
+                                del temp['object_id']
                             object_id = val1['object_id']
                             result[object_id] = temp
 
@@ -2172,8 +2175,8 @@ class EnhancementReportsUpdateAPI(APIView):
         def compare_program(old_program,new_program):
             result = {}
             for k1,v1 in new_program.items():
-                #if k1 == 'object_id':
-                #   continue
+                if k1 == 'object_id':
+                    continue
                 if k1 in old_program.keys() and isinstance(v1,dict):
                     for k2,v2 in v1.items():
                         if k2 in old_program[k1].keys():
@@ -2228,8 +2231,6 @@ class EnhancementReportsUpdateAPI(APIView):
             for k1,v1 in v.items():
                 if isinstance(v1,dict):
                     diff_count = diff_count + len(v1)
-                    print(v1)
-                    print(len(v1))
                 else:
                     diff_count = diff_count + 1
 
@@ -2238,19 +2239,19 @@ class EnhancementReportsUpdateAPI(APIView):
             for k1,v1 in v.items():
                 if isinstance(v1,dict):
                     diff_count = diff_count + len(v1)
-                    print(v1)
-                    print(len(v1))
                 else:
                     diff_count = diff_count + 1
 
         #combine two dict program and competing programs
         diff_return  = {}
-        diff_return.update(diff_result['program'])
+        diff_return = diff_result['program']
+
         diff_return.update(diff_result['competing_programs'])
 
+        print(diff_count)
         #struct the diff and return it
         diff_return['diff_count'] = diff_count
-        if diff_return and diff_count != 0:
+        if diff_return and diff_count != 0 and len(diff_return):
             print(diff_return)
             return diff_return
         else:
@@ -2501,7 +2502,7 @@ class ClientViewEnhancementUpdate(APIView):
 
             update_report.existing_report = update_report.cache_report
             update_report.most_recent = False
-            update_report.save()
+            
             new_eru = EnhancementUpdate.objects.create(
                 customer_program=customer_program,
                 customer=user,
@@ -2509,6 +2510,8 @@ class ClientViewEnhancementUpdate(APIView):
                 existing_report=update_report.existing_report,
                 prev_diff=update_report.update_diff,
                 last_edit_time=update_report.last_edit_time)
+
+            update_report.save()
             new_eru.save()
 
         # print(update_report.existing_report)
@@ -2544,7 +2547,7 @@ class ClientViewEnhancementUpdate(APIView):
 
 
         # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
-        context = {'existing_report': existing_report, 'update_diff': update_diff,
+        context = {'existing_report': existing_report, 'prev_diff': update_diff,
                    'enhancement_final_release_time': customer_program.enhancement_final_release_time,
                    'report_last_edit_time': update_report.last_edit_time
                    }
