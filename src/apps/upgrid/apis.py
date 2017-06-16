@@ -1959,6 +1959,7 @@ class ClientViewWhoopsUpdate(APIView):
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
             update_report = WhoopsUpdate.objects.get(customer_program=object_id, customer=user, most_recent=True)
+            print(JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff))))
         except WhoopsUpdate.DoesNotExist:
             return Response({"failed": _("No WhoopsReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
