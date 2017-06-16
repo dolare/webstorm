@@ -2445,7 +2445,15 @@ class ManagerEnhancementDiffConfirmation(APIView):
         
         print(update_diff)
         print('update_diff')
-        eru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
+
+        #initial diff change
+        university_customer_program = request.data['customer_program_id']
+        new_enhancement_report_dict = EnhancementReportsUpdateAPI().get_programs_data(university_customer_program)
+        initial_diff = EnhancementReportsUpdateAPI.\
+            compare_enhancement_report(request.data['cache_report'],new_enhancement_report_dict)
+
+        print(initial_diff)
+        print('initial_diff')
         confirmed_diff = request.data['confirmed_diff']
         
         diff_count = 0
@@ -2457,6 +2465,8 @@ class ManagerEnhancementDiffConfirmation(APIView):
                 diff_count = diff_count + 1
         confirmed_diff['diff_count'] = diff_count
         eru.confirmed_diff = zlib.compress(JSONRenderer().render(confirmed_diff))
+        eru.initial_diff = zlib.compress(JSONRenderer().render(initial_diff))
+
         print(eru.confirmed_diff)
         eru.last_edit_time = timezone.now()
         eru.save()
