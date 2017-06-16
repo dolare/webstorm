@@ -9,7 +9,7 @@ angular.module('myApp')
 
             if(user === 'client'){
               var e_raw = raw_data.existing_report.program.concat(raw_data.existing_report.competing_programs);
-              var e_update_diff = raw_data.update_diff;
+              var e_update_diff = raw_data.prev_diff;
               var ver = 'old'
             } else if (user === 'admin'){
               var e_raw = raw_data.existing_or_cache_report.program.concat(raw_data.existing_or_cache_report.competing_programs);

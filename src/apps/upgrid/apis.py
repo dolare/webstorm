@@ -1752,7 +1752,10 @@ class WhoopsReportsUpdateAPI(APIView):
     @classmethod
     def compare_whoops_report(cls, a, b):
         """a is old report, b is new report"""
-
+        print(a)
+        print('old')
+        print(b)
+        print('new')
         def compare(a, b):
             diff = {}
             old_diff = {}
@@ -1959,6 +1962,7 @@ class ClientViewWhoopsUpdate(APIView):
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
             update_report = WhoopsUpdate.objects.get(customer_program=object_id, customer=user, most_recent=True)
+            print(JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff))))
         except WhoopsUpdate.DoesNotExist:
             return Response({"failed": _("No WhoopsReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
@@ -2147,6 +2151,10 @@ class EnhancementReportsUpdateAPI(APIView):
     #generate diff
     @classmethod
     def compare_enhancement_report(self,a, b):
+        print('a')
+        print(a);
+        print('b');
+        print(b);
      
         #cause order by order, so store them in a list
         def compare_program_list(old_program_list,new_program_list):
@@ -2187,6 +2195,8 @@ class EnhancementReportsUpdateAPI(APIView):
                                     result[k1] = {}
                                 result[k1][k2] = v2
                         else:
+                            if not k1 in result.keys():
+                                result[k1] = {}
                             result[k1][k2] = v2
                 elif not k1 in old_program.keys() and isinstance(v1,dict): 
                     result[k1] = v1
