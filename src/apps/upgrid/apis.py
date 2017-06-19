@@ -1920,6 +1920,8 @@ class ManagerWhoopsDiffConfirmation(APIView):
         wru = WhoopsUpdate.objects.get(customer_program=request.data['customer_program_id'],
                                        most_recent=True)
         wru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
+        print(request.data['cache_report'])
+        print('cache')
 
         update_diff = WhoopsReportsUpdateAPI.\
             compare_whoops_report(JSONParser().parse(BytesIO(zlib.decompress(wru.existing_report))),
