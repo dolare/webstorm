@@ -254,6 +254,26 @@ class CustomerVerify(APIView):
         user.save()
         return Response({"success": _("Your account has been verified.")}, status=HTTP_202_ACCEPTED)
 
+class CustomerSentVerifyEmail(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(sef,request):
+        
+        try:
+            user = UniversityCustomer.objects.get(email = request.data['email'])
+            if user.is_active is True:
+                return Response({"fail": _("This account has been verified")}, status=HTTP_400_BAD_REQUEST)
+            request.is_create = True
+            ResetPassword().post(request)
+        except:
+            return Response({"fail": _("data error")}, status=HTTP_400_BAD_REQUEST)
+
+        return Response({"success": _("Verification email has been sent successfully..")}, status=HTTP_200_ACCEPTED)
+
+
+
+        
+
 # api/user/program
 class CustomerProgram(generics.ListAPIView):
     """
@@ -1967,12 +1987,15 @@ class ClientViewWhoopsUpdate(APIView):
 
     def get(self, request, object_id=None, client_id=None):
         user = self.get_user(request, object_id, client_id)
+        print(user)
         cust_pro = UniversityCustomerProgram.objects.get(object_id=object_id)
+        print(cust_pro)
         if not user:
             return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
-            update_report = WhoopsUpdate.objects.get(customer_program=object_id, customer=user, most_recent=True)
-            print(JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff))))
+            update_report_query = WhoopsUpdate.objects.filter(customer_program=object_id, customer=user, most_recent=True)
+            print(update_report_query)
+            update_report = update_report_query.first()
         except WhoopsUpdate.DoesNotExist:
             return Response({"failed": _("No WhoopsReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
