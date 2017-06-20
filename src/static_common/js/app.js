@@ -410,7 +410,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
                     }],
 
 
-
       //get raw data
       Ceeb: function(depsSuccess, apiService, authenticationSvc) {
         var userInfo = authenticationSvc.getUserInfo();

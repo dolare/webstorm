@@ -14,28 +14,6 @@ controller('ShareWhoopsController',
 
 
 
-    //     //test
-    //     var token = authenticationSvc.getUserInfo().accessToken;
-    //   $http({
-    //       url:  '/api/upgrid/ewr/f434bdb5-7b29-4ffe-a0d2-93b0147e3497/',
-    //       method: 'GET',
-    //       headers: {
-    //         'Authorization': 'JWT ' + token
-    //       }
-    // }).then(function (response) {
-
-    //    $scope.details = response.data;
-
-    //    console.log("return data"+ JSON.stringify(response.data));
-       
-    // }).
-    //  catch(function(error){
-    //     console.log('test error occurred...'+JSON.stringify(error));
-
-    //  });
-
-
-
 
       $http({
           url: '/api/upgrid/reports/shared/'+$stateParams.param1+'/'+$stateParams.param2+'/',

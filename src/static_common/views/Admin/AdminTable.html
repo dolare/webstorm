@@ -67,9 +67,9 @@
                         <table class="table table-hover table-vcenter client-table" st-pagination-scroll st-table="displayeddata" st-safe-src="client_data">
                             <colgroup>
                             <col width="5%" />
-                            <col width="25%" />
+                            <col width="23%" />
                             <col width="15%" />
-                            <col width="30%" />
+                            <col width="32%" />
                             <col width="15%" />
                             <col width="40" />
                         </colgroup>
@@ -81,7 +81,7 @@
                                 <th class="text-center"><i class="icon-organization"></i></th>
                                 <!--  <th class="text-center"><i class="icon-user"></i></th> -->
                                 <th st-sort="contact_name" class="text-left">Name</th>
-                                <th st-sort="is_active" class="text-left">Status</th>
+                                <th st-sort="is_active" class="text-center">Status</th>
                                 <!-- <th st-sort="university" class="text-left">University</th> -->
                                 <th class="text-left">
 
@@ -129,8 +129,11 @@
                         </td> -->
                         <td>
                                 {{row.contact_name}} &nbsp;<a href="mailto:{{row.email}}" id="client-email"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+
+                                <div class="text-muted push-5-t" style="font-size:80%">{{row.email}}
+                                </div>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <span ng-if="row.is_active===true">
                                 <span class="label label-info">active</span>
                             </span>
