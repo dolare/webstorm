@@ -143,21 +143,6 @@ controller('EnhancementController', function($timeout, updateService, avatarServ
              var e_array_10 = [];
              var e_array_11 = [];
 
-             // for(i=0; i<$scope.e_raw.length; i++)
-             // {
-             //   e_array_1.push($scope.e_raw['p'+(i===0?'':i+1)]);
-             //   e_array_2.push($scope.e_raw['c'+(i===0?'':i+1)]);
-             //   e_array_3.push($scope.e_raw['t'+(i===0?'':i+1)]);
-             //   e_array_4.push($scope.e_raw['d'+(i===0?'':i+1)]);
-             //   e_array_5.push($scope.e_raw['r'+(i===0?'':i+1)]);
-             //   e_array_6.push($scope.e_raw['ex'+(i===0?'':i+1)]);
-             //   e_array_7.push($scope.e_raw['Intl_transcript'+(i===0?'':i+1)]);
-             //   e_array_8.push($scope.e_raw['Intl_eng_test'+(i===0?'':i+1)]);
-             //   e_array_9.push($scope.e_raw['s'+(i===0?'':i+1)]);
-             //   e_array_10.push($scope.e_raw['dura'+(i===0?'':i+1)]);
-
-             // }
-
 
 
              for(i=0; i<$scope.e_raw.length; i++){

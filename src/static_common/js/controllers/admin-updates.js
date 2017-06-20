@@ -20,6 +20,10 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
     $scope.only_update = true;
 
+
+    
+
+
     $http({
           url: '/api/upgrid/update/dashboard/',
           method: 'GET',
@@ -37,7 +41,12 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
         $scope.update_client.push(response.data[i]);
       }
 
-      App.blocks('#loadingclient', 'state_normal');
+      // var school_list_raw_unordered = _.sortBy($scope.update_client, 'university');
+      //   var school_list_raw = _.pluck(school_list_raw_unordered, 'university');
+
+      //   $scope.school_list = _.uniq(school_list_raw);
+      //   console.log("$scope.school_list = "+JSON.stringify($scope.school_list))
+
        console.log("update client = "+ JSON.stringify(response.data));
         App.blocks('#loadingtable', 'state_normal');
     }).
@@ -196,7 +205,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              $scope.e_update = response.data.initial_diff;
              
 
-
+             //array
              $scope.e_raw = response.data.existing_or_cache_report.program.concat(response.data.existing_or_cache_report.competing_programs);
 
              $scope.program_order = [];
@@ -755,7 +764,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
 
 
-     
+
 
 
 

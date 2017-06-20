@@ -14,8 +14,6 @@ controller('ShareEnhancementController',
       
       App.blocks('#enhancement_loading', 'state_loading');
       
-      //$scope.enhancement_report_program;
-      //$scope.enhancement_report_degree;
 
         //ewr
          $http({
@@ -28,10 +26,12 @@ controller('ShareEnhancementController',
           }).then(function (response) {
 
             
+             
+             console.log("raw enhancement"+ JSON.stringify(response));
+
              var enhancement_final_release_time = response.data[1].enhancement[0].enhancement_final_release_time;
              var report_last_edit_time = response.data[1].enhancement[0].report_last_edit_time;
 
-             console.log("raw enhancement"+ JSON.stringify(response.data[1].enhancement[0]));
              //$scope.e_raw = response.data[1].enhancement[0];
              $scope.e_raw = response.data[1].enhancement[0].program.concat(response.data[1].enhancement[0].competing_programs);
 

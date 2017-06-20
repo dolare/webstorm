@@ -721,6 +721,34 @@ angular.module('myApp')
                 }
 
 
+                // international deadline
+                if(
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_international_deadline_month_display') || 
+                  (((e_update_diff||{})[value]||{})['deadline']||{}).hasOwnProperty('get_international_deadline_day_display') 
+                 ){
+
+                  create_array(e_show_update,'international_deadline', order);
+
+                  var international_deadline_get_international_deadline_month_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_international_deadline_month_display
+                  var international_deadline_get_international_deadline_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_international_deadline_day_display 
+
+
+                  e_show_update['international_deadline'][key] 
+                  = ((international_deadline_get_international_deadline_month_display ? e_update_diff[value]['deadline'].get_international_deadline_month_display : e_raw[key]['deadline'].get_international_deadline_month_display)
+                    ? (international_deadline_get_international_deadline_month_display ? e_update_diff[value]['deadline'].get_international_deadline_month_display : e_raw[key]['deadline'].get_international_deadline_month_display)
+                    : "")
+                  + ' '
+                  + ((international_deadline_get_international_deadline_day_display ? e_update_diff[value]['deadline'].get_international_deadline_day_display : e_raw[key]['deadline'].get_international_deadline_day_display)
+                    ? (international_deadline_get_international_deadline_day_display ? e_update_diff[value]['deadline'].get_international_deadline_day_display : e_raw[key]['deadline'].get_international_deadline_day_display)
+                    : "")
+                  
+
+                  set_null(e_show_update,'international_deadline', key)
+
+                }
+
+
+
                 // Special requirements (special_reqs)
                 if(
                   (((e_update_diff||{})[value]||{})['requirement']||{}).hasOwnProperty('special_reqs') 
