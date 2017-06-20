@@ -268,7 +268,7 @@ class CustomerSentVerifyEmail(APIView):
         except:
             return Response({"fail": _("data error")}, status=HTTP_400_BAD_REQUEST)
 
-        return Response({"success": _("Verification email has been sent successfully..")}, status=HTTP_200_ACCEPTED)
+        return Response({"success": _("Verification email has been sent successfully..")}, status=HTTP_202_ACCEPTED)
 
 
 

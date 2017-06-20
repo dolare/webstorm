@@ -89,9 +89,12 @@ angular.module('myApp').controller('AdminMainController',
 
         }
 
+        $scope.verifying = false;
 
         $scope.verify_email = function(email) {
-            
+
+            $scope.verifying = true;
+
             $http({
                 url: '/api/upgrid/user/sent_verify_email/',
                 method: 'POST',
@@ -119,13 +122,14 @@ angular.module('myApp').controller('AdminMainController',
                     z_index: 1999,
                 });
 
+                $scope.verifying = false;
                 console.log("email sent data =" + JSON.stringify(response.data));
 
 
             }).
             catch(function(error) {
                 console.log('an error occurred...' + JSON.stringify(error));
-
+                $scope.verifying = false;
             });
         }
 
