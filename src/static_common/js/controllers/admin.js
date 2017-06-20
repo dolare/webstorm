@@ -91,9 +91,10 @@ angular.module('myApp').controller('AdminMainController',
 
 
         $scope.verify_email = function(email) {
+            
             $http({
                 url: '/api/upgrid/user/sent_verify_email/',
-                method: 'GET',
+                method: 'POST',
                 data: {
                     'email': email,
                 },

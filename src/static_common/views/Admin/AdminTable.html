@@ -175,8 +175,8 @@
                                             </button>
 
 
-                                            <button ng-if="!row.is_active">
-                                                <a class="fa fa-envelope-o text-primary" ng-if="verify_email(row.email)">
+                                            <button ng-if="!row.is_active" class="btn btn-default">
+                                                <a class="fa fa-envelope-o text-primary" ng-click="verify_email(row.email)">
                                                 </a>
 
                                             </button>
