@@ -195,6 +195,8 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
              $scope.e_update = response.data.initial_diff;
              
+
+
              $scope.e_raw = response.data.existing_or_cache_report.program.concat(response.data.existing_or_cache_report.competing_programs);
 
              $scope.program_order = [];
@@ -565,11 +567,6 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
    }
 
 
-
-
-
-
-
 ///////////////////
      $scope.togglefull = function(){
       angular.element(document.getElementById("WhoopsReport")).toggleClass('fullscreen-modal');
@@ -755,6 +752,32 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
         }
 
      }
+
+
+
+     function deepDiff(a, b, r, reversible) {
+      _.each(a, function(v, k) {
+        // already checked this or equal...
+        if (r.hasOwnProperty(k) || b[k] === v) return;
+        // but what if it returns an empty object? still attach?
+        r[k] = _.isObject(v) ? _.diff(v, b[k], reversible) : v;
+      });
+    }
+    
+    /* the function */
+    _.mixin({
+      shallowDiff: function(a, b) {
+        return _.omit(a, function(v, k) {
+          return b[k] === v;
+        })
+      },
+      diff: function(a, b, reversible) {
+        var r = {};
+        deepDiff(a, b, r, reversible);
+        if(reversible) deepDiff(b, a, r, reversible);
+        return r;
+      }
+    });
 
 
 
