@@ -90,6 +90,45 @@ angular.module('myApp').controller('AdminMainController',
         }
 
 
+        $scope.verify_email = function(email) {
+            $http({
+                url: '/api/upgrid/user/sent_verify_email/',
+                method: 'GET',
+                data: {
+                    'email': email,
+                },
+                headers: {
+                    'Authorization': 'JWT ' + token,
+                }
+            }).then(function(response) {
+
+                
+                $.notify({
+
+                    // options
+                    icon: "fa fa-check",
+                    message: "The verification email has been sent."
+                }, {
+                    // settings
+                    type: 'success',
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+                    z_index: 1999,
+                });
+
+                console.log("email sent data =" + JSON.stringify(response.data));
+
+
+            }).
+            catch(function(error) {
+                console.log('an error occurred...' + JSON.stringify(error));
+
+            });
+        }
+
+
         $scope.impersonate = function(id) {
             console.log("id = " + id);
             avatarService.register(id);
