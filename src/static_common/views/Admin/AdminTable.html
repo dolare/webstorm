@@ -169,9 +169,16 @@
                                             </div>
                                         </td>
                                         <td class="text-right" style="width:40px">
-                                            <button class="btn btn-default" confirmed-click="deactivate(row.id, $index, null, !row.is_active)" ng-confirm-click="Do you really want to delete/re-activate?" data-js-blur>
-                                                <a ng-class="row.is_active ? 'fa fa-times text-danger' : 'fa fa-undo text-info'">
+                                            <button ng-if="row.is_active" class="btn btn-default" confirmed-click="deactivate(row.id, $index, null, !row.is_active)" ng-confirm-click="Do you really want to delete?" data-js-blur>
+                                                <a class="fa fa-times text-danger">
                                                 </a>
+                                            </button>
+
+
+                                            <button ng-if="!row.is_active">
+                                                <a class="fa fa-envelope-o text-primary" ng-if="verify_email(row.email)">
+                                                </a>
+
                                             </button>
 
 
