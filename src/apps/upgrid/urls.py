@@ -24,6 +24,9 @@ urlpatterns=[
     #Verify user
     
     url(r'^api/upgrid/user/verify/$', apis.CustomerVerify.as_view()),
+
+     url(r'^api/upgrid/user/sent_verify_email/$', apis.CustomerSentVerifyEmail.as_view()),
+
     # Get user's customer program +++
     url(r'^api/upgrid/user/program/$', apis.CustomerProgram.as_view()),
 
