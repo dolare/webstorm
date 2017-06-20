@@ -250,7 +250,7 @@ class CustomerVerify(APIView):
         if user.is_active is True:
             return Response({"Failed": _("have been verified before!")}, status=HTTP_400_BAD_REQUEST)
         user.is_active = True
-        user._password = None
+        user._password = False
         user.save()
         return Response({"success": _("Your account has been verified.")}, status=HTTP_202_ACCEPTED)
 
@@ -803,10 +803,11 @@ class CreateOrChangeSubUser(APIView):
             service_until=sub_service_until,
         )
 
+        print(decoded_new_password)
+        user.password = decoded_new_password
+        user._password = None
+        user.save()   
 
-        user.set_password(decoded_new_password)
-
-        user.save()
 
         # create corresponding customer programs of subuser
         programs_id = self.request.data['customer_programs']
@@ -890,7 +891,11 @@ class ShareReports(APIView):
         try:
             program_id = UniversityCustomerProgram.objects.get(object_id=object_id)
             program = Program.objects.get(object_id=program_id.program.object_id)
-            wur = WhoopsUpdate.objects.get(customer=client.main_user_id,customer_program=object_id,most_recent='True')
+
+            if client.accounttype == 'sub':
+                wur = WhoopsUpdate.objects.get(customer=client.main_user_id,customer_program=object_id,most_recent='True')
+            else:
+                wur = WhoopsUpdate.objects.get(customer=client,customer_program=object_id,most_recent='True')
         except:
             return None
         return wur, program
@@ -900,7 +905,10 @@ class ShareReports(APIView):
         print(client)
 
         try:
-            eur = EnhancementUpdate.objects.filter(customer_program=object_id, customer=client.main_user_id, most_recent='True')
+            if client.accounttype == 'sub':
+                eur = EnhancementUpdate.objects.get(customer_program=object_id, customer=client.main_user_id, most_recent='True')
+            else:
+                eur = EnhancementUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
         except:
             return None
         return eur
@@ -998,6 +1006,8 @@ class ShareReports(APIView):
                         arr.update(info)
                         json_str = JSONRenderer().render(arr)
                         raw_data = zlib.compress(json_str)
+                        print(raw_data)
+                        print('raw_data')
                         customer_program = UniversityCustomerProgram.objects.get(object_id=y)
                         e_obj = EnhancementReportsRepo.objects.create(er_customer_program=customer_program,
                                                                       er_enhancement_report=raw_data,
@@ -1198,11 +1208,11 @@ class ClientCRUD(APIView):
                 phone=self.request.data['phone'],
                 service_until=self.request.data['service_until'],
                 )
-        
-      
-        client.set_password(decoded_new_password)
 
-        client.save()
+        client.password = decoded_new_password
+        client._password = None
+        client.save()   
+
 
         for cp in self.request.data['competing_schools']:
             school = UniversitySchool.objects.get(object_id=cp.get('object_id'))
@@ -2188,8 +2198,9 @@ class EnhancementReportsUpdateAPI(APIView):
                     for k2,v2 in v1.items():
                         if k2 in old_program[k1].keys():
                             if v2 != old_program[k1][k2]:
-                                if str(k2) == 'specialization':
+                                if str(k2) == 'job_placement_url':
                                     print(v2)
+                                    print('v2')
                                     print(old_program[k1][k2]) 
                                 if not k1 in result.keys():
                                     result[k1] = {}
@@ -2197,6 +2208,10 @@ class EnhancementReportsUpdateAPI(APIView):
                         else:
                             if not k1 in result.keys():
                                 result[k1] = {}
+                            print('key =====')
+                            print(k1)
+                            print(k2)
+                            print(old_program[k1])
                             result[k1][k2] = v2
                 elif not k1 in old_program.keys() and isinstance(v1,dict): 
                     result[k1] = v1
@@ -2206,14 +2221,14 @@ class EnhancementReportsUpdateAPI(APIView):
                 else:
                     result[k1] = v1
 
-            print(result)
-            print('test')
+            # print(result)
+            # print('test')
 
 
             #diff not only contains the object_id
             if len(result) >= 1:
-                print('len > 1')
-                print(result)
+                # print('len > 1')
+                # print(result)
                 return result
             else:
                 return None
@@ -2229,11 +2244,10 @@ class EnhancementReportsUpdateAPI(APIView):
 
         diff_result = {}
         
-
         diff_result['program'] = compare_program_list(old_program,new_program)
         diff_result['competing_programs'] = compare_program_list(old_competing_programs,new_competing_programs)
 
-        print(diff_result)
+        # print(diff_result)
         #count how many diffs in the result_diff
         diff_count = 0
         for k,v in diff_result['program'].items():
@@ -2257,11 +2271,11 @@ class EnhancementReportsUpdateAPI(APIView):
 
         diff_return.update(diff_result['competing_programs'])
 
-        print(diff_count)
+        #print(diff_count)
         #struct the diff and return it
         diff_return['diff_count'] = diff_count
         if diff_return and diff_count != 0 and len(diff_return):
-            print(diff_return)
+            # print(diff_return)
             return diff_return
         else:
             return None  # return None if no difference
@@ -2445,6 +2459,8 @@ class ManagerEnhancementDiffConfirmation(APIView):
         
         print(update_diff)
         print('update_diff')
+        print(JSONParser().parse(BytesIO(zlib.decompress(eru.existing_report))))
+        print('cache report')
 
         #initial diff change
         university_customer_program = request.data['customer_program_id']
