@@ -364,7 +364,7 @@
                                             
                                             <td class="text-center bg-info text-white">1. </td>
                                             <td colspan="{{report.e_array_final[0].length}}" class="bg-info text-white text-left" style="text-decoration: none; cursor: default;">PROGRAM DETAILS</td>
-                                           
+
                                         </tr>
 
 
@@ -2059,9 +2059,7 @@
                                                     <span><i class="fa fa-star"></i>
                                                     </span>                                   
                                                 </div> 
-                                                    <pre ng-if="row.intl_other">
-                                                    {{row.intl_other}}
-                                                    </pre>
+                                                    <pre ng-if="row.intl_other">{{row.intl_other}}</pre>
 
                                                     <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.intl_other" >N/A</span>
 
