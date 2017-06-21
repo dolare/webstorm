@@ -1585,6 +1585,9 @@ angular.module('myApp').controller('AdminMainController',
 
         $scope.delete_customer_program = function (index) {
 
+            App.blocks('#client_block2', 'state_loading');
+            
+
             $scope.delete_customer_program_string = $scope.selected_customprogram[index].customer_program_id
 
             $http({
@@ -1601,33 +1604,103 @@ angular.module('myApp').controller('AdminMainController',
 
             }).then(function(response) {
 
-            console.log("success delete customer program" + JSON.stringify(response));
+                console.log("success delete customer program" + JSON.stringify(response));
 
 
-            return  $http({
+                    $scope.customer_program = response.data.customer_program;
+                    
+
+                    return $http({
                         url: '/api/upgrid/accountmanager/client/' + $scope.pwhide,
                         method: 'GET',
                         headers: {
                             'Authorization': 'JWT ' + token
                         }
 
-                  
-                     });
-
+                
+                    })
                 }).then(function(response) {
 
 
                     $scope.customer_program = response.data.customer_program;
-                  
+                    console.log("$scope.customer_program="+JSON.stringify($scope.customer_program));
+
+                //generate selected_customprogram list
+                    $scope.selected_customprogram = [];
+
+                    for (i = 0; i < $scope.customer_program.length; i++) {
+
+                        console.log("i=" + i)
+
+                        $scope.selected_customprogram.push({
+                            "customer_program_id": $scope.customer_program[i].object_id,
+                            "program_id": $scope.customer_program[i].program.object_id,
+                            "university": $scope.customer_program[i].program.program_display.split('--')[0].split('-')[0].split(':')[1],
+                            "school": $scope.customer_program[i].program.program_display.split('--')[0].split('-')[1],
+                            "program_name": $scope.customer_program[i].program.program_display.split('--')[1],
+                            "program_degree": $scope.customer_program[i].program.program_display.split('--')[2],
+                            "assignment_status": $scope.customer_program[i].program.assignment_status,
+                            "review_status": $scope.customer_program[i].program.review_status,
+                            "whoops_status": $scope.customer_program[i].whoops_status,
+                            "whoops_final_release": $scope.customer_program[i].whoops_final_release,
+                            "enhancement_final_release": $scope.customer_program[i].enhancement_final_release,
+                           
+                            "customerconfirmation_status": $scope.customer_program[i].customer_confirmation,
+                            "competing_program": (function() {
+                                var programs = [];
+                                //to fix
+                                for (j = 0; j < $scope.customer_program[i].competing_program.length; j++) {
+                                    programs[j] = {
+                                        "object_id": $scope.customer_program[i].competing_program[j].object_id,
+                                        "program_id": $scope.customer_program[i].competing_program[j].program_id,
+                                        "university": $scope.customer_program[i].competing_program[j].university,
+                                        "school": $scope.customer_program[i].competing_program[j].school,
+                                        "program_name": $scope.customer_program[i].competing_program[j].program_name,
+                                        "program_degree": $scope.customer_program[i].competing_program[j].program_degree,
+                                        "order": $scope.customer_program[i].competing_program[j].order,
+                                        "enhancement_status": $scope.customer_program[i].competing_program[j].enhancement_status
+                                    }
+
+                                }
+
+
+                                programs.sort(function(a, b) {
+                                    return parseInt(a.order) - parseInt(b.order);
+                                });
+
+                                if (programs.length === 0) {
+                                    programs.push({
+                                        "object_id": null,
+                                        "program_id": null,
+                                        "order": 1,
+                                        "enhancement_status": "in progress"
+
+                                    })
+                                }
+
+                                // programs.sort(function(a, b) {
+                                //   return (a.order.toLowerCase() > b.programName.toLowerCase()) ? 1 : ((b.programName.toLowerCase() > a.programName.toLowerCase()) ? -1 : 0);
+                                // });
+                                return programs;
+
+                            })(),
+
+                        });
+
+                    }
+
+                    App.blocks('#client_block2', 'state_normal');
+
 
 
         }).
         catch(function(error) {
             console.log('an error occurred...' + JSON.stringify(error));
+            App.blocks('#client_block2', 'state_normal');
 
         });
 
-        }
+    }
 
 
 

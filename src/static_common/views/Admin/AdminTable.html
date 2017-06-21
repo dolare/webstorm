@@ -175,8 +175,8 @@
                                             </button>
 
 
-                                            <button ng-if="!row.is_active" class="btn btn-default">
-                                                <a ng-click="verify_email(row.email)" ng-class="verifying ? 'fa fa-refresh fa-spin text-primary': 'fa fa-envelope text-primary'" style="width: 11px">
+                                            <button ng-if="!row.is_active" class="btn btn-default" ng-click="verify_email(row.email)">
+                                                <a  ng-class="verifying ? 'fa fa-refresh fa-spin text-primary': 'fa fa-envelope text-primary'" style="width: 11px">
                                                 </a>
 
                                             </button>
@@ -1134,7 +1134,8 @@
                                                             </td>
 
                                                             <td class="text-center">
-                                                                <button type="button" ng-click="delete_customer_program($index);update_list(pwhide)" class="btn btn-sm btn-danger" data-uib-tooltip="Delete" data-tooltip-placement="top">
+
+                                                                <button type="button" ng-click="delete_customer_program($index)" class="btn btn-sm btn-danger" data-uib-tooltip="Delete" data-tooltip-placement="top">
                                                                     <i class="fa fa-trash-o">
                                                                     </i>
                                                                 </button>
