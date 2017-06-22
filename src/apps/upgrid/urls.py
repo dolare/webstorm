@@ -1,7 +1,8 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from .apis import *
 from .api_enhancement import *
 from .api_whoops import *
+
 
 urlpatterns=[
     ##############################################
@@ -182,4 +183,6 @@ urlpatterns=[
     #Get return unconfirmed enhancement program
     url(r'api/upgrid/user/unenhancement/programs/$', UnconfirmedPrograms.as_view()),
 
+    # non-degree api
+    url(r'upgrid/non_degree/', include('apps.upgrid.non_degree_api.urls', namespace='non_degree_api')),
 ]
