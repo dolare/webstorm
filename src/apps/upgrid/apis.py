@@ -2248,11 +2248,18 @@ class EnhancementReportsUpdateAPI(APIView):
                             print(old_program[k1])
                             result[k1][k2] = v2
                 elif not k1 in old_program.keys() and isinstance(v1,dict): 
+                    print('key1 =====')
+                    print(k1)
+                    print(old_program[k1])
                     result[k1] = v1
                 elif k1 in old_program.keys() and not isinstance(v1,dict):
+                    print('key2')
+                    print(k1)
                     if v1 != old_program[k1]:
                         result[k1] = v1
                 else:
+                    print('key3')
+                    print(k1)
                     result[k1] = v1
 
             # print(result)
