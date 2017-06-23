@@ -665,10 +665,10 @@ class ClientWhoopsUpdateNumberSerializer(serializers.ModelSerializer):
 
     def get_update_nums(self, obj):
 
-        if not obj.confirmed_diff:
+        if not obj.update_diff:
             return 0
         else:
-            json_string = zlib.decompress(obj.confirmed_diff)
+            json_string = zlib.decompress(obj.update_diff)
             json_string = BytesIO(json_string)
             res = JSONParser().parse(json_string)
             length = 0
