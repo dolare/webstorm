@@ -84,6 +84,29 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
           }).then(function (response) {
 
 
+            $scope.show_dead_link = false;
+            $scope.show_typo = false;
+            $scope.show_outdated_information = false;
+            $scope.show_data_discrepancy = false;
+            $scope.show_sidebars = false;
+            $scope.show_infinite_loop = false;
+            $scope.show_floating_page = false;
+            $scope.show_confusing = false;
+            $scope.show_other_expert_note = false;
+
+
+            $scope.confirmed_dead_link = false;
+            $scope.confirmed_typo = false;
+            $scope.confirmed_outdated_information = false;
+            $scope.confirmed_data_discrepancy = false;
+            $scope.confirmed_sidebars = false;
+            $scope.confirmed_infinite_loop = false;
+            $scope.confirmed_floating_page = false;
+            $scope.confirmed_confusing = false;
+            $scope.confirmed_other_expert_note = false;
+
+
+
              //$scope.update_client = response.data;
              console.log("init data all = "+ JSON.stringify(response.data))
              console.log("init data =  "+ JSON.stringify(response.data.existing_report));
@@ -280,6 +303,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
       // $scope['show_'+category] = false;
 
+
       $scope.w_raw[category] = $scope.w_update[category];
       
       console.log("$scope.w_raw[category] = "+JSON.stringify($scope.w_raw[category]));
@@ -287,12 +311,14 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
             if(category === 'dead_link'){
               
-              $scope.w_array_final[0] = $scope.w_update[category]
+              $scope.w_array_final[0] = $scope.w_update[category];
+              $scope.confirmed_dead_link = true;
              }
 
              if(category === 'typo'){
               
-              $scope.w_array_final[1] = $scope.w_update[category]
+              $scope.w_array_final[1] = $scope.w_update[category];
+              $scope.confirmed_typo = true;
              }
 
              if(category === 'outdated_information'){
@@ -302,32 +328,38 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
              if(category === 'data_discrepancy'){
               
-              $scope.w_array_final[3] = $scope.w_update[category]
+              $scope.w_array_final[3] = $scope.w_update[category];
+              $scope.confirmed_data_discrepancy = true;
              }
 
              if(category === 'sidebars'){
               
-              $scope.w_array_final[4] = $scope.w_update[category]
+              $scope.w_array_final[4] = $scope.w_update[category];
+              $scope.confirmed_sidebars = true;
              }
 
              if(category === 'infinite_loop'){
               
-              $scope.w_array_final[5] = $scope.w_update[category]
+              $scope.w_array_final[5] = $scope.w_update[category];
+              $scope.confirmed_infinite_loop = true;
              }
 
              if(category === 'floating_page'){
               
-              $scope.w_array_final[6] = $scope.w_update[category]
+              $scope.w_array_final[6] = $scope.w_update[category];
+              $scope.confirmed_floating_page = true;
              }
             
              if(category === 'confusing'){
               
-              $scope.w_array_final[7] = $scope.w_update[category]
+              $scope.w_array_final[7] = $scope.w_update[category];
+              $scope.confirmed_confusing = true;
              }
               
              if(category === 'other_expert_note'){
               
-              $scope.w_array_final[8] = $scope.w_update[category]
+              $scope.w_array_final[8] = $scope.w_update[category];
+              $scope.confirmed_other_expert_note = true;
              }
 
              $scope.w_confirmed_diff_raw[category] = $scope.w_update[category];
