@@ -155,9 +155,9 @@
 
 
                                                 <div class="pull-right">
-                                                    <span ng-if="w_array_final[0].length!==0" class="badge badge-primary pull-right">{{w_array_final[0].length}}</span>
+                                                    <span ng-show="w_array_final[0].length!==0" class="badge badge-primary pull-right">{{w_array_final[0].length}}</span>
 
-                                                    <span ng-if="w_array_final[0].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                                                    <span ng-show="w_array_final[0].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                                                     <span class="pull-left">
                                                         &nbsp;&nbsp;
@@ -172,7 +172,7 @@
                                     </tbody>
 
 
-                                    <tbody ng-if="show_dead_link && w_update.dead_link" ng-repeat="row in w_update.dead_link">
+                                    <tbody ng-show="show_dead_link && w_update.dead_link" ng-repeat="row in w_update.dead_link">
 
                                         <tr class="bg-gray-light">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
@@ -194,7 +194,7 @@
                                             </td>
                                        </tr>
 
-                                       <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+                                       <tr class="bg-gray-lighter" ng-show="row.additional_note_url2">
                                             <td class="text-center bg-white"></td>
                                             <td>
                                                 <span class="font-w600 text-muted">Dead link url</span>
@@ -208,7 +208,7 @@
                                             
                                         </tr>
 
-                                        <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+                                        <tr class="bg-gray-lighter" ng-show="row.additional_note_url3">
                                             <td class="text-center bg-white"></td>
                                             <td>
                                                 <span class="font-w600 text-muted">Dead link url</span>
@@ -222,7 +222,7 @@
                                             
                                         </tr>
 
-                                        <tr class="bg-gray-lighter" ng-if="row.additional_note">
+                                        <tr class="bg-gray-lighter" ng-show="row.additional_note">
                                             <td class="text-center bg-white"></td>
                                             <td>
                                                 <span class="font-w600 text-muted">Description</span>
@@ -235,6 +235,7 @@
                                             </td>
                                             
                                         </tr>
+                                        
 
                                     </tbody>
 
@@ -255,7 +256,7 @@
                                             </td>
                                        </tr>
 
-                                       <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+                                       <tr class="bg-gray-lighterer" ng-show="row.additional_note_url2">
                                             <td class="text-center bg-white"></td>
                                             <td>
                                                 <span class="font-w600 text-muted">Dead link url</span>
@@ -269,7 +270,7 @@
                                             
                                         </tr>
 
-                                        <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+                                        <tr class="bg-gray-lighterer" ng-show="row.additional_note_url3">
                                             <td class="text-center bg-white"></td>
                                             <td>
                                                 <span class="font-w600 text-muted">Dead link url</span>
@@ -283,7 +284,7 @@
                                             
                                         </tr>
 
-                                        <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+                                        <tr class="bg-gray-lighterer" ng-show="row.additional_note">
                                             <td class="text-center bg-white"></td>
                                             <td>
                                                 <span class="font-w600 text-muted">Description</span>
@@ -308,9 +309,9 @@
 
                                                 <div class="pull-right">
 
-                                                    <span ng-if="w_array_final[1].length!==0" class="badge badge-primary pull-right">{{w_array_final[1].length}}</span>
+                                                    <span ng-show="w_array_final[1].length!==0" class="badge badge-primary pull-right">{{w_array_final[1].length}}</span>
 
-                                                    <span ng-if="w_array_final[1].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                                                    <span ng-show="w_array_final[1].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                                                     <span class="pull-left">
                                                         &nbsp;&nbsp;
@@ -325,7 +326,7 @@
         </tbody>
 
 
-        <tbody ng-if="show_typo && w_update.typo" ng-repeat="row in w_update.typo">
+        <tbody ng-show="show_typo && w_update.typo" ng-repeat="row in w_update.typo">
 
         <tr class="bg-gray-light">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
@@ -347,7 +348,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighter" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Typo url</span>
@@ -361,7 +362,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Typo url</span>
@@ -375,7 +376,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -408,7 +409,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighterer" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Typo url</span>
@@ -422,7 +423,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Typo url</span>
@@ -436,7 +437,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -460,9 +461,9 @@
                     <span class="font-w600" >OUTDATED INFORMATION</span>
 
                     <div class="pull-right">
-                        <span ng-if="w_array_final[2].length!==0" class="badge badge-primary pull-right">{{w_array_final[2].length}}</span>
+                        <span ng-show="w_array_final[2].length!==0" class="badge badge-primary pull-right">{{w_array_final[2].length}}</span>
 
-                        <span ng-if="w_array_final[2].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[2].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                             &nbsp;&nbsp;
@@ -480,7 +481,7 @@
         </tbody>
 
 
-        <tbody ng-if="show_outdated_information && w_update.outdated_information" ng-repeat="row in w_update.outdated_information">
+        <tbody ng-show="show_outdated_information && w_update.outdated_information" ng-repeat="row in w_update.outdated_information">
 
             <tr class="bg-gray-light">
                 <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
@@ -501,7 +502,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighter" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Outdated information url</span>
@@ -515,7 +516,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Outdated information url</span>
@@ -529,7 +530,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -560,7 +561,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighterer" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Outdated information url</span>
@@ -574,7 +575,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Outdated information url</span>
@@ -588,7 +589,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -612,9 +613,9 @@
 
 
                     <div class="pull-right">
-                        <span ng-if="w_array_final[3].length!==0" class="badge badge-primary pull-right">{{w_array_final[3].length}}</span>
+                        <span ng-show="w_array_final[3].length!==0" class="badge badge-primary pull-right">{{w_array_final[3].length}}</span>
 
-                        <span ng-if="w_array_final[3].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[3].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                 &nbsp;&nbsp;
@@ -630,7 +631,7 @@
         </tbody>
 
 
-        <tbody ng-if="show_data_discrepancy && w_update.data_discrepancy" ng-repeat="row in w_update.data_discrepancy">
+        <tbody ng-show="show_data_discrepancy && w_update.data_discrepancy" ng-repeat="row in w_update.data_discrepancy">
 
             <tr class="bg-gray-light">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
@@ -652,7 +653,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighter" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Source url</span>
@@ -666,7 +667,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Source url</span>
@@ -680,7 +681,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -713,7 +714,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighterer" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Source url</span>
@@ -727,7 +728,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Source url</span>
@@ -741,7 +742,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -764,9 +765,9 @@
                     <span class="font-w600">MALFUNCTIONING SIDEBARS/MENU/HYPERLINK</span>
 
                     <div class="pull-right">
-                        <span ng-if="w_array_final[4].length!==0" class="badge badge-primary pull-right">{{w_array_final[4].length}}</span>
+                        <span ng-show="w_array_final[4].length!==0" class="badge badge-primary pull-right">{{w_array_final[4].length}}</span>
 
-                        <span ng-if="w_array_final[4].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[4].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                     &nbsp;&nbsp;
@@ -781,7 +782,7 @@
         </tbody>
 
 
-        <tbody ng-if="show_sidebars && w_update.sidebars" ng-repeat="row in w_update.sidebars">
+        <tbody ng-show="show_sidebars && w_update.sidebars" ng-repeat="row in w_update.sidebars">
         
             <tr class="bg-gray-light">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
@@ -804,7 +805,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighter" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Source url</span>
@@ -818,7 +819,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Sidebars url</span>
@@ -832,7 +833,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -864,7 +865,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighterer" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Source url</span>
@@ -878,7 +879,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Sidebars url</span>
@@ -892,7 +893,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -915,9 +916,9 @@
                     <span class="font-w600">INFINITE LOOP</span>
 
                     <div class="pull-right">
-                        <span ng-if="w_array_final[5].length!==0" class="badge badge-primary pull-right">{{w_array_final[5].length}}</span>
+                        <span ng-show="w_array_final[5].length!==0" class="badge badge-primary pull-right">{{w_array_final[5].length}}</span>
 
-                        <span ng-if="w_array_final[5].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[5].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                         &nbsp;&nbsp;
@@ -931,7 +932,7 @@
 
         </tbody>
 
-        <tbody ng-if="show_infinite_loop && w_update.infinite_loop" ng-repeat="row in w_update.infinite_loop">
+        <tbody ng-show="show_infinite_loop && w_update.infinite_loop" ng-repeat="row in w_update.infinite_loop">
 
         <tr class="bg-gray-light">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
@@ -953,7 +954,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighter" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Infinite loop url</span>
@@ -967,7 +968,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Infinite loop url</span>
@@ -981,7 +982,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -1013,7 +1014,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighterer" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Infinite loop url</span>
@@ -1027,7 +1028,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Infinite loop url</span>
@@ -1041,7 +1042,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -1065,9 +1066,9 @@
 
                     <div class="pull-right">
 
-                        <span ng-if="w_array_final[6].length!==0" class="badge badge-primary pull-right">{{w_array_final[6].length}}</span>
+                        <span ng-show="w_array_final[6].length!==0" class="badge badge-primary pull-right">{{w_array_final[6].length}}</span>
 
-                        <span ng-if="w_array_final[6].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[6].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                             &nbsp;&nbsp;
@@ -1086,7 +1087,7 @@
         </tbody>
 
 
-        <tbody ng-if="show_floating_page && w_update.floating_page" ng-repeat="row in w_update.floating_page">  
+        <tbody ng-show="show_floating_page && w_update.floating_page" ng-repeat="row in w_update.floating_page">  
             <tr class="bg-gray-light">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
                                             <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('floating_page'); show_floating_page = false">confirm</button></td>
@@ -1107,7 +1108,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighter" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Floating page url</span>
@@ -1121,7 +1122,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Floating page url</span>
@@ -1135,7 +1136,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -1167,7 +1168,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighterer" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Floating page url</span>
@@ -1181,7 +1182,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Floating page url</span>
@@ -1195,7 +1196,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -1218,9 +1219,9 @@
                     <span class="font-w600">CONFUSING AND/OR NOT CLEARLY PRESENTED</span>
 
                     <div class="pull-right">
-                        <span ng-if="w_array_final[7].length!==0" class="badge badge-primary pull-right">{{w_array_final[7].length}}</span>
+                        <span ng-show="w_array_final[7].length!==0" class="badge badge-primary pull-right">{{w_array_final[7].length}}</span>
 
-                        <span ng-if="w_array_final[7].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[7].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                                 &nbsp;&nbsp;
@@ -1236,7 +1237,7 @@
         </tbody>
 
 
-        <tbody ng-if="show_confusing && w_update.confusing" ng-repeat="row in w_update.confusing">
+        <tbody ng-show="show_confusing && w_update.confusing" ng-repeat="row in w_update.confusing">
 
             <tr class="bg-gray-light">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
@@ -1257,7 +1258,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighter" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Confusing url</span>
@@ -1271,7 +1272,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Confusing url</span>
@@ -1285,7 +1286,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -1317,7 +1318,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighterer" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Confusing url</span>
@@ -1331,7 +1332,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Confusing url</span>
@@ -1345,7 +1346,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -1369,9 +1370,9 @@
 
                     <div class="pull-right">
 
-                        <span ng-if="w_array_final[8].length!==0" class="badge badge-primary pull-right">{{w_array_final[8].length}}</span>
+                        <span ng-show="w_array_final[8].length!==0" class="badge badge-primary pull-right">{{w_array_final[8].length}}</span>
 
-                        <span ng-if="w_array_final[8].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[8].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                                 &nbsp;&nbsp;
@@ -1387,7 +1388,7 @@
 
         </tbody>
 
-        <tbody ng-if="show_other_expert_note && w_update.other_expert_note" ng-repeat="row in w_update.other_expert_note">
+        <tbody ng-show="show_other_expert_note && w_update.other_expert_note" ng-repeat="row in w_update.other_expert_note">
 
         <tr class="bg-gray-light">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
@@ -1409,7 +1410,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighter" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighter" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Other expert notes url</span>
@@ -1423,7 +1424,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Other expert notes url</span>
@@ -1437,7 +1438,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighter" ng-if="row.additional_note">
+            <tr class="bg-gray-lighter" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>
@@ -1469,7 +1470,7 @@
                 </td>
            </tr>
 
-           <tr class="bg-gray-lighterer" ng-if="row.additional_note_url2">
+           <tr class="bg-gray-lighterer" ng-show="row.additional_note_url2">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Other expert notes url</span>
@@ -1483,7 +1484,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note_url3">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note_url3">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Other expert notes url</span>
@@ -1497,7 +1498,7 @@
                 
             </tr>
 
-            <tr class="bg-gray-lighterer" ng-if="row.additional_note">
+            <tr class="bg-gray-lighterer" ng-show="row.additional_note">
                 <td class="text-center bg-white"></td>
                 <td>
                     <span class="font-w600 text-muted">Description</span>

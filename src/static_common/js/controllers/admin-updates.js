@@ -97,7 +97,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              $scope.w_update = response.data.initial_diff.new;
              console.log("w_update="+JSON.stringify($scope.w_update));
 
-             $scope.w_raw = response.data.existing_report;
+             $scope.w_raw = response.data.existing_or_cache_report;
              console.log("w_raw = "+JSON.stringify($scope.w_raw))
 
              $scope.w_array_final = [];
@@ -277,6 +277,8 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
      $scope.w_confirm_update = function (category) {
       console.log("confirmed "+category);
+
+      // $scope['show_'+category] = false;
 
       $scope.w_raw[category] = $scope.w_update[category];
       
