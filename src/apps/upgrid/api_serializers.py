@@ -121,14 +121,19 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
         return obj.program.degree.name
 
     def get_has_expert_notes(self, obj):
-        origin_program = Program.objects.get(object_id=obj.program.object_id)
-        qs = ExpertAdditionalNote.objects.filter(program=origin_program)
-        
-        expert_notes = ""
-        if len(qs) == 0:
+        try:
+            update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
+            
+            existing_report = zlib.decompress(update_report.existing_report)
+            existing_report = BytesIO(existing_report)
+            existing_report = JSONParser().parse(existing_report)
+
+            if not existing_report is None:
+                expert_notes = True
+            else:
+                expert_notes = False
+        except:
             expert_notes = False
-        else:
-            expert_notes = True
 
         return expert_notes
 

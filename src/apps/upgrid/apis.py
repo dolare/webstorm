@@ -1951,10 +1951,22 @@ class ManagerWhoopsDiffConfirmation(APIView):
                                        most_recent=True)
         wru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
 
+        #initial diff change
+        university_customer_program_query = UniversityCustomerProgram.objects.filter(pk = request.data['customer_program_id'])
+        if not university_customer_program_query.exists():
+            return Response({"failed": _("bad request")}, status=HTTP_400_BAD_REQUEST)
+        university_customer_program = university_customer_program_query.first()
+        new_whoops_report_dict = WhoopsReportsUpdateAPI().get_programs_data(request,university_customer_program)
+        initial_diff = WhoopsReportsUpdateAPI.\
+            compare_whoops_report(request.data['cache_report'],new_whoops_report_dict)
+
+
+
         update_diff = WhoopsReportsUpdateAPI.\
             compare_whoops_report(JSONParser().parse(BytesIO(zlib.decompress(wru.existing_report))),
                                        request.data['cache_report'])
         wru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
+        wru.initial_diff = zlib.compress(JSONRenderer().render(initial_diff))
         wru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
         wru.last_edit_time = timezone.now()
         wru.save()
@@ -2026,7 +2038,6 @@ class ClientViewWhoopsUpdate(APIView):
                 existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
 
             else:
-
                 existing_report = "None"
             if update_report.update_diff and client_id:
                 update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
@@ -2476,7 +2487,8 @@ class ManagerEnhancementDiffConfirmation(APIView):
         eru = EnhancementUpdate.objects.get(customer_program=request.data['customer_program_id'],
                                             customer=request.data['client_id'], most_recent=True)
         eru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
-       
+        
+        #update diff change
         update_diff = EnhancementReportsUpdateAPI.\
             compare_enhancement_report(request.data['cache_report'],JSONParser().parse(BytesIO(zlib.decompress(eru.existing_report))))
         
@@ -2490,6 +2502,8 @@ class ManagerEnhancementDiffConfirmation(APIView):
         new_enhancement_report_dict = EnhancementReportsUpdateAPI().get_programs_data(university_customer_program)
         initial_diff = EnhancementReportsUpdateAPI.\
             compare_enhancement_report(request.data['cache_report'],new_enhancement_report_dict)
+
+     
 
         print(initial_diff)
         print('initial_diff')
@@ -2505,7 +2519,8 @@ class ManagerEnhancementDiffConfirmation(APIView):
         confirmed_diff['diff_count'] = diff_count
         eru.confirmed_diff = zlib.compress(JSONRenderer().render(confirmed_diff))
         eru.initial_diff = zlib.compress(JSONRenderer().render(initial_diff))
-
+        eru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
+        
         print(eru.confirmed_diff)
         eru.last_edit_time = timezone.now()
         eru.save()
