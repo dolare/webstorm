@@ -41,7 +41,7 @@ controller('ReportsController',
     }
 
     // alert('wahaha[0]='+$scope.obj1.wahaha[0]);
-    $scope.printReport = function() {
+
       
     $scope.printReport = function() {
       
@@ -59,7 +59,7 @@ controller('ReportsController',
       }); 
    }  
 
-    }
+    
 
     $scope.togglefullen = function() {
       angular.element(document.getElementById("ViewAll")).toggleClass('fullscreen-modal');

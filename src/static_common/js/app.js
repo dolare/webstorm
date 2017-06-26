@@ -606,6 +606,62 @@ App.config(function($stateProvider, $urlRouterProvider) {
     }
 
   }).
+  state('non_degree', {
+
+    url: '/non_degree',
+    templateUrl: '/static/views/Home/non_degree.html',
+    controller: 'NonDegreeController',
+    parent: 'success_demo',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo) {
+          console.log("authenticated");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+        } else {
+          console.log('fail to see the page, route change error');
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsEnhancement: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                            
+                              '/static/js/third-party/clipboard.min.js',
+                              '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                            
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                              '/static/js/controllers/non_degree.js',
+                             
+                              
+                            ]
+                        });
+                    }],
+
+      //get raw data
+      List: function(depsEnhancement, apiService, authenticationSvc) {
+        var userInfo = authenticationSvc.getUserInfo();
+        console.log('*************');
+        return apiService.getProfileList(userInfo.accessToken);
+
+      }
+
+
+    }
+
+  }).
   state('reports', {
 
     url: '/reports',
