@@ -185,7 +185,7 @@ class UniversityCustomer(UpgridBaseUser):
     phone = models.CharField(max_length=20, null=True)
     account_type = models.CharField(max_length=20, choices=accounttype, default='sub', null=True)
     service_until = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
-    competing_schools = models.ManyToManyField(UniversitySchool, related_name='+')
+    competing_schools = models.ManyToManyField(UniversitySchool, related_name='+', blank=True)
     non_degree_schools = models.ManyToManyField(UniversitySchool, blank=True, related_name='non_degree_user')
 
     def __str__(self):
@@ -446,4 +446,4 @@ class NonDegreeReleaseReport(BasedDatedObject):
     """
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     school = models.ForeignKey(UniversitySchool, on_delete=models.CASCADE, null=False)
-    report = JSONField()
+    categories = JSONField()

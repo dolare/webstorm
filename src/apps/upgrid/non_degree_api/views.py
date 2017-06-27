@@ -1,19 +1,16 @@
 from django.db.models import Q
 from django.core.exceptions import ValidationError
-from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, CreateAPIView, DestroyAPIView, \
     RetrieveAPIView
 from rest_framework.filters import SearchFilter, OrderingFilter, DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
-from rest_framework.mixins import CreateModelMixin
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, \
     HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
 
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeRepeatDate
 
-from .serializers import UniversitySchoolListSerializer, ReleaseReportCreateSerializer, CategorieSerializer, \
+from .serializers import UniversitySchoolListSerializer, ReleaseReportCreateSerializer, CategorySerializer, \
     ReleaseReportListSerializer, ReleaseReportSerializer
 from .pagination import UniversitySchoolPagination, ReleaseReportPagination
 from .filter import UniversitySchoolFilter, ReleaseReportFilter
@@ -46,7 +43,7 @@ class UniversitySchoolListAPI(PermissionMixin, ListAPIView):
             university_schools = UniversitySchool.objects.all()
         else:
             university_schools = UniversitySchool.objects\
-                .filter(nondegreecustomerschoolmap__customer=self.request.user)
+                .filter(non_degree_user=self.request.user)
         return university_schools
 
 
@@ -68,7 +65,7 @@ class ReleaseReportListAPI(PermissionMixin, ListAPIView):
             reports = NonDegreeReleaseReport.objects.all()
         else:
             reports = NonDegreeReleaseReport.objects \
-                .filter(school__non_degree_user__contains=self.request.user).distinct()
+                .filter(school__non_degree_user=self.request.user)
         return reports
 
 
@@ -84,7 +81,7 @@ class ReleaseReportAPI(PermissionMixin, GenericAPIView):
             reports = NonDegreeReleaseReport.objects.all()
         else:
             reports = NonDegreeReleaseReport.objects \
-                .filter(school__non_degree_user__contains=self.request.user).distinct()
+                .filter(school__non_degree_user=self.request.user)
         return reports
 
     def retrieve(self, request, *args, **kwargs):
@@ -120,7 +117,7 @@ class ReleaseReportCreateAPI(PermissionMixin, CreateAPIView):
         except UniversitySchool.DoesNotExist:
             raise ValidationError("Can not find school with this object_id.")
         categories = NonDegreeCategory.objects.filter(university_school=school)
-        data = JSONRenderer().render(CategorieSerializer(categories, many=True).data)
+        data = JSONRenderer().render(CategorySerializer(categories, many=True).data)
         return data
 
     def create(self, request, *args, **kwargs):

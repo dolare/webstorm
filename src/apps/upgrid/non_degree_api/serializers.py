@@ -1,13 +1,18 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField, JSONField
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeCourseDate
 
 from ..models import NonDegreeReleaseReport
 
 
 class UniversitySchoolListSerializer(ModelSerializer):
+    university = SerializerMethodField()
+
     class Meta:
         model = UniversitySchool
-        fields = ('object_id', 'ceeb', 'school')
+        fields = ('object_id', 'ceeb', 'school', 'university',)
+
+    def get_university(self, obj):
+        return obj.university
 
 
 class ReleaseReportListSerializer(ModelSerializer):
@@ -53,7 +58,7 @@ class CourseSerializer(ModelSerializer):
         return CourseDateSerializer(dates, many=True).data
 
 
-class CategorieSerializer(ModelSerializer):
+class CategorySerializer(ModelSerializer):
     courses = SerializerMethodField()
 
     class Meta:

@@ -86,30 +86,49 @@ class SimpleObjectModelAdmin(AutoUserModelAdmin):
 
 
 class UniversityCustomerAdmin(admin.ModelAdmin):
-    readonly_fields = ('object_id', 'date_created', 'date_modified', 'created_by', 'modified_by')
+    readonly_fields = ('id', 'data_joined', )
 
-    list_display = ('name', 'description', 'created_by', 'modified_by')
-    list_filter = ('date_created', 'date_modified', 'created_by', 'modified_by')
+    list_display = ('username', 'email', 'is_active', 'data_joined', )
+    list_filter = ('is_active', 'data_joined',)
 
+    filter_horizontal = ('competing_schools', 'non_degree_schools', )
     search_fields = [
-        'name',
-        'description',
+        'username',
+        'email',
     ]
 
     fieldsets = [
         ('Management Record', {
             'fields': [
-                'object_id',
-                'date_created',
-                'date_modified',
-                'created_by',
-                'modified_by',
+                'id',
+                'data_joined',
             ]
         }),
         ('Details', {
             'fields': [
-                'name',
-                'description',
+                'username',
+                'email',
+                'password',
+                'is_active',
+                'is_demo',
+                'can_ccemail',
+                'Ceeb',
+                'department',
+                'account_manager',
+            ]
+        }),
+        ('Sub User', {
+            'fields': [
+                'main_user_id',
+                'service_level',
+                'title',
+                'contact_name',
+                'position',
+                'position_level',
+                'phone',
+                'account_type',
+                'competing_schools',
+                'non_degree_schools',
             ]
         }),
     ]
@@ -305,7 +324,7 @@ class NonDegreeCourseAdmin(AutoUserModelAdmin):
     ]
 
 
-admin.site.register(UniversityCustomer)
+admin.site.register(UniversityCustomer, UniversityCustomerAdmin)
 admin.site.register(UniversityCustomerProgram)
 admin.site.register(CustomerCompetingProgram)
 admin.site.register(UpgridAccountManager)
