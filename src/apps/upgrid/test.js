@@ -1,3 +1,320 @@
-{'d': {'get_deadline_summer_early_month_display': None, 'deadline_url': 'https://www.mailman.columbia.edu/become-student/apply/deadlines', 'get_deadline_spring_early_day_display': None, 'deadline_summer_late_day': None, 'scholarship_deadline_day': None, 'get_deadline_fall_early_month_display': 'December', 'get_deadline_summer_early_day_display': None, 'deadline_spring_late_month': None, 'get_deadline_fall_late_day_display': '15th', 'deadline_summer_early_month': None, 'get_deadline_spring_late_month_display': None, 'get_deadline_spring_early_month_display': None, 'get_deadline_summer_late_day_display': None, 'deadline_fall_early_day': 1, 'get_deadline_fall_early_day_display': '1st', 'deadline_spring_early_day': None, 'deadline_fall_early_month': 12, 'deadline_summer_early_day': None, 'get_deadline_fall_late_month_display': 'January', 'scholarship_deadline_month': None, 'get_deadline_spring_late_day_display': None, 'deadline_fall_late_day': 15, 'deadline_rolling': None, 'get_deadline_summer_late_month_display': None, 'deadline_fall_late_month': 1, 'deadline_spring_early_month': None, 'deadline_summer_late_month': None, 'deadline_spring_late_day': None}, 'c': {'curriculum_url': 'https://www.mailman.columbia.edu/become-student/apply/process/faq', 'min_total_unit': '52', 'dissertation_notes': '', 'doctorate_dissertation_or_equivalent': None, 'curriculum_unit': {'name': 'Credit/Point/(Credit/Semester) Hour'}, 'thesis_notes': 'Upon completion of the practicum, each student will complete a capstone paper which details his/her role, how data was managed, the specific statistical methods and key types of measures used on the study, and any outcomes of the project.', 'master_thesis_or_equivalent': 'Y', 'max_transfer_unit': 0}, 'dura': {'duration_unit': {'name': 'Year(s)'}, 'full_part_time': 'F', 'duration_max': '1.0', 'durationtime_limit': None, 'duration_min': '1.0', 'duration_addl': None, 'part_time': None, 'duration_conj': None, 'duration_addl_unit': None}, 'Intl_eng_test': [{'name': 'IELTS'}, {'name': 'TOEFL'}], 'ex': [{'name': 'GMAT'}, {'name': 'GRE'}, {'name': 'LSAT'}, {'name': 'MCAT'}], 'r': {'program_req_url': 'https://www.mailman.columbia.edu/become-student/apply/process/application-components', 'transcript_post_admin': None, 'school_req_url': 'https://www.mailman.columbia.edu/become-student/apply/process/faq', 'toefl_twe': None, 'recommendation': 3, 'gpa_minimum_letter': None, 'toefl_cbt': None, 'gpa_suggested': None, 'application_fee': 65, 'special_reqs': '', 'transcript_for_application': 'Y', 'intl_other': '', 'sup_mat_writing_sample_notes': '', 'application_fee_waiver_notes': '', 'toefl_ibt': 100, 'toefl_pbt': 600, 'toefl_ibt_writing': None, 'resume': 'Y', 'school_interview': None, 'toefl_ibt_reading': None, 'essays': 'Personal Statement', 'toefl_ibt_speaking': None, 'intl_ielts_reqs': '7.5', 'application_fee_waiver': None, 'gpa_suggested_letter': None, 'intl_lang_waiver': False, 'gpa_minimum': '3.30', 'sup_mat_writing_sample': None, 'official_transcript_for_enrollment': None, 'toefl_ibt_listening': None, 'intl_lang_waiver_conditions': '', 'gpa_average_letter': None, 'sup_mat_portfolio': None, 'gpa_average': '3.63', 'intl_req_url': '', 'apply_online': True, 'toefl_tse': None, 'sup_mat_portfolio_notes': '', 'intl_english_test_required': True}, 'p': {'additional_url': 'https://www.mailman.columbia.edu/sites/default/files/legacy/biostats_student_handbook_2015_2016.pdf', 'degree': {'name': 'MPH'}, 'object_id': 'fd885899-f974-4a07-a5eb-0f2ce979a77d', 'specialization': '', 'department': 'Biostatistics', 'url': 'https://www.mailman.columbia.edu/become-student/degrees/masters-programs/masters-public-health/accelerated-mph', 'university_school': {'university': 'Columbia University', 'school': 'Mailman School of Public Health'}, 'highlights': 'The curriculum is similar to the innovative curriculum of the two-year Columbia MPH, but completed at a faster, more demanding pace.', 'job_placement': '', 'stats_profile_url': 'https://www.mailman.columbia.edu/become-student/apply/process/faq', 'program_faq_url': 'https://www.mailman.columbia.edu/become-student/degrees/faq', 'program_name': 'Accelerated Master of Public Health in Biostatistics', 'online_program': False, 'job_placement_url': 'https://www.mailman.columbia.edu/sites/default/files/pdf/ocs_stats_2014_2015_0.pdf', 'audience': 'The Accelerated MPH is an intensive, one-year program designed for highly motivated professionals seeking to enhance their career with a degree in public health.'}, 's': {'fully_funded': None, 'fully_funded_notes': '', 'scholarship_notes': 'Financial aid packages can include a combination of institutional funds, loans, and student employment opportunities.', 'scholarship_avail': True, 'scholarship_program_specific_url': ''}, 't': {'tuition_per_unit': 1624, 'tuition_unit': {'name': 'Credit/Point/(Credit/Semester) Hour'}, 'tuition_per_unit_out_state': None, 'fee_included': False, 'university_cost_url': 'http://sfs.columbia.edu/tuitions-fees-listing?trf_school=390&year-period=434', 'school_cost_url': 'https://www.mailman.columbia.edu/become-student/apply/tuition-fees/mphmha-costs'}, 'Intl_transcript': [{'name': 'WES', 'description': 'World Education Services'}], 'length': 1}
-[[[[[[]]]]]]
-{'d': {'get_deadline_summer_early_month_display': None, 'deadline_url': 'https://www.mailman.columbia.edu/become-student/apply/deadlines', 'international_deadline_month': None, 'get_deadline_spring_early_day_display': None, 'deadline_summer_late_day': None, 'scholarship_deadline_day': None, 'get_deadline_fall_early_month_display': 'December', 'get_deadline_summer_early_day_display': None, 'deadline_spring_late_month': None, 'get_international_deadline_day_display': None, 'get_deadline_fall_late_day_display': '15th', 'deadline_summer_early_month': None, 'get_deadline_spring_late_month_display': None, 'get_deadline_spring_early_month_display': None, 'get_deadline_summer_late_day_display': None, 'deadline_fall_early_day': 1, 'get_deadline_fall_early_day_display': '1st', 'deadline_spring_early_day': None, 'deadline_fall_early_month': 12, 'deadline_summer_early_day': None, 'get_deadline_fall_late_month_display': 'January', 'scholarship_deadline_month': None, 'get_deadline_spring_late_day_display': None, 'deadline_fall_late_day': 15, 'deadline_rolling': None, 'get_deadline_summer_late_month_display': None, 'deadline_fall_late_month': 1, 'deadline_spring_early_month': None, 'get_international_deadline_month_display': None, 'deadline_summer_late_month': None, 'international_deadline_day': None, 'deadline_spring_late_day': None}, 'Intl_transcript2': [OrderedDict([('name', 'TRANSLATED'), ('description', 'Basic Translation from non-English transcript to English')])], 'c': {'curriculum_url': 'https://www.mailman.columbia.edu/become-student/apply/process/faq', 'min_total_unit': '52', 'dissertation_notes': '', 'doctorate_dissertation_or_equivalent': None, 'curriculum_unit': OrderedDict([('name', 'Credit/Point/(Credit/Semester) Hour')]), 'thesis_notes': 'Upon completion of the practicum, each student will complete a capstone paper which details his/her role, how data was managed, the specific statistical methods and key types of measures used on the study, and any outcomes of the project.', 'master_thesis_or_equivalent': 'Y', 'max_transfer_unit': 0}, 'd2': {'get_deadline_summer_early_month_display': None, 'deadline_url': 'https://grad.admissions.rutgers.edu/GraduateProgram/Detail.aspx?code=16125%20%20XX&degree=ME', 'international_deadline_month': None, 'get_deadline_spring_early_day_display': '5th', 'deadline_summer_late_day': None, 'scholarship_deadline_day': None, 'get_deadline_fall_early_month_display': 'August', 'get_deadline_summer_early_day_display': None, 'deadline_spring_late_month': None, 'get_international_deadline_day_display': None, 'get_deadline_fall_late_day_display': None, 'deadline_summer_early_month': None, 'get_deadline_spring_late_month_display': None, 'get_deadline_spring_early_month_display': 'January', 'get_deadline_summer_late_day_display': None, 'deadline_fall_early_day': 1, 'get_deadline_fall_early_day_display': '1st', 'deadline_spring_early_day': 5, 'deadline_fall_early_month': 8, 'deadline_summer_early_day': None, 'get_deadline_fall_late_month_display': None, 'scholarship_deadline_month': None, 'get_deadline_spring_late_day_display': None, 'deadline_fall_late_day': None, 'deadline_rolling': True, 'get_deadline_summer_late_month_display': None, 'deadline_fall_late_month': None, 'deadline_spring_early_month': 1, 'get_international_deadline_month_display': None, 'deadline_summer_late_month': None, 'international_deadline_day': None, 'deadline_spring_late_day': None}, 'c2': {'curriculum_url': None, 'min_total_unit': '', 'dissertation_notes': None, 'doctorate_dissertation_or_equivalent': None, 'curriculum_unit': None, 'thesis_notes': '', 'master_thesis_or_equivalent': None, 'max_transfer_unit': None}, 'p2': {'additional_url': 'http://bme.rutgers.edu/sites/default/files/uploads/GradHandbookAug272015.pdf', 'degree': OrderedDict([('name', 'MEng')]), 'object_id': 'deecde54-b0bb-44a1-a43c-ac3e4b788cb0', 'specialization': '', 'department': 'Biomedical Engineering', 'url': 'http://online.rutgers.edu/master-biomedical-engineering/', 'university_school': OrderedDict([('university', 'Rutgers University'), ('school', 'Graduate School')]), 'highlights': 'The Online Advantage\r\n Learn from anywhere, according to your own schedule\r\n Balance your studies with other life commitments\r\n Enjoy small class sizes and close online interactions with faculty and peers\r\n Complete your study all year round, part-time or full-time\r\n Choose from Fall and Spring start points', 'job_placement': '', 'stats_profile_url': '', 'program_faq_url': '', 'program_name': 'Biomedical Engineering - Online', 'online_program': False, 'job_placement_url': '', 'audience': 'The M.E. degree focuses on preparing students in the fundamentals of biomedical engineering without a thesis - it is a terminal degree that is not intended to lead to a PhD program.'}, 'ex': [OrderedDict([('name', 'GMAT')]), OrderedDict([('name', 'GRE')]), OrderedDict([('name', 'LSAT')]), OrderedDict([('name', 'MCAT')])], 'Intl_transcript': [OrderedDict([('name', 'WES'), ('description', 'World Education Services')])], 'length': 2, 'Intl_eng_test2': [OrderedDict([('name', 'TOEFL')])], 's2': {'fully_funded': None, 'fully_funded_notes': '', 'scholarship_notes': '', 'scholarship_avail': None, 'scholarship_program_specific_url': ''}, 'ex2': [OrderedDict([('name', 'GRE')])], 'r2': {'program_req_url': 'http://online.rutgers.edu/master-biomedical-engineering/', 'transcript_post_admin': None, 'school_req_url': 'http://gsnb.rutgers.edu/admissions/admissions-requirements', 'toefl_twe': None, 'recommendation': 3, 'gpa_minimum_letter': None, 'toefl_cbt': 213, 'gpa_suggested': None, 'application_fee': 65, 'special_reqs': '1. Minimum of 3.0 GPA recommended\r\n2. Additional evidence of potential for excellence in research as demonstrated by previous research experience', 'transcript_for_application': 'Y', 'intl_other': '', 'sup_mat_writing_sample_notes': '', 'application_fee_waiver_notes': 'Online application and $65 non-refundable application fee', 'toefl_ibt': None, 'toefl_pbt': 550, 'toefl_ibt_writing': 22, 'resume': 'O', 'school_interview': None, 'toefl_ibt_reading': 21, 'essays': 'Personal statement addressing your reason of interest in pursuing a graduate degree', 'toefl_ibt_speaking': 23, 'intl_ielts_reqs': '7.0', 'application_fee_waiver': False, 'gpa_suggested_letter': None, 'intl_lang_waiver': True, 'gpa_minimum': None, 'sup_mat_writing_sample': None, 'official_transcript_for_enrollment': None, 'toefl_ibt_listening': 17, 'intl_lang_waiver_conditions': '1. You have completed Level 112 of the ELS Intensive English for Academic Purposes program as proof of English proficiency for undergraduate and graduate admission;\r\n2. You have achieved a grade of B or better in a college-level English composition course at an accredited U.S. college (not a foreign affiliate); or\r\n3. You have completed an accredited bachelor’s degree program in the United States where the primary mode of instruction was English.', 'gpa_average_letter': None, 'sup_mat_portfolio': None, 'gpa_average': None, 'intl_req_url': 'http://gradstudy.rutgers.edu/information/international-students', 'apply_online': True, 'toefl_tse': None, 'sup_mat_portfolio_notes': '', 'intl_english_test_required': True}, 'dura': {'duration_unit': OrderedDict([('name', 'Year(s)')]), 'full_part_time': 'F', 'duration_max': '1.0', 'durationtime_limit': None, 'duration_min': '1.0', 'duration_addl': None, 'part_time': None, 'duration_conj': None, 'duration_addl_unit': None}, 'dura2': {'duration_unit': OrderedDict([('name', 'Year(s)')]), 'full_part_time': 'F', 'duration_max': '1.0', 'durationtime_limit': None, 'duration_min': '1.0', 'duration_addl': None, 'part_time': True, 'duration_conj': None, 'duration_addl_unit': None}, 't2': {'tuition_per_unit': None, 'tuition_unit': None, 'tuition_per_unit_out_state': None, 'fee_included': None, 'university_cost_url': '', 'school_cost_url': ''}, 'Intl_eng_test': [OrderedDict([('name', 'IELTS')]), OrderedDict([('name', 'TOEFL')])], 'r': {'program_req_url': 'https://www.mailman.columbia.edu/become-student/apply/process/application-components', 'transcript_post_admin': None, 'school_req_url': 'https://www.mailman.columbia.edu/become-student/apply/process/faq', 'toefl_twe': None, 'recommendation': 3, 'gpa_minimum_letter': None, 'toefl_cbt': None, 'gpa_suggested': None, 'application_fee': 65, 'special_reqs': '', 'transcript_for_application': 'Y', 'intl_other': '', 'sup_mat_writing_sample_notes': '', 'application_fee_waiver_notes': '', 'toefl_ibt': 100, 'toefl_pbt': 600, 'toefl_ibt_writing': None, 'resume': 'Y', 'school_interview': None, 'toefl_ibt_reading': None, 'essays': 'Personal Statement', 'toefl_ibt_speaking': None, 'intl_ielts_reqs': '7.5', 'application_fee_waiver': None, 'gpa_suggested_letter': None, 'intl_lang_waiver': False, 'gpa_minimum': '3.30', 'sup_mat_writing_sample': None, 'official_transcript_for_enrollment': None, 'toefl_ibt_listening': None, 'intl_lang_waiver_conditions': '', 'gpa_average_letter': None, 'sup_mat_portfolio': None, 'gpa_average': '3.63', 'intl_req_url': '', 'apply_online': True, 'toefl_tse': None, 'sup_mat_portfolio_notes': '', 'intl_english_test_required': True}, 'p': {'additional_url': 'https://www.mailman.columbia.edu/sites/default/files/legacy/biostats_student_handbook_2015_2016.pdf', 'degree': OrderedDict([('name', 'MPH')]), 'object_id': 'fd885899-f974-4a07-a5eb-0f2ce979a77d', 'specialization': '', 'department': 'Biostatistics', 'url': 'https://www.mailman.columbia.edu/become-student/degrees/masters-programs/masters-public-health/accelerated-mph', 'university_school': OrderedDict([('university', 'Columbia University'), ('school', 'Mailman School of Public Health')]), 'highlights': 'The curriculum is similar to the innovative curriculum of the two-year Columbia MPH, but completed at a faster, more demanding pace.', 'job_placement': '', 'stats_profile_url': 'https://www.mailman.columbia.edu/become-student/apply/process/faq', 'program_faq_url': 'https://www.mailman.columbia.edu/become-student/degrees/faq', 'program_name': 'Accelerated Master of Public Health in Biostatistics', 'online_program': False, 'job_placement_url': 'https://www.mailman.columbia.edu/sites/default/files/pdf/ocs_stats_2014_2015_0.pdf', 'audience': 'The Accelerated MPH is an intensive, one-year program designed for highly motivated professionals seeking to enhance their career with a degree in public health.'}, 's': {'fully_funded': None, 'fully_funded_notes': '', 'scholarship_notes': 'Financial aid packages can include a combination of institutional funds, loans, and student employment opportunities.', 'scholarship_avail': True, 'scholarship_program_specific_url': ''}, 't': {'tuition_per_unit': 1624, 'tuition_unit': OrderedDict([('name', 'Credit/Point/(Credit/Semester) Hour')]), 'tuition_per_unit_out_state': None, 'fee_included': False, 'university_cost_url': 'http://sfs.columbia.edu/tuitions-fees-listing?trf_school=390&year-period=434', 'school_cost_url': 'https://www.mailman.columbia.edu/become-student/apply/tuition-fees/mphmha-costs'}}
+{
+	'length': 2,
+	'program': [{
+		'curriculum': {
+			'curriculum_url': '',
+			'master_thesis_or_equivalent': None,
+			'min_total_unit': '60',
+			'curriculum_unit': {
+				'name': 'Credits/Points'
+			},
+			'doctorate_dissertation_or_equivalent': 'Y',
+			'dissertation_notes': '',
+			'thesis_notes': '',
+			'max_transfer_unit': None
+		},
+		'object_id': '6b84762f-2a68-43a5-9a43-8c499bcc4dd5',
+		'requirement': {
+			'apply_online': True,
+			'gpa_minimum_letter': None,
+			'toefl_cbt': None,
+			'toefl_pbt': None,
+			'application_fee_waiver': True,
+			'program_req_url': 'http://gradengineering.columbia.edu/about-applying-1',
+			'special_reqs': 'The M.S. degree is required for admission into the Ph.D. and Eng.Sc.D. degree programs',
+			'transcript_post_admin': True,
+			'toefl_ibt': None,
+			'gpa_suggested': None,
+			'school_req_url': '',
+			'intl_lang_waiver_conditions': "An exception is made for applicants who have earned an undergraduate degree or complete a master's degree in the United States before enrollment, in this case the applicant is not required to submit TOEFL or IELTS scores for admission.",
+			'transcript_for_application': 'Y',
+			'resume': 'Y',
+			'toefl_twe': None,
+			'intl_lang_waiver': True,
+			'school_interview': None,
+			'intl_english_test_required': True,
+			'gpa_average_letter': None,
+			'sup_mat_writing_sample_notes': '',
+			'sup_mat_writing_sample': None,
+			'application_fee_waiver_notes': 'U.S. citizens or permanent residents currently enrolled in a U.S. college or university who demonstrate financial need can request an application fee waiver.',
+			'gpa_average': None,
+			'essays': 'Personal statement',
+			'intl_other': '',
+			'toefl_ibt_listening': None,
+			'toefl_ibt_reading': None,
+			'toefl_ibt_speaking': None,
+			'gpa_suggested_letter': None,
+			'toefl_ibt_writing': None,
+			'application_fee': 85,
+			'toefl_tse': None,
+			'intl_req_url': '',
+			'recommendation': 3,
+			'official_transcript_for_enrollment': 'Y',
+			'gpa_minimum': None,
+			'sup_mat_portfolio': None,
+			'sup_mat_portfolio_notes': '',
+			'intl_ielts_reqs': None
+		},
+		'scholarship': {
+			'scholarship_notes': '',
+			'scholarship_avail': None,
+			'fully_funded_notes': 'All doctoral students in good academic standing and making satisfactory research proress are fully supported for the duration of their Ph.D. study, with full tuition and health insurance coverage, plus a teaching or research assistantship stipend.',
+			'fully_funded': True,
+			'scholarship_program_specific_url': 'http://apam.columbia.edu/msphd-track-phd-or-engscd-program'
+		},
+		'required_exam': [{
+			'name': 'GRE'
+		}],'job_placement': '',
+			'audience': 'The program prepares students for careers in academic life, primarily in psychology, sociology, or human development; ; in research programs of governmental agencies at various levels; and in a range of programs in community agencies and private enterprise. It does not prepare students to be clinical psychologists, school psychologists, or family life counselors.',
+			'department': '',
+			'job_placement_url': '',
+			'university_school': {
+				'school': 'Graduate School',
+				'university': 'Cornell University'
+			},
+			'object_id': 'e8f6138d-c140-4197-b4f4-dfaba5672dbb',
+			'additional_url': '',
+			'program_name': 'Developmental Psychology',
+			'degree': {
+				'name': 'MA'
+			},
+			'highlights': '',
+			'url': 'http://gradschool.cornell.edu/academics/fields-of-study/subject/human-development/developmental-psychology-ma-ithaca',
+			'stats_profile_url': '',
+			'specialization': 'aging and health\r\ncognitive development\r\ndevelopmental psychopathology\r\necology of human development\r\nlaw, psychology and human development\r\nsocial and personality development',
+			'program_faq_url': None,
+			'online_program': False
+		'program_detail': {
+			'job_placement': 'bbbbbbbbbbbbb',
+			'audience': 'sssssssssssss',
+			'department': 'Applied Physics and Applied Mathematics',
+			'university_school': {
+				'school': 'School of Engineering & Applied Science',
+				'university': 'Columbia University'
+			},
+			'object_id': '6b84762f-2a68-43a5-9a43-8c499bcc4dd5',
+			'additional_url': 'http://bulletin.engineering.columbia.edu/graduate-programs-0',
+			'online_program': False,
+			'degree': {
+				'name': 'EngScD'
+			},
+			'highlights': 'After completing the M.S. program in applied physics/concentration in applied mathematics, doctoral students specialize in one applied physics field (such as Applied Mathematics).\r\n2nd',
+			'url': 'http://apam.columbia.edu/applied-mathematics#Ph.D.',
+			'stats_profile_url': '',
+			'specialization': 'lllll\r\n2nd line\r\n3nd line',
+			'program_faq_url': '',
+			'program_name': 'Applied Mathematics'
+		},
+		'intl_eng_test': [{
+			'name': 'IELTS'
+		}, {
+			'name': 'PTE'
+		}, {
+			'name': 'TOEFL'
+		}],
+		'duration': {
+			'full_part_time': 'F',
+			'duration_conj': None,
+			'duration_min': None,
+			'duration_addl': None,
+			'duration_addl_unit': None,
+			'durationtime_limit': None,
+			'part_time': None,
+			'duration_unit': None,
+			'duration_max': None
+		},
+		'deadline': {
+			'international_deadline_month': None,
+			'get_international_deadline_day_display': None,
+			'get_deadline_spring_late_day_display': None,
+			'get_deadline_spring_early_month_display': 'October',
+			'deadline_spring_late_day': None,
+			'deadline_spring_late_month': None,
+			'scholarship_deadline_day': None,
+			'deadline_spring_early_day': 1,
+			'deadline_url': 'http://gradengineering.columbia.edu/deadlines-1',
+			'deadline_rolling': True,
+			'get_deadline_summer_late_day_display': None,
+			'deadline_summer_early_month': None,
+			'get_deadline_summer_late_month_display': None,
+			'deadline_fall_early_month': 12,
+			'get_deadline_fall_late_day_display': None,
+			'get_deadline_fall_late_month_display': None,
+			'deadline_summer_early_day': None,
+			'get_deadline_summer_early_day_display': None,
+			'get_deadline_spring_late_month_display': None,
+			'get_deadline_fall_early_month_display': 'December',
+			'deadline_spring_early_month': 10,
+			'deadline_fall_late_day': None,
+			'deadline_summer_late_month': None,
+			'scholarship_deadline_month': None,
+			'get_deadline_fall_early_day_display': '15th',
+			'deadline_fall_late_month': None,
+			'deadline_summer_late_day': None,
+			'international_deadline_day': None,
+			'get_deadline_summer_early_month_display': None,
+			'deadline_fall_early_day': 15,
+			'get_deadline_spring_early_day_display': '1st',
+			'get_international_deadline_month_display': None
+		},
+		'tuition': {
+			'tuition_per_unit_out_state': None,
+			'fee_included': False,
+			'tuition_unit': {
+				'name': 'Credit/Point'
+			},
+			'tuition_per_unit': 1782,
+			'school_cost_url': '',
+			'university_cost_url': 'http://sfs.columbia.edu/tuitions-fees-listing?trf_school=379&year-period=404'
+		},
+		'intl_transcript': [{
+			'description': 'Basic Translation from non-English transcript to English',
+			'name': 'TRANS'
+		}]
+	}],
+	'competing_programs': [{
+		'curriculum': {
+			'curriculum_url': '',
+			'master_thesis_or_equivalent': 'Y',
+			'min_total_unit': '',
+			'curriculum_unit': None,
+			'doctorate_dissertation_or_equivalent': None,
+			'dissertation_notes': '',
+			'thesis_notes': 'Both the M.A. and the Ph.D. degree programs require a research thesis or dissertation.',
+			'max_transfer_unit': None
+		},
+		'object_id': 'e8f6138d-c140-4197-b4f4-dfaba5672dbb',
+		'requirement': {
+			'apply_online': True,
+			'gpa_minimum_letter': None,
+			'toefl_cbt': None,
+			'toefl_pbt': None,
+			'application_fee_waiver': None,
+			'program_req_url': '',
+			'special_reqs': '',
+			'transcript_post_admin': None,
+			'toefl_ibt': None,
+			'gpa_suggested': None,
+			'school_req_url': '',
+			'intl_lang_waiver_conditions': '',
+			'transcript_for_application': None,
+			'resume': None,
+			'toefl_twe': None,
+			'intl_lang_waiver': None,
+			'school_interview': None,
+			'intl_english_test_required': None,
+			'gpa_average_letter': None,
+			'sup_mat_writing_sample_notes': '',
+			'sup_mat_writing_sample': None,
+			'application_fee_waiver_notes': 'In cases of extreme financial need the Graduate School will consider a request for a fee waiver.',
+			'gpa_average': None,
+			'essays': '',
+			'intl_other': '',
+			'toefl_ibt_listening': None,
+			'toefl_ibt_reading': None,
+			'toefl_ibt_speaking': None,
+			'gpa_suggested_letter': None,
+			'toefl_ibt_writing': None,
+			'application_fee': 105,
+			'toefl_tse': None,
+			'intl_req_url': '',
+			'recommendation': 3,
+			'official_transcript_for_enrollment': None,
+			'gpa_minimum': None,
+			'sup_mat_portfolio': None,
+			'sup_mat_portfolio_notes': '',
+			'intl_ielts_reqs': None
+		},
+		'scholarship': {
+			'scholarship_notes': '',
+			'scholarship_avail': True,
+			'fully_funded_notes': '',
+			'fully_funded': None,
+			'scholarship_program_specific_url': ''
+		},
+		'required_exam': [{
+			'name': 'GRE'
+		}],
+		'program_detail': {
+			'job_placement': '',
+			'audience': 'The program prepares students for careers in academic life, primarily in psychology, sociology, or human development; ; in research programs of governmental agencies at various levels; and in a range of programs in community agencies and private enterprise. It does not prepare students to be clinical psychologists, school psychologists, or family life counselors.',
+			'department': '',
+			'job_placement_url': '',
+			'university_school': {
+				'school': 'Graduate School',
+				'university': 'Cornell University'
+			},
+			'object_id': 'e8f6138d-c140-4197-b4f4-dfaba5672dbb',
+			'additional_url': '',
+			'program_name': 'Developmental Psychology',
+			'degree': {
+				'name': 'MA'
+			},
+			'highlights': '',
+			'url': 'http://gradschool.cornell.edu/academics/fields-of-study/subject/human-development/developmental-psychology-ma-ithaca',
+			'stats_profile_url': '',
+			'specialization': 'aging and health\r\ncognitive development\r\ndevelopmental psychopathology\r\necology of human development\r\nlaw, psychology and human development\r\nsocial and personality development',
+			'program_faq_url': None,
+			'online_program': False
+		},
+		'intl_eng_test': [],
+		'duration': {
+			'full_part_time': None,
+			'duration_conj': None,
+			'duration_min': '4.0',
+			'duration_addl': None,
+			'duration_addl_unit': None,
+			'durationtime_limit': None,
+			'part_time': None,
+			'duration_unit': {
+				'name': 'Year'
+			},
+			'duration_max': '4.0'
+		},
+		'deadline': {
+			'international_deadline_month': None,
+			'get_international_deadline_day_display': None,
+			'get_deadline_spring_late_day_display': None,
+			'get_deadline_spring_early_month_display': 'October',
+			'deadline_spring_late_day': None,
+			'deadline_spring_late_month': None,
+			'scholarship_deadline_day': None,
+			'deadline_spring_early_day': 1,
+			'deadline_url': 'http://gradschool.cornell.edu/academics/fields-of-study/subject/human-development/developmental-psychology-ma-ithaca',
+			'deadline_rolling': None,
+			'get_deadline_summer_late_day_display': None,
+			'deadline_summer_early_month': None,
+			'get_deadline_summer_late_month_display': None,
+			'deadline_fall_early_month': 5,
+			'get_deadline_fall_late_day_display': None,
+			'get_deadline_fall_late_month_display': None,
+			'deadline_summer_early_day': None,
+			'get_deadline_summer_early_day_display': None,
+			'get_deadline_spring_late_month_display': None,
+			'get_deadline_fall_early_month_display': 'May',
+			'deadline_spring_early_month': 10,
+			'deadline_fall_late_day': None,
+			'deadline_summer_late_month': None,
+			'scholarship_deadline_month': None,
+			'get_deadline_fall_early_day_display': '1st',
+			'deadline_fall_late_month': None,
+			'deadline_summer_late_day': None,
+			'international_deadline_day': None,
+			'get_deadline_summer_early_month_display': None,
+			'deadline_fall_early_day': 1,
+			'get_deadline_spring_early_day_display': '1st',
+			'get_international_deadline_month_display': None
+		},
+		'tuition': {
+			'tuition_per_unit_out_state': None,
+			'fee_included': None,
+			'tuition_unit': {
+				'name': 'Year'
+			},
+			'tuition_per_unit': 20800,
+			'school_cost_url': 'http://gradschool.cornell.edu/academics/fields-of-study/subject/human-development/developmental-psychology-ma-ithaca',
+			'university_cost_url': ''
+		},
+		'intl_transcript': []
+	}]
+}
