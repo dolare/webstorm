@@ -287,13 +287,10 @@ class EnhancementReportsUpdateAPI(APIView):
                         		if not k1 in result.keys():
                         			result[k1] = {}
                         		result[k1][k2] = v2
-                        else:
+                        elif v2 != None and v2 != "":
                             if not k1 in result.keys():
                                 result[k1] = {}
-                            print('key =====')
-                            print(k1)
-                            print(k2)
-                            print(old_program[k1])
+                            print(v2)
                             result[k1][k2] = v2
                 elif not k1 in old_program.keys() and isinstance(v1,dict): 
                     print('key1 =====')
@@ -394,6 +391,8 @@ class EnhancementReportsUpdateAPI(APIView):
             if diff:
                 diff = zlib.compress(JSONRenderer().render(diff))
                 eru.initial_diff = diff
+            else:
+            	eru.initial_diff = None
         eru.save()
 
     def enhancement_schedule_compare(self, request):
