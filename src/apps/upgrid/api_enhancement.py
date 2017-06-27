@@ -241,10 +241,10 @@ class EnhancementReportsUpdateAPI(APIView):
     #generate diff
     @classmethod
     def compare_enhancement_report(self,a, b):
-        print('a')
-        print(a);
-        print('b');
-        print(b);
+        # print('a')
+        # print(a);
+        # print('b');
+        # print(b);
      
         #cause order by order, so store them in a list
         def compare_program_list(old_program_list,new_program_list):
@@ -277,14 +277,16 @@ class EnhancementReportsUpdateAPI(APIView):
                 if k1 in old_program.keys() and isinstance(v1,dict):
                     for k2,v2 in v1.items():
                         if k2 in old_program[k1].keys():
-                            if v2 != old_program[k1][k2]:
-                                if str(k2) == 'job_placement_url':
-                                    print(v2)
-                                    print('v2')
-                                    print(old_program[k1][k2]) 
-                                if not k1 in result.keys():
-                                    result[k1] = {}
-                                result[k1][k2] = v2
+                        	if v2 == None and old_program[k1][k2] == "":
+                        		continue
+                        	elif v2 == "" and old_program[k1][k2] == None:
+                        		continue
+                        	elif v2 != old_program[k1][k2]:
+                        		print('v2')
+                        		print(old_program[k1][k2])
+                        		if not k1 in result.keys():
+                        			result[k1] = {}
+                        		result[k1][k2] = v2
                         else:
                             if not k1 in result.keys():
                                 result[k1] = {}
@@ -528,7 +530,7 @@ class ManagerEnhancementDiffConfirmation(APIView):
         eru.last_edit_time = timezone.now()
         eru.save()
 
-        return Response({"success": _("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
+        return Response({"success": ("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
 
 
 class ClientViewEnhancementUpdate(APIView):
