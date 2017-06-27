@@ -335,7 +335,7 @@ class ManagerWhoopsDiffConfirmation(APIView):
         wru.last_edit_time = timezone.now()
         wru.save()
 
-        return Response({"success": _("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
+        return Response({"success": ("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
 
 
 
