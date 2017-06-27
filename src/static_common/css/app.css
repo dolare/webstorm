@@ -1990,3 +1990,8 @@ left: 35%;
     font-weight: 100;
 }
 
+.label_new {
+    font-size: 80%;
+    vertical-align: top;
+    font-weight: 700;
+}
