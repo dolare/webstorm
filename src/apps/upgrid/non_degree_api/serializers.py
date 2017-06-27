@@ -24,7 +24,7 @@ class ReleaseReportListSerializer(ModelSerializer):
 class ReleaseReportSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeReleaseReport
-        fields = ('object_id', 'school', 'date_created', 'report', )
+        fields = ('object_id', 'school', 'date_created', 'categories', )
 
 
 class ReleaseReportCreateSerializer(ModelSerializer):
@@ -33,7 +33,7 @@ class ReleaseReportCreateSerializer(ModelSerializer):
 
     class Meta:
         model = NonDegreeReleaseReport
-        fields = ('school_name', 'school', 'report')
+        fields = ('school_name', 'school', 'categories')
 
     def get_school_name(self, obj):
         return obj.school.school

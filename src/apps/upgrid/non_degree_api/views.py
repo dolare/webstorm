@@ -123,6 +123,6 @@ class ReleaseReportCreateAPI(PermissionMixin, CreateAPIView):
     def create(self, request, *args, **kwargs):
         if not self.is_manager():
             return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
-        request.data['report'] = self.create_report(request)
+        request.data['categories'] = self.create_report(request)
 
         return super(ReleaseReportCreateAPI, self).create(request, *args, **kwargs)
