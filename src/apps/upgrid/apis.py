@@ -110,9 +110,9 @@ class PasswordChangeView(generics.GenericAPIView):
                 user.password = decoded_new_password
                 user._password = None
                 user.save()
-                return Response({"success": _("New password has been saved.")}, status=HTTP_202_ACCEPTED)
-            return Response({"Failed": _("Please input valid old password.")}, status=HTTP_403_FORBIDDEN)
-        return Response({"Failed": _("System can not identify your status. Please login first!")}, status=HTTP_403_FORBIDDEN)
+                return Response({"success": ("New password has been saved.")}, status=HTTP_202_ACCEPTED)
+            return Response({"Failed": ("Please input valid old password.")}, status=HTTP_403_FORBIDDEN)
+        return Response({"Failed": ("System can not identify your status. Please login first!")}, status=HTTP_403_FORBIDDEN)
 
 
 # api/password/reset/send_email/
@@ -151,7 +151,7 @@ class ResetPassword(generics.GenericAPIView):
                                         "padding: 20px 35px;border-radius: 8px '>"
                                         "<div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', "
                                         "Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div "
-                                        "style='font-family: sans-serif;'><p>please click <a href='https://%s/#/upgrid/verify/%s/'>here</a> "                                         ""
+                                        "style='font-family: sans-serif;'><p>You account has been created in Upgrid. Please click <a href='https://%s/#/upgrid/verify/%s/'>here</a> "                                         ""
                                         "to verify you account"
                                         "<p>If the above link does not work for"
                                         " you, please copy and paste the following into your browser address "
@@ -163,7 +163,7 @@ class ResetPassword(generics.GenericAPIView):
 
 
 
-                        message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
+                        message = EmailMessage(subject='Account Vertification', body=html_content % (user_reset.contact_name,
                                                request.META['HTTP_HOST'], token,  request.META['HTTP_HOST'], token,
                                                 request.META['HTTP_HOST'], token), 
                                                 to=[request.data['email']],bcc=cc_addresses_tuple)
@@ -224,7 +224,7 @@ class ResetPassword(generics.GenericAPIView):
         user._password = None
         user.save()
         #user.save()
-        return Response({"success": _("New password has been saved.")}, status=HTTP_202_ACCEPTED)
+        return Response({"success": ("New password has been saved.")}, status=HTTP_202_ACCEPTED)
 
 
 # ------------------------------User API--------------------------------------------
@@ -238,10 +238,10 @@ class CustomerVerify(APIView):
         try:
             payload = jwt_decode_handler(jwt_value)
         except jwt.ExpiredSignature:
-            msg = _('Signature has expired.')
+            msg = ('Signature has expired.')
             raise exceptions.AuthenticationFailed(msg)
         except jwt.DecodeError:
-            msg = _('Error decoding signature.')
+            msg = ('Error decoding signature.')
             raise exceptions.AuthenticationFailed(msg)
         except jwt.InvalidTokenError:
             raise exceptions.AuthenticationFailed()
@@ -249,11 +249,11 @@ class CustomerVerify(APIView):
        
         user =  UniversityCustomer.objects.get(username = username) 
         if user.is_active is True:
-            return Response({"Failed": _("have been verified before!")}, status=HTTP_400_BAD_REQUEST)
+            return Response({"Failed": ("have been verified before!")}, status=HTTP_400_BAD_REQUEST)
         user.is_active = True
         user._password = False
         user.save()
-        return Response({"success": _("Your account has been verified.")}, status=HTTP_202_ACCEPTED)
+        return Response({"success": ("Your account has been verified.")}, status=HTTP_202_ACCEPTED)
 
 class CustomerSentVerifyEmail(APIView):
     permission_classes = (IsAuthenticated,)
@@ -263,13 +263,13 @@ class CustomerSentVerifyEmail(APIView):
         try:
             user = UniversityCustomer.objects.get(email = request.data['email'])
             if user.is_active is True:
-                return Response({"fail": _("This account has been verified")}, status=HTTP_400_BAD_REQUEST)
+                return Response({"fail": ("This account has been verified")}, status=HTTP_400_BAD_REQUEST)
             request.is_create = True
             ResetPassword().post(request)
         except:
-            return Response({"fail": _("data error")}, status=HTTP_400_BAD_REQUEST)
+            return Response({"fail": ("data error")}, status=HTTP_400_BAD_REQUEST)
 
-        return Response({"success": _("Verification email has been sent successfully..")}, status=HTTP_202_ACCEPTED)
+        return Response({"success": ("Verification email has been sent successfully..")}, status=HTTP_202_ACCEPTED)
 
 
 
@@ -305,9 +305,9 @@ class CustomerProgram(generics.ListAPIView):
                 try:
                     user = UniversityCustomer.objects.get(id=client_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": _("System can not identify your status. Please login first!")},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
 
         if user.account_type == 'sub':
@@ -352,9 +352,9 @@ class CustomerCompetingProgramAPI(APIView):
                 try:
                     user = UniversityCustomer.objects.get(id=client_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": _("System can not identify your status. Please login first!")},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
 
         if user.account_type == 'sub':
@@ -365,7 +365,7 @@ class CustomerCompetingProgramAPI(APIView):
                 program_list = UniversityCustomerProgram.objects.get(object_id=object_id, customer=user)
                 return program_list
             except UniversityCustomerProgram.DoesNotExist:
-                return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+                return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
     def get(self, request, object_id, client_id=None):
         customer_program = self.get_object(request, object_id, client_id)
@@ -389,9 +389,9 @@ class DashBoardAPI(APIView):
                 try:
                     user = UniversityCustomer.objects.get(id=object_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": _("System can not identify your status. Please login first!")},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
 
         return user
@@ -454,9 +454,9 @@ class ReleasedPrograms(APIView):
                 try:
                     user = UniversityCustomer.objects.get(id=object_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": _("System can not identify your status. Please login first!")},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
         return user
 
@@ -509,9 +509,9 @@ class UpdatedReportsList(APIView):
                 try:
                     user = UniversityCustomer.objects.get(id=object_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": _("System can not identify your status. Please login first!")},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                     status=HTTP_403_FORBIDDEN)
         return user
 
@@ -563,9 +563,9 @@ class CustomerDetail(APIView):
                     user = UniversityCustomer.objects.get(id=client_id, account_manager=manager)
                     return user
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except UpgridAccountManager.DoesNotExist:
-                return Response({"Failed": _("System can not identify your status. Please login first!")},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
 
     def get(self, request, client_id=None):
@@ -620,11 +620,11 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
     def create(self, request, *args, **kwargs):
         user = request.user
         if 'client' not in request.data or 'client_program' not in request.data:
-            return Response({"Failed": _("client and client_program is required")}, status=HTTP_400_BAD_REQUEST)
+            return Response({"Failed": ("client and client_program is required")}, status=HTTP_400_BAD_REQUEST)
         client = request.data['client']
         client_programs = request.data['client_program']
         if type(client_programs) is not list:
-            return Response({"Failed": _("client_programs must be a list.")}, status=HTTP_400_BAD_REQUEST)
+            return Response({"Failed": ("client_programs must be a list.")}, status=HTTP_400_BAD_REQUEST)
 
         if UpgridAccountManager.objects.filter(id=user.id):
             owned_users = UniversityCustomer.objects.filter(account_manager=user)
@@ -634,7 +634,7 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
             university_customer_programs = UniversityCustomerProgram.objects.filter(customer=user)
 
         if client not in [str(owned_user.id) for owned_user in owned_users]:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
         client_owned_programs = [str(program.object_id) for program in university_customer_programs]
         error_program = []
@@ -651,19 +651,19 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
         if error_program:
             return Response({"error": "Permission Denied for {0}".format(",".join(error_program))},
                             status=HTTP_201_CREATED)
-        return Response({"success": _("Client and Program relation has been created.")}, status=HTTP_201_CREATED)
+        return Response({"success": ("Client and Program relation has been created.")}, status=HTTP_201_CREATED)
 
     def delete(self, request):
         if 'client_program' not in request.data or 'client' not in request.data:
-            return Response({"Failed": _("client and client_program is required")}, status=HTTP_400_BAD_REQUEST)
+            return Response({"Failed": ("client and client_program is required")}, status=HTTP_400_BAD_REQUEST)
         client_id = request.data['client']
         client_program = request.data['client_program']
         if type(client_program) is not list:
-            return Response({"Failed": _("client_programs must be a list.")}, status=HTTP_400_BAD_REQUEST)
+            return Response({"Failed": ("client_programs must be a list.")}, status=HTTP_400_BAD_REQUEST)
         queryset = self.get_queryset()
         client_and_program_relation = queryset.filter(client_program__in=client_program).filter(client_id=client_id)
         client_and_program_relation.delete()
-        return Response({"success": _("ClientAndProgramRelation has been deleted.")}, status=HTTP_204_NO_CONTENT)
+        return Response({"success": ("ClientAndProgramRelation has been deleted.")}, status=HTTP_204_NO_CONTENT)
 
 
 # Post create new sub_user/ Put change sub_user's is_active status
@@ -716,7 +716,7 @@ class CreateOrChangeSubUser(APIView):
                     setattr(sub_user, field, request.data[field])
             sub_user._password = False
             sub_user.save()
-            return Response({"success": _("Sub user has been update.")}, status=HTTP_200_OK)
+            return Response({"success": ("Sub user has been update.")}, status=HTTP_200_OK)
 
     def post(self, request):
         try:
@@ -726,10 +726,10 @@ class CreateOrChangeSubUser(APIView):
                 manager = UpgridAccountManager.objects.get(id=request.user.id)
                 main_user = UniversityCustomer.objects.get(id=request.data['main_user_id'])
             except UniversityCustomer.DoesNotExist or UpgridAccountManager.DoesNotExist:
-                return Response({"failed": _("Permission Denied.")}, status=HTTP_403_FORBIDDEN)
+                return Response({"failed": ("Permission Denied.")}, status=HTTP_403_FORBIDDEN)
 
         if 'email' not in request.data:
-            return Response({"failed": _("Email is required.")}, status=HTTP_400_BAD_REQUEST)
+            return Response({"failed": ("Email is required.")}, status=HTTP_400_BAD_REQUEST)
 
         email_existed = UniversityCustomer.objects.filter(email=request.data['email'])
         if email_existed.exists():
@@ -740,7 +740,7 @@ class CreateOrChangeSubUser(APIView):
 
         sub_user_number = UniversityCustomer.objects.filter(main_user_id=main_user.id).filter(is_active=True).count()
         if sub_user_number >= 10:
-            return Response({"failed": _("Can not create more than 10 sub user.")}, status=HTTP_400_BAD_REQUEST)
+            return Response({"failed": ("Can not create more than 10 sub user.")}, status=HTTP_400_BAD_REQUEST)
 
         sub_service_until = main_user.service_until
         university_school = UniversitySchool.objects.get(ceeb=main_user.Ceeb.ceeb)
@@ -783,7 +783,7 @@ class CreateOrChangeSubUser(APIView):
         request.is_create = True
         ResetPassword().post(request)
 
-        return Response({"success": _("Sub user has been created.")}, status=HTTP_201_CREATED)
+        return Response({"success": ("Sub user has been created.")}, status=HTTP_201_CREATED)
 
 
 # ----------------------------Report API---------------------------------------------
@@ -799,9 +799,9 @@ class ShareReports(APIView):
                 try:
                     user = UniversityCustomer.objects.get(id=request.data['client_id'], account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": _("System can not identify your status. Please login first!")},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
 
         if not request.data['whoops_id'] is None:
@@ -849,10 +849,11 @@ class ShareReports(APIView):
         try:
             program_id = UniversityCustomerProgram.objects.get(object_id=object_id)
             program = Program.objects.get(object_id=program_id.program.object_id)
-
-            if client.accounttype == 'sub':
+            if client.account_type == 'sub':
+                print('sub')
                 wur = WhoopsUpdate.objects.get(customer=client.main_user_id,customer_program=object_id,most_recent='True')
             else:
+                print('main')
                 wur = WhoopsUpdate.objects.get(customer=client,customer_program=object_id,most_recent='True')
         except:
             return None
@@ -861,11 +862,15 @@ class ShareReports(APIView):
     def get_enhancement_object(self, object_id, client):
         print(object_id)
         print(client)
-
+        print(client.account_type)
         try:
-            if client.accounttype == 'sub':
+            if client.account_type == 'sub':
+                print('eur')
+                print(object_id)
+                print(client)
                 eur = EnhancementUpdate.objects.get(customer_program=object_id, customer=client.main_user_id, most_recent='True')
             else:
+                print('eur_main')
                 eur = EnhancementUpdate.objects.get(customer_program=object_id, customer=client, most_recent='True')
         except:
             return None
@@ -881,9 +886,14 @@ class ShareReports(APIView):
             if timezone.now() > obj.expired_time:
                 return Response("Token Expired!", status=HTTP_403_FORBIDDEN)
             else:
+                print(obj)
                 whoops_report_list = obj.whoopsreportsrepo_set.all().filter(wr_share_relation=object_id)
                 enhancement_report_list = obj.enhancementreportsrepo_set.all().\
                     filter(er_share_relation=object_id)
+
+                print('shared list')
+                print(whoops_report_list)
+                print(enhancement_report_list)
                 if whoops_report_list is not None:
                     for x in whoops_report_list:
                         whoops_json_string = zlib.decompress(x.wr_whoops_report)
@@ -904,7 +914,7 @@ class ShareReports(APIView):
     def post(self, request):
         perm = self.check_permission(request)
         if not perm:
-            return Response({"Failed": _("Permission denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission denied!")}, status=HTTP_403_FORBIDDEN)
         else:
             try:
                 user = UniversityCustomer.objects.get(id=request.user.id)
@@ -914,7 +924,7 @@ class ShareReports(APIView):
             time_now = timezone.now()
             if 'expired_day' in request.data:
                 if request.data['expired_day'] > 30:
-                    return Response({"Failed": _("expired_day can not greater than 30 days.")},
+                    return Response({"Failed": ("expired_day can not greater than 30 days.")},
                                     status=HTTP_400_BAD_REQUEST)
                 else:
                     expired_time = time_now + timezone.timedelta(days=request.data['expired_day'])
@@ -933,24 +943,25 @@ class ShareReports(APIView):
             if not request.data['whoops_id'] is None:
                 whoops_id_list = request.data['whoops_id'].split('/')
                 for x in whoops_id_list:
-                    wur, program = self.get_whoops_object(x, user)
-                    if wur:
-                        customer_program = UniversityCustomerProgram.objects.get(object_id=x)
-                        info = {'university': program.university_school.university_foreign_key.name,
-                                'school': program.university_school.school,
-                                'program': program.program_name, 'degree': program.degree.name,
-                                'whoops_final_release_time':customer_program.whoops_final_release_time,
-                                'report_last_edit_time':wur.last_edit_time}
-                        arr = JSONParser().parse(BytesIO(zlib.decompress(wur.existing_report)))
-                        arr.update(info)
-                        json_str = JSONRenderer().render(arr)
-                        raw_data = zlib.compress(json_str)
-                        w_obj = WhoopsReportsRepo(
-                            wr_created=time_now,
-                            wr_customer_program=customer_program,
-                            wr_whoops_report=raw_data,
-                            wr_share_relation=relation_ship)
-                        w_obj.save()
+                    if not self.get_whoops_object(x, user) is None:
+                        wur, program = self.get_whoops_object(x, user)
+                        if wur:
+                            customer_program = UniversityCustomerProgram.objects.get(object_id=x)
+                            info = {'university': program.university_school.university_foreign_key.name,
+                                    'school': program.university_school.school,
+                                    'program': program.program_name, 'degree': program.degree.name,
+                                    'whoops_final_release_time':customer_program.whoops_final_release_time,
+                                    'report_last_edit_time':wur.last_edit_time}
+                            arr = JSONParser().parse(BytesIO(zlib.decompress(wur.existing_report)))
+                            arr.update(info)
+                            json_str = JSONRenderer().render(arr)
+                            raw_data = zlib.compress(json_str)
+                            w_obj = WhoopsReportsRepo(
+                                wr_created=time_now,
+                                wr_customer_program=customer_program,
+                                wr_whoops_report=raw_data,
+                                wr_share_relation=relation_ship)
+                            w_obj.save()
 
             if not request.data['enhancement_id'] is None:
                 enhancement_id_list = request.data['enhancement_id'].split('/')
@@ -1012,7 +1023,7 @@ class AccountManager(APIView):
             serializer = AccountManagerSerializer(manager)
             return Response(data=serializer.data, status=HTTP_200_OK)
         else:
-            return Response({"Failed": _("Pleas login first!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Pleas login first!")}, status=HTTP_403_FORBIDDEN)
 
 
 # Client CRUD
@@ -1050,7 +1061,7 @@ class ClientCRUD(APIView):
     def get(self, request, object_id):
         perm = self.check_manager_permission(request, object_id)
         if not perm:
-            return Response({"Failed": _("You don't have permission to see this client info!")},
+            return Response({"Failed": ("You don't have permission to see this client info!")},
                             status=HTTP_403_FORBIDDEN)
 
         client = self.get_object(object_id)
@@ -1064,10 +1075,10 @@ class ClientCRUD(APIView):
     def post(self, request):
         perm = self.is_manager(request)
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         manager = UpgridAccountManager.objects.get(id=request.user.id)
         if 'email' not in request.data:
-            return Response({"Failed": _("Email is required!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Email is required!")}, status=HTTP_403_FORBIDDEN)
         email_existed = UniversityCustomer.objects.filter(email=request.data['email'])
         if email_existed.exists():
             existed_user = email_existed.first()
@@ -1133,14 +1144,14 @@ class ClientCRUD(APIView):
     def put(self, request):
         perm = self.is_manager(request)
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
         if not 'client_id' in self.request.data:
-            return Response({"Failed": _("client_id is required!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("client_id is required!")}, status=HTTP_403_FORBIDDEN)
 
         clients = UniversityCustomer.objects.filter(id=self.request.data['client_id'])
         if not clients.exists():
-            return Response({"Failed": _("client_id is invalid!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("client_id is invalid!")}, status=HTTP_403_FORBIDDEN)
         client = clients.first()
         if 'main_user_id' in self.request.data:
             main_users = UniversityCustomer.objects.filter(id=request.data['main_user_id'])
@@ -1166,19 +1177,19 @@ class ClientCRUD(APIView):
             for cp in self.request.data['competing_schools']:
                 school = UniversitySchool.objects.get(object_id=cp['object_id'])
                 client.competing_schools.add(school)
-        return Response({"success": _("User has been modified.")}, status=HTTP_202_ACCEPTED)
+        return Response({"success": ("User has been modified.")}, status=HTTP_202_ACCEPTED)
 
     def delete(self, request):
         perm = self.is_manager(request)
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
             client = UniversityCustomer.objects.get(id=request.data['client_id'])
             client.is_active = False
             client.save()
-            return Response({"Success": _("User deleted!")}, status=HTTP_204_NO_CONTENT)
+            return Response({"Success": ("User deleted!")}, status=HTTP_204_NO_CONTENT)
         except UniversityCustomer.DoesNotExist:
-            return Response({"Failed": _("User doesn't exists!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("User doesn't exists!")}, status=HTTP_403_FORBIDDEN)
 
 
 class UniversityCustomerProgramCRUD(APIView):
@@ -1192,11 +1203,11 @@ class UniversityCustomerProgramCRUD(APIView):
     def get(self, request, object_id):
         perm = self.is_manager(request)
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
             client = UniversityCustomer.objects.get(id=object_id)
         except UniversityCustomer.DoesNotExist:
-            return Response({"Failed": _("Can not find client with provided id.")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Can not find client with provided id.")}, status=HTTP_403_FORBIDDEN)
         customer_program_list = UniversityCustomerProgram.objects.filter(customer=client)
         serializer = UnivCustomerProgramSerializer(customer_program_list, many=True)
         return Response(serializer.data)
@@ -1204,7 +1215,7 @@ class UniversityCustomerProgramCRUD(APIView):
     def post(self, request):
         perm = self.is_manager(request)
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         client = UniversityCustomer.objects.get(id=request.data['client_id'])
         if client.account_type == 'sub':
             sub_program_list = self.request.data['sub_client_program'].split('/')
@@ -1213,7 +1224,7 @@ class UniversityCustomerProgramCRUD(APIView):
                     client=client,
                     client_program=cp,
                     ).save()
-            return Response({"success": _("User programs has been created.")}, status=HTTP_201_CREATED)
+            return Response({"success": ("User programs has been created.")}, status=HTTP_201_CREATED)
         else:
             for p in self.request.data['selected_customer_program']:
                 program = Program.objects.get(object_id=p.get('program_id'))
@@ -1249,12 +1260,12 @@ class UniversityCustomerProgramCRUD(APIView):
                             )
                             new_cp.save()
 
-            return Response({"success": _(" User programs has been created.")}, status=HTTP_201_CREATED)
+            return Response({"success": (" User programs has been created.")}, status=HTTP_201_CREATED)
 
     def put(self, request):
         perm = self.is_manager(request)
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         client = UniversityCustomer.objects.get(id=request.data['client_id'])
         if client.account_type == 'sub':
             print(request.data['sub_client_program'])
@@ -1265,7 +1276,7 @@ class UniversityCustomerProgramCRUD(APIView):
                         client=client,
                         client_program=cp,
                     ).save()
-            return Response({"success": _("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
+            return Response({"success": ("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
         else:
             for p in self.request.data['selected_customer_program']:
                 program = Program.objects.get(object_id=p.get('program_id'))
@@ -1297,12 +1308,12 @@ class UniversityCustomerProgramCRUD(APIView):
 
                 customer_program_object.save()
                 # customer_program.save()
-            return Response({"success": _("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
+            return Response({"success": ("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
 
     def delete(self, request):
         perm = self.is_manager(request)
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         client = UniversityCustomer.objects.get(id=request.data['client_id'])
         if client.account_type == 'main':
             total_program = request.data['customer_program_id'].split('/')
@@ -1315,7 +1326,7 @@ class UniversityCustomerProgramCRUD(APIView):
                 ClientAndProgramRelation.objects.filter(client_program=i).delete()
                 UniversityCustomerProgram.objects.get(object_id=i).delete()
 
-            return Response({"success": _("User programs has been deleted.")}, status=HTTP_204_NO_CONTENT)
+            return Response({"success": ("User programs has been deleted.")}, status=HTTP_204_NO_CONTENT)
 
 
 class CustomerCompetingProgramCRUD(APIView):
@@ -1329,7 +1340,7 @@ class CustomerCompetingProgramCRUD(APIView):
     def get(self, request, object_id):
         perm = self.is_manager(request)
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         competing_programs = CustomerCompetingProgram.objects.filter(customer_program=object_id)
         serializer = ManagerUseCompetingProgramSerializer(competing_programs, many=True)
         return Response(serializer.data)
@@ -1339,7 +1350,7 @@ class CustomerCompetingProgramCRUD(APIView):
         print(request.data['customer_competing_program'])
         print('post============================================================')
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         for p in request.data['customer_competing_program']:
             CustomerCompetingProgram.objects.create(
                 customer_program=UniversityCustomerProgram.objects.get(object_id=p.get('customer_program_id')),
@@ -1347,13 +1358,13 @@ class CustomerCompetingProgramCRUD(APIView):
                 order=p.get('order'),
                 enhancement_status=p.get('enhancement_status')
             ).save()
-        return Response({"success": _("Competing programs has been created.")}, status=HTTP_201_CREATED)
+        return Response({"success": ("Competing programs has been created.")}, status=HTTP_201_CREATED)
 
     def put(self, request):
         perm = self.is_manager(request)
         print(request.data['customer_competing_program'])
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         for p in request.data['customer_competing_program']:
             ccp = CustomerCompetingProgram.objects.filter(object_id=p.get('object_id'))
             print(p.get('program_id'))
@@ -1369,15 +1380,15 @@ class CustomerCompetingProgramCRUD(APIView):
             except:
                 raise ValidationError('Bad request!')
 
-        return Response({"success": _("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
+        return Response({"success": ("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
 
     def delete(self, request):
         perm = self.is_manager(request)
         if not perm:
-            return Response({"Failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         for cp in request.data['competing_program_id']:
             CustomerCompetingProgram.objects.get(object_id=cp.get('object_id')).delete()
-        return Response({"success": _("User programs has been deleted.")}, status=HTTP_204_NO_CONTENT)
+        return Response({"success": ("User programs has been deleted.")}, status=HTTP_204_NO_CONTENT)
 
 
 # Returns all the university and School in the database for Ceeb drop down menu
@@ -1399,7 +1410,7 @@ class UniversitySchoolAPI(generics.ListAPIView):
     def get_queryset(self, *args, **kwargs):
         is_manager = self.is_manager(self.request)
         if not is_manager:
-            return Response({"Failed": _("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
 
         queryset = UniversitySchool.objects.all()   
         if 'object_id' in self.request.GET.keys():
@@ -1420,7 +1431,7 @@ class UniversitySchoolAPI(generics.ListAPIView):
     # def get(self, request):
     #     is_manager = self.is_manager(request)
     #     if not is_manager:
-    #         return Response({"Failed": _("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
+    #         return Response({"Failed": ("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
 
     #     ceebs = self.get_object()
     #     serializer = UniversityAndSchoolSerializer(ceebs, many=True)
@@ -1441,7 +1452,7 @@ class ProgramAPI(APIView):
     def get(self, request):
         is_manager = self.is_manager(request)
         if not is_manager:
-            return Response({"Failed": _("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
 
         programs = self.get_object()
         serializer = ProgramSerializer(programs, many=True)
@@ -1469,7 +1480,7 @@ class DepartmentAPI(APIView):
     def get(self, request, object_id):
         is_manager = self.is_manager(request)
         if not is_manager:
-            return Response({"Failed": _("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("You don't have permission to access.")}, status=HTTP_403_FORBIDDEN)
 
         departments = self.get_object(object_id)
         # serializer = ProgramSerializer(programs, many=True)
@@ -1529,7 +1540,7 @@ class CustomerAndCompetingProgramAPI(generics.ListAPIView):
 
             return query_list
         else:
-            return Response({"Failed": _("You don't have permission to access!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("You don't have permission to access!")}, status=HTTP_403_FORBIDDEN)
 
 
     def list(self, request, *args, **kwargs):
@@ -1566,7 +1577,7 @@ class ManagerUpdateDashBoardAPI(APIView):
         """
         perm = self.is_manager(request)
         if not perm:
-            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         user = UpgridAccountManager.objects.get(id=request.user.id)
         clients = UniversityCustomer.objects.filter(account_manager=user)
         serializer = ManagerUpdateDashBoardSerializer(clients, many=True)
@@ -1587,7 +1598,7 @@ class ManagerUpdateProgramListAPI(APIView):
         """
         perm = self.is_manager(request)
         if not perm:
-            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         client = UniversityCustomer.objects.get(id=client_id)
 
         print('1')
