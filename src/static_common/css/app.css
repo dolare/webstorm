@@ -116,7 +116,13 @@ body.modal-open {
   padding-right:inherit !important;
 }
 
-.modal-open .modal {
+/*.modal-open .modal {
+    overflow: hidden;
+  
+}*/
+
+
+.modal-open .modal.update-modal {
     overflow: hidden;
   
 }
