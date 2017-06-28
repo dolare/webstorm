@@ -481,10 +481,11 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
                 }
 
 
-
                 $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
                 $scope.e_raw[index][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
 
+                console.log("confirm the raw after= "+ JSON.stringify($scope.e_raw));
+                console.log("1ooresult = "+JSON.stringify($scope.confirmed_diff_raw));
 
 
 
@@ -505,7 +506,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
               }
 
               console.log("confirm the raw after= "+ JSON.stringify($scope.e_raw));
-              console.log("oooresult = "+JSON.stringify($scope.confirmed_diff_raw));
+              console.log("2ooresult = "+JSON.stringify($scope.confirmed_diff_raw));
               
               
          }
