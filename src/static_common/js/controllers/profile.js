@@ -466,7 +466,7 @@ controller('ProfileController',
 
               // options
               icon: "fa fa-check",
-              message: 'The user has been created.'
+              message: 'The user has been created. It will be displayed in the list once the colleague account is activated.'
             }, {
               // settings
               type: 'success',
@@ -481,6 +481,22 @@ controller('ProfileController',
           }).
           catch(function(error) {
             console.log('an error occurred...' + JSON.stringify(error));
+           
+            $.notify({
+
+              // options
+              icon: "fa fa-times",
+              message: error.data[0]
+            }, {
+              // settings
+              type: 'danger',
+              placement: {
+                from: "top",
+                align: "center"
+              },
+              z_index: 1999,
+            });
+
 
 
           }).finally(function(){
