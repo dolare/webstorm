@@ -13,9 +13,9 @@ class FinalReleasedEnhancement(APIView):
                 try:
                     user = UniversityCustomer.objects.get(id=object_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": _("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": _("System can not identify your status. Please login first!")},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
 
         return user
@@ -67,21 +67,21 @@ class EnhancementReportsAPI(APIView):
     def put(self, request):
         user = self.get_user(request, self.request.data['client_id'])
         if not user:
-            return Response({"Failed": _("Permission Denied! ")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission Denied! ")}, status=HTTP_403_FORBIDDEN)
         
         if not user.account_type == 'main':
-            return Response({"Failed": _("Only main account can make enhancement report confirmation! ")},
+            return Response({"Failed": ("Only main account can make enhancement report confirmation! ")},
                             status=HTTP_403_FORBIDDEN)
 
         cp_list = self.get_listobjects(request)
         for p in cp_list:
             if not p.customer == user:
-                    return Response({"Failed": _("You don not have access to this program.! ")},
+                    return Response({"Failed": ("You don not have access to this program.! ")},
                                     status=HTTP_403_FORBIDDEN)
             p.customer_confirmation = "Yes"
             p.save()
 
-        return Response({"Success": _("Confirmation status has been set!")}, status=HTTP_202_ACCEPTED)
+        return Response({"Success": ("Confirmation status has been set!")}, status=HTTP_202_ACCEPTED)
 
 # ------------------------------------Account Manager APIs---------------------------------------
 
@@ -104,7 +104,7 @@ class EnhancementWebReports(APIView):
             return Response(context, status=HTTP_200_OK)
 
         else:
-            return Response({"Failed": _("Permission denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"Failed": ("Permission denied!")}, status=HTTP_403_FORBIDDEN)
 
 
 
@@ -453,7 +453,7 @@ class ManagerEnhancementDiffConfirmation(APIView):
         perm = self.is_manager(request)
         # perm = True
         if not perm:
-            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         update_report = EnhancementUpdate.objects.get(customer=client_id, customer_program=customer_program_id,
                                                       most_recent=True)
         if update_report.initial_diff is not None:
@@ -487,7 +487,7 @@ class ManagerEnhancementDiffConfirmation(APIView):
     def put(self, request):
         perm = self.is_manager(request)
         if not perm:
-            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         eru = EnhancementUpdate.objects.get(customer_program=request.data['customer_program_id'],
                                             customer=request.data['client_id'], most_recent=True)
         eru.cache_report = zlib.compress(JSONRenderer().render(request.data['cache_report']))
@@ -563,17 +563,17 @@ class ClientViewEnhancementUpdate(APIView):
 
         customer_program = UniversityCustomerProgram.objects.get(object_id=object_id)
         if not user:
-            return Response({"failed": _("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
+            return Response({"failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
         try:
             update_report_query = EnhancementUpdate.objects.filter(customer_program=customer_program, customer=user,
                                                           most_recent=True)
             if update_report_query.exists():
                 update_report = update_report_query.first()
             else:
-                return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
+                return Response({"failed": ("No EnhancementReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
         except EnhancementUpdate.DoesNotExist:
-            return Response({"failed": _("No EnhancementReportsViewUpdate matches the given query.")},
+            return Response({"failed": ("No EnhancementReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
         if update_report.cache_report and not client_id:
 

@@ -47,7 +47,7 @@ class Login2Serializer(serializers.Serializer):
                 user = UpgridAccountManager.objects.get(email=e)
                 return user.username
             except UpgridAccountManager.DoesNotExist:
-                msg = _('Email is not correct!')
+                msg = ('Email is not correct!')
                 raise serializers.ValidationError(msg)
 
     def validate(self, attrs):
@@ -58,7 +58,7 @@ class Login2Serializer(serializers.Serializer):
             user = UpgridBaseUser.objects.get(username=username)
             if user.check_password(password):
                 if not user.is_active:
-                    msg = _('User account is disabled.')
+                    msg = ('User account is disabled.')
                     raise serializers.ValidationError(msg)
 
                 payload = jwt_payload_handler(user)
@@ -69,11 +69,11 @@ class Login2Serializer(serializers.Serializer):
                         }
 
             else:
-                msg = _('Unable to login with provided credentials.')
+                msg = ('Unable to login with provided credentials.')
                 raise serializers.ValidationError(msg)
 
         else:
-            msg = _('Must include "email" and "password".')
+            msg = ('Must include "email" and "password".')
             raise serializers.ValidationError(msg)
 
 
@@ -82,18 +82,18 @@ class RefreshJWTSerializer(RefreshJSONWebTokenSerializer):
         username = jwt_get_username_from_payload(payload)
 
         if not username:
-            msg = _('Invalid payload.')
+            msg = ('Invalid payload.')
             raise serializers.ValidationError(msg)
 
         # Make sure user exists
         try:
             user = UpgridBaseUser.objects.get_by_natural_key(username)
         except UpgridBaseUser.DoesNotExist:
-            msg = _("User doesn't exist.")
+            msg = ("User doesn't exist.")
             raise serializers.ValidationError(msg)
 
         if not user.is_active:
-            msg = _('User account is disabled.')
+            msg = ('User account is disabled.')
             raise serializers.ValidationError(msg)
 
         return user
@@ -142,7 +142,7 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
             eu = EnhancementUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent='True')
             serializer = ClientEnhancementUpdateNumberSerializer(eu)
             return serializer.data
-        except EnhancementUpdate.DoesNotExist:
+        except:
             return 0
 
     def get_whoops_update(self, obj):
@@ -150,7 +150,7 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
             wu = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent='True')
             serializer = ClientWhoopsUpdateNumberSerializer(wu)
             return serializer.data
-        except WhoopsUpdate.DoesNotExist:
+        except:
             return 0
 
 
