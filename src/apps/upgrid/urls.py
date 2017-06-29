@@ -184,5 +184,5 @@ urlpatterns=[
     url(r'api/upgrid/user/unenhancement/programs/$', UnconfirmedPrograms.as_view()),
 
     # non-degree api
-    url(r'upgrid/non_degree/', include('apps.upgrid.non_degree_api.urls', namespace='non_degree_api')),
+    url(r'api/upgrid/non_degree/', include('apps.upgrid.non_degree_api.urls', namespace='non_degree_api')),
 ]
