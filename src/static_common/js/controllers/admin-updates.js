@@ -1,4 +1,3 @@
-
 // ********************************Updates********************************
 
 angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService',
@@ -816,3 +815,4 @@ angular.module('myApp').filter('keylength', function(){
      return Object.keys(input).length;
   }
 })
+
