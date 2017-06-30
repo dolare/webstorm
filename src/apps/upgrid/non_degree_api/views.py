@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
+from rest_framework.mixins import CreateModelMixin
 from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, CreateAPIView, DestroyAPIView, \
     RetrieveAPIView
 from rest_framework.filters import SearchFilter, OrderingFilter, DjangoFilterBackend
@@ -49,18 +50,23 @@ class UniversitySchoolListAPI(PermissionMixin, ListAPIView):
         return university_schools
 
 
-class ReleaseReportListAPI(PermissionMixin, ListAPIView):
+class ReleaseReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
     """
     Get list of user release report API
     """
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    serializer_class = ReleaseReportListSerializer
     pagination_class = ReleaseReportPagination
     filter_class = ReleaseReportFilter
 
     search_fields = ('school__school', 'school__ceeb',)
     ordering_fields = ('school', 'date_created')
     ordering = ('school', '-date_created')      # default ordering
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ReleaseReportListSerializer
+        else:
+            return ReleaseReportCreateSerializer
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
@@ -69,6 +75,28 @@ class ReleaseReportListAPI(PermissionMixin, ListAPIView):
             reports = NonDegreeReleaseReport.objects \
                 .filter(school__non_degree_user=self.request.user)
         return reports
+
+    @staticmethod
+    def create_report(request):
+        if 'school' not in request.data:
+            raise ValidationError("School object_id is required.")
+        try:
+            school = UniversitySchool.objects.get(object_id=request.data['school'])
+        except UniversitySchool.DoesNotExist:
+            raise ValidationError("Can not find school with this object_id.")
+        categories = NonDegreeCategory.objects.filter(university_school=school)
+        data = JSONRenderer().render(CategorySerializer(categories, many=True).data)
+        return data
+
+    def create(self, request, *args, **kwargs):
+        if not self.is_manager():
+            return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
+        request.data['categories'] = self.create_report(request)
+
+        return super(ReleaseReportCreateListAPI, self).create(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 class ReleaseReportAPI(PermissionMixin, GenericAPIView):
@@ -102,32 +130,6 @@ class ReleaseReportAPI(PermissionMixin, GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
-
-
-class ReleaseReportCreateAPI(PermissionMixin, CreateAPIView):
-    """
-    Create non-degree Release Report API
-    """
-    serializer_class = ReleaseReportCreateSerializer
-
-    @staticmethod
-    def create_report(request):
-        if 'school' not in request.data:
-            raise ValidationError("School object_id is required.")
-        try:
-            school = UniversitySchool.objects.get(object_id=request.data['school'])
-        except UniversitySchool.DoesNotExist:
-            raise ValidationError("Can not find school with this object_id.")
-        categories = NonDegreeCategory.objects.filter(university_school=school)
-        data = JSONRenderer().render(CategorySerializer(categories, many=True).data)
-        return data
-
-    def create(self, request, *args, **kwargs):
-        if not self.is_manager():
-            return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
-        request.data['categories'] = self.create_report(request)
-
-        return super(ReleaseReportCreateAPI, self).create(request, *args, **kwargs)
 
 
 class ReportOverview(PermissionMixin, APIView):
@@ -180,12 +182,6 @@ class ReportOverview(PermissionMixin, APIView):
         for course_id in old_report_courses:
             if course_id not in new_report_courses:
                 course_removed += 1
-
-        # for category in new_report_dict['categories']:
-        #     if category['object_id'] not in [category['object_id'] for category in old_report_dict['categories']]:
-        #         category_added += 1
-        #         course_added += len(category['courses'])
-        #     for course in category['courses']:
 
         return Response({'category_added': category_added,
                          'category_removed': category_removed,
