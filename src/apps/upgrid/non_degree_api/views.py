@@ -1,5 +1,7 @@
 from django.db.models import Q
 from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, CreateAPIView, DestroyAPIView, \
     RetrieveAPIView
 from rest_framework.filters import SearchFilter, OrderingFilter, DjangoFilterBackend
@@ -40,10 +42,10 @@ class UniversitySchoolListAPI(PermissionMixin, ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
-            university_schools = UniversitySchool.objects.all()
+            university_schools = UniversitySchool.objects.filter(nondegreecategory__isnull=False)
         else:
-            university_schools = UniversitySchool.objects\
-                .filter(non_degree_user=self.request.user)
+            university_schools = UniversitySchool.objects.filter(nondegreecategory__isnull=False)\
+                                                         .filter(non_degree_user=self.request.user)
         return university_schools
 
 
@@ -126,3 +128,67 @@ class ReleaseReportCreateAPI(PermissionMixin, CreateAPIView):
         request.data['categories'] = self.create_report(request)
 
         return super(ReleaseReportCreateAPI, self).create(request, *args, **kwargs)
+
+
+class ReportOverview(PermissionMixin, APIView):
+    """
+    Get report overview: category_added, category_removed, course_added, course_removed
+    """
+
+    def get_queryset(self, *args, **kwargs):
+        if self.is_manager():
+            reports = NonDegreeReleaseReport.objects.all()
+        else:
+            reports = NonDegreeReleaseReport.objects \
+                .filter(school__non_degree_user=self.request.user)
+        return reports
+
+    def get(self, request, new_report_id, old_report_id):
+        reports = self.get_queryset()
+        new_report = get_object_or_404(reports, object_id=new_report_id)
+        old_report = get_object_or_404(reports, object_id=old_report_id)
+        new_report_dict = ReleaseReportSerializer(new_report).data
+        old_report_dict = ReleaseReportSerializer(old_report).data
+        new_report_categories = []
+        new_report_courses = []
+        old_report_categories = []
+        old_report_courses = []
+        category_added = 0
+        category_removed = 0
+        course_added = 0
+        course_removed = 0
+        for category in new_report_dict['categories']:
+            new_report_categories.append(category['object_id'])
+            for course in category['courses']:
+                new_report_courses.append(course['object_id'])
+
+        for category in old_report_dict['categories']:
+            old_report_categories.append(category['object_id'])
+            for course in category['courses']:
+                old_report_courses.append(course['object_id'])
+
+        for category_id in new_report_categories:
+            if category_id not in old_report_categories:
+                category_added += 1
+        for category_id in old_report_categories:
+            if category_id not in new_report_categories:
+                category_removed += 1
+
+        for course_id in new_report_courses:
+            if course_id not in old_report_courses:
+                course_added += 1
+        for course_id in old_report_courses:
+            if course_id not in new_report_courses:
+                course_removed += 1
+
+        # for category in new_report_dict['categories']:
+        #     if category['object_id'] not in [category['object_id'] for category in old_report_dict['categories']]:
+        #         category_added += 1
+        #         course_added += len(category['courses'])
+        #     for course in category['courses']:
+
+        return Response({'category_added': category_added,
+                         'category_removed': category_removed,
+                         'course_added': course_added,
+                         'course_removed': course_removed})
+
