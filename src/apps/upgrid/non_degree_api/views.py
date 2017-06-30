@@ -114,25 +114,9 @@ class ReportAPI(PermissionMixin, RetrieveDestroyAPIView):
         return reports
 
 
-class ReportOverview(PermissionMixin, APIView):
-    """
-    Get report overview: category_added, category_removed, course_added, course_removed
-    """
-
-    def get_queryset(self, *args, **kwargs):
-        if self.is_manager():
-            reports = NonDegreeReport.objects.all()
-        else:
-            reports = NonDegreeReport.objects \
-                .filter(school__non_degree_user=self.request.user)
-        return reports
-
-    def get(self, request, new_report_id, old_report_id):
-        reports = self.get_queryset()
-        new_report = get_object_or_404(reports, object_id=new_report_id)
-        old_report = get_object_or_404(reports, object_id=old_report_id)
-        new_report_dict = ReportSerializer(new_report).data
-        old_report_dict = ReportSerializer(old_report).data
+class ReportOverviewMixin(object):
+    @staticmethod
+    def count_diff(new, old):
         new_report_categories = []
         new_report_courses = []
         old_report_categories = []
@@ -141,12 +125,12 @@ class ReportOverview(PermissionMixin, APIView):
         category_removed = 0
         course_added = 0
         course_removed = 0
-        for category in new_report_dict['categories']:
+        for category in new['categories']:
             new_report_categories.append(category['object_id'])
             for course in category['courses']:
                 new_report_courses.append(course['object_id'])
 
-        for category in old_report_dict['categories']:
+        for category in old['categories']:
             old_report_categories.append(category['object_id'])
             for course in category['courses']:
                 old_report_courses.append(course['object_id'])
@@ -165,8 +149,32 @@ class ReportOverview(PermissionMixin, APIView):
             if course_id not in new_report_courses:
                 course_removed += 1
 
-        return Response({'category_added': category_added,
-                         'category_removed': category_removed,
-                         'course_added': course_added,
-                         'course_removed': course_removed})
+        return {'category_added': category_added,
+                'category_removed': category_removed,
+                'course_added': course_added,
+                'course_removed': course_removed}
+
+
+class ReportOverview(PermissionMixin, ReportOverviewMixin, APIView):
+    """
+    Get report overview: category_added, category_removed, course_added, course_removed
+    """
+
+    def get_queryset(self, *args, **kwargs):
+        if self.is_manager():
+            reports = NonDegreeReport.objects.all()
+        else:
+            reports = NonDegreeReport.objects \
+                .filter(school__non_degree_user=self.request.user)
+        return reports
+
+    def get(self, request, new_report_id, old_report_id):
+        reports = self.get_queryset()
+        new_report = get_object_or_404(reports, object_id=new_report_id)
+        old_report = get_object_or_404(reports, object_id=old_report_id)
+        new_report_dict = ReportSerializer(new_report).data
+        old_report_dict = ReportSerializer(old_report).data
+        diff_data = self.count_diff(new_report_dict, old_report_dict)
+
+        return Response(diff_data)
 
