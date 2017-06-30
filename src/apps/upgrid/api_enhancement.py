@@ -381,6 +381,8 @@ class EnhancementReportsUpdateAPI(APIView):
             if diff:
                 diff = zlib.compress(JSONRenderer().render(diff))
                 eru.initial_diff = diff
+            else:
+                eru.initial_diff = None
         else:
             binary_data = zlib.decompress(eru.cache_report)
             enhancement_json_string = BytesIO(binary_data)

@@ -189,6 +189,9 @@ class WhoopsReportsUpdateAPI(APIView):
                 if diff:
                     diff = zlib.compress(JSONRenderer().render(diff))
                     wru.initial_diff = diff
+                else:
+                    print('diff_initl == None')
+                    wru.initial_diff = None
             else:
                 binary_data = zlib.decompress(wru.cache_report)
                 whoops_json_string = BytesIO(binary_data)
@@ -200,6 +203,7 @@ class WhoopsReportsUpdateAPI(APIView):
                     diff = zlib.compress(JSONRenderer().render(diff))
                     wru.initial_diff = diff
                 else:
+                    print('diff_initl == None')
                     wru.initial_diff = None
             wru.save()
 
