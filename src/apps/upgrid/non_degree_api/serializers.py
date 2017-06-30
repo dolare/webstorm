@@ -23,9 +23,18 @@ class ReleaseReportListSerializer(ModelSerializer):
 
 
 class ReleaseReportSerializer(ModelSerializer):
+    school_name = SerializerMethodField()
+    university_name = SerializerMethodField()
+
     class Meta:
         model = NonDegreeReleaseReport
-        fields = ('object_id', 'school', 'date_created', 'categories', )
+        fields = ('object_id', 'school_name', 'university_name', 'school', 'date_created', 'categories', )
+
+    def get_school_name(self, obj):
+        return obj.school.school
+
+    def get_university_name(self, obj):
+        return obj.school.university_foreign_key.name
 
 
 class ReleaseReportCreateSerializer(ModelSerializer):
