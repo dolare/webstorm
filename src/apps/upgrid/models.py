@@ -440,9 +440,9 @@ class CustomerFeatureMapping(BasedDatedObject):
     feature = models.ForeignKey(CustomerFeature, on_delete=models.PROTECT, null=True, blank=True)
 
 
-class NonDegreeReleaseReport(BasedDatedObject):
+class NonDegreeReport(BasedDatedObject):
     """
-    non-degree school release report
+    non-degree school report
     """
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     school = models.ForeignKey(UniversitySchool, on_delete=models.CASCADE, null=False)

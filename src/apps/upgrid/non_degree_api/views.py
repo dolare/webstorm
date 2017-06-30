@@ -13,11 +13,11 @@ from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPT
 
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeRepeatDate
 
-from .serializers import UniversitySchoolListSerializer, ReleaseReportCreateSerializer, CategorySerializer, \
-    ReleaseReportListSerializer, ReleaseReportSerializer
-from .pagination import UniversitySchoolPagination, ReleaseReportPagination
-from .filter import UniversitySchoolFilter, ReleaseReportFilter
-from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReleaseReport
+from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer, CategorySerializer, \
+    ReportListSerializer, ReportSerializer
+from .pagination import UniversitySchoolPagination, ReportPagination
+from .filter import UniversitySchoolFilter, ReportFilter
+from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport
 
 
 class PermissionMixin(object):
@@ -49,13 +49,13 @@ class UniversitySchoolListAPI(PermissionMixin, ListAPIView):
         return university_schools
 
 
-class ReleaseReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
+class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
     """
-    Get list of user release report API
+    Get list of user non-degree report API
     """
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    pagination_class = ReleaseReportPagination
-    filter_class = ReleaseReportFilter
+    pagination_class = ReportPagination
+    filter_class = ReportFilter
 
     search_fields = ('school__school', 'school__ceeb',)
     ordering_fields = ('school', 'date_created')
@@ -63,15 +63,15 @@ class ReleaseReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView)
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
-            return ReleaseReportListSerializer
+            return ReportListSerializer
         else:
-            return ReleaseReportCreateSerializer
+            return ReportCreateSerializer
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
-            reports = NonDegreeReleaseReport.objects.all()
+            reports = NonDegreeReport.objects.all()
         else:
-            reports = NonDegreeReleaseReport.objects \
+            reports = NonDegreeReport.objects \
                 .filter(school__non_degree_user=self.request.user)
         return reports
 
@@ -92,24 +92,24 @@ class ReleaseReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView)
             return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
         request.data['categories'] = self.create_report(request)
 
-        return super(ReleaseReportCreateListAPI, self).create(request, *args, **kwargs)
+        return super(ReportCreateListAPI, self).create(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
 
-class ReleaseReportAPI(PermissionMixin, RetrieveDestroyAPIView):
+class ReportAPI(PermissionMixin, RetrieveDestroyAPIView):
     """
-    Retrieve non-degree Release Report API
+    Retrieve non-degree Report API
     """
     lookup_field = 'object_id'
-    serializer_class = ReleaseReportSerializer
+    serializer_class = ReportSerializer
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
-            reports = NonDegreeReleaseReport.objects.all()
+            reports = NonDegreeReport.objects.all()
         else:
-            reports = NonDegreeReleaseReport.objects \
+            reports = NonDegreeReport.objects \
                 .filter(school__non_degree_user=self.request.user)
         return reports
 
@@ -121,9 +121,9 @@ class ReportOverview(PermissionMixin, APIView):
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
-            reports = NonDegreeReleaseReport.objects.all()
+            reports = NonDegreeReport.objects.all()
         else:
-            reports = NonDegreeReleaseReport.objects \
+            reports = NonDegreeReport.objects \
                 .filter(school__non_degree_user=self.request.user)
         return reports
 
@@ -131,8 +131,8 @@ class ReportOverview(PermissionMixin, APIView):
         reports = self.get_queryset()
         new_report = get_object_or_404(reports, object_id=new_report_id)
         old_report = get_object_or_404(reports, object_id=old_report_id)
-        new_report_dict = ReleaseReportSerializer(new_report).data
-        old_report_dict = ReleaseReportSerializer(old_report).data
+        new_report_dict = ReportSerializer(new_report).data
+        old_report_dict = ReportSerializer(old_report).data
         new_report_categories = []
         new_report_courses = []
         old_report_categories = []

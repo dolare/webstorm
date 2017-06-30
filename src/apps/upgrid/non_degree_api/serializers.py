@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeCourseDate, \
     NonDegreeUrl, NonDegreeUrlTypeRef
 
-from ..models import NonDegreeReleaseReport
+from ..models import NonDegreeReport
 
 
 class UniversitySchoolListSerializer(ModelSerializer):
@@ -16,18 +16,18 @@ class UniversitySchoolListSerializer(ModelSerializer):
         return obj.university
 
 
-class ReleaseReportListSerializer(ModelSerializer):
+class ReportListSerializer(ModelSerializer):
     class Meta:
-        model = NonDegreeReleaseReport
+        model = NonDegreeReport
         fields = ('object_id', 'school', 'date_created')
 
 
-class ReleaseReportSerializer(ModelSerializer):
+class ReportSerializer(ModelSerializer):
     school_name = SerializerMethodField()
     university_name = SerializerMethodField()
 
     class Meta:
-        model = NonDegreeReleaseReport
+        model = NonDegreeReport
         fields = ('object_id', 'school_name', 'university_name', 'school', 'date_created', 'categories', )
 
     def get_school_name(self, obj):
@@ -37,13 +37,13 @@ class ReleaseReportSerializer(ModelSerializer):
         return obj.school.university_foreign_key.name
 
 
-class ReleaseReportCreateSerializer(ModelSerializer):
-    """ Create release report serializer"""
+class ReportCreateSerializer(ModelSerializer):
+    """ Create non-degree report serializer"""
     school_name = SerializerMethodField()
     university_name = SerializerMethodField()
 
     class Meta:
-        model = NonDegreeReleaseReport
+        model = NonDegreeReport
         fields = ('school_name', 'university_name', 'school', 'categories')
 
     def get_school_name(self, obj):

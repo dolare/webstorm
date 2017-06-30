@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework.filters import FilterSet
 
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeRepeatDate
-from ..models import NonDegreeReleaseReport
+from ..models import NonDegreeReport
 
 
 class UniversitySchoolFilter(FilterSet):
@@ -19,10 +19,10 @@ class UniversitySchoolFilter(FilterSet):
         if value is True:
             return queryset.filter(nondegreecategory__isnull=False)
         return queryset
-    
 
-class ReleaseReportFilter(FilterSet):
+
+class ReportFilter(FilterSet):
 
     class Meta:
-        model = NonDegreeReleaseReport
+        model = NonDegreeReport
         fields = ['school', ]
