@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, CreateAPIView, DestroyAPIView, \
-    RetrieveAPIView
+    RetrieveAPIView, RetrieveDestroyAPIView
 from rest_framework.filters import SearchFilter, OrderingFilter, DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
@@ -43,10 +43,9 @@ class UniversitySchoolListAPI(PermissionMixin, ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
-            university_schools = UniversitySchool.objects.filter(nondegreecategory__isnull=False)
+            university_schools = UniversitySchool.objects.all()
         else:
-            university_schools = UniversitySchool.objects.filter(nondegreecategory__isnull=False)\
-                                                         .filter(non_degree_user=self.request.user)
+            university_schools = UniversitySchool.objects.filter(non_degree_user=self.request.user)
         return university_schools
 
 
@@ -99,7 +98,7 @@ class ReleaseReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView)
         return self.create(request, *args, **kwargs)
 
 
-class ReleaseReportAPI(PermissionMixin, GenericAPIView):
+class ReleaseReportAPI(PermissionMixin, RetrieveDestroyAPIView):
     """
     Retrieve non-degree Release Report API
     """
@@ -113,23 +112,6 @@ class ReleaseReportAPI(PermissionMixin, GenericAPIView):
             reports = NonDegreeReleaseReport.objects \
                 .filter(school__non_degree_user=self.request.user)
         return reports
-
-    def retrieve(self, request, *args, **kwargs):
-        new_report = self.get_object()
-        new_report_data = self.get_serializer(new_report).data
-        old_reports = NonDegreeReleaseReport.objects.filter(school=new_report.school)\
-                                                    .filter(date_created__lt=new_report.date_created)\
-                                                    .order_by('-date_created')
-        if old_reports:
-            old_report_data = self.get_serializer(old_reports.first()).data
-        else:
-            old_report_data = None
-        data = {'old_report': old_report_data,
-                'new_report': new_report_data}
-        return Response(data)
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
 
 
 class ReportOverview(PermissionMixin, APIView):
