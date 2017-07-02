@@ -116,43 +116,37 @@ class ReportAPI(PermissionMixin, RetrieveDestroyAPIView):
 
 class ReportOverviewMixin(object):
     @staticmethod
-    def count_diff(new, old):
-        new_report_categories = []
-        new_report_courses = []
+    def count_diff(new_report, old_report):
+        if old_report is None:
+            return {'category_added': 0,
+                    'category_removed': 0,
+                    'course_added': 0,
+                    'course_removed': 0}
         old_report_categories = []
         old_report_courses = []
         category_added = 0
-        category_removed = 0
         course_added = 0
-        course_removed = 0
-        for category in new['categories']:
-            new_report_categories.append(category['object_id'])
-            for course in category['courses']:
-                new_report_courses.append(course['object_id'])
 
-        for category in old['categories']:
+        for category in old_report['categories']:
             old_report_categories.append(category['object_id'])
             for course in category['courses']:
                 old_report_courses.append(course['object_id'])
 
-        for category_id in new_report_categories:
-            if category_id not in old_report_categories:
+        for category in new_report['categories']:
+            if category['object_id'] not in old_report_categories:
                 category_added += 1
-        for category_id in old_report_categories:
-            if category_id not in new_report_categories:
-                category_removed += 1
-
-        for course_id in new_report_courses:
-            if course_id not in old_report_courses:
-                course_added += 1
-        for course_id in old_report_courses:
-            if course_id not in new_report_courses:
-                course_removed += 1
+            else:
+                old_report_categories.remove(category['object_id'])
+            for course in category['courses']:
+                if course['object_id'] not in old_report_courses:
+                    course_added += 1
+                else:
+                    old_report_courses.remove(course['object_id'])
 
         return {'category_added': category_added,
-                'category_removed': category_removed,
+                'category_removed': len(old_report_categories),
                 'course_added': course_added,
-                'course_removed': course_removed}
+                'course_removed': len(old_report_courses)}
 
 
 class ReportOverview(PermissionMixin, ReportOverviewMixin, APIView):
@@ -178,3 +172,33 @@ class ReportOverview(PermissionMixin, ReportOverviewMixin, APIView):
 
         return Response(diff_data)
 
+
+class ReportOverviewLatest(PermissionMixin, ReportOverviewMixin, APIView):
+    """
+    Get report overview: category_added, category_removed, course_added, course_removed
+    """
+
+    def get_queryset(self, *args, **kwargs):
+        if self.is_manager():
+            reports = NonDegreeReport.objects.all()
+        else:
+            reports = NonDegreeReport.objects \
+                .filter(school__non_degree_user=self.request.user)
+        return reports
+
+    def get(self, request, school_id):
+        reports = self.get_queryset()
+        school_reports = reports.filter(school=school_id).order_by('-date_created')
+        if not school_reports:
+            return Response({"Failed": "Report not fund!"}, status=HTTP_400_BAD_REQUEST)
+        new_report_dict = ReportSerializer(school_reports.first()).data
+
+        try:
+            old_report = school_reports[1]
+            old_report_dict = ReportSerializer(old_report).data
+        except IndexError:
+            old_report_dict = None
+
+        diff_data = self.count_diff(new_report_dict, old_report_dict)
+
+        return Response(diff_data)
