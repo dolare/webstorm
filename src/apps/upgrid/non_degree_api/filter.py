@@ -17,7 +17,7 @@ class UniversitySchoolFilter(FilterSet):
 
     def non_degree_filter(self, queryset, name, value):
         if value is True:
-            return queryset.filter(nondegreecategory__isnull=False)
+            return queryset.filter(nondegreecategory__isnull=False).distinct()
         return queryset
 
 
