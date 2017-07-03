@@ -27,13 +27,20 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
 
      $scope.releaseSchool = function(Id) {
+
+      var form = new FormData();
+      form.append("school", Id);
+
+
       console.log("Id= "+Id);
          $http({
           url: '/api/upgrid/non_degree/reports',
           method: 'POST',
-          data: {
-            school: Id
-          },
+          data: form,
+          mimeType: "multipart/form-data",
+          processData: false,
+          contentType: false,
+
           headers: {
             'Authorization': 'JWT ' + token
           }
@@ -52,6 +59,28 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
 
      }
+
+
+    //  $http({
+    //       url: '/api/upgrid/non_degree/reports/32d18135-b699-4a3d-a3f2-9f142740cfd9',
+    //       method: 'GET',
+    //       headers: {
+    //         'Authorization': 'JWT ' + token
+    //       }
+    // }).then(function (response) {
+
+     
+
+    //    console.log("return data"+ JSON.stringify(response.data));
+       
+    // }).
+    //  catch(function(error){
+    //     console.log('an error occurred...'+JSON.stringify(error));
+
+    //  });
+
+
+     
 
 
   }
