@@ -15,8 +15,8 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           }
     }).then(function (response) {
 
-      
-    
+        $scope.non_degree_schools = response.data.results
+
        console.log("return data"+ JSON.stringify(response.data));
        
     }).

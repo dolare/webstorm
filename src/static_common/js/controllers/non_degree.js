@@ -136,47 +136,47 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', funct
       return amount / $scope.fxRates.rates[currency];
     }
   });
-  $http.get('/static/data/non-degree_report.json').then(function(response) {
-    $scope.universities = response.data.data;
-    $scope.date = response.data.date;
-    for (let i = 0; i < $scope.universities.length; i++) {
-      let s = $scope.universities[i];
-      // category offerings
-      s.cat_offer = s.categories.length;
+  // $http.get('/static/data/non-degree_report.json').then(function(response) {
+  //   $scope.universities = response.data.data;
+  //   $scope.date = response.data.date;
+  //   for (let i = 0; i < $scope.universities.length; i++) {
+  //     let s = $scope.universities[i];
+  //     // category offerings
+  //     s.cat_offer = s.categories.length;
 
-      s.course_offer = 0; // university course offerings
-      s.course_add = 0; // university course additions
-      s.course_rm = 0; // university course removals
+  //     s.course_offer = 0; // university course offerings
+  //     s.course_add = 0; // university course additions
+  //     s.course_rm = 0; // university course removals
 
-      // category additions
-      s.cat_add = 0;
+  //     // category additions
+  //     s.cat_add = 0;
 
-      // category removals
-      s.cat_rm = 0;
+  //     // category removals
+  //     s.cat_rm = 0;
 
-      for (let j = 0; j < s.categories.length; j++) {
-        let c = s.categories[j]; // category course offerings
-        if (c.status == 'add')
-          s.cat_add++;
-        if (c.status == 'rm')
-          s.cat_rm++;
+  //     for (let j = 0; j < s.categories.length; j++) {
+  //       let c = s.categories[j]; // category course offerings
+  //       if (c.status == 'add')
+  //         s.cat_add++;
+  //       if (c.status == 'rm')
+  //         s.cat_rm++;
 
-        c.course_offer = c.courses.length;
-        c.course_add = 0; // category course additions
-        c.course_rm = 0; // category course removals
-        for (let k in c.courses) {
-          if (c.courses[k].status == 'add')
-            c.course_add++;
-          if (c.courses[k].status == 'rm')
-            c.course_rm++;
-        }
+  //       c.course_offer = c.courses.length;
+  //       c.course_add = 0; // category course additions
+  //       c.course_rm = 0; // category course removals
+  //       for (let k in c.courses) {
+  //         if (c.courses[k].status == 'add')
+  //           c.course_add++;
+  //         if (c.courses[k].status == 'rm')
+  //           c.course_rm++;
+  //       }
 
-        s.course_offer += c.course_offer;
-        s.course_add += c.course_add;
-        s.course_rm += c.course_rm;
-      }
-    }
-  });
+  //       s.course_offer += c.course_offer;
+  //       s.course_add += c.course_add;
+  //       s.course_rm += c.course_rm;
+  //     }
+  //   }
+  // });
   /*END Non-degree Report Controller*/
 
 

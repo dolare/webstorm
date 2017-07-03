@@ -39,9 +39,9 @@
                     <div class="block-content">
                         <div class="">
 
-                        <div class="alert alert-warning" role="alert" ng-show="update_client.length===0">{{emptyUpdateLabel}}</div>
+                        <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyUpdateLabel}}</div>
 
-                            <table class="table table-hover table-vcenter"  st-table="update_client" data-js-table-sections-update ng-show="update_client.length>0" style="table-layout: fixed;">
+                            <table class="table table-hover table-vcenter"  st-table="non_degree_schools" data-js-table-sections-update ng-show="non_degree_schools.length>0" style="table-layout: fixed;">
 
                                     <colgroup>
                                       
@@ -58,14 +58,7 @@
                                     <th class="text-left" style="padding-left: 30px;">Name</th>
                                     <th class="text-left">University</th>
 
-                                    <!-- <th class="text-left">
-
-                                    <select st-search="university" class="form-control" id="select-school1" name="select-school1">
-                                        <option value="">SCHOOLS...</option>
-                                        <option ng-repeat="row in school_list" value="{{row}}">{{row}}</option>
-                                    </select>
-
-                                    </th> -->
+                                
 
                                     <th class="text-center">Updates</th>
 
@@ -73,7 +66,7 @@
 
                                 </thead>
 
-                                <tbody class="js-table-sections-header" ng-repeat-start="row in update_client">
+                                <tbody class="js-table-sections-header" ng-repeat-start="row in non_degree_schools">
                                     <tr>
                                      
 
@@ -146,18 +139,11 @@
                                     </td>
 
 
-                                    <!-- <td>
-                                            <button class="btn btn-default btn-white" style="position: relative;" ng-click="ondemand_one(row1.customer_program_id, row1.type, row.id)">
-                                                                  <i data-uib-tooltip="Ondemand" data-tooltip-placement="top"  ng-class="{'fa fa-refresh text-primary': !ondemand_single, 'fa fa-refresh fa-spin text-primary': ondemand_single }">
-                                            </i>
-                                        </button>
-
-                                    </td> -->
 
                                     
                                     </tr>
                                     </tbody>
-                                <tfoot ng-show="update_client.length>25">
+                                <tfoot ng-show="non_degree_schools.length>25">
                                     <tr>
                                       
 
@@ -182,11 +168,7 @@
                                   </tfoot>
                             </table>
                         </div>
-                        <!-- <div class="text-center push">
-                            <button class="btn btn-xs btn-default" type="button">
-                                <i class="fa fa-arrow-down push-5-r text-primary"></i>Load More..
-                            </button>
-                        </div> -->
+                      
                     </div>
                 </div>
         </div>
