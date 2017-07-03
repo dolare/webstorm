@@ -1,5 +1,7 @@
 /* app css stylesheet */
 
+@import "non-degree.css";
+
 html {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 }
