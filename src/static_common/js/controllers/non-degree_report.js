@@ -22,50 +22,70 @@ angular.module('myApp').controller('NonDegreeReportController', ['$scope', '$htt
 		    'UAH': '₴', // Ukrainian Hryvnia
 		    'VND': '₫', // Vietnamese Dong
 		    'CNY': '¥', // Chinese Yuan
+		    'null': '$', // default as US Dollar
 		};
 		$scope.fxConvert = function(amount, currency) {
 			return amount / $scope.fxRates.rates[currency];
 		}
 	});
-	// $http.get('/static/data/non-degree_report.json').then(function(response) {
-	// 	$scope.universities = response.data.data;
-	// 	$scope.date = response.data.date;
-	// 	for (let i = 0; i < $scope.universities.length; i++) {
-	// 		let u = $scope.universities[i];
-	// 		// category offerings
-	// 		u.cat_offer = u.categories.length;
 
-	// 		u.course_offer = 0; // university course offerings
-	// 		u.course_add = 0; // university course additions
-	// 		u.course_rm = 0; // university course removals
+	$http.get('/static/data/non-degree_report.json').then(function(response) {
+		$scope.schools = response.data;
+		$scope.date = new Date().toISOString();
+		for (let i = $scope.schools.length - 1; i >= 0; i--) {
+			let s = $scope.schools[i];
+			// category offerings
+			s.cat_offer = 0;
 
-	// 		// category additions
-	// 		u.cat_add = 0;
+			s.course_offer = 0; // school course offerings
+			s.course_add = 0; // school course additions
+			s.course_rm = 0; // school course removals
 
-	// 		// category removals
-	// 		u.cat_rm = 0;
+			// category additions
+			s.cat_add = 0;
 
-	// 		for (let j = 0; j < u.categories.length; j++) {
-	// 			let c = u.categories[j]; // category course offerings
-	// 			if(c.status == 'add')
-	// 				u.cat_add++;
-	// 			if(c.status == 'rm')
-	// 				u.cat_rm++;
+			// category removals
+			s.cat_rm = 0;
 
-	// 			c.course_offer = c.courses.length;
-	// 			c.course_add = 0; // category course additions
-	// 			c.course_rm = 0; // category course removals
-	// 			for (let k in c.courses) {
-	// 				if(c.courses[k].status == 'add')
-	// 					c.course_add++;
-	// 				if(c.courses[k].status == 'rm')
-	// 					c.course_rm++;
-	// 			}
+			for (let j = 0; j < s.categories.length; j++) {
+				let c = s.categories[j]; // category course offerings
+				if (c.status == 'add') {
+					s.cat_add++;
+					s.cat_offer++;
+				}
+				else if (c.status == 'rm')
+					s.cat_rm++;
+				else
+					s.cat_offer++;
 
-	// 			u.course_offer += c.course_offer;
-	// 			u.course_add += c.course_add;
-	// 			u.course_rm += c.course_rm;
-	// 		}
-	// 	}
-	// });
+				c.course_offer = 0;
+				c.course_add = 0; // category course additions
+				c.course_rm = 0; // category course removals
+				for (let k in c.courses) {
+					if (c.courses[k].status == 'add') {
+						c.course_add++;
+						c.course_offer++;
+					}
+					else if (c.courses[k].status == 'rm')
+						c.course_rm++;
+					else
+						c.course_offer++;
+				}
+
+				s.course_offer += c.course_offer;
+				s.course_add += c.course_add;
+				s.course_rm += c.course_rm;
+			}
+		}
+	});
+
+	$scope.statusComparator = function (status1, status2) {
+		var order = {
+			'add': 0,
+			'rm': 1,
+			'uc': 2
+		};
+
+		return (order[status1] < order[status2]) ? -1 : 1;
+	}
 }]);

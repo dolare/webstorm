@@ -1,0 +1,159 @@
+[{
+  "object_id": "3772f4a4-c4d1-4d70-944e-da197a425d38",
+  "school_name": "The Graduate School of Arts and Sciences–Camden",
+  "university_name": "Rutgers University - Camden",
+  "school": "580bbf8b-642b-4eb7-914c-03a054981719",
+  "date_created": "2017-07-03T14:59:11.533791Z",
+  "categories": [{
+      "name": "category1",
+      "status": "uc",
+      "courses": [{
+          "url": null,
+          "name": "course1",
+          "status": "uc",
+          "currency": null,
+          "course_dates": [{
+              "end_date": "2018-02-08",
+              "start_date": "2016-12-07",
+              "object_id": "d02741b4-006e-434e-84b2-524c431644c1"
+            },
+            {
+              "end_date": "2018-01-25",
+              "start_date": "2016-12-01",
+              "object_id": "f3b20d41-019b-4d16-9bbb-1061fbae49cf"
+            }
+          ],
+          "type": "onsite",
+          "Repeatable": "Y",
+          "tuition_number": 333,
+          "date_modified": "2017-06-28T15:26:09.935848Z",
+          "object_id": "fc220a15-94c5-454a-9767-061fb2e63034"
+        },
+        {
+          "url": null,
+          "name": "course3",
+          "status": "uc",
+          "currency": null,
+          "course_dates": [{
+              "end_date": "2017-10-18",
+              "start_date": "2017-02-08",
+              "object_id": "a7994d9c-ec4b-427d-8fad-f6a357015f29"
+            },
+            {
+              "end_date": "2017-11-22",
+              "start_date": "2017-02-01",
+              "object_id": "6df0f3ba-2636-4aa4-902e-a35eccc11da7"
+            }
+          ],
+          "type": "onsite",
+          "Repeatable": null,
+          "tuition_number": 40000,
+          "date_modified": "2017-06-28T15:31:18.683141Z",
+          "object_id": "6059eacd-5d55-4e6d-82d0-56360608aead"
+        },
+        {
+          "url": null,
+          "name": "course5",
+          "status": "rm",
+          "currency": null,
+          "course_dates": [{
+              "end_date": "2017-06-30",
+              "start_date": "2017-06-28",
+              "object_id": "89501320-6858-4df5-a54c-1ce6097acc4b"
+            },
+            {
+              "end_date": "2017-10-27",
+              "start_date": "2017-06-28",
+              "object_id": "8de9eb9b-69e2-4b9e-9366-cd377d199655"
+            }
+          ],
+          "type": "onsite",
+          "Repeatable": null,
+          "tuition_number": 50000,
+          "date_modified": "2017-07-03T14:47:37.288420Z",
+          "object_id": "c04fe6e6-15fa-41de-bc77-0cc378128cdb"
+        },
+        {
+          "url": null,
+          "name": "course7",
+          "status": "add",
+          "currency": null,
+          "course_dates": [{
+              "end_date": "2017-09-14",
+              "start_date": "2017-09-12",
+              "object_id": "247541d1-ff03-4929-9496-e8912718e8f7"
+            },
+            {
+              "end_date": "2017-07-17",
+              "start_date": "2017-07-03",
+              "object_id": "4f87e21a-d04d-44ee-bde7-138ebf5b4880"
+            }
+          ],
+          "type": "onsite",
+          "Repeatable": null,
+          "tuition_number": 45600,
+          "date_modified": "2017-07-03T14:48:47.899831Z",
+          "object_id": "915de4a3-351e-4ac7-8d45-f6af778fc1c5"
+        }
+      ],
+      "date_modified": "2017-06-28T14:41:24.311564Z",
+      "object_id": "6d8d5435-eda5-4a5c-b246-3c6be1f786da"
+    },
+    {
+      "name": "category5",
+      "status": "add",
+      "courses": [{
+        "url": null,
+        "name": "course8",
+        "status": "add",
+        "currency": null,
+        "course_dates": [{
+            "end_date": "2017-06-20",
+            "start_date": "2017-06-30",
+            "object_id": "c8ab4d6f-7da2-4254-a579-dba01cfb7169"
+          },
+          {
+            "end_date": "2017-09-07",
+            "start_date": "2017-06-02",
+            "object_id": "816b8a14-e297-4177-b52f-ade060329eb1"
+          }
+        ],
+        "type": "onsite",
+        "Repeatable": null,
+        "tuition_number": 4000,
+        "date_modified": "2017-07-03T14:58:25.865841Z",
+        "object_id": "48291ba9-fcbb-4071-ad9e-6b4e78821f77"
+      }],
+      "date_modified": "2017-07-03T14:51:23.840278Z",
+      "object_id": "a978dd6e-db19-48a4-b630-57863561258e"
+    },
+    {
+      "name": "category2",
+      "status": "rm",
+      "courses": [{
+        "url": null,
+        "name": "course2",
+        "status": "rm",
+        "currency": null,
+        "course_dates": [{
+            "end_date": "2017-10-20",
+            "start_date": "2017-06-09",
+            "object_id": "99773d7e-7c9b-49b3-9ced-77a613278a3d"
+          },
+          {
+            "end_date": "2017-11-16",
+            "start_date": "2017-06-01",
+            "object_id": "17cfaf8b-9a2b-47e1-99f8-d0fb836d3b25"
+          }
+        ],
+        "type": "online",
+        "Repeatable": null,
+        "tuition_number": 44400,
+        "date_modified": "2017-06-30T21:48:15.821204Z",
+        "object_id": "43eff34c-8580-4b22-8e79-f0ca68e0a3e2"
+      }],
+      "date_modified": "2017-06-30T21:46:24.027221Z",
+      "object_id": "1d3eec8a-3871-4d13-8114-e424b67fafbc"
+    }
+  ]
+}]

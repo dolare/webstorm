@@ -187,37 +187,37 @@
               <!-- END table header -->
               <!-- table body -->
               <tbody>
-                <tr ng-repeat-start="u in universities">
+                <tr ng-repeat-start="s in schools">
                   <td style="
                     border-right: 0;
                     padding: 4px;
-                    " rowspan="2"><img ng-src="{{u.logo_url}}" alt="Logo of {{u.title.department}}" height="58" width="58"></td>
-                  <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">{{u.title.department}}<br>
+                    " rowspan="2"><img ng-src="{{s.logo_url}}" alt="Logo of {{s.title.department}}" height="58" width="58"></td>
+                  <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">{{s.school_name}}<br>
                     <span class="text-muted">
                     <small style="
                       font-weight: 300;
                       font-size: 12px;
-                      ">{{u.title.university | uppercase}}
+                      ">{{s.university_name | uppercase}}
                     </small>
                     </span>
                   </td>
-                  <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Category Offerings:<span class="badge badge-primary pull-right">{{u.cat_offer}}</span></td>
+                  <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Category Offerings:<span class="badge badge-primary pull-right">{{s.cat_offer}}</span></td>
                   <td rowspan="2">
-                    <span ng-if="u.cat_add==null" class="badge badge-default">In Progress</span><span ng-if="u.cat_add!=0&&u.cat_add!=null" class="badge badge-success">+ {{u.cat_add}}</span><span ng-if="u.cat_add==0" class="badge badge-default">- -</span>
+                    <span ng-if="s.cat_add!=0" class="badge badge-success">+ {{s.cat_add}}</span><span ng-if="s.cat_add==0" class="badge badge-default">- -</span>
                   </td>
                   <td rowspan="2">
-                    <span ng-if="u.cat_rm==null" class="badge badge-default">In Progress</span><span ng-if="u.cat_rm!=0&&u.cat_rm!=null" class="badge badge-danger">- {{u.cat_rm}}</span><span ng-if="u.cat_rm==0" class="badge badge-default">- -</span>
+                    <span ng-if="s.cat_rm!=0" class="badge badge-danger">- {{s.cat_rm}}</span><span ng-if="s.cat_rm==0" class="badge badge-default">- -</span>
                   </td>
                   <td rowspan="2">
-                    <span ng-if="u.course_add==null" class="badge badge-default">In Progress</span><span ng-if="u.course_add!=0&&u.course_add!=null" class="badge badge-success">+ {{u.course_add}}</span><span ng-if="u.course_add==0" class="badge badge-default">- -</span>
+                    <span ng-if="s.course_add!=0" class="badge badge-success">+ {{s.course_add}}</span><span ng-if="s.course_add==0" class="badge badge-default">- -</span>
                   </td>
                   <td rowspan="2">
-                    <span ng-if="u.course_rm==null" class="badge badge-default">In Progress</span><span ng-if="u.course_rm!=0&&u.course_rm!=null" class="badge badge-danger">- {{u.course_rm}}</span><span ng-if="u.course_rm==0" class="badge badge-default">- -</span>
+                    <span ng-if="s.course_rm!=0" class="badge badge-danger">- {{s.course_rm}}</span><span ng-if="s.course_rm==0" class="badge badge-default">- -</span>
                   </td>
                 </tr>
                 <tr ng-repeat-end>
                   <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
-                    Course Offerings:<span class="badge badge-primary pull-right">{{u.course_offer}}</span>
+                    Course Offerings:<span class="badge badge-primary pull-right">{{s.course_offer}}</span>
                   </td>
                 </tr>
               </tbody>
@@ -242,8 +242,8 @@
               </div>
             </div>
           </div>
-          <!-- universities report body-->
-          <div class="row" ng-repeat-start="u in universities">
+          <!-- schools report body-->
+          <div class="row" ng-repeat-start="s in schools">
             <div class="col-sm-12">
               <!-- school overview -->
               <div class="col-sm-3">
@@ -259,7 +259,7 @@
                   </div>
                   <div class="block-content block-content-full text-left bg-image" style="padding: 10px 15px;">
                     <div>
-                      <img ng-src="{{u.logo_url}}" alt="Logo of {{u.title.department}}" width="50%">
+                      <img ng-src="" alt="Logo of {{s.school_name}}" width="50%">
                     </div>
                   </div>
                   <div class="text-left bg-gray-lighter" style="
@@ -270,11 +270,11 @@
                     ">
                     <div style="
                       font-size: 18px;
-                      " class="push-5 text-primary font-w600">{{u.title.department}}</div>
+                      " class="push-5 text-primary font-w600">{{s.school_name}}</div>
                     <small class="text-muted" style="
                       font-weight: 300;
                       font-size: 12px;
-                      ">{{u.title.university | uppercase}}</small>
+                      ">{{s.university_name | uppercase}}</small>
                   </div>
                   <div class="block-content" style="
                     padding-top: 10px;
@@ -282,7 +282,7 @@
                     <div style="
                       font-weight: 600;
                       font-size: 16px;
-                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="">{{u.cat_offer}}</span></div>
+                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="">{{s.cat_offer}}</span></div>
                     <div class="row items-push text-center">
                       <div class="col-xs-6 border-r">
                         <div class="text-muted animated fadeIn" style="
@@ -290,8 +290,8 @@
                           "><small style="
                           font-size: 11px;
                           "> ADDITION(S)</small></div>
-                        <a class="h2 font-w300 text-success animated flipInX" ng-if="u.cat_add!=0">+ {{u.cat_add}}</a>
-                        <a class="h2 font-w300 text-success animated flipInX" ng-if="u.cat_add==0">--</a>
+                        <a class="h2 font-w300 text-success animated flipInX" ng-if="s.cat_add!=0">+ {{s.cat_add}}</a>
+                        <a class="h2 font-w300 text-success animated flipInX" ng-if="s.cat_add==0">--</a>
                       </div>
                       <div class="col-xs-6">
                         <div class="text-muted animated fadeIn" style="
@@ -299,8 +299,8 @@
                           "><small style="
                           font-size: 11px;
                           "> REMOVAL(S)</small></div>
-                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="u.cat_rm!=0">- {{u.cat_rm}}</a>
-                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="u.cat_rm==0">--</a>
+                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="s.cat_rm!=0">- {{s.cat_rm}}</a>
+                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="s.cat_rm==0">--</a>
                       </div>
                     </div>
                   </div>
@@ -309,7 +309,7 @@
               <!-- END school overview -->
               <div class="col-sm-9">
                 <!-- category -->
-                <div ng-repeat="c in u.categories" class="col-sm-12"  style="
+                <div ng-repeat="c in s.categories | orderBy:'status':false:statusComparator" class="col-sm-12"  style="
                   padding-right: 0;
                   ">
                   <!-- category header -->
@@ -412,7 +412,7 @@
                       </thead>
                       <tbody>
                         <!-- course table rows -->
-                        <tr ng-repeat="course in c.courses" class="course" ng-class="{add: course.status=='add', rm: course.status=='rm', uc: course.status=='uc'}">
+                        <tr ng-repeat="course in c.courses | orderBy:'status':false:statusComparator" class="course" ng-class="{add: course.status=='add', rm: course.status=='rm', uc: course.status=='uc'}">
                           <td style="
                             text-align: center;
                             ">{{$index + 1}}</td>
@@ -426,15 +426,15 @@
                           <td style="
                             padding: 8px 10px;
                             ">
-                            <span ng-repeat-start="s in course.schedule">{{s}}</span><br ng-repeat-end ng-if="!$last">
+                            <span ng-repeat-start="d in course.course_dates">Start: {{d.start_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span><br><span>End: {{d.end_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span><br ng-repeat-end ng-if="!$last">
                           </td>
                           <td style="
                             padding: 8px 10px;
                             ">
-                            <span>{{course.tuitionAmount | currency:currency_symbols[course.tuitionCurrency]:0}}<br><span ng-if="course.tuitionCurrency!='USD'" class="text-muted" style="
+                            <span>{{course.tuition_number | currency:currency_symbols[course.currency]:0}}<br><span ng-if="course.currency!='USD'&&course.currency!=null" class="text-muted" style="
                               font-size: 12px;
                               font-weight: 200;
-                              ">*({{fxConvert(course.tuitionAmount,course.tuitionCurrency) | currency:"$":0}} as of {{fxRates.date | amUtc | amLocal | amDateFormat:'M/D/YY'}})</span></span>
+                              ">*({{fxConvert(course.tuition_number,course.currency) | currency:"$":0}} as of {{fxRates.date | amUtc | amLocal | amDateFormat:'M/D/YY'}})</span></span>
                           </td>
                           <td style="
                             padding: 8px 10px;
@@ -457,7 +457,7 @@
             border: 0;
             border-top: 1px dashed #bbb;
             ">
-          <!-- END universities report body-->
+          <!-- END schools report body-->
           <hr class="hidden-print" style="margin-bottom: 8px;">
           <p class="text-muted text-left"><small><strong>Gridology Education &amp; Technology, Inc.</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oak Tree Center, 2024 Center Ave, Fort Lee, NJ 07024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="http://www.gridet.com" target="_blank"><strong>gridet</strong>.com</a></small></p>
         </div>
