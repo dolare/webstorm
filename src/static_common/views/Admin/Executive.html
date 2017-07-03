@@ -39,67 +39,80 @@
                     <div class="block-content">
                         <div class="">
 
-                        <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyUpdateLabel}}</div>
+                        <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyExecutiveLabel}}</div>
 
-                            <table class="table table-hover table-vcenter"  st-table="non_degree_schools" data-js-table-sections-update ng-show="non_degree_schools.length>0" style="table-layout: fixed;">
+                            <table class="table table-hover"  st-table="non_degree_schools" ng-show="non_degree_schools.length>0" style="table-layout: fixed;">
 
                                     <colgroup>
                                       
+                                      <col width="10%"/>
                                       <col width="35%"/>
-                                      
-                                      <col width="35%"/>
-                                      <col width="20%"/>
+                                     
+                                      <col width="80px"/>
+                                      <col width="15%"/>
                                     </colgroup>
 
                                 <thead>
                                 <tr>
                                     
                                    
-                                    <th class="text-left" style="padding-left: 30px;">Name</th>
-                                    <th class="text-left">University</th>
+                                    <th class="text-left">Ceeb</th>
+                                    <th class="text-left">School</th>
 
-                                
 
-                                    <th class="text-center">Updates</th>
+                                   
+                                    <th class="text-center">Release</th>
+
+
+                                    <th class="text-center">History</th>
 
                                 </tr>
 
                                 </thead>
 
-                                <tbody class="js-table-sections-header" ng-repeat-start="row in non_degree_schools">
+                                <tbody ng-repeat="row in non_degree_schools">
                                     <tr>
                                      
 
-                                        <td style="padding-left: 30px;">{{row.contact_name}}
-                                          <div class="text-muted push-5-t" style="font-size:80%">{{row.email}}
-                                           </div>
+                                        <td>
+                                          
+
+
+                                          <label class="label label-default text-success bg-success-light" style="
+                                            border: 1px solid #46c37b;
+                                            font-size: 9px;
+                                            padding: 1px 4px;
+                                            margin-left: 5px;    top: -3px; font-size: 80%;">{{row.ceeb}}</label>
 
                                         </td>
                                        
-                                        <td>{{row.university}}
-                                          <div class="text-muted push-5-t" style="font-size:80%">DEP: {{row.department}}
-                                          <span ng-if="row.department===null">
-                                              N/A
-                                          </span></div>
+                                        <td>
+
+                                          {{row.school}}
+                                          <div class="text-muted push-5-t" style="font-size:80%">{{row.university}}
+                                         </div>
 
                                         </td>
 
 
                                        
+
+
 
                                         <td class="text-center">
-                                           
-                                                                <button class="btn btn-default btn-white" type="button" style="position: relative; margin-right:6px" ng-click="updated_whoops(row.id)" ng-disabled="row.has_update.whoops_update===0">
-                                                                <i data-uib-tooltip="Whoops" data-tooltip-placement="top" class="fa fa-wrench" ng-disabled="row.has_update.whoops_update===0" ng-class="{'text-success': row.has_update.whoops_update===0, 'text-warning': row.has_update.whoops_update!==0}">
-                                                                </i><span ng-if="row.has_update.whoops_update>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;">{{row.has_update.whoops_update}}</span>
-                                                                </button>
 
-                                                                <button class="btn btn-default btn-white" style="position: relative;" ng-click="updated_enhancement(row.id)" ng-disabled="row.has_update.enhancement_update===0">
-                                                                  <i data-uib-tooltip="Enhancement" data-tooltip-placement="top" class="fa fa-rocket" ng-disabled="row.has_update.enhancement_update===0" ng-class="{'text-success': row.has_update.enhancement_update===0, 'text-warning': row.has_update.enhancement_update!==0}">
-                                                                 </i><span ng-if="row.has_update.enhancement_update>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;z-index: 1;">{{row.has_update.enhancement_update}}</span>
-                                                                 </button>
-                                                               
-                                                            
+                                          <button class="btn btn-default btn-white" ng-click = "releaseSchool(row.object_id)" data-js-blur>
+                                              <a class="fa fa-cloud-upload text-city" style="vertical-align: middle;">
+                                              </a>
+                                              </button>
+
+                                        </td>
+
+                                        <td class="text-center">
+                                         <button class="btn btn-default btn-white" data-toggle="modal" data-target="#WhoopsReport"" data-js-blur>
+                                              <a class="fa fa-cloud-download text-primary" style="vertical-align: middle;">
+                                              </a>
+                                              </button>
 
                                         </td>
 
@@ -110,39 +123,6 @@
                                     </tbody>
 
 
-                                    <tbody ng-repeat-end class="bg-gray-lighter">
-                                    <tr ng-repeat="row1 in dropdown_list">
-                                    
-                                    <td colspan="2" style="padding-left: 30px;">
-                                    Program: 
-                                    {{row1.customer_program.program_display.split('--')[1]}} ({{row1.customer_program.program_display.split('--')[2].split('-')[0]}})
-                                    </td>
-
-                                
-
-                                    <td class="text-center">
-
-                                        <button class="btn btn-default btn-white" style="position: relative;" ng-click="need_for_confirm(row1.customer_program_id, row1.type, row1.customer_program.program_display, row.id)" data-toggle="modal" data-target="#WhoopsReport" ng-if="row1.type==='whoops'">
-                                                                  <i data-uib-tooltip="Enhancement" data-tooltip-placement="top" class="fa fa-file-text-o text-info">
-                                                                 </i> &nbsp;<span class="text-primary">View</span>
-
-                                                                <!--  <span ng-if="row1.update_nums>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;z-index: 1;">{{row1.update_nums}}</span> -->
-                                        </button>
-
-                                        <button class="btn btn-default btn-white" style="position: relative;" ng-click="need_for_confirm(row1.customer_program_id, row1.type, row1.customer_program.program_display, row.id)" data-toggle="modal" data-target="#EnhancementReport" ng-if="row1.type==='enhancement'">
-                                                                  <i data-uib-tooltip="Enhancement" data-tooltip-placement="top" class="fa fa-file-text-o text-info">
-                                                                 </i> &nbsp;<span class="text-primary">View</span>
-                                                                 <!-- <span ng-if="row1.update_nums>0" class="badge badge-danger" style="position: absolute;top:-10px;right:-10px; background-color: #d26a5c;z-index: 1;">{{row1.update_nums}}</span> -->
-                                        </button>
-
-                                        
-                                    </td>
-
-
-
-                                    
-                                    </tr>
-                                    </tbody>
                                 <tfoot ng-show="non_degree_schools.length>25">
                                     <tr>
                                       
@@ -168,7 +148,7 @@
                                   </tfoot>
                             </table>
                         </div>
-                      
+                       
                     </div>
                 </div>
         </div>
@@ -280,6 +260,11 @@
         </div>
       </div>
     </div>
+
+
+
+
+
 
 
 

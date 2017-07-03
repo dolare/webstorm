@@ -84,7 +84,9 @@ class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
         except UniversitySchool.DoesNotExist:
             raise ValidationError("Can not find school with this object_id.")
         categories = NonDegreeCategory.objects.filter(university_school=school)
+        print(categories)
         data = JSONRenderer().render(CategorySerializer(categories, many=True).data)
+        print(data)
         return data
 
     def create(self, request, *args, **kwargs):
