@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('myApp').
-controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$localStorage', '$sessionStorage', function($scope, $http, authenticationSvc, $localStorage, $sessionStorage) {
+controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$localStorage', '$sessionStorage', 'executiveService', function($scope, $http, authenticationSvc, $localStorage, $sessionStorage, executiveService) {
   var token = authenticationSvc.getUserInfo().accessToken;
   $scope.$storage = $localStorage;
 
@@ -18,6 +18,7 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
     $scope.url = null;
   };
+
 
   $scope.check_storage = function(){
     console.log("$scope.$storage.non_degree="+JSON.stringify($scope.$storage.non_degree))
@@ -110,6 +111,88 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
        } else {
 
         jQuery('#ViewAll').modal('toggle');
+
+        App.blocks('#viewall_loading', 'state_loading');
+
+        $scope.school_details = [];
+
+        angular.forEach(selected_ids, function(value, index) {
+
+          $http({
+            url: '/api/upgrid/non_degree/reports?school=' + value,
+            method: 'GET',
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+          })
+          .then(function(response) {
+
+            console.log("history ver.="+JSON.stringify(response.data.results))
+            
+            $http({
+              url: '/api/upgrid/non_degree/reports/' + response.data.results[0],
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            }).then(function(response) {
+
+              // $scope.new_school_data = response
+
+            console.log("new school data ="+JSON.stringify(response.data))
+             return $http({
+                url: '/api/upgrid/non_degree/reports/' + (response.data.results.length === 1 ? response.data.results[0] : response.data.results[1]),
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                }
+              })
+
+              }).then(function(response) {
+
+
+              }).
+               catch(function(error){
+                  console.log('an error occurred...'+JSON.stringify(error));
+              });
+
+              // $http({
+              //       url: '/api/upgrid/non_degree/reports/overview/' + response.data.results[0].object_id + '/' + (response.data.results.length>1? response.data.results[1].object_id:response.data.results[0].object_id),
+              //       method: 'GET',
+              //       headers: {
+              //         'Authorization': 'JWT ' + token
+              //       }
+              //     })
+              //     .then(function(response) {
+                    
+              //       value["details"] = {};
+
+              //       value.details["course_removed"] = response.data.course_removed
+              //       value.details["course_added"] = response.data.course_added
+              //       value.details["category_added"] = response.data.category_added
+              //       value.details["category_removed"] = response.data.category_removed
+
+              //     }).
+              //      catch(function(error){
+              //         console.log('an error occurred...'+JSON.stringify(error));
+              //     });
+               
+
+
+            }).
+             catch(function(error){
+                console.log('an error occurred...'+JSON.stringify(error));
+            });
+
+
+
+        })
+        
+
+
+
+
+        App.blocks('#viewall_loading', 'state_normal');
 
        }
 
