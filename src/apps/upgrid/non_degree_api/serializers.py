@@ -16,6 +16,22 @@ class UniversitySchoolListSerializer(ModelSerializer):
         return obj.university
 
 
+class UniversitySchoolDetailSerializer(ModelSerializer):
+    university = SerializerMethodField()
+    categories = SerializerMethodField()
+
+    class Meta:
+        model = UniversitySchool
+        fields = ('object_id', 'ceeb', 'school', 'university', 'categories')
+
+    def get_university(self, obj):
+        return obj.university
+
+    def get_categories(self, obj):
+        categories = NonDegreeCategory.objects.filter(university_school=obj)
+        return CategorySerializer(categories, many=True).data
+
+
 class ReportListSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeReport
@@ -39,18 +55,10 @@ class ReportSerializer(ModelSerializer):
 
 class ReportCreateSerializer(ModelSerializer):
     """ Create non-degree report serializer"""
-    school_name = SerializerMethodField()
-    university_name = SerializerMethodField()
 
     class Meta:
         model = NonDegreeReport
-        fields = ('school_name', 'university_name', 'school', 'categories')
-
-    def get_school_name(self, obj):
-        return obj.school.school
-
-    def get_university_name(self, obj):
-        return obj.school.university_foreign_key.name
+        fields = ('school', 'categories')
 
 
 class CourseDateSerializer(ModelSerializer):

@@ -14,7 +14,7 @@ from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPT
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeRepeatDate
 
 from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer, CategorySerializer, \
-    ReportListSerializer, ReportSerializer
+    ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination
 from .filter import UniversitySchoolFilter, ReportFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport
@@ -40,6 +40,21 @@ class UniversitySchoolListAPI(PermissionMixin, ListAPIView):
     search_fields = ('ceeb', 'school', )
     ordering_fields = ('ceeb', 'school', )
     ordering = ('ceeb', 'school', )      # default ordering
+
+    def get_queryset(self, *args, **kwargs):
+        if self.is_manager():
+            university_schools = UniversitySchool.objects.all()
+        else:
+            university_schools = UniversitySchool.objects.filter(non_degree_user=self.request.user)
+        return university_schools
+
+
+class UniversitySchoolDetailAPI(PermissionMixin, RetrieveAPIView):
+    """
+    Retrieve school detail API
+    """
+    lookup_field = 'object_id'
+    serializer_class = UniversitySchoolDetailSerializer
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
