@@ -218,6 +218,9 @@ App.config(function($stateProvider, $urlRouterProvider) {
                                 'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
                                 '/static/js/services/updateService.js',
                                 '/static/js/controllers/admin-executive.js',
    

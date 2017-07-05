@@ -3,19 +3,26 @@
 angular.module('myApp')
   .factory('executiveService', function(avatarService, $http, $q, authenticationSvc) {
     
-     var updatedReport = function(old_data, new_data) {
+     var updatedReport = function(old_data_raw, new_data_raw) {
 
-      var school_data = angular.copy(new_data);
+      var school_data = angular.copy(new_data_raw);
+      var school_cat_data = school_data.categories;
 
-      var new_ids = _.pluck(new_data, 'object_id');
-      var old_ids = _.pluck(old_data, 'object_id');
+      var new_ids = _.pluck(new_data_raw.categories, 'object_id');
+      var old_ids = _.pluck(old_data_raw.categories, 'object_id');
+
+      var old_data = old_data_raw.categories;
+      var new_data = new_data_raw.categories;
+
+      console.log("old_data="+JSON.stringify(old_data));
+      console.log("new_data="+JSON.stringify(new_data));
 
       //loop old
       for(var i=0; i<old_data.length; i++){
 
         if(!_.contains(new_ids, old_data[i].object_id)){
-          school_data.push(old_data[i]);
-          school_data[school_data.length-1]["updated"]= 0 
+          school_cat_data.push(old_data[i]);
+          school_cat_data[school_cat_data.length-1]["updated"]= 0 
         }
       }
 
@@ -24,24 +31,24 @@ angular.module('myApp')
 
       for(var i=0; i<new_data.length; i++){
 
-        if(!_.contains(old_ids, school_data[i].object_id)){
-          school_data[i]["updated"]= 1 
+        if(!_.contains(old_ids, school_cat_data[i].object_id)){
+          school_cat_data[i]["updated"]= 1 
         } else {
 
           //if name diff
-          if(school_data[i].name !== _.findWhere(old_data, {"object_id": school_data[i].object_id}).name){
-            school_data[i]["updated"] =   _.findWhere(old_data, {"object_id": school_data[i].object_id}).name
+          if(school_cat_data[i].name !== _.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).name){
+            school_cat_data[i]["updated"] =   _.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).name
 
           } else {
             //same name(no update on category)
             //check update on courses
-            school_data[i]["updated"] = null;
-            var course_data_copy = school_data[i].courses
-            var new_course_data = angular.copy(school_data[i].courses)
-            var old_course_data = angular.copy(_.findWhere(old_data, {"object_id": school_data[i].object_id}).courses)
+            school_cat_data[i]["updated"] = null;
+            var course_data_copy = school_cat_data[i].courses
+            var new_course_data = angular.copy(school_cat_data[i].courses)
+            var old_course_data = angular.copy(_.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).courses)
 
-            var new_course_ids = _.pluck(school_data[i].courses, 'object_id');
-            var old_course_ids = _.pluck(_.findWhere(old_data, {"object_id": school_data[i].object_id}).courses, 'object_id');
+            var new_course_ids = _.pluck(school_cat_data[i].courses, 'object_id');
+            var old_course_ids = _.pluck(_.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).courses, 'object_id');
 
              //loop old course, deleted course
             for(var j=0; j<old_course_data.length; j++){

@@ -83,6 +83,8 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
 
 
+     //view the reports
+
      $scope.view_report = function () {
 
        var selected_ids = [];
@@ -114,10 +116,16 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
         App.blocks('#viewall_loading', 'state_loading');
 
-        $scope.school_details = [];
+        $scope.schools = [];
+
+        var report_history = [];
+
+        var new_school_data;
+        var old_school_data;
 
         angular.forEach(selected_ids, function(value, index) {
 
+          console.log("value = "+value)
           $http({
             url: '/api/upgrid/non_degree/reports?school=' + value,
             method: 'GET',
@@ -128,9 +136,10 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
           .then(function(response) {
 
             console.log("history ver.="+JSON.stringify(response.data.results))
-            
+            report_history = response.data.results;
+
             $http({
-              url: '/api/upgrid/non_degree/reports/' + response.data.results[0],
+              url: '/api/upgrid/non_degree/reports/' + report_history[0].object_id,
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
@@ -139,9 +148,11 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
               // $scope.new_school_data = response
 
+
             console.log("new school data ="+JSON.stringify(response.data))
+            new_school_data = response.data;
              return $http({
-                url: '/api/upgrid/non_degree/reports/' + (response.data.results.length === 1 ? response.data.results[0] : response.data.results[1]),
+                url: '/api/upgrid/non_degree/reports/' + (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id),
                 method: 'GET',
                 headers: {
                   'Authorization': 'JWT ' + token
@@ -150,6 +161,12 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
               }).then(function(response) {
 
+                old_school_data = response.data;
+                console.log("old school data ="+JSON.stringify(response.data));
+
+                $scope.schools.push(executiveService.updatedReport(old_school_data, new_school_data))
+
+                console.log("$scope.schools after ="+JSON.stringify($scope.schools));
 
               }).
                catch(function(error){
