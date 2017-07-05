@@ -101,7 +101,7 @@
 
                                         <td class="text-center">
 
-                                          <button class="btn btn-default btn-white" ng-click = "releaseSchool(row.object_id)" data-js-blur>
+                                          <button class="btn btn-default btn-white" ng-click = "releaseSchool(row.object_id)" data-js-blur data-toggle="modal" data-target="#releaseSchool">
                                               <a class="fa fa-cloud-upload text-city" style="vertical-align: middle;">
                                               </a>
                                               </button>
@@ -109,7 +109,10 @@
                                         </td>
 
                                         <td class="text-center">
-                                         <button class="btn btn-default btn-white" data-toggle="modal" data-target="#WhoopsReport"" data-js-blur>
+                                          <select ng-click="getReports()" ng-model="selectedReportId">
+                                            <option ng-repeat="r in row.reports" value="{{r.object_id}}">{{r.date_created | amUtc | amLocal | amDateFormat:'MM/DD/YYY HH:mm:ss'}}</option>
+                                          </select>
+                                         <button class="btn btn-default btn-white" ng-click="viewReport(selectedReportId)" data-js-blur>
                                               <a class="fa fa-cloud-download text-primary" style="vertical-align: middle;">
                                               </a>
                                               </button>
@@ -154,8 +157,8 @@
         </div>
 
 
-
-<div class="modal fullscreen-modal viewer fade update-modal" id="EnhancementReport"  role="dialog" aria-labelledby="myModalLabel" >
+<!-- Modal of release pop-up window-->
+<div class="modal fullscreen-modal viewer fade update-modal" id="releaseSchool"  role="dialog" aria-labelledby="myModalLabel" >
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="block block-themed block-transparent remove-margin-b" id="enhancement_loading">
@@ -173,7 +176,7 @@
                                     <button data-dismiss="modal" type="button" ng-click="scrolltop2()" data-js-blur><i class="si si-close"></i></button>
                                   </li>
                                 </ul>
-                                <h3 class="block-title">Enhancement Report 
+                                <h3 class="block-title">Release Report 
 
                                 &nbsp;&nbsp;<span class="badge badge-danger" style=" background-color: #d26a5c;">{{e_show_update}} Updates</span>
 
@@ -187,11 +190,10 @@
 
                    <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
-                    <div ng-include src="'/static/views/Home/partials/enhancement_template_pro.html'"></div>
+                    <div ng-include src="'/static/views/Home/partials/non_degree_viewreport.html'"></div>
                     </div>
 
 
-                  <!--   </div> -->
                     <!-- END SlimScroll Container -->
                 
                         <div style="position: fixed;bottom: 20px;right: 44px;">
@@ -209,8 +211,8 @@
 
 
 
-   <!-- Modal of Pdf Viewer-->
-      <div class="modal viewer fade update-modal" id="WhoopsReport"  role="dialog" aria-labelledby="myModalLabel" >
+   <!-- Modal of view report pop-up window-->
+      <div class="modal viewer fade update-modal" id="viewReport"  role="dialog" aria-labelledby="myModalLabel" >
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="block block-themed block-transparent remove-margin-b" id="whoops_loading">
@@ -228,7 +230,7 @@
                                         <button data-dismiss="modal" type="button" ng-click="scrolltop1()" data-js-blur><i class="si si-close"></i></button>
                                       </li>
                                     </ul>
-                                    <h3 class="block-title">Whoops Report 
+                                    <h3 class="block-title">Non-degree Report 
                                     &nbsp;&nbsp;<span class="badge badge-danger" style=" background-color: #d26a5c;">{{w_update}} Updates</span>
                                     </h3>
 
@@ -243,7 +245,7 @@
 
                         <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
-                        <div ng-include src="'/static/views/Home/partials/whoops_template_pro.html'"></div>
+                        <div ng-include src="'/static/views/Home/partials/non_degree_viewreport.html'"></div>
                         
                         </div>
                          
@@ -260,11 +262,3 @@
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
-

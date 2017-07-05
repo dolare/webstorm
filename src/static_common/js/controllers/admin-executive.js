@@ -25,6 +25,69 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
      });
 
 
+     $scope.getReports = function() {
+        for (let i = $scope.non_degree_schools.length-1; i >= 0; i--) {
+        let s = $scope.non_degree_schools[i];
+        $http({
+              url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+        })
+        .then(function(resp_reports) {
+            s.reports = resp_reports.data.results;
+        });
+       }
+     }
+
+     $scope.viewReport = function(reportId) {
+        if(reportId == null){
+          $.notify({
+
+          // options
+          icon: "fa fa-warning",
+          message: 'Please select a report from the dropdown list.'
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
+          },
+          z_index: 1999,
+        });
+       } 
+       else {
+        $http({
+              url: '/api/upgrid/non_degree/reports/' + reportId,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+        })
+        .then(function(resp_report) {
+           $scope.date = resp_report.data.date_created; 
+           $scope.school = resp_report.data.school_name;
+           $scope.university = resp_report.data.university_name;
+           $scope.categories = resp_report.data.categories;
+
+           // Category offerings
+           $scope.cat_offer = $scope.categories.length;
+
+           // Course offerings
+           $scope.course_offer = 0;
+
+           for (let i = $scope.categories.length-1; i >= 0; i--) {
+            $scope.categories[i].course_offer = $scope.categories[i].courses.length;
+            $scope.course_offer += $scope.categories[i].courses.length;
+           }
+        });
+
+        jQuery('#viewReport').modal('toggle');
+        }
+
+     }
 
      $scope.releaseSchool = function(Id) {
 
@@ -50,6 +113,22 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         }).then(function (response) {
 
            console.log("return data"+ JSON.stringify(response.data));
+
+           $scope.date = new Date().toISOString(); 
+           $scope.school = response.data.school_name;
+           $scope.university = response.data.university_name;
+           $scope.categories = response.data.categories;
+
+           // Category offerings
+           $scope.cat_offer = $scope.categories.length;
+
+           // Course offerings
+           $scope.course_offer = 0;
+
+           for (let i = $scope.categories.length-1; i >= 0; i--) {
+            $scope.categories[i].course_offer = $scope.categories[i].courses.length;
+            $scope.course_offer += $scope.categories[i].courses.length;
+           }
            
         }).
          catch(function(error){
