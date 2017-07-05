@@ -2,8 +2,11 @@
 'use strict';
 
 angular.module('myApp').
-controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', function($scope, $http, authenticationSvc) {
+controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$localStorage', '$sessionStorage', function($scope, $http, authenticationSvc, $localStorage, $sessionStorage) {
   var token = authenticationSvc.getUserInfo().accessToken;
+  $scope.$storage = $localStorage;
+
+  $scope.$storage.non_degree = null
 
   // selected schools' IDs
   $scope.selectedSchoolIds = [];
@@ -16,6 +19,109 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', funct
     $scope.url = null;
   };
 
+  $scope.check_storage = function(){
+    console.log("$scope.$storage.non_degree="+JSON.stringify($scope.$storage.non_degree))
+  }
+
+   $http({
+      url: '/api/upgrid/non_degree/schools',
+      method: 'GET',
+      headers: {
+        'Authorization': 'JWT ' + token
+      }
+    })
+    .then(function(response) {
+
+       console.log("return data"+ JSON.stringify(response.data.results));
+       $scope.school_table = response.data.results
+
+        angular.forEach($scope.school_table, function(value, index) {
+         value["details"] = null;
+         value["logo_url"] = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/LBS_logo_.png/150px-LBS_logo_.png';
+
+          $http({
+            url: '/api/upgrid/non_degree/reports?school=' + value.object_id,
+            method: 'GET',
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+          })
+          .then(function(response) {
+            if(response.data.results.length>0) {
+              $http({
+                    url: '/api/upgrid/non_degree/reports/overview/' + response.data.results[0].object_id + '/' + (response.data.results.length>1? response.data.results[1].object_id:response.data.results[0].object_id),
+                    method: 'GET',
+                    headers: {
+                      'Authorization': 'JWT ' + token
+                    }
+                  })
+                  .then(function(response) {
+                    
+                    value["details"] = {};
+
+                    value.details["course_removed"] = response.data.course_removed
+                    value.details["course_added"] = response.data.course_added
+                    value.details["category_added"] = response.data.category_added
+                    value.details["category_removed"] = response.data.category_removed
+
+                  }).
+                   catch(function(error){
+                      console.log('an error occurred...'+JSON.stringify(error));
+                  });
+               }
+            }).
+             catch(function(error){
+                console.log('an error occurred...'+JSON.stringify(error));
+            });
+        })
+        console.log("school_table = "+JSON.stringify($scope.school_table));
+    }).
+     catch(function(error){
+        console.log('an error occurred...'+JSON.stringify(error));
+    });
+
+
+
+     $scope.view_report = function () {
+
+       var selected_ids = [];
+       angular.forEach($scope.$storage.non_degree, function(value, key) {
+          if(value){
+            selected_ids.push(key)
+          }
+
+        });
+
+       if(selected_ids.length===0){
+          $.notify({
+
+          // options
+          icon: "fa fa-warning",
+          message: 'Please make a selection from the table.'
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
+          },
+          z_index: 1999,
+        });
+       } else {
+
+        jQuery('#ViewAll').modal('toggle');
+
+       }
+
+       console.log("selected_ids= "+JSON.stringify(selected_ids))
+
+
+     }
+
+
+////////////////////////////////////////////////////////////
+
+
   // Retrieve the list of subsribed schools
   $http({
       url: '/api/upgrid/non_degree/schools',
@@ -25,7 +131,10 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', funct
       }
     })
     .then(function(resp_schools) {
+
       $scope.school_list = resp_schools.data.results;
+
+
       for (let i = $scope.school_list.length - 1; i >= 0; i--) {
         let s = $scope.school_list[i];
         s.selected = false;
@@ -100,7 +209,17 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', funct
         console.log($scope.selectedSchoolIds);
       }, true);
 
+
+
+    }).
+     catch(function(error){
+        console.log('an error occurred...'+JSON.stringify(error));
+
     });
+
+
+
+
 
 
   // View selected schools

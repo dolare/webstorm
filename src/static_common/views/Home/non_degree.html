@@ -10,13 +10,14 @@
       <!-- <h3 class="block-title">Checkable Table</h3> -->
       <div class="col-sm-7">
         <h1 class="page-heading">
-          Report Manager <br><small> &nbsp;&nbsp;- Help you organize the selected reports.</small>
+          Non-degree Tracking <br><small> &nbsp;&nbsp;- Monitor on peers' offerings.</small>
         </h1>
       </div>
     </div>
     <div class="block-content" style="padding-top:0; padding-left:30px; padding-right:30px">
       <!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
-      <table st-table="school_list" class="table" style="table-layout: fixed;">
+      
+     <!--  <table st-table="school_list" class="table" style="table-layout: fixed;">
         <colgroup>
           <col width="60px">
           <col width="50%">
@@ -60,7 +61,7 @@
         <tbody>
           <tr ng-repeat="row in school_list">
             <td class="font-w500 td-bordered text-center bg-gray-lighterer">
-              <!-- checkbox one -->
+             
               <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.hasReport==false}">
               <input type="checkbox" ng-model="row.selected" ng-disabled="row.hasReport==false"><span></span>
               </label>
@@ -105,9 +106,121 @@
             </td>
           </tr>
         </tfoot>
+      </table> -->
+
+      
+       <table st-table="school_table" class="table" style="table-layout: fixed;">
+        <colgroup>
+          <col width="60px">
+          <col width="50%">
+          <col width="80px">
+          <col width="80px">
+          <col width="80px">
+          <col width="80px">
+        </colgroup>
+        <thead class="thead-inverse">
+          <tr class=" bg-info" style="border: 1px solid #e3e3e3; color:white;">
+            <th></th>
+            <th st-sort="name" style="padding-left:15px;" class="h4 font-w400">school
+            </th>
+            <th colspan="2" class="h4 font-w400" style="text-align:center;">categories
+            </th>
+            <th colspan="2" class="h4 font-w400" style="text-align:center;">
+              courses
+            </th>
+          </tr>
+          <tr class="bg-gray-lighter">
+            <th class="text-center th-bordered" style="vertical-align: middle; text-decoration: none; cursor: default;">
+              <i class="fa fa-search text-primary"></i>
+            </th>
+            <th class="th-bordered">
+              <input st-search="" placeholder="Search for a school..."  style="height:auto; width:100%;" type="search" class="form-control font-w400"/>
+            </th>
+            <th style="text-align:center;vertical-align: middle;letter-spacing: 0.2px;" class="font-w400 th-bordered text-muted font-s12">
+              Addition(s)
+            </th>
+            <th style="text-align:center;vertical-align: middle;letter-spacing: 0.2px" class="font-w400 th-bordered text-muted font-s12">
+              Removal(s)
+            </th>
+            <th style="text-align:center;vertical-align: middle;letter-spacing: 0.2px" class="font-w400 th-bordered text-muted font-s12">
+              Addition(s)
+            </th>
+            <th style="text-align:center;vertical-align: middle;letter-spacing: 0.2px" class="font-w400 th-bordered text-muted font-s12">
+              Removal(s)
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="row in school_table">
+            <td class="font-w500 td-bordered text-center bg-gray-lighterer">
+             
+              <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':!row.details}">
+              <input type="checkbox" ng-model="$storage.non_degree[row.object_id]" ng-disabled="!row.details"><span></span>
+              </label>
+            </td>
+            <td class="font-w500 td-bordered" style="padding-left:15px;">
+              <div class="pull-left" style="margin-right: 10px">
+                <img ng-src="{{row.logo_url}}" height="40" width="40">
+              </div>
+              <div>{{row.school}}<br>
+                <span class="text-muted"><small class="ng-binding text-uppercase" style="
+                  font-weight: 300;
+                  font-size: 12px;
+                  ">{{row.university}}</small></span>
+              </div>
+            </td>
+
+            <td ng-show="!row.details" colspan="4" class="td-bordered text-center">
+             
+               <label class="label label-default"><i class="fa fa-refresh"></i> &nbsp;In Progress</label>
+
+
+            </td>
+
+
+            <td style="text-align:center;" class="td-bordered" ng-show="row.details">
+              
+              <span ng-if="row.details.category_added>0" class="badge badge-success">+ {{row.details.category_added}}</span>
+              <span ng-if="row.details.category_added===0" class="badge badge-default">- -</span>
+            </td>
+            <td style="text-align:center;" class="td-bordered" ng-show="row.details">
+              
+              <span ng-if=row.details.category_removed>0" class="badge badge-danger">- {{row.details.category_removed}}</span>
+              <span ng-if="row.details.category_removed===0" class="badge badge-default">- -</span>
+            </td>
+            <td style="text-align:center;" class="td-bordered" ng-show="row.details">
+              
+              <span ng-if="row.details.course_added>0" class="badge badge-success">+ {{row.details.course_added}}</span>
+              <span ng-if="row.details.course_added===0" class="badge badge-default">- -</span>
+            </td>
+            <td style="text-align:center;" class="td-bordered" ng-show="row.details">
+             
+              <span ng-if="row.details.course_removed>0" class="badge badge-danger">- {{row.details.course_removed}}</span>
+              <span ng-if="row.details.course_removed===0" class="badge badge-default">- -</span>
+            </td>
+
+
+          </tr>
+        </tbody>
+        <tfoot ng-show="school_list.length>25">
+          <tr>
+            <td colspan="2" >
+              <br/><br/>
+              <div class="btn-group pull-left ng-scope tablepagenum" >
+                <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
+                <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button>
+              </div>
+            </td>
+            <td colspan="3" class="text-center">
+              <br/><br/>
+              <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5" style="text-align:right;"></div>
+            </td>
+          </tr>
+        </tfoot>
       </table>
+
       <hr ng-if="school_list.length>0">
-      <button class="font-w400 btn btn-lg btn-square bg-info" ng-click="viewReport()" style="width:48%;color:white;margin-bottom:30px;" data-toggle="modal" data-target="#ViewAll">
+      <button class="font-w400 btn btn-lg btn-square bg-info" ng-click="view_report()" style="width:48%;color:white;margin-bottom:30px;">
       View
       </button>
       <button class="font-w400 btn btn-lg pull-right btn-square bg-city-light" ng-click="setLinkValue()" style="width:48%;color:white;margin-bottom:30px;">
@@ -116,6 +229,8 @@
     </div>
   </div>
 </div>
+
+
 <!-- Modal of Share the Link-->
 <div class="modal fade push-100-t" id="myModal1"  role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -214,6 +329,8 @@
     </div>
   </div>
 </div>
+
+
 <!-- viewall modal -->
 <div class="modal fullscreen-modal viewer fade" id="ViewAll"  role="dialog" aria-labelledby="myModalLabel" >
   <div class="modal-dialog modal-lg" role="document">
@@ -245,8 +362,7 @@
                 <div ng-include src="'/static/views/Home/non_degree_report.html'"></div>
               </div>
               <!-- Footer -->
-              <hr class="hidden-print" style="margin-bottom: 8px;">
-              <p class="text-muted text-left"><small><strong>Gridology Education & Technology, Inc.</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oak Tree Center, 2024 Center Ave, Fort Lee, NJ 07024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="http://www.gridet.com" target="_blank"><strong>gridet</strong>.com</a></small></p>
+             
             </div>
           </div>
           <div style="position: fixed;bottom: 50px;right: 25px;">
