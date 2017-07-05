@@ -90,5 +90,5 @@ class CategorySerializer(ModelSerializer):
         fields = ('object_id', 'name', 'date_modified', 'courses',)
 
     def get_courses(self, obj):
-        courses = NonDegreeCourse.objects.filter(category=obj)
+        courses = NonDegreeCourse.objects.filter(category=obj).filter(active=True)
         return CourseSerializer(courses, many=True).data
