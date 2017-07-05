@@ -22,6 +22,7 @@ PyYAML==3.11
 #django-nested-admin==3.0.8
 #django-rest-swagger==2.1.1
 WeasyPrint==0.30
+Pillow==4.2.0
 
 # our packages are only listed here for information purpose
 # - on dev box, they should be installed from tarballs generated from source code
