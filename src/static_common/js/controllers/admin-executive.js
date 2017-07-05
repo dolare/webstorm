@@ -32,6 +32,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       form.append("school", Id);
 
 
+
       console.log("Id= "+Id);
          $http({
           url: '/api/upgrid/non_degree/reports',
@@ -40,13 +41,13 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           mimeType: "multipart/form-data",
           processData: false,
           contentType: false,
-
           headers: {
-            'Authorization': 'JWT ' + token
-          }
-        }).then(function (response) {
+            'Authorization': 'JWT ' + token,
+            'Content-Type': undefined,
 
-            
+          },
+          // transformRequest: angular.identity,
+        }).then(function (response) {
 
            console.log("return data"+ JSON.stringify(response.data));
            
@@ -391,7 +392,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       for(var i=0; i<old_data.length; i++){
 
         if(!_.contains(new_ids, old_data[i].object_id)){
-
           school_data.push(old_data[i]);
           school_data[school_data.length-1]["updated"]= 0 
 
@@ -405,9 +405,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       for(var i=0; i<new_data.length; i++){
 
         if(!_.contains(old_ids, school_data[i].object_id)){
-          
           school_data[i]["updated"]= 1 
-
         } else {
 
           //if name diff
@@ -485,8 +483,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
               }
 
             }
-
-            
 
           }
           
