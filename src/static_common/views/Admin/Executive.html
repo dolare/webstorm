@@ -1,264 +1,255 @@
-        <div class="content content-boxed">
+<div class="content content-boxed">
 
-                <!-- Stats -->
-                <div class="row text-uppercase">
-                    <div class="col-xs-6 col-sm-6">
-                        <div class="block block-rounded">
-                            <div class="block-content block-content-full">
-                                <div class="font-s12 font-w700">Total</div>
-                                <a class="h2 font-w300 text-primary">{{update_client.length}}</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-sm-6">
-                        <div class="block block-rounded">
-                            <div class="block-content block-content-full">
-                                <div class="font-s12 font-w700">Active</div>
-                                <a class="h2 font-w300 text-primary">{{update_client.length}}</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- <div class="col-xs-12 col-sm-4">
-                        <div class="block block-rounded">
-                            <div class="block-content block-content-full">
-                                <div class="font-s12 font-w700">Unedited</div>
-                                <a class="h2 font-w300 text-primary" href="javascript:void(0)">3</a>
-                            </div>
-                        </div>
-                    </div> -->
-                </div>
-                <!-- END Stats -->
-                
-                
-
-                <!-- Customers -->
-                <div class="block" id="loadingtable">
-                    
-                    <div class="block-content">
-                        <div class="">
-
-                        <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyExecutiveLabel}}</div>
-
-                            <table class="table table-hover"  st-table="non_degree_schools" ng-show="non_degree_schools.length>0" style="table-layout: fixed;">
-
-                                    <colgroup>
-                                      
-                                      <col width="10%"/>
-                                      <col width="35%"/>
-                                     
-                                      <col width="80px"/>
-                                      <col width="15%"/>
-                                    </colgroup>
-
-                                <thead>
-                                <tr>
-                                    
-                                   
-                                    <th class="text-left">Ceeb</th>
-                                    <th class="text-left">School</th>
-
-
-                                   
-                                    <th class="text-center">Release</th>
-
-
-                                    <th class="text-center">History</th>
-
-                                </tr>
-
-                                </thead>
-
-                                <tbody ng-repeat="row in non_degree_schools">
-                                    <tr>
-                                     
-
-                                        <td>
-                                          
-
-
-                                          <label class="label label-default text-success bg-success-light" style="
-                                            border: 1px solid #46c37b;
-                                            font-size: 9px;
-                                            padding: 1px 4px;
-                                            margin-left: 5px;    top: -3px; font-size: 80%;">{{row.ceeb}}</label>
-
-                                        </td>
-                                       
-                                        <td>
-
-                                          {{row.school}}
-                                          <div class="text-muted push-5-t" style="font-size:80%">{{row.university}}
-                                         </div>
-
-                                        </td>
-
-
-                                       
-
-
-
-                                        <td class="text-center">
-
-                                          <button class="btn btn-default btn-white" ng-click = "releaseSchool(row.object_id)" data-js-blur data-toggle="modal" data-target="#releaseSchool">
-                                              <a class="fa fa-cloud-upload text-city" style="vertical-align: middle;">
-                                              </a>
-                                              </button>
-
-                                        </td>
-
-                                        <td class="text-center">
-                                          <select ng-click="getReports()" ng-model="selectedReportId">
-                                            <option ng-repeat="r in row.reports" value="{{r.object_id}}">{{r.date_created | amUtc | amLocal | amDateFormat:'MM/DD/YYY HH:mm:ss'}}</option>
-                                          </select>
-                                         <button class="btn btn-default btn-white" ng-click="viewReport(selectedReportId)" data-js-blur>
-                                              <a class="fa fa-cloud-download text-primary" style="vertical-align: middle;">
-                                              </a>
-                                              </button>
-
-                                        </td>
-
-                                      
-
-                                    </tr>
-                                
-                                    </tbody>
-
-
-                                <tfoot ng-show="non_degree_schools.length>25">
-                                    <tr>
-                                      
-
-                                      
-                                      <td colspan="3">
-                                         <br><br>
-                                        <div class="btn-group pull-left ng-scope tablepagenum" >
-                                         
-                                          <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
-                                          <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button>
-                                          
-                                        </div>
-                                      </td>
-
-                                      <td colspan="3" class="text-center">
-                                        <br><br>
-                                        <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
-                                      </td>
-
-
-                                    </tr>
-                                  </tfoot>
-                            </table>
-                        </div>
-                       
-                    </div>
-                </div>
+  <!-- Stats -->
+  <div class="row text-uppercase">
+    <div class="col-xs-6 col-sm-6">
+      <div class="block block-rounded">
+        <div class="block-content block-content-full">
+          <div class="font-s12 font-w700">Total</div>
+          <a class="h2 font-w300 text-primary">{{update_client.length}}</a>
         </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-6">
+      <div class="block block-rounded">
+        <div class="block-content block-content-full">
+          <div class="font-s12 font-w700">Active</div>
+          <a class="h2 font-w300 text-primary">{{update_client.length}}</a>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+  <!-- END Stats -->
+
+
+
+  <!-- Customers -->
+  <div class="block" id="loadingtable">
+
+    <div class="block-content">
+      <div class="">
+
+        <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyExecutiveLabel}}</div>
+
+        <table class="table table-hover" st-table="non_degree_schools" ng-show="non_degree_schools.length>0" style="table-layout: fixed;">
+
+          <colgroup>
+
+          <col width="10%" />
+          <col width="35%" />
+
+          <col width="80px" />
+          <col width="15%" />
+        </colgroup>
+
+        <thead>
+          <tr>
+
+
+            <th class="text-left">Ceeb</th>
+            <th class="text-left">School</th>
+
+
+
+            <th class="text-center">Release</th>
+
+
+            <th class="text-center">History</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody ng-repeat="row in non_degree_schools">
+          <tr>
+
+
+            <td>
+
+
+
+              <label class="label label-default text-success bg-success-light" style="
+              border: 1px solid #46c37b;
+              font-size: 9px;
+              padding: 1px 4px;
+              margin-left: 5px;    top: -3px; font-size: 80%;">{{row.ceeb}}</label>
+
+            </td>
+
+            <td>
+
+              {{row.school}}
+              <div class="text-muted push-5-t" style="font-size:80%">{{row.university}}
+              </div>
+
+            </td>
+
+
+
+
+
+            <td class="text-center">
+
+              <button class="btn btn-default btn-white" ng-click="releaseSchool(row.object_id)" data-js-blur data-toggle="modal" data-target="#releaseSchool">
+                <a class="fa fa-cloud-upload text-city" style="vertical-align: middle;">
+                </a>
+              </button>
+
+            </td>
+
+            <td class="text-center">
+              <select id="js-data-{{row.object_id}}" ng-model="selectedReportId">
+              </select>
+              <button class="btn btn-default btn-white" ng-click="viewReport(selectedReportId)" data-js-blur>
+                <a class="fa fa-cloud-download text-primary" style="vertical-align: middle;">
+                </a>
+              </button>
+
+            </td>
+
+
+
+          </tr>
+
+        </tbody>
+
+
+        <tfoot ng-show="non_degree_schools.length>25">
+          <tr>
+
+
+
+            <td colspan="3">
+              <br><br>
+              <div class="btn-group pull-left ng-scope tablepagenum">
+
+                <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
+                <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button>
+
+              </div>
+            </td>
+
+            <td colspan="3" class="text-center">
+              <br><br>
+              <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
+            </td>
+
+
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+</div>
+</div>
 
 
 <!-- Modal of release pop-up window-->
-<div class="modal fullscreen-modal viewer fade update-modal" id="releaseSchool"  role="dialog" aria-labelledby="myModalLabel" >
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="block block-themed block-transparent remove-margin-b" id="enhancement_loading">
-          <div class="block-header bg-primary-dark">
-            <ul class="block-options">
-                                <li>
-                                    <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
-                                 </li>
+<div class="modal fullscreen-modal viewer fade update-modal" id="releaseSchool" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="block block-themed block-transparent remove-margin-b" id="enhancement_loading">
+        <div class="block-header bg-primary-dark">
+          <ul class="block-options">
+            <li>
+              <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
+            </li>
 
-                                <li>
-                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle" onclick="App.blocks('#WhoopsReport', 'fullscreen_toggle');" ng-click="togglefullen(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
-                                  </li>
-                                  
-                                  <li>
-                                    <button data-dismiss="modal" type="button" ng-click="scrolltop2()" data-js-blur><i class="si si-close"></i></button>
-                                  </li>
-                                </ul>
-                                <h3 class="block-title">Release Report 
+            <li>
+              <button type="button" data-toggle="block-option" data-action="fullscreen_toggle" onclick="App.blocks('#WhoopsReport', 'fullscreen_toggle');" ng-click="togglefullen(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
+            </li>
 
-                                &nbsp;&nbsp;<span class="badge badge-danger" style=" background-color: #d26a5c;">{{e_show_update}} Updates</span>
+            <li>
+              <button data-dismiss="modal" type="button" ng-click="scrolltop2()" data-js-blur><i class="si si-close"></i></button>
+            </li>
+          </ul>
+          <h3 class="block-title">Release Report &nbsp;&nbsp;
 
-                                </h3>
-                              </div>
-                              
-                              <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" id="scrolltop_enhancement_page">
+            <span class="badge badge-danger" style=" background-color: #d26a5c;">{{e_show_update}} Updates</span>
 
-                    <!-- SlimScroll Container -->
-                   <!--  <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
+          </h3>
+        </div>
 
-                   <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+        <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" id="scrolltop_enhancement_page">
 
-                    <div ng-include src="'/static/views/Home/partials/non_degree_viewreport.html'"></div>
-                    </div>
+          <!-- SlimScroll Container -->
+          <!--  <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
 
+          <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
 
-                    <!-- END SlimScroll Container -->
-                
-                        <div style="position: fixed;bottom: 20px;right: 44px;">
-                            <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" data-dismiss="modal" ng-click="scrolltop2(); release_updates(release_customer_program_id)"><i class="si si-mouse"></i> Update</button>
-
-                        </div>
+            <div ng-include src="'/static/views/Home/partials/reports/non_degree_viewreport.html'"></div>
+          </div>
 
 
-            </div>
-                            </div>
-      
+          <!-- END SlimScroll Container -->
+
+          <div style="position: fixed;bottom: 20px;right: 44px;">
+            <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" data-dismiss="modal" ng-click="scrolltop2(); release_updates(release_customer_program_id)"><i class="si si-mouse"></i> Update</button>
+
+          </div>
+
+
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
 
 
-   <!-- Modal of view report pop-up window-->
-      <div class="modal viewer fade update-modal" id="viewReport"  role="dialog" aria-labelledby="myModalLabel" >
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="block block-themed block-transparent remove-margin-b" id="whoops_loading">
-              <div class="block-header bg-primary-dark">
-                <ul class="block-options">
-                                    <li>
-                                        <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
-                                     </li>
+<!-- Modal of view report pop-up window-->
+<div class="modal viewer fade update-modal" id="viewReport" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="block block-themed block-transparent remove-margin-b" id="whoops_loading">
+        <div class="block-header bg-primary-dark">
+          <ul class="block-options">
+            <li>
+              <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
+            </li>
 
-                                    <li>
-                                        <button type="button" ng-click="togglefull(); actualscreen = !actualscreen" data-js-blur><i ng-class="{'si si-size-fullscreen': !actualscreen, 'si si-size-actual': actualscreen }"></i></button>
-                                      </li>
-                                      
-                                      <li>
-                                        <button data-dismiss="modal" type="button" ng-click="scrolltop1()" data-js-blur><i class="si si-close"></i></button>
-                                      </li>
-                                    </ul>
-                                    <h3 class="block-title">Non-degree Report 
-                                    &nbsp;&nbsp;<span class="badge badge-danger" style=" background-color: #d26a5c;">{{w_update}} Updates</span>
-                                    </h3>
+            <li>
+              <button type="button" ng-click="togglefull(); actualscreen = !actualscreen" data-js-blur><i ng-class="{'si si-size-fullscreen': !actualscreen, 'si si-size-actual': actualscreen }"></i></button>
+            </li>
 
-                                  </div>
-                                  
-                                  <div class="block-content fullscreen-container frame" style="width:auto;padding:0; " id="scrolltop_whoops_page">
+            <li>
+              <button data-dismiss="modal" type="button" ng-click="scrolltop1()" data-js-blur><i class="si si-close"></i></button>
+            </li>
+          </ul>
+          <h3 class="block-title">Non-degree Report &nbsp;&nbsp;
+            <span class="badge badge-danger" style=" background-color: #d26a5c;">{{w_update}} Updates</span>
+          </h3>
 
-               
-                        <!-- SlimScroll Container -->
-                       
+        </div>
+
+        <div class="block-content fullscreen-container frame" style="width:auto;padding:0; " id="scrolltop_whoops_page">
 
 
-                        <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+          <!-- SlimScroll Container -->
 
-                        <div ng-include src="'/static/views/Home/partials/non_degree_viewreport.html'"></div>
-                        
-                        </div>
-                         
-                        
-                        <!-- END SlimScroll Container -->
-                        <div style="position: fixed;bottom: 20px;right: 110px;">
-                            <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" data-dismiss="modal" ng-click="scrolltop1(); w_release_updates(release_customer_program_id)"><i class="si si-mouse"></i> Update</button>
 
-                        </div>
 
-                </div>
-            </div>
-          
+          <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074">
+
+            <div ng-include src="'/static/views/Home/partials/reports/non_degree_viewreport.html'"></div>
+
+          </div>
+
+
+          <!-- END SlimScroll Container -->
+          <div style="position: fixed;bottom: 20px;right: 110px;">
+            <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" data-dismiss="modal" ng-click="scrolltop1(); w_release_updates(release_customer_program_id)"><i class="si si-mouse"></i> Update</button>
+
+          </div>
+
         </div>
       </div>
+
     </div>
+  </div>
+</div>
