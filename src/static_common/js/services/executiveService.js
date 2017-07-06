@@ -22,7 +22,7 @@ angular.module('myApp')
 
         if(!_.contains(new_ids, old_data[i].object_id)){
           school_cat_data.push(old_data[i]);
-          school_cat_data[school_cat_data.length-1]["updated"]= 0 
+          school_cat_data[school_cat_data.length-1]["updated"]= 2
         }
       }
 
@@ -56,7 +56,7 @@ angular.module('myApp')
               if(!_.contains(new_course_ids, old_course_data[j].object_id)){
 
                 course_data_copy.push(old_course_data[j]);
-                course_data_copy[course_data_copy.length-1]["updated"]= 0 
+                course_data_copy[course_data_copy.length-1]["updated"]= 2 
               }
 
             }
@@ -74,37 +74,37 @@ angular.module('myApp')
 
               //updated name
               if(course_data_copy[j].name !== old_course_copy.name){
-                course_data_copy[j]["name_old"] = old_course_copy.name;
+                course_data_copy[j]["name_old"] = old_course_copy.name ? old_course_copy.name : 'N/A';
               }
 
               //updated url
               if(course_data_copy[j].url !== old_course_copy.url){
-                course_data_copy[j]["url_old"] = old_course_copy.url;
+                course_data_copy[j]["url_old"] = old_course_copy.url ? old_course_copy.url : 'N/A';
               }
 
               //updated repeatable
               if(course_data_copy[j].Repeatable !== old_course_copy.Repeatable){
-                course_data_copy[j]["Repeatable_old"] = old_course_copy.Repeatable;
+                course_data_copy[j]["Repeatable_old"] = old_course_copy.Repeatable ? old_course_copy.Repeatable : 'N/A';
               }
 
               //course_date
               if(!_.isEqual(course_data_copy[j].course_dates, old_course_copy.course_dates)){
-                course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates;
+                course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates.length !== 0 ? old_course_copy.course_dates : 'N/A';
               }
 
               //updated currency
               if(course_data_copy[j].currency !== old_course_copy.currency){
-                course_data_copy[j]["currency_old"] = old_course_copy.currency;
+                course_data_copy[j]["currency_old"] = old_course_copy.currency ? old_course_copy.currency : 'N/A';
               }
 
               //updated type
               if(course_data_copy[j].type !== old_course_copy.type){
-                course_data_copy[j]["type_old"] = old_course_copy.type;
+                course_data_copy[j]["type_old"] = old_course_copy.type ? old_course_copy.type : 'N/A';
               }
 
               //updated tuition
               if(course_data_copy[j].tuition_number !== old_course_copy.tuition_number){
-                course_data_copy[j]["tuition_number_old"] = old_course_copy.tuition_number;
+                course_data_copy[j]["tuition_number_old"] = old_course_copy.tuition_number ? old_course_copy.tuition_number : 'N/A';
               }
 
               }

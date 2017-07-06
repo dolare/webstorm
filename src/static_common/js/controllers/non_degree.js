@@ -87,6 +87,7 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
      $scope.view_report = function () {
 
+
        var selected_ids = [];
        angular.forEach($scope.$storage.non_degree, function(value, key) {
           if(value){
@@ -94,6 +95,9 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
           }
 
         });
+
+       console.log("selected_ids="+JSON.stringify(selected_ids))
+    
 
        if(selected_ids.length===0){
           $.notify({
@@ -118,39 +122,48 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
         $scope.schools = [];
 
-        var report_history = [];
-
-        var new_school_data;
-        var old_school_data;
 
         angular.forEach(selected_ids, function(value, index) {
 
+          var report_history = [];
+          var new_school_data;
+          var old_school_data;
+
           console.log("value = "+value)
+
           $http({
             url: '/api/upgrid/non_degree/reports?school=' + value,
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
             }
-          })
-          .then(function(response) {
+          }).then(function(response) {
 
             console.log("history ver.="+JSON.stringify(response.data.results))
-            report_history = response.data.results;
+            //report_history = response.data.results;
 
-            $http({
+            report_history = angular.copy(response.data.results)
+
+            console.log("test_id_new="+report_history[0].object_id);
+
+            return $http({
               url: '/api/upgrid/non_degree/reports/' + report_history[0].object_id,
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
               }
-            }).then(function(response) {
+              });
+            }).then(function(result) {
 
               // $scope.new_school_data = response
 
 
-            console.log("new school data ="+JSON.stringify(response.data))
-            new_school_data = response.data;
+            console.log("new school data ="+JSON.stringify(result.data))
+            new_school_data = result.data;
+
+            var test_id = (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id);
+            console.log("test_id="+test_id)
+
              return $http({
                 url: '/api/upgrid/non_degree/reports/' + (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id),
                 method: 'GET',
@@ -159,13 +172,14 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
                 }
               })
 
-              }).then(function(response) {
+              }).then(function(final_result) {
 
-                old_school_data = response.data;
-                console.log("old school data ="+JSON.stringify(response.data));
+                old_school_data = final_result.data;
+                console.log("old school data ="+JSON.stringify(final_result.data));
 
                 $scope.schools.push(executiveService.updatedReport(old_school_data, new_school_data))
 
+                App.blocks('#viewall_loading', 'state_normal');
                 console.log("$scope.schools after ="+JSON.stringify($scope.schools));
 
               }).
@@ -173,162 +187,127 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
                   console.log('an error occurred...'+JSON.stringify(error));
               });
 
-              // $http({
-              //       url: '/api/upgrid/non_degree/reports/overview/' + response.data.results[0].object_id + '/' + (response.data.results.length>1? response.data.results[1].object_id:response.data.results[0].object_id),
-              //       method: 'GET',
-              //       headers: {
-              //         'Authorization': 'JWT ' + token
-              //       }
-              //     })
-              //     .then(function(response) {
-                    
-              //       value["details"] = {};
-
-              //       value.details["course_removed"] = response.data.course_removed
-              //       value.details["course_added"] = response.data.course_added
-              //       value.details["category_added"] = response.data.category_added
-              //       value.details["category_removed"] = response.data.category_removed
-
-              //     }).
-              //      catch(function(error){
-              //         console.log('an error occurred...'+JSON.stringify(error));
-              //     });
-               
-
-
-            }).
-             catch(function(error){
-                console.log('an error occurred...'+JSON.stringify(error));
-            });
 
 
 
         })
+
         
 
-
-
-
-        App.blocks('#viewall_loading', 'state_normal');
-
        }
-
-       console.log("selected_ids= "+JSON.stringify(selected_ids))
-
-
      }
 
 
 ////////////////////////////////////////////////////////////
 
 
-  // Retrieve the list of subsribed schools
-  $http({
-      url: '/api/upgrid/non_degree/schools',
-      method: 'GET',
-      headers: {
-        'Authorization': 'JWT ' + token
-      }
-    })
-    .then(function(resp_schools) {
+  // // Retrieve the list of subsribed schools
+  // $http({
+  //     url: '/api/upgrid/non_degree/schools',
+  //     method: 'GET',
+  //     headers: {
+  //       'Authorization': 'JWT ' + token
+  //     }
+  //   })
+  //   .then(function(resp_schools) {
 
-      $scope.school_list = resp_schools.data.results;
+  //     $scope.school_list = resp_schools.data.results;
 
 
-      for (let i = $scope.school_list.length - 1; i >= 0; i--) {
-        let s = $scope.school_list[i];
-        s.selected = false;
-        s.logo_url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/LBS_logo_.png/150px-LBS_logo_.png';
+  //     for (let i = $scope.school_list.length - 1; i >= 0; i--) {
+  //       let s = $scope.school_list[i];
+  //       s.selected = false;
+  //       s.logo_url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/LBS_logo_.png/150px-LBS_logo_.png';
 
-        /*
+  //       /*
 
-        Update stats for this school: 
-        s.cat_add: category additions
-        s.cat_rm: category removals
-        s.course_add: course additions
-        s.course_rm: course removals
+  //       Update stats for this school: 
+  //       s.cat_add: category additions
+  //       s.cat_rm: category removals
+  //       s.course_add: course additions
+  //       s.course_rm: course removals
 
-        Their default values are null, which mean no reports released.
+  //       Their default values are null, which mean no reports released.
 
-        */
-        s.cat_add = null;
-        s.cat_rm = null;
-        s.course_add = null;
-        s.course_rm = null;
+  //       */
+  //       s.cat_add = null;
+  //       s.cat_rm = null;
+  //       s.course_add = null;
+  //       s.course_rm = null;
 
-        // True if there is at least one repleased report of this school
-        s.hasReport = false;
+  //       // True if there is at least one repleased report of this school
+  //       s.hasReport = false;
 
-        //Retrieve the list of reports for a school
-        $http({
-            url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
-            method: 'GET',
-            headers: {
-              'Authorization': 'JWT ' + token
-            }
-          })
-          .then(function(resp_reports) {
+  //       //Retrieve the list of reports for a school
+  //       $http({
+  //           url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
+  //           method: 'GET',
+  //           headers: {
+  //             'Authorization': 'JWT ' + token
+  //           }
+  //         })
+  //         .then(function(resp_reports) {
 
             
-            // School has only 1 report
-            if (resp_reports.data.results.length == 1) {
-              s.cat_add = 0;
-              s.cat_rm = 0;
-              s.course_add = 0;
-              s.course_rm = 0;
+  //           // School has only 1 report
+  //           if (resp_reports.data.results.length == 1) {
+  //             s.cat_add = 0;
+  //             s.cat_rm = 0;
+  //             s.course_add = 0;
+  //             s.course_rm = 0;
 
-              s.hasReport = true;
-            }
-            // School has at least 2 reports
-            else if (resp_reports.data.results.length > 1) {
-              // Retrieve stats of updates of the two latest reports
-              $http({
-                  url: '/api/upgrid/non_degree/reports/overview/' + resp_reports.data.results[0].object_id + '/' + resp_reports.data.results[1].object_id,
-                  method: 'GET',
-                  headers: {
-                    'Authorization': 'JWT ' + token
-                  }
-                })
-                .then(function(resp_overview) {
-                  s.cat_add = resp_overview.data.category_added;
-                  s.cat_rm = resp_overview.data.category_removed;
-                  s.course_add = resp_overview.data.course_added;
-                  s.course_rm = resp_overview.data.course_removed;
-                });
+  //             s.hasReport = true;
+  //           }
+  //           // School has at least 2 reports
+  //           else if (resp_reports.data.results.length > 1) {
+  //             // Retrieve stats of updates of the two latest reports
+  //             $http({
+  //                 url: '/api/upgrid/non_degree/reports/overview/' + resp_reports.data.results[0].object_id + '/' + resp_reports.data.results[1].object_id,
+  //                 method: 'GET',
+  //                 headers: {
+  //                   'Authorization': 'JWT ' + token
+  //                 }
+  //               })
+  //               .then(function(resp_overview) {
+  //                 s.cat_add = resp_overview.data.category_added;
+  //                 s.cat_rm = resp_overview.data.category_removed;
+  //                 s.course_add = resp_overview.data.course_added;
+  //                 s.course_rm = resp_overview.data.course_removed;
+  //               });
 
-              s.hasReport = true;
-            }
-          });
-      }
+  //             s.hasReport = true;
+  //           }
+  //         });
+  //     }
 
-      // Watch school for changes
-      $scope.$watch('school_list | filter: {selected: true}', function(nv) {
-        $scope.selectedSchoolIds = nv.map(function(school) {
-          return school.object_id;
-        });
-        console.log($scope.selectedSchoolIds);
-      }, true);
-
-
-
-    }).
-     catch(function(error){
-        console.log('an error occurred...'+JSON.stringify(error));
-
-    });
+  //     // Watch school for changes
+  //     $scope.$watch('school_list | filter: {selected: true}', function(nv) {
+  //       $scope.selectedSchoolIds = nv.map(function(school) {
+  //         return school.object_id;
+  //       });
+  //       console.log($scope.selectedSchoolIds);
+  //     }, true);
 
 
+
+  //   }).
+  //    catch(function(error){
+  //       console.log('an error occurred...'+JSON.stringify(error));
+
+  //   });
 
 
 
 
-  // View selected schools
-  $scope.viewReport = function() {
-    // $scope.selectedSchools = filterFilter($scope.school_list, {selected: true});
-    console.log($scope.selectedSchoolIds);
+
+
+  // // View selected schools
+  // $scope.viewReport = function() {
+  //   // $scope.selectedSchools = filterFilter($scope.school_list, {selected: true});
+  //   console.log($scope.selectedSchoolIds);
 
     
-  };
+  // };
 
   /*Non-degree Report Controller*/
   $http.get('http://api.fixer.io/latest?base=USD').then(function(response) {

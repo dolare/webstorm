@@ -2003,3 +2003,18 @@ left: 35%;
     vertical-align: top;
     font-weight: 700;
 }
+
+
+.ex-table-headercell {
+  padding: 5px 15px;
+  border-left: 0;
+  border-right: 0;
+}
+
+.course.add {
+  background: #f0f8ed;
+}
+
+.course.rm {
+  background: #f8eded;
+}

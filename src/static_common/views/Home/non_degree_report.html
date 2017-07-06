@@ -159,37 +159,37 @@
               <!-- END table header -->
               <!-- table body -->
               <tbody>
-                <tr ng-repeat-start="s in schools">
+                <tr ng-repeat-start="row in schools">
                   <td style="
                     border-right: 0;
                     padding: 4px;
-                    " rowspan="2"><img ng-src="{{s.logo_url}}" alt="Logo of {{s.title.department}}" height="58" width="58"></td>
-                  <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">{{s.school_name}}<br>
+                    " rowspan="2"><img ng-src="{{row.logo_url}}" alt="Logo of {{row.title.department}}" height="58" width="58"></td>
+                  <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">{{row.school_name}}<br>
                     <span class="text-muted">
                     <small style="
                       font-weight: 300;
                       font-size: 12px;
-                      ">{{s.university_name | uppercase}}
+                      ">{{row.university_name | uppercase}}
                     </small>
                     </span>
                   </td>
-                  <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Category Offerings:<span class="badge badge-primary pull-right">{{s.cat_offer}}</span></td>
+                  <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Category Offerings:<span class="badge badge-primary pull-right">{{row.cat_offer}}</span></td>
                   <td rowspan="2">
-                    <span ng-if="s.cat_add!=0" class="badge badge-success">+ {{s.cat_add}}</span><span ng-if="s.cat_add==0" class="badge badge-default">- -</span>
+                    <span ng-if="row.cat_add!=0" class="badge badge-success">+ {{row.cat_add}}</span><span ng-if="row.cat_add==0" class="badge badge-default">- -</span>
                   </td>
                   <td rowspan="2">
-                    <span ng-if="s.cat_rm!=0" class="badge badge-danger">- {{s.cat_rm}}</span><span ng-if="s.cat_rm==0" class="badge badge-default">- -</span>
+                    <span ng-if="row.cat_rm!=0" class="badge badge-danger">- {{row.cat_rm}}</span><span ng-if="row.cat_rm==0" class="badge badge-default">- -</span>
                   </td>
                   <td rowspan="2">
-                    <span ng-if="s.course_add!=0" class="badge badge-success">+ {{s.course_add}}</span><span ng-if="s.course_add==0" class="badge badge-default">- -</span>
+                    <span ng-if="row.course_add!=0" class="badge badge-success">+ {{row.course_add}}</span><span ng-if="row.course_add==0" class="badge badge-default">- -</span>
                   </td>
                   <td rowspan="2">
-                    <span ng-if="s.course_rm!=0" class="badge badge-danger">- {{s.course_rm}}</span><span ng-if="s.course_rm==0" class="badge badge-default">- -</span>
+                    <span ng-if="row.course_rm!=0" class="badge badge-danger">- {{row.course_rm}}</span><span ng-if="row.course_rm==0" class="badge badge-default">- -</span>
                   </td>
                 </tr>
                 <tr ng-repeat-end>
                   <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
-                    Course Offerings:<span class="badge badge-primary pull-right">{{s.course_offer}}</span>
+                    Course Offerings:<span class="badge badge-primary pull-right">{{row.course_offer}}</span>
                   </td>
                 </tr>
               </tbody>
@@ -220,10 +220,10 @@
           </div>
 
 
-          
+
           <!-- schools report body-->
-          <div class="row" ng-repeat-start="s in schools">
-            <div class="col-sm-12">
+          <div class="row" ng-repeat-start="row in schools">
+            
               <!-- school overview -->
               <div class="col-sm-3">
                 <div class="block col-sm-12" style="
@@ -238,7 +238,7 @@
                   </div>
                   <div class="block-content block-content-full text-left bg-image" style="padding: 10px 15px;">
                     <div>
-                      <img ng-src="" alt="Logo of {{s.school_name}}" width="50%">
+                      <img ng-src="" alt="Logo of {{row.school_name}}" width="50%">
                     </div>
                   </div>
                   <div class="text-left bg-gray-lighter" style="
@@ -249,11 +249,11 @@
                     ">
                     <div style="
                       font-size: 18px;
-                      " class="push-5 text-primary font-w600">{{s.school_name}}</div>
+                      " class="push-5 text-primary font-w600">{{row.school_name}}</div>
                     <small class="text-muted" style="
                       font-weight: 300;
                       font-size: 12px;
-                      ">{{s.university_name | uppercase}}</small>
+                      ">{{row.university_name | uppercase}}</small>
                   </div>
                   <div class="block-content" style="
                     padding-top: 10px;
@@ -261,7 +261,7 @@
                     <div style="
                       font-weight: 600;
                       font-size: 16px;
-                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="">{{s.cat_offer}}</span></div>
+                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="">{{row.cat_offer}}</span></div>
                     <div class="row items-push text-center">
                       <div class="col-xs-6 border-r">
                         <div class="text-muted animated fadeIn" style="
@@ -269,8 +269,8 @@
                           "><small style="
                           font-size: 11px;
                           "> ADDITION(S)</small></div>
-                        <a class="h2 font-w300 text-success animated flipInX" ng-if="s.cat_add!=0">+ {{s.cat_add}}</a>
-                        <a class="h2 font-w300 text-success animated flipInX" ng-if="s.cat_add==0">--</a>
+                        <a class="h2 font-w300 text-success animated flipInX" ng-if="row.cat_add!=0">+ {{row.cat_add}}</a>
+                        <a class="h2 font-w300 text-success animated flipInX" ng-if="row.cat_add==0">--</a>
                       </div>
                       <div class="col-xs-6">
                         <div class="text-muted animated fadeIn" style="
@@ -278,8 +278,8 @@
                           "><small style="
                           font-size: 11px;
                           "> REMOVAL(S)</small></div>
-                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="s.cat_rm!=0">- {{s.cat_rm}}</a>
-                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="s.cat_rm==0">--</a>
+                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="row.cat_rm!=0">- {{row.cat_rm}}</a>
+                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="row.cat_rm==0">--</a>
                       </div>
                     </div>
                   </div>
@@ -288,8 +288,8 @@
               <!-- END school overview -->
               <div class="col-sm-9">
                 <!-- category -->
-                <div ng-repeat="c in s.categories | orderBy:'status':false:statusComparator" class="col-sm-12"  style="
-                  padding-right: 0;
+                <div ng-repeat="c in row.categories | orderBy:'status':false:statusComparator" class="col-sm-12 push-20"  style="
+                  padding-right: 0;padding-left: 0;
                   ">
                   <!-- category header -->
                   <div style="
@@ -340,7 +340,7 @@
                   <!-- END category header -->
                   <!-- course table under a category -->
                   <div class="table-responsive">
-                    <table class="table report_table2 table-bordered table-hover" style="table-layout: fixed;margin-bottom: 0;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">
+                    <table class="table report_table2 table-bordered table-hover non-degree-table" style="table-layout: fixed;margin-bottom: 0;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">
                       <colgroup>
                         <col width="6%">
                         <col width="26%">
@@ -354,65 +354,110 @@
                           <td class="bg-info" style="
                             border-right: 0;
                             "></td>
-                          <td class="text-info-light  text-left bg-info font-w600" style="vertical-align: middle;padding: 5px 15px;text-align: left;border-left: 0;border-right: 0;">COURSE</td>
-                          <td class="text-info-light bg-info" style="
-                            padding: 5px 10px;
-                            border-left: 0;
-                            border-right: 0;
-                            ">
-                            <span>
+                          <td class="text-info-light  text-left bg-info font-w600 text-left ex-table-headercell">COURSE</td>
+
+                          <td class="text-info-light bg-info text-center ex-table-headercell">
+                            
                             TYPE
-                            </span>
+                            
                           </td>
-                          <td class="text-info-light bg-info" style="
-                            padding: 5px 10px;
-                            border-left: 0;
-                            border-right: 0;
-                            ">
-                            <span>
+                          <td class="text-info-light bg-info text-center ex-table-headercell">
+                            
                             SCHEDULE
-                            </span>
+                            
                           </td>
-                          <td class="text-info-light bg-info" style="
-                            border-left: 0;
-                            border-right: 0;
-                            ">
-                            <span>
+                          <td class="text-info-light bg-info text-center ex-table-headercell">
+                           
                             TUITION
-                            </span>
+                           
                           </td>
-                          <td class="text-info-light bg-info" style="
-                            padding: 5px 10px;
-                            border-left: 0;
-                            border-right: 0;
-                            ">
-                            <span>
+                          <td class="text-info-light bg-info text-center ex-table-headercell">
+                           
                             URL
-                            </span>
+                          
                           </td>
                         </tr>
                       </thead>
                       <tbody>
                         <!-- course table rows -->
-                        <tr ng-repeat="course in c.courses | orderBy:'status':false:statusComparator" class="course" ng-class="{add: course.status=='add', rm: course.status=='rm', uc: course.status=='uc'}">
+                        <tr ng-repeat="course in c.courses | orderBy:'updated'" class="course" ng-class="{add: course.updated===1, rm: course.updated===2}">
                           <td style="
                             text-align: center;
                             ">{{$index + 1}}</td>
-                          <td style="vertical-align: middle;padding: 8px 15px;text-align: left;">{{course.name}}</td>
-                          <td style="
-                            padding: 8px 10px;
-                            ">
-                            <span style="
-                              ">{{course.type}}</span>
+                          <td style="vertical-align: middle;padding: 8px 15px;text-align: left;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+
+                          <div class="ribbon-box font-w600" 
+                                                data-popover-title="HISTORY"                                                          
+                                                data-uib-popover="{{course.name_old}}"
+
+                                                ng-show="course.name_old"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover">                        
+                                                    <span class="label_new">new
+                                                    </span>                                   
+                                                </div> 
+
+                          {{course.name}}
+
                           </td>
-                          <td style="
-                            padding: 8px 10px;
-                            ">
-                            <span ng-repeat-start="d in course.course_dates">Start: {{d.start_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span><br><span>End: {{d.end_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span><br ng-repeat-end ng-if="!$last">
+
+                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+
+                            <div class="ribbon-box font-w600" 
+                                                data-popover-title="HISTORY"                                                          
+                                                data-uib-popover="{{course.type_old}}"
+
+                                                ng-show="course.type_old"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover">                        
+                                                    <span class="label_new">new
+                                                    </span>                                   
+                                                </div> 
+
+                            {{course.type}}
                           </td>
-                          <td style="
-                            padding: 8px 10px;
-                            ">
+                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+
+                            <div class="ribbon-box font-w600" 
+                                                data-popover-title="HISTORY"                                                          
+                                                data-uib-popover="{{course.course_dates_old}}"
+
+                                                ng-show="course.course_dates_old"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover">                        
+                                                    <span class="label_new">new
+                                                    </span>                                   
+                                                </div> 
+
+
+                            <span ng-repeat-start="d in course.course_dates">Start: {{d.start_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span><br>
+
+                            <span>End: {{d.end_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span>
+                            <br ng-repeat-end ng-if="!$last">
+
+
+
+                          </td>
+                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+                             <div class="ribbon-box font-w600" 
+                                                data-popover-title="HISTORY"                                                          
+                                                data-uib-popover="{{course.tuition_number_old}}"
+
+                                                ng-show="course.tuition_number_old"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover">                        
+                                                    <span class="label_new">new
+                                                    </span>                                   
+                                                </div> 
+
                             <span>{{course.tuition_number | currency:currency_symbols[course.currency]:0}}<br><span ng-if="course.currency!='USD'&&course.currency!=null" class="text-muted" style="
                               font-size: 12px;
                               font-weight: 200;
@@ -431,7 +476,7 @@
                 </div>
                 <!-- END category -->
               </div>
-            </div>
+          
           </div>
           <hr ng-repeat-end ng-if="!$last" style="
             margin-top: 50px;
