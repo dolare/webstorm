@@ -447,3 +447,15 @@ class NonDegreeReport(BasedDatedObject):
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     school = models.ForeignKey(UniversitySchool, on_delete=models.CASCADE, null=False)
     categories = JSONField()
+
+
+class NonDegreeSharedReport(BasedDatedObject):
+    """
+    non-degree Shared report
+    """
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    created_by = models.ForeignKey(UpgridBaseUser, on_delete=models.PROTECT)
+    reports = models.ManyToManyField(NonDegreeReport, null=True, blank=True)
+    expired_time = models.DateTimeField(default=one_day_hence, blank=True)
+    access_token = models.UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
+

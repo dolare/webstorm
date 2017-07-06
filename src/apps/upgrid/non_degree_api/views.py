@@ -1,6 +1,8 @@
 from django.db.models import Q
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, CreateAPIView, DestroyAPIView, \
@@ -14,10 +16,10 @@ from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPT
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeRepeatDate
 
 from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer, CategorySerializer, \
-    ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer
+    ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer, SharedReportSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination
 from .filter import UniversitySchoolFilter, ReportFilter
-from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport
+from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport
 
 
 class PermissionMixin(object):
@@ -218,3 +220,81 @@ class ReportOverviewLatest(PermissionMixin, ReportOverviewMixin, APIView):
         diff_data = self.count_diff(new_report_dict, old_report_dict)
 
         return Response(diff_data)
+
+
+class SharedReportCreateAPI(PermissionMixin, CreateAPIView):
+    """
+    Get list of user non-degree report API
+    """
+
+    def get_queryset(self, *args, **kwargs):
+        if self.is_manager():
+            reports = NonDegreeReport.objects.all()
+        else:
+            reports = NonDegreeReport.objects \
+                .filter(school__non_degree_user=self.request.user)
+        return reports
+
+    def create(self, request, *args, **kwargs):
+        time_now = timezone.now()
+        if 'expired_day' in request.data:
+            if type(request.data['expired_day']) is not int:
+                return Response({"Failed": "expired_day must be integer!"}, status=HTTP_400_BAD_REQUEST)
+            if request.data['expired_day'] > 30:
+                return Response({"Failed": "Expired_day can not greater than 30 days."}, status=HTTP_400_BAD_REQUEST)
+            else:
+                expired_time = time_now + timezone.timedelta(days=request.data['expired_day'])
+        else:
+            expired_time = time_now + timezone.timedelta(days=2)
+
+        if 'expired_sec' in request.data:
+            if type(request.data['expired_sec']) is not int:
+                return Response({"Failed": "expired_sec must be integer!"}, status=HTTP_400_BAD_REQUEST)
+            if request.data['expired_sec'] > 60:
+                return Response({"Failed": "Expired_sec can not greater than 60 sec."}, status=HTTP_400_BAD_REQUEST)
+            else:
+                expired_time = expired_time + timezone.timedelta(seconds=request.data['expired_sec'])
+
+        if 'reports' not in request.data:
+            return Response({"Failed": "Reports are required."}, status=HTTP_400_BAD_REQUEST)
+        if type(request.data['reports']) is not list:
+            return Response({"Failed": "reports must be a list of report id!"}, status=HTTP_400_BAD_REQUEST)
+        report_list = []
+        owned_reports = self.get_queryset()
+        for report_id in request.data['reports']:
+            try:
+                report = owned_reports.get(object_id=report_id)
+                report_list.append(report)
+            except NonDegreeReport.DoesNotExist:
+                return Response({"Failed": "Report does not exist, or you don't have permission to access report."},
+                                status=HTTP_400_BAD_REQUEST)
+
+        shared_report = NonDegreeSharedReport.objects.create(created_by=request.user,
+                                                             expired_time=expired_time,)
+
+        shared_report.save()
+        shared_report.reports.add(*report_list)
+        link = 'shared_reports/{0}/{1}'.format(shared_report.object_id, shared_report.access_token)
+        return Response({'link': link, 'expired_time': shared_report.expired_time}, status=HTTP_201_CREATED)
+
+
+class SharedReportAPI(PermissionMixin, GenericAPIView):
+    """
+    Retrieve SharedReport detail API
+    """
+    permission_classes = (AllowAny,)
+    lookup_field = 'object_id'
+    serializer_class = SharedReportSerializer
+    queryset = NonDegreeSharedReport
+
+    def retrieve(self, request, object_id, access_token, *args, **kwargs):
+        shared_report = self.get_object()
+        if access_token != str(shared_report.access_token):
+            return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
+        if timezone.now() > shared_report.expired_time:
+            return Response({"Failed": "Token Expired!"}, status=HTTP_403_FORBIDDEN)
+        serializer = self.get_serializer(shared_report)
+        return Response(serializer.data)
+
+    def get(self, request, object_id, access_token, *args, **kwargs):
+        return self.retrieve(request, object_id, access_token, *args, **kwargs)

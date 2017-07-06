@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeCourseDate, \
     NonDegreeUrl, NonDegreeUrlTypeRef
 
-from ..models import NonDegreeReport
+from ..models import NonDegreeReport, NonDegreeSharedReport
 
 
 class UniversitySchoolListSerializer(ModelSerializer):
@@ -100,3 +100,12 @@ class CategorySerializer(ModelSerializer):
     def get_courses(self, obj):
         courses = NonDegreeCourse.objects.filter(category=obj).filter(active=True)
         return CourseSerializer(courses, many=True).data
+
+
+class SharedReportSerializer(ModelSerializer):
+    reports = ReportSerializer(many=True)
+
+    class Meta:
+        model = NonDegreeSharedReport
+        fields = ('object_id', 'expired_time', 'reports')
+
