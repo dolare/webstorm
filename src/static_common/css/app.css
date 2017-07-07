@@ -2018,3 +2018,27 @@ left: 35%;
 .course.rm {
   background: #f8eded;
 }
+
+.categoryheader {
+  font-size: 18px;
+  color:#999999;
+  background-color: #f4f4f4;
+  border-left: 3px solid #999;
+  padding: 4px 10px;
+}
+
+.categoryheader.add {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-left: 3px solid #3c763d;
+
+}
+
+.categoryheader.rm {
+  color: #a94442;
+  background-color: #f2dede;
+  border-left: 3px solid #a94442;
+
+}
+
+

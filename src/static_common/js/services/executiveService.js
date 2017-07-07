@@ -19,10 +19,13 @@ angular.module('myApp')
 
       //loop old
       for(var i=0; i<old_data.length; i++){
-
         if(!_.contains(new_ids, old_data[i].object_id)){
           school_cat_data.push(old_data[i]);
           school_cat_data[school_cat_data.length-1]["updated"]= 2
+          //process the courses
+          for(var j=0; j<school_cat_data[school_cat_data.length-1]["courses"].length; j++){
+            school_cat_data[school_cat_data.length-1]["courses"][j]["updated"] = 2;
+          }
         }
       }
 
@@ -33,6 +36,12 @@ angular.module('myApp')
 
         if(!_.contains(old_ids, school_cat_data[i].object_id)){
           school_cat_data[i]["updated"]= 1 
+
+          for(var j=0; j<school_cat_data[i]["courses"].length; j++){
+            school_cat_data[i]["courses"][j]["updated"] = 1;
+          }
+
+
         } else {
 
           //if name diff
@@ -54,11 +63,9 @@ angular.module('myApp')
             for(var j=0; j<old_course_data.length; j++){
 
               if(!_.contains(new_course_ids, old_course_data[j].object_id)){
-
                 course_data_copy.push(old_course_data[j]);
                 course_data_copy[course_data_copy.length-1]["updated"]= 2 
               }
-
             }
 
             //loop new, added course
@@ -115,13 +122,9 @@ angular.module('myApp')
 
       console.log("school_data= "+JSON.stringify(school_data));
       return school_data
-      
   }
-
     return {
-     
       updatedReport: updatedReport
-
     };
 
   });
