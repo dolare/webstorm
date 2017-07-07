@@ -62,14 +62,27 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
               cache: true
             },
+            // Permanently hide the search box
+            minimumResultsForSearch: Infinity,
             
-            placeholder: 'Please select a report.'
+            placeholder: 'No reports available.'
 
           });
+
+          // Make ajax request for the selected data object
+          $.ajax({
+            url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
+            method: 'GET',
+            headers: {
+              'Authorization': 'JWT ' + token
+            },
+            dataType: 'json'
+          }).then(function(data) {
+            if (data.results.length > 0)
+              $("#js-data-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+          });
+
         }, 100);
-
-
-
       }
 
     }).
@@ -149,6 +162,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       }).then(function(response) {
 
         console.log("return data" + JSON.stringify(response.data));
+        console.log(response.data);
 
         $scope.date = new Date().toISOString();
         $scope.school = response.data.school_name;
@@ -165,6 +179,18 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           $scope.categories[i].course_offer = $scope.categories[i].courses.length;
           $scope.course_offer += $scope.categories[i].courses.length;
         }
+
+        // Trigger dropdown list update and select the first report in history
+        $.ajax({
+          url: '/api/upgrid/non_degree/reports?school=' + response.data.school,
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          },
+          dataType: 'json'
+        }).then(function(data) {
+          $("#js-data-" + response.data.school).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+        });
 
       }).
       catch(function(error) {
