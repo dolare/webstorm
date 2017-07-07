@@ -82,7 +82,7 @@
             <td>
 
               {{row.school}}
-              <div class="text-muted push-5-t" style="font-size:80%">{{row.university}}
+              <div class="text-muted push-5-t" style="font-size:80%">{{row.university | uppercase}}
               </div>
 
             </td>
@@ -102,6 +102,7 @@
 
             <td class="text-center">
               <select id="js-data-{{row.object_id}}" ng-model="selectedReportId">
+                <option></option>
               </select>
               <button class="btn btn-default btn-white" ng-click="viewReport(selectedReportId)" data-js-blur>
                 <a class="fa fa-cloud-download text-primary" style="vertical-align: middle;">

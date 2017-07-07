@@ -324,6 +324,33 @@ class NonDegreeCourseAdmin(AutoUserModelAdmin):
     ]
 
 
+class NonDegreeSharedReportAdmin(AutoUserModelAdmin):
+    readonly_fields = ('object_id', 'date_created', 'date_modified', 'created_by', 'access_token')
+
+    list_display = ('object_id', 'created_by', 'expired_time')
+    list_filter = ('date_created', 'date_modified',)
+
+    filter_horizontal = ('reports',)
+    fieldsets = [
+        ('Management Record', {
+            'classes': ('collapse',),
+            'fields': [
+                'object_id',
+                'date_created',
+                'date_modified',
+            ]
+        }),
+        ('Detail', {
+            'classes': ('collapse', 'open'),
+            'fields': [
+                'reports',
+                'expired_time',
+                'access_token',
+            ]
+        }),
+    ]
+
+
 admin.site.register(UniversityCustomer, UniversityCustomerAdmin)
 admin.site.register(UniversityCustomerProgram)
 admin.site.register(CustomerCompetingProgram)
@@ -349,3 +376,4 @@ admin.site.register(NonDegreeCourse, NonDegreeCourseAdmin)
 admin.site.register(NonDegreeUrl, NonDegreeUrlAdmin)
 admin.site.register(NonDegreeUrlTypeRef, SimpleObjectModelAdmin)
 admin.site.register(NonDegreeCourseDate, NonDegreeCourseDateAdmin)
+admin.site.register(NonDegreeSharedReport, NonDegreeSharedReportAdmin)
