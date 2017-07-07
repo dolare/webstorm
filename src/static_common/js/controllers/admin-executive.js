@@ -1,6 +1,6 @@
 // ********************************Executive********************************
-angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout',
-  function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService, $timeout) {
+angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService',
+  function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService, $timeout, executiveService) {
 
     var token = authenticationSvc.getUserInfo().accessToken;
     $scope.emptyExecutiveLabel = "Currently there is no update of the reports."
@@ -13,9 +13,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
     }).then(function(response) {
 
       $scope.non_degree_schools = response.data.results;
-
-      console.log("return data" + JSON.stringify(response.data.results));
-
 
       for (let i = $scope.non_degree_schools.length - 1; i >= 0; i--) {
         let s = $scope.non_degree_schools[i];
@@ -69,7 +66,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
           });
 
-          // Make ajax request for the selected data object
+          // Set default option as the latest report
           $.ajax({
             url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
             method: 'GET',
@@ -143,9 +140,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       var form = new FormData();
       form.append("school", Id);
 
-
-
-      console.log("Id= " + Id);
       $http({
         url: '/api/upgrid/non_degree/reports',
         method: 'POST',
@@ -160,10 +154,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         },
         // transformRequest: angular.identity,
       }).then(function(response) {
-
-        console.log("return data" + JSON.stringify(response.data));
-        console.log(response.data);
-
         $scope.date = new Date().toISOString();
         $scope.school = response.data.school_name;
         $scope.university = response.data.university_name;
@@ -202,24 +192,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
     }
 
-
-    //  $http({
-    //       url: '/api/upgrid/non_degree/reports/32d18135-b699-4a3d-a3f2-9f142740cfd9',
-    //       method: 'GET',
-    //       headers: {
-    //         'Authorization': 'JWT ' + token
-    //       }
-    // }).then(function (response) {
-
-
-
-    //    console.log("return data"+ JSON.stringify(response.data));
-
-    // }).
-    //  catch(function(error){
-    //     console.log('an error occurred...'+JSON.stringify(error));
-
-    //  });
 
 
     $scope.schooldata_old = {
@@ -360,7 +332,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           "date_modified": "2017-05-30T04:55:39.670543Z"
         }
       ]
-    }
+    };
 
     $scope.schooldata_new = {
       "object_id": "be9912e2-0f90-4103-8af4-2779f405bf8b",
@@ -499,135 +471,50 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           "date_modified": "2017-06-30T04:55:39.670543Z"
         }
       ]
-    }
+    };
 
 
-    $scope.processExecutive = function(old_data, new_data) {
-
-      var school_data = angular.copy(new_data);
-
-      var new_ids = _.pluck(new_data, 'object_id');
-      var old_ids = _.pluck(old_data, 'object_id');
-
-      //loop old
-      for (var i = 0; i < old_data.length; i++) {
-
-        if (!_.contains(new_ids, old_data[i].object_id)) {
-          school_data.push(old_data[i]);
-          school_data[school_data.length - 1]["updated"] = 0
-
+    $scope.schooldata_3 = {
+      "object_id": "be9912e2-0f90-4103-8af4-2779f405bf8b",
+      "school_name": "The Graduate School of Arts and Sciences–Camden",
+      "university_name": "Rutgers University - Camden",
+      "school": "580bbf8b-642b-4eb7-914c-03a054981719",
+      "date_created": "2017-06-30T20:30:42.283374Z",
+      "categories": [{
+          "name": "category1",
+          "courses": [{
+              "url": null,
+              "Repeatable": "Y",
+              "course_dates": [{
+                  "end_date": "2017-06-29",
+                  "start_date": "2017-06-26",
+                  "object_id": "70881026-1738-4ce1-91fd-c59530c0879e"
+                },
+                {
+                  "end_date": "2017-06-13",
+                  "start_date": "2017-06-06",
+                  "object_id": "ebe37b70-3cd7-4e9b-87f9-5e47f8ac312b"
+                }
+              ],
+              "currency": null,
+              "name": "course1",
+              "date_modified": "2017-06-26T18:26:30.399316Z",
+              "type": "onsite",
+              "object_id": "59b0eb7e-4b83-48fe-a78c-2050d90a5ba3",
+              "tuition_number": 222
+            }
+            
+          ],
+          "object_id": "03c655e6-3ab0-4849-85bd-3bbc5f9a2dff",
+          "date_modified": "2017-06-26T18:24:48.069051Z"
         }
 
-      }
+      ]
+    };
 
-      //loop new
-      console.log("new_data.length" + JSON.stringify(new_data.length));
+    var testExec = executiveService.updatedReport($scope.schooldata_3, $scope.schooldata_3);
 
-      for (var i = 0; i < new_data.length; i++) {
-
-        if (!_.contains(old_ids, school_data[i].object_id)) {
-          school_data[i]["updated"] = 1
-        } else {
-
-          //if name diff
-          if (school_data[i].name !== _.findWhere(old_data, {
-              "object_id": school_data[i].object_id
-            }).name) {
-            school_data[i]["updated"] = _.findWhere(old_data, {
-              "object_id": school_data[i].object_id
-            }).name
-
-          } else {
-            //same name(no update on category)
-            //check update on courses
-            school_data[i]["updated"] = null;
-            var course_data_copy = school_data[i].courses
-            var new_course_data = angular.copy(school_data[i].courses)
-            var old_course_data = angular.copy(_.findWhere(old_data, {
-              "object_id": school_data[i].object_id
-            }).courses)
-
-            var new_course_ids = _.pluck(school_data[i].courses, 'object_id');
-            var old_course_ids = _.pluck(_.findWhere(old_data, {
-              "object_id": school_data[i].object_id
-            }).courses, 'object_id');
-
-            //loop old course, deleted course
-            for (var j = 0; j < old_course_data.length; j++) {
-
-              if (!_.contains(new_course_ids, old_course_data[j].object_id)) {
-
-                course_data_copy.push(old_course_data[j]);
-                course_data_copy[course_data_copy.length - 1]["updated"] = 0
-              }
-
-            }
-
-            //loop new, added course
-            for (var j = 0; j < new_course_data.length; j++) {
-
-              if (!_.contains(old_course_ids, course_data_copy[j].object_id)) {
-
-                course_data_copy[j]["updated"] = 1
-
-              } else {
-                //updated course, no color
-                var old_course_copy = _.findWhere(old_course_data, {
-                  "object_id": course_data_copy[j].object_id
-                })
-
-                //updated name
-                if (course_data_copy[j].name !== old_course_copy.name) {
-                  course_data_copy[j]["name_old"] = old_course_copy.name;
-                }
-
-                //updated url
-                if (course_data_copy[j].url !== old_course_copy.url) {
-                  course_data_copy[j]["url_old"] = old_course_copy.url;
-                }
-
-                //updated repeatable
-                if (course_data_copy[j].Repeatable !== old_course_copy.Repeatable) {
-                  course_data_copy[j]["Repeatable_old"] = old_course_copy.Repeatable;
-                }
-
-                //course_date
-                if (!_.isEqual(course_data_copy[j].course_dates, old_course_copy.course_dates)) {
-                  course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates;
-                }
-
-                //updated currency
-                if (course_data_copy[j].currency !== old_course_copy.currency) {
-                  course_data_copy[j]["currency_old"] = old_course_copy.currency;
-                }
-
-                //updated type
-                if (course_data_copy[j].type !== old_course_copy.type) {
-                  course_data_copy[j]["type_old"] = old_course_copy.type;
-                }
-
-                //updated tuition
-                if (course_data_copy[j].tuition_number !== old_course_copy.tuition_number) {
-                  course_data_copy[j]["tuition_number_old"] = old_course_copy.tuition_number;
-                }
-
-              }
-
-            }
-
-          }
-
-        }
-
-      }
-
-      console.log("school_data= " + JSON.stringify(school_data));
-
-    }
-
-
-    $scope.processExecutive($scope.schooldata_old.categories, $scope.schooldata_new.categories);
-
+    console.log(JSON.stringify(testExec));
 
 
   }

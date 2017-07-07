@@ -223,6 +223,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
                                 '/static/js/services/updateService.js',
                                 '/static/js/controllers/admin-executive.js',
+                                '/static/js/services/executiveService.js',
    
                             ]
                         });
