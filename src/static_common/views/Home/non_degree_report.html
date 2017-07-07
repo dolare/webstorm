@@ -94,27 +94,30 @@
               border-top-left-radius: 4px;
               border-top-right-radius: 4px;
               ">REPORT OVERVIEW</span>
+          
           </div>
-          <div class=" push-20">
-            <table class="table report_table2 table-bordered table-hover" style="table-layout: fixed;">
+          <div class=" push-50">
+            <table class="table report_table2 table-bordered" style="table-layout: fixed;">
               <colgroup>
+                <col width="55px">
                 <col width="7%">
                 <col width="35%">
-                <col width="18%">
-                <col width="10%">
-                <col width="10%">
-                <col width="10%">
-                <col width="10%">
+                <col width="17%">
+                <col width="9%">
+                <col width="9%">
+                <col width="9%">
+                <col width="9%">
               </colgroup>
               <!-- table header -->
               <thead>
                 <tr class="font-w600 text-primary bg-" style="background: #edf6fd;">
+
                   <td rowspan="2" class="bg-info" style="
                     border-right: 0;
                     color: rgba(255,255,255,0.85);
                     border-left: 0;
                     "></td>
-                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: left;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="1" rowspan="2">UNIVERSITY SCHOOL</td>
+                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: left;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="2" rowspan="2">UNIVERSITY SCHOOL</td>
                   <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="1" rowspan="2">TOTAL</td>
                   <td class="bg-info text-center" colspan="2" style="
                     color: rgba(255,255,255,0.85);
@@ -160,11 +163,25 @@
               <!-- table body -->
               <tbody>
                 <tr ng-repeat-start="row in schools">
+
+                  <td rowspan="2" class="text-center td-bordered bg-gray-lighterer">
+                  <!-- checkbox one -->
+                    <label class="css-input css-checkbox css-checkbox-primary"  data-tooltip-placement="top">
+
+                      <input type="checkbox" ng-model="show_school[row.object_id]" ng-init="show_school[row.object_id]=true"><span></span>
+
+
+                    </label>
+
+                  </td>
+
                   <td style="
                     border-right: 0;
                     padding: 4px;
                     " rowspan="2"><img ng-src="{{row.logo_url}}" alt="Logo of {{row.title.department}}" height="58" width="58"></td>
-                  <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">{{row.school_name}}<br>
+                  <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">
+
+                    <a data-js-blur class="link-effect" href="{{ '#school-' + $index }}" du-smooth-scroll>{{row.school_name}}</a><br>
                     <span class="text-muted">
                     <small style="
                       font-weight: 300;
@@ -172,7 +189,9 @@
                       ">{{row.university_name | uppercase}}
                     </small>
                     </span>
+
                   </td>
+
                   <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Category Offerings:<span class="badge badge-primary pull-right">{{row.categories.length - _.where(row.categories, {updated: 2}).length}}</span></td>
 
                   <td rowspan="2">
@@ -233,7 +252,7 @@
 
 
           <!-- schools report body-->
-          <div class="row" ng-repeat-start="row in schools">
+          <div class="row non-degree-report-table" ng-repeat-start="row in schools" ng-hide = "!show_school[row.object_id]">
             
               <!-- school overview -->
               <div class="col-sm-3">
@@ -241,7 +260,7 @@
                   border: 1px solid #cfcfcf;
                   padding-left: 0;
                   padding-right: 0;
-                  ">
+                  " ng-attr-id="{{ 'school-' + $index }}">
                   <div class="block-header bg-gray-light" style="
                     border-bottom: 1px solid #cfcfcf;
                     ">
@@ -254,6 +273,7 @@
                   </div>
                   <div class="text-left bg-gray-lighter" style="
                     padding-left: 21px;
+                    padding-right: 21px;
                     padding-bottom: 15px;
                     padding-top: 0px;
                     border-bottom: 1px solid #e4e4e4;
@@ -299,7 +319,7 @@
               <!-- END school overview -->
               <div class="col-sm-9">
                 <!-- category -->
-                <div ng-repeat="c in row.categories | orderBy:'updated'" class="col-sm-12 push-20"  style="
+                <div ng-repeat="c in row.categories | orderBy:'updated'" class="col-sm-12 push-30"  style="
                   padding-right: 0;padding-left: 0;
                   ">
                   <!-- category header -->
@@ -312,7 +332,7 @@
                     <p class="h3 font-w500 push-5 text-primary" style="
                       display: inline-block;
                       font-size: 28px;
-                      ">CATEGORY</p>
+                      ">{{$index+1}} - CATEGORY</p>
 
 
                     <div class="categoryheader" ng-class="{add: c.updated===1, rm: c.updated===2}">
@@ -400,9 +420,7 @@
                           <td style="
                             text-align: center;
                             ">{{$index + 1}}</td>
-                          <td style="vertical-align: middle;padding: 8px 15px;text-align: left;" class="ribbon ribbon-modern ribbon-city ribbon-update">
-
-                          <div class="ribbon-box font-w600" 
+                          <td style="vertical-align: middle;padding: 8px 15px;text-align: left;" class="ribbon ribbon-modern ribbon-city ribbon-update"><div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
                                                 data-uib-popover="{{course.name_old}}"
 
@@ -415,7 +433,8 @@
                                                     </span>                                   
                                                 </div> 
 
-                          {{course.name}}
+                          <span ng-if="course.name">{{course.name}}</span>
+                          <span ng-if="!course.name" class="font-w600 text-gray label-na">N/A</span>
 
                           </td>
 
@@ -434,7 +453,8 @@
                                                     </span>                                   
                                                 </div> 
 
-                            {{course.type}}
+                            <span ng-if="course.type">{{course.type}}</span>
+                            <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
                           <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
 
@@ -451,13 +471,14 @@
                                                     </span>                                   
                                                 </div> 
 
+                            <span ng-if="course.course_dates.length!==0">
+                              <span ng-repeat-start="d in course.course_dates">Start: {{d.start_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span><br>
 
-                            <span ng-repeat-start="d in course.course_dates">Start: {{d.start_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span><br>
+                              <span>End: {{d.end_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span>
+                              <br ng-repeat-end ng-if="!$last">
+                            </span>
 
-                            <span>End: {{d.end_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span>
-                            <br ng-repeat-end ng-if="!$last">
-
-
+                            <span ng-if="course.course_dates.length===0" class="font-w600 text-gray label-na">N/A</span>
 
                           </td>
                           <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
@@ -474,15 +495,22 @@
                                                     </span>                                   
                                                 </div> 
 
-                            <span>{{course.tuition_number | currency:currency_symbols[course.currency]:0}}<br><span ng-if="course.currency!='USD'&&course.currency!=null" class="text-muted" style="
+                            <span ng-if="course.tuition_number">
+                            {{course.tuition_number | currency:currency_symbols[course.currency]:0}}<br><span ng-if="course.currency!='USD'&&course.currency!=null" class="text-muted" style="
                               font-size: 12px;
                               font-weight: 200;
-                              ">*({{fxConvert(course.tuition_number,course.currency) | currency:"$":0}} as of {{fxRates.date | amUtc | amLocal | amDateFormat:'M/D/YY'}})</span></span>
+                              ">*({{fxConvert(course.tuition_number,course.currency) | currency:"$":0}} as of {{fxRates.date | amUtc | amLocal | amDateFormat:'M/D/YY'}})</span>
+                            </span>
+
+
+                              <span ng-if="!course.tuition_number" class="font-w600 text-gray label-na">N/A</span>
                           </td>
                           <td style="
                             padding: 8px 10px;
                             ">
-                            <a href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
+                            <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
+
+                            <span ng-if="!course.url" class="font-w600 text-gray label-na">N/A</span>
                           </td>
                         </tr>
                       </tbody>
@@ -492,9 +520,10 @@
                 </div>
                 <!-- END category -->
               </div>
-          
+            
+
           </div>
-          <hr ng-repeat-end ng-if="!$last" style="
+          <hr ng-hide = "!show_school[row.object_id]" ng-repeat-end ng-if="!$last" style="
             margin-top: 50px;
             margin-bottom: 50px;
             border: 0;

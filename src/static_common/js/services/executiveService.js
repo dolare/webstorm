@@ -51,7 +51,7 @@ angular.module('myApp')
           } else {
             //same name(no update on category)
             //check update on courses
-            school_cat_data[i]["updated"] = null;
+            //school_cat_data[i]["updated"] = null;
             var course_data_copy = school_cat_data[i].courses
             var new_course_data = angular.copy(school_cat_data[i].courses)
             var old_course_data = angular.copy(_.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).courses)
@@ -78,7 +78,7 @@ angular.module('myApp')
               } else {
               //updated course, no color
               var old_course_copy =  _.findWhere(old_course_data, {"object_id": course_data_copy[j].object_id})
-
+              
               //updated name
               if(course_data_copy[j].name !== old_course_copy.name){
                 course_data_copy[j]["name_old"] = old_course_copy.name ? old_course_copy.name : 'N/A';

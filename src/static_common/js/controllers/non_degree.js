@@ -90,7 +90,6 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
      $scope.view_report = function () {
 
-
        var selected_ids = [];
        angular.forEach($scope.$storage.non_degree, function(value, key) {
           if(value){
@@ -125,6 +124,7 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
         $scope.schools = [];
 
+        $scope.show_school = {};
 
         //one id for one school
         angular.forEach(selected_ids, function(value, index) {
