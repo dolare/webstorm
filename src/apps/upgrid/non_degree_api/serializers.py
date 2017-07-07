@@ -55,10 +55,18 @@ class ReportSerializer(ModelSerializer):
 
 class ReportCreateSerializer(ModelSerializer):
     """ Create non-degree report serializer"""
+    school_name = SerializerMethodField()
+    university_name = SerializerMethodField()
 
     class Meta:
         model = NonDegreeReport
-        fields = ('school', 'categories')
+        fields = ('school_name', 'university_name', 'school', 'categories')
+
+    def get_school_name(self, obj):
+        return obj.school.school
+
+    def get_university_name(self, obj):
+        return obj.school.university_foreign_key.name
 
 
 class CourseDateSerializer(ModelSerializer):
