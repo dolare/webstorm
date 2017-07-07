@@ -8,6 +8,9 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
   $scope.$storage.non_degree = null
 
+  $scope._ = _;
+  $scope.testObject = {one: 1, two: 2, three: 3, four: 4};
+
   // selected schools' IDs
   $scope.selectedSchoolIds = [];
 
@@ -123,11 +126,13 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
         $scope.schools = [];
 
 
+        //one id for one school
         angular.forEach(selected_ids, function(value, index) {
 
           var report_history = [];
           var new_school_data;
           var old_school_data;
+          var school_data_temp;
 
           console.log("value = "+value)
 
@@ -177,10 +182,39 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
                 old_school_data = final_result.data;
                 console.log("old school data ="+JSON.stringify(final_result.data));
 
-                $scope.schools.push(executiveService.updatedReport(old_school_data, new_school_data))
+                school_data_temp = executiveService.updatedReport(old_school_data, new_school_data)
+                console.log("school_data_temp = "+JSON.stringify(school_data_temp))
+
+                return $http({
+                    url: '/api/upgrid/non_degree/reports/overview/' + report_history[0].object_id + '/' + (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id),
+                    method: 'GET',
+                    headers: {
+                      'Authorization': 'JWT ' + token
+                    }
+                  });
+
+              }).then(function(overview_result) {
+
+                school_data_temp["course_removed"] = overview_result.data.course_removed
+                school_data_temp["course_added"] = overview_result.data.course_added
+                school_data_temp["category_added"] = overview_result.data.category_added
+                school_data_temp["category_removed"] = overview_result.data.category_removed
+
+                $scope.schools.push(school_data_temp)
 
                 App.blocks('#viewall_loading', 'state_normal');
                 console.log("$scope.schools after ="+JSON.stringify($scope.schools));
+
+
+                var test_pluck = _.pluck($scope.schools[0].categories, 'courses')
+                console.log("COURSESESE = "+JSON.stringify(test_pluck))
+                var test_union = _.union(test_pluck)
+                var test_flatten = _.flatten(test_pluck);
+                console.log("TEST_FLATTEN"+JSON.stringify(test_flatten))
+                console.log("TEST_FIND"+JSON.stringify(_.filter(test_flatten, {updated: 2})));
+                var test_without = _.difference(test_flatten, _.filter(test_flatten, {updated: 2}))
+                console.log("COURSESESE_haha = "+ _.uniq(_.difference(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), _.filter(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), {updated: 2})), 'object_id').length);
+                
 
               }).
                catch(function(error){
@@ -196,6 +230,7 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
        }
      }
+
 
 
 ////////////////////////////////////////////////////////////

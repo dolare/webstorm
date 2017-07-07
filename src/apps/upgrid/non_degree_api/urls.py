@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from .views import UniversitySchoolListAPI, UniversitySchoolDetailAPI, ReportAPI, ReportCreateListAPI, ReportOverview, \
-    ReportOverviewLatest
+    ReportOverviewLatest, SharedReportCreateAPI, SharedReportAPI
 
 urlpatterns = [
 
@@ -14,5 +14,8 @@ urlpatterns = [
         ReportOverview.as_view(), name="report_overview"),
     url(r'^reports/overview/latest/(?P<school_id>[0-9a-fA-F\-]+)$',
         ReportOverviewLatest.as_view(), name="report_overview_latest"),
+    url(r'^shared_reports$', SharedReportCreateAPI.as_view(), name="create_shared_report"),
+    url(r'^shared_reports/(?P<object_id>[0-9a-fA-F\-]+)/(?P<access_token>[0-9a-fA-F\-]+)$',
+        SharedReportAPI.as_view(), name="shared_report"),
 ]
 

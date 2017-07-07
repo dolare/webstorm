@@ -109,18 +109,18 @@
 
                 <li class="animate-show nav-main-heading" ng-hide="admin==='True'&&avatar_id===''"><span class="sidebar-mini-hide" style="font-weight:bold;">Menu</span></li>
 
-                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb==='2174'">
                     <a data-ui-sref="dashboard" data-ui-sref-active="active" >
                         <i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span>
                     </a>
                 </li>
 
-                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb==='2174'">
                     <a data-ui-sref="whoops" data-ui-sref-active="active" >
                         <i class="si si-wrench"></i><span class="sidebar-mini-hide">"Whoops!" Report</span>
                     </a>
                 </li>
-                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb==='2174'">
                     <a data-ui-sref="enhancement" data-ui-sref-active="active" >
                         <i class="si si-rocket"></i><span class="sidebar-mini-hide">Enhancement Report</span>
                     </a>
@@ -132,7 +132,7 @@
                     </a>
                 </li>
 
-                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb==='2174'">
                     <a data-ui-sref="reports" data-ui-sref-active="active" style="position:relative;" ><i class="si si-folder-alt"></i><span shake count="count" class="badge badge-info pull-right programbadge" ng-if="oneui.settings.sidebarMini&&count>0" style="position: absolute;top:0px;left:26px;">{{count}}</span><span class="sidebar-mini-hide">Report Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span shake count="count" class="badge badge-info pull-right sidebar-mini-hide programbadge" style="position: absolute" ng-if="!oneui.settings.sidebarMini&&count>0" >{{count}}</span>
                     </a>
                 </li>
