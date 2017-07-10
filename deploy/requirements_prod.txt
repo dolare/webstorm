@@ -1,4 +1,4 @@
 
 # packages that only needed in requirements.txt for prod deployment
-/opt/python/ondeck/app/.ebextensions/packages/grid-core-db-0.19.tar.gz
+/opt/python/ondeck/app/.ebextensions/packages/grid-core-db-0.22.tar.gz
 

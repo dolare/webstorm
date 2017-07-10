@@ -185,14 +185,19 @@ class WhoopsReleasedListSerializer(serializers.ModelSerializer):
             return obj.program.degree.name
 
     def get_has_expert_notes(self, obj):
-        origin_program = Program.objects.get(object_id=obj.program.object_id)
-        qs = ExpertAdditionalNote.objects.filter(program=origin_program)
+        try:
+            update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
+            
+            existing_report = zlib.decompress(update_report.existing_report)
+            existing_report = BytesIO(existing_report)
+            existing_report = JSONParser().parse(existing_report)
 
-        expert_notes = ""
-        if len(qs) == 0:
+            if not existing_report is None:
+                expert_notes = True
+            else:
+                expert_notes = False
+        except:
             expert_notes = False
-        else:
-            expert_notes = True
 
         return expert_notes
 
@@ -235,14 +240,19 @@ class WhoopsUpdateSerializer(serializers.ModelSerializer):
         return obj.customer_program.program.degree.name
 
     def get_has_expert_notes(self, obj):
-        origin_program = Program.objects.get(object_id=obj.customer_program.program.object_id)
-        qs = ExpertAdditionalNote.objects.filter(program=origin_program)
+        try:
+            update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
+            
+            existing_report = zlib.decompress(update_report.existing_report)
+            existing_report = BytesIO(existing_report)
+            existing_report = JSONParser().parse(existing_report)
 
-        expert_notes = ""
-        if len(qs) == 0:
+            if not existing_report is None:
+                expert_notes = True
+            else:
+                expert_notes = False
+        except:
             expert_notes = False
-        else:
-            expert_notes = True
 
         return expert_notes
 
@@ -589,6 +599,7 @@ class ManagerEnhancementUpdateNumberSerializer(serializers.ModelSerializer):
         if obj.initial_diff is None:
             return 0
         else:
+            print('111')
             json_string = zlib.decompress(obj.initial_diff)
             json_string = BytesIO(json_string)
             res = JSONParser().parse(json_string)

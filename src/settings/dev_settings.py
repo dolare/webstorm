@@ -77,15 +77,18 @@ except KeyError:
 try:
     upgridAdmin = os.environ["upgridAdmin"]
 except KeyError:
+    print('upgridAdmin == null')
     upgridAdmin = None
 
 
 try:
     ceebAdmin = os.environ["ceebAdmin"]
 except KeyError:
-    upgridAdmin = None
+    print('ceebAdmin == null')
+    ceebAdmin = None
 
 if not upgridAdmin == None:
+    print('upgridAdmin')
     DATABASES = {  
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -96,7 +99,8 @@ if not upgridAdmin == None:
             'PASSWORD': upgridAdmin,
             },
     }
-elif not ceebAdmin == None:
+elif not ceebAdmin == None and upgridAdmin == None:
+    print('ceebdAdmin')
     DATABASES = {  
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
