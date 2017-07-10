@@ -307,6 +307,9 @@ class ManagerWhoopsDiffConfirmation(APIView):
             cache_report = JSONParser().parse(cache_report)
             result = {"initial_diff": initial_diff, "confirmed_diff": confirmed_diff, "existing_or_cache_report": cache_report}
 
+        app_logger.info(" ManagerWhoopsDiffConfirmation get ::: cache_report = {0},  initial_diff={1}, ".format(cache_report,initial_diff))
+
+
         return Response(result, HTTP_200_OK)
 
     def put(self, request):
@@ -336,6 +339,8 @@ class ManagerWhoopsDiffConfirmation(APIView):
         wru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
         wru.last_edit_time = timezone.now()
         wru.save()
+
+        app_logger.info(" ManagerWhoopsDiffConfirmation put ::: update_diff = {0},  initial_diff={1}, ".format(update_diff,initial_diff))
 
         return Response({"success": ("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
 
