@@ -155,18 +155,27 @@ class WhoopsReportsUpdateAPI(APIView):
                     if not a.get(k):
                         old_diff[k] = None
                         new_diff[k] = v
+
+                print('res_dict1 == {0}'.format(diff))
                 for k, v in a.items():
                     if (not v or len(v) == 0) and (not b.get(k) or len(b.get(k)) == 0):
                         del old_diff[k]
                         del new_diff[k]
+                    elif k == 'object_id': 
+                        if k in old_diff.keys():
+                            del old_diff[k]
+                        if k in new_diff.keys():
+                            del new_diff[k]
 
                 return diff
 
         res_dict = compare(a, b)
+        print('res_dict2 == {0}'.format(res_dict))
        
         if res_dict:
-            for _, v in res_dict.items():
-                if len(v) > 1:
+            for k, v in res_dict.items():
+                print(len(v))
+                if len(v) > 0:
                     print(res_dict)
                     print('res_dict')
                     return res_dict
@@ -307,7 +316,7 @@ class ManagerWhoopsDiffConfirmation(APIView):
             cache_report = JSONParser().parse(cache_report)
             result = {"initial_diff": initial_diff, "confirmed_diff": confirmed_diff, "existing_or_cache_report": cache_report}
 
-        app_logger.info(" ManagerWhoopsDiffConfirmation get ::: cache_report = {0},  initial_diff={1}, ".format(cache_report,initial_diff))
+        app_logger.info(" ManagerWhoopsDiffConfirmation get ::: cache_report = {0},  initial_diff={1}, ".format(result["existing_or_cache_report"],result["initial_diff"]))
 
 
         return Response(result, HTTP_200_OK)
@@ -334,12 +343,18 @@ class ManagerWhoopsDiffConfirmation(APIView):
         update_diff = WhoopsReportsUpdateAPI.\
             compare_whoops_report(JSONParser().parse(BytesIO(zlib.decompress(wru.existing_report))),
                                        request.data['cache_report'])
-        wru.update_diff = zlib.compress(JSONRenderer().render(update_diff))
+        if update_diff != None:
+            update_diff = zlib.compress(JSONRenderer().render(update_diff))
+            print("wru.update_diff = {0}".format(update_diff))
+        else:
+            update_diff = None
+            print('update_diff === None')
+        wru.update_diff = update_diff
         wru.initial_diff = zlib.compress(JSONRenderer().render(initial_diff))
         wru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
         wru.last_edit_time = timezone.now()
         wru.save()
-
+        print("existing report = {0}".format(JSONParser().parse(BytesIO(zlib.decompress(wru.existing_report)))))
         app_logger.info(" ManagerWhoopsDiffConfirmation put ::: update_diff = {0},  initial_diff={1}, ".format(update_diff,initial_diff))
 
         return Response({"success": ("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
@@ -403,23 +418,28 @@ class ClientViewWhoopsUpdate(APIView):
                 update_diff = JSONParser().parse(BytesIO(zlib.decompress(new_wru.prev_diff)))
             else:
                 update_diff = "None"
+
             print('update_diff')
             app_logger.info("existing_report = {0}, update_diff = {1}".format(existing_report,update_diff))
             print(update_diff)
         else:
-
             if update_report.existing_report:#(account manager's view or client's veiw) and has existing report and no cache_report
                 print("(account manager's view or client's veiw) and has existing report no cache report")
+                #print(update_report.existing_report)
                 existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
                 app_logger.info("(account manager's view or client's veiw) and has existing report and no_cache report".format(existing_report))
             else:#client or account manager's view and has no existing report
                 existing_report = "None"                                
                 app_logger.info("client or account manager's view and has no existing report".format())
-            if update_report.update_diff and client_id:
+
+            if update_report.update_diff or not zlib.decompress(update_report.prev_diff) == b'' and client_id:
+                print(update_report.update_diff)
                 update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
+                print("update_diff = {0}".format(update_diff))
             elif update_report.prev_diff:
 
-                if not zlib.decompress(update_report.prev_diff) == b'':
+                if not zlib.decompress(update_report.prev_diff) == b'' or not update_report.prev_diff == None:
+                    print('update diff 1 : {0}'.format(update_report.prev_diff))
                     update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.prev_diff)))
                 else:
                     update_diff = '' 
@@ -428,6 +448,7 @@ class ClientViewWhoopsUpdate(APIView):
 
             app_logger.info("existing_report = {0}, update_diff = {1}".format(existing_report,update_diff))
         print(update_diff)
+        print('update_diff')
 
         # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
         context = {'existing_report': existing_report, 'update_diff': update_diff,
