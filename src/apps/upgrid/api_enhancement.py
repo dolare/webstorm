@@ -578,15 +578,14 @@ class ClientViewEnhancementUpdate(APIView):
             return Response({"failed": ("No EnhancementReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
         if update_report.cache_report and not client_id:
-
-            update_report.existing_report = update_report.cache_report
+            
             update_report.most_recent = False
             
             new_eru = EnhancementUpdate.objects.create(
                 customer_program=customer_program,
                 customer=user,
                 most_recent=True,
-                existing_report=update_report.existing_report,
+                existing_report=update_report.cache_report,
                 prev_diff=update_report.update_diff,
                 last_edit_time=update_report.last_edit_time)
 
