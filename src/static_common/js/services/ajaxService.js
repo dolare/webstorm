@@ -109,8 +109,79 @@ angular.module('myApp').factory("ajaxService",
             return deferred.promise;
         }
 
+        function nonDegree(token) {
+
+           
+
+            var promise = $http({
+                  url: '/api/upgrid/non_degree/schools',
+                  method: 'GET',
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  }
+                })
+                .then(function(response) {
+
+                   console.log("return data"+ JSON.stringify(response.data.results));
+                   var school_table = response.data.results
+
+                    angular.forEach(school_table, function(value, index) {
+                     value["details"] = null;
+                     value["logo_url"] = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/LBS_logo_.png/150px-LBS_logo_.png';
+
+                      $http({
+                        url: '/api/upgrid/non_degree/reports?school=' + value.object_id,
+                        method: 'GET',
+                        headers: {
+                          'Authorization': 'JWT ' + token
+                        }
+                      })
+                      .then(function(result) {
+                        if(result.data.results.length>0) {
+                          $http({
+                                url: '/api/upgrid/non_degree/reports/overview/' + result.data.results[0].object_id + '/' + (result.data.results.length>1? result.data.results[1].object_id:result.data.results[0].object_id),
+                                method: 'GET',
+                                headers: {
+                                  'Authorization': 'JWT ' + token
+                                }
+                              })
+                              .then(function(numbers) {
+                                
+                                console.log("numbers"+JSON.stringify(numbers))
+                                value["details"] = {};
+
+                                value.details["course_removed"] = numbers.data.course_removed
+                                value.details["course_added"] = numbers.data.course_added
+                                value.details["category_added"] = numbers.data.category_added
+                                value.details["category_removed"] = numbers.data.category_removed
+
+
+
+                              }).
+                               catch(function(error){
+                                  console.log('an error occurred...'+JSON.stringify(error));
+                              });
+                           }
+                        }).
+                         catch(function(error){
+                            console.log('an error occurred...'+JSON.stringify(error));
+                        });
+                    })
+                    
+                    return school_table;
+                    console.log("school_table = "+JSON.stringify(school_table));
+                }).
+                 catch(function(error){
+                    console.log('an error occurred...'+JSON.stringify(error));
+                });
+
+                 return promise;
+
+        }
+
         return {
-            getResult: getResult
+            getResult: getResult,
+            nonDegree: nonDegree
         };
 
     });

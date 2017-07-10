@@ -330,6 +330,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                                '/static/js/services/apiService.js',
                                 '/static/js/controllers/login.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css',
@@ -356,6 +357,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                              '/static/js/services/apiService.js',
                               '/static/js/controllers/login.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
                                 
@@ -398,6 +400,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                                '/static/js/services/apiService.js',
                                 '/static/js/controllers/login.js',
                                 '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
@@ -681,12 +684,12 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
-      depsEnhancement: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+      depsNondegree: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
                         return $ocLazyLoad.load({
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
-                            
+                              '/static/js/services/ajaxService.js',
                               '/static/js/third-party/clipboard.min.js',
                               '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
@@ -705,12 +708,12 @@ App.config(function($stateProvider, $urlRouterProvider) {
                     }],
 
       //get raw data
-      List: function(depsEnhancement, apiService, authenticationSvc) {
-        var userInfo = authenticationSvc.getUserInfo();
-        console.log('*************');
-        return apiService.getProfileList(userInfo.accessToken);
+      // Table: function(depsNondegree, ajaxService, authenticationSvc) {
+      //   var userInfo = authenticationSvc.getUserInfo();
+      //   console.log('*************');
+      //   return ajaxService.nonDegree(userInfo.accessToken);
 
-      }
+      // }
 
 
     }
