@@ -6,6 +6,7 @@ import uuid
 from django.utils import timezone
 from django.contrib.auth import password_validation
 from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.postgres.fields import JSONField
 # 3rd party lib
 # our lib
 from ceeb_program.models import Program, UniversitySchool
@@ -184,7 +185,8 @@ class UniversityCustomer(UpgridBaseUser):
     phone = models.CharField(max_length=20, null=True)
     account_type = models.CharField(max_length=20, choices=accounttype, default='sub', null=True)
     service_until = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
-    competing_schools = models.ManyToManyField(UniversitySchool, related_name='+')
+    competing_schools = models.ManyToManyField(UniversitySchool, related_name='+', blank=True)
+    non_degree_schools = models.ManyToManyField(UniversitySchool, blank=True, related_name='non_degree_user')
 
     def __str__(self):
         return '{0} - {1}'.format(self.Ceeb, self.username)
@@ -420,15 +422,40 @@ class ConfirmedUpdateEmailQueue(models.Model):
     update_report_type = models.CharField(max_length=20, choices=(('whoops', 'Whoops'),
                                                                   ('enhancement', 'Enhancement')),
                                           null=True, blank=True)
-#customer table 
+
+
 class CustomerFeature(BasedSimpleObject):
+    """
+    Feature reference table
+    """
     pass
 
-#customer feature mapping table
+
 class CustomerFeatureMapping(BasedDatedObject):
+    """
+    customer feature mapping table
+    """
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT, null = True, blank = True)
-    feature = models.ForeignKey(CustomerFeature, on_delete=models.PROTECT, null = True, blank = True)
+    customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT, null=True, blank=True)
+    feature = models.ForeignKey(CustomerFeature, on_delete=models.PROTECT, null=True, blank=True)
 
 
-    
+class NonDegreeReport(BasedDatedObject):
+    """
+    non-degree school report
+    """
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    school = models.ForeignKey(UniversitySchool, on_delete=models.CASCADE, null=False)
+    categories = JSONField()
+
+
+class NonDegreeSharedReport(BasedDatedObject):
+    """
+    non-degree Shared report
+    """
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    created_by = models.ForeignKey(UpgridBaseUser, on_delete=models.PROTECT)
+    reports = models.ManyToManyField(NonDegreeReport, null=True, blank=True)
+    expired_time = models.DateTimeField(default=one_day_hence, blank=True)
+    access_token = models.UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
+

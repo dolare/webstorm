@@ -1,0 +1,41 @@
+/*non-degree CSS*/
+
+.nondegree .categoryheader {
+  font-size: 18px;
+  padding-left: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding: 4px 10px;
+
+}
+
+.nondegree .categoryheader.add {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-left: 3px solid #3c763d;
+}
+
+.nondegree .categoryheader.rm {
+  color: #a94442;
+  background-color: #f2dede;
+  border-left: 3px solid #a94442;
+}
+
+.nondegree .categoryheader.uc {
+  /* color: #3c763d; */
+  background-color: #f4f4f4;
+  border-left: 3px solid #999;
+}
+
+.nondegree .course.add {
+  background: #f0f8ed;
+}
+
+.nondegree .course.rm {
+  background: #f8eded;
+}
+
+.nondegree .course.uc {
+  
+}
+
