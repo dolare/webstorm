@@ -174,38 +174,34 @@ class WhoopsReportsUpdateAPI(APIView):
             return None  # return None if no difference
 
     def whoops_compare_process(self, wru, raw_new_whoops_report, new_whoops_report_dict):
-        if raw_new_whoops_report is None and new_whoops_report_dict is None:
-            wru.existing_report = None
-            wru.save()
-        else:
-            if wru.existing_report is None and wru.cache_report is None:  # For the very first WhoopsUpdate object
-                wru.existing_report = raw_new_whoops_report  # raw binary data
-            elif wru.cache_report is None:
-                binary_data = zlib.decompress(wru.existing_report)
-                whoops_json_string = BytesIO(binary_data)
-                existing_report_dict = JSONParser().parse(whoops_json_string)
-                diff = WhoopsReportsUpdateAPI.compare_whoops_report(existing_report_dict, new_whoops_report_dict)
+        if wru.existing_report is None and wru.cache_report is None and wru.initial_diff is None:  # For the very first WhoopsUpdate object
+            wru.existing_report = raw_new_whoops_report  # raw binary data
+        elif wru.cache_report is None:
+            binary_data = zlib.decompress(wru.existing_report)
+            whoops_json_string = BytesIO(binary_data)
+            existing_report_dict = JSONParser().parse(whoops_json_string)
+            diff = WhoopsReportsUpdateAPI.compare_whoops_report(existing_report_dict, new_whoops_report_dict)
 
-                if diff:
-                    diff = zlib.compress(JSONRenderer().render(diff))
-                    wru.initial_diff = diff
-                else:
-                    print('diff_initl == None')
-                    wru.initial_diff = None
+            if diff:
+                diff = zlib.compress(JSONRenderer().render(diff))
+                wru.initial_diff = diff
             else:
-                binary_data = zlib.decompress(wru.cache_report)
-                whoops_json_string = BytesIO(binary_data)
-                cache_report_dict = JSONParser().parse(whoops_json_string)
-                diff = WhoopsReportsUpdateAPI.compare_whoops_report(cache_report_dict, new_whoops_report_dict)
-                print('diff_whoops')
-                print(diff)
-                if diff:
-                    diff = zlib.compress(JSONRenderer().render(diff))
-                    wru.initial_diff = diff
-                else:
-                    print('diff_initl == None')
-                    wru.initial_diff = None
-            wru.save()
+                print('diff_initl == None')
+                wru.initial_diff = None
+        else:
+            binary_data = zlib.decompress(wru.cache_report)
+            whoops_json_string = BytesIO(binary_data)
+            cache_report_dict = JSONParser().parse(whoops_json_string)
+            diff = WhoopsReportsUpdateAPI.compare_whoops_report(cache_report_dict, new_whoops_report_dict)
+            print('diff_whoops')
+            print(diff)
+            if diff:
+                diff = zlib.compress(JSONRenderer().render(diff))
+                wru.initial_diff = diff
+            else:
+                print('diff_initl == None')
+                wru.initial_diff = None
+        wru.save()
 
     def whoops_schedule_compare(self, request):
         """call this method each day at 04:00 or any other time, update WhoopsReports each day for all users"""
@@ -228,6 +224,9 @@ class WhoopsReportsUpdateAPI(APIView):
                 raw_new_whoops_report = zlib.compress(json_str)
             else:
                 raw_new_whoops_report = None
+            print(new_whoops_report_dict)
+            print(raw_new_whoops_report)
+            print('1234567')
             self.whoops_compare_process(wru, raw_new_whoops_report, new_whoops_report_dict)
         else:
             users = UniversityCustomer.objects.filter(account_type='main',account_manager = request.user.id)
@@ -308,6 +307,9 @@ class ManagerWhoopsDiffConfirmation(APIView):
             cache_report = JSONParser().parse(cache_report)
             result = {"initial_diff": initial_diff, "confirmed_diff": confirmed_diff, "existing_or_cache_report": cache_report}
 
+        app_logger.info(" ManagerWhoopsDiffConfirmation get ::: cache_report = {0},  initial_diff={1}, ".format(cache_report,initial_diff))
+
+
         return Response(result, HTTP_200_OK)
 
     def put(self, request):
@@ -337,6 +339,8 @@ class ManagerWhoopsDiffConfirmation(APIView):
         wru.confirmed_diff = zlib.compress(JSONRenderer().render(request.data['confirmed_diff']))
         wru.last_edit_time = timezone.now()
         wru.save()
+
+        app_logger.info(" ManagerWhoopsDiffConfirmation put ::: update_diff = {0},  initial_diff={1}, ".format(update_diff,initial_diff))
 
         return Response({"success": ("Confirmed diff!")}, status=HTTP_202_ACCEPTED)
 
@@ -377,17 +381,19 @@ class ClientViewWhoopsUpdate(APIView):
         except WhoopsUpdate.DoesNotExist:
             return Response({"failed": _("No WhoopsReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
-        if update_report.cache_report and not client_id: #only account manager view report will pass client_id
-            update_report.existing_report = update_report.cache_report
+        if update_report.cache_report and not client_id: #client's view after account manager updating a new version
+            app_logger.info("client or account manager's view and has no existing report".format())
+            print("#client's view after account manager updating a new version")
             update_report.most_recent = False
             update_report.save()
             new_wru = WhoopsUpdate.objects.create(
                 customer_program=cust_pro,
                 customer=user,
                 most_recent=True,
-                existing_report=update_report.existing_report,
+                existing_report=update_report.cache_report,
                 prev_diff=update_report.update_diff,
                 last_edit_time=update_report.last_edit_time)
+
             new_wru.save()
             if new_wru.existing_report:
                 existing_report = JSONParser().parse(BytesIO(zlib.decompress(new_wru.existing_report)))
@@ -397,14 +403,18 @@ class ClientViewWhoopsUpdate(APIView):
                 update_diff = JSONParser().parse(BytesIO(zlib.decompress(new_wru.prev_diff)))
             else:
                 update_diff = "None"
+            print('update_diff')
+            app_logger.info("existing_report = {0}, update_diff = {1}".format(existing_report,update_diff))
+            print(update_diff)
         else:
 
-            if update_report.existing_report:
-
+            if update_report.existing_report:#(account manager's view or client's veiw) and has existing report and no cache_report
+                print("(account manager's view or client's veiw) and has existing report no cache report")
                 existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
-
-            else:
-                existing_report = "None"
+                app_logger.info("(account manager's view or client's veiw) and has existing report and no_cache report".format(existing_report))
+            else:#client or account manager's view and has no existing report
+                existing_report = "None"                                
+                app_logger.info("client or account manager's view and has no existing report".format())
             if update_report.update_diff and client_id:
                 update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
             elif update_report.prev_diff:
@@ -414,8 +424,9 @@ class ClientViewWhoopsUpdate(APIView):
                 else:
                     update_diff = '' 
             else:
-
                 update_diff = "None"
+
+            app_logger.info("existing_report = {0}, update_diff = {1}".format(existing_report,update_diff))
         print(update_diff)
 
         # context = "{'existing_report': {0}, 'update_diff':{1}".format(existing_report, update_diff)
