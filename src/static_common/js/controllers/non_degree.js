@@ -309,7 +309,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
             $scope.expired_time = response.data.expired_time;
 
             $scope.url = {
-                text: 'https://'+location.host + '/api/upgrid/non_degree/' + response.data.link,
+                text: 'https://'+location.host + '/#/' + response.data.link +'/',
             };
 
       }).

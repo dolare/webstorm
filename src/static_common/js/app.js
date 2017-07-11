@@ -946,6 +946,31 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
 
+  state('shareExecutive', {
+    url: '/shared_reports/:param1/:param2/',
+    templateUrl: '/static/views/Share/shared_executive_reports.html',
+    controller: 'ShareExecutiveController',
+    resolve: {
+                    depsShareExecutive: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              
+                              '/static/js/controllers/share_executive.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                              
+                            ]
+                        });
+                    }]
+                }
+
+  }).
+
 
   //error pages
   state('404', {
