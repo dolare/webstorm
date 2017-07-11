@@ -166,7 +166,6 @@ class WhoopsReportsUpdateAPI(APIView):
                             del old_diff[k]
                         if k in new_diff.keys():
                             del new_diff[k]
-
                 return diff
 
         res_dict = compare(a, b)
@@ -432,7 +431,7 @@ class ClientViewWhoopsUpdate(APIView):
                 existing_report = "None"                                
                 app_logger.info("client or account manager's view and has no existing report".format())
 
-            if update_report.update_diff or not zlib.decompress(update_report.prev_diff) == b'' and client_id:
+            if update_report.update_diff and client_id:
                 print(update_report.update_diff)
                 update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
                 print("update_diff = {0}".format(update_diff))
