@@ -238,6 +238,50 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         jQuery('#viewReport').modal('toggle');
       }
 
-    }
+    };
+
+    $scope.togglefullen_release = function() {
+      angular.element(document.getElementById("releaseReport")).toggleClass('fullscreen-modal');
+    };
+
+    $scope.togglefullen_view = function() {
+      angular.element(document.getElementById("viewReport")).toggleClass('fullscreen-modal');
+    };
+
+    $scope.scrolltop = function() {
+      angular.element(document.getElementById('scrolltop_non_degree')).scrollTop(0);
+    };
+
+    $scope.printReport_release = function() {
+
+      $("#releaseReport").printThis({
+        debug: false,
+        importCSS: true,
+        importStyle: true,
+        printContainer: true,
+        loadCSS: "../static/css/print.css",
+        pageTitle: "Upgrid Reports",
+        removeInline: false,
+        printDelay: 333,
+        header: null,
+        formValues: true
+      });
+    };
+
+    $scope.printReport_view = function() {
+
+      $("#viewReport").printThis({
+        debug: false,
+        importCSS: true,
+        importStyle: true,
+        printContainer: true,
+        loadCSS: "../static/css/print.css",
+        pageTitle: "Upgrid Reports",
+        removeInline: false,
+        printDelay: 333,
+        header: null,
+        formValues: true
+      });
+    };
   }
 ]);
