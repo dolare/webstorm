@@ -10,6 +10,7 @@ from ..models import NonDegreeReport
 class UniversitySchoolFilter(FilterSet):
     university_id = django_filters.UUIDFilter(name="university_foreign_key__object_id")
     is_non_degree = django_filters.BooleanFilter(method="non_degree_filter")
+    client_id = django_filters.UUIDFilter(name="non_degree_user__id")
 
     class Meta:
         model = UniversitySchool
