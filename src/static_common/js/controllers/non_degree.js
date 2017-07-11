@@ -266,7 +266,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
             text: null
         };
 
-        //App.blocks('#shareReports', 'state_loading');
+        App.blocks('#shareReports', 'state_loading');
         
         $scope.copied = false;
         new Clipboard('.btn');

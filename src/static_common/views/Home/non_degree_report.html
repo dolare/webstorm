@@ -117,8 +117,8 @@
                     color: rgba(255,255,255,0.85);
                     border-left: 0;
                     "></td>
-                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: left;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="2" rowspan="2">UNIVERSITY SCHOOL</td>
-                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="1" rowspan="2">TOTAL</td>
+                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: left;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="2" rowspan="2">BUSINESS SCHOOLS</td>
+                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);" colspan="1" rowspan="2">CURRENT OFFERINGS</td>
                   <td class="bg-info text-center" colspan="2" style="
                     color: rgba(255,255,255,0.85);
                     border-left: 0;
@@ -192,7 +192,10 @@
 
                   </td>
 
-                  <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Category Offerings:<span class="badge badge-primary pull-right">{{row.categories.length - _.where(row.categories, {updated: 2}).length}}</span></td>
+                  <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Categories:<span class="badge badge-primary pull-right">{{row.categories.length - _.where(row.categories, {updated: 2}).length}}</span>
+                  | Courses: <span class="badge badge-primary pull-right">{{row.categories.length - _.where(row.categories, {updated: 2}).length}}</span>
+
+                  </td>
 
                   <td rowspan="2">
 
@@ -219,7 +222,7 @@
                 </tr>
                 <tr ng-repeat-end>
                   <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
-                    Course Offerings:<span class="badge badge-primary pull-right">{{_.uniq(_.difference(_.flatten(_.pluck(row.categories, 'courses')), _.filter(_.flatten(_.pluck(row.categories, 'courses')), {updated: 2})), 'object_id').length}}</span>
+                    Courses:<span class="badge badge-primary pull-right">{{_.uniq(_.difference(_.flatten(_.pluck(row.categories, 'courses')), _.filter(_.flatten(_.pluck(row.categories, 'courses')), {updated: 2})), 'object_id').length}}</span>
                   </td>
                 </tr>
               </tbody>
