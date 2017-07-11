@@ -1,4 +1,5 @@
 /*Executive Education Admin controller*/
+
 'use strict';
 
 angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService',
@@ -111,11 +112,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
                 }
               }).then(function(resp_schoolpreview) {
                 var compareResult = executiveService.updatedReport(resp_report.data, resp_schoolpreview.data);
-
-                console.log('current data ' + JSON.stringify(resp_schoolpreview.data));
-                console.log('last report data ' + JSON.stringify(resp_report.data));
-                console.log('compareResult ' + JSON.stringify(compareResult));
-                console.log(JSON.stringify(compareResult) == JSON.stringify(resp_schoolpreview.data));
 
                 if (JSON.stringify(compareResult) != JSON.stringify(resp_schoolpreview.data))
                   return s.readyToRelease = true;
@@ -283,5 +279,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         formValues: true
       });
     };
+
   }
 ]);
