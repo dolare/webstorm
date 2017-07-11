@@ -170,7 +170,7 @@
               </div>
             </td>
 
-            <td ng-show="!row.details" colspan="4" class="td-bordered text-center">
+            <td ng-show="row.details===null" colspan="4" class="td-bordered text-center">
              
                <label class="label label-default"><i class="fa fa-refresh"></i> &nbsp;In Progress</label>
 
@@ -219,11 +219,11 @@
         </tfoot>
       </table>
 
-      <hr ng-if="school_list.length>0">
-      <button class="font-w400 btn btn-lg btn-square bg-info" ng-click="view_report()" style="width:48%;color:white;margin-bottom:30px;">
+      <hr>
+      <button class="font-w400 btn btn-lg btn-square bg-info push-5-t" ng-click="view_report()" style="width:48%;color:white;margin-bottom:30px;">
       View
       </button>
-      <button class="font-w400 btn btn-lg pull-right btn-square bg-city-light" ng-click="setLinkValue()" style="width:48%;color:white;margin-bottom:30px;">
+      <button class="font-w400 btn btn-lg pull-right btn-square bg-city-light push-5-t" ng-click="setLinkValue()" style="width:48%;color:white;margin-bottom:30px;">
       Share
       </button>
     </div>

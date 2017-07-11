@@ -2,7 +2,7 @@
 
 var login = angular.module('myApp');
 login.controller('LoginController',
-    function(avatarService, $stateParams, $scope, $location, $window, $http, authenticationSvc, $cookies, $state) {
+    function(apiService, avatarService, $stateParams, $scope, $location, $window, $http, authenticationSvc, $cookies, $state) {
         //$scope.userInfo = null;
 
 
@@ -219,7 +219,7 @@ login.controller('LoginController',
                 if($scope.username && $scope.password) {
                 authenticationSvc.login($scope.username, $scope.password, $scope.rememberMe)
                     .then(function(result) {
-                        App.blocks('#loginblock', 'state_loading');
+                        //App.blocks('#loginblock', 'state_loading');
                         var token = authenticationSvc.getUserInfo().accessToken;
                         $scope.userInfo = result;
                         //console.log('congrats');
@@ -233,25 +233,33 @@ login.controller('LoginController',
                         console.log("if it is admin"+JSON.stringify(authenticationSvc.getUserInfo().admin));
                         
                             
-                            
+                           
+                            apiService.getCustomer(authenticationSvc.getUserInfo().accessToken).then(function(result) {
+                                 
+                                 var ceeb = result;
+                                 console.log("ccc ceeb= "+result)
 
-                            if(authenticationSvc.getUserInfo().admin === "True"){
-                                $state.go('admin')
-                            }else if(authenticationSvc.getUserInfo().admin === "False"){
+                                if(authenticationSvc.getUserInfo().admin === "True"){
+                                     $state.go('admin')
+                                }else if(authenticationSvc.getUserInfo().admin === "False"){
 
-                                console.log("authenticationSvc.getUserInfo().admin === False")
-                                if ($stateParams.url) {
-                                //$location.url($stateParams.url);
-                                $state.go('dashboard');
+                                    console.log("authenticationSvc.getUserInfo().admin === False")
+                                    if (ceeb==='2174') {
+                                    //$location.url($stateParams.url);
+                                        $state.go('non_degree');
 
-                                } else {
-                                    $state.go('dashboard');
+                                    } else {
+                                        $state.go('dashboard');
+                                    }
+
+
                                 }
+                                //progressJs().start().set(100).end();
+                                //App.blocks('#loginblock', 'state_normal');
 
+                            })
 
-                            }
-                            //progressJs().start().set(100).end();
-                            App.blocks('#loginblock', 'state_normal');
+                            
 
             
 

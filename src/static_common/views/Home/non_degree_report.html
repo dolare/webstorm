@@ -97,7 +97,7 @@
           
           </div>
           <div class=" push-50">
-            <table class="table report_table2 table-bordered" style="table-layout: fixed;">
+            <table class="table non-degree-table report_table2 table-bordered" style="table-layout: fixed;">
               <colgroup>
                 <col width="55px">
                 <col width="7%">
@@ -300,8 +300,8 @@
                           "><small style="
                           font-size: 11px;
                           "> ADDITION(S)</small></div>
-                        <a class="h2 font-w300 text-success animated flipInX" ng-if="row.cat_add!=0">+ {{_.filter(row.categories, {updated: 1}).length}}</a>
-                        <a class="h2 font-w300 text-success animated flipInX" ng-if="row.cat_add==0">--</a>
+                        <a class="h2 font-w300 text-success animated flipInX" ng-if="_.filter(row.categories, {updated: 1}).length!==0">+ {{_.filter(row.categories, {updated: 1}).length}}</a>
+                        <a class="h2 font-w300 text-success animated flipInX" ng-if="_.filter(row.categories, {updated: 1}).length===0">- -</a>
                       </div>
                       <div class="col-xs-6">
                         <div class="text-muted animated fadeIn" style="
@@ -309,8 +309,8 @@
                           "><small style="
                           font-size: 11px;
                           "> REMOVAL(S)</small></div>
-                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="row.cat_rm!=0">- {{_.filter(row.categories, {updated: 2}).length}}</a>
-                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="row.cat_rm==0">--</a>
+                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="_.filter(row.categories, {updated: 2}).length!==0">- {{_.filter(row.categories, {updated: 2}).length}}</a>
+                        <a class="h2 font-w300 text-danger animated flipInX" ng-if="_.filter(row.categories, {updated: 2}).length===0">- -</a>
                       </div>
                     </div>
                   </div>
@@ -327,26 +327,27 @@
                     border: 1px solid #ddd;
                     padding: 35px 15px 18px 15px;
                     margin-right: 1px;
-                    border-top: 5px solid #70b9eb;
+                    border-top: 6px solid #70b9eb;
                     ">
-                    <p class="h3 font-w500 push-5 text-primary" style="
+                    <p class="h3 font-w500 push-5 text-muted" style="
                       display: inline-block;
-                      font-size: 28px;
-                      ">{{$index+1}} - CATEGORY</p>
+                      font-size: 18px;
+                      ">Category:</p>
 
 
-                    <div class="categoryheader" ng-class="{add: c.updated===1, rm: c.updated===2}">
-                      {{c.name}}
+                    <div class="categoryheader" ng-class="{add: c.updated===1, rm: c.updated===2}" style="display: table;width: 100%;">
+                      <span style="display: table-cell;font-size: 21px;">{{c.name}}</span>
                       <div style="
-                        display: inline-block;
+                        display: table-cell;
+                        text-align: right;
                         padding: 5px 0px;
                         font-size: 15px;
-                        " class="pull-right"><span style="
-                        font-weight: 600;
+                        " class=""><span style="
+                        font-weight: 400;
                         ">COURSE OFFERINGS: &nbsp;<span class="badge badge-primary" style="
                         vertical-align: top;
                         margin-top: 1px;
-                        ">{{_.difference(c.courses, _.filter(c.courses, {updated: 2})).length}}</span></span>&nbsp;|&nbsp;&nbsp;<span class="text-muted">Addition(s):&nbsp; 
+                        ">{{_.difference(c.courses, _.filter(c.courses, {updated: 2})).length}}</span></span>&nbsp;|&nbsp;&nbsp;Addition(s):&nbsp; 
 
                         <span ng-if="_.filter(c.courses, {updated: 1}).length!==0" class="badge badge-success" style="
                           font-size: 12px;
@@ -364,7 +365,7 @@
                         <span ng-if="_.filter(c.courses, {updated: 2}).length === 0" class="badge badge-default" style="
                           vertical-align: top;
                           margin-top: 1px;
-                          ">-&nbsp; -</span></span>
+                          ">-&nbsp; -</span>
                       </div>
 
 
