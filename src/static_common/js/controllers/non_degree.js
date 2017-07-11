@@ -2,9 +2,11 @@
 'use strict';
 
 angular.module('myApp').
-controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$localStorage', '$sessionStorage', 'executiveService', function($scope, $http, authenticationSvc, $localStorage, $sessionStorage, executiveService) {
+controller('NonDegreeController', function($scope, $http, authenticationSvc, $localStorage, $sessionStorage, executiveService) {
   var token = authenticationSvc.getUserInfo().accessToken;
   $scope.$storage = $localStorage;
+
+  //console.log("table = "+JSON.stringify(Table));
 
   $scope.$storage.non_degree = null
 
@@ -27,6 +29,8 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
     console.log("$scope.$storage.non_degree="+JSON.stringify($scope.$storage.non_degree))
   }
 
+  $scope.$storage.non_degree = {}
+
    $http({
       url: '/api/upgrid/non_degree/schools',
       method: 'GET',
@@ -38,6 +42,7 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
 
        console.log("return data"+ JSON.stringify(response.data.results));
        $scope.school_table = response.data.results
+       $scope.school_report_pair = {};
 
         angular.forEach($scope.school_table, function(value, index) {
          value["details"] = null;
@@ -51,7 +56,15 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
             }
           })
           .then(function(response) {
+
+            
+            
             if(response.data.results.length>0) {
+
+              console.log("++++++++value.object_id="+value.object_id);
+              console.log("++++++++response.data.results[0].object_id="+response.data.results[0].object_id);
+              $scope.school_report_pair[value.object_id] = response.data.results[0].object_id
+              console.log("$scope.school_report_pair="+JSON.stringify($scope.school_report_pair))
               $http({
                     url: '/api/upgrid/non_degree/reports/overview/' + response.data.results[0].object_id + '/' + (response.data.results.length>1? response.data.results[1].object_id:response.data.results[0].object_id),
                     method: 'GET',
@@ -68,21 +81,33 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
                     value.details["category_added"] = response.data.category_added
                     value.details["category_removed"] = response.data.category_removed
 
+                    $scope.$storage.non_degree[value.object_id] = true;
+                    
+
+
                   }).
                    catch(function(error){
                       console.log('an error occurred...'+JSON.stringify(error));
                   });
+               } else {
+
+
                }
+
+
             }).
              catch(function(error){
                 console.log('an error occurred...'+JSON.stringify(error));
             });
         })
+
+
         console.log("school_table = "+JSON.stringify($scope.school_table));
     }).
      catch(function(error){
         console.log('an error occurred...'+JSON.stringify(error));
     });
+
 
 
 
@@ -231,6 +256,69 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
        }
      }
 
+
+      $scope.htmlShare = function(day) {
+      
+      var reports_ids = [];
+      jQuery('.myTab-share a:last').tab('show')
+      
+      $scope.url = {
+            text: null
+        };
+
+        App.blocks('#shareReports', 'state_loading');
+        
+        $scope.copied = false;
+        new Clipboard('.btn');
+        
+        console.log("$scope.$storage.non_degree = "+JSON.stringify($scope.$storage.non_degree));
+
+        
+          angular.forEach($scope.$storage.non_degree, function(value, key) {
+            
+            if(value){
+              reports_ids.push($scope.school_report_pair[key]);
+            }
+          });
+
+          console.log("reports_ids="+JSON.stringify(reports_ids));
+      $http({
+        url: '/api/upgrid/non_degree/shared_reports',
+        method: 'POST',
+        data: {
+          "reports": reports_ids,
+          "expired_day": day,
+          "expired_sec": 0,
+          
+        },
+        headers: {
+          'Authorization': 'JWT ' + token
+        },
+        'Content-Type': 'application/json'
+    
+      }).then(function(response) {
+        console.log("share html RESPONSE is "+JSON.stringify(response.data));
+     
+          App.blocks('#shareReports', 'state_normal');
+
+
+
+            // $scope.shared_id = response.data.link.split('/')[0];
+            // $scope.shared_token = response.data.link.split('/')[1];
+
+            $scope.expired_time = response.data.expired_time;
+
+            $scope.url = {
+                text: 'https://'+location.host + '/#/' + response.data.link +'/',
+            };
+
+      }).
+      catch(function(error) {
+        console.log('an error occurred...' + JSON.stringify(error));
+        App.blocks('#shareReports', 'state_normal');
+      });
+
+    };
 
 
 ////////////////////////////////////////////////////////////
@@ -423,37 +511,72 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
   };
 
   $scope.setLinkValue = function() {
-    $("#myModal1").modal('toggle');
-    jQuery('.myTab-share a:first').tab('show');
+
+    var selected_ids = [];
+       angular.forEach($scope.$storage.non_degree, function(value, key) {
+          if(value){
+            selected_ids.push(key)
+          }
+
+        });
+
+       console.log("selected_ids="+JSON.stringify(selected_ids))
+    
+
+       if(selected_ids.length===0){
+          $.notify({
+
+          // options
+          icon: "fa fa-warning",
+          message: 'Please make a selection from the table.'
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
+          },
+          z_index: 1999,
+        });
+
+       } else {
+
+          $("#myModal1").modal('toggle');
+          jQuery('.myTab-share a:first').tab('show');
+       }
+
+    
+
+
   };
 
 
 
-  $scope.htmlShare = function(day) {
-    $scope.url = {
-      text: null
-    };
+  // $scope.htmlShare = function(day) {
+  //   $scope.url = {
+  //     text: null
+  //   };
 
-    $scope.copied = false;
-    new Clipboard('.btn');
-
-
-    jQuery('.myTab-share a:last').tab('show');
-
-    App.blocks('#shareReports', 'state_loading');
+  //   $scope.copied = false;
+  //   new Clipboard('.btn');
 
 
-    App.blocks('#shareReports', 'state_normal');
-    $scope.url = {
-      text: 'www.google.com',
-    };
+  //   jQuery('.myTab-share a:last').tab('show');
 
-    App.blocks('#shareReports', 'state_normal');
+  //   App.blocks('#shareReports', 'state_loading');
 
 
+  //   App.blocks('#shareReports', 'state_normal');
+  //   $scope.url = {
+  //     text: 'www.google.com',
+  //   };
+
+  //   App.blocks('#shareReports', 'state_normal');
 
 
-  };
+
+
+  // };
 
 
   $scope.printReport = function() {
@@ -472,4 +595,4 @@ controller('NonDegreeController', ['$scope', '$http', 'authenticationSvc', '$loc
     });
   };
 
-}]);
+});

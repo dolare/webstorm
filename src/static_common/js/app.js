@@ -331,6 +331,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                                '/static/js/services/apiService.js',
                                 '/static/js/controllers/login.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css',
@@ -357,6 +358,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                              '/static/js/services/apiService.js',
                               '/static/js/controllers/login.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
                                 
@@ -399,6 +401,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                                '/static/js/services/apiService.js',
                                 '/static/js/controllers/login.js',
                                 '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
@@ -682,12 +685,12 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
-      depsEnhancement: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+      depsNondegree: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
                         return $ocLazyLoad.load({
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
-                            
+                              '/static/js/services/ajaxService.js',
                               '/static/js/third-party/clipboard.min.js',
                               '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
@@ -706,12 +709,12 @@ App.config(function($stateProvider, $urlRouterProvider) {
                     }],
 
       //get raw data
-      List: function(depsEnhancement, apiService, authenticationSvc) {
-        var userInfo = authenticationSvc.getUserInfo();
-        console.log('*************');
-        return apiService.getProfileList(userInfo.accessToken);
+      // Table: function(depsNondegree, ajaxService, authenticationSvc) {
+      //   var userInfo = authenticationSvc.getUserInfo();
+      //   console.log('*************');
+      //   return ajaxService.nonDegree(userInfo.accessToken);
 
-      }
+      // }
 
 
     }
@@ -930,6 +933,31 @@ App.config(function($stateProvider, $urlRouterProvider) {
                               '/static/js/services/tableService.js',
                               '/static/js/services/reportService.js',
                               '/static/js/controllers/shareall.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                              
+                            ]
+                        });
+                    }]
+                }
+
+  }).
+
+  state('shareExecutive', {
+    url: '/shared_reports/:param1/:param2/',
+    templateUrl: '/static/views/Share/shared_executive_reports.html',
+    controller: 'ShareExecutiveController',
+    resolve: {
+                    depsShareExecutive: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              
+                              '/static/js/controllers/share_executive.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
