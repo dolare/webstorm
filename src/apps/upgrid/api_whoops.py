@@ -422,7 +422,9 @@ class ClientViewWhoopsUpdate(APIView):
             app_logger.info("existing_report = {0}, update_diff = {1}".format(existing_report,update_diff))
             print(update_diff)
         else:
-            if update_report.existing_report:#(account manager's view or client's veiw) and has existing report and no cache_report
+            if update_report.cache_report and client_id:
+                existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.cache_report)))
+            elif update_report.existing_report:#(account manager's view or client's veiw) and has existing report and no cache_report
                 print("(account manager's view or client's veiw) and has existing report no cache report")
                 #print(update_report.existing_report)
                 existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
