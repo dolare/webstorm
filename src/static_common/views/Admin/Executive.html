@@ -168,7 +168,7 @@
           </ul>
           <h3 class="block-title">Preview Report</h3>
         </div>
-        <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_non_degree">
+        <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container>
           <!-- SlimScroll Container -->
           <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
           <div class="block cart_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="top-report">
@@ -183,11 +183,15 @@
              
             </div>
           </div>
-          <div style="position: fixed;bottom: 50px;right: 25px;">
+          <div style="position: fixed;bottom: 80px;right: 44px;">
             <a  data-js-blur href="#top-report" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
           </div>
           <!-- </div> -->
           <!-- END SlimScroll Container -->
+          <div style="position: fixed;bottom: 20px;right: 44px;">
+              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseReport()" data-dismiss="modal"><i class="si si-mouse"></i> Release</button>
+
+          </div>
         </div>
       </div>
     </div>
@@ -212,7 +216,7 @@
             </li>
 
             <li>
-              <button data-dismiss="modal" type="button" ng-click="scrolltop1()" data-js-blur><i class="si si-close"></i></button>
+              <button data-dismiss="modal" type="button" ng-click="scrolltop2()" data-js-blur><i class="si si-close"></i></button>
             </li>
           </ul>
           <h3 class="block-title">Non-degree Report &nbsp;&nbsp;
