@@ -348,7 +348,8 @@
 
                     <p class="h3 font-w500 push-10 text-muted" style="
                       display: inline-block;
-                      font-size: 18px;
+                      font-size: 17px;
+                      font-style: italic
                       ">Category:</p>
 
 
@@ -399,10 +400,10 @@
                     <table class="table report_table2 table-bordered table-hover non-degree-table" style="table-layout: fixed;margin-bottom: 0;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">
                       <colgroup>
                         <col width="6%">
-                        <col width="26%">
+                        <col width="32%">
                         <col width="12%">
-                        <col width="26%">
-                        <col width="22%">
+                        <col width="28%">
+                        <col width="16%">
                         <col width="6%">
                       </colgroup>
                       <thead>
@@ -410,24 +411,24 @@
                           <td class="bg-info" style="
                             border-right: 0;
                             "></td>
-                          <td class="text-info-light  text-left bg-info font-w600 text-left ex-table-headercell">COURSE</td>
+                          <td class="text-info-light  text-left bg-info font-w400 text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
 
-                          <td class="text-info-light bg-info text-center ex-table-headercell">
+                          <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
                             
                             TYPE
                             
                           </td>
-                          <td class="text-info-light bg-info text-center ex-table-headercell">
+                          <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
                             
                             SCHEDULE
                             
                           </td>
-                          <td class="text-info-light bg-info text-center ex-table-headercell">
+                          <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
                            
                             TUITION
                            
                           </td>
-                          <td class="text-info-light bg-info text-center ex-table-headercell">
+                          <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
                            
                             URL
                           
@@ -492,13 +493,11 @@
                                                 </div> 
 
                             <span ng-if="course.course_dates.length!==0">
-                              <span ng-repeat-start="d in course.course_dates">Start: {{d.start_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span><br>
-
-                              <span>End: {{d.end_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span>
+                              <span ng-repeat-start="d in course.course_dates">{{d.start_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span> - <span>{{d.end_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span>
                               <br ng-repeat-end ng-if="!$last">
                             </span>
 
-                            <span ng-if="course.course_dates.length===0" class="font-w600 text-gray label-na">N/A</span>
+                            <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
 
                           </td>
                           <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
@@ -516,14 +515,16 @@
                                                 </div> 
 
                             <span ng-if="course.tuition_number">
-                            {{course.tuition_number | currency:currency_symbols[course.currency]:0}}<br><span ng-if="course.currency!='USD'&&course.currency!=null" class="text-muted" style="
+                            {{course.tuition_number | currency:currency_symbols[course.currency]:0}}
+
+                           <!--  <br><span ng-if="course.currency!='USD'&&course.currency!=null" class="text-muted" style="
                               font-size: 12px;
                               font-weight: 200;
-                              ">*({{fxConvert(course.tuition_number,course.currency) | currency:"$":0}} as of {{fxRates.date | amUtc | amLocal | amDateFormat:'M/D/YY'}})</span>
+                              ">*({{fxConvert(course.tuition_number,course.currency) | currency:"$":0}} as of {{fxRates.date | amUtc | amLocal | amDateFormat:'M/D/YY'}})</span> -->
                             </span>
 
 
-                              <span ng-if="!course.tuition_number" class="font-w600 text-gray label-na">N/A</span>
+                              <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
                           </td>
                           <td style="
                             padding: 8px 10px;
@@ -537,6 +538,7 @@
                     </table>
                   </div>
                   <!-- END course table under a category -->
+                  <hr ng-show="!$last" style="margin-top: 30px;margin-bottom: 0px;border-color: #dedede">
                 </div>
                 <!-- END category -->
               </div>
