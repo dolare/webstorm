@@ -14,6 +14,8 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         'Authorization': 'JWT ' + token
       }
     }).then(function(response) {
+      // Inject underscore into $scope
+      $scope._ = _;
 
       $scope.non_degree_schools = response.data.results;
 
@@ -123,31 +125,38 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             return s.readyToRelease = true;
         });
 
-        s.releaseReport = function() {
+        
 
-          s.readyToRelease = false;
+        s.previewReport = function() {
+          // assign the school id of this row to a field under $scope so that the releaseReport function in the popup window could access the current school id.
+          $scope.current_school_id = s.object_id;
 
-          var form = new FormData();
-          form.append("school", s.object_id);
-
-          $http({
-            url: '/api/upgrid/non_degree/reports',
-            method: 'POST',
-            data: form,
-            mimeType: "multipart/form-data",
-            processData: false,
-            contentType: false,
-            headers: {
-              'Authorization': 'JWT ' + token,
-              'Content-Type': undefined,
-
-            },
-            // transformRequest: angular.identity,
+          $q.all({
+            // Get the report list
+            reports: $http({
+              url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            }),
+            // Get the current school programs' data
+            preview: $http({
+              url: '/api/upgrid/non_degree/schools/' + s.object_id,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            })
           }).then(function(response) {
+            var reports = response.reports.data;
+            var preview = response.preview.data;
+
             $scope.date = new Date().toISOString();
-            $scope.school = response.data.school_name;
-            $scope.university = response.data.university_name;
-            $scope.categories = response.data.categories;
+            $scope.school = preview.school;
+            $scope.university = preview.university;
+            $scope.categories = preview.categories;
+            $scope.logo_url = executiveService.getLogoBySchoolName($scope.school);
 
             // Category offerings
             $scope.cat_offer = $scope.categories.length;
@@ -156,38 +165,95 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             $scope.course_offer = 0;
 
             for (let i = $scope.categories.length - 1; i >= 0; i--) {
+              // Course offerings for each category
               $scope.categories[i].course_offer = $scope.categories[i].courses.length;
               $scope.course_offer += $scope.categories[i].courses.length;
             }
 
-            // Trigger dropdown list update and select the first report in history
-            $.ajax({
-              url: '/api/upgrid/non_degree/reports?school=' + response.data.school,
-              method: 'GET',
-              headers: {
-                'Authorization': 'JWT ' + token
-              },
-              dataType: 'json'
-            }).then(function(data) {
-              $("#js-data-" + response.data.school).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-            });
+            // Get the compared data between the preview data(school's current data) and the previous report
 
-          }).
-          catch(function(error) {
-            console.log('an error occurred...' + JSON.stringify(error));
+            // if there is no previous report 
+            if (reports.cout === 0) {
+              $scope.categories_compared = preview.categories;
+              $scope.cat_add = 0;
+              $scope.cat_rm = 0;
+              $scope.course_add = 0;
+              $scope.course_rm = 0;
+            }
+            // else there would be a previous report, and get that report
+            else
+              $http({
+                url: '/api/upgrid/non_degree/reports/' + reports.results[0].object_id,
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                }
+              }).then(function(resp_prev_report) {
+                $scope.categories_compared = executiveService.updatedReport(resp_prev_report.data, preview).categories;
+                $scope.cat_add = _.filter($scope.categories_compared, {updated: 1}).length;
+                $scope.cat_rm = _.filter($scope.categories_compared, {updated: 2}).length;
 
+                $scope.course_add = 0;
+                $scope.course_rm = 0;
+
+                for (let i = $scope.categories_compared.length - 1; i >= 0; i--) {
+                  $scope.course_add += _.filter($scope.categories_compared[i].courses, {updated: 1}).length;
+                  $scope.course_rm += _.filter($scope.categories_compared[i].courses, {updated: 2}).length;
+                }
+              });
           });
 
-          jQuery('#releaseReport').modal('toggle');
-        }
+          jQuery('#previewReport').modal('toggle');
+        };
 
-      }
+      } // END for loop
 
     }).
     catch(function(error) {
       console.log('an error occurred...' + JSON.stringify(error));
 
     });
+
+    $scope.releaseReport = function() {
+
+      // Set the readyToRelease property of the processing school to false to prevent repetitively releasing a report
+      _.filter($scope.non_degree_schools, {object_id: $scope.current_school_id})[0].readyToRelease = false;
+
+      var form = new FormData();
+      form.append("school", $scope.current_school_id);
+
+      $http({
+        url: '/api/upgrid/non_degree/reports',
+        method: 'POST',
+        data: form,
+        mimeType: "multipart/form-data",
+        processData: false,
+        contentType: false,
+        headers: {
+          'Authorization': 'JWT ' + token,
+          'Content-Type': undefined,
+
+        },
+      }).then(function(resp_post) {
+        // Trigger dropdown list update and select the first report in history
+        $.ajax({
+          url: '/api/upgrid/non_degree/reports?school=' + resp_post.data.school,
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          },
+          dataType: 'json'
+        }).then(function(data) {
+          $("#js-data-" + resp_post.data.school).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+        });
+
+      }).
+      catch(function(error) {
+        console.log('an error occurred...' + JSON.stringify(error));
+
+      });
+
+    };
 
     $scope.viewReport = function(reportId) {
       if (reportId == null) {
@@ -219,6 +285,8 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             $scope.university = resp_report.data.university_name;
             $scope.categories = resp_report.data.categories;
 
+            $scope.logo_url = executiveService.getLogoBySchoolName($scope.school);
+
             // Category offerings
             $scope.cat_offer = $scope.categories.length;
 
@@ -245,7 +313,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
     };
 
     $scope.scrolltop = function() {
-      angular.element(document.getElementById('scrolltop_non_degree')).scrollTop(0);
+      angular.element(document.getElementById('')).scrollTop(0);
     };
 
     $scope.printReport_release = function() {
