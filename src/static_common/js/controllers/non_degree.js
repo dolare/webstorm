@@ -48,6 +48,9 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
          value["details"] = null;
          value["logo_url"] = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/LBS_logo_.png/150px-LBS_logo_.png';
 
+         value["logo_url"] = executiveService.getLogoBySchoolName(value.school)
+
+         //console.log("value = "+JSON.stringify(value));
           $http({
             url: '/api/upgrid/non_degree/reports?school=' + value.object_id,
             method: 'GET',
@@ -191,6 +194,8 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
             console.log("new school data ="+JSON.stringify(result.data))
             new_school_data = result.data;
 
+            new_school_data["logo_url"] = executiveService.getLogoBySchoolName(new_school_data.school_name)
+            
             var test_id = (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id);
             console.log("test_id="+test_id)
 
