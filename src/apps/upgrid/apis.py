@@ -108,8 +108,7 @@ class PasswordChangeView(generics.GenericAPIView):
                 decoded_new_password = self.check_new_password(request.data['new_password'])
 
                 user.password = decoded_new_password
-                user._password = None
-                user.save()
+                user.save_password()
                 return Response({"success": ("New password has been saved.")}, status=HTTP_202_ACCEPTED)
             return Response({"Failed": ("Please input valid old password.")}, status=HTTP_403_FORBIDDEN)
         return Response({"Failed": ("System can not identify your status. Please login first!")}, status=HTTP_403_FORBIDDEN)
@@ -221,8 +220,7 @@ class ResetPassword(generics.GenericAPIView):
         #user.set_password(self.validate(password).decode("utf-8"))
         #password = zlib.decompress(self.validate(password))                                                                                                                                
         user.password = self.validate(password)
-        user._password = None
-        user.save()
+        user.save_password()
         #user.save()
         return Response({"success": ("New password has been saved.")}, status=HTTP_202_ACCEPTED)
 
@@ -251,8 +249,7 @@ class CustomerVerify(APIView):
         if user.is_active is True:
             return Response({"Failed": ("have been verified before!")}, status=HTTP_400_BAD_REQUEST)
         user.is_active = True
-        user._password = False
-        user.save()
+        user.save_without_password()
         return Response({"success": ("Your account has been verified.")}, status=HTTP_202_ACCEPTED)
 
 class CustomerSentVerifyEmail(APIView):
@@ -714,8 +711,7 @@ class CreateOrChangeSubUser(APIView):
             for field in update_fields:
                 if field in request.data:
                     setattr(sub_user, field, request.data[field])
-            sub_user._password = False
-            sub_user.save()
+            sub_user.save_without_password()
             return Response({"success": ("Sub user has been update.")}, status=HTTP_200_OK)
 
     def post(self, request):
@@ -763,8 +759,7 @@ class CreateOrChangeSubUser(APIView):
 
         print(decoded_new_password)
         user.password = decoded_new_password
-        user._password = None
-        user.save()   
+        user.save_password()   
 
 
         # create corresponding customer programs of subuser
@@ -782,7 +777,7 @@ class CreateOrChangeSubUser(APIView):
 
         request.is_create = True
         ResetPassword().post(request)
-
+        
         return Response({"success": ("Sub user has been created.")}, status=HTTP_201_CREATED)
 
 
@@ -1128,8 +1123,7 @@ class ClientCRUD(APIView):
                 )
 
         client.password = decoded_new_password
-        client._password = None
-        client.save()   
+        client.save_password()   
 
 
         for cp in self.request.data['competing_schools']:
@@ -1169,8 +1163,7 @@ class ClientCRUD(APIView):
         for field in update_fields:
             if field in request.data:
                 setattr(client, field, request.data[field])
-        client._password = False
-        client.save()
+        client.save_without_password()
 
         if 'competing_schools' in self.request.data:
             client.competing_schools.clear()
@@ -1186,7 +1179,7 @@ class ClientCRUD(APIView):
         try:
             client = UniversityCustomer.objects.get(id=request.data['client_id'])
             client.is_active = False
-            client.save()
+            client.save_without_password()
             return Response({"Success": ("User deleted!")}, status=HTTP_204_NO_CONTENT)
         except UniversityCustomer.DoesNotExist:
             return Response({"Failed": ("User doesn't exists!")}, status=HTTP_403_FORBIDDEN)

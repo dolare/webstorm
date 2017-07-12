@@ -90,25 +90,21 @@ class UpgridBaseUser(models.Model):
         self._password = None
 
     def save(self, *args, **kwargs):
-        print(self.password)
-        if self._password == None:
-            print('_password == none')
-            self.set_password(self.password)
+        if self._password is not None:
+            password_validation.password_changed(self._password, self)
+            self._password = None
+        else:
+            self.password = make_password(self.password)
             print(self.password)
         super(UpgridBaseUser, self).save(*args, **kwargs)
-        # if self._password is not None:
-        #     password_validation.password_changed(self._password, self)
-        #     self._password = None
 
-        #     #self.password = make_password(self.password)
-        #      super(UpgridBaseUser, self).save(*args, **kwargs)
-        # if self._password is not None:
-        #     password_validation.password_changed(self._password, self)
-        #     self._password = None
-        # else:
-        #     self.password = make_password(self.password)
-        #     print(self.password)
+    def save_without_password(self, *args, **kwargs):
+        super(UpgridBaseUser, self).save(*args, **kwargs)
 
+    def save_password(self, *args, **kwargs):
+        self.set_password(self.password)
+        super(UpgridBaseUser, self).save(*args, **kwargs)
+        
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
         self._password = raw_password

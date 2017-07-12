@@ -307,10 +307,6 @@ class EnhancementReportsUpdateAPI(APIView):
                     print(k1)
                     result[k1] = v1
 
-            # print(result)
-            # print('test')
-
-
             #diff not only contains the object_id
             if len(result) >= 1:
                 # print('len > 1')
