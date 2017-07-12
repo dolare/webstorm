@@ -144,7 +144,7 @@ angular.module('myApp')
             "ceeb": "2174",
             "school": "Business School",
             "university": "Columbia University",
-            "logo": "http://www8.gsb.columbia.edu/centennial/sites/centennial/files/hermes-mark-90s-calaphon.png"
+            "logo": "http://www.macandrewsandforbes.com/wp-content/uploads/2013/05/columbia-gsb.jpg"
         },
         {
             "object_id": "69cf9a6f-9fcc-46ff-a1b8-f463bf4d9db0",
@@ -207,16 +207,18 @@ angular.module('myApp')
             "ceeb": "8888",
             "school": "INSEAD - Institut Européen d'Administration des Affaires",
             "university": "",
-            "logo": "https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/19380056_1775853065764209_3415681134233649152_n.jpg"
+            "logo": "http://worldscholarshipforum.com/wp-content/uploads/2017/04/INSEAD-Alumni-Fund-IAF-Diversity-Scholarships.png"
         }
     ]
 
+    var default_school_logo = "/static/img/school_default_logo.png"
+    
     var getLogoById = function(schoolId) {
       var result = schools.filter(function(school) {
         return school.object_id == schoolId;
       })
       if (result.length == 0)
-        return null;
+        return default_school_logo;
       else
         return result[0].logo;
     };
@@ -226,7 +228,7 @@ angular.module('myApp')
         return school.school == schoolName;
       })
       if (result.length == 0)
-        return null;
+        return default_school_logo;
       else
         return result[0].logo;
     };

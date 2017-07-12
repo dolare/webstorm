@@ -101,12 +101,12 @@
               <colgroup>
                 <col width="55px">
                 <col width="7%">
-                <col width="35%">
-                <col width="17%">
-                <col width="9%">
-                <col width="9%">
-                <col width="9%">
-                <col width="9%">
+                <col width="42%">
+                <col width="14%">
+                <col width="8%">
+                <col width="8%">
+                <col width="8%">
+                <col width="8%">
               </colgroup>
               <!-- table header -->
               <thead>
@@ -130,29 +130,33 @@
                    COURSES
                   </td>
                 </tr>
-                <tr class="font-w600 text-primary bg-" style="background: #edf6fd;">
-                  <td class="bg-info" style="
+                <tr class="font-w600 text-primary" style="background: #edf6fd;">
+                  <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
                     border: 0;
+                    font-size: 12px
                     ">
                     <span>ADDITION(S)</span>
                   </td>
-                  <td class="bg-info" style="
+                  <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
+                    font-size: 12px
                     ">
                     <span>REMOVAL(S)</span>
                   </td>
-                  <td class="bg-info" style="
+                  <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
+                    font-size: 12px;
                     ">
                     <span>ADDITION(S)</span>
                   </td>
-                  <td class="bg-info" style="
+                  <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
+                    font-size: 12px;
                     border: 0;
                     ">
                     <span>REMOVAL(S)</span>
@@ -192,9 +196,7 @@
 
                   </td>
 
-                  <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Categories:<span class="badge badge-primary pull-right">{{row.categories.length - _.where(row.categories, {updated: 2}).length}}</span>
-                  | Courses: <span class="badge badge-primary pull-right">{{row.categories.length - _.where(row.categories, {updated: 2}).length}}</span>
-
+                  <td class="font-w600 text-left text-info" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Categories:<span class="badge badge-info pull-right">{{row.categories.length - _.where(row.categories, {updated: 2}).length}}</span>
                   </td>
 
                   <td rowspan="2">
@@ -221,8 +223,13 @@
                   </td>
                 </tr>
                 <tr ng-repeat-end>
-                  <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
-                    Courses:<span class="badge badge-primary pull-right">{{_.uniq(_.difference(_.flatten(_.pluck(row.categories, 'courses')), _.filter(_.flatten(_.pluck(row.categories, 'courses')), {updated: 2})), 'object_id').length}}</span>
+                  <td class="font-w500 text-left text-warning" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
+
+                    <ul style="padding-left:20px; margin-bottom: 0">
+                      <li>Courses:<span class="badge badge-warning pull-right">{{_.uniq(_.difference(_.flatten(_.pluck(row.categories, 'courses')), _.filter(_.flatten(_.pluck(row.categories, 'courses')), {updated: 2})), 'object_id').length}}</span></li>
+                    </ul>
+
+                    
                   </td>
                 </tr>
               </tbody>
@@ -271,7 +278,7 @@
                   </div>
                   <div class="block-content block-content-full text-left bg-image" style="padding: 10px 15px;">
                     <div>
-                      <img ng-src="" alt="Logo of {{row.school_name}}" width="50%">
+                      <img ng-src="{{row.logo_url}}" alt="Logo of {{row.school_name}}" width="50%">
                     </div>
                   </div>
                   <div class="text-left bg-gray-lighter" style="
@@ -328,23 +335,30 @@
                   <!-- category header -->
                   <div style="
                     border: 1px solid #ddd;
-                    padding: 35px 15px 18px 15px;
+                    padding: 0px 15px 18px 15px;
                     margin-right: 1px;
                     border-top: 6px solid #70b9eb;
                     ">
-                    <p class="h3 font-w500 push-5 text-muted" style="
+
+                    <div class="text-right font-w600 text-muted" style="
+                        margin-bottom: 14px;
+                        font-size:11px;
+                        margin-top:2px;
+                    ">{{row.school_name}}</div>
+
+                    <p class="h3 font-w500 push-10 text-muted" style="
                       display: inline-block;
                       font-size: 18px;
                       ">Category:</p>
 
 
                     <div class="categoryheader" ng-class="{add: c.updated===1, rm: c.updated===2}" style="display: table;width: 100%;">
-                      <span style="display: table-cell;font-size: 21px;">{{c.name}}</span>
+                      <span style="display: table-cell;font-size: 21px;width:45%;">{{c.name}}</span>
                       <div style="
                         display: table-cell;
                         text-align: right;
                         padding: 5px 0px;
-                        font-size: 15px;
+                        font-size: 13px;
                         " class=""><span style="
                         font-weight: 400;
                         ">COURSE OFFERINGS: &nbsp;<span class="badge badge-primary" style="
@@ -365,10 +379,12 @@
                           vertical-align: top;
                           margin-top: 1px;
                           ">&nbsp;-&nbsp;{{_.filter(c.courses, {updated: 2}).length}}&nbsp;</span>
+
                         <span ng-if="_.filter(c.courses, {updated: 2}).length === 0" class="badge badge-default" style="
                           vertical-align: top;
                           margin-top: 1px;
                           ">-&nbsp; -</span>
+
                       </div>
 
 
