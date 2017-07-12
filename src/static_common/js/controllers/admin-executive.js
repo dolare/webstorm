@@ -14,6 +14,8 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         'Authorization': 'JWT ' + token
       }
     }).then(function(response) {
+      // Inject underscore into $scope
+      $scope._ = _;
 
       $scope.non_degree_schools = response.data.results;
 
@@ -142,12 +144,41 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
               'Content-Type': undefined,
 
             },
-            // transformRequest: angular.identity,
           }).then(function(response) {
             $scope.date = new Date().toISOString();
             $scope.school = response.data.school_name;
             $scope.university = response.data.university_name;
             $scope.categories = response.data.categories;
+
+            // Get the compared data between the latest released report and the previous one
+
+            // Get the report list
+            $http({
+              url: '/api/upgrid/non_degree/reports?school=' + response.data.school,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            }).then(function(resp_reports) {
+              // if there is no previous report
+              if (resp_reports.data.cout === 1)
+                $scope.categories_compared = executiveService.updatedReport(response.data, response.data).categories;
+              // else there would be a previous report, and get that report
+              else
+                $http({
+                  url: '/api/upgrid/non_degree/reports/' + resp_reports.data.results[1].object_id,
+                  method: 'GET',
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  }
+                }).then(function(resp_prev_report) {
+                  $scope.categories_compared = executiveService.updatedReport(resp_prev_report.data, response.data).categories;
+                  console.log(JSON.stringify($scope.categories_compared));
+                });
+
+            });
+
+            $scope.logo_url = executiveService.getLogoBySchoolName($scope.school);
 
             // Category offerings
             $scope.cat_offer = $scope.categories.length;
@@ -159,6 +190,20 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
               $scope.categories[i].course_offer = $scope.categories[i].courses.length;
               $scope.course_offer += $scope.categories[i].courses.length;
             }
+
+            // Get report update stats
+            $http({
+              url: '/api/upgrid/non_degree/reports/overview/latest/' + response.data.school,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            }).then(function(resp_update) {
+              $scope.cat_rm = resp_update.data.category_removed;
+              $scope.cat_add = resp_update.data.category_added;
+              $scope.course_rm = resp_update.data.course_removed;
+              $scope.course_add = resp_update.data.course_added;
+            });
 
             // Trigger dropdown list update and select the first report in history
             $.ajax({
@@ -178,10 +223,87 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
           });
 
-          jQuery('#releaseReport').modal('toggle');
-        }
+          jQuery('#previewReport').modal('toggle');
+        };
 
-      }
+        s.previewReport = function() {
+
+          $q.all({
+            // Get the report list
+            reports: $http({
+              url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            }),
+            // Get the current school programs' data
+            preview: $http({
+              url: '/api/upgrid/non_degree/schools/' + s.object_id,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            })
+          }).then(function(response) {
+            var reports = response.reports.data;
+            var preview = response.preview.data;
+
+            $scope.date = new Date().toISOString();
+            $scope.school = preview.school;
+            $scope.university = preview.university;
+            $scope.categories = preview.categories;
+            $scope.logo_url = executiveService.getLogoBySchoolName($scope.school);
+
+            // Category offerings
+            $scope.cat_offer = $scope.categories.length;
+
+            // Course offerings
+            $scope.course_offer = 0;
+
+            for (let i = $scope.categories.length - 1; i >= 0; i--) {
+              // Course offerings for each category
+              $scope.categories[i].course_offer = $scope.categories[i].courses.length;
+              $scope.course_offer += $scope.categories[i].courses.length;
+            }
+
+            // Get the compared data between the preview data(school's current data) and the previous report
+
+            // if there is no previous report 
+            if (reports.cout === 0) {
+              $scope.categories_compared = preview.categories;
+              $scope.cat_add = 0;
+              $scope.cat_rm = 0;
+              $scope.course_add = 0;
+              $scope.course_rm = 0;
+            }
+            // else there would be a previous report, and get that report
+            else
+              $http({
+                url: '/api/upgrid/non_degree/reports/' + reports.results[0].object_id,
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                }
+              }).then(function(resp_prev_report) {
+                $scope.categories_compared = executiveService.updatedReport(resp_prev_report.data, preview).categories;
+                $scope.cat_add = _.filter($scope.categories_compared, {updated: 1}).length;
+                $scope.cat_rm = _.filter($scope.categories_compared, {updated: 2}).length;
+
+                $scope.course_add = 0;
+                $scope.course_rm = 0;
+
+                for (let i = $scope.categories_compared.length - 1; i >= 0; i--) {
+                  $scope.course_add += _.filter($scope.categories_compared[i].courses, {updated: 1}).length;
+                  $scope.course_rm += _.filter($scope.categories_compared[i].courses, {updated: 2}).length;
+                }
+              });
+          });
+
+          jQuery('#previewReport').modal('toggle');
+        };
+
+      } // END for loop
 
     }).
     catch(function(error) {
@@ -218,6 +340,8 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             $scope.school = resp_report.data.school_name;
             $scope.university = resp_report.data.university_name;
             $scope.categories = resp_report.data.categories;
+
+            $scope.logo_url = executiveService.getLogoBySchoolName($scope.school);
 
             // Category offerings
             $scope.cat_offer = $scope.categories.length;
