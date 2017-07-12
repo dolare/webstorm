@@ -97,6 +97,7 @@
           
           </div>
           <div class=" push-50">
+          
             <table class="table non-degree-table report_table2 table-bordered" style="table-layout: fixed;">
               <colgroup>
                 <col width="55px">
@@ -185,7 +186,24 @@
                     " rowspan="2"><img ng-src="{{row.logo_url}}" alt="Logo of {{row.title.department}}" height="58" width="58"></td>
                   <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">
 
-                    <a data-js-blur class="link-effect" href="{{ '#school-' + $index }}" du-smooth-scroll>{{row.school_name}}</a><br>
+                    <a data-js-blur class="link-effect" href="{{ '#school-' + $index }}" du-smooth-scroll>{{row.school_name}}
+
+                    <label ng-show="_.difference( _.pluck(row.categories, 'updated'), [1, 2, undefined]).length || _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'name_old'), [undefined]).length > 0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'url_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'course_dates_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'currency_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'type_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'tuition_number_old'), [undefined]).length>0"
+
+                    class="label label-default text-success bg-success-light" style="
+                                            /* background: transparent; */
+                                            border: 1px solid #46c37b;
+                                            font-size: 8px;
+                                            padding: 2px 4px;
+                                            position: absolute;
+                                            margin-left: 5px; top: -7px;">Updated</label></a>
+
+                    <br>
                     <span class="text-muted">
                     <small style="
                       font-weight: 300;
