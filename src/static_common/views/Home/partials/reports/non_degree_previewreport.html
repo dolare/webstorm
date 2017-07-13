@@ -117,7 +117,7 @@
                     border-left: 0;
                     "></td>
                   <td class="bg-info font-w600" style="vertical-align: middle;text-align: left;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" rowspan="2">UNIVERSITY SCHOOL</td>
-                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="1" rowspan="2">TOTAL</td>
+                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="1" rowspan="2">CURRENT OFFERINGS</td>
                   <td class="bg-info text-center" colspan="2" style="
                     color: rgba(255,255,255,0.85);
                     border-left: 0;
@@ -180,7 +180,8 @@
 
                   </td>
 
-                  <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Category Offerings:<span class="badge badge-primary pull-right">{{cat_offer}}</span></td>
+                  <td class="font-w600 text-left text-info" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Categories:<span class="badge badge-info pull-right">{{categories_compared.length - _.where(categories_compared, {updated: 2}).length}}</span>
+                  </td>
 
                   <td rowspan="2">
 
@@ -206,8 +207,13 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="font-w500 text-left" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
-                    Course Offerings:<span class="badge badge-primary pull-right">{{course_offer}}</span>
+                  <td class="font-w500 text-left text-warning" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
+
+                    <ul style="padding-left:20px; margin-bottom: 0">
+                      <li>Courses:<span class="badge badge-warning pull-right">{{_.uniq(_.difference(_.flatten(_.pluck(categories_compared, 'courses')), _.filter(_.flatten(_.pluck(categories_compared, 'courses')), {updated: 2})), 'object_id').length}}</span></li>
+                    </ul>
+
+                    
                   </td>
                 </tr>
               </tbody>
@@ -256,7 +262,7 @@
                   </div>
                   <div class="block-content block-content-full text-left bg-image" style="padding: 10px 15px;">
                     <div>
-                      <img ng-src="" alt="Logo of {{school}}" width="50%">
+                      <img ng-src="{{logo_url}}" alt="Logo of {{school}}" width="50%">
                     </div>
                   </div>
                   <div class="text-left bg-gray-lighter" style="
@@ -280,7 +286,7 @@
                     <div style="
                       font-weight: 600;
                       font-size: 16px;
-                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="">{{cat_offer}}</span></div>
+                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="">{{categories_compared.length - _.where(categories_compared, {updated: 2}).length}}</span></div>
                     <div class="row items-push text-center">
                       <div class="col-xs-6 border-r">
                         <div class="text-muted animated fadeIn" style="
@@ -334,7 +340,7 @@
                         ">COURSE OFFERINGS: &nbsp;<span class="badge badge-primary" style="
                         vertical-align: top;
                         margin-top: 1px;
-                        ">{{c.course_offer}}</span></span>&nbsp;|&nbsp;&nbsp;<span class="text-muted">Addition(s):&nbsp; 
+                        ">{{_.difference(c.courses, _.filter(c.courses, {updated: 2})).length}}</span></span>&nbsp;|&nbsp;&nbsp;<span class="text-muted">Addition(s):&nbsp; 
 
                         <span ng-if="_.filter(c.courses, {updated: 1}).length!==0" class="badge badge-success" style="
                           font-size: 12px;
