@@ -372,7 +372,14 @@
 
 
                     <div class="categoryheader" ng-class="{add: c.updated===1, rm: c.updated===2}" style="display: table;width: 100%;">
-                      <span style="display: table-cell;font-size: 21px;width:45%;">{{c.name}}</span>
+                      <span style="display: table-cell;font-size: 21px;width:45%;">{{c.name}}&nbsp;<i class="fa fa-exclamation-circle font-s16 text-city" aria-hidden="true" data-popover-title="HISTORY"                                                          
+                                                data-uib-popover="{{c.updated}}"
+
+                                                ng-show="c.updated&&c.updated!==1&&c.updated!==2"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover-category"></i></span>
                       <div style="
                         display: table-cell;
                         text-align: right;
@@ -414,15 +421,15 @@
 
                   <!-- END category header -->
                   <!-- course table under a category -->
-                  <div class="table-responsive">
+                  <div class="">
                     <table class="table report_table2 table-bordered table-hover non-degree-table" style="table-layout: fixed;margin-bottom: 0;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">
                       <colgroup>
-                        <col width="6%">
+                        <col width="5%">
                         <col width="32%">
-                        <col width="12%">
+                        <col width="10%">
                         <col width="28%">
-                        <col width="16%">
-                        <col width="6%">
+                        <col width="14%">
+                        <col width="11%">
                       </colgroup>
                       <thead>
                         <tr class="font-w600 text-primary" style="background: #edf6fd;">
@@ -459,7 +466,7 @@
                           <td style="
                             text-align: center;
                             ">{{$index + 1}}</td>
-                          <td style="vertical-align: middle;padding: 8px 15px;text-align: left;" class="ribbon ribbon-modern ribbon-city ribbon-update"><div class="ribbon-box font-w600" 
+                          <td style="vertical-align: middle;padding: 15px;text-align: left;" class="ribbon ribbon-modern ribbon-city ribbon-update"><div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
                                                 data-uib-popover="{{course.name_old}}"
 
@@ -477,7 +484,7 @@
 
                           </td>
 
-                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
 
                             <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
@@ -495,7 +502,7 @@
                             <span ng-if="course.type">{{course.type}}</span>
                             <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
-                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
 
                             <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
@@ -518,7 +525,7 @@
                             <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
 
                           </td>
-                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
                              <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
                                                 data-uib-popover="{{course.tuition_number_old}}"
@@ -545,8 +552,23 @@
                               <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
                           </td>
                           <td style="
-                            padding: 8px 10px;
-                            ">
+                            padding: 15px;
+                            " class="ribbon ribbon-modern ribbon-city ribbon-update">
+
+                            <div class="ribbon-box font-w600" 
+                                                data-popover-title="HISTORY"                            
+                                                
+                                                data-uib-popover-html="'<a  href='+'{{course.url_old}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'" 
+
+                                                ng-show="course.url_old"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover">                        
+                                                    <span class="label_new">new
+                                                    </span>                                   
+                                                </div> 
+
                             <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
 
                             <span ng-if="!course.url" class="font-w600 text-gray label-na">N/A</span>

@@ -2051,3 +2051,9 @@ left: 35%;
 }
 
     */
+
+
+.update-popover-category {
+    width: initial;
+    max-width: none;
+}

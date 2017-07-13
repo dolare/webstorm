@@ -46,8 +46,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
         angular.forEach($scope.school_table, function(value, index) {
          value["details"] = null;
-         value["logo_url"] = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/LBS_logo_.png/150px-LBS_logo_.png';
-
+        
          value["logo_url"] = executiveService.getLogoBySchoolName(value.school)
 
          //console.log("value = "+JSON.stringify(value));
@@ -195,7 +194,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
             new_school_data = result.data;
 
             new_school_data["logo_url"] = executiveService.getLogoBySchoolName(new_school_data.school_name)
-            
+
             var test_id = (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id);
             console.log("test_id="+test_id)
 
@@ -211,7 +210,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
                 old_school_data = final_result.data;
                 console.log("old school data ="+JSON.stringify(final_result.data));
-
+                console.log("new_school_data ="+JSON.stringify(new_school_data));
                 school_data_temp = executiveService.updatedReport(old_school_data, new_school_data)
                 console.log("school_data_temp = "+JSON.stringify(school_data_temp))
 
