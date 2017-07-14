@@ -27,7 +27,6 @@ controller('ShareExecutiveController',
         //console.log('w_array_1='+JSON.stringify($scope.w_array_final));
 
 
-
       }).
      catch(function(error){
         console.log('an error occurred...'+JSON.stringify(error));

@@ -28,7 +28,7 @@ class UniversitySchoolDetailSerializer(ModelSerializer):
         return obj.university
 
     def get_categories(self, obj):
-        categories = NonDegreeCategory.objects.filter(university_school=obj)
+        categories = NonDegreeCategory.objects.filter(university_school=obj).filter(active=True)
         return CategorySerializer(categories, many=True).data
 
 

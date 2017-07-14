@@ -221,6 +221,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css',
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                                 '/static/js/services/updateService.js',
                                 '/static/js/controllers/admin-executive.js',
                                 '/static/js/services/executiveService.js',
@@ -948,7 +949,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   state('shareExecutive', {
     url: '/shared_reports/:param1/:param2/',
-    templateUrl: '/static/views/Share/shared_executive_reports.html',
+    templateUrl: '/static/views/Errors/base_pages_maintenance.html',
     controller: 'ShareExecutiveController',
     resolve: {
                     depsShareExecutive: ['$ocLazyLoad', function($ocLazyLoad) {

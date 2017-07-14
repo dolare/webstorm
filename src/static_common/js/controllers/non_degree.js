@@ -25,6 +25,25 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
   };
 
 
+  $scope.currency_symbols = {
+      'USD': '$', // US Dollar
+      'EUR': '€', // Euro
+      'CRC': '₡', // Costa Rican Colón
+      'GBP': '£', // British Pound Sterling
+      'ILS': '₪', // Israeli New Sheqel
+      'INR': '₹', // Indian Rupee
+      'JPY': '¥', // Japanese Yen
+      'KRW': '₩', // South Korean Won
+      'NGN': '₦', // Nigerian Naira
+      'PHP': '₱', // Philippine Peso
+      'PLN': 'zł', // Polish Zloty
+      'PYG': '₲', // Paraguayan Guarani
+      'THB': '฿', // Thai Baht
+      'UAH': '₴', // Ukrainian Hryvnia
+      'VND': '₫', // Vietnamese Dong
+      'CNY': '¥', // Chinese Yuan
+    };
+
   $scope.check_storage = function(){
     console.log("$scope.$storage.non_degree="+JSON.stringify($scope.$storage.non_degree))
   }
@@ -46,11 +65,12 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
         angular.forEach($scope.school_table, function(value, index) {
          value["details"] = null;
-         value["logo_url"] = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/LBS_logo_.png/150px-LBS_logo_.png';
-
-         value["logo_url"] = executiveService.getLogoBySchoolName(value.school)
+        
+         value["logo_url"] = executiveService.getLogoBySchoolName(value.school, value.university)
 
          //console.log("value = "+JSON.stringify(value));
+
+
           $http({
             url: '/api/upgrid/non_degree/reports?school=' + value.object_id,
             method: 'GET',
@@ -118,6 +138,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
      $scope.view_report = function () {
 
+      $scope.open_legend = false;
        var selected_ids = [];
        angular.forEach($scope.$storage.non_degree, function(value, key) {
           if(value){
@@ -194,8 +215,8 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
             console.log("new school data ="+JSON.stringify(result.data))
             new_school_data = result.data;
 
-            new_school_data["logo_url"] = executiveService.getLogoBySchoolName(new_school_data.school_name)
-            
+            new_school_data["logo_url"] = executiveService.getLogoBySchoolName(new_school_data.school_name, new_school_data.university_name)
+
             var test_id = (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id);
             console.log("test_id="+test_id)
 
@@ -211,7 +232,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
                 old_school_data = final_result.data;
                 console.log("old school data ="+JSON.stringify(final_result.data));
-
+                console.log("new_school_data ="+JSON.stringify(new_school_data));
                 school_data_temp = executiveService.updatedReport(old_school_data, new_school_data)
                 console.log("school_data_temp = "+JSON.stringify(school_data_temp))
 
@@ -438,30 +459,30 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
   // };
 
   /*Non-degree Report Controller*/
-  $http.get('http://api.fixer.io/latest?base=USD').then(function(response) {
-    $scope.fxRates = response.data;
-    $scope.currency_symbols = {
-      'USD': '$', // US Dollar
-      'EUR': '€', // Euro
-      'CRC': '₡', // Costa Rican Colón
-      'GBP': '£', // British Pound Sterling
-      'ILS': '₪', // Israeli New Sheqel
-      'INR': '₹', // Indian Rupee
-      'JPY': '¥', // Japanese Yen
-      'KRW': '₩', // South Korean Won
-      'NGN': '₦', // Nigerian Naira
-      'PHP': '₱', // Philippine Peso
-      'PLN': 'zł', // Polish Zloty
-      'PYG': '₲', // Paraguayan Guarani
-      'THB': '฿', // Thai Baht
-      'UAH': '₴', // Ukrainian Hryvnia
-      'VND': '₫', // Vietnamese Dong
-      'CNY': '¥', // Chinese Yuan
-    };
-    $scope.fxConvert = function(amount, currency) {
-      return amount / $scope.fxRates.rates[currency];
-    }
-  });
+  // $http.get('http://api.fixer.io/latest?base=USD').then(function(response) {
+  //   $scope.fxRates = response.data;
+  //   $scope.currency_symbols = {
+  //     'USD': '$', // US Dollar
+  //     'EUR': '€', // Euro
+  //     'CRC': '₡', // Costa Rican Colón
+  //     'GBP': '£', // British Pound Sterling
+  //     'ILS': '₪', // Israeli New Sheqel
+  //     'INR': '₹', // Indian Rupee
+  //     'JPY': '¥', // Japanese Yen
+  //     'KRW': '₩', // South Korean Won
+  //     'NGN': '₦', // Nigerian Naira
+  //     'PHP': '₱', // Philippine Peso
+  //     'PLN': 'zł', // Polish Zloty
+  //     'PYG': '₲', // Paraguayan Guarani
+  //     'THB': '฿', // Thai Baht
+  //     'UAH': '₴', // Ukrainian Hryvnia
+  //     'VND': '₫', // Vietnamese Dong
+  //     'CNY': '¥', // Chinese Yuan
+  //   };
+  //   $scope.fxConvert = function(amount, currency) {
+  //     return amount / $scope.fxRates.rates[currency];
+  //   }
+  // });
   // $http.get('/static/data/non-degree_report.json').then(function(response) {
   //   $scope.universities = response.data.data;
   //   $scope.date = response.data.date;

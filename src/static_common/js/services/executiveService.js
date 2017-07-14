@@ -1,7 +1,7 @@
 //from username, to get the ceeb, program, and degree respectively
 
 angular.module('myApp')
-  .factory('executiveService', function(avatarService, $http, $q, authenticationSvc) {
+  .factory('executiveService', function($sce, avatarService, $http, $q, authenticationSvc) {
     
      var updatedReport = function(old_data_raw, new_data_raw) {
 
@@ -96,7 +96,28 @@ angular.module('myApp')
 
               //course_date
               if(!_.isEqual(course_data_copy[j].course_dates, old_course_copy.course_dates)){
-                course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates.length !== 0 ? old_course_copy.course_dates : 'N/A';
+
+                if(old_course_copy.course_dates.length !== 0){
+
+                  if(old_course_copy.course_dates.length===1){
+                    course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates[0].start_date + ' - ' + old_course_copy.course_dates[0].end_date;
+                  } else {
+
+                    for(var i=0; i<old_course_copy.course_dates.length; i++){
+
+                      course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates[i].start_date + ' - ' + old_course_copy.course_dates[i].end_date;
+
+                      if(i !== old_course_copy.course_dates.length - 1){
+                        course_data_copy[j]["course_dates_old"] = course_data_copy[j]["course_dates_old"] + ', '
+                      }
+                    }
+
+                  }
+
+                } else {
+                  course_data_copy[j]["course_dates_old"] = 'N/A'
+                }
+                //course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates.length !== 0 ? old_course_copy.course_dates : 'N/A';
               }
 
               //updated currency
@@ -212,7 +233,7 @@ angular.module('myApp')
     ]
 
     var default_school_logo = "/static/img/school_default_logo.png"
-    
+
     var getLogoById = function(schoolId) {
       var result = schools.filter(function(school) {
         return school.object_id == schoolId;
@@ -223,9 +244,10 @@ angular.module('myApp')
         return result[0].logo;
     };
 
-    var getLogoBySchoolName = function(schoolName) {
+    var getLogoBySchoolName = function(schoolName, uniName) {
       var result = schools.filter(function(school) {
-        return school.school == schoolName;
+
+        return school.school === schoolName && school.university === uniName;
       })
       if (result.length == 0)
         return default_school_logo;

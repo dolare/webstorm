@@ -18,14 +18,19 @@
           </div>
           <hr class="hidden-print">
           <!-- Invoice Info -->
+
+
+
+
           <div class="row items-push-2x">
             <!-- Company Info -->
             <div class="col-sm-4 push-15">
-              <div class="panel panel-default" style="
+              <!-- <div class="panel panel-default" style="
                 /* border: 1px solid #ddd; */
                 /* padding: 5px 0px 0px 10px; */
                 border-color: hsla(53, 35%, 88%, 1);
                 ">
+
                 <div class="panel-heading" style="
                   background: #FFF8DC;
                   border-color: hsla(53, 35%, 88%, 1);
@@ -74,7 +79,61 @@
                     background: hsla(0, 44%, 93%, 1);
                     ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
                 </div>
-              </div>
+              </div> -->
+
+
+                <uib-accordion>
+                <div uib-accordion-group class="panel-default" is-open="open_legend">
+
+                  <uib-accordion-heading style="
+                  background: #FFF8DC;
+                  border-color: hsla(53, 35%, 88%, 1)">
+                    <p class="text-muted" style="
+                    margin-bottom: 0;
+                    font-weight: 200;
+                    /* padding-left: 5px; */
+                    font-weight: 400;
+                    ">REPORT LEGEND<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_legend, 'glyphicon-chevron-right': !open_legend}" style="margin-top: 2px;"></i></p>
+                  </uib-accordion-heading>
+                  
+                  <p style="
+                    margin-bottom: 0;
+                    margin-top: 0;
+                    " class=""><span class="badge badge-success">+ 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Addition(s)</span></p>
+                  <p class="push-5-t" style="
+                    margin-bottom: 0;
+                    "><span class="badge badge-danger">&nbsp;- 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Removal(s)</span></p>
+                  <p class="push-5-t" style="
+                    margin-bottom: 0;
+                    "><span style="
+                    color: #3c763d;
+                    background-color: #dff0d8;
+                    padding: 0 5px;
+                    border-left: 3px solid #3c763d;
+                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Category</span></p>
+                  <p class="push-5-t" style="
+                    margin-bottom: 0;
+                    "><span style="
+                    color: #a94442;
+                    background-color: #f2dede;
+                    padding: 0 5px;
+                    border-left: 3px solid #a94442;
+                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Category</span></p>
+                  <p class="push-5-t" style="
+                    margin-bottom: 0;
+                    "><span style="
+                    padding: 0 22px 0 8px;
+                    background: hsla(104, 44%, 93%, 1);
+                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
+                  <p class="push-5-t" style="
+                    margin-bottom: 0;
+                    "><span style="
+                    padding: 0 22px 0 8px;
+                    background: hsla(0, 44%, 93%, 1);
+                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
+                </div>
+              </uib-accordion>
+
             </div>
             <!-- END Company Info -->
           </div>
@@ -97,6 +156,7 @@
           
           </div>
           <div class=" push-50">
+          
             <table class="table non-degree-table report_table2 table-bordered" style="table-layout: fixed;">
               <colgroup>
                 <col width="55px">
@@ -185,7 +245,24 @@
                     " rowspan="2"><img ng-src="{{row.logo_url}}" alt="Logo of {{row.title.department}}" height="58" width="58"></td>
                   <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">
 
-                    <a data-js-blur class="link-effect" href="{{ '#school-' + $index }}" du-smooth-scroll>{{row.school_name}}</a><br>
+                    <a data-js-blur class="link-effect" href="{{ '#school-' + $index }}" du-smooth-scroll>{{row.school_name}}
+
+                    <label ng-show="_.difference( _.pluck(row.categories, 'updated'), [1, 2, undefined]).length || _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'name_old'), [undefined]).length > 0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'url_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'course_dates_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'currency_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'type_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'tuition_number_old'), [undefined]).length>0"
+
+                    class="label label-default text-success bg-success-light" style="
+                                            /* background: transparent; */
+                                            border: 1px solid #46c37b;
+                                            font-size: 8px;
+                                            padding: 2px 4px;
+                                            position: absolute;
+                                            margin-left: 0px; top: -7px;">Updated</label></a>
+
+                    <br>
                     <span class="text-muted">
                     <small style="
                       font-weight: 300;
@@ -302,7 +379,7 @@
                     <div style="
                       font-weight: 600;
                       font-size: 16px;
-                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="">{{row.cat_offer}}</span></div>
+                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="badge badge-primary pull-right">{{row.categories.length - _.where(row.categories, {updated: 2}).length}}</span></div>
                     <div class="row items-push text-center">
                       <div class="col-xs-6 border-r">
                         <div class="text-muted animated fadeIn" style="
@@ -335,26 +412,36 @@
                   <!-- category header -->
                   <div style="
                     border: 1px solid #ddd;
-                    padding: 0px 15px 18px 15px;
+                    padding: 0px 0 18px 0;
                     margin-right: 1px;
                     border-top: 6px solid #70b9eb;
                     ">
 
-                    <div class="text-right font-w100 text-info" style="
+                    <div class="text-right font-w400 text-info bg-info-light" style="
                         margin-bottom: 14px;
                         font-size:11px;
-                        margin-top:1px;
-                    ">{{row.school_name}}</div>
+                       
+                        padding:0 15px 1px 15px;
+                    ">{{row.school_name}} ({{row.university_name}})</div>
 
+
+                    <div style="padding:0 15px" class="push-25-t">
                     <p class="h3 font-w500 push-10 text-muted" style="
                       display: inline-block;
                       font-size: 17px;
-                      font-style: italic
+                      font-style: italic;
                       ">Category:</p>
 
 
                     <div class="categoryheader" ng-class="{add: c.updated===1, rm: c.updated===2}" style="display: table;width: 100%;">
-                      <span style="display: table-cell;font-size: 21px;width:45%;">{{c.name}}</span>
+                      <span style="display: table-cell;font-size: 21px;width:45%;">{{c.name}}&nbsp;<i class="fa fa-exclamation-circle font-s16 text-city" aria-hidden="true" data-popover-title="HISTORY"                                                          
+                                                data-uib-popover="{{c.updated}}"
+
+                                                ng-show="c.updated&&c.updated!==1&&c.updated!==2"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover-category"></i></span>
                       <div style="
                         display: table-cell;
                         text-align: right;
@@ -390,21 +477,28 @@
 
 
                     </div>
+
+                    </div>
+
+
+
+
+
                   </div>
 
 
 
                   <!-- END category header -->
                   <!-- course table under a category -->
-                  <div class="table-responsive">
-                    <table class="table report_table2 table-bordered table-hover non-degree-table" style="table-layout: fixed;margin-bottom: 0;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">
+                  <div class="">
+                    <table class="table report_table2 table-bordered table-hover non-degree-table" style="table-layout: fixed;margin-bottom: 0;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; border-bottom: 5px solid #70b9eb;">
                       <colgroup>
-                        <col width="6%">
+                        <col width="5%">
                         <col width="32%">
-                        <col width="12%">
+                        <col width="10%">
                         <col width="28%">
-                        <col width="16%">
-                        <col width="6%">
+                        <col width="14%">
+                        <col width="11%">
                       </colgroup>
                       <thead>
                         <tr class="font-w600 text-primary" style="background: #edf6fd;">
@@ -441,7 +535,7 @@
                           <td style="
                             text-align: center;
                             ">{{$index + 1}}</td>
-                          <td style="vertical-align: middle;padding: 8px 15px;text-align: left;" class="ribbon ribbon-modern ribbon-city ribbon-update"><div class="ribbon-box font-w600" 
+                          <td style="vertical-align: middle;padding: 15px;text-align: left;" class="ribbon ribbon-modern ribbon-city ribbon-update"><div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
                                                 data-uib-popover="{{course.name_old}}"
 
@@ -459,7 +553,7 @@
 
                           </td>
 
-                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
 
                             <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
@@ -477,7 +571,7 @@
                             <span ng-if="course.type">{{course.type}}</span>
                             <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
-                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
 
                             <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
@@ -500,7 +594,7 @@
                             <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
 
                           </td>
-                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
                              <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
                                                 data-uib-popover="{{course.tuition_number_old}}"
@@ -527,8 +621,23 @@
                               <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
                           </td>
                           <td style="
-                            padding: 8px 10px;
-                            ">
+                            padding: 15px;
+                            " class="ribbon ribbon-modern ribbon-city ribbon-update">
+
+                            <div class="ribbon-box font-w600" 
+                                                data-popover-title="HISTORY"                            
+                                                
+                                                data-uib-popover-html="'<a  href='+'{{course.url_old}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'" 
+
+                                                ng-show="course.url_old"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover">                        
+                                                    <span class="label_new">new
+                                                    </span>                                   
+                                                </div> 
+
                             <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
 
                             <span ng-if="!course.url" class="font-w600 text-gray label-na">N/A</span>

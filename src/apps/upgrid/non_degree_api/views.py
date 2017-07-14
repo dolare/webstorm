@@ -60,10 +60,8 @@ class UniversitySchoolDetailAPI(PermissionMixin, RetrieveAPIView):
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
-            university_schools = UniversitySchool.objects.all()
-        else:
-            university_schools = UniversitySchool.objects.filter(non_degree_user=self.request.user)
-        return university_schools
+            return UniversitySchool.objects.all()
+        return UniversitySchool.objects.none()
 
 
 class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):

@@ -16,6 +16,9 @@ h1 {
   margin-bottom: 40px !important;
 }
 
+.push-25-t {
+  margin-top: 25px !important;
+}
 
 .push-60-t {
   margin-top: 60px !important;
@@ -2051,3 +2054,9 @@ left: 35%;
 }
 
     */
+
+
+.update-popover-category {
+    width: initial;
+    max-width: none;
+}
