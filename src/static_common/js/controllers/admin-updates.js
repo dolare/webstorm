@@ -6,6 +6,8 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
    
     var token = authenticationSvc.getUserInfo().accessToken;
 
+    $scope._ = _;
+
     $scope.itemsByPage = 25;
     $scope.emptyUpdateLabel = "Currently there is no update of the reports."
     $scope.date = new Date();
@@ -119,6 +121,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              $scope.w_update = response.data.initial_diff.new;
              console.log("w_update="+JSON.stringify($scope.w_update));
 
+
              $scope.w_raw = response.data.existing_or_cache_report;
              console.log("w_raw = "+JSON.stringify($scope.w_raw))
 
@@ -134,7 +137,6 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              var w_array_9 = [];
              var w_array_10 = [];
              
-      
 
              for(var i=0; i<$scope.w_raw.dead_link.length; i++){
               w_array_1.push($scope.w_raw.dead_link[i]);
@@ -184,9 +186,6 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
               "w_update_time": report_last_edit_time
 
              });
-
-
-
 
 
             $scope.w_array_final = [w_array_1, w_array_2, w_array_3, w_array_4, w_array_5, w_array_6, w_array_7, w_array_8, w_array_9, w_array_10];

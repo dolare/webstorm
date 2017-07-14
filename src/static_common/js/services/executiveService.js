@@ -244,9 +244,10 @@ angular.module('myApp')
         return result[0].logo;
     };
 
-    var getLogoBySchoolName = function(schoolName) {
+    var getLogoBySchoolName = function(schoolName, uniName) {
       var result = schools.filter(function(school) {
-        return school.school == schoolName;
+
+        return school.school === schoolName && school.university === uniName;
       })
       if (result.length == 0)
         return default_school_logo;
