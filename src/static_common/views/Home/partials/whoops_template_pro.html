@@ -157,11 +157,11 @@
                                                 <div class="pull-right">
                                                     <span ng-show="w_array_final[0].length!==0" class="badge badge-primary pull-right">{{w_array_final[0].length}}</span>
 
-                                                    <span ng-show="w_array_final[0].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                                                    <span ng-show="w_array_final[0].length===0 || w_array_final[0] === null"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                                                     <span class="pull-left">
                                                         &nbsp;&nbsp;
-                                                        <button ng-show="w_update.dead_link && !confirmed_dead_link" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_dead_link = !$parent.show_dead_link"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                                                        <button ng-show="_.has(w_update, 'dead_link') && !confirmed_dead_link" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_dead_link = !$parent.show_dead_link"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
 
 
                                                         <button ng-show="confirmed_dead_link" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ><i class="fa fa-check" aria-hidden="true"></i> Confirmed</button>
@@ -176,11 +176,43 @@
                                     </tbody>
 
 
-                                    <tbody ng-show="$parent.show_dead_link && w_update.dead_link" ng-repeat="row in w_update.dead_link">
+
+                                    <tbody ng-show="show_dead_link && _.has(w_update, 'dead_link') && (w_update.dead_link === null || w_update.dead_link.length === 0) ">
+
+                                        <tr class="bg-gray-light">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('dead_link'); $parent.$parent.show_dead_link = false">confirm</button></td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                    <tr class="bg-gray-light">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+
+                                </tbody>
+
+
+                                    <tbody ng-show="$parent.show_dead_link && w_update.dead_link.length > 0" ng-repeat="row in w_update.dead_link">
 
                                         <tr class="bg-gray-light" ng-show="$index===0">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('dead_link');$parent.$parent.show_dead_link=false ">confirm</button></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('dead_link');$parent.$parent.show_dead_link=false ">confirm</button></td>
                                         </tr>
 
                                        <tr class="bg-gray-light">
@@ -310,7 +342,7 @@
 
                                     </tbody>
 
-                                            <tbody>
+                                    <tbody>
                                         <tr>
                                             <td class="text-center font-w600" ng-class="{'bg-info text-white': w_array_final[1].length!==0, 'bg-green text-white': w_array_final[1].length===0}">2</td>
                                             <td colspan="2" ng-class="{'bg-info text-white': w_array_final[1].length!==0, 'bg-green text-white': w_array_final[1].length===0}">
@@ -321,7 +353,7 @@
 
                                                     <span ng-show="w_array_final[1].length!==0" class="badge badge-primary pull-right">{{w_array_final[1].length}}</span>
 
-                                                    <span ng-show="w_array_final[1].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                                                    <span ng-show="w_array_final[1].length===0 || w_array_final[1] === null"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                                                     <span class="pull-left">
                                                         &nbsp;&nbsp;
@@ -338,11 +370,44 @@
         </tbody>
 
 
-        <tbody ng-show="show_typo && _.has(w_update, 'typo')" ng-repeat="row in w_update.typo">
+        <tbody ng-show="show_typo && _.has(w_update, 'typo') && (w_update.typo === null || w_update.typo.length === 0) ">
+
+        <tr class="bg-gray-light">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('typo'); $parent.$parent.show_typo = false">confirm</button></td>
+          </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                    <tr class="bg-gray-light">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+
+        </tbody>
+
+
+
+        <tbody ng-show="show_typo && w_update.typo.length > 0" ng-repeat="row in w_update.typo">
+
 
         <tr class="bg-gray-light" ng-show="$index===0 || !w_update.typo">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('typo'); $parent.$parent.show_typo = false">confirm</button></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('typo'); $parent.$parent.show_typo = false">confirm</button></td>
           </tr>
 
            <tr class="bg-gray-light">
@@ -405,6 +470,8 @@
 
 
 
+
+
             <tr class="bg-gray-light" ng-show="$index === w_update.typo.length-1">
                                             <td></td>
                                             <td></td>
@@ -413,29 +480,7 @@
                                         </tr>
 
 
-                                        <tr class="bg-gray-light">
-                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
-
-                                                <span class="pull-right">
-                                               
-                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
-
-
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="bg-gray-light">
-                                             <td></td>
-
-                                             <td colspan="2">
-                                                <span class="font-w600 text-muted">Empty Record</span>
-                                                
-                                            </td>
-
-                                            
-                                       </tr>
+                                       
 
         </tbody>
 
@@ -510,11 +555,11 @@
                     <div class="pull-right">
                         <span ng-show="w_array_final[2].length!==0" class="badge badge-primary pull-right">{{w_array_final[2].length}}</span>
 
-                        <span ng-show="w_array_final[2].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[2].length===0 || w_array_final[2] === null"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                             &nbsp;&nbsp;
-                            <button ng-show="w_update.outdated_information && !confirmed_outdated_information" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_outdated_information = !$parent.show_outdated_information"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                            <button ng-show="_.has(w_update, 'outdated_information') && !confirmed_outdated_information" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_outdated_information = !$parent.show_outdated_information"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
 
                             <button ng-show="confirmed_outdated_information" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ><i class="fa fa-check" aria-hidden="true"></i> Confirmed</button>
                         </span>
@@ -530,11 +575,42 @@
         </tbody>
 
 
-        <tbody ng-show="show_outdated_information && w_update.outdated_information" ng-repeat="row in w_update.outdated_information">
+        <tbody ng-show="show_outdated_information && _.has(w_update, 'outdated_information') && (w_update.outdated_information === null || w_update.outdated_information.length === 0) ">
+
+                                        <tr class="bg-gray-light">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('outdated_information'); $parent.$parent.show_outdated_information = false">confirm</button></td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                    <tr class="bg-gray-light">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+
+                                </tbody>
+
+
+        <tbody ng-show="show_outdated_information && w_update.outdated_information.length>0" ng-repeat="row in w_update.outdated_information">
 
             <tr class="bg-gray-light" ng-show="$index===0">
                 <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('outdated_information'); $parent.$parent.show_outdated_information = false">confirm</button></td>
+                <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('outdated_information'); $parent.$parent.show_outdated_information = false">confirm</button></td>
             </tr>
            <tr class="bg-gray-light">
                  <td class="text-right text-muted">{{$index+1}})</td>
@@ -672,11 +748,11 @@
                     <div class="pull-right">
                         <span ng-show="w_array_final[3].length!==0" class="badge badge-primary pull-right">{{w_array_final[3].length}}</span>
 
-                        <span ng-show="w_array_final[3].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[3].length===0 || w_array_final[3] === null"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                 &nbsp;&nbsp;
-                            <button ng-show="w_update.data_discrepancy && !confirmed_data_discrepancy" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_data_discrepancy = !$parent.show_data_discrepancy"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                            <button ng-show="_.has(w_update, 'data_discrepancy') && !confirmed_data_discrepancy" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_data_discrepancy = !$parent.show_data_discrepancy"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
 
                             <button ng-show="confirmed_data_discrepancy" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ><i class="fa fa-check" aria-hidden="true"></i> Confirmed</button>
                         </span>
@@ -690,11 +766,41 @@
         </tbody>
 
 
-        <tbody ng-show="show_data_discrepancy && w_update.data_discrepancy" ng-repeat="row in w_update.data_discrepancy">
+         <tbody ng-show="show_data_discrepancy && _.has(w_update, 'data_discrepancy') && (w_update.data_discrepancy === null || w_update.data_discrepancy.length === 0) ">
+
+                                        <tr class="bg-gray-light">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('data_discrepancy'); $parent.$parent.show_data_discrepancy = false">confirm</button></td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                    <tr class="bg-gray-light">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+
+                                </tbody>
+
+        <tbody ng-show="show_data_discrepancy && w_update.data_discrepancy.length > 0" ng-repeat="row in w_update.data_discrepancy">
 
             <tr class="bg-gray-light" ng-show="$index===0">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('data_discrepancy'); $parent.$parent.show_data_discrepancy = false">confirm</button></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('data_discrepancy'); $parent.$parent.show_data_discrepancy = false">confirm</button></td>
            </tr>
 
            <tr class="bg-gray-light">
@@ -833,11 +939,11 @@
                     <div class="pull-right">
                         <span ng-show="w_array_final[4].length!==0" class="badge badge-primary pull-right">{{w_array_final[4].length}}</span>
 
-                        <span ng-show="w_array_final[4].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[4].length===0 || w_array_final[4] === null"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                     &nbsp;&nbsp;
-                                <button ng-show="w_update.sidebars && !confirmed_sidebars" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_sidebars = !$parent.show_sidebars"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                                <button ng-show="_.has(w_update, 'sidebars') && !confirmed_sidebars" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_sidebars = !$parent.show_sidebars"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
 
                                 <button ng-show="confirmed_sidebars" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ><i class="fa fa-check" aria-hidden="true"></i> Confirmed</button>
                         </span>
@@ -850,11 +956,41 @@
         </tbody>
 
 
-        <tbody ng-show="show_sidebars && w_update.sidebars" ng-repeat="row in w_update.sidebars">
+        <tbody ng-show="show_sidebars && _.has(w_update, 'sidebars') && (w_update.sidebars === null || w_update.sidebars.length === 0) ">
+
+                                        <tr class="bg-gray-light">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('sidebars'); $parent.$parent.show_sidebars = false">confirm</button></td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                    <tr class="bg-gray-light">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+
+                                </tbody>
+
+        <tbody ng-show="show_sidebars && w_update.sidebars.length > 0" ng-repeat="row in w_update.sidebars">
         
             <tr class="bg-gray-light" ng-show="$index===0">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('sidebars'); $parent.$parent.show_sidebars = false">confirm</button></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('sidebars'); $parent.$parent.show_sidebars = false">confirm</button></td>
                                         </tr>
 
 
@@ -994,11 +1130,11 @@
                     <div class="pull-right">
                         <span ng-show="w_array_final[5].length!==0" class="badge badge-primary pull-right">{{w_array_final[5].length}}</span>
 
-                        <span ng-show="w_array_final[5].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[5].length===0 || w_array_final[5] === null"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                         &nbsp;&nbsp;
-                                    <button ng-show="w_update.infinite_loop && !confirmed_infinite_loop" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_infinite_loop = !$parent.show_infinite_loop"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                                    <button ng-show=" _.has(w_update, 'infinite_loop') && !confirmed_infinite_loop" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_infinite_loop = !$parent.show_infinite_loop"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
 
                                     <button ng-show="confirmed_infinite_loop" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ><i class="fa fa-check" aria-hidden="true"></i> Confirmed</button>
                             </span>
@@ -1010,11 +1146,43 @@
 
         </tbody>
 
-        <tbody ng-show="show_infinite_loop && w_update.infinite_loop" ng-repeat="row in w_update.infinite_loop">
+
+        <tbody ng-show="show_infinite_loop && _.has(w_update, 'infinite_loop') && (w_update.infinite_loop === null || w_update.infinite_loop.length === 0) ">
+
+                                        <tr class="bg-gray-light">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('infinite_loop'); $parent.$parent.show_infinite_loop = false">confirm</button></td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                    <tr class="bg-gray-light">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+
+                                </tbody>
+
+
+        <tbody ng-show="show_infinite_loop && w_update.infinite_loop.length > 0" ng-repeat="row in w_update.infinite_loop">
 
         <tr class="bg-gray-light" ng-show="$index===0">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('infinite_loop'); $parent.$parent.show_infinite_loop = false">confirm</button></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('infinite_loop'); $parent.$parent.show_infinite_loop = false">confirm</button></td>
                                         </tr>
 
            <tr class="bg-gray-light">
@@ -1154,11 +1322,11 @@
 
                         <span ng-show="w_array_final[6].length!==0" class="badge badge-primary pull-right">{{w_array_final[6].length}}</span>
 
-                        <span ng-show="w_array_final[6].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[6].length===0 || w_array_final[6]=== null"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                             &nbsp;&nbsp;
-                                        <button ng-show="w_update.floating_page && !confirmed_floating_page" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_floating_page = !$parent.show_floating_page"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                                        <button ng-show="_.has(w_update, 'floating_page') && !confirmed_floating_page" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_floating_page = !$parent.show_floating_page"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
 
                                         <button ng-show="confirmed_floating_page" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ><i class="fa fa-check" aria-hidden="true"></i> Confirmed</button>
                         </span>
@@ -1174,11 +1342,40 @@
 
         </tbody>
 
+        <tbody ng-show="show_floating_page && _.has(w_update, 'floating_page') && (w_update.floating_page === null || w_update.floating_page.length === 0) ">
 
-        <tbody ng-show="show_floating_page && w_update.floating_page" ng-repeat="row in w_update.floating_page">  
+                                        <tr class="bg-gray-light">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('floating_page'); $parent.$parent.show_floating_page = false">confirm</button></td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                    <tr class="bg-gray-light">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+
+                                </tbody>
+
+        <tbody ng-show="show_floating_page && w_update.floating_page.length > 0" ng-repeat="row in w_update.floating_page">  
             <tr class="bg-gray-light" ng-show="$index===0">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('floating_page'); $parent.$parent.show_floating_page = false">confirm</button></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('floating_page'); $parent.$parent.show_floating_page = false">confirm</button></td>
                                         </tr>
 
            <tr class="bg-gray-light">
@@ -1316,11 +1513,11 @@
                     <div class="pull-right">
                         <span ng-show="w_array_final[7].length!==0" class="badge badge-primary pull-right">{{w_array_final[7].length}}</span>
 
-                        <span ng-show="w_array_final[7].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[7].length===0 || w_array_final[7] === null"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                                 &nbsp;&nbsp;
-                                            <button ng-show="w_update.confusing && !confirmed_confusing" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_confusing = !$parent.show_confusing"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                                            <button ng-show="_.has(w_update, 'confusing') && !confirmed_confusing" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_confusing = !$parent.show_confusing"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
 
                                             <button ng-show="confirmed_confusing" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ><i class="fa fa-check" aria-hidden="true"></i> Confirmed</button>
                             </span>
@@ -1334,11 +1531,41 @@
         </tbody>
 
 
-        <tbody ng-show="show_confusing && w_update.confusing" ng-repeat="row in w_update.confusing">
+        <tbody ng-show="show_confusing && _.has(w_update, 'confusing') && (w_update.confusing === null || w_update.confusing.length === 0) ">
+
+                                        <tr class="bg-gray-light">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('confusing'); $parent.$parent.show_confusing = false">confirm</button></td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                    <tr class="bg-gray-light">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+
+                                </tbody>
+
+        <tbody ng-show="show_confusing && w_update.confusing.length > 0" ng-repeat="row in w_update.confusing">
 
             <tr class="bg-gray-light" ng-show="$index===0">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('confusing'); $parent.$parent.show_confusing = false">confirm</button></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('confusing'); $parent.$parent.show_confusing = false">confirm</button></td>
                                         </tr>
            <tr class="bg-gray-light">
                  <td class="text-right text-muted">{{$index+1}})</td>
@@ -1477,11 +1704,12 @@
 
                         <span ng-show="w_array_final[8].length!==0" class="badge badge-primary pull-right">{{w_array_final[8].length}}</span>
 
-                        <span ng-show="w_array_final[8].length===0"><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
+                        <span ng-show="w_array_final[8].length===0 || w_array_final[8] === null "><i class="fa fa-check-circle fa-lg pull-right" style="width: 18px;"></i></span>
 
                         <span class="pull-left">
                                                 &nbsp;&nbsp;
-                                            <button ng-show="w_update.other_expert_note && !other_expert_note" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_other_expert_note = !$parent.show_other_expert_note"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+                                            <button ng-show="_.has(w_update, 'other_expert_note') && !confirmed_other_expert_note" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_other_expert_note = !$parent.show_other_expert_note"><i class="fa fa-eye" aria-hidden="true"></i> Update</button>
+
 
                                             <button ng-show="other_expert_note" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ><i class="fa fa-check" aria-hidden="true"></i> Confirmed</button>
                             </span>
@@ -1495,11 +1723,43 @@
 
         </tbody>
 
-        <tbody ng-show="show_other_expert_note && w_update.other_expert_note" ng-repeat="row in w_update.other_expert_note">
+
+        <tbody ng-show="show_other_expert_note && _.has(w_update, 'other_expert_note') && (w_update.other_expert_note === null || w_update.other_expert_note.length === 0) ">
+
+                                        <tr class="bg-gray-light">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('other_expert_note'); $parent.$parent.show_other_expert_note = false">confirm</button></td>
+                                        </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+                                    <tr class="bg-gray-light">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+
+                                </tbody>
+
+
+        <tbody ng-show="show_other_expert_note && w_update.other_expert_note.length > 0" ng-repeat="row in w_update.other_expert_note">
 
         <tr class="bg-gray-light" ng-show="$index===0">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('other_expert_note'); $parent.$parent.show_other_expert_note = false">confirm</button></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">Update <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('other_expert_note'); $parent.$parent.show_other_expert_note = false">confirm</button></td>
                                         </tr>
 
            <tr class="bg-gray-light">

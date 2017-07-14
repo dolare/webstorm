@@ -136,43 +136,81 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              var w_array_8 = [];
              var w_array_9 = [];
              var w_array_10 = [];
+ 
+             if(!$scope.w_raw.dead_link){
+              $scope.w_raw.dead_link = [];
+             } else {
+              for(var i=0; i<$scope.w_raw.dead_link.length; i++){
+                w_array_1.push($scope.w_raw.dead_link[i]);
+               }
+             }
+
+             if(!$scope.w_raw.typo){
+              $scope.w_raw.typo = [];
+             } else {
+              for(var i=0; i<$scope.w_raw.typo.length; i++){
+                w_array_2.push($scope.w_raw.typo[i]);
+               }
+             }
+
+             if(!$scope.w_raw.outdated_information){
+              $scope.w_raw.outdated_information = [];
+             } else {
+              for(var i=0; i<$scope.w_raw.outdated_information.length; i++){
+                w_array_3.push($scope.w_raw.outdated_information[i]);
+               }
+             }
+
+             if(!$scope.w_raw.data_discrepancy){
+              $scope.w_raw.data_discrepancy = [];
+             } else {
+              for(var i=0; i<$scope.w_raw.data_discrepancy.length; i++){
+                w_array_4.push($scope.w_raw.data_discrepancy[i]);
+               }
+             }
+
+             if(!$scope.w_raw.sidebars){
+              $scope.w_raw.sidebars = [];
+             } else {
+              for(var i=0; i<$scope.w_raw.sidebars.length; i++){
+                w_array_5.push($scope.w_raw.sidebars[i]);
+               }
+             }
+
+             if(!$scope.w_raw.infinite_loop){
+              $scope.w_raw.infinite_loop = [];
+             } else {
+              for(var i=0; i<$scope.w_raw.infinite_loop.length; i++){
+                w_array_6.push($scope.w_raw.infinite_loop[i]);
+               }
+             }
+
+             if(!$scope.w_raw.floating_page){
+              $scope.w_raw.floating_page  = [];
+             } else {
+              for(var i=0; i<$scope.w_raw.floating_page.length; i++){
+                w_array_7.push($scope.w_raw.floating_page[i]);
+               }
+             }
+
+             if(!$scope.w_raw.confusing){
+              $scope.w_raw.confusing = [];
+             } else {
+              for(var i=0; i<$scope.w_raw.confusing.length; i++){
+                w_array_8.push($scope.w_raw.confusing[i]);
+               }
+             }
+
+             if(!$scope.w_raw.other_expert_note){
+              $scope.w_raw.other_expert_note = [];
+             } else {
+              for(var i=0; i<$scope.w_raw.other_expert_note.length; i++){
+                w_array_9.push($scope.w_raw.other_expert_note[i]);
+               }
+             }
+
+             // console.log("$scope.w_raw.typo="+JSON.stringify($scope.w_raw.typo));
              
-
-             for(var i=0; i<$scope.w_raw.dead_link.length; i++){
-              w_array_1.push($scope.w_raw.dead_link[i]);
-             }
-
-             for(var i=0; i<$scope.w_raw.typo.length; i++){
-              w_array_2.push($scope.w_raw.typo[i]);
-             }
-
-             for(var i=0; i<$scope.w_raw.outdated_information.length; i++){
-              w_array_3.push($scope.w_raw.outdated_information[i]);
-             }
-
-             for(var i=0; i<$scope.w_raw.data_discrepancy.length; i++){
-              w_array_4.push($scope.w_raw.data_discrepancy[i]);
-             }
-
-             for(var i=0; i<$scope.w_raw.sidebars.length; i++){
-              w_array_5.push($scope.w_raw.sidebars[i]);
-             }
-
-             for(var i=0; i<$scope.w_raw.infinite_loop.length; i++){
-              w_array_6.push($scope.w_raw.infinite_loop[i]);
-             }
-
-             for(var i=0; i<$scope.w_raw.floating_page.length; i++){
-              w_array_7.push($scope.w_raw.floating_page[i]);
-             }
-
-             for(var i=0; i<$scope.w_raw.confusing.length; i++){
-              w_array_8.push($scope.w_raw.confusing[i]);
-             }
-
-             for(var i=0; i<$scope.w_raw.other_expert_note.length; i++){
-              w_array_9.push($scope.w_raw.other_expert_note[i]);
-             }
 
              // for(var i=0; i<$scope.w_raw.details.length; i++){
              //  w_array_10.push($scope.w_raw.details[i]);
