@@ -338,7 +338,40 @@
         </tbody>
 
 
-        <tbody ng-show="show_typo && _.has(w_update, 'typo')" ng-repeat="row in w_update.typo">
+        <tbody ng-show="show_typo && _.has(w_update, 'typo')">
+
+        <tr class="bg-gray-light">
+                                            <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
+                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History <button class="pull-right btn btn-xs btn-rounded btn-info" ng-click="w_confirm_update('typo'); $parent.$parent.show_typo = false">confirm</button></td>
+          </tr>
+
+                                        <tr class="bg-gray-light">
+                                             <td></td>
+
+                                             <td colspan="2">
+                                                <span class="font-w600 text-muted">Empty Record</span>
+                                                
+                                            </td>
+
+                                            
+                                       </tr>
+
+
+
+            <tr class="bg-gray-light">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+
+        </tbody>
+
+
+
+        <tbody ng-show="show_typo && _.has(w_update, 'typo') && w_update.typo.length > 0" ng-repeat="row in w_update.typo">
+
 
         <tr class="bg-gray-light" ng-show="$index===0 || !w_update.typo">
                                             <td class="text-right font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
@@ -405,6 +438,8 @@
 
 
 
+
+
             <tr class="bg-gray-light" ng-show="$index === w_update.typo.length-1">
                                             <td></td>
                                             <td></td>
@@ -413,29 +448,7 @@
                                         </tr>
 
 
-                                        <tr class="bg-gray-light">
-                                            <td class="text-center font-w600 text-muted" style="padding-top: 9px;padding-bottom: 5px;"><i class="icon-drawer"></i></td>
-                                            <td class="font-w600 text-muted" colspan="2" style="padding-top: 9px;padding-bottom: 5px;">History
-
-                                                <span class="pull-right">
-                                               
-                                                    <span class="pull-right" style="margin-left:3px;"><i class="fa fa-check-circle fa-lg" style="width: 18px;vertical-align: initial;"></i></span>
-
-
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="bg-gray-light">
-                                             <td></td>
-
-                                             <td colspan="2">
-                                                <span class="font-w600 text-muted">Empty Record</span>
-                                                
-                                            </td>
-
-                                            
-                                       </tr>
+                                       
 
         </tbody>
 
