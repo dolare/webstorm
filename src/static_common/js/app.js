@@ -949,7 +949,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   state('shareExecutive', {
     url: '/shared_reports/:param1/:param2/',
-    templateUrl: '/static/views/Errors/base_pages_maintenance.html',
+    templateUrl: '/static/views/Home/non_degree_report.html',
     controller: 'ShareExecutiveController',
     resolve: {
                     depsShareExecutive: ['$ocLazyLoad', function($ocLazyLoad) {
