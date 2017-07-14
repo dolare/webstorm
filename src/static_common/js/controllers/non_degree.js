@@ -48,6 +48,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
     console.log("$scope.$storage.non_degree="+JSON.stringify($scope.$storage.non_degree))
   }
 
+
   $scope.$storage.non_degree = {}
 
    $http({
@@ -84,9 +85,15 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
             
             if(response.data.results.length>0) {
 
+
+
               console.log("++++++++value.object_id="+value.object_id);
               console.log("++++++++response.data.results[0].object_id="+response.data.results[0].object_id);
-              $scope.school_report_pair[value.object_id] = response.data.results[0].object_id
+              
+              $scope.school_report_pair[value.object_id] = [];
+              $scope.school_report_pair[value.object_id].push(response.data.results[0].object_id);
+              $scope.school_report_pair[value.object_id].push(response.data.results.length>1? response.data.results[1].object_id:response.data.results[0].object_id)
+
               console.log("$scope.school_report_pair="+JSON.stringify($scope.school_report_pair))
               $http({
                     url: '/api/upgrid/non_degree/reports/overview/' + response.data.results[0].object_id + '/' + (response.data.results.length>1? response.data.results[1].object_id:response.data.results[0].object_id),
@@ -303,7 +310,8 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
           angular.forEach($scope.$storage.non_degree, function(value, key) {
             
             if(value){
-              reports_ids.push($scope.school_report_pair[key]);
+              reports_ids.push($scope.school_report_pair[key][0]);
+              reports_ids.push($scope.school_report_pair[key][1]);
             }
           });
 
