@@ -123,15 +123,16 @@ class UnivCustomerProgramSerializer(serializers.ModelSerializer):
     def get_has_expert_notes(self, obj):
         try:
             update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
-            
-            existing_report = zlib.decompress(update_report.existing_report)
-            existing_report = BytesIO(existing_report)
-            existing_report = JSONParser().parse(existing_report)
-
-            if not existing_report is None:
-                expert_notes = True
-            else:
+            print('univ customer lise')
+            print(update_report.initial_diff)
+            print(update_report.existing_report)
+            print(update_report.cache_report)
+            if update_report.initial_diff is None and update_report.existing_report is None:
                 expert_notes = False
+            elif not update_report.initial_diff is None and update_report.cache_report is None:
+                expert_notes = False
+            else:
+                expert_notes = True
         except:
             expert_notes = False
 
@@ -187,15 +188,16 @@ class WhoopsReleasedListSerializer(serializers.ModelSerializer):
     def get_has_expert_notes(self, obj):
         try:
             update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
-            
-            existing_report = zlib.decompress(update_report.existing_report)
-            existing_report = BytesIO(existing_report)
-            existing_report = JSONParser().parse(existing_report)
-
-            if not existing_report is None:
-                expert_notes = True
-            else:
+            print('whoos released list')
+            print(update_report.initial_diff)
+            print(update_report.existing_report)
+            print(update_report.cache_report)
+            if update_report.initial_diff is None and update_report.existing_report is None:
                 expert_notes = False
+            elif not update_report.initial_diff is None and update_report.cache_report is None:
+                expert_notes = False
+            else:
+                expert_notes = True
         except:
             expert_notes = False
 
@@ -242,19 +244,24 @@ class WhoopsUpdateSerializer(serializers.ModelSerializer):
     def get_has_expert_notes(self, obj):
         try:
             update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
-            
-            existing_report = zlib.decompress(update_report.existing_report)
-            existing_report = BytesIO(existing_report)
-            existing_report = JSONParser().parse(existing_report)
-
-            if not existing_report is None:
-                expert_notes = True
-            else:
+            print('whoops update list')
+            print(update_report.initial_diff)
+            print(update_report.existing_report)
+            print(update_report.cache_report)
+            if update_report.initial_diff is None and update_report.existing_report is None:
                 expert_notes = False
+                print('1')
+            elif not update_report.initial_diff is None and update_report.cache_report is None:
+                expert_notes = False
+                print('2')
+            else:
+                expert_notes = True
         except:
+            print('3')
             expert_notes = False
 
         return expert_notes
+
 
 
 class CompetingProgramSerializer(serializers.ModelSerializer):
@@ -717,16 +724,23 @@ class UnconfirmedProgramsSerializer(serializers.ModelSerializer):
         return obj.program.degree.name
 
     def get_has_expert_notes(self, obj):
-        origin_program = Program.objects.get(object_id=obj.program.object_id)
-        qs = ExpertAdditionalNote.objects.filter(program=origin_program)
-        
-        expert_notes = ""
-        if len(qs) == 0:
+        try:
+            update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
+            print('unconfirmed program list')
+            print(update_report.initial_diff)
+            print(update_report.existing_report)
+            print(update_report.cache_report)
+            if update_report.initial_diff is None and update_report.existing_report is None:
+                expert_notes = False
+            elif not update_report.initial_diff is None and update_report.cache_report is None:
+                expert_notes = False
+            else:
+                expert_notes = True
+        except:
             expert_notes = False
-        else:
-            expert_notes = True
 
         return expert_notes
+
 
     def get_enhancement_update(self, obj):
         try:
