@@ -5,8 +5,14 @@
 angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService',
   function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService, $timeout, executiveService) {
 
+    // Inject underscore into $scope
+      $scope._ = _;
+
     var token = authenticationSvc.getUserInfo().accessToken;
-    $scope.emptyExecutiveLabel = "Currently there is no update of the reports."
+    $scope.emptyExecutiveLabel = 'Currently there is no update of the reports.';
+
+    $scope.date = new Date().toISOString();
+
     $http({
       url: '/api/upgrid/non_degree/schools?is_non_degree=True',
       method: 'GET',
@@ -14,8 +20,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         'Authorization': 'JWT ' + token
       }
     }).then(function(response) {
-      // Inject underscore into $scope
-      $scope._ = _;
 
       $scope.non_degree_schools = response.data.results;
 
@@ -156,8 +160,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           }).then(function(response) {
             var reports = response.reports.data;
             var preview = response.preview.data;
-
-            $scope.date = new Date().toISOString();
+            
             $scope.school = preview.school;
             $scope.university = preview.university;
             $scope.categories = preview.categories;

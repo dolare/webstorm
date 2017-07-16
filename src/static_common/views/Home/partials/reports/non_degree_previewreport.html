@@ -21,60 +21,57 @@
           <div class="row items-push-2x">
             <!-- Company Info -->
             <div class="col-sm-4 push-15">
-              <div class="panel panel-default" style="
-                /* border: 1px solid #ddd; */
-                /* padding: 5px 0px 0px 10px; */
-                border-color: hsla(53, 35%, 88%, 1);
-                ">
-                <div class="panel-heading" style="
-                  background: #FFF8DC;
-                  border-color: hsla(53, 35%, 88%, 1);
-                  ">
-                  <p class="text-muted" style="
-                    margin-bottom: 0;
-                    font-weight: 200;
-                    /* padding-left: 5px; */
-                    font-weight: 400;
-                    ">REPORT LEGEND</p>
-                </div>
-                <div class="panel-body">
+              <uib-accordion>
+                <div uib-accordion-group class="panel-default" is-open="open_legend">
+
+                  <uib-accordion-heading style="
+                                background: #FFF8DC;
+                                border-color: hsla(53, 35%, 88%, 1)">
+                    <p class="text-muted" style="
+                                  margin-bottom: 0;
+                                  font-weight: 200;
+                                  /* padding-left: 5px; */
+                                  font-weight: 400;
+                                  ">REPORT LEGEND<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_legend, 'glyphicon-chevron-right': !open_legend}" style="margin-top: 2px;"></i></p>
+                  </uib-accordion-heading>
+
                   <p style="
-                    margin-bottom: 0;
-                    margin-top: 0;
-                    " class=""><span class="badge badge-success">+ 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Addition(s)</span></p>
+                                  margin-bottom: 0;
+                                  margin-top: 0;
+                                  " class=""><span class="badge badge-success">+ 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Addition(s)</span></p>
                   <p class="push-5-t" style="
-                    margin-bottom: 0;
-                    "><span class="badge badge-danger">&nbsp;- 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Removal(s)</span></p>
+                                  margin-bottom: 0;
+                                  "><span class="badge badge-danger">&nbsp;- 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Removal(s)</span></p>
                   <p class="push-5-t" style="
-                    margin-bottom: 0;
-                    "><span style="
-                    color: #3c763d;
-                    background-color: #dff0d8;
-                    padding: 0 5px;
-                    border-left: 3px solid #3c763d;
-                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Category</span></p>
+                                  margin-bottom: 0;
+                                  "><span style="
+                                  color: #3c763d;
+                                  background-color: #dff0d8;
+                                  padding: 0 5px;
+                                  border-left: 3px solid #3c763d;
+                                  ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Category</span></p>
                   <p class="push-5-t" style="
-                    margin-bottom: 0;
-                    "><span style="
-                    color: #a94442;
-                    background-color: #f2dede;
-                    padding: 0 5px;
-                    border-left: 3px solid #a94442;
-                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Category</span></p>
+                                  margin-bottom: 0;
+                                  "><span style="
+                                  color: #a94442;
+                                  background-color: #f2dede;
+                                  padding: 0 5px;
+                                  border-left: 3px solid #a94442;
+                                  ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Category</span></p>
                   <p class="push-5-t" style="
-                    margin-bottom: 0;
-                    "><span style="
-                    padding: 0 22px 0 8px;
-                    background: hsla(104, 44%, 93%, 1);
-                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
+                                  margin-bottom: 0;
+                                  "><span style="
+                                  padding: 0 22px 0 8px;
+                                  background: hsla(104, 44%, 93%, 1);
+                                  ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
                   <p class="push-5-t" style="
-                    margin-bottom: 0;
-                    "><span style="
-                    padding: 0 22px 0 8px;
-                    background: hsla(0, 44%, 93%, 1);
-                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
+                                  margin-bottom: 0;
+                                  "><span style="
+                                  padding: 0 22px 0 8px;
+                                  background: hsla(0, 44%, 93%, 1);
+                                  ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
                 </div>
-              </div>
+              </uib-accordion>
             </div>
             <!-- END Company Info -->
           </div>
@@ -99,8 +96,8 @@
           <div class=" push-50">
             <table class="table report_table2 table-bordered" style="table-layout: fixed;">
               <colgroup>
-                <col width="12%">
-                <col width="35%">
+                <col width="7%">
+                <col width="40%">
                 <col width="17%">
                 <col width="9%">
                 <col width="9%">
