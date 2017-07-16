@@ -334,13 +334,16 @@ class CourseURLListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     pagination_class = BasePagination
     filter_class = CourseURLFilter
 
-    search_fields = ('name', )
-    ordering_fields = ('name', )
-    ordering = ('name', )      # default ordering
+    search_fields = ('url', )
+    ordering_fields = ('url', )
+    ordering = ('url', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
-        course_urls = NonDegreeCourseURL.objects.filter(object_id=self.course_id)
+        print(self.course_id)
+        course_urls = NonDegreeCourseURL.objects.filter(course__object_id=self.course_id)
+        print(course_urls)
         course_urls = course_urls.filter(course__category__university_school__object_id=self.school_id)
+        print(course_urls)
         if not self.is_manager():
             course_urls = course_urls.filter(course__category__university_school=self.request.user.non_degree_schools)
         print(course_urls)
