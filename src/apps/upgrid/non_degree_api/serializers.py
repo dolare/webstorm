@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeCourseDate, \
-    NonDegreeUrl, NonDegreeUrlTypeRef
+    NonDegreeUrl, NonDegreeUrlTypeRef, NonDegreeCourseURL, NonDegreeAMPReport
 
 from ..models import NonDegreeReport, NonDegreeSharedReport
 
@@ -116,4 +116,25 @@ class SharedReportSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeSharedReport
         fields = ('object_id', 'expired_time', 'reports')
+
+
+class CourseListSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeCourse
+        fields = ('object_id', 'name',)
+
+
+class CourseURLListSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeCourseURL
+        fields = ('object_id', 'url',)
+
+
+class AMPReportListSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeAMPReport
+        fields = ('object_id', 'date_created',)
 

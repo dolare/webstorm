@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     #'nested_admin',
     # our apps
     'ceeb_program',
+    'webtracking',
     'apps.record_management',
     'apps.upgrid',
 )

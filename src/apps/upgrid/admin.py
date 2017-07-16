@@ -311,6 +311,7 @@ class NonDegreeCourseAdmin(AutoUserModelAdmin):
                 'university_school',
                 'category',
                 'active',
+                'is_advanced_management_program',
                 'version',
                 'type',
                 'tuition',
