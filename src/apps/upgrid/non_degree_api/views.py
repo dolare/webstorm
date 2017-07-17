@@ -362,15 +362,14 @@ class AMPReportListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     pagination_class = BasePagination
     filter_class = AMPReportListFilter
 
-    search_fields = ('name', )
-    ordering_fields = ('name', )
-    ordering = ('name', )      # default ordering
+    search_fields = ('webpage__url', )
+    ordering_fields = ('webpage__url', )
+    ordering = ('webpage__url', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
         reports = NonDegreeAMPReport.objects.filter(webpage__nondegreecourseurl__object_id=self.url_id)\
             .filter(webpage__nondegreecourseurl__course__object_id=self.course_id)\
             .filter(webpage__nondegreecourseurl__course__category__university_school__object_id=self.school_id)
-        # reports = reports.objects.filter(category__object_id=self.course_id)
         if not self.is_manager():
             user = UniversityCustomer.objects.get(id=self.request.user.id)
             reports = reports.filter(webpage__nondegreecourseurl__course__category__university_school__in
@@ -392,12 +391,9 @@ class AMPReportDetailAPI(PermissionMixin, RetrieveModelMixin, GenericAPIView):
     serializer_class = AMPReportDetailSerializer
 
     def get_queryset(self, *args, **kwargs):
-
-        # web_page = WebPage.objects.filter()
         reports = NonDegreeAMPReport.objects.filter(webpage__nondegreecourseurl__object_id=self.url_id)\
             .filter(webpage__nondegreecourseurl__course__object_id=self.course_id)\
             .filter(webpage__nondegreecourseurl__course__category__university_school__object_id=self.school_id)
-        # reports = reports.objects.filter(category__object_id=self.course_id)
         if not self.is_manager():
             user = UniversityCustomer.objects.get(id=self.request.user.id)
             reports = reports.filter(webpage__nondegreecourseurl__course__category__university_school__in

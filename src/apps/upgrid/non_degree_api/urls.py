@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^schools/(?P<school_id>[0-9a-fA-F\-]+)/courses/(?P<course_id>[0-9a-fA-F\-]+)/urls$',
         CourseURLListAPI.as_view(), name="urls"),
     url(r'^schools/(?P<school_id>[0-9a-fA-F\-]+)/courses/(?P<course_id>[0-9a-fA-F\-]+)/urls/'
-        r'(?P<url_id>[0-9a-fA-F\-]+)/amp_reports', AMPReportListAPI.as_view(), name="amp_reports"),
+        r'(?P<url_id>[0-9a-fA-F\-]+)/amp_reports$', AMPReportListAPI.as_view(), name="amp_reports"),
     url(r'^schools/(?P<school_id>[0-9a-fA-F\-]+)/courses/(?P<course_id>[0-9a-fA-F\-]+)/urls/'
         r'(?P<url_id>[0-9a-fA-F\-]+)/amp_reports/(?P<object_id>[0-9a-fA-F\-]+)$', AMPReportDetailAPI.as_view(),
         name="amp_report_detail"),
