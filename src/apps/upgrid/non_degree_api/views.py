@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
-from rest_framework.mixins import CreateModelMixin, ListModelMixin
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, CreateAPIView, DestroyAPIView, \
     RetrieveAPIView, RetrieveDestroyAPIView
 from rest_framework.filters import SearchFilter, OrderingFilter, DjangoFilterBackend
@@ -19,7 +19,7 @@ from webtracking.models import WebPage, WebPageScan
 
 from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer, CategorySerializer, \
     ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer, SharedReportSerializer, \
-    CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer
+    CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer, AMPReportDetailSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport
@@ -328,7 +328,7 @@ class CourseListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
 
 class CourseURLListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     """
-    Get list of user non-degree courses
+    Get list of user non-degree course URL
     """
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     serializer_class = CourseURLListSerializer
@@ -340,8 +340,8 @@ class CourseURLListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     ordering = ('url', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
-        course_urls = NonDegreeCourseURL.objects.filter(course__object_id=self.course_id)
-        course_urls = course_urls.filter(course__category__university_school__object_id=self.school_id)
+        course_urls = NonDegreeCourseURL.objects.filter(course__object_id=self.course_id)\
+            .filter(course__category__university_school__object_id=self.school_id)
         if not self.is_manager():
             user = UniversityCustomer.objects.get(id=self.request.user.id)
             course_urls = course_urls.filter(course__category__university_school__in=user.non_degree_schools.all())
@@ -352,58 +352,56 @@ class CourseURLListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
         self.course_id = course_id
         return self.list(request, *args, **kwargs)
 
-#
-# class AMPReportListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
-#     """
-#     Get list of user non-degree courses
-#     """
-#     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-#     serializer_class = AMPReportListSerializer
-#     pagination_class = BasePagination
-#     filter_class = AMPReportListFilter
-#
-#     search_fields = ('name', )
-#     ordering_fields = ('name', )
-#     ordering = ('name', )      # default ordering
-#
-#     def get_queryset(self, *args, **kwargs):
-#         web_page = WebPage.objects.filter()
-#         reports = NonDegreeAMPReport.objects.filter(webpage__category__university_school__object_id=self.school_id)
-#         reports = reports.objects.filter(category__object_id=self.course_id)
-#         if not self.is_manager():
-#             course_urls = course_urls.filter(category__university_school=self.request.user.non_degree_schools)
-#         return course_urls
-#
-#     def get(self, request, school_id, course_id, URL_id, *args, **kwargs):
-#         self.school_id = school_id
-#         self.course_id = course_id
-#         self.URL_id = URL_id
-#         return self.list(request, *args, **kwargs)
-#
-#
-# class AMPReportDetailAPI(PermissionMixin, RetrieveAPIView):
-#     """
-#     Get list of user non-degree courses
-#     """
-#     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-#     serializer_class = AMPReportListSerializer
-#     pagination_class = BasePagination
-#     filter_class = AMPReportListFilter
-#
-#     search_fields = ('name', )
-#     ordering_fields = ('name', )
-#     ordering = ('name', )      # default ordering
-#
-#     def get_queryset(self, *args, **kwargs):
-#         web_page = WebPage.objects.filter()
-#         reports = NonDegreeAMPReport.objects.filter(webpage__category__university_school__object_id=self.school_id)
-#         reports = reports.objects.filter(category__object_id=self.course_id)
-#         if not self.is_manager():
-#             course_urls = course_urls.filter(category__university_school=self.request.user.non_degree_schools)
-#         return course_urls
-#
-#     def get(self, request, school_id, course_id, URL_id, *args, **kwargs):
-#         self.school_id = school_id
-#         self.course_id = course_id
-#         self.URL_id = URL_id
-#         return self.list(request, *args, **kwargs)
+
+class AMPReportListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
+    """
+    Get list of user non-degree AMP report
+    """
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    serializer_class = AMPReportListSerializer
+    pagination_class = BasePagination
+    filter_class = AMPReportListFilter
+
+    search_fields = ('webpage__url', )
+    ordering_fields = ('webpage__url', 'date_created',)
+    ordering = ('-date_created', )      # default ordering
+
+    def get_queryset(self, *args, **kwargs):
+        reports = NonDegreeAMPReport.objects.filter(webpage__nondegreecourseurl__object_id=self.url_id)\
+            .filter(webpage__nondegreecourseurl__course__object_id=self.course_id)\
+            .filter(webpage__nondegreecourseurl__course__category__university_school__object_id=self.school_id)
+        if not self.is_manager():
+            user = UniversityCustomer.objects.get(id=self.request.user.id)
+            reports = reports.filter(webpage__nondegreecourseurl__course__category__university_school__in
+                                     =user.non_degree_schools.all())
+        return reports
+
+    def get(self, request, school_id, course_id, url_id, *args, **kwargs):
+        self.school_id = school_id
+        self.course_id = course_id
+        self.url_id = url_id
+        return self.list(request, *args, **kwargs)
+
+
+class AMPReportDetailAPI(PermissionMixin, RetrieveModelMixin, GenericAPIView):
+    """
+    Get list of user non-degree AMP report detail
+    """
+    lookup_field = 'object_id'
+    serializer_class = AMPReportDetailSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        reports = NonDegreeAMPReport.objects.filter(webpage__nondegreecourseurl__object_id=self.url_id)\
+            .filter(webpage__nondegreecourseurl__course__object_id=self.course_id)\
+            .filter(webpage__nondegreecourseurl__course__category__university_school__object_id=self.school_id)
+        if not self.is_manager():
+            user = UniversityCustomer.objects.get(id=self.request.user.id)
+            reports = reports.filter(webpage__nondegreecourseurl__course__category__university_school__in
+                                     =user.non_degree_schools.all())
+        return reports
+
+    def get(self, request, school_id, course_id, url_id, *args, **kwargs):
+        self.school_id = school_id
+        self.course_id = course_id
+        self.url_id = url_id
+        return self.retrieve(request, *args, **kwargs)
