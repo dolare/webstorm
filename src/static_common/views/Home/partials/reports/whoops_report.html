@@ -25,7 +25,7 @@
 
                                                     <span class="pull-left">
                                                         &nbsp;&nbsp;
-                                                        <button ng-show="w_update_diff.new.dead_link" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.dead_link = !$parent.show_history.dead_link"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                                                        <button ng-show="_.has(w_update_diff.old, 'dead_link')" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.dead_link = !$parent.show_history.dead_link"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
                                                     </span>
 
                                                 </span>
@@ -218,7 +218,7 @@
 
                                                     <span class="pull-left">
                                                         &nbsp;&nbsp;
-                                                        <button ng-show="w_update_diff.new.typo" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.typo = !$parent.show_history.typo"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                                                        <button ng-show="_.has(w_update_diff.old, 'typo')" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.typo = !$parent.show_history.typo"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
                                                     </span>
                                                 </span>
 
@@ -410,7 +410,7 @@
 
                         <span class="pull-left">
                             &nbsp;&nbsp;
-                            <button ng-show="w_update_diff.new.outdated_information" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.outdated_information = !$parent.show_history.outdated_information"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                            <button ng-show="_.has(w_update_diff.old, 'outdated_information')" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.outdated_information = !$parent.show_history.outdated_information"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
                         </span>
                         
                     </span>
@@ -596,7 +596,7 @@
 
                         <span class="pull-left">
                             &nbsp;&nbsp;
-                            <button ng-show="w_update_diff.new.data_discrepancy" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.data_discrepancy = !$parent.show_history.data_discrepancy"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                            <button ng-show="_.has(w_update_diff.old, 'data_discrepancy')" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.data_discrepancy = !$parent.show_history.data_discrepancy"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
                         </span>
 
                     </span>
@@ -790,7 +790,7 @@
 
                         <span class="pull-left">
                             &nbsp;&nbsp;
-                            <button ng-show="w_update_diff.new.sidebars" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.sidebars = !$parent.show_history.sidebars"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                            <button ng-show="_.has(w_update_diff.old, 'sidebars')" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.sidebars = !$parent.show_history.sidebars"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
                         </span>
 
 
@@ -980,7 +980,7 @@
 
                         <span class="pull-left">
                             &nbsp;&nbsp;
-                            <button ng-show="w_update_diff.new.infinite_loop" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.infinite_loop = !$parent.show_history.infinite_loop"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                            <button ng-show="_.has(w_update_diff.old, 'infinite_loop')" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.infinite_loop = !$parent.show_history.infinite_loop"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
                         </span>
 
                     </span>
@@ -1160,7 +1160,7 @@
             <tr>
                 <td class="text-center font-w600" ng-class="{'bg-info text-white': report.w_array_final[6].length!==0, 'bg-green text-white': report.w_array_final[6].length===0}">7</td>
                 <td colspan="2" ng-class="{'bg-info text-white': report.w_array_final[6].length!==0, 'bg-green text-white': report.w_array_final[6].length===0}">
-                    <span class="font-w600">FLOATING PAGE &nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="Page that is no longer meant to be accessible, but remains so, such as via a google search." data-tooltip-placement="top"></i></span>
+                    <span class="font-w600">FLOATING PAGE {{_.has(w_update_diff.old, 'floating_page')}}&nbsp;<i class="fa fa-info-circle whoops-info font-s13" data-tooltip-trigger="'click'" data-uib-tooltip="Page that is no longer meant to be accessible, but remains so, such as via a google search." data-tooltip-placement="top"></i></span>
 
                     <span class="pull-right">
 
@@ -1170,7 +1170,7 @@
 
                         <span class="pull-left">
                             &nbsp;&nbsp;
-                            <button ng-show="w_update_diff.new.floating_page" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.floating_page = !$parent.show_history.floating_page"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                            <button ng-show="_.has(w_update_diff.old, 'floating_page')" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.floating_page = !$parent.show_history.floating_page"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
                         </span>
 
                     </span>
@@ -1356,7 +1356,7 @@
 
                         <span class="pull-left">
                             &nbsp;&nbsp;
-                            <button ng-show="w_update_diff.new.confusing" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.confusing = !$parent.show_history.confusing"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                            <button ng-show="_.has(w_update_diff.old, 'confusing')" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.confusing = !$parent.show_history.confusing"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
                         </span>
 
                     </span>
@@ -1543,7 +1543,7 @@
 
                         <span class="pull-left">
                             &nbsp;&nbsp;
-                            <button ng-show="w_update_diff.new.other_expert_note" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.other_expert_note = !$parent.show_history.other_expert_note"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
+                            <button ng-show="_.has(w_update_diff.old, 'other_expert_note')" class="badge badge-primary pull-left font-w600 badge-whoops" data-js-blur ng-click="$parent.show_history.other_expert_note = !$parent.show_history.other_expert_note"><i class="fa fa-eye" aria-hidden="true"></i> HISTORY</button>
                         </span>
 
                     </span>

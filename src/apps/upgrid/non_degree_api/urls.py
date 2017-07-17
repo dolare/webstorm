@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
 from .views import UniversitySchoolListAPI, UniversitySchoolDetailAPI, ReportAPI, ReportCreateListAPI, ReportOverview, \
-    ReportOverviewLatest, SharedReportCreateAPI, SharedReportAPI
+    ReportOverviewLatest, SharedReportCreateAPI, SharedReportAPI, CourseListAPI, CourseURLListAPI, AMPReportListAPI, \
+    AMPReportDetailAPI
 
 urlpatterns = [
 
@@ -17,5 +18,14 @@ urlpatterns = [
     url(r'^shared_reports$', SharedReportCreateAPI.as_view(), name="create_shared_report"),
     url(r'^shared_reports/(?P<object_id>[0-9a-fA-F\-]+)/(?P<access_token>[0-9a-fA-F\-]+)$',
         SharedReportAPI.as_view(), name="shared_report"),
+
+    url(r'^schools/(?P<school_id>[0-9a-fA-F\-]+)/courses$', CourseListAPI.as_view(), name="courses"),
+    url(r'^schools/(?P<school_id>[0-9a-fA-F\-]+)/courses/(?P<course_id>[0-9a-fA-F\-]+)/urls$',
+        CourseURLListAPI.as_view(), name="urls"),
+    url(r'^schools/(?P<school_id>[0-9a-fA-F\-]+)/courses/(?P<course_id>[0-9a-fA-F\-]+)/urls/'
+        r'(?P<url_id>[0-9a-fA-F\-]+)/amp_reports$', AMPReportListAPI.as_view(), name="amp_reports"),
+    url(r'^schools/(?P<school_id>[0-9a-fA-F\-]+)/courses/(?P<course_id>[0-9a-fA-F\-]+)/urls/'
+        r'(?P<url_id>[0-9a-fA-F\-]+)/amp_reports/(?P<object_id>[0-9a-fA-F\-]+)$', AMPReportDetailAPI.as_view(),
+        name="amp_report_detail"),
 ]
 

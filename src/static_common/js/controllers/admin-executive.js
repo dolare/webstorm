@@ -5,8 +5,14 @@
 angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService',
   function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService, $timeout, executiveService) {
 
+    // Inject underscore into $scope
+      $scope._ = _;
+
     var token = authenticationSvc.getUserInfo().accessToken;
-    $scope.emptyExecutiveLabel = "Currently there is no update of the reports."
+    $scope.emptyExecutiveLabel = 'Currently there is no update of the reports.';
+
+    $scope.date = new Date().toISOString();
+
     $http({
       url: '/api/upgrid/non_degree/schools?is_non_degree=True',
       method: 'GET',
@@ -14,8 +20,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         'Authorization': 'JWT ' + token
       }
     }).then(function(response) {
-      // Inject underscore into $scope
-      $scope._ = _;
 
       $scope.non_degree_schools = response.data.results;
 
@@ -128,6 +132,11 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         
 
         s.previewReport = function() {
+
+          jQuery('#previewReport').modal('toggle');
+
+          App.blocks('#previewReport_loading', 'state_loading');
+
           // assign the school id of this row to a field under $scope so that the releaseReport function in the popup window could access the current school id.
           $scope.current_school_id = s.object_id;
 
@@ -151,8 +160,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           }).then(function(response) {
             var reports = response.reports.data;
             var preview = response.preview.data;
-
-            $scope.date = new Date().toISOString();
+            
             $scope.school = preview.school;
             $scope.university = preview.university;
             $scope.categories = preview.categories;
@@ -189,9 +197,9 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
                   $scope.course_rm += _.filter($scope.categories_compared[i].courses, {updated: 2}).length;
                 }
               });
+          }).finally(function() {
+            App.blocks('#previewReport_loading', 'state_normal');
           });
-
-          jQuery('#previewReport').modal('toggle');
         };
 
       } // END for loop
@@ -260,6 +268,10 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           z_index: 1999,
         });
       } else {
+        jQuery('#viewReport').modal('toggle');
+
+        App.blocks('#viewReport_loading', 'state_loading');
+
         $http({
             url: '/api/upgrid/non_degree/reports/' + reportId,
             method: 'GET',
@@ -285,28 +297,32 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
               $scope.categories[i].course_offer = $scope.categories[i].courses.length;
               $scope.course_offer += $scope.categories[i].courses.length;
             }
-          });
 
-        jQuery('#viewReport').modal('toggle');
+            App.blocks('#viewReport_loading', 'state_normal');
+          });
       }
 
     };
 
-    $scope.togglefullen_release = function() {
-      angular.element(document.getElementById("releaseReport")).toggleClass('fullscreen-modal');
+    $scope.togglefullen_preview = function() {
+      angular.element(document.getElementById("previewReport")).toggleClass('fullscreen-modal');
     };
 
     $scope.togglefullen_view = function() {
       angular.element(document.getElementById("viewReport")).toggleClass('fullscreen-modal');
     };
 
-    $scope.scrolltop = function() {
-      angular.element(document.getElementById('')).scrollTop(0);
+    $scope.scrolltop_preview = function() {
+      angular.element(document.getElementById('scrolltop_preview')).scrollTop(0);
     };
 
-    $scope.printReport_release = function() {
+    $scope.scrolltop_view = function() {
+      angular.element(document.getElementById('scrolltop_view')).scrollTop(0);
+    };
 
-      $("#releaseReport").printThis({
+    $scope.printReport_preview = function() {
+
+      $("#print-content_preview").printThis({
         debug: false,
         importCSS: true,
         importStyle: true,
@@ -322,7 +338,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
     $scope.printReport_view = function() {
 
-      $("#viewReport").printThis({
+      $("#print-content_view").printThis({
         debug: false,
         importCSS: true,
         importStyle: true,

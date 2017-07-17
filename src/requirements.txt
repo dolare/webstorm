@@ -27,5 +27,6 @@ Pillow==4.2.0
 # our packages are only listed here for information purpose
 # - on dev box, they should be installed from tarballs generated from source code
 # - on prod box, they are installed from tarballs bundled together
-# grid-core-db==0.2
+# grid-core-db==0.25
+# webtracking-db==0.2
 

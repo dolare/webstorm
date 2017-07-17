@@ -134,8 +134,8 @@ class UniversityCustomerAdmin(admin.ModelAdmin):
     ]
 
 
-class NonDegreeUrlInline(admin.TabularInline):
-    model = NonDegreeUrl
+class NonDegreeCategoryURLInline(admin.TabularInline):
+    model = NonDegreeCategoryURL
     extra = 0
     classes = ('collapse',)
 
@@ -143,23 +143,40 @@ class NonDegreeUrlInline(admin.TabularInline):
         ('Notes', {
             'classes': ('collapse', 'open'),
             'fields': [
-                'url_type',
-                'name',
+                'type',
+                'note',
                 'url',
             ]
         }),
     ]
 
 
-class NonDegreeUrlAdmin(AutoUserModelAdmin):
+class NonDegreeCourseURLInline(admin.TabularInline):
+    model = NonDegreeCourseURL
+    extra = 0
+    classes = ('collapse',)
+
+    fieldsets = [
+        ('Notes', {
+            'classes': ('collapse', 'open'),
+            'fields': [
+                'type',
+                'note',
+                'url',
+            ]
+        }),
+    ]
+
+
+class NonDegreeCategoryURLAdmin(AutoUserModelAdmin):
     readonly_fields = ('date_created', 'date_modified', 'created_by', 'modified_by')
 
-    list_display = ('name', 'url', 'date_created', 'date_modified', 'created_by', 'modified_by')
+    list_display = ('note', 'url', 'date_created', 'date_modified', 'created_by', 'modified_by')
     list_filter = ('date_created', 'date_modified', 'created_by', 'modified_by',)
 
     search_fields = [
-        'url_type__name',
-        'name',
+        'type__name',
+        'note',
         'url',
     ]
 
@@ -175,10 +192,45 @@ class NonDegreeUrlAdmin(AutoUserModelAdmin):
             'classes': ('collapse', 'open'),
             'fields': [
                 'category',
-                'course',
-                'url_type',
-                'name',
+                'type',
+                'note',
                 'url',
+                'webpage',
+                'processed_scan',
+            ]
+        }),
+    ]
+
+
+class NonDegreeCourseURLAdmin(AutoUserModelAdmin):
+    readonly_fields = ('date_created', 'date_modified', 'created_by', 'modified_by')
+
+    list_display = ('note', 'url', 'date_created', 'date_modified', 'created_by', 'modified_by')
+    list_filter = ('date_created', 'date_modified', 'created_by', 'modified_by',)
+
+    search_fields = [
+        'type__name',
+        'note',
+        'url',
+    ]
+
+    fieldsets = [
+        ('Management Record', {
+            'classes': ('collapse',),
+            'fields': [
+                ('date_created', 'created_by'),
+                ('date_modified', 'modified_by'),
+            ]
+        }),
+        ('URL Identity', {
+            'classes': ('collapse', 'open'),
+            'fields': [
+                'course',
+                'type',
+                'note',
+                'url',
+                'webpage',
+                'processed_scan',
             ]
         }),
     ]
@@ -235,7 +287,7 @@ class NonDegreeCategoryAdmin(AutoUserModelAdmin):
     save_as = True
 
     inlines = [
-        NonDegreeUrlInline,
+        NonDegreeCategoryURLInline,
     ]
     readonly_fields = ('object_id', 'date_created', 'date_modified', 'created_by', 'modified_by')
 
@@ -277,7 +329,7 @@ class NonDegreeCourseAdmin(AutoUserModelAdmin):
 
     inlines = [
         NonDegreeCourseDateInline,
-        NonDegreeUrlInline,
+        NonDegreeCourseURLInline,
     ]
     readonly_fields = ('object_id', 'date_created', 'date_modified', 'created_by', 'modified_by')
 
@@ -311,6 +363,7 @@ class NonDegreeCourseAdmin(AutoUserModelAdmin):
                 'university_school',
                 'category',
                 'active',
+                'is_advanced_management_program',
                 'version',
                 'type',
                 'tuition',
@@ -373,7 +426,9 @@ admin.site.register(TranscriptEvaluationProvider)
 
 admin.site.register(NonDegreeCategory, NonDegreeCategoryAdmin)
 admin.site.register(NonDegreeCourse, NonDegreeCourseAdmin)
-admin.site.register(NonDegreeUrl, NonDegreeUrlAdmin)
+admin.site.register(NonDegreeCategoryURL, NonDegreeCategoryURLAdmin)
+admin.site.register(NonDegreeCourseURL, NonDegreeCourseURLAdmin)
 admin.site.register(NonDegreeUrlTypeRef, SimpleObjectModelAdmin)
 admin.site.register(NonDegreeCourseDate, NonDegreeCourseDateAdmin)
 admin.site.register(NonDegreeSharedReport, NonDegreeSharedReportAdmin)
+admin.site.register(NonDegreeAMPReport)

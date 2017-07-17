@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeCourseDate, \
-    NonDegreeUrl, NonDegreeUrlTypeRef
+    NonDegreeUrl, NonDegreeUrlTypeRef, NonDegreeCourseURL, NonDegreeAMPReport
+from webtracking.models import WebPage, WebPageScan
 
 from ..models import NonDegreeReport, NonDegreeSharedReport
 
@@ -117,3 +118,71 @@ class SharedReportSerializer(ModelSerializer):
         model = NonDegreeSharedReport
         fields = ('object_id', 'expired_time', 'reports')
 
+
+class CourseListSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeCourse
+        fields = ('object_id', 'name',)
+
+
+class CourseURLListSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeCourseURL
+        fields = ('object_id', 'url',)
+
+
+class AMPReportListSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeAMPReport
+        fields = ('object_id', 'date_created',)
+
+
+class WebPageSerializer(ModelSerializer):
+
+    class Meta:
+        model = WebPage
+        fields = ('object_id', 'url', 'last_check_date', 'last_change_date', )
+
+
+class WebPageScanDetailSerializer(ModelSerializer):
+    raw_contents = SerializerMethodField()
+    text_contents = SerializerMethodField()
+
+    class Meta:
+        model = WebPageScan
+        fields = ("object_id", "date_modified", "http_code", 'raw_contents', 'text_contents', )
+
+    def get_raw_contents(self, obj):
+        return obj.get_raw_content()
+
+    def get_text_contents(self, obj):
+        return obj.get_text_content()
+
+
+class AMPReportDetailSerializer(ModelSerializer):
+    webpage = SerializerMethodField()
+    start_scan = SerializerMethodField()
+    end_scan = SerializerMethodField()
+
+    class Meta:
+        model = NonDegreeAMPReport
+        fields = ('webpage', 'start_scan', 'end_scan')
+
+    def get_webpage(self, obj):
+        web_page = obj.webpage
+        return WebPageSerializer(web_page).data
+
+    def get_start_scan(self, obj):
+        start_scan = getattr(obj, 'start_scan', None)
+        if start_scan is not None:
+            return WebPageScanDetailSerializer(start_scan).data
+        return None
+
+    def get_end_scan(self, obj):
+        end_scan = getattr(obj, 'end_scan', None)
+        if end_scan is not None:
+            return WebPageScanDetailSerializer(end_scan).data
+        return None
