@@ -77,10 +77,10 @@
 
             </tr>
 
-            <tr ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls">
+            <tr class="zebra-row-gray" ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls">
                <td class="td-bordered"></td>
-               <td class="td-bordered"><i class="text-primary fa fa-link"></i></td>
-               <td><i class="fa fa-file-text-o text-info"></i></td>
+               <td colspan="2" class="td-bordered text-info" style="padding-left: 15px; font-size: 90%;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"><a data-js-blur class="hover-underline" href="javascript:void(0)" style="color: #337ab7;"><i class="fa fa-external-link"></i> &nbsp;{{row2.url}}</a></td>
+               
             </tr>
         </tbody>
 
