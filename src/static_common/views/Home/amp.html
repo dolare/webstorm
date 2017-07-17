@@ -1,0 +1,252 @@
+<!-- Page Content -->
+<div class="content content-boxed">
+  <!-- Table Sections (data-js-table-sections attribute is initialized in js/directives.js) -->
+  <!-- Table Sections (data-js-table-checkable attribute is initialized in js/directives.js) -->
+  <div class="block block-rounded" id="reports">
+    <div class="block-header">
+      <!-- <div class="block-options">
+        <code>.data-js-table-checkable</code>
+        </div> -->
+      <!-- <h3 class="block-title">Checkable Table</h3> -->
+      <div class="col-sm-7">
+        <h1 class="page-heading">
+          AMP Tracking<br><small> &nbsp;&nbsp;- Monitor peers' offerings.</small>
+        </h1>
+      </div>
+    </div>
+    <div class="block-content" style="padding-top:0; padding-left:30px; padding-right:30px">
+     
+      
+       <table st-table="school_table" class="table" style="table-layout: fixed;">
+        <colgroup>
+          <col width="60px">
+          <col width="80%">
+          <col width="80px">
+         
+        </colgroup>
+        <thead class="thead-inverse">
+          <tr class=" bg-info" style="border: 1px solid #e3e3e3; color:white;">
+            <th></th>
+            <th st-sort="name" style="padding-left:15px;" class="h4 font-w400" colspan="2">school
+            </th>
+
+          </tr>
+          <tr class="bg-gray-lighter">
+            <th class="text-center th-bordered" style="vertical-align: middle; text-decoration: none; cursor: default;">
+              <i class="fa fa-search text-primary"></i>
+            </th>
+            <th class="th-bordered" colspan="2">
+              <input st-search="" placeholder="Search for a school..."  style="height:auto; width:100%;" type="search" class="form-control font-w400"/>
+            </th>
+
+
+           
+          </tr>
+        </thead>
+        <tbody ng-repeat-start="row in school_table">
+          <tr>
+            <td class="font-w500 td-bordered text-center bg-gray-lighterer">
+              {{$index+1}}.
+              
+            </td>
+            <td class="font-w500 td-bordered" style="padding-left:15px;" colspan="2">
+              <div class="pull-left" style="margin-right: 10px">
+                <img ng-src="{{row.logo_url}}" height="40" width="40">
+              </div>
+              <div>{{row.school}}<br>
+                <span class="text-muted"><small class="ng-binding text-uppercase" style="
+                  font-weight: 300;
+                  font-size: 12px;
+                  ">{{row.university}}</small></span>
+              </div>
+            </td>
+
+            </tr>
+            
+        </tbody>
+        <tbody ng-repeat-end>
+
+          <tr ng-repeat-start="row1 in row.courses">
+
+              <td class="td-bordered text-center">
+              <i class="text-primary" ng-class="showURL?'fa fa-minus':'fa fa-plus'"></i>
+           
+              
+              </td>
+              <td class="td-bordered" colspan="2" style="padding-left: 15px" ng-click="showUrl($parent.$index, $index);showURL=!showURL "><a data-js-blur class="link-effect" href="javascript:void(0)">{{row1.name}}</a></td>
+
+            </tr>
+
+            <tr ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls">
+               <td class="td-bordered"></td>
+               <td class="td-bordered"><i class="text-primary fa fa-link"></i></td>
+               <td><i class="fa fa-file-text-o text-info"></i></td>
+            </tr>
+        </tbody>
+
+        <tfoot ng-show="school_list.length>25">
+          <tr>
+            <td colspan="2" >
+              <br/><br/>
+              <div class="btn-group pull-left ng-scope tablepagenum" >
+                <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
+                <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button>
+              </div>
+            </td>
+            <td colspan="3" class="text-center">
+              <br/><br/>
+              <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5" style="text-align:right;"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal of Share the Link-->
+<div class="modal fade push-100-t" id="myModal1"  role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="block block-themed block-transparent remove-margin-b" id="shareReports">
+        <div class="block-header bg-primary-dark">
+          <ul class="block-options">
+            <!-- <li>
+              <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+              </li> -->
+            <li>
+              <button data-dismiss="modal" type="button" ng-click="clearSharedValue()"><i class="si si-close"></i></button>
+            </li>
+          </ul>
+          <h3 class="block-title"><i class="fa fa-share-alt"></i>&nbsp; Share the Reports</h3>
+        </div>
+        <div class="block-content" style="padding:0">
+          <div class="board">
+            <div class="board-inner">
+              <ul class="nav myTab-share">
+                <li class="active">
+                  <a href="#reports-days" data-toggle="tab" title="days" style="padding:0">
+                  </a>
+                </li>
+                <li>
+                  <a href="#reports-link" data-toggle="tab" title="link" style="padding:0">
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!-- TABS -->
+            <div class="tab-content tab-share">
+              <!-- TAB 1 -->
+              <div class="tab-pane  in active" id="reports-days">
+                <div class="block-content" style="padding: 10px 12px;">
+                  <div class="form-group">
+                    <div class="pull-left font-w600" style="padding-left: 8px;">I want this report link to expire in:</div>
+                  </div>
+                </div>
+                <div class="content-grid bg-gray-light" style="margin-bottom: 0; padding: 8px 10px 10px 10px">
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                      <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(1)">
+                        <div class="block-content block-content-full">
+                          <div class="font-w600 day-number" style="font-size: 49px">1</div>
+                          <div class="font-w600 push-15-t text-muted">Days</div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                      <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(2)">
+                        <div class="block-content block-content-full">
+                          <div class="font-w600 day-number" style="font-size: 49px">2</div>
+                          <div class="font-w600 push-15-t text-muted">Days</div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                      <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(7)">
+                        <div class="block-content block-content-full">
+                          <div class="font-w600 day-number" style="font-size: 49px">7</div>
+                          <div class="font-w600 push-15-t text-muted">Days</div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                      <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(14)">
+                        <div class="block-content block-content-full">
+                          <div class="font-w600 day-number" style="font-size: 49px">14</div>
+                          <div class="font-w600 push-15-t text-muted">Days</div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- TAB 2 -->
+              <div class="tab-pane" id="reports-link">
+                <div class="block-content">
+                  <div class="form-group">
+                    <label for="reportlink">Link: </label> 
+                    <label style="float:right" ng-show="copied">Copied!</label>
+                    <input type="url" ng-copy="copied=true" class="form-control" id="reportlink" ng-model= "url.text" select-on-click spellcheck="false">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" ng-show="url">
+          <span class="pull-left text-city">The link will be expired on {{expired_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY HH:mm'}}</span>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearSharedValue()">Cancel</button>
+          <button data-clipboard-target="#reportlink" type="button" class="btn btn-primary">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- viewall modal -->
+<div class="modal fullscreen-modal fade" id="ViewAll"  role="dialog" aria-labelledby="myModalLabel" >
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="block block-themed block-transparent remove-margin-b" id="viewall_loading">
+        <div class="block-header bg-primary-dark">
+          <ul class="block-options">
+            <li>
+              <button ng-click="printReport()" type="button" data-js-blur><i class="si si-printer"></i></button>
+            </li>
+            <li>
+              <button type="button" ng-click="togglefullen(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
+            </li>
+            <li>
+              <button data-dismiss="modal" type="button" ng-click="scrolltop()" data-js-blur><i class="si si-close"></i></button>
+            </li>
+          </ul>
+          <h3 class="block-title">Non-degree Report</h3>
+        </div>
+        <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_non_degree">
+          <!-- SlimScroll Container -->
+          <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
+          <div class="block cart_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="top-report">
+            <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content1">
+              <!-- ########### -->
+              <!-- dynamic templates -->
+              
+                <!-- <div ng-attr-id="{{ 'program-' + $index }}"></div> -->
+                <div ng-include src="'/static/views/Home/non_degree_report.html'"></div>
+              
+              <!-- Footer -->
+             
+            </div>
+          </div>
+          <div style="position: fixed;bottom: 50px;right: 25px;">
+            <a  data-js-blur href="#top-report" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
+          </div>
+          <!-- </div> -->
+          <!-- END SlimScroll Container -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
