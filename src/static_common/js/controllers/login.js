@@ -175,7 +175,7 @@ login.controller('LoginController',
 
                         // options
                         icon: "fa fa-check",
-                        message: 'Your password reset email has been sent. If you do not receive reset email within the next minute, please check your email address.'
+                        message: 'You should receive a password reset email shortly. If you do not receive one within the next few minutes, please verify that you have submitted the correct email address.'
                     }, {
                         // settings
                         type: 'success',
