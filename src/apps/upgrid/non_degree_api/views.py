@@ -317,7 +317,8 @@ class CourseListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     def get_queryset(self, *args, **kwargs):
         courses = NonDegreeCourse.objects.filter(category__university_school__object_id=self.school_id).distinct()
         if not self.is_manager():
-            courses = courses.filter(category__university_school=self.request.user.non_degree_schools)
+            user = UniversityCustomer.objects.get(id=self.request.user.id)
+            courses = courses.filter(category__university_school__in=user.non_degree_schools.all())
         return courses
 
     def get(self, request, school_id, *args, **kwargs):
@@ -339,14 +340,11 @@ class CourseURLListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     ordering = ('url', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
-        print(self.course_id)
         course_urls = NonDegreeCourseURL.objects.filter(course__object_id=self.course_id)
-        print(course_urls)
         course_urls = course_urls.filter(course__category__university_school__object_id=self.school_id)
-        print(course_urls)
         if not self.is_manager():
-            course_urls = course_urls.filter(course__category__university_school=self.request.user.non_degree_schools)
-        print(course_urls)
+            user = UniversityCustomer.objects.get(id=self.request.user.id)
+            course_urls = course_urls.filter(course__category__university_school__in=user.non_degree_schools.all())
         return course_urls
 
     def get(self, request, school_id, course_id, *args, **kwargs):
