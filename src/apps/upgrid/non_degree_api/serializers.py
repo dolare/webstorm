@@ -128,16 +128,20 @@ class CourseListSerializer(ModelSerializer):
 
 class CourseURLListSerializer(ModelSerializer):
     amp_report_released_date = SerializerMethodField()
+    type = SerializerMethodField()
 
     class Meta:
         model = NonDegreeCourseURL
-        fields = ('object_id', 'url', 'amp_report_released_date', )
+        fields = ('object_id', 'url', 'amp_report_released_date', 'type', 'note',)
 
     def get_amp_report_released_date(self, obj):
         amp_reports = NonDegreeAMPReport.objects.filter(webpage=obj.webpage).order_by('-date_created')
         if not amp_reports:
             return None
         return amp_reports.first().date_created
+
+    def get_type(self, obj):
+        return obj.type.name
 
 
 class AMPReportListSerializer(ModelSerializer):
