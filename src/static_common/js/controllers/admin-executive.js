@@ -20,10 +20,9 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         'Authorization': 'JWT ' + token
       }
     }).then(function(response) {
+      $scope.non_degree_schools = response.data.results;
       console.log('number of schools:', $scope.non_degree_schools.length);
 
-      $scope.non_degree_schools = response.data.results;
-      
       for (let i = $scope.non_degree_schools.length - 1; i >= 0; i--) {
         let s = $scope.non_degree_schools[i];
 
@@ -129,7 +128,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             $scope.school = preview.school;
             $scope.university = preview.university;
             $scope.categories = preview.categories;
-            $scope.logo_url = executiveService.getLogoBySchoolName($scope.school);
+            $scope.logo_url = executiveService.getLogoBySchoolName($scope.school, $scope.university);
 
             // Get the compared data between the preview data(school's current data) and the previous report
 
@@ -309,7 +308,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             $scope.university = resp_report.data.university_name;
             $scope.categories = resp_report.data.categories;
 
-            $scope.logo_url = executiveService.getLogoBySchoolName($scope.school);
+            $scope.logo_url = executiveService.getLogoBySchoolName($scope.school, $scope.university);
 
             // Category offerings
             $scope.cat_offer = $scope.categories.length;
