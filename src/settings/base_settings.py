@@ -29,7 +29,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # 3rd party libs
-    'guardian',
+    # 'guardian',
     'bootstrap3',
     'adminplus',    # add custom view to admin page, https://github.com/jsocol/django-adminplus
     'rest_framework',
