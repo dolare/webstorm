@@ -1,7 +1,7 @@
 //from username, to get the ceeb, program, and degree respectively
 
 angular.module('myApp')
-  .factory('executiveService',['orderByFilter', '$sce', 'avatarService', '$http', '$q', 'authenticationSvc', function(orderBy, $sce, avatarService, $http, $q, authenticationSvc) {
+  .factory('executiveService',['orderByFilter', '$sce', 'avatarService', '$http', '$q', 'authenticationSvc', function(orderByFilter, $sce, avatarService, $http, $q, authenticationSvc) {
     
      var updatedReport = function(old_data_raw, new_data_raw) {
 
@@ -105,15 +105,15 @@ angular.module('myApp')
                     course_data_copy[j]["course_dates_old"] = moment(old_course_copy.course_dates[0].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[0].end_date).format('MMM DD, YYYY');
                   } else {
 
-                    old_course_copy.course_dates = orderBy(old_course_copy.course_dates, 'start_date', false);
+                    old_course_copy.course_dates = orderByFilter(old_course_copy.course_dates, 'start_date');
 
-                    for(var i=0; i<old_course_copy.course_dates.length; i++){
-                      console.log("i="+i);
-                      course_data_copy[j]["course_dates_old"] = (course_data_copy[j]["course_dates_old"] || '') + moment(old_course_copy.course_dates[i].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[i].end_date).format('MMM DD, YYYY');
+                    for(var k=0; k<old_course_copy.course_dates.length; k++){
+                      console.log("k="+k);
+                      course_data_copy[j]["course_dates_old"] = (course_data_copy[j]["course_dates_old"] || '') + moment(old_course_copy.course_dates[k].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[k].end_date).format('MMM DD, YYYY');
 
                       console.log("format = "+moment().format('MMM DD, YYYY'))
 
-                      if(i < old_course_copy.course_dates.length - 1){
+                      if(k < old_course_copy.course_dates.length - 1){
                         course_data_copy[j]["course_dates_old"] = course_data_copy[j]["course_dates_old"] + '; '
                       }
 
