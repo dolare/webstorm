@@ -34,7 +34,7 @@
           <div class="row">
             <div class="col-sm-6">
               <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
-                <small>upgrid.gridet.com</small><br>Non-degree REPORT
+                <small>upgrid.gridet.com</small><br>NON-DEGREE REPORT
               </h1>
               <div class="text-muted" style="
                 padding-left: 2px;
@@ -271,7 +271,7 @@
                         <td style="
                             padding: 8px 10px;
                             ">
-                          <span ng-repeat-start="d in course.course_dates">Start: {{d.start_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span><br><span>End: {{d.end_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span><br ng-repeat-end ng-if="!$last">
+                          <span ng-repeat-start="d in course.course_dates | orderBy:'start_date'">Start: {{d.start_date | amUtc  | amDateFormat:'MMM DD, YYYY'}}</span><br><span>End: {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span><br ng-repeat-end ng-if="!$last">
                         </td>
                         <td style="
                             padding: 8px 10px;

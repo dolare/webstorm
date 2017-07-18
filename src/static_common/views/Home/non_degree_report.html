@@ -535,7 +535,7 @@
                           <td style="
                             text-align: center;
                             ">{{$index + 1}}</td>
-                          <td style="vertical-align: middle;padding: 15px;text-align: left;" class="ribbon ribbon-modern ribbon-city ribbon-update"><div class="ribbon-box font-w600" 
+                          <td style="vertical-align: middle;padding: 15px;text-align: left;" class="ribbon ribbon-modern ribbon-success ribbon-update"><div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
                                                 data-uib-popover="{{course.name_old}}"
 
@@ -553,7 +553,7 @@
 
                           </td>
 
-                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
                             <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
@@ -571,7 +571,7 @@
                             <span ng-if="course.type">{{course.type}}</span>
                             <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
-                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
                             <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
@@ -587,14 +587,14 @@
                                                 </div> 
 
                             <span ng-if="course.course_dates.length!==0">
-                              <span ng-repeat-start="d in course.course_dates">{{d.start_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span> - <span>{{d.end_date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</span>
+                              <span ng-repeat-start="d in course.course_dates | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span> - <span>{{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span>
                               <br ng-repeat-end ng-if="!$last">
                             </span>
 
                             <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
 
                           </td>
-                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-city ribbon-update">
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
                              <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
                                                 data-uib-popover="{{course.tuition_number_old}}"
@@ -622,7 +622,7 @@
                           </td>
                           <td style="
                             padding: 15px;
-                            " class="ribbon ribbon-modern ribbon-city ribbon-update">
+                            " class="ribbon ribbon-modern ribbon-success ribbon-update">
 
                             <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                            

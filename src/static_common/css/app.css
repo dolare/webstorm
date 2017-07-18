@@ -1597,6 +1597,7 @@ ul.help-ul>li {
 }
 .report-popover .popover-content {
     padding: 9px 14px;
+    font-size: 13px;
 }
 
 
@@ -1652,6 +1653,17 @@ ul.help-ul>li {
 
 .ribbon-update.ribbon-flat.ribbon-modern .ribbon-box:before {
     border-color: #44b4a6;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+}
+
+/*ribbon-success*/
+.ribbon-update.ribbon-success .ribbon-box {
+    background-color: #46c37b;
+}
+
+.ribbon-update.ribbon-success.ribbon-modern .ribbon-box:before {
+    border-color: #46c37b;
     border-left-color: transparent;
     border-bottom-color: transparent;
 }

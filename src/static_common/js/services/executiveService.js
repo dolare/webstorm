@@ -1,7 +1,7 @@
 //from username, to get the ceeb, program, and degree respectively
 
 angular.module('myApp')
-  .factory('executiveService', function($sce, avatarService, $http, $q, authenticationSvc) {
+  .factory('executiveService',['orderByFilter', '$sce', 'avatarService', '$http', '$q', 'authenticationSvc', function(orderBy, $sce, avatarService, $http, $q, authenticationSvc) {
     
      var updatedReport = function(old_data_raw, new_data_raw) {
 
@@ -97,19 +97,27 @@ angular.module('myApp')
               //course_date
               if(!_.isEqual(course_data_copy[j].course_dates, old_course_copy.course_dates)){
 
+                console.log("old_course_copy.course_dates="+JSON.stringify(old_course_copy.course_dates));
+
                 if(old_course_copy.course_dates.length !== 0){
 
                   if(old_course_copy.course_dates.length===1){
-                    course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates[0].start_date + ' - ' + old_course_copy.course_dates[0].end_date;
+                    course_data_copy[j]["course_dates_old"] = moment(old_course_copy.course_dates[0].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[0].end_date).format('MMM DD, YYYY');
                   } else {
 
+                    old_course_copy.course_dates = orderBy(old_course_copy.course_dates, 'start_date', false);
+
                     for(var i=0; i<old_course_copy.course_dates.length; i++){
+                      console.log("i="+i);
+                      course_data_copy[j]["course_dates_old"] = (course_data_copy[j]["course_dates_old"] || '') + moment(old_course_copy.course_dates[i].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[i].end_date).format('MMM DD, YYYY');
 
-                      course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates[i].start_date + ' - ' + old_course_copy.course_dates[i].end_date;
+                      console.log("format = "+moment().format('MMM DD, YYYY'))
 
-                      if(i !== old_course_copy.course_dates.length - 1){
-                        course_data_copy[j]["course_dates_old"] = course_data_copy[j]["course_dates_old"] + ', '
+                      if(i < old_course_copy.course_dates.length - 1){
+                        course_data_copy[j]["course_dates_old"] = course_data_copy[j]["course_dates_old"] + '; '
                       }
+
+                      console.log("time = "+course_data_copy[j]["course_dates_old"]);
                     }
 
                   }
@@ -261,4 +269,4 @@ angular.module('myApp')
       getLogoBySchoolName: getLogoBySchoolName
     };
 
-  });
+  }]);
