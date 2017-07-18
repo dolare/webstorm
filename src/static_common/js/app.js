@@ -749,6 +749,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                              'https://cdnjs.cloudflare.com/ajax/libs/jsdiff/3.2.0/diff.min.js',
                               '/static/js/services/ajaxService.js',
                               '/static/js/third-party/clipboard.min.js',
                               '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
@@ -760,6 +761,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                               '/static/js/services/executiveService.js',
+
                               '/static/js/controllers/amp.js',
                              
                               
