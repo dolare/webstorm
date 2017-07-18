@@ -15,7 +15,8 @@
       </div>
     </div>
     <div class="block-content" style="padding-top:0; padding-left:30px; padding-right:30px">
-     
+      
+      
       
        <table st-table="school_table" class="table" style="table-layout: fixed;">
         <colgroup>
@@ -77,10 +78,10 @@
 
             </tr>
 
-            <tr ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls">
+            <tr class="zebra-row-gray" ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls">
                <td class="td-bordered"></td>
-               <td class="td-bordered"><i class="text-primary fa fa-link"></i></td>
-               <td><i class="fa fa-file-text-o text-info"></i></td>
+               <td colspan="2" class="td-bordered text-info" style="padding-left: 15px; font-size: 90%;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"><a data-js-blur class="hover-underline" href="javascript:void(0)" style="color: #337ab7;" data-toggle="modal" data-target="#amp_report"  ng-click="getReport(row.object_id, row1.object_id, row2.object_id)"><i class="fa fa-external-link"></i> &nbsp;{{row2.url}}</a></td>
+               
             </tr>
         </tbody>
 
@@ -206,11 +207,13 @@
 </div>
 
 
-<!-- viewall modal -->
-<div class="modal fullscreen-modal fade" id="ViewAll"  role="dialog" aria-labelledby="myModalLabel" >
+
+
+<!-- amp modal -->
+<div class="modal fullscreen-modal fade" id="amp_report"  role="dialog" aria-labelledby="myModalLabel" >
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="block block-themed block-transparent remove-margin-b" id="viewall_loading">
+      <div class="block block-themed block-transparent remove-margin-b" id="amp_loading">
         <div class="block-header bg-primary-dark">
           <ul class="block-options">
             <li>
@@ -223,21 +226,40 @@
               <button data-dismiss="modal" type="button" ng-click="scrolltop()" data-js-blur><i class="si si-close"></i></button>
             </li>
           </ul>
-          <h3 class="block-title">Non-degree Report</h3>
+          <h3 class="block-title">AMP Tracking Report</h3>
         </div>
         <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_non_degree">
           <!-- SlimScroll Container -->
           <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
           <div class="block cart_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="top-report">
             <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content1">
+
+                        <div class="row">
+            <div class="col-sm-6">
+              <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
+                <small>upgrid.gridet.com</small><br>AMP TRACKING REPORT
+              </h1>
+              <div class="text-muted" style="
+                padding-left: 2px;
+                font-weight: 100;
+                ">Created: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
+            </div>
+            <div class="col-sm-6">
+              <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
+            </div>
+          </div>
+          <hr class="hidden-print">
+          <!-- Invoice Info -->
+
+
               <!-- ########### -->
-              <!-- dynamic templates -->
-              
-                <!-- <div ng-attr-id="{{ 'program-' + $index }}"></div> -->
-                <div ng-include src="'/static/views/Home/non_degree_report.html'"></div>
-              
+              <pre id="diffRptContent"></pre>
               <!-- Footer -->
-             
+            
+         <hr class="hidden-print" style="margin-bottom: 8px;">
+          <p class="text-muted text-left"><small><strong>Gridology Education &amp; Technology, Inc.</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oak Tree Center, 2024 Center Ave, Fort Lee, NJ 07024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="http://www.gridet.com" target="_blank"><strong>gridet</strong>.com</a></small></p>
+     
+
             </div>
           </div>
           <div style="position: fixed;bottom: 50px;right: 25px;">

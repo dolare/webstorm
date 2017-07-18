@@ -2060,3 +2060,15 @@ left: 35%;
     width: initial;
     max-width: none;
 }
+
+.zebra-row-gray:nth-child(even)>td:last-child {
+  background:#f9f9f9;
+}
+
+.zebra-row-gray:nth-child(odd)>td:last-child {
+  background:#fefefe;
+}
+
+.hover-underline:hover {
+  text-decoration: underline;
+}

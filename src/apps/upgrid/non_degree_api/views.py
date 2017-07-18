@@ -363,8 +363,8 @@ class AMPReportListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     filter_class = AMPReportListFilter
 
     search_fields = ('webpage__url', )
-    ordering_fields = ('webpage__url', )
-    ordering = ('webpage__url', )      # default ordering
+    ordering_fields = ('webpage__url', 'date_created',)
+    ordering = ('-date_created', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
         reports = NonDegreeAMPReport.objects.filter(webpage__nondegreecourseurl__object_id=self.url_id)\
