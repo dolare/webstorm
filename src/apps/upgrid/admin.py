@@ -13,38 +13,25 @@ from django.contrib.admin.options import InlineModelAdmin
 
 
 class AutoUserModelAdmin(admin.ModelAdmin):
-    change_form_template = 'admin/ceeb_program/change_form.html'
-
     formfield_overrides = {
+        # models.CharField: {'widget': TextInput(attrs={'size':'20'})},
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 80})},
     }
 
     def has_change_permission(self, request, obj=None):
-        """
-        In this function, we not only check models change permission, we also check object change
-        permission. User who has either models change permission or object change permission can
-        access the object.
-
-        :param request:
-        :param obj: Object which user want to access
-        :return: True if user has permission, False if not
-        """
         opts = self.opts
-        codename_view = get_permission_codename('view_only', opts)
-        codename_change = get_permission_codename('change', opts)
-
-        if request.user.has_perm("%s.%s" % (opts.app_label, codename_view), obj) or \
-                request.user.has_perm("%s.%s" % (opts.app_label, codename_view)):
+        codename = get_permission_codename('view_only', opts)
+        if request.user.has_perm("%s.%s" % (opts.app_label, codename)):
             return True  # allow "view_only" account to access detail page
         else:
-            return request.user.has_perm("%s.%s" % (opts.app_label, codename_change), obj) or \
-                   request.user.has_perm("%s.%s" % (opts.app_label, codename_change))
+            # otherwise fall back to default behavior
+            return super(AutoUserModelAdmin, self).has_change_permission(request)
 
     # auto save user ID when creating/modifying
     def save_model(self, request, obj, form, change):
         opts = self.opts
-        codename_view = get_permission_codename('view_only', opts)
-        if request.user.has_perm("%s.%s" % (opts.app_label, codename_view)):
+        codename = get_permission_codename('view_only', opts)
+        if request.user.has_perm("%s.%s" % (opts.app_label, codename)):
             # don't allow view_only account change record
             messages.add_message(request, messages.ERROR, "Cannot modify record with view_only permission")
             return
