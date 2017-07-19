@@ -13,6 +13,26 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
     $scope.date = new Date().toISOString();
 
+    $scope.currency_symbols = {
+      'USD': '$', // US Dollar
+      'EUR': '€', // Euro
+      'CRC': '₡', // Costa Rican Colón
+      'GBP': '£', // British Pound Sterling
+      'ILS': '₪', // Israeli New Sheqel
+      'INR': '₹', // Indian Rupee
+      'JPY': '¥', // Japanese Yen
+      'KRW': '₩', // South Korean Won
+      'NGN': '₦', // Nigerian Naira
+      'PHP': '₱', // Philippine Peso
+      'PLN': 'zł', // Polish Zloty
+      'PYG': '₲', // Paraguayan Guarani
+      'THB': '฿', // Thai Baht
+      'UAH': '₴', // Ukrainian Hryvnia
+      'VND': '₫', // Vietnamese Dong
+      'CNY': '¥', // Chinese Yuan
+      'null': '$', // The default currency sign is USD
+    };
+
     $http({
       url: '/api/upgrid/non_degree/schools?is_non_degree=True',
       method: 'GET',
