@@ -486,15 +486,8 @@
                                                     </span>                                   
                                                 </div> 
 
-                            <span ng-if="course.tuition_number">
-                            {{course.tuition_number | currency:currency_symbols[course.currency]:0}}<br><span ng-if="course.currency!='USD'&&course.currency!=null" class="text-muted" style="
-                              font-size: 12px;
-                              font-weight: 200;
-                              ">*({{fxConvert(course.tuition_number,course.currency) | currency:"$":0}} as of {{fxRates.date | amUtc | amLocal | amDateFormat:'M/D/YY'}})</span>
-                            </span>
-
-
-                              <span ng-if="!course.tuition_number" class="font-w600 text-gray label-na">N/A</span>
+                            <span ng-if="course.tuition_number">{{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                            <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
                           </td>
                           <td style="
                             padding: 8px 10px;

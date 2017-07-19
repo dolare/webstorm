@@ -42,6 +42,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
       'UAH': '₴', // Ukrainian Hryvnia
       'VND': '₫', // Vietnamese Dong
       'CNY': '¥', // Chinese Yuan
+      'null': '$', // The default currency sign is USD
     };
 
   $scope.check_storage = function(){

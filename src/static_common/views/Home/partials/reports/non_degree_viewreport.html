@@ -276,7 +276,8 @@
                         <td style="
                             padding: 8px 10px;
                             ">
-                          <span>{{course.tuition_number | currency:$:0}}</span>
+                          <span ng-if="course.tuition_number">{{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                          <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
                         </td>
                         <td style="
                             padding: 8px 10px;
