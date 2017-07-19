@@ -2073,11 +2073,11 @@ left: 35%;
     max-width: none;
 }
 
-.zebra-row-gray:nth-child(even)>td:last-child {
+.zebra-row-gray:nth-child(even)>td:not(:first-child) {
   background:#f9f9f9;
 }
 
-.zebra-row-gray:nth-child(odd)>td:last-child {
+.zebra-row-gray:nth-child(odd)>td:not(:first-child) {
   background:#fefefe;
 }
 
