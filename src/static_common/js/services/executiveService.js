@@ -6,6 +6,7 @@ angular.module('myApp')
      var updatedReport = function(old_data_raw, new_data_raw) {
 
       var school_data = angular.copy(new_data_raw);
+      var school_data_old = angular.copy(old_data_raw);
       var school_cat_data = school_data.categories;
 
       var new_ids = _.pluck(new_data_raw.categories, 'object_id');
@@ -48,6 +49,9 @@ angular.module('myApp')
           if(school_cat_data[i].name !== _.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).name){
             school_cat_data[i]["updated"] =   _.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).name
 
+            //history time
+            school_data['date_created_old'] = school_data_old.date_created
+
           } else {
             //same name(no update on category)
             //check update on courses
@@ -82,16 +86,25 @@ angular.module('myApp')
               //updated name
               if(course_data_copy[j].name !== old_course_copy.name){
                 course_data_copy[j]["name_old"] = old_course_copy.name ? old_course_copy.name : 'N/A';
+                
+                //history time
+                school_data['date_created_old'] = school_data_old.date_created
               }
 
               //updated url
               if(course_data_copy[j].url !== old_course_copy.url){
                 course_data_copy[j]["url_old"] = old_course_copy.url ? old_course_copy.url : 'N/A';
+                
+                //history time
+                school_data['date_created_old'] = school_data_old.date_created
               }
 
               //updated repeatable
               if(course_data_copy[j].Repeatable !== old_course_copy.Repeatable){
                 course_data_copy[j]["Repeatable_old"] = old_course_copy.Repeatable ? old_course_copy.Repeatable : 'N/A';
+                
+                //history time
+                school_data['date_created_old'] = school_data_old.date_created
               }
 
               //course_date
@@ -125,22 +138,36 @@ angular.module('myApp')
                 } else {
                   course_data_copy[j]["course_dates_old"] = 'N/A'
                 }
+
                 //course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates.length !== 0 ? old_course_copy.course_dates : 'N/A';
+                
+                //history time
+                school_data['date_created_old'] = school_data_old.date_created
               }
 
               //updated currency
               if(course_data_copy[j].currency !== old_course_copy.currency){
                 course_data_copy[j]["currency_old"] = old_course_copy.currency ? old_course_copy.currency : 'N/A';
+              
+                //history time
+                school_data['date_created_old'] = school_data_old.date_created
               }
 
               //updated type
               if(course_data_copy[j].type !== old_course_copy.type){
                 course_data_copy[j]["type_old"] = old_course_copy.type ? old_course_copy.type : 'N/A';
+              
+                //history time
+                school_data['date_created_old'] = school_data_old.date_created
               }
 
               //updated tuition
               if(course_data_copy[j].tuition_number !== old_course_copy.tuition_number){
                 course_data_copy[j]["tuition_number_old"] = old_course_copy.tuition_number ? old_course_copy.tuition_number : 'N/A';
+                
+                //history time
+                school_data['date_created_old'] = school_data_old.date_created
+
               }
 
               }

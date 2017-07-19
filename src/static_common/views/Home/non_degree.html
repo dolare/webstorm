@@ -16,98 +16,7 @@
     </div>
     <div class="block-content" style="padding-top:0; padding-left:30px; padding-right:30px">
       <!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
-      
-     <!--  <table st-table="school_list" class="table" style="table-layout: fixed;">
-        <colgroup>
-          <col width="60px">
-          <col width="50%">
-          <col width="80px">
-          <col width="80px">
-          <col width="80px">
-          <col width="80px">
-        </colgroup>
-        <thead class="thead-inverse">
-          <tr class=" bg-info" style="border: 1px solid #e3e3e3; color:white;">
-            <th></th>
-            <th st-sort="name" style="padding-left:15px;" class="h4 font-w400">school
-            </th>
-            <th colspan="2" class="h4 font-w400" style="text-align:center;">categories
-            </th>
-            <th colspan="2" class="h4 font-w400" style="text-align:center;">
-              courses
-            </th>
-          </tr>
-          <tr class="bg-gray-lighter">
-            <th class="text-center th-bordered" style="vertical-align: middle; text-decoration: none; cursor: default;">
-              <i class="fa fa-search text-primary"></i>
-            </th>
-            <th class="th-bordered">
-              <input st-search="" placeholder="Search for a school..."  style="height:auto; width:100%;" type="search" class="form-control font-w400"/>
-            </th>
-            <th style="text-align:center;vertical-align: middle;letter-spacing: 0.2px;" class="font-w400 th-bordered text-muted font-s12">
-              Addition(s)
-            </th>
-            <th style="text-align:center;vertical-align: middle;letter-spacing: 0.2px" class="font-w400 th-bordered text-muted font-s12">
-              Removal(s)
-            </th>
-            <th style="text-align:center;vertical-align: middle;letter-spacing: 0.2px" class="font-w400 th-bordered text-muted font-s12">
-              Addition(s)
-            </th>
-            <th style="text-align:center;vertical-align: middle;letter-spacing: 0.2px" class="font-w400 th-bordered text-muted font-s12">
-              Removal(s)
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="row in school_list">
-            <td class="font-w500 td-bordered text-center bg-gray-lighterer">
-             
-              <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':row.hasReport==false}">
-              <input type="checkbox" ng-model="row.selected" ng-disabled="row.hasReport==false"><span></span>
-              </label>
-            </td>
-            <td class="font-w500 td-bordered" style="padding-left:15px;">
-              <div class="pull-left" style="margin-right: 10px">
-                <img ng-src="{{row.logo_url}}" alt="Smiley face" height="40" width="40">
-              </div>
-              <div>{{row.school}}<br>
-                <span class="text-muted"><small class="ng-binding text-uppercase" style="
-                  font-weight: 300;
-                  font-size: 12px;
-                  ">{{row.university}}</small></span>
-              </div>
-            </td>
-            <td style="text-align:center;" class="td-bordered">
-              <span ng-if="row.hasReport==false" class="badge badge-default">In Progress</span><span ng-if="row.cat_add>0" class="badge badge-success">+ {{row.cat_add}}</span><span ng-if="row.cat_add==0" class="badge badge-default">- -</span>
-            </td>
-            <td style="text-align:center;" class="td-bordered">
-              <span ng-if="row.hasReport==false" class="badge badge-default">In Progress</span><span ng-if="row.cat_rm>0" class="badge badge-danger">- {{row.cat_rm}}</span><span ng-if="row.cat_rm==0" class="badge badge-default">- -</span>
-            </td>
-            <td style="text-align:center;" class="td-bordered">
-              <span ng-if="row.hasReport==false" class="badge badge-default">In Progress</span><span ng-if="row.course_add>0" class="badge badge-success">+ {{row.course_add}}</span><span ng-if="row.course_add==0" class="badge badge-default">- -</span>
-            </td>
-            <td style="text-align:center;" class="td-bordered">
-              <span ng-if="row.hasReport==false" class="badge badge-default">In Progress</span><span ng-if="row.course_rm>0" class="badge badge-danger">- {{row.course_rm}}</span><span ng-if="row.course_rm==0" class="badge badge-default">- -</span>
-            </td>
-          </tr>
-        </tbody>
-        <tfoot ng-show="school_list.length>25">
-          <tr>
-            <td colspan="2" >
-              <br/><br/>
-              <div class="btn-group pull-left ng-scope tablepagenum" >
-                <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
-                <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button>
-              </div>
-            </td>
-            <td colspan="3" class="text-center">
-              <br/><br/>
-              <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="5" style="text-align:right;"></div>
-            </td>
-          </tr>
-        </tfoot>
-      </table> -->
-
+    
       
        <table st-table="school_table" class="table" style="table-layout: fixed;">
         <colgroup>
@@ -131,10 +40,13 @@
           </tr>
           <tr class="bg-gray-lighter">
             <th class="text-center th-bordered" style="vertical-align: middle; text-decoration: none; cursor: default;">
-              <i class="fa fa-search text-primary"></i>
+              <!-- <i class="fa fa-search text-primary"></i> -->
+              <label class="css-input css-checkbox css-checkbox-primary">
+              <input type="checkbox" ng-model="checkAll" ng-click="checkAll_None(checkAll)" ng-init="checkAll=true"><span></span>
+              </label>
             </th>
             <th class="th-bordered">
-              <input st-search="" placeholder="Search for a school..."  style="height:auto; width:100%;" type="search" class="form-control font-w400"/>
+             <!--  <input st-search="" placeholder="Search for a school..."  style="height:auto; width:100%;" type="search" class="form-control font-w400"/> -->
             </th>
             <th style="text-align:center;vertical-align: middle;letter-spacing: 0.2px;" class="font-w400 th-bordered text-muted font-s12">
               Addition(s)

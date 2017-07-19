@@ -290,6 +290,20 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
      }
 
 
+     $scope.checkAll_None = function(value) {
+
+      for(var i=0; i<$scope.school_table.length; i++){
+
+        if($scope.school_table[i].details){
+          console.log("i="+i)
+          $scope.$storage.non_degree[$scope.school_table[i].object_id] = value
+
+        }
+
+      }
+
+     }
+
       $scope.htmlShare = function(day) {
       
       var reports_ids = [];
