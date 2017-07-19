@@ -91,18 +91,25 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
         }, 100);
 
-        s.previewReport = function() {
+      } // END for loop
+
+    }).catch(function(error) {
+      console.log('an error occurred...' + JSON.stringify(error));
+
+    });
+
+    $scope.previewReport = function(schoolId) {
           jQuery('#previewReport').modal('toggle');
 
           App.blocks('#previewReport_loading', 'state_loading');
 
           // assign the school id of this row to a field under $scope so that the releaseReport function in the popup window could access the current school id.
-          $scope.current_school_id = s.object_id;
+          $scope.current_school_id = schoolId;
 
           $q.all({
             // Get the report list
             reports: $http({
-              url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
+              url: '/api/upgrid/non_degree/reports?school=' + schoolId,
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
@@ -110,7 +117,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             }),
             // Get the current school programs' data
             preview: $http({
-              url: '/api/upgrid/non_degree/schools/' + s.object_id,
+              url: '/api/upgrid/non_degree/schools/' + schoolId,
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
@@ -139,6 +146,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
               $scope.cat_rm = 0;
               $scope.course_add = 0;
               $scope.course_rm = 0;
+              App.blocks('#previewReport_loading', 'state_normal');
             }
             // else there would be a previous report, and get that report
             else
@@ -152,6 +160,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
                 console.log('Loaded latest report of ' + resp_prev_report.data.school_name);
 
                 $scope.categories_compared = executiveService.updatedReport(resp_prev_report.data, preview).categories;
+                console.log('Got compared results!');
                 $scope.cat_add = _.filter($scope.categories_compared, {updated: 1}).length;
                 $scope.cat_rm = _.filter($scope.categories_compared, {updated: 2}).length;
 
@@ -162,20 +171,12 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
                   $scope.course_add += _.filter($scope.categories_compared[i].courses, {updated: 1}).length;
                   $scope.course_rm += _.filter($scope.categories_compared[i].courses, {updated: 2}).length;
                 }
+                App.blocks('#previewReport_loading', 'state_normal');
               });
-          }).finally(function() {
-            App.blocks('#previewReport_loading', 'state_normal');
           }).catch(function(error) {
             console.log('an error occurred...' + JSON.stringify(error));
           });
         };
-
-      } // END for loop
-
-    }).catch(function(error) {
-      console.log('an error occurred...' + JSON.stringify(error));
-
-    });
 
     $scope.checkUpdate = function() {
       // If true, the report is ready to release, otherwise not
