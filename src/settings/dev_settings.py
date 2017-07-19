@@ -69,6 +69,7 @@ LOGGING = {
 #databas settings
 upgridAdmin = None
 ceebAdmin = None
+
 try:
     db_pass = os.environ["DB_PASS"]
 except KeyError:
@@ -87,6 +88,11 @@ try:
 except KeyError:
     print('ceebAdmin == null')
     ceebAdmin = None
+
+try:
+    ceebdev = os.environ["ceebdev"]
+except KeyError:
+    ceebdev = None
 
 if not upgridAdmin == None:
     print('upgridAdmin')
@@ -110,6 +116,17 @@ elif not ceebAdmin == None and upgridAdmin == None:
             'PORT': '8443',
             'USER': 'ceebadmin',
             'PASSWORD': ceebAdmin,
+            },
+    }
+elif ceebdev is not None:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'ceebdev',
+            'HOST': 'localhost',
+            'PORT': '',
+            'USER': 'localuser',
+            'PASSWORD': ceebdev,
             },
     }
 else:
