@@ -96,10 +96,7 @@ class CourseSerializer(ModelSerializer):
         return None
 
     def get_url(self, obj):
-        url_type = NonDegreeUrlTypeRef.objects.filter(name='Main')
-        if not url_type:
-            return None
-        url = NonDegreeUrl.objects.filter(course=obj).filter(url_type=url_type)
+        url = NonDegreeCourseURL.objects.filter(course=obj).filter(type__name='Main')
         if not url:
             return None
         return url.first().url
