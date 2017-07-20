@@ -123,6 +123,8 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
           App.blocks('#previewReport_loading', 'state_loading');
 
+          $scope.readyToRelease = false;
+
           // assign the school id of this row to a field under $scope so that the releaseReport function in the popup window could access the current school id.
           $scope.current_school_id = schoolId;
 
