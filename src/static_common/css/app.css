@@ -2026,12 +2026,14 @@ left: 35%;
   border-right: 0;
 }
 
-.course.add {
-  background: #f0f8ed;
+.course.add>td:first-child {
+  background: #46c37b;
+  color: white;
 }
 
-.course.rm {
-  background: #f8eded;
+.course.rm>td:first-child {
+  background: #d26a5c;
+  color: white;
 }
 
 .categoryheader {
@@ -2087,4 +2089,8 @@ left: 35%;
 
 .hover-underline:hover {
   text-decoration: underline;
+}
+
+.location-dashline {
+  border-bottom: 1px dashed;
 }
