@@ -88,8 +88,8 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
 
 
-              console.log("++++++++value.object_id="+value.object_id);
-              console.log("++++++++response.data.results[0].object_id="+response.data.results[0].object_id);
+              //console.log("++++++++value.object_id="+value.object_id);
+              //console.log("++++++++response.data.results[0].object_id="+response.data.results[0].object_id);
               
               $scope.school_report_pair[value.object_id] = [];
               $scope.school_report_pair[value.object_id].push(response.data.results[0].object_id);
@@ -265,14 +265,14 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
                 console.log("$scope.schools after ="+JSON.stringify($scope.schools));
 
 
-                var test_pluck = _.pluck($scope.schools[0].categories, 'courses')
-                console.log("COURSESESE = "+JSON.stringify(test_pluck))
-                var test_union = _.union(test_pluck)
-                var test_flatten = _.flatten(test_pluck);
-                console.log("TEST_FLATTEN"+JSON.stringify(test_flatten))
-                console.log("TEST_FIND"+JSON.stringify(_.filter(test_flatten, {updated: 2})));
-                var test_without = _.difference(test_flatten, _.filter(test_flatten, {updated: 2}))
-                console.log("COURSESESE_haha = "+ _.uniq(_.difference(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), _.filter(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), {updated: 2})), 'object_id').length);
+                // var test_pluck = _.pluck($scope.schools[0].categories, 'courses')
+                // console.log("COURSESESE = "+JSON.stringify(test_pluck))
+                // var test_union = _.union(test_pluck)
+                // var test_flatten = _.flatten(test_pluck);
+                // console.log("TEST_FLATTEN"+JSON.stringify(test_flatten))
+                // console.log("TEST_FIND"+JSON.stringify(_.filter(test_flatten, {updated: 2})));
+                // var test_without = _.difference(test_flatten, _.filter(test_flatten, {updated: 2}))
+                // console.log("COURSESESE_haha = "+ _.uniq(_.difference(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), _.filter(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), {updated: 2})), 'object_id').length);
                 
 
               }).
