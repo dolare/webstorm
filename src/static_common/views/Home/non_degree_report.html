@@ -123,13 +123,15 @@
                     margin-bottom: 0;
                     "><span style="
                     padding: 0 22px 0 8px;
-                    background: hsla(104, 44%, 93%, 1);
+                    background: #46c37b;
+                    color: white;
                     ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
                   <p class="push-5-t" style="
                     margin-bottom: 0;
                     "><span style="
                     padding: 0 22px 0 8px;
-                    background: hsla(0, 44%, 93%, 1);
+                    background: #d26a5c;
+                    color: white;
                     ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
                 </div>
               </uib-accordion>
@@ -583,8 +585,8 @@
                                                     </span>                                   
                                                 </div> 
 
-                            <span ng-if="course.type">{{course.type}}</span>
-                            <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
+                            <span ng-show="course.type" ng-class="{location-dashline: course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-map-marker" aria-hidden="true" ng-show="course.location_info"></i> {{course.type}}</span>
+                            <span ng-show="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
