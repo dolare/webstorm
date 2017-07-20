@@ -157,7 +157,7 @@
           </div>
           <div class=" push-50">
           
-            <table class="table non-degree-table report_table2 table-bordered" style="table-layout: fixed;">
+            <table class="table non-degree-table report_table2 table-bordered zebra-table" style="table-layout: fixed;">
               <colgroup>
                 <col width="55px">
                 <col width="7%">
@@ -305,7 +305,7 @@
                   </td>
 
                   <td rowspan="2">
-                    {{row.date_created | amUtc |  amDateFormat:'MM/DD'}}
+                    {{row.date_created | amUtc | amLocal |  amDateFormat:'MM/DD'}}
                   </td>
                 </tr>
                 <tr ng-repeat-end>
@@ -383,7 +383,7 @@
                       ">{{row.university_name | uppercase}}</small>
 
                       <br>
-                      <div class="push-15-t font-w600">Released: {{row.date_created | amUtc |  amDateFormat:'MM/DD'}}</div>
+                      <div class="push-15-t font-w600">Released: {{row.date_created | amUtc | amLocal |  amDateFormat:'MM/DD'}}</div>
                   </div>
 
 
