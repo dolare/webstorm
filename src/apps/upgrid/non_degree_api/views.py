@@ -4,9 +4,10 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin
-from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, CreateAPIView, DestroyAPIView, \
-    RetrieveAPIView, RetrieveDestroyAPIView
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, \
+    DestroyModelMixin
+from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, CreateAPIView, \
+    RetrieveAPIView
 from rest_framework.filters import SearchFilter, OrderingFilter, DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
@@ -19,7 +20,8 @@ from webtracking.models import WebPage, WebPageScan
 
 from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer, CategorySerializer, \
     ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer, SharedReportSerializer, \
-    CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer, AMPReportDetailSerializer
+    CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer, AMPReportDetailSerializer, \
+    ReportUpdateSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport
@@ -117,12 +119,17 @@ class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
         return self.create(request, *args, **kwargs)
 
 
-class ReportAPI(PermissionMixin, RetrieveDestroyAPIView):
+class ReportAPI(PermissionMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericAPIView):
     """
-    Retrieve non-degree Report API
+    Retrieve update and destroy non-degree Report API
     """
     lookup_field = 'object_id'
-    serializer_class = ReportSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'PUT':
+            return ReportUpdateSerializer
+        else:
+            return ReportSerializer
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
@@ -131,6 +138,19 @@ class ReportAPI(PermissionMixin, RetrieveDestroyAPIView):
             reports = NonDegreeReport.objects \
                 .filter(school__non_degree_user=self.request.user)
         return reports
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        if not self.is_manager():
+            return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        if not self.is_manager():
+            return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
+        return self.destroy(request, *args, **kwargs)
 
 
 class ReportOverviewMixin(object):

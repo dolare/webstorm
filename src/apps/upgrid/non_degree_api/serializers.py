@@ -39,6 +39,13 @@ class ReportListSerializer(ModelSerializer):
         fields = ('object_id', 'school', 'date_created')
 
 
+class ReportUpdateSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeReport
+        fields = ('categories', )
+
+
 class ReportSerializer(ModelSerializer):
     school_name = SerializerMethodField()
     university_name = SerializerMethodField()
