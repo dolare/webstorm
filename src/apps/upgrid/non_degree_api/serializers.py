@@ -14,7 +14,7 @@ class UniversitySchoolListSerializer(ModelSerializer):
         fields = ('object_id', 'ceeb', 'school', 'university',)
 
     def get_university(self, obj):
-        return obj.university
+        return obj.university_foreign_key.name
 
 
 class UniversitySchoolDetailSerializer(ModelSerializer):
@@ -26,7 +26,7 @@ class UniversitySchoolDetailSerializer(ModelSerializer):
         fields = ('object_id', 'ceeb', 'school', 'university', 'categories')
 
     def get_university(self, obj):
-        return obj.university
+        return obj.university_foreign_key.name
 
     def get_categories(self, obj):
         categories = NonDegreeCategory.objects.filter(university_school=obj).filter(active=True)
@@ -84,7 +84,7 @@ class CourseSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeCourse
         fields = ('object_id', 'name', 'date_modified', 'type', 'currency', 'tuition_number', 'Repeatable',
-                  'course_dates', 'url')
+                  'course_dates', 'url', 'location_info', )
 
     def get_course_dates(self, obj):
         dates = NonDegreeCourseDate.objects.filter(course=obj)
