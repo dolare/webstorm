@@ -10,7 +10,7 @@
               <div class="text-muted" style="
                 padding-left: 2px;
                 font-weight: 100;
-                ">Created: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
+                ">Report view date: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
             </div>
             <div class="col-sm-6">
               <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
@@ -305,7 +305,7 @@
                   </td>
 
                   <td rowspan="2">
-                    {{row.date_created | amUtc | amLocal |  amDateFormat:'MM/DD'}}
+                    <div class="font-w100">{{row.date_created | amUtc | amLocal |  amDateFormat:'MM/DD'}}</div>
                   </td>
                 </tr>
                 <tr ng-repeat-end>
