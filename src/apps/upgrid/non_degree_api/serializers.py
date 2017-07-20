@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeCourseDate, \
-    NonDegreeUrl, NonDegreeUrlTypeRef, NonDegreeCourseURL, NonDegreeAMPReport
+    NonDegreeCourseURL, NonDegreeAMPReport
 from webtracking.models import WebPage, WebPageScan
 
 from ..models import NonDegreeReport, NonDegreeSharedReport
@@ -37,6 +37,13 @@ class ReportListSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeReport
         fields = ('object_id', 'school', 'date_created')
+
+
+class ReportUpdateSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeReport
+        fields = ('categories', )
 
 
 class ReportSerializer(ModelSerializer):
