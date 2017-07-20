@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeCourseDate, \
-    NonDegreeUrl, NonDegreeUrlTypeRef, NonDegreeCourseURL, NonDegreeAMPReport
+    NonDegreeCourseURL, NonDegreeAMPReport
 from webtracking.models import WebPage, WebPageScan
 
 from ..models import NonDegreeReport, NonDegreeSharedReport
@@ -14,7 +14,7 @@ class UniversitySchoolListSerializer(ModelSerializer):
         fields = ('object_id', 'ceeb', 'school', 'university',)
 
     def get_university(self, obj):
-        return obj.university
+        return obj.university_foreign_key.name
 
 
 class UniversitySchoolDetailSerializer(ModelSerializer):
@@ -26,7 +26,7 @@ class UniversitySchoolDetailSerializer(ModelSerializer):
         fields = ('object_id', 'ceeb', 'school', 'university', 'categories')
 
     def get_university(self, obj):
-        return obj.university
+        return obj.university_foreign_key.name
 
     def get_categories(self, obj):
         categories = NonDegreeCategory.objects.filter(university_school=obj).filter(active=True)
@@ -37,6 +37,13 @@ class ReportListSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeReport
         fields = ('object_id', 'school', 'date_created')
+
+
+class ReportUpdateSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeReport
+        fields = ('categories', )
 
 
 class ReportSerializer(ModelSerializer):
@@ -84,7 +91,7 @@ class CourseSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeCourse
         fields = ('object_id', 'name', 'date_modified', 'type', 'currency', 'tuition_number', 'Repeatable',
-                  'course_dates', 'url')
+                  'course_dates', 'url', 'location_info', )
 
     def get_course_dates(self, obj):
         dates = NonDegreeCourseDate.objects.filter(course=obj)
@@ -96,10 +103,7 @@ class CourseSerializer(ModelSerializer):
         return None
 
     def get_url(self, obj):
-        url_type = NonDegreeUrlTypeRef.objects.filter(name='Main')
-        if not url_type:
-            return None
-        url = NonDegreeUrl.objects.filter(course=obj).filter(url_type=url_type)
+        url = NonDegreeCourseURL.objects.filter(course=obj).filter(type__name='Main')
         if not url:
             return None
         return url.first().url

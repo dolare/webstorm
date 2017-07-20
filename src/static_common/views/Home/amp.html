@@ -21,9 +21,10 @@
        <table st-table="school_table" class="table" style="table-layout: fixed;">
         <colgroup>
           <col width="40px">
-          <col width="15%">
+          
           <col width="60px">
           <col width="10%">
+          <col width="60px">
           <col width="80px">
           <col width="110px">
          
@@ -31,11 +32,11 @@
         <thead class="thead-inverse">
           <tr class=" bg-info" style="border: 1px solid #e3e3e3; color:white;">
             <th></th>
-            <th st-sort="name" style="padding-left:15px;" class="h4 font-w400" colspan="5">school
+            <th st-sort="name" style="padding-left:15px;" class="h4 font-w400" colspan="5">school / university
             </th>
 
           </tr>
-          <tr class="bg-gray-lighter">
+         <!--  <tr class="bg-gray-lighter">
             <th class="text-center th-bordered" style="vertical-align: middle; text-decoration: none; cursor: default;">
               <i class="fa fa-search text-primary"></i>
             </th>
@@ -45,7 +46,7 @@
 
 
            
-          </tr>
+          </tr> -->
         </thead>
         <tbody ng-repeat-start="row in school_table">
           <tr>
@@ -84,11 +85,17 @@
             <tr class="zebra-row-gray" ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls">
                <td class="td-bordered"></td>
                
-               <td class="td-bordered text-info text-left" style="padding-left: 15px;"><a data-js-blur class="hover-underline" href="{{row2.url}}" target="_blank" style="color: #337ab7;"><i class="fa fa-external-link"></i> &nbsp;Check source url</a>
+               
 
-               </td>
+               <td class="td-bordered text-center">
 
-               <td class="td-bordered text-center"><span class="label label-info">{{row2.type}}</span>
+               <!-- <span class="label label-info">{{row2.type}}</span> -->
+
+               <label class="label label-default text-info bg-info-light" style="
+              border: 1px solid #70b9eb;
+              font-size: 9px;
+              padding: 1px 4px;
+               font-size: 80%;">{{row2.type}}</label>
 
                </td>
 
@@ -98,16 +105,21 @@
                </td>
 
 
+               <td class="td-bordered text-info text-center" style="padding-left: 15px;"><a href="{{row2.url}}" target="_blank" style="color: #337ab7;border-bottom: 1px dashed">source</a>
+
+               </td>
+
+
                <td class="td-bordered text-center">
 
-               <button data-toggle="modal" data-target="#amp_report"  ng-click="getReport(row.object_id, row1.object_id, row2.object_id)" class="btn btn-success ng-scope" data-js-blur>
+               <a data-toggle="modal"  href="javascript:void(0)"  data-target="#amp_report"  ng-click="getReport(row.object_id, row1.object_id, row2.object_id)" class="link-effect">
                      View Report
-                </button>
+                </a>
 
 
                </td>
 
-               <td class="td-bordered text-center"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i>&nbsp; {{row2.amp_report_released_date | amUtc | amDateFormat:'MMM DD, YYYY HH:mm'}}</td>
+               <td class="td-bordered text-center font-w100 text-muted"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i>&nbsp; <span style="font-size: 90%;">{{row2.amp_report_released_date | amUtc | amDateFormat:'MMM DD, YYYY HH:mm'}}</span></td>
                
             </tr>
         </tbody>
