@@ -80,22 +80,10 @@ controller('ShareExecutiveController', ['$timeout', '$stateParams', '$scope', '$
                   s.categories[k].course_added = _.filter(s.categories[k].courses, {updated: 1}).length;
                   s.categories[k].course_removed = _.filter(s.categories[k].courses, {updated: 2}).length;
 
-
                 }
-
-                
-
-
-
 			}
 
-
-
-			
-
 			App.blocks('#sharedNonDegree_loading', 'state_normal');
-
-
 
 		}).catch(function(error){
 		console.log('an error occurred...'+JSON.stringify(error));

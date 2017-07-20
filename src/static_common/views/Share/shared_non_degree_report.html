@@ -7,7 +7,7 @@
     <!-- SlimScroll Container -->
     <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}">
  -->
-    <div class="block whoops_block" style="padding:7px 12px 12px 12px;margin:0; background:#f5f5f5">
+    <div class="block whoops_block" style="padding:15px 25px 25px 25px;margin:0;">
       <!-- <div ng-include src="'/static/views/Home/non_degree_report.html'"></div> -->
 
       <!-- SlimScroll Container -->
@@ -78,13 +78,15 @@
                     margin-bottom: 0;
                     "><span style="
                     padding: 0 22px 0 8px;
-                    background: hsla(104, 44%, 93%, 1);
+                    background: #46c37b;
+                    color: white;
                     ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
               <p class="push-5-t" style="
                     margin-bottom: 0;
                     "><span style="
                     padding: 0 22px 0 8px;
-                    background: hsla(0, 44%, 93%, 1);
+                    background: #d26a5c;
+                    color: white;
                     ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
             </div>
           </uib-accordion>
@@ -117,11 +119,12 @@
             <col width="55px">
             <col width="7%">
             <col width="42%">
-            <col width="14%">
-            <col width="8%">
-            <col width="8%">
-            <col width="8%">
-            <col width="8%">
+            <col width="137px">
+            <col width="78px">
+            <col width="78px">
+            <col width="78px">
+            <col width="78px">
+            <col width="82px">
           </colgroup>
           <!-- table header -->
           <thead>
@@ -141,37 +144,38 @@
                     ">
                 CATEGORIES
               </td>
-              <td class="bg-info text-center" colspan="2" style="color: rgba(255,255,255,0.85);border-right: 0;">
+              <td class="bg-info text-center" colspan="2" style="color: rgba(255,255,255,0.85);">
                 COURSES
               </td>
+              <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 13px;" colspan="1" rowspan="2">RELEASED TIME</td>
             </tr>
             <tr class="font-w600 text-primary" style="background: #edf6fd;">
               <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
                     border: 0;
-                    font-size: 12px
+                    font-size: 10px
                     ">
                 <span>ADDITION(S)</span>
               </td>
               <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
-                    font-size: 12px
+                    font-size: 10px
                     ">
                 <span>REMOVAL(S)</span>
               </td>
               <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
-                    font-size: 12px;
+                    font-size: 10px;
                     ">
                 <span>ADDITION(S)</span>
               </td>
               <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
-                    font-size: 12px;
+                    font-size: 10px;
                     border: 0;
                     ">
                 <span>REMOVAL(S)</span>
@@ -253,6 +257,9 @@
                 <span ng-if="row.course_removed!==0" class="badge badge-danger">- {{row.course_removed}}</span>
                 <span ng-if="row.course_removed===0" class="badge badge-default">-&nbsp; -</span>
               </td>
+              <td rowspan="2">
+                <div class="font-w100">{{row.date_created | amUtc | amLocal |  amDateFormat:'MM/DD'}}</div>
+              </td>
             </tr>
             <tr ng-repeat-end>
               <td class="font-w500 text-left text-warning" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
@@ -327,6 +334,8 @@
                       font-weight: 300;
                       font-size: 12px;
                       ">{{row.university_name | uppercase}}</small>
+              <br>
+              <div class="push-15-t font-w600">Released: {{row.date_created | amUtc | amLocal |  amDateFormat:'MM/DD'}}</div>
             </div>
             <div class="block-content" style="
                     padding-top: 10px;
