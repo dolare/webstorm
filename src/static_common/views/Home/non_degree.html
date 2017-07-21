@@ -63,7 +63,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="row in school_table">
+          <tr ng-repeat="row in school_table | orderBy: 'school'">
             <td class="font-w500 td-bordered text-center bg-gray-lighterer">
              
               <label class="css-input css-checkbox css-checkbox-primary" ng-class="{'css-input-disabled':!row.details}">
