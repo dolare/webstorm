@@ -126,7 +126,7 @@ class SharedReportSerializer(ModelSerializer):
 
     class Meta:
         model = NonDegreeSharedReport
-        fields = ('object_id', 'expired_time', 'reports')
+        fields = ('object_id', 'expired_time', 'reports', 'date_created', )
 
 
 class CourseListSerializer(ModelSerializer):

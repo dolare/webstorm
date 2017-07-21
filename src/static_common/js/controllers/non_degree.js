@@ -223,7 +223,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
             console.log("new school data ="+JSON.stringify(result.data))
             new_school_data = result.data;
 
-            new_school_data["logo_url"] = executiveService.getLogoBySchoolName(new_school_data.school_name, new_school_data.university_name)
+            new_school_data["logo_url"] = executiveService.getLogoBySchoolName(new_school_data.school_name, new_school_data.university_name);
 
             var test_id = (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id);
             console.log("test_id="+test_id)

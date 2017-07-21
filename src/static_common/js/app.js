@@ -1009,7 +1009,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   state('shareExecutive', {
     url: '/shared_reports/:param1/:param2/',
-    templateUrl: '/static/views/Home/non_degree_report.html',
+    templateUrl: '/static/views/Share/shared_non_degree_report.html',
     controller: 'ShareExecutiveController',
     resolve: {
                     depsShareExecutive: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -1023,6 +1023,8 @@ App.config(function($stateProvider, $urlRouterProvider) {
                               'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                              '/static/js/services/executiveService.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                               
                             ]

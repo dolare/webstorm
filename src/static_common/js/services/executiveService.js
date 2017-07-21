@@ -15,8 +15,8 @@ angular.module('myApp')
       var old_data = old_data_raw.categories;
       var new_data = new_data_raw.categories;
 
-      console.log("old_data="+JSON.stringify(old_data));
-      console.log("new_data="+JSON.stringify(new_data));
+      
+      console.log('Start loop old');
 
       //loop old
       for(var i=0; i<old_data.length; i++){
@@ -31,7 +31,7 @@ angular.module('myApp')
       }
 
       //loop new
-      console.log("new_data.length"+JSON.stringify(new_data.length));
+      console.log('Start loop new');
 
       for(var i=0; i<new_data.length; i++){
 
@@ -176,7 +176,7 @@ angular.module('myApp')
         }
       }
 
-      console.log("school_data= "+JSON.stringify(school_data));
+      console.log('Comparison finished!');
       return school_data
     }
 

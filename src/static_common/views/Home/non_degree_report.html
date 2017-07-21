@@ -10,7 +10,7 @@
               <div class="text-muted" style="
                 padding-left: 2px;
                 font-weight: 100;
-                ">Report view date: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
+                ">Report View Date: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
             </div>
             <div class="col-sm-6">
               <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
@@ -249,7 +249,7 @@
                   <td style="
                     border-right: 0;
                     padding: 4px;
-                    " rowspan="2"><img ng-src="{{row.logo_url}}" alt="Logo of {{row.title.department}}" height="58" width="58"></td>
+                    " rowspan="2"><img ng-src="{{row.logo_url}}" alt="Logo of {{row.school_name}}" height="58" width="58"></td>
                   <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">
 
                     <a data-js-blur class="link-effect" href="{{ '#school-' + $index }}" du-smooth-scroll>{{row.school_name}}
