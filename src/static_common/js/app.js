@@ -1025,6 +1025,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                               '/static/js/services/executiveService.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                               
                             ]
                         });

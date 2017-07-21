@@ -233,7 +233,7 @@
               <!-- END table header -->
               <!-- table body -->
               <tbody>
-                <tr ng-repeat-start="row in schools">
+                <tr ng-repeat-start="row in schools | orderBy: 'school_name'">
 
                   <td rowspan="2" class="text-center td-bordered">
                   <!-- checkbox one -->
@@ -350,7 +350,7 @@
 
 
           <!-- schools report body-->
-          <div class="row non-degree-report-table" ng-repeat-start="row in schools" ng-hide = "!show_school[row.object_id]">
+          <div class="row non-degree-report-table" ng-repeat-start="row in schools | orderBy: 'school_name'" ng-hide = "!show_school[row.object_id]">
             
               <!-- school overview -->
               <div class="col-sm-3">

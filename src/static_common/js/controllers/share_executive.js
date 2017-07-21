@@ -60,6 +60,9 @@ controller('ShareExecutiveController', ['$timeout', '$stateParams', '$scope', '$
 				$scope.schools.push(executiveService.updatedReport(reports[i-1], reports[i]));
 				console.log('#' + ((i - 1) / 2) + ' report comparison done');
 			}
+			// Order schools by their names
+			$scope.schools = orderBy($scope.schools, 'school_name');
+
 			for (var j = $scope.schools.length - 1; j >= 0; j--) {
 				var s = $scope.schools[j];
 				s.logo_url = executiveService.getLogoBySchoolName(s.school_name, s.university_name);

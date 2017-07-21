@@ -2,8 +2,8 @@
 
 'use strict';
 
-angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService',
-  function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService, $timeout, executiveService) {
+angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 'orderByFilter', 
+  function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService, $timeout, executiveService, orderBy) {
 
     // Inject underscore into $scope
       $scope._ = _;
@@ -41,6 +41,10 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       }
     }).then(function(response) {
       $scope.non_degree_schools = response.data.results;
+
+      // Order schools by their names
+      $scope.non_degree_schools = orderBy($scope.non_degree_schools, 'school');
+
       console.log('number of schools:', $scope.non_degree_schools.length);
 
       for (let i = $scope.non_degree_schools.length - 1; i >= 0; i--) {
