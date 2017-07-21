@@ -137,7 +137,7 @@
                                     <p ng-bind="serviceUntilDate"></p>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr ng-show="data.ceeb!=='2174'">
                                 <td class="text-right">
                                     <p class="font-w600 text-muted">Programs in Service:</p>
                                 </td>
@@ -312,7 +312,7 @@
 
                         
 
-                        <div class="form-group">
+                        <div class="form-group" ng-show="data.ceeb!=='2174'">
                             <label class="col-md-4 control-label" for="val-phone">Program access 
                             
                             <p class="push-10-t"><a href ng-click="checkall_edit(true)">All</a> | <a href ng-click="checkall_edit(false)">None</a></p></label>
@@ -412,7 +412,7 @@
                         </div>
 
 
-                        <div class="form-group" style="margin-bottom: 0">
+                        <div class="form-group" style="margin-bottom: 0" ng-show="data.ceeb!=='2174'">
                             <label class="col-md-4 control-label" for="val-phone">Program access
                             <p class="push-10-t"><a href ng-click="checkall(true)">All</a> | <a href ng-click="checkall(undefined)">None</a></p>
                             </label>

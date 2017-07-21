@@ -2036,6 +2036,17 @@ left: 35%;
   color: white;
 }
 
+
+.course.add>td:not(first-child) {
+  background: #e0f5e9;
+  color: #46c37b;
+}
+
+.course.rm>td:not(first-child) {
+  background: #f9eae8;
+  color: #d26a5c;
+}
+
 .categoryheader {
   font-size: 18px;
   color:#999999;
