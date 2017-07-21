@@ -18,6 +18,40 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider.
 
+  state('admin-dashboard', {
+    url: '/admin-dashboard',
+    parent: 'success_demo',
+    templateUrl: '/static/views/Admin/AdminDashboard.html',
+    controller: 'AdminDashboardController',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo && userInfo.admin === "True") {
+
+          return $q.when(userInfo);
+
+        } else {
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsAdmin: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                '/static/js/controllers/admin-dashboard.js',
+
+                            ]
+                        });
+                    }]
+      }
+
+  }).
+
   state('admin', {
     url: '/admin',
     parent: 'success_demo',

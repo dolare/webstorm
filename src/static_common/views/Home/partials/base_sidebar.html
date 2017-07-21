@@ -74,23 +74,57 @@
                 </li>
 
                 <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <a data-ui-sref="admin" data-ui-sref-active="active" >
+                    <a data-ui-sref="admin-dashboard" data-ui-sref-active="active" >
                         <i class="si si-home"></i><span class="sidebar-mini-hide">Admin Dashboard</span>
                     </a>
                 </li>
 
 
                 <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Regular</span></a>
+                    <ul>
+                        <li class="push-5 push-5-t">
+                            <a data-ui-sref="admin" data-ui-sref-active="active" >Client Management</a>
+                        </li>
+
+                        <li class="push-5 push-5-t">
+                            <a data-ui-sref="updates" data-ui-sref-active="active">Updates</a>
+                        </li>
+                        
+                        
+                       
+                    </ul>
+                </li>
+
+
+                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="icon-briefcase"></i><span class="sidebar-mini-hide">Executive Education</span></a>
+                    <ul>
+                        <li class="push-5 push-5-t">
+                            <a>Client Management</a>
+                        </li>
+
+                        <li class="push-5 push-5-t">
+                            <a data-ui-sref="executive" data-ui-sref-active="active">Updates</a>
+                        </li>
+                        
+                        
+                       
+                    </ul>
+                </li>
+
+
+                <!-- <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
                     <a data-ui-sref="updates" data-ui-sref-active="active" >
                         <i class="si si-bulb"></i><span class="sidebar-mini-hide">Updates</span>
                     </a>
-                </li>
+                </li> -->
 
-                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+                <!-- <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
                     <a data-ui-sref="executive" data-ui-sref-active="active" >
                         <i class="icon-briefcase"></i><span class="sidebar-mini-hide">Executive Education</span>
                     </a>
-                </li>
+                </li> -->
 
 
                 <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
