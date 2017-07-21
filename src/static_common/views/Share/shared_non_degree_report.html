@@ -7,7 +7,7 @@
     <!-- SlimScroll Container -->
     <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}">
  -->
-    <div class="block whoops_block" style="padding:15px 25px 25px 25px;margin:0;">
+    <div class="block whoops_block" style="padding:15px 25px 25px 25px;margin:0;" id="top-sharedNonDegree" du-scroll-container>
       <!-- <div ng-include src="'/static/views/Home/non_degree_report.html'"></div> -->
 
       <!-- SlimScroll Container -->
@@ -22,7 +22,7 @@
                 padding-left: 2px;
                 font-weight: 100;
                 ">Report View Date: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
-          <div class="text-muted" style="
+          <div class="text-danger font-w600" style="
                 padding-left: 2px;
                 font-weight: 100;
                 ">Expiration Date: {{expired_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
@@ -589,6 +589,11 @@
 
       <!-- END SlimScroll Container -->
 
+    </div>
+
+    <!--   Scroll top button -->
+    <div style="position: fixed;bottom: 20px;right: 44px;">
+      <a  data-js-blur href="#top-sharedNonDegree" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
     </div>
 
 
