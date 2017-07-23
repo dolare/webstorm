@@ -33,6 +33,9 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       'null': '$', // The default currency sign is USD
     };
 
+    // A property that toggles the confirmation of release
+    $scope.toggleReleaseConfirm = false;
+
     $http({
       url: '/api/upgrid/non_degree/schools?is_non_degree=True',
       method: 'GET',
@@ -127,7 +130,9 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
           App.blocks('#previewReport_loading', 'state_loading');
 
+          // If true, the report is ready to release, otherwise not
           $scope.readyToRelease = false;
+          console.log('Initialize readyToRelease to false, Ready? ' + $scope.readyToRelease);
 
           // assign the school id of this row to a field under $scope so that the releaseReport function in the popup window could access the current school id.
           $scope.current_school_id = schoolId;
@@ -150,13 +155,11 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
               }
             })
           }).then(function(response) {
-            
-
-            var reports = response.reports.data;
-            var preview = response.preview.data;
+            var reports = response.reports.data; // Report list
+            var preview = response.preview.data; // Current school data
 
             console.log('Loaded report list. There are ' + reports.results.length + ' reports');
-            console.log('Loaded current data of ' + preview.ceeb);
+            console.log('Loaded current data of ' + preview.school);
             
             $scope.school = preview.school;
             $scope.university = preview.university;
@@ -172,6 +175,11 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
               $scope.cat_rm = 0;
               $scope.course_add = 0;
               $scope.course_rm = 0;
+
+              console.log('No previous report.');
+              $scope.readyToRelease = true;
+              console.log('Ready? ' + $scope.readyToRelease);
+
               App.blocks('#previewReport_loading', 'state_normal');
             }
             // else there would be a previous report, and get that report
@@ -187,6 +195,17 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
                 $scope.categories_compared = executiveService.updatedReport(resp_prev_report.data, preview).categories;
                 console.log('Got compared results!');
+
+                if (JSON.stringify($scope.categories_compared) != JSON.stringify(preview.categories)) {
+                  console.log('Update is found.');
+                  $scope.readyToRelease = true;
+                  console.log('Ready? ' + $scope.readyToRelease);
+                }
+                else {
+                  console.log('No update.');
+                  $scope.readyToRelease = false;
+                  console.log('Ready? ' + $scope.readyToRelease);
+                }
                 $scope.cat_add = _.filter($scope.categories_compared, {updated: 1}).length;
                 $scope.cat_rm = _.filter($scope.categories_compared, {updated: 2}).length;
 
@@ -203,6 +222,28 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             console.log('an error occurred...' + JSON.stringify(error));
           });
         };
+
+    $scope.releaseConfirm = function() {
+      if ($scope.readyToRelease == true) {
+        $scope.toggleReleaseConfirm = true;
+      }
+      else {
+        console.log('No update. Cannot release!');
+        $.notify({
+          // options
+          icon: "fa fa-warning",
+          message: 'There is no update for these programs, so the report cannot be released this time.'
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
+          },
+          z_index: 1999,
+        });
+      }
+    };
 
     $scope.checkUpdate = function() {
       // If true, the report is ready to release, otherwise not
@@ -276,27 +317,48 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
     };
 
     $scope.releaseReport = function() {
-      var form = new FormData();
-      form.append("school", $scope.current_school_id);
+      if ($scope.readyToRelease == true) {
+        $scope.readyToRelease = false;
+        console.log('Set readyToRelease back to false, Ready? ' + $scope.readyToRelease);
 
-      $http({
-        url: '/api/upgrid/non_degree/reports',
-        method: 'POST',
-        data: form,
-        mimeType: "multipart/form-data",
-        processData: false,
-        contentType: false,
-        headers: {
-          'Authorization': 'JWT ' + token,
-          'Content-Type': undefined,
+        var form = new FormData();
+        form.append("school", $scope.current_school_id);
 
-        },
-      }).then(function(resp_post) {
-        console.log('Released a report of ' + resp_post.data.school_name);
-      }).catch(function(error) {
-        console.log('an error occurred...' + JSON.stringify(error));
+        $http({
+          url: '/api/upgrid/non_degree/reports',
+          method: 'POST',
+          data: form,
+          mimeType: "multipart/form-data",
+          processData: false,
+          contentType: false,
+          headers: {
+            'Authorization': 'JWT ' + token,
+            'Content-Type': undefined,
 
-      });
+          },
+        }).then(function(resp_post) {
+          console.log('Released a report of ' + resp_post.data.school_name);
+        }).catch(function(error) {
+          console.log('an error occurred...' + JSON.stringify(error));
+        });
+      }
+      else {
+        console.log('Warning: duplicate clicks on "Yes".');
+        $.notify({
+          // options
+          icon: "fa fa-warning",
+          message: 'You have already released the report, please wait.'
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
+          },
+          z_index: 1999,
+        });
+      }
+      
     };
 
     $scope.viewReport = function(reportId) {
