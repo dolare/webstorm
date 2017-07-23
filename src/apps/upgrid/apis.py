@@ -1102,9 +1102,15 @@ class ClientCRUD(APIView):
         client.password = decoded_new_password
         client.save_password()   
 
-        for cp in self.request.data['competing_schools']:
-            school = UniversitySchool.objects.get(object_id=cp.get('object_id'))
-            client.competing_schools.add(school)
+        if 'competing_schools' in self.request.data:
+            for cp in self.request.data['competing_schools']:
+                school = UniversitySchool.objects.get(object_id=cp.get('object_id'))
+                client.competing_schools.add(school)
+
+        if 'non_degree_schools' in self.request.data:
+            for school_id in self.request.data['non_degree_schools']:
+                school = UniversitySchool.objects.get(object_id=school_id.get('object_id'))
+                client.non_degree_schools.add(school)
 
         request.is_create = True
         ResetPassword().post(request)
@@ -1146,6 +1152,13 @@ class ClientCRUD(APIView):
             for cp in self.request.data['competing_schools']:
                 school = UniversitySchool.objects.get(object_id=cp['object_id'])
                 client.competing_schools.add(school)
+
+        if 'non_degree_schools' in self.request.data:
+            client.competing_schools.clear()
+            for school_id in self.request.data['non_degree_schools']:
+                school = UniversitySchool.objects.get(object_id=school_id['object_id'])
+                client.competing_schools.add(school)
+
         return Response({"success": ("User has been modified.")}, status=HTTP_202_ACCEPTED)
 
     def delete(self, request):
