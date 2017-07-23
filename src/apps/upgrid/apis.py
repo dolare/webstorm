@@ -752,6 +752,10 @@ class CreateOrChangeSubUser(APIView):
                     )
                 sub_customer_program.save()
 
+        non_degree_schools = main_user.non_degree_schools.all()
+        for school in non_degree_schools:
+            user.non_degree_schools.add(school)
+
         request.is_create = True
         ResetPassword().post(request)
         
