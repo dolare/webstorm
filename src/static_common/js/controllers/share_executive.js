@@ -42,7 +42,7 @@ controller('ShareExecutiveController', ['$timeout', '$stateParams', '$scope', '$
 
 			console.log("shared executive, # of reports: "+ response.data.reports.length)
 
-			$scope.date = new Date();
+			$scope.date_created = response.data.date_created;
 
 			$scope.expired_time = response.data.expired_time;
 			
