@@ -33,8 +33,10 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       'null': '$', // The default currency sign is USD
     };
 
-    // A property that toggles the confirmation of release
-    $scope.toggleReleaseConfirm = false;
+    // Release preview release popover-enable
+    $scope.releaseConfirmEnable = false;
+    // Release preview release popover-is-open
+    $scope.releaseConfirmIsOpen = false;
 
     $http({
       url: '/api/upgrid/non_degree/schools?is_non_degree=True',
@@ -170,6 +172,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
             // if there is no previous report 
             if (reports.count == 0) {
+              $scope.hasUpdates = false;
               $scope.categories_compared = preview.categories;
               $scope.cat_add = 0;
               $scope.cat_rm = 0;
@@ -191,20 +194,23 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
                   'Authorization': 'JWT ' + token
                 }
               }).then(function(resp_prev_report) {
+                $scope.report_old = resp_prev_report.data;
                 console.log('Loaded latest report of ' + resp_prev_report.data.school_name);
 
                 $scope.categories_compared = executiveService.updatedReport(resp_prev_report.data, preview).categories;
                 console.log('Got compared results!');
 
-                if (JSON.stringify($scope.categories_compared) != JSON.stringify(preview.categories)) {
+                if (angular.toJson($scope.categories_compared) != angular.toJson($scope.categories)) {
                   console.log('Update is found.');
                   $scope.readyToRelease = true;
                   console.log('Ready? ' + $scope.readyToRelease);
+                  $scope.hasUpdates = true;
                 }
                 else {
                   console.log('No update.');
                   $scope.readyToRelease = false;
                   console.log('Ready? ' + $scope.readyToRelease);
+                  $scope.hasUpdates = false;
                 }
                 $scope.cat_add = _.filter($scope.categories_compared, {updated: 1}).length;
                 $scope.cat_rm = _.filter($scope.categories_compared, {updated: 2}).length;
@@ -225,7 +231,8 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
     $scope.releaseConfirm = function() {
       if ($scope.readyToRelease == true) {
-        $scope.toggleReleaseConfirm = true;
+        $scope.releaseConfirmEnable = true;
+        $scope.releaseConfirmIsOpen = true;
       }
       else {
         console.log('No update. Cannot release!');
@@ -245,76 +252,76 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       }
     };
 
-    $scope.checkUpdate = function() {
-      // If true, the report is ready to release, otherwise not
-      $scope.readyToRelease = false;
-      console.log('Ready? ' + $scope.readyToRelease);
+    // $scope.checkUpdate = function() {
+    //   // If true, the report is ready to release, otherwise not
+    //   $scope.readyToRelease = false;
+    //   console.log('Ready? ' + $scope.readyToRelease);
 
-      // Get report list
-      $http({
-        url: '/api/upgrid/non_degree/reports?school=' + $scope.current_school_id,
-        method: 'GET',
-        headers: {
-          'Authorization': 'JWT ' + token
-        }
-      }).then(function(resp_reports) {
-        console.log('Loaded report list. There are ' + resp_reports.data.results.length + ' reports');
+    //   // Get report list
+    //   $http({
+    //     url: '/api/upgrid/non_degree/reports?school=' + $scope.current_school_id,
+    //     method: 'GET',
+    //     headers: {
+    //       'Authorization': 'JWT ' + token
+    //     }
+    //   }).then(function(resp_reports) {
+    //     console.log('Loaded report list. There are ' + resp_reports.data.results.length + ' reports');
 
-        if (resp_reports.data.results.length > 0)
-          $http({
-            url: '/api/upgrid/non_degree/reports/' + resp_reports.data.results[0].object_id,
-            method: 'GET',
-            headers: {
-              'Authorization': 'JWT ' + token
-            }
-          }).then(function(resp_report) {
-            console.log('Latest report of ' + resp_report.data.school_name + ' retrieved.');
+    //     if (resp_reports.data.results.length > 0)
+    //       $http({
+    //         url: '/api/upgrid/non_degree/reports/' + resp_reports.data.results[0].object_id,
+    //         method: 'GET',
+    //         headers: {
+    //           'Authorization': 'JWT ' + token
+    //         }
+    //       }).then(function(resp_report) {
+    //         console.log('Latest report of ' + resp_report.data.school_name + ' retrieved.');
 
-            $http({
-              url: '/api/upgrid/non_degree/schools/' + $scope.current_school_id,
-              method: 'GET',
-              headers: {
-                'Authorization': 'JWT ' + token
-              }
-            }).then(function(resp_schoolpreview) {
-              console.log('Current data of ' + resp_schoolpreview.data.school + ' retrieved.');
+    //         $http({
+    //           url: '/api/upgrid/non_degree/schools/' + $scope.current_school_id,
+    //           method: 'GET',
+    //           headers: {
+    //             'Authorization': 'JWT ' + token
+    //           }
+    //         }).then(function(resp_schoolpreview) {
+    //           console.log('Current data of ' + resp_schoolpreview.data.school + ' retrieved.');
 
-              var compareResult = executiveService.updatedReport(resp_report.data, resp_schoolpreview.data);
+    //           var compareResult = executiveService.updatedReport(resp_report.data, resp_schoolpreview.data);
 
-              if (JSON.stringify(compareResult) != JSON.stringify(resp_schoolpreview.data)) {
-                console.log('Update is found.');
-                $scope.readyToRelease = true;
-                console.log('Ready? ' + $scope.readyToRelease);
-              }
-              else {
-                console.log('No update.');
-                $.notify({
-                  // options
-                  icon: "fa fa-warning",
-                  message: 'There is no update for these programs, so the report cannot be released this time.'
-                }, {
-                  // settings
-                  type: 'warning',
-                  placement: {
-                    from: "top",
-                    align: "center"
-                  },
-                  z_index: 1999,
-                });
-                $scope.readyToRelease = false;
-                console.log('Ready? ' + $scope.readyToRelease);
-              }
-            });
-          });
-        else {
-          console.log('No previous report.');
-          $scope.readyToRelease = true;
-          console.log('Ready? ' + $scope.readyToRelease);
-        }
+    //           if (angular.toJson(compareResult) != angular.toJson(resp_schoolpreview.data)) {
+    //             console.log('Update is found.');
+    //             $scope.readyToRelease = true;
+    //             console.log('Ready? ' + $scope.readyToRelease);
+    //           }
+    //           else {
+    //             console.log('No update.');
+    //             $.notify({
+    //               // options
+    //               icon: "fa fa-warning",
+    //               message: 'There is no update for these programs, so the report cannot be released this time.'
+    //             }, {
+    //               // settings
+    //               type: 'warning',
+    //               placement: {
+    //                 from: "top",
+    //                 align: "center"
+    //               },
+    //               z_index: 1999,
+    //             });
+    //             $scope.readyToRelease = false;
+    //             console.log('Ready? ' + $scope.readyToRelease);
+    //           }
+    //         });
+    //       });
+    //     else {
+    //       console.log('No previous report.');
+    //       $scope.readyToRelease = true;
+    //       console.log('Ready? ' + $scope.readyToRelease);
+    //     }
 
         
-      });
-    };
+    //   });
+    // };
 
     $scope.releaseReport = function() {
       if ($scope.readyToRelease == true) {

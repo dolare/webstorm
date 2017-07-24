@@ -240,7 +240,7 @@ login.controller('LoginController',
                                  console.log("ccc ceeb= "+result)
 
                                 if(authenticationSvc.getUserInfo().admin === "True"){
-                                     $state.go('admin')
+                                     $state.go('admin-dashboard')
                                 }else if(authenticationSvc.getUserInfo().admin === "False"){
 
                                     console.log("authenticationSvc.getUserInfo().admin === False")

@@ -216,6 +216,73 @@ App.config(function($stateProvider, $urlRouterProvider) {
   }).
 
 
+  state('admin-exec-user', {
+    url: '/admin-exec-user',
+    parent: 'success_demo',
+    templateUrl: '/static/views/Admin/AdminExecUser.html',
+    controller: 'AdminExecUserController',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo && userInfo.admin === "True") {
+
+          return $q.when(userInfo);
+
+        } else {
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsAdminExecUser: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.css',
+                                '/static/js/third-party/bootstrap-duallistbox/bootstrap-duallistbox.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
+                                '/static/js/third-party/bootstrap-wizard/jquery.bootstrap.wizard.min.js',
+                                '/static/js/third-party/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js',
+                                '/static/js/third-party/angular-bootstrap-duallistbox.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
+                                '/static/js/third-party/masked-inputs/jquery.maskedinput.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js',
+                                '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js',
+                                '/static/js/services/tableService.js',
+                                '/static/js/services/apiService.js',
+                                '/static/js/controllers/admin-exec-user.js',
+
+   
+                            ]
+                        });
+                    }], 
+
+      //get client list
+      Client: function(depsAdminExecUser, apiService, authenticationSvc) {
+        
+        if(authenticationSvc.getUserInfo().admin === "True"){
+            var token = authenticationSvc.getUserInfo().accessToken;
+        
+            return apiService.getClient(token);
+        } else {
+            return null;
+        }
+      
+      }
+    }
+    //end of resolve
+
+  }).
+
 
 
   state('executive', {
