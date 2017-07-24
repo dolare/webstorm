@@ -261,6 +261,32 @@ angular.module('myApp')
         }
 
 
+        //get exec client list
+      var getExecClient = function(token) {
+
+            var promise =  $http({
+              url: '/api/upgrid/user/university_customer/?is_main_user=True&is_non_degree_user=True',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            }).then(function (response) {
+
+               console.log("all client is="+ JSON.stringify(response.data));
+                
+               return response.data;
+
+             }).
+             catch(function(error){
+                console.log('an error occurred...'+JSON.stringify(error));
+
+             });
+            return promise;
+
+
+        }
+
+
     var getCustomer = function(token) {
 
                         var deferred = $q.defer();
@@ -439,7 +465,8 @@ angular.module('myApp')
       getReleasedWhoops: getReleasedWhoops,
       getReleasedEnhancement: getReleasedEnhancement,
       getDashboard: getDashboard,
-      getSubuser: getSubuser
+      getSubuser: getSubuser,
+      getExecClient: getExecClient
 
 
 

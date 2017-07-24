@@ -166,7 +166,16 @@
                     " rowspan="2"><img ng-src="{{logo_url}}" alt="Logo of {{school}}" height="58" width="58"></td>
                   <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">
 
-                    <a data-js-blur class="link-effect" href="#schooloverview" du-smooth-scroll>{{school}}</a><br>
+                    <a data-js-blur class="link-effect" href="#schooloverview" du-smooth-scroll>{{school}}
+                    <label ng-show="hasUpdates"
+
+                    class="label label-default text-success bg-success-light" style="
+                                            /* background: transparent; */
+                                            border: 1px solid #46c37b;
+                                            font-size: 8px;
+                                            padding: 2px 4px;
+                                            position: absolute;
+                                            margin-left: 0px; top: -7px;">Updated</label></a><br>
                     <span class="text-muted">
                     <small style="
                       font-weight: 300;
@@ -490,8 +499,23 @@
                             <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
                           </td>
                           <td style="
-                            padding: 8px 10px;
-                            ">
+                            padding: 15px;
+                            " class="ribbon ribbon-modern ribbon-success ribbon-update">
+
+                            <div class="ribbon-box font-w600" 
+                                                data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})"                            
+                                                
+                                                data-uib-popover-html="'<a  href='+'{{course.url_old}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'" 
+
+                                                ng-show="course.url_old"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover">                        
+                                                    <span class="label_new">new
+                                                    </span>                                   
+                                                </div> 
+
                             <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
 
                             <span ng-if="!course.url" class="font-w600 text-gray label-na">N/A</span>
