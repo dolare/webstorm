@@ -1,0 +1,605 @@
+<div class="block block-themed block-transparent remove-margin-b" id="sharedNonDegree_loading">
+
+
+  <div class="block-content fullscreen-container share-link" style="width:auto;padding:0;">
+
+
+    <!-- SlimScroll Container -->
+    <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}">
+ -->
+    <div class="block whoops_block" style="padding:15px 25px 25px 25px;margin:0;" id="top-sharedNonDegree" du-scroll-container>
+      <!-- <div ng-include src="'/static/views/Home/non_degree_report.html'"></div> -->
+
+      <!-- SlimScroll Container -->
+
+
+      <div class="row">
+        <div class="col-sm-6">
+          <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
+            <small>upgrid.gridet.com</small><br>TRACKING REPORT
+          </h1>
+          <div class="text-muted" style="
+                padding-left: 2px;
+                font-weight: 100;
+                ">Report View Date: {{date_created | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
+          <div class="text-danger font-w600" style="
+                padding-left: 2px;
+                font-weight: 100;
+                ">Expiration Date: {{expired_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
+        </div>
+        <div class="col-sm-6">
+          <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
+        </div>
+      </div>
+      <hr class="hidden-print">
+      <!-- Invoice Info -->
+
+
+
+
+      <div class="row items-push-2x">
+        <!-- Company Info -->
+        <div class="col-sm-4 push-15">
+
+          <uib-accordion>
+            <div uib-accordion-group class="panel-default" is-open="open_legend">
+
+              <uib-accordion-heading style="
+                  background: #FFF8DC;
+                  border-color: hsla(53, 35%, 88%, 1)">
+                <p class="text-muted" style="
+                    margin-bottom: 0;
+                    font-weight: 200;
+                    /* padding-left: 5px; */
+                    font-weight: 400;
+                    ">REPORT LEGEND<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_legend, 'glyphicon-chevron-right': !open_legend}" style="margin-top: 2px;"></i></p>
+              </uib-accordion-heading>
+
+              <p style="
+                    margin-bottom: 0;
+                    margin-top: 0;
+                    " class=""><span class="badge badge-success">+ 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Addition(s)</span></p>
+              <p class="push-5-t" style="
+                    margin-bottom: 0;
+                    "><span class="badge badge-danger">&nbsp;- 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Removal(s)</span></p>
+              <p class="push-5-t" style="
+                    margin-bottom: 0;
+                    "><span style="
+                    color: #3c763d;
+                    background-color: #dff0d8;
+                    padding: 0 5px;
+                    border-left: 3px solid #3c763d;
+                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Category</span></p>
+              <p class="push-5-t" style="
+                    margin-bottom: 0;
+                    "><span style="
+                    color: #a94442;
+                    background-color: #f2dede;
+                    padding: 0 5px;
+                    border-left: 3px solid #a94442;
+                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Category</span></p>
+              <p class="push-5-t" style="
+                    margin-bottom: 0;
+                    "><span style="
+                    padding: 0 22px 0 8px;
+                    background: #46c37b;
+                    color: white;
+                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
+              <p class="push-5-t" style="
+                    margin-bottom: 0;
+                    "><span style="
+                    padding: 0 22px 0 8px;
+                    background: #d26a5c;
+                    color: white;
+                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
+            </div>
+          </uib-accordion>
+
+        </div>
+        <!-- END Company Info -->
+      </div>
+      <!-- END Invoice Info -->
+
+
+
+
+      <!-- Table -->
+      <div class="push-15" style="
+            border-bottom: 3px solid rgba(75, 123, 155, 0.38);
+            ">
+        <span class="h3 font-w400 push-50 push-10-t  text-uppercase text-left" style="
+              padding: 0px 12px;
+              background-color: rgba(75, 123, 155, 0.78);
+              color: rgba(255,255,255,1);
+              border-top-left-radius: 4px;
+              border-top-right-radius: 4px;
+              ">REPORT OVERVIEW</span>
+
+      </div>
+      <div class=" push-50">
+
+        <table class="table non-degree-table report_table2 table-bordered" style="table-layout: fixed;">
+          <colgroup>
+            <col width="55px">
+            <col width="7%">
+            <col width="42%">
+            <col width="137px">
+            <col width="78px">
+            <col width="78px">
+            <col width="78px">
+            <col width="78px">
+            <col width="82px">
+          </colgroup>
+          <!-- table header -->
+          <thead>
+            <tr class="font-w600 text-primary bg-" style="background: #edf6fd;">
+
+              <td rowspan="2" class="bg-info" style="
+                    border-right: 0;
+                    color: rgba(255,255,255,0.85);
+                    border-left: 0;
+                    "></td>
+              <td class="bg-info font-w600" style="vertical-align: middle;text-align: left;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="2" rowspan="2">BUSINESS SCHOOLS</td>
+              <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);" colspan="1" rowspan="2">CURRENT OFFERINGS</td>
+              <td class="bg-info text-center" colspan="2" style="
+                    color: rgba(255,255,255,0.85);
+                    border-left: 0;
+                    border-right: 0;
+                    ">
+                CATEGORIES
+              </td>
+              <td class="bg-info text-center" colspan="2" style="color: rgba(255,255,255,0.85);">
+                COURSES
+              </td>
+              <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 13px;" colspan="1" rowspan="2">RELEASED TIME</td>
+            </tr>
+            <tr class="font-w600 text-primary" style="background: #edf6fd;">
+              <td class="bg-info text-center" style="
+                    padding: 5px 10px;
+                    color: rgba(255,255,255,0.85);
+                    border: 0;
+                    font-size: 10px
+                    ">
+                <span>ADDITION(S)</span>
+              </td>
+              <td class="bg-info text-center" style="
+                    padding: 5px 10px;
+                    color: rgba(255,255,255,0.85);
+                    font-size: 10px
+                    ">
+                <span>REMOVAL(S)</span>
+              </td>
+              <td class="bg-info text-center" style="
+                    padding: 5px 10px;
+                    color: rgba(255,255,255,0.85);
+                    font-size: 10px;
+                    ">
+                <span>ADDITION(S)</span>
+              </td>
+              <td class="bg-info text-center" style="
+                    padding: 5px 10px;
+                    color: rgba(255,255,255,0.85);
+                    font-size: 10px;
+                    border: 0;
+                    ">
+                <span>REMOVAL(S)</span>
+              </td>
+            </tr>
+          </thead>
+          <!-- END table header -->
+          <!-- table body -->
+          <tbody>
+            <tr ng-repeat-start="row in schools">
+
+              <td rowspan="2" class="text-center td-bordered bg-gray-lighterer">
+                <!-- checkbox one -->
+                <label class="css-input css-checkbox css-checkbox-primary" data-tooltip-placement="top">
+
+                      <input type="checkbox" ng-model="show_school[row.object_id]" ng-init="show_school[row.object_id]=true"><span></span>
+
+
+                    </label>
+
+              </td>
+
+              <td style="
+                    border-right: 0;
+                    padding: 4px;
+                    " rowspan="2"><img ng-src="{{row.logo_url}}" alt="Logo of {{row.school_name}}" height="58" width="58"></td>
+              <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">
+
+                <a data-js-blur class="link-effect" href="{{ '#school-' + $index }}" du-smooth-scroll>{{row.school_name}}
+
+                    <label ng-show="_.difference( _.pluck(row.categories, 'updated'), [1, 2, undefined]).length || _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'name_old'), [undefined]).length > 0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'url_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'course_dates_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'currency_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'type_old'), [undefined]).length>0 ||
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'tuition_number_old'), [undefined]).length>0"
+
+                    class="label label-default text-success bg-success-light" style="
+                                            /* background: transparent; */
+                                            border: 1px solid #46c37b;
+                                            font-size: 8px;
+                                            padding: 2px 4px;
+                                            position: absolute;
+                                            margin-left: 0px; top: -7px;">Updated</label></a>
+
+                <br>
+                <span class="text-muted">
+                    <small style="
+                      font-weight: 300;
+                      font-size: 12px;
+                      ">{{row.university_name | uppercase}}
+                    </small>
+                    </span>
+
+              </td>
+
+              <td class="font-w600 text-left text-info" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Categories:<span class="badge badge-info pull-right">{{row.category_offer}}</span>
+              </td>
+
+              <td rowspan="2">
+
+                <span ng-if="row.category_added!==0" class="badge badge-success">+ {{row.category_added}}</span>
+                <span ng-if="row.category_added===0" class="badge badge-default">-&nbsp; -</span>
+
+              </td>
+              <td rowspan="2">
+
+                <span ng-if="row.category_removed!==0" class="badge badge-danger">- {{row.category_removed}}</span>
+
+                <span ng-if="row.category_removed===0" class="badge badge-default">-&nbsp; -</span>
+
+              </td>
+              <td rowspan="2">
+                <span ng-if="row.course_added!==0" class="badge badge-success">+ {{row.course_added}}</span>
+
+                <span ng-if="row.course_added===0" class="badge badge-default">-&nbsp; -</span>
+              </td>
+              <td rowspan="2">
+                <span ng-if="row.course_removed!==0" class="badge badge-danger">- {{row.course_removed}}</span>
+                <span ng-if="row.course_removed===0" class="badge badge-default">-&nbsp; -</span>
+              </td>
+              <td rowspan="2">
+                <div class="font-w100">{{row.date_created | amUtc | amLocal |  amDateFormat:'MM/DD'}}</div>
+              </td>
+            </tr>
+            <tr ng-repeat-end>
+              <td class="font-w500 text-left text-warning" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
+
+                <ul style="padding-left:20px; margin-bottom: 0">
+                  <li>Courses:<span class="badge badge-warning pull-right">{{row.course_offer}}</span></li>
+                </ul>
+
+
+              </td>
+            </tr>
+          </tbody>
+          <!-- END table body -->
+        </table>
+      </div>
+      <!-- END Table -->
+
+
+
+
+      <div class="row items-push-2x">
+        <!-- Company Info -->
+        <div class="col-sm-12" style="
+              margin-bottom: 0;
+              ">
+          <div class="push-20" style="
+                border-bottom: 3px solid rgba(75, 123, 155, 0.38);
+                ">
+            <span class="h3 font-w400 push-50 push-10-t text-uppercase text-left text-white" style="
+                  padding: 0px 12px;
+                  background-color: rgba(75, 123, 155, 0.78);
+                  border-top-left-radius: 4px;
+                  border-top-right-radius: 4px;
+                  ">Tracking Details</span>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- schools report body-->
+      <div class="row non-degree-report-table" ng-repeat-start="row in schools" ng-hide="!show_school[row.object_id]">
+
+        <!-- school overview -->
+        <div class="col-sm-3">
+          <div class="block col-sm-12" style="
+                  border: 1px solid #cfcfcf;
+                  padding-left: 0;
+                  padding-right: 0;
+                  " ng-attr-id="{{ 'school-' + $index }}">
+            <div class="block-header bg-gray-light" style="
+                    border-bottom: 1px solid #cfcfcf;
+                    ">
+              <h3 class="block-title text-left">School Overview</h3>
+            </div>
+            <div class="block-content block-content-full text-left bg-image" style="padding: 10px 15px;">
+              <div>
+                <img ng-src="{{row.logo_url}}" alt="Logo of {{row.school_name}}" width="50%">
+              </div>
+            </div>
+            <div class="text-left bg-gray-lighter" style="
+                    padding-left: 21px;
+                    padding-right: 21px;
+                    padding-bottom: 15px;
+                    padding-top: 0px;
+                    border-bottom: 1px solid #e4e4e4;
+                    ">
+              <div style="
+                      font-size: 18px;
+                      " class="push-5 text-primary font-w600">{{row.school_name}}</div>
+              <small class="text-muted" style="
+                      font-weight: 300;
+                      font-size: 12px;
+                      ">{{row.university_name | uppercase}}</small>
+              <br>
+              <div class="push-15-t font-w600">Released: {{row.date_created | amUtc | amLocal |  amDateFormat:'MM/DD'}}</div>
+            </div>
+            <div class="block-content" style="
+                    padding-top: 10px;
+                    ">
+              <div style="
+                      font-weight: 600;
+                      font-size: 16px;
+                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="badge badge-primary pull-right">{{row.category_offer}}</span></div>
+              <div class="row items-push text-center">
+                <div class="col-xs-6 border-r">
+                  <div class="text-muted animated fadeIn" style="
+                          font-size: 14px;
+                          "><small style="
+                          font-size: 11px;
+                          "> ADDITION(S)</small></div>
+                  <a class="h2 font-w300 text-success animated flipInX" ng-if="row.category_added!==0">+ {{row.category_added}}</a>
+                  <a class="h2 font-w300 text-success animated flipInX" ng-if="row.category_added===0">- -</a>
+                </div>
+                <div class="col-xs-6">
+                  <div class="text-muted animated fadeIn" style="
+                          font-size: 14px;
+                          "><small style="
+                          font-size: 11px;
+                          "> REMOVAL(S)</small></div>
+                  <a class="h2 font-w300 text-danger animated flipInX" ng-if="row.category_removed!==0">- {{row.category_removed}}</a>
+                  <a class="h2 font-w300 text-danger animated flipInX" ng-if="row.category_removed===0">- -</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END school overview -->
+        <div class="col-sm-9">
+          <!-- category -->
+          <div ng-repeat="c in row.categories | orderBy:'updated'" class="col-sm-12 push-30" style="
+                  padding-right: 0;padding-left: 0;
+                  ">
+            <!-- category header -->
+            <div style="
+                    border: 1px solid #ddd;
+                    padding: 0px 0 18px 0;
+                    margin-right: 1px;
+                    border-top: 6px solid #70b9eb;
+                    ">
+
+              <div class="text-right font-w400 text-info bg-info-light" style="
+                        margin-bottom: 14px;
+                        font-size:11px;
+                       
+                        padding:0 15px 1px 15px;
+                    ">{{row.school_name}} ({{row.university_name}})</div>
+
+
+              <div style="padding:0 15px" class="push-25-t">
+                <p class="h3 font-w500 push-10 text-muted" style="
+                      display: inline-block;
+                      font-size: 17px;
+                      font-style: italic;
+                      ">Category:</p>
+
+
+                <div class="categoryheader" ng-class="{add: c.updated===1, rm: c.updated===2}" style="display: table;width: 100%;">
+                  <span style="display: table-cell;font-size: 21px;width:45%;">{{c.name}}&nbsp;<i class="fa fa-exclamation-circle font-s16 text-city" aria-hidden="true" data-popover-title="HISTORY"                                                          
+                                                data-uib-popover="{{c.updated}}"
+
+                                                ng-show="c.updated&&c.updated!==1&&c.updated!==2"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover-category"></i></span>
+                  <div style="
+                        display: table-cell;
+                        text-align: right;
+                        padding: 5px 0px;
+                        font-size: 13px;
+                        " class=""><span style="
+                        font-weight: 400;
+                        ">COURSE OFFERINGS: &nbsp;<span class="badge badge-primary" style="
+                        vertical-align: top;
+                        margin-top: 1px;
+                        ">{{c.course_offer}}</span></span>&nbsp;|&nbsp;&nbsp;Addition(s):&nbsp;
+
+                    <span ng-if="c.course_added!==0" class="badge badge-success" style="
+                          font-size: 12px;
+                          vertical-align: top;
+                          margin-top: 1px;
+                          ">+ {{c.course_added}}</span>
+                    <span ng-if="c.course_added===0" class="badge badge-default" style="
+                          vertical-align: top;
+                          margin-top: 1px;
+                          ">-&nbsp; -</span> |&nbsp;&nbsp;Removal(s): &nbsp;
+                    <span ng-if="c.course_removed!==0" class="badge badge-danger" style="
+                          vertical-align: top;
+                          margin-top: 1px;
+                          ">- {{c.course_removed}}</span>
+
+                    <span ng-if="c.course_removed===0" class="badge badge-default" style="
+                          vertical-align: top;
+                          margin-top: 1px;
+                          ">-&nbsp; -</span>
+
+                  </div>
+
+
+                </div>
+
+              </div>
+
+
+
+
+
+            </div>
+
+
+
+            <!-- END category header -->
+            <!-- course table under a category -->
+            <div class="">
+              <table class="table report_table2 table-bordered table-hover non-degree-table" style="table-layout: fixed;margin-bottom: 0;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; border-bottom: 5px solid #70b9eb;">
+                <colgroup>
+                  <col width="5%">
+                  <col width="32%">
+                  <col width="10%">
+                  <col width="28%">
+                  <col width="14%">
+                  <col width="11%">
+                </colgroup>
+                <thead>
+                  <tr class="font-w600 text-primary" style="background: #edf6fd;">
+                    <td class="bg-info" style="
+                            border-right: 0;
+                            "></td>
+                    <td class="text-info-light  text-left bg-info font-w400 text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
+
+                    <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
+
+                      TYPE
+
+                    </td>
+                    <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
+
+                      SCHEDULE
+
+                    </td>
+                    <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
+
+                      TUITION
+
+                    </td>
+                    <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
+
+                      URL
+
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- course table rows -->
+                  <tr ng-repeat="course in c.courses | orderBy:'updated'" class="course" ng-class="{add: course.updated===1, rm: course.updated===2}">
+                    <td style="
+                            text-align: center;
+                            ">{{$index + 1}}</td>
+                    <td style="vertical-align: middle;padding: 15px;text-align: left;" class="ribbon ribbon-modern ribbon-success ribbon-update">
+                      <div class="ribbon-box font-w600" data-popover-title="HISTORY" data-uib-popover="{{course.name_old}}" ng-show="course.name_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
+                        <span class="label_new">new
+                                                    </span>
+                      </div>
+
+                      <span ng-if="course.name">{{course.name}}</span>
+                      <span ng-if="!course.name" class="font-w600 text-gray label-na">N/A</span>
+
+                    </td>
+
+                    <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
+
+                      <div class="ribbon-box font-w600" data-popover-title="HISTORY" data-uib-popover="{{course.type_old}}" ng-show="course.type_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
+                        <span class="label_new">new
+                                                    </span>
+                      </div>
+
+                      <span ng-if="course.type">{{course.type}}</span>
+                      <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
+                    </td>
+                    <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
+
+                      <div class="ribbon-box font-w600" data-popover-title="HISTORY" data-uib-popover="{{course.course_dates_old}}" ng-show="course.course_dates_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
+                        <span class="label_new">new
+                                                    </span>
+                      </div>
+
+                      <span ng-if="course.course_dates.length!==0">
+                              <span ng-repeat-start="d in course.course_dates | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span> - <span>{{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span>
+                      <br ng-repeat-end ng-if="!$last">
+                      </span>
+
+                      <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
+
+                    </td>
+                    <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
+                      <div class="ribbon-box font-w600" data-popover-title="HISTORY" data-uib-popover="{{course.tuition_number_old}}" ng-show="course.tuition_number_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
+                        <span class="label_new">new
+                                                    </span>
+                      </div>
+
+                      <span ng-if="course.tuition_number">
+                            {{course.tuition_number | currency:currency_symbols[course.currency]:0}}
+                      </span>
+
+
+                      <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
+                    </td>
+                    <td style="
+                            padding: 15px;
+                            " class="ribbon ribbon-modern ribbon-success ribbon-update">
+
+                      <div class="ribbon-box font-w600" data-popover-title="HISTORY" data-uib-popover-html="'<a  href='+'{{course.url_old}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'" ng-show="course.url_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
+                        <span class="label_new">new
+                                                    </span>
+                      </div>
+
+                      <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
+
+                      <span ng-if="!course.url" class="font-w600 text-gray label-na">N/A</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- END course table under a category -->
+            <hr ng-show="!$last" style="margin-top: 30px;margin-bottom: 0px;border-color: #dedede">
+          </div>
+          <!-- END category -->
+        </div>
+
+
+      </div>
+      <hr ng-hide="!show_school[row.object_id]" ng-repeat-end ng-if="!$last" style="
+            margin-top: 50px;
+            margin-bottom: 50px;
+            border: 0;
+            border-top: 1px dashed #bbb;
+            ">
+      <!-- END schools report body-->
+      <hr class="hidden-print" style="margin-bottom: 8px;">
+      <p class="text-muted text-left"><small><strong>Gridology Education &amp; Technology, Inc.</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oak Tree Center, 2024 Center Ave, Fort Lee, NJ 07024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="http://www.gridet.com" target="_blank"><strong>gridet</strong>.com</a></small></p>
+
+      <!-- END SlimScroll Container -->
+
+    </div>
+
+    <!--   Scroll top button -->
+    <div style="position: fixed;bottom: 20px;right: 44px;">
+      <a  data-js-blur href="#top-sharedNonDegree" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
+    </div>
+
+
+    <!--  </div> -->
+    <!-- END SlimScroll Container -->
+
+
+  </div>
+</div>

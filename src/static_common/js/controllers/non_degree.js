@@ -42,6 +42,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
       'UAH': '₴', // Ukrainian Hryvnia
       'VND': '₫', // Vietnamese Dong
       'CNY': '¥', // Chinese Yuan
+      'null': '$', // The default currency sign is USD
     };
 
   $scope.check_storage = function(){
@@ -87,8 +88,8 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
 
 
-              console.log("++++++++value.object_id="+value.object_id);
-              console.log("++++++++response.data.results[0].object_id="+response.data.results[0].object_id);
+              //console.log("++++++++value.object_id="+value.object_id);
+              //console.log("++++++++response.data.results[0].object_id="+response.data.results[0].object_id);
               
               $scope.school_report_pair[value.object_id] = [];
               $scope.school_report_pair[value.object_id].push(response.data.results[0].object_id);
@@ -222,7 +223,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
             console.log("new school data ="+JSON.stringify(result.data))
             new_school_data = result.data;
 
-            new_school_data["logo_url"] = executiveService.getLogoBySchoolName(new_school_data.school_name, new_school_data.university_name)
+            new_school_data["logo_url"] = executiveService.getLogoBySchoolName(new_school_data.school_name, new_school_data.university_name);
 
             var test_id = (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id);
             console.log("test_id="+test_id)
@@ -264,14 +265,14 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
                 console.log("$scope.schools after ="+JSON.stringify($scope.schools));
 
 
-                var test_pluck = _.pluck($scope.schools[0].categories, 'courses')
-                console.log("COURSESESE = "+JSON.stringify(test_pluck))
-                var test_union = _.union(test_pluck)
-                var test_flatten = _.flatten(test_pluck);
-                console.log("TEST_FLATTEN"+JSON.stringify(test_flatten))
-                console.log("TEST_FIND"+JSON.stringify(_.filter(test_flatten, {updated: 2})));
-                var test_without = _.difference(test_flatten, _.filter(test_flatten, {updated: 2}))
-                console.log("COURSESESE_haha = "+ _.uniq(_.difference(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), _.filter(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), {updated: 2})), 'object_id').length);
+                // var test_pluck = _.pluck($scope.schools[0].categories, 'courses')
+                // console.log("COURSESESE = "+JSON.stringify(test_pluck))
+                // var test_union = _.union(test_pluck)
+                // var test_flatten = _.flatten(test_pluck);
+                // console.log("TEST_FLATTEN"+JSON.stringify(test_flatten))
+                // console.log("TEST_FIND"+JSON.stringify(_.filter(test_flatten, {updated: 2})));
+                // var test_without = _.difference(test_flatten, _.filter(test_flatten, {updated: 2}))
+                // console.log("COURSESESE_haha = "+ _.uniq(_.difference(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), _.filter(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), {updated: 2})), 'object_id').length);
                 
 
               }).
@@ -289,6 +290,20 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
        }
      }
 
+
+     $scope.checkAll_None = function(value) {
+
+      for(var i=0; i<$scope.school_table.length; i++){
+
+        if($scope.school_table[i].details){
+          console.log("i="+i)
+          $scope.$storage.non_degree[$scope.school_table[i].object_id] = value
+
+        }
+
+      }
+
+     }
 
       $scope.htmlShare = function(day) {
       

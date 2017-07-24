@@ -18,6 +18,40 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider.
 
+  state('admin-dashboard', {
+    url: '/admin-dashboard',
+    parent: 'success_demo',
+    templateUrl: '/static/views/Admin/AdminDashboard.html',
+    controller: 'AdminDashboardController',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo && userInfo.admin === "True") {
+
+          return $q.when(userInfo);
+
+        } else {
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsAdmin: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                '/static/js/controllers/admin-dashboard.js',
+
+                            ]
+                        });
+                    }]
+      }
+
+  }).
+
   state('admin', {
     url: '/admin',
     parent: 'success_demo',
@@ -181,6 +215,73 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
 
+
+  state('admin-exec-user', {
+    url: '/admin-exec-user',
+    parent: 'success_demo',
+    templateUrl: '/static/views/Admin/AdminExecUser.html',
+    controller: 'AdminExecUserController',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo && userInfo.admin === "True") {
+
+          return $q.when(userInfo);
+
+        } else {
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsAdminExecUser: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.css',
+                                '/static/js/third-party/bootstrap-duallistbox/bootstrap-duallistbox.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
+                                '/static/js/third-party/bootstrap-wizard/jquery.bootstrap.wizard.min.js',
+                                '/static/js/third-party/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js',
+                                '/static/js/third-party/angular-bootstrap-duallistbox.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
+                                '/static/js/third-party/masked-inputs/jquery.maskedinput.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js',
+                                '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js',
+                                '/static/js/services/tableService.js',
+                                '/static/js/services/apiService.js',
+                                '/static/js/controllers/admin-exec-user.js',
+
+   
+                            ]
+                        });
+                    }], 
+
+      //get client list
+      Client: function(depsAdminExecUser, apiService, authenticationSvc) {
+        
+        if(authenticationSvc.getUserInfo().admin === "True"){
+            var token = authenticationSvc.getUserInfo().accessToken;
+        
+            return apiService.getClient(token);
+        } else {
+            return null;
+        }
+      
+      }
+    }
+    //end of resolve
+
+  }).
 
 
 
@@ -749,6 +850,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                              'https://cdnjs.cloudflare.com/ajax/libs/jsdiff/3.2.0/diff.min.js',
                               '/static/js/services/ajaxService.js',
                               '/static/js/third-party/clipboard.min.js',
                               '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
@@ -760,6 +862,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                               '/static/js/services/executiveService.js',
+
                               '/static/js/controllers/amp.js',
                              
                               
@@ -778,28 +881,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
     }
 
-  }).
-  // Non-degree report state
-  state('non_degree_report', {
-    url: '/non_degree_report',
-    templateUrl: '/static/views/Home/non_degree_report.html',
-    controller: 'NonDegreeReportController',
-    resolve: {
-                    depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
-                        return $ocLazyLoad.load({
-                            insertBefore: '#css-bootstrap',
-                            serie: true,
-                            files: [
-                              '/static/js/controllers/non-degree_report.js',
-                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
-                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
-                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
-                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
-                                
-                            ]
-                        });
-                    }] 
-    }
   }).
   state('reports', {
 
@@ -1007,7 +1088,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   state('shareExecutive', {
     url: '/shared_reports/:param1/:param2/',
-    templateUrl: '/static/views/Home/non_degree_report.html',
+    templateUrl: '/static/views/Share/shared_non_degree_report.html',
     controller: 'ShareExecutiveController',
     resolve: {
                     depsShareExecutive: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -1021,6 +1102,8 @@ App.config(function($stateProvider, $urlRouterProvider) {
                               'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                              '/static/js/services/executiveService.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                               
                             ]
