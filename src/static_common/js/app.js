@@ -272,7 +272,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
         if(authenticationSvc.getUserInfo().admin === "True"){
             var token = authenticationSvc.getUserInfo().accessToken;
         
-            return apiService.getClient(token);
+            return apiService.getExecClient(token);
         } else {
             return null;
         }

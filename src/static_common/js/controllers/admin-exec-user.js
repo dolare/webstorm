@@ -964,7 +964,7 @@ angular.module('myApp').controller('AdminExecUserController',
 
                     $scope.success_client_id = response.data.client_id;
 
-                    apiService.getClient(token).then(function (result) {
+                    apiService.getExecClient(token).then(function (result) {
             
                             console.log("$scope.success_client_id="+$scope.success_client_id)
                                   
@@ -1199,7 +1199,7 @@ angular.module('myApp').controller('AdminExecUserController',
 
 
 
-                     apiService.getClient(token).then(function (result) {
+                     apiService.getExecClient(token).then(function (result) {
             
                             console.log("$scope.success_client_id="+$scope.success_client_id)
                                   
