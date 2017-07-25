@@ -36,14 +36,14 @@ class UniversitySchoolDetailSerializer(ModelSerializer):
 class ReportListSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeReport
-        fields = ('object_id', 'school', 'date_created')
+        fields = ('object_id', 'school', 'date_created', 'active', )
 
 
 class ReportUpdateSerializer(ModelSerializer):
 
     class Meta:
         model = NonDegreeReport
-        fields = ('categories', )
+        fields = ('categories', 'active', )
 
 
 class ReportSerializer(ModelSerializer):
