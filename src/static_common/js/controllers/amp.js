@@ -52,6 +52,11 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
             console.log('an error occurred...'+JSON.stringify(error));
       });
 
+      $scope.sort_time = function(parentIndex, Index) {
+
+        _.sortBy($scope.school_table[parentIndex].courses[Index]['urls'], 'amp_report_released_date').reverse();
+      }
+
 
       $scope.showUrl = function (parentIndex, Index){
 
@@ -68,8 +73,37 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
             //value["courses"] = result.data.results;
 
             console.log("response = "+JSON.stringify(response.data));
-            $scope.urls = response.data.results;
+            
+            $scope.urls = response.data.results
+            
+            //highlight the newest one
+            _.sortBy($scope.urls, 'amp_report_released_date').reverse()[0]['highlight'] = true;
 
+            for(var i=0; i<$scope.urls.length; i++){
+
+              if($scope.urls[i].type === 'Main') {
+
+                $scope.urls[i]['type_order'] = 1
+
+              } else if($scope.urls[i].type === 'Parent') {
+
+                $scope.urls[i]['type_order'] = 2
+
+              } else if($scope.urls[i].type === 'Other') { 
+
+                $scope.urls[i]['type_order'] = 4
+
+              } else {
+
+                $scope.urls[i]['type_order'] = 3
+
+              }
+            }
+
+
+            
+            console.log("$scope.urls = "+JSON.stringify($scope.urls))
+            
             $scope.school_table[parentIndex].courses[Index]['urls'] = $scope.urls;
 
 
@@ -114,6 +148,7 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
             var amp_old = result.data.start_scan.text_contents
             var amp_new = result.data.end_scan.text_contents
 
+            console.log("xxx"+JSON.stringify(result.data));
             var final_diff = differentiateTextContent(amp_old, amp_new)
             console.log("final_diff = "+JSON.stringify(final_diff));
             App.blocks('#amp_loading', 'state_normal');

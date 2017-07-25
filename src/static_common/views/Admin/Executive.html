@@ -108,6 +108,7 @@
                 <a class="fa fa-cloud-download text-primary" style="vertical-align: middle;">
                 </a>
               </button>
+              <button class="btn btn-default btn-white" ng-click="editReport(selectedReportId)" data-js-blur>Edit</button>
 
             </td>
 
@@ -170,13 +171,11 @@
         </div>
         <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_preview">
           <!-- SlimScroll Container -->
-          <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
           <div class="block cart_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="top-report_preview">
             <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content_preview">
               <!-- ########### -->
               <!-- dynamic templates -->
               
-                <!-- <div ng-attr-id="{{ 'program-' + $index }}"></div> -->
                 <div ng-include src="'/static/views/Home/partials/reports/non_degree_previewreport.html'"></div>
               
               <!-- Footer -->
@@ -186,23 +185,22 @@
           <div style="position: fixed;bottom: 80px;right: 44px;">
             <a  data-js-blur href="#top-report_preview" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
           </div>
-          <!-- </div> -->
           <!-- END SlimScroll Container -->
           <div style="position: fixed;bottom: 20px;right: 44px;">
-              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="checkUpdate()"><i class="si si-mouse"></i> Check for Update</button>
+              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseConfirm()" popover-enable="releaseConfirmEnable" popover-is-open="releaseConfirmIsOpen" uib-popover-template="'releaseConfirmTemplate.html'" ><i class="si si-mouse"></i> Release</button>
 
-              <label ng-show="readyToRelease">Report is ready to release!</label>
+              <script type="text/ng-template" id="releaseConfirmTemplate.html">
+                  <label>Are you sure you want to release this Tracking Report?</label>
+                  <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseReport(); scrolltop_preview(); $parent.releaseConfirmEnable=false; $parent.releaseConfirmIsOpen=false" data-dismiss="modal">Yes</button>
+                  <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="$parent.releaseConfirmIsOpen=false">No</button>
+              </script>
+
+              <!-- <label ng-show="readyToRelease">Report is ready to release!</label>
 
               <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseReport(); scrolltop_preview(); $parent.readyToRelease=false" data-dismiss="modal" ng-show="readyToRelease"><i class="si si-mouse"></i> Release</button>
 
-              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="$parent.readyToRelease=false" ng-show="readyToRelease"><i class="si si-mouse"></i> Cancel</button>
-              <!-- <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="checkUpdate($event)" uib-popover-template="confirmRelease" popover-enable="false" popover-is-open="{{popoverIsOpen}}"><i class="si si-mouse"></i> Release</button> -->
-
-              <!-- <script type="text/ng-template" id="confirmRelease">
-                  <p>Confirm to release this report?</p><br>
-                  <button ng-click="releaseReport(); scrolltop_preview()" data-dismiss="modal">Yes</button>
-                  <button ng-click="popoverIsOpen=false">No</button>
-              </script> -->
+              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="$parent.readyToRelease=false" ng-show="readyToRelease"><i class="si si-mouse"></i> Cancel</button> -->
+              
 
           </div>
         </div>
@@ -234,13 +232,11 @@
         </div>
         <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_view">
           <!-- SlimScroll Container -->
-          <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
           <div class="block cart_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="top-report_view">
             <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content_view">
               <!-- ########### -->
               <!-- dynamic templates -->
               
-                <!-- <div ng-attr-id="{{ 'program-' + $index }}"></div> -->
                 <div ng-include src="'/static/views/Home/partials/reports/non_degree_viewreport.html'"></div>
               
               <!-- Footer -->
@@ -250,7 +246,52 @@
           <div style="position: fixed;bottom: 20px;right: 44px;">
             <a  data-js-blur href="#top-report_view" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
           </div>
-          <!-- </div> -->
+          <!-- END SlimScroll Container -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal of edit report pop-up window-->
+<div class="modal fullscreen-modal fade" id="editReport"  role="dialog" aria-labelledby="myModalLabel" >
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="block block-themed block-transparent remove-margin-b" id="editReport_loading">
+        <div class="block-header bg-primary-dark">
+          <ul class="block-options">
+            <li>
+              <button ng-click="printReport_edit()" type="button" data-js-blur><i class="si si-printer"></i></button>
+            </li>
+            <li>
+              <button type="button" ng-click="togglefullen_edit(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
+            </li>
+            <li>
+              <button data-dismiss="modal" type="button" ng-click="scrolltop_edit()" data-js-blur><i class="si si-close"></i></button>
+            </li>
+          </ul>
+          <h3 class="block-title">History Report</h3>
+        </div>
+        <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_edit">
+          <!-- SlimScroll Container -->
+          <div class="block cart_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="top-report_edit">
+            <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content_edit">
+              <!-- ########### -->
+              <!-- dynamic templates -->
+              
+                <div ng-include src="'/static/views/Home/partials/reports/non_degree_editreport.html'"></div>
+              
+              <!-- Footer -->
+             
+            </div>
+          </div>
+          <div style="position: fixed;bottom: 80px;right: 44px;">
+            <a  data-js-blur href="#top-report_edit" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
+          </div>
+          <div style="position: fixed;bottom: 20px;right: 44px;">
+              <button data-js-blur type="button" class="btn btn-default" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="saveReport()"><i class="si si-mouse"></i> Save</button>
+          </div>
           <!-- END SlimScroll Container -->
         </div>
       </div>

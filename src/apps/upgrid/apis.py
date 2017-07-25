@@ -590,7 +590,7 @@ class UniversityCustomerListAPI(generics.ListAPIView):
         if UpgridAccountManager.objects.filter(id=user.id).exists():
             return UniversityCustomer.objects.filter(account_manager=user)
         else:
-            return UniversityCustomer.objects.filter(Q(main_user_id=str(user.id)))
+            return UniversityCustomer.objects.filter(main_user_id=str(user.id)).filter(is_active=True)
 
 
 class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView):
