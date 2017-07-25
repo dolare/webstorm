@@ -239,16 +239,17 @@ angular.module('myApp')
       var getClient = function(token) {
 
             var promise =  $http({
-              url: '/api/upgrid/accountmanager/',
+              //url: '/api/upgrid/accountmanager/',
+              url: '/api/upgrid/user/university_customer/?is_main_user=True&is_non_degree_user=False',
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
               }
             }).then(function (response) {
 
-               console.log("all client is="+ JSON.stringify(response.data.client_list));
+               console.log("all client is="+ JSON.stringify(response.data));
                 
-               return response.data.client_list;
+               return response.data;
 
              }).
              catch(function(error){
