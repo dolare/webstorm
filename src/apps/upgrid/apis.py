@@ -156,13 +156,11 @@ class ResetPassword(generics.GenericAPIView):
                                         " you, please copy and paste the following into your browser address "
                                         "bar:</p><a href='https://%s/#/upgrid/verify/%s/'>"
                                         "https://%s/#/upgrid/verify/%s/</a><br><br><div>Thanks!"
-                                        "</div><h3>- Team Gridology</h3></div></div></div>")
+                                        "</div><h3>- Gridology Tech Team</h3></div></div></div>")
 
                         html_content = html_verify
 
-
-
-                        message = EmailMessage(subject='Account Vertification', body=html_content % (user_reset.contact_name,
+                        message = EmailMessage(subject='Account Verification', body=html_content % (user_reset.contact_name,
                                                request.META['HTTP_HOST'], token,  request.META['HTTP_HOST'], token,
                                                 request.META['HTTP_HOST'], token), 
                                                 to=[request.data['email']],bcc=cc_addresses_tuple)
@@ -181,7 +179,7 @@ class ResetPassword(generics.GenericAPIView):
                                         " you, please copy and paste the following into your browser address "
                                         "bar:</p><a href='https://%s/#/upgrid/reset/%s/'>"
                                         "https://%s/#/upgrid/reset/%s/</a><br><br><div>Thanks!"
-                                        "</div><h3>- Team Gridology</h3></div></div></div>")
+                                        "</div><h3>- Gridology Tech Team</h3></div></div></div>")
 
                         html_content = hmtl_resetPassword
 
