@@ -529,7 +529,7 @@
                                                     </span>                                   
                                                 </div> 
 
-                            <span ng-show="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-map-marker" aria-hidden="true" ng-show="course.location_info"></i> {{course.type}}</span>
+                            <span ng-show="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-map-marker text-primary" aria-hidden="true" ng-show="course.location_info"></i> {{course.type}}</span>
                             <span ng-show="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
@@ -569,14 +569,8 @@
                                                     </span>                                   
                                                 </div> 
 
-                            <span ng-if="course.tuition_number">
-                            {{course.tuition_number | currency:currency_symbols[course.currency]:0}}
 
-                           <!--  <br><span ng-if="course.currency!='USD'&&course.currency!=null" class="text-muted" style="
-                              font-size: 12px;
-                              font-weight: 200;
-                              ">*({{fxConvert(course.tuition_number,course.currency) | currency:"$":0}} as of {{fxRates.date | amUtc | amLocal | amDateFormat:'M/D/YY'}})</span> -->
-                            </span>
+                            <span ng-show="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip="note: {{course.tuition_note}}" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-pencil-square-o text-primary" aria-hidden="true" ng-show="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
 
 
                               <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>

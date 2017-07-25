@@ -187,6 +187,8 @@ class WhoopsReleasedListSerializer(serializers.ModelSerializer):
 
     def get_has_expert_notes(self, obj):
         try:
+            print(obj.customer)
+            print(obj)
             update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
             print('whoos released list')
             print(update_report.initial_diff)
@@ -243,8 +245,10 @@ class WhoopsUpdateSerializer(serializers.ModelSerializer):
 
     def get_has_expert_notes(self, obj):
         try:
-            update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
-            print('whoops update list')
+            print('whoops update list ===================================================================================')
+            print(obj.customer)
+            update_report = obj
+            print(update_report)
             print(update_report.initial_diff)
             print(update_report.existing_report)
             print(update_report.cache_report)
@@ -256,8 +260,9 @@ class WhoopsUpdateSerializer(serializers.ModelSerializer):
                 print('2')
             else:
                 expert_notes = True
-        except:
+        except Exception as e:
             print('3')
+            print(e)
             expert_notes = False
 
         return expert_notes
