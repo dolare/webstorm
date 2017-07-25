@@ -36,14 +36,14 @@ class UniversitySchoolDetailSerializer(ModelSerializer):
 class ReportListSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeReport
-        fields = ('object_id', 'school', 'date_created')
+        fields = ('object_id', 'school', 'date_created', 'active', )
 
 
 class ReportUpdateSerializer(ModelSerializer):
 
     class Meta:
         model = NonDegreeReport
-        fields = ('categories', )
+        fields = ('categories', 'active', )
 
 
 class ReportSerializer(ModelSerializer):
@@ -90,8 +90,8 @@ class CourseSerializer(ModelSerializer):
 
     class Meta:
         model = NonDegreeCourse
-        fields = ('object_id', 'name', 'date_modified', 'type', 'currency', 'tuition_number', 'Repeatable',
-                  'course_dates', 'url', 'location_info', )
+        fields = ('object_id', 'name', 'date_modified', 'type', 'currency', 'tuition_number', 'tuition_note',
+                  'Repeatable', 'course_dates', 'url', 'location_info', )
 
     def get_course_dates(self, obj):
         dates = NonDegreeCourseDate.objects.filter(course=obj)
@@ -187,10 +187,11 @@ class AMPReportDetailSerializer(ModelSerializer):
     webpage = SerializerMethodField()
     start_scan = SerializerMethodField()
     end_scan = SerializerMethodField()
+    last_report_date_created = SerializerMethodField()
 
     class Meta:
         model = NonDegreeAMPReport
-        fields = ('webpage', 'start_scan', 'end_scan')
+        fields = ('webpage', 'start_scan', 'end_scan', 'date_created', 'last_report_date_created',)
 
     def get_webpage(self, obj):
         web_page = obj.webpage
@@ -206,4 +207,11 @@ class AMPReportDetailSerializer(ModelSerializer):
         end_scan = getattr(obj, 'end_scan', None)
         if end_scan is not None:
             return WebPageScanDetailSerializer(end_scan).data
+        return None
+
+    def get_last_report_date_created(self, obj):
+        reports = NonDegreeAMPReport.objects.filter(webpage=obj.webpage).filter(date_created__lt=obj.date_created)\
+                                            .order_by('-date_created')
+        if reports:
+            return reports.first().date_created
         return None

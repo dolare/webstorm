@@ -25,62 +25,6 @@
           <div class="row items-push-2x">
             <!-- Company Info -->
             <div class="col-sm-4 push-15">
-              <!-- <div class="panel panel-default" style="
-                /* border: 1px solid #ddd; */
-                /* padding: 5px 0px 0px 10px; */
-                border-color: hsla(53, 35%, 88%, 1);
-                ">
-
-                <div class="panel-heading" style="
-                  background: #FFF8DC;
-                  border-color: hsla(53, 35%, 88%, 1);
-                  ">
-                  <p class="text-muted" style="
-                    margin-bottom: 0;
-                    font-weight: 200;
-                    /* padding-left: 5px; */
-                    font-weight: 400;
-                    ">REPORT LEGEND</p>
-                </div>
-                <div class="panel-body">
-                  <p style="
-                    margin-bottom: 0;
-                    margin-top: 0;
-                    " class=""><span class="badge badge-success">+ 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Addition(s)</span></p>
-                  <p class="push-5-t" style="
-                    margin-bottom: 0;
-                    "><span class="badge badge-danger">&nbsp;- 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Removal(s)</span></p>
-                  <p class="push-5-t" style="
-                    margin-bottom: 0;
-                    "><span style="
-                    color: #3c763d;
-                    background-color: #dff0d8;
-                    padding: 0 5px;
-                    border-left: 3px solid #3c763d;
-                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Category</span></p>
-                  <p class="push-5-t" style="
-                    margin-bottom: 0;
-                    "><span style="
-                    color: #a94442;
-                    background-color: #f2dede;
-                    padding: 0 5px;
-                    border-left: 3px solid #a94442;
-                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Category</span></p>
-                  <p class="push-5-t" style="
-                    margin-bottom: 0;
-                    "><span style="
-                    padding: 0 22px 0 8px;
-                    background: hsla(104, 44%, 93%, 1);
-                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
-                  <p class="push-5-t" style="
-                    margin-bottom: 0;
-                    "><span style="
-                    padding: 0 22px 0 8px;
-                    background: hsla(0, 44%, 93%, 1);
-                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
-                </div>
-              </div> -->
-
 
                 <uib-accordion>
                 <div uib-accordion-group class="panel-default" is-open="open_legend">
@@ -585,7 +529,7 @@
                                                     </span>                                   
                                                 </div> 
 
-                            <span ng-show="course.type" ng-class="{location-dashline: course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-map-marker" aria-hidden="true" ng-show="course.location_info"></i> {{course.type}}</span>
+                            <span ng-show="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-map-marker text-primary" aria-hidden="true" ng-show="course.location_info"></i> {{course.type}}</span>
                             <span ng-show="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
@@ -625,14 +569,8 @@
                                                     </span>                                   
                                                 </div> 
 
-                            <span ng-if="course.tuition_number">
-                            {{course.tuition_number | currency:currency_symbols[course.currency]:0}}
 
-                           <!--  <br><span ng-if="course.currency!='USD'&&course.currency!=null" class="text-muted" style="
-                              font-size: 12px;
-                              font-weight: 200;
-                              ">*({{fxConvert(course.tuition_number,course.currency) | currency:"$":0}} as of {{fxRates.date | amUtc | amLocal | amDateFormat:'M/D/YY'}})</span> -->
-                            </span>
+                            <span ng-show="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip="note: {{course.tuition_note}}" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-pencil-square-o text-primary" aria-hidden="true" ng-show="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
 
 
                               <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>

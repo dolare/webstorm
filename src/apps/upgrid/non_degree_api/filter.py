@@ -29,7 +29,7 @@ class ReportFilter(FilterSet):
 
     class Meta:
         model = NonDegreeReport
-        fields = ['school', ]
+        fields = ['school', 'active', ]
 
 
 class CourseFilter(FilterSet):

@@ -187,6 +187,8 @@ class WhoopsReleasedListSerializer(serializers.ModelSerializer):
 
     def get_has_expert_notes(self, obj):
         try:
+            print(obj.customer)
+            print(obj)
             update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
             print('whoos released list')
             print(update_report.initial_diff)
@@ -243,8 +245,10 @@ class WhoopsUpdateSerializer(serializers.ModelSerializer):
 
     def get_has_expert_notes(self, obj):
         try:
-            update_report = WhoopsUpdate.objects.get(customer=obj.customer, customer_program=obj, most_recent=True)
-            print('whoops update list')
+            print('whoops update list ===================================================================================')
+            print(obj.customer)
+            update_report = obj
+            print(update_report)
             print(update_report.initial_diff)
             print(update_report.existing_report)
             print(update_report.cache_report)
@@ -256,8 +260,9 @@ class WhoopsUpdateSerializer(serializers.ModelSerializer):
                 print('2')
             else:
                 expert_notes = True
-        except:
+        except Exception as e:
             print('3')
+            print(e)
             expert_notes = False
 
         return expert_notes
@@ -332,17 +337,25 @@ class UniversityAndSchoolSerializer(serializers.ModelSerializer):
 
 class SubuserListSerializer(serializers.ModelSerializer):
     customer_program = SerializerMethodField()
+    university = SerializerMethodField()
+    school = SerializerMethodField()
 
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'title',
-                  'contact_name', 'position', 'phone', 'customer_program')
+        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'title', 'department',
+                  'contact_name', 'position', 'phone', 'customer_program', 'university', 'school', 'account_type')
 
     def get_customer_program(self, obj):
         program_list = ClientAndProgramRelation.objects.filter(client=obj).values('client_program')
         programs = UniversityCustomerProgram.objects.filter(object_id__in=program_list)
         serializer = ClientProgramSerializer(programs, many=True)
         return serializer.data
+
+    def get_university(self, obj):
+        return obj.Ceeb.university_foreign_key.name
+
+    def get_school(self, obj):
+        return obj.Ceeb.school
 
 
 class MainUserDetailSerializer(serializers.ModelSerializer):
