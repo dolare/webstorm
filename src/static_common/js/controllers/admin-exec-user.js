@@ -9,7 +9,7 @@ angular.module('myApp').controller('AdminExecUserController',
         $scope.itemsByPage = 25;
         $scope.orders = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-        $scope.client_data = tableDataService.getClientList(Client);
+        $scope.client_data = Client;
 
         //sorting in alphabetical order
         $scope.client_data.sort(function(a, b) {
@@ -970,7 +970,7 @@ angular.module('myApp').controller('AdminExecUserController',
                                   
                             console.log("result===="+JSON.stringify(result))
                             //$scope.client_data = result;
-                            $scope.client_data = tableDataService.getClientList(result);
+                            $scope.client_data = result;
                                 //$scope.() = [].concat($scope.selected_customprogram);
                             //$scope.$broadcast('refreshProducts');
 
@@ -1205,7 +1205,7 @@ angular.module('myApp').controller('AdminExecUserController',
                                   
                             console.log("result===="+JSON.stringify(result))
                             //$scope.client_data = result;
-                            $scope.client_data = tableDataService.getClientList(result);
+                            $scope.client_data = result;
                          
                     });
                          
