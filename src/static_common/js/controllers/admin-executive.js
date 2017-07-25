@@ -30,6 +30,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       'UAH': '₴', // Ukrainian Hryvnia
       'VND': '₫', // Vietnamese Dong
       'CNY': '¥', // Chinese Yuan
+      'SGD': '$', // Singapore Dollar
       'null': '$', // The default currency sign is USD
     };
 
