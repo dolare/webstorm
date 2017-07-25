@@ -126,7 +126,7 @@ class ReportAPI(PermissionMixin, RetrieveModelMixin, UpdateModelMixin, DestroyMo
     lookup_field = 'object_id'
 
     def get_serializer_class(self):
-        if self.request.method == 'PUT':
+        if self.request.method == 'PUT' or self.request.method == 'PATCH':
             return ReportUpdateSerializer
         else:
             return ReportSerializer
@@ -146,6 +146,9 @@ class ReportAPI(PermissionMixin, RetrieveModelMixin, UpdateModelMixin, DestroyMo
         if not self.is_manager():
             return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
         return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         if not self.is_manager():
