@@ -3,7 +3,8 @@
 var dashboard = angular.module('myApp')
 dashboard.controller('DashboardController',
   function(apiService, updateService, avatarService, $sce, $timeout, $window, Dash, authenticationSvc, $http, List, SUB, $scope) {
-    
+      
+    $scope._ = _;
     var token = authenticationSvc.getUserInfo().accessToken;
     var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
