@@ -1,0 +1,322 @@
+<div class="nondegree">
+  <div class="block block-themed block-transparent remove-margin-b ng-scope" id="enhancement_loading">
+    <div class="block-content fullscreen-container share-link" style="width:auto;padding:0;">
+      <!-- SlimScroll Container -->
+      <div class="block" style="padding:7px 12px 12px 12px;margin:0; background:#f5f5f5">
+        <div class="block-content block-content-full bg-white ng-scope" style="height:100%;" id="print-content1">
+          <style>
+            @media print {
+              body * {
+                visibility: hidden;
+              }
+              #print-content1 * {
+                visibility: visible;
+                overflow: visible;
+              }
+              .modal {
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow: visible;
+              }
+            }
+
+            .report_table2.table>tbody>tr>td {
+              vertical-align: top;
+            }
+          </style>
+          <div class="row">
+            <div class="col-sm-6">
+              <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
+                <small>upgrid.gridet.com</small><br>NON-DEGREE REPORT
+              </h1>
+              <div class="text-muted" style="
+                padding-left: 2px;
+                font-weight: 100;
+                ">Created: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY HH:mm'}}</div>
+            </div>
+            <div class="col-sm-6">
+              <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
+            </div>
+          </div>
+          <hr class="hidden-print">
+          <!-- Table -->
+          <div class="push-15" style="
+            border-bottom: 3px solid rgba(75, 123, 155, 0.38);
+            ">
+            <span class="h3 font-w400 push-50 push-10-t  text-uppercase text-left" style="
+              padding: 0px 12px;
+              background-color: rgba(75, 123, 155, 0.78);
+              color: rgba(255,255,255,1);
+              border-top-left-radius: 4px;
+              border-top-right-radius: 4px;
+              ">REPORT OVERVIEW</span>
+          </div>
+          <div class="table-responsive push-20" style="
+            ">
+            <table class="table report_table2 table-bordered table-hover" style="table-layout: fixed;">
+              <colgroup>
+                <col width="7%">
+                <col width="35%">
+                <col width="18%">
+                <col width="18%">
+              </colgroup>
+              <!-- table header -->
+              <thead>
+                <tr class="font-w600 text-primary bg-" style="background: #edf6fd;">
+                  <td rowspan="2" class="bg-info" style="
+                    border-right: 0;
+                    color: rgba(255,255,255,0.85);
+                    border-left: 0;
+                    "></td>
+                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: left;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="1" rowspan="2">UNIVERSITY SCHOOL</td>
+                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="1" rowspan="2">Category Offerings</td>
+                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="1" rowspan="2">Course Offerings</td>
+
+
+                </tr>
+
+              </thead>
+              <!-- END table header -->
+              <!-- table body -->
+              <tbody>
+                <tr>
+                  <td style="
+                    border-right: 0;
+                    padding: 4px;
+                    "><img ng-src="{{logo_url}}" alt="Logo of {{school}}" height="58" width="58"></td>
+                  <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">{{school}}<br>
+                    <span class="text-muted">
+                    <small style="
+                      font-weight: 300;
+                      font-size: 12px;
+                      ">{{university | uppercase}}
+                    </small>
+                    </span>
+                  </td>
+                  <td class="font-w500 text-center" style="vertical-align: middle;border-left: 0;padding: 5px 10px;"><span class="badge badge-primary">{{cat_offer}}</span></td>
+                  <td class="font-w500 text-center" style="vertical-align: middle;border-left: 0;padding: 5px 10px;"><span class="badge badge-primary">{{course_offer}}</span></td>
+                </tr>
+              </tbody>
+              <!-- END table body -->
+            </table>
+          </div>
+          <!-- END Table -->
+          <div class="row items-push-2x">
+            <!-- Company Info -->
+            <div class="col-sm-12" style="
+              margin-bottom: 0;
+              ">
+              <div class="push-20" style="
+                border-bottom: 3px solid rgba(75, 123, 155, 0.38);
+                ">
+                <span class="h3 font-w400 push-50 push-10-t text-uppercase text-left text-white" style="
+                  padding: 0px 12px;
+                  background-color: rgba(75, 123, 155, 0.78);
+                  border-top-left-radius: 4px;
+                  border-top-right-radius: 4px;
+                  ">Report Details</span>
+              </div>
+            </div>
+          </div>
+          <!-- report body-->
+          <div class="col-sm-12">
+            <!-- school overview -->
+            <div class="col-sm-3">
+              <div class="block col-sm-12" style="
+                  border: 1px solid #cfcfcf;
+                  padding-left: 0;
+                  padding-right: 0;
+                  ">
+                <div class="block-header bg-gray-light" style="
+                    border-bottom: 1px solid #cfcfcf;
+                    ">
+                  <h3 class="block-title text-left">School Overview</h3>
+                </div>
+                <div class="block-content block-content-full text-left bg-image" style="padding: 10px 15px;">
+                  <div>
+                    <img ng-src="{{logo_url}}" alt="Logo of {{school}}" width="50%">
+                  </div>
+                </div>
+                <div class="text-left bg-gray-lighter" style="
+                    padding-left: 21px;
+                    padding-bottom: 15px;
+                    padding-top: 0px;
+                    border-bottom: 1px solid #e4e4e4;
+                    ">
+                  <div style="
+                      font-size: 18px;
+                      " class="push-5 text-primary font-w600">{{school}}</div>
+                  <small class="text-muted" style="
+                      font-weight: 300;
+                      font-size: 12px;
+                      ">{{university | uppercase}}</small>
+                </div>
+                <div class="block-content" style="
+                    padding-top: 10px;
+                    ">
+                  <div style="
+                      font-weight: 600;
+                      font-size: 16px;
+                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="">{{cat_offer}}</span></div>
+                </div>
+              </div>
+            </div>
+            <!-- END school overview -->
+            <div class="col-sm-9">
+              <!-- category -->
+              <div ng-repeat="c in categories" class="col-sm-12" style="
+                  padding-right: 0;
+                  ">
+                <!-- category header -->
+                <div style="
+                    border: 1px solid #ddd;
+                    padding: 35px 15px 18px 15px;
+                    margin-right: 1px;
+                    border-top: 5px solid #70b9eb;
+                    ">
+                  <p class="h3 font-w500 push-5 text-primary" style="
+                      display: inline-block;
+                      font-size: 28px;
+                      ">CATEGORY</p>
+                  <div class="categoryheader">
+                    <input type="text" ng-model="c.name">
+                    <div style="
+                        display: inline-block;
+                        padding: 5px 0px;
+                        font-size: 15px;
+                        " class="pull-right"><span style="
+                        font-weight: 600;
+                        ">COURSE OFFERINGS: &nbsp;<span class="badge badge-primary" style="
+                        vertical-align: top;
+                        margin-top: 1px;
+                        ">{{c.course_offer}}</span></span>
+                    </div>
+                  </div>
+                </div>
+                <!-- END category header -->
+                <!-- course table under a category -->
+                <div class="table-responsive">
+                  <table class="table report_table2 table-bordered table-hover" style="table-layout: fixed;margin-bottom: 0;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">
+                    <colgroup>
+                      <col width="6%">
+                      <col width="26%">
+                      <col width="12%">
+                      <col width="26%">
+                      <col width="22%">
+                      <col width="6%">
+                    </colgroup>
+                    <thead>
+                      <tr class="font-w600 text-primary" style="background: #edf6fd;">
+                        <td class="bg-info" style="
+                            border-right: 0;
+                            "></td>
+                        <td class="text-info-light  text-left bg-info font-w600" style="vertical-align: middle;padding: 5px 15px;text-align: left;border-left: 0;border-right: 0;">COURSE</td>
+                        <td class="text-info-light bg-info" style="
+                            padding: 5px 10px;
+                            border-left: 0;
+                            border-right: 0;
+                            ">
+                          <span>
+                            TYPE
+                            </span>
+                        </td>
+                        <td class="text-info-light bg-info" style="
+                            padding: 5px 10px;
+                            border-left: 0;
+                            border-right: 0;
+                            ">
+                          <span>
+                            SCHEDULE
+                            </span>
+                        </td>
+                        <td class="text-info-light bg-info" style="
+                            border-left: 0;
+                            border-right: 0;
+                            ">
+                          <span>
+                            TUITION
+                            </span>
+                        </td>
+                        <td class="text-info-light bg-info" style="
+                            padding: 5px 10px;
+                            border-left: 0;
+                            border-right: 0;
+                            ">
+                          <span>
+                            URL
+                            </span>
+                        </td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- course table rows -->
+                      <tr ng-repeat="course in c.courses" class="course">
+                        <td style="
+                            text-align: center;
+                            ">{{$index + 1}}</td>
+                        <td style="vertical-align: middle;padding: 8px 15px;text-align: left;">
+                          <input type="text" ng-model="course.name">
+                        </td>
+                        <td style="padding: 8px 10px;">
+                          <input type="text" ng-model="course.type" size="5">
+                        </td>
+                        <td style="
+                            padding: 8px 10px;
+                            ">
+                          <span ng-repeat-start="d in course.course_dates | orderBy:'start_date'">Start: {{d.start_date | amUtc  | amDateFormat:'MMM DD, YYYY'}}</span>
+                          <input type="text" ng-model="d.start_date"><br>
+                          <span>End: {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span>
+                          <input type="text" ng-model="d.end_date"><br ng-repeat-end ng-if="!$last">
+                        </td>
+                        <td style="
+                            padding: 8px 10px;
+                            ">
+                          <span ng-if="course.tuition_number">{{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                          <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span><br>
+                          <input type="text" ng-model="course.currency" size="3">
+                          <input type="text" ng-model="course.tuition_number" size="5">
+                        </td>
+                        <td style="
+                            padding: 8px 10px;
+                            ">
+                          <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
+
+                          <span ng-if="!course.url" class="font-w600 text-gray label-na">N/A</span><br>
+                          <button data-js-blur type="button" class="btn btn-default" style="font-size: 16px;background: #fff;opacity: 0.8;width: 100%;display: block;text-align: center;border-radius: 4px; border-width: 2px;" uib-popover-template="'editCourseUrl.html'">E</button>
+
+                          <script type="text/ng-template" id="editCourseUrl.html">
+                              <input type="text" ng-model="course.url">
+                          </script>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- END course table under a category -->
+              </div>
+              <!-- END category -->
+            </div>
+          </div>
+
+          <hr style="
+            margin-top: 50px;
+            margin-bottom: 50px;
+            border: 0;
+            border-top: 1px dashed #bbb;
+            ">
+          <!-- END report body-->
+          <hr class="hidden-print" style="margin-bottom: 8px;">
+          <p class="text-muted text-left"><small><strong>Gridology Education &amp; Technology, Inc.</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oak Tree Center, 2024 Center Ave, Fort Lee, NJ 07024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="http://www.gridet.com" target="_blank"><strong>gridet</strong>.com</a></small></p>
+        </div>
+      </div>
+      <!-- END SlimScroll Container -->
+    </div>
+  </div>
+</div>

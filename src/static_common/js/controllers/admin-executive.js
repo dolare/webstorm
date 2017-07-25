@@ -30,6 +30,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       'UAH': '₴', // Ukrainian Hryvnia
       'VND': '₫', // Vietnamese Dong
       'CNY': '¥', // Chinese Yuan
+      'SGD': '$', // Singapore Dollar
       'null': '$', // The default currency sign is USD
     };
 
@@ -423,6 +424,98 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
     };
 
+    $scope.editReport = function(reportId) {
+      $scope.current_report_id = reportId;
+      if (reportId == null) {
+        $.notify({
+
+          // options
+          icon: "fa fa-warning",
+          message: 'Please select a report from the dropdown list.'
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
+          },
+          z_index: 1999,
+        });
+      } else {
+        jQuery('#editReport').modal('toggle');
+
+        App.blocks('#editReport_loading', 'state_loading');
+
+        $http({
+            url: '/api/upgrid/non_degree/reports/' + reportId,
+            method: 'GET',
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+          })
+          .then(function(resp_report) {
+            console.log('Report of ' + 'resp_report.data.school_name' + ' loaded, created on ' + moment.utc(resp_report.data.date_created).local().format('MM/DD/YYYY HH:mm:ss'));
+            $scope.report = resp_report.data;
+
+            $scope.date = resp_report.data.date_created;
+            $scope.school = resp_report.data.school_name;
+            $scope.university = resp_report.data.university_name;
+            $scope.categories = resp_report.data.categories;
+
+            $scope.logo_url = executiveService.getLogoBySchoolName($scope.school, $scope.university);
+
+            // Category offerings
+            $scope.cat_offer = $scope.categories.length;
+
+            // Course offerings
+            $scope.course_offer = 0;
+
+            for (let i = $scope.categories.length - 1; i >= 0; i--) {
+              $scope.categories[i].course_offer = $scope.categories[i].courses.length;
+              $scope.course_offer += $scope.categories[i].courses.length;
+            }
+
+            $scope.$watch('report', function(newV, oldV) {
+              console.log(angular.toJson(newV));
+            }, true);
+
+            App.blocks('#editReport_loading', 'state_normal');
+          });
+      }
+    };
+
+    $scope.saveReport = function() {
+      // var form = new FormData();
+      // form.append("school", $scope.current_school_id);
+
+      // $http({
+      //   url: '/api/upgrid/non_degree/reports',
+      //   method: 'POST',
+      //   data: form,
+      //   mimeType: "multipart/form-data",
+      //   processData: false,
+      //   contentType: false,
+      //   headers: {
+      //     'Authorization': 'JWT ' + token,
+      //     'Content-Type': undefined,
+
+      //   },
+      $http({
+          url: '/api/upgrid/non_degree/reports/' + $scope.current_report_id,
+          method: 'PUT',
+          data: {
+            categories: $scope.categories
+          },
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+        }).then(function(resp_put) {
+          console.log('School: ' + $scope.school + ', report # ' + $scope.current_report_id + ', modified.');
+        }).catch(function(error) {
+          console.log('an error occurred...' + JSON.stringify(error));
+        });
+    };
+
     $scope.togglefullen_preview = function() {
       angular.element(document.getElementById("previewReport")).toggleClass('fullscreen-modal');
     };
@@ -431,12 +524,20 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       angular.element(document.getElementById("viewReport")).toggleClass('fullscreen-modal');
     };
 
+    $scope.togglefullen_edit = function() {
+      angular.element(document.getElementById("editReport")).toggleClass('fullscreen-modal');
+    };
+
     $scope.scrolltop_preview = function() {
       angular.element(document.getElementById('scrolltop_preview')).scrollTop(0);
     };
 
     $scope.scrolltop_view = function() {
       angular.element(document.getElementById('scrolltop_view')).scrollTop(0);
+    };
+
+    $scope.scrolltop_edit = function() {
+      angular.element(document.getElementById('scrolltop_edit')).scrollTop(0);
     };
 
     $scope.printReport_preview = function() {
@@ -458,6 +559,22 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
     $scope.printReport_view = function() {
 
       $("#print-content_view").printThis({
+        debug: false,
+        importCSS: true,
+        importStyle: true,
+        printContainer: true,
+        loadCSS: "../static/css/print.css",
+        pageTitle: "Upgrid Reports",
+        removeInline: false,
+        printDelay: 333,
+        header: null,
+        formValues: true
+      });
+    };
+
+    $scope.printReport_edit = function() {
+
+      $("#print-content_edit").printThis({
         debug: false,
         importCSS: true,
         importStyle: true,

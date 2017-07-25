@@ -1,46 +1,62 @@
 # System lib
-import os
 import jwt
+from rest_framework_jwt.settings import api_settings
+jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
+jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
 import logging
 from django.shortcuts import render, get_object_or_404
+from django.core.serializers import serialize
 from django.core.mail import BadHeaderError, EmailMessage
 from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 from smtplib import SMTPServerDisconnected,  SMTPSenderRefused, SMTPRecipientsRefused, \
     SMTPDataError, SMTPConnectError, SMTPHeloError, SMTPAuthenticationError
-
 # 3rd party lib
 from rest_framework import generics, mixins
+from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.filters import DjangoFilterBackend
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, \
-    HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST
+from rest_framework.status import (
+    HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST)
 from rest_framework.views import APIView
-from rest_framework_jwt.views import ObtainJSONWebToken, RefreshJSONWebToken
-from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.renderers import JSONRenderer
-from rest_framework.exceptions import AuthenticationFailed
+from django.utils.six import BytesIO
+from rest_framework.parsers import JSONParser
 
+from rest_framework_jwt.settings import api_settings
+from rest_framework_jwt.views import ObtainJSONWebToken, RefreshJSONWebToken
+
+from rest_framework.filters import (
+    SearchFilter,
+    OrderingFilter,
+)
 # Our lib
+from ceeb_program.models import (
+    Curriculum, Deadline, Duration, Program, Requirement, Scholarship, Tuition,
+    UniversitySchool
+    )
+
+# lib in same project
+from .pagination import CustomerPageNumberPagination, CompetingPageNumberPagination
 from .models import (
     UpgridAccountManager, UniversityCustomer, UniversityCustomerProgram,
     CustomerCompetingProgram, ClientAndProgramRelation, WhoopsReports,
     EnhancementReports)
-
-# lib in same project
-from .pagination import CustomerPageNumberPagination, CompetingPageNumberPagination
-
 from .api_serializers import *
 from .filter import UniversityCustomerFilter, ClientAndProgramRelationFilter
+import os
 
 # used shared report
+import zlib
+from django.utils import timezone
 from . import dbSerializers as dbLizer
+from json import dumps, loads
+from rest_framework.renderers import JSONRenderer
 from django.core.exceptions import ObjectDoesNotExist
-
-jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
-jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
+from .authentication import BaseJSONWebTokenAuthentication
+from .api_decorators import *
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -52,6 +68,7 @@ app_logger = logging.getLogger('app')
 
 try:
     cc_email = os.environ["CC_EMAIL"]
+    #cc_email = os.environ["CC_EMAIL"]
 except KeyError:
     cc_email = "swang@gradgrid.com"
 
@@ -92,10 +109,9 @@ class PasswordChangeView(generics.GenericAPIView):
 
                 user.password = decoded_new_password
                 user.save_password()
-                return Response({"success": "New password has been saved."}, status=HTTP_202_ACCEPTED)
-            return Response({"Failed": "Please input valid old password."}, status=HTTP_403_FORBIDDEN)
-        return Response({"Failed": "System can not identify your status. Please login first!"},
-                        status=HTTP_403_FORBIDDEN)
+                return Response({"success": ("New password has been saved.")}, status=HTTP_202_ACCEPTED)
+            return Response({"Failed": ("Please input valid old password.")}, status=HTTP_403_FORBIDDEN)
+        return Response({"Failed": ("System can not identify your status. Please login first!")}, status=HTTP_403_FORBIDDEN)
 
 
 # api/password/reset/send_email/
@@ -127,15 +143,14 @@ class ResetPassword(generics.GenericAPIView):
 
                     cc_addresses_tuple = tuple(cc_addresses)
 
-                    if hasattr(request, 'is_create') and request.is_create is True:
+                    if hasattr(request,'is_create') and request.is_create is True:
                         html_verify = ("<div style='margin: 30px auto;max-width: 600px;'><div style='margin-bottom: 20px'>"
                                         "<img src='http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png' "
                                         "width='150px'></div><div style='background:white; "
                                         "padding: 20px 35px;border-radius: 8px '>"
                                         "<div style='text-align: center;font-size: 30px; font-family: 'Helvetica Neue', "
                                         "Helvetica, Arial, sans-serif; color: rgb(41,61,119)'>Hello, %s! </div><div "
-                                        "style='font-family: sans-serif;'><p>You account has been created in Upgrid. "
-                                       "Please click <a href='https://%s/#/upgrid/verify/%s/'>here</a> "
+                                        "style='font-family: sans-serif;'><p>You account has been created in Upgrid. Please click <a href='https://%s/#/upgrid/verify/%s/'>here</a> "                                         ""
                                         "to verify you account"
                                         "<p>If the above link does not work for"
                                         " you, please copy and paste the following into your browser address "
@@ -168,6 +183,8 @@ class ResetPassword(generics.GenericAPIView):
 
                         html_content = hmtl_resetPassword
 
+
+
                         message = EmailMessage(subject='Reset Password', body=html_content % (user_reset.contact_name,
                                                request.META['HTTP_HOST'], token, request.META['HTTP_HOST'], token,
                                                 request.META['HTTP_HOST'], token), to=[request.data['email']],
@@ -199,11 +216,11 @@ class ResetPassword(generics.GenericAPIView):
         print(password)
         #print(self.validate(password).decode("utf-8"))
         #user.set_password(self.validate(password).decode("utf-8"))
-        #password = zlib.decompress(self.validate(password))
+        #password = zlib.decompress(self.validate(password))                                                                                                                                
         user.password = self.validate(password)
         user.save_password()
         #user.save()
-        return Response({"success": "New password has been saved."}, status=HTTP_202_ACCEPTED)
+        return Response({"success": ("New password has been saved.")}, status=HTTP_202_ACCEPTED)
 
 
 # ------------------------------User API--------------------------------------------
@@ -211,45 +228,47 @@ class ResetPassword(generics.GenericAPIView):
 class CustomerVerify(APIView):
     permission_classes = (AllowAny,)
     
-    def put(self, request):
+    def put(self,request):
         jwt_value = request.data['token']
 
         try:
             payload = jwt_decode_handler(jwt_value)
         except jwt.ExpiredSignature:
-            msg = 'Signature has expired.'
-            raise AuthenticationFailed(msg)
+            msg = ('Signature has expired.')
+            raise exceptions.AuthenticationFailed(msg)
         except jwt.DecodeError:
-            msg = 'Error decoding signature.'
-            raise AuthenticationFailed(msg)
+            msg = ('Error decoding signature.')
+            raise exceptions.AuthenticationFailed(msg)
         except jwt.InvalidTokenError:
-            raise AuthenticationFailed()
+            raise exceptions.AuthenticationFailed()
         username = jwt_get_username_from_payload(payload)
        
-        user = UniversityCustomer.objects.get(username=username)
+        user =  UniversityCustomer.objects.get(username = username) 
         if user.is_active is True:
-            return Response({"Failed": "have been verified before!"}, status=HTTP_400_BAD_REQUEST)
+            return Response({"Failed": ("have been verified before!")}, status=HTTP_400_BAD_REQUEST)
         user.is_active = True
         user.save_without_password()
-        return Response({"success": "Your account has been verified."}, status=HTTP_202_ACCEPTED)
-
+        return Response({"success": ("Your account has been verified.")}, status=HTTP_202_ACCEPTED)
 
 class CustomerSentVerifyEmail(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def post(self, request):
+    def post(sef,request):
         
         try:
-            user = UniversityCustomer.objects.get(email=request.data['email'])
+            user = UniversityCustomer.objects.get(email = request.data['email'])
             if user.is_active is True:
-                return Response({"fail": "This account has been verified"}, status=HTTP_400_BAD_REQUEST)
+                return Response({"fail": ("This account has been verified")}, status=HTTP_400_BAD_REQUEST)
             request.is_create = True
             ResetPassword().post(request)
         except:
-            return Response({"fail": "data error"}, status=HTTP_400_BAD_REQUEST)
+            return Response({"fail": ("data error")}, status=HTTP_400_BAD_REQUEST)
 
-        return Response({"success": "Verification email has been sent successfully.."}, status=HTTP_202_ACCEPTED)
+        return Response({"success": ("Verification email has been sent successfully..")}, status=HTTP_202_ACCEPTED)
 
+
+
+        
 
 # api/user/program
 class CustomerProgram(generics.ListAPIView):
@@ -281,9 +300,9 @@ class CustomerProgram(generics.ListAPIView):
                 try:
                     user = UniversityCustomer.objects.get(id=client_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": "This is not a valid client!"}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": "System can not identify your status. Please login first!"},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
 
         if user.account_type == 'sub':
@@ -328,9 +347,9 @@ class CustomerCompetingProgramAPI(APIView):
                 try:
                     user = UniversityCustomer.objects.get(id=client_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": "This is not a valid client!"}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": "System can not identify your status. Please login first!"},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
 
         if user.account_type == 'sub':
@@ -341,7 +360,7 @@ class CustomerCompetingProgramAPI(APIView):
                 program_list = UniversityCustomerProgram.objects.get(object_id=object_id, customer=user)
                 return program_list
             except UniversityCustomerProgram.DoesNotExist:
-                return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
+                return Response({"Failed": ("Permission Denied!")}, status=HTTP_403_FORBIDDEN)
 
     def get(self, request, object_id, client_id=None):
         customer_program = self.get_object(request, object_id, client_id)
@@ -349,6 +368,7 @@ class CustomerCompetingProgramAPI(APIView):
         print('customer progtams')
         serializer = CustomerCompetingProgramSerializer(customer_program)
         return Response(data=serializer.data)
+
 
 
 # api/upgrid/user/dashboard/    used for full fill dashboard data requirement
@@ -364,9 +384,9 @@ class DashBoardAPI(APIView):
                 try:
                     user = UniversityCustomer.objects.get(id=object_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": "This is not a valid client!"}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": "System can not identify your status. Please login first!"},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
 
         return user
@@ -429,9 +449,9 @@ class ReleasedPrograms(APIView):
                 try:
                     user = UniversityCustomer.objects.get(id=object_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": "This is not a valid client!"}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": "System can not identify your status. Please login first!"},
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
                                 status=HTTP_403_FORBIDDEN)
         return user
 
@@ -484,10 +504,10 @@ class UpdatedReportsList(APIView):
                 try:
                     user = UniversityCustomer.objects.get(id=object_id, account_manager=manager)
                 except UniversityCustomer.DoesNotExist:
-                    return Response({"Failed": "This is not a valid client!"}, status=HTTP_403_FORBIDDEN)
+                    return Response({"Failed": ("This is not a valid client!")}, status=HTTP_403_FORBIDDEN)
             except ObjectDoesNotExist:
-                return Response({"Failed": "System can not identify your status. Please login first!"},
-                                status=HTTP_403_FORBIDDEN)
+                return Response({"Failed": ("System can not identify your status. Please login first!")},
+                                    status=HTTP_403_FORBIDDEN)
         return user
 
     def get_reports_list(self, customer, type):
@@ -516,11 +536,11 @@ class UpdatedReportsList(APIView):
 
     def get(self, request, object_id=None):
         user = self.get_user(request, object_id)
-        whoops_report_list = self.get_reports_list(user, "whoops")
-        whoops_update_list = WhoopsUpdateSerializer(whoops_report_list, many=True)
-        enhancement_report_list = self.get_reports_list(user, "enhancement")
-        enhancement_update_list = EnhancementUpdateSerializer(enhancement_report_list, many=True)
-        context = {"WhoopsUpdateList": whoops_update_list.data, "EnhancementUpdateList": enhancement_update_list.data}
+        wrlist = self.get_reports_list(user, "whoops")
+        whoopsupdatelist = WhoopsUpdateSerializer(wrlist, many=True)
+        erlist = self.get_reports_list(user, "enhancement")
+        enhancementupdatelist = EnhancementUpdateSerializer(erlist, many=True)
+        context = {"WhoopsUpdateList": whoopsupdatelist.data, "EnhancementUpdateList": enhancementupdatelist.data}
 
         return Response(context, status=HTTP_200_OK)
 
@@ -551,6 +571,7 @@ class CustomerDetail(APIView):
         else:
             serializer = SubUserDetailSerializer(customer)
             return Response(data=serializer.data)
+
 
 
 class UniversityCustomerListAPI(generics.ListAPIView):
@@ -592,6 +613,7 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
+    @maintain_upgrid_tag_for_programs
     def create(self, request, *args, **kwargs):
         user = request.user
         if 'client' not in request.data or 'client_program' not in request.data:
@@ -628,6 +650,7 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
                             status=HTTP_201_CREATED)
         return Response({"success": ("Client and Program relation has been created.")}, status=HTTP_201_CREATED)
 
+    @maintain_upgrid_tag_for_programs
     def delete(self, request):
         if 'client_program' not in request.data or 'client' not in request.data:
             return Response({"Failed": ("client and client_program is required")}, status=HTTP_400_BAD_REQUEST)
@@ -1198,6 +1221,7 @@ class UniversityCustomerProgramCRUD(APIView):
         serializer = UnivCustomerProgramSerializer(customer_program_list, many=True)
         return Response(serializer.data)
 
+    @maintain_upgrid_tag_for_programs
     def post(self, request):
         perm = self.is_manager(request)
         if not perm:
@@ -1296,6 +1320,7 @@ class UniversityCustomerProgramCRUD(APIView):
                 # customer_program.save()
             return Response({"success": ("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
 
+    @maintain_upgrid_tag_for_programs
     def delete(self, request):
         perm = self.is_manager(request)
         if not perm:
