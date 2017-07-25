@@ -4,6 +4,7 @@ var whoops = angular.module('myApp')
 whoops.controller('WhoopsController',
   function(avatarService, ajaxService, reportService, $location, tableDataService, filterFilter, $scope, apiService, $window, $http, authenticationSvc, $localStorage, $sessionStorage, $state, $filter, $q) {
 
+    $scope._ = _;
     //progressJs().end();
     //////////
     var token = authenticationSvc.getUserInfo().accessToken;
