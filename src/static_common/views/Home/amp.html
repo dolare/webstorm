@@ -74,16 +74,16 @@
           <tr ng-repeat-start="row1 in row.courses">
 
               <td class="td-bordered text-center">
-              <i class="text-primary" ng-class="showURL?'fa fa-minus':'fa fa-plus'"></i>
+              <i class="text-primary" ng-click="showUrl($parent.$index, $index);showURL=!showURL " ng-class="showURL?'fa fa-minus':'fa fa-plus'"></i>
            
               
               </td>
-              <td class="td-bordered" colspan="5" style="padding-left: 15px" ng-click="showUrl($parent.$index, $index);showURL=!showURL "><a data-js-blur class="link-effect" href="javascript:void(0)">{{row1.name}}</a></td>
+              <td class="td-bordered" colspan="5" style="padding-left: 15px"><a data-js-blur class="link-effect" href="javascript:void(0)" ng-click="showUrl($parent.$index, $index);showURL=!showURL ">{{row1.name}}</a><button class="btn btn-xs btn-rounded btn-info pull-right" ng-show="showURL && row1.urls.length > 0" type="button" ng-click="sort_time($parent.$index, $index)">Sort by time</button></td>
 
             </tr>
 
-            <tr class="zebra-row-gray" ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls">
-               <td class="td-bordered"></td>
+            <tr class="zebra-row-gray" ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls | orderBy: 'type_order'">
+               <td class="td-bordered text-center"><i class="fa fa-certificate text-warning" aria-hidden="true" ng-show = "row2.highlight"></i></td>
                
                
 
