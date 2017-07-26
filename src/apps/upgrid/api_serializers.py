@@ -342,8 +342,8 @@ class SubuserListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'title',
-                  'contact_name', 'position', 'phone', 'customer_program', 'university', 'school')
+        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'title', 'department',
+                  'contact_name', 'position', 'phone', 'customer_program', 'university', 'school', 'account_type')
 
     def get_customer_program(self, obj):
         program_list = ClientAndProgramRelation.objects.filter(client=obj).values('client_program')
