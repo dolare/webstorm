@@ -5,6 +5,7 @@ angular.module('myApp')
     
      var updatedReport = function(old_data_raw, new_data_raw) {
 
+      console.log("new_data_raw="+JSON.stringify(new_data_raw))
       var school_data = angular.copy(new_data_raw);
       var school_data_old = angular.copy(old_data_raw);
       var school_cat_data = school_data.categories;
