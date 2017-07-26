@@ -472,6 +472,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             $scope.school = resp_report.data.school_name;
             $scope.university = resp_report.data.university_name;
             $scope.categories = resp_report.data.categories;
+            $scope.catBeforeEdit = angular.toJson($scope.categories);
 
             $scope.logo_url = executiveService.getLogoBySchoolName($scope.school, $scope.university);
 
@@ -496,36 +497,50 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
     };
 
     $scope.saveReport = function() {
-      // var form = new FormData();
-      // form.append("school", $scope.current_school_id);
-
-      // $http({
-      //   url: '/api/upgrid/non_degree/reports',
-      //   method: 'POST',
-      //   data: form,
-      //   mimeType: "multipart/form-data",
-      //   processData: false,
-      //   contentType: false,
-      //   headers: {
-      //     'Authorization': 'JWT ' + token,
-      //     'Content-Type': undefined,
-
-      //   },
-      $http({
-          url: '/api/upgrid/non_degree/reports/' + $scope.current_report_id,
-          method: 'PUT',
-          data: {
-            categories: $scope.categories
+      if ($scope.catBeforeEdit != angular.toJson($scope.categories))
+        $http({
+            url: '/api/upgrid/non_degree/reports/' + $scope.current_report_id,
+            method: 'PATCH',
+            data: {
+              categories: $scope.categories
+            },
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+          }).then(function(resp_put) {
+            console.log('School: ' + $scope.school + ', report # ' + $scope.current_report_id + ', modified.');
+            $.notify({
+              // options
+              icon: 'fa fa-warning',
+              message: 'Changes have been saved!'
+            }, {
+              // settings
+              type: 'warning',
+              placement: {
+                from: "top",
+                align: "center"
+              },
+              z_index: 1999,
+            });
+          }).catch(function(error) {
+            console.log('an error occurred...' + JSON.stringify(error));
+          });
+      else
+        $.notify({
+          // options
+          icon: 'fa fa-warning',
+          message: "You haven't made any changes to this report."
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
           },
-          headers: {
-            'Authorization': 'JWT ' + token
-          }
-        }).then(function(resp_put) {
-          console.log('School: ' + $scope.school + ', report # ' + $scope.current_report_id + ', modified.');
-        }).catch(function(error) {
-          console.log('an error occurred...' + JSON.stringify(error));
+          z_index: 1999,
         });
     };
+
 
     $scope.togglefullen_preview = function() {
       angular.element(document.getElementById("previewReport")).toggleClass('fullscreen-modal');
