@@ -36,40 +36,42 @@
                   </uib-accordion-heading>
 
                   <p style="
-                                  margin-bottom: 0;
-                                  margin-top: 0;
-                                  " class=""><span class="badge badge-success">+ 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Addition(s)</span></p>
+                    margin-bottom: 0;
+                    margin-top: 0;
+                    " class=""><span class="badge badge-success">+ 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Addition(s)</span></p>
                   <p class="push-5-t" style="
-                                  margin-bottom: 0;
-                                  "><span class="badge badge-danger">&nbsp;- 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Removal(s)</span></p>
+                    margin-bottom: 0;
+                    "><span class="badge badge-danger">&nbsp;- 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Removal(s)</span></p>
                   <p class="push-5-t" style="
-                                  margin-bottom: 0;
-                                  "><span style="
-                                  color: #3c763d;
-                                  background-color: #dff0d8;
-                                  padding: 0 5px;
-                                  border-left: 3px solid #3c763d;
-                                  ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Category</span></p>
+                    margin-bottom: 0;
+                    "><span style="
+                    color: #3c763d;
+                    background-color: #dff0d8;
+                    padding: 0 5px;
+                    border-left: 3px solid #3c763d;
+                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Category</span></p>
                   <p class="push-5-t" style="
-                                  margin-bottom: 0;
-                                  "><span style="
-                                  color: #a94442;
-                                  background-color: #f2dede;
-                                  padding: 0 5px;
-                                  border-left: 3px solid #a94442;
-                                  ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Category</span></p>
+                    margin-bottom: 0;
+                    "><span style="
+                    color: #a94442;
+                    background-color: #f2dede;
+                    padding: 0 5px;
+                    border-left: 3px solid #a94442;
+                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Category</span></p>
                   <p class="push-5-t" style="
-                                  margin-bottom: 0;
-                                  "><span style="
-                                  padding: 0 22px 0 8px;
-                                  background: hsla(104, 44%, 93%, 1);
-                                  ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
+                    margin-bottom: 0;
+                    "><span style="
+                    padding: 0 22px 0 8px;
+                    background: #46c37b;
+                    color: white;
+                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
                   <p class="push-5-t" style="
-                                  margin-bottom: 0;
-                                  "><span style="
-                                  padding: 0 22px 0 8px;
-                                  background: hsla(0, 44%, 93%, 1);
-                                  ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
+                    margin-bottom: 0;
+                    "><span style="
+                    padding: 0 22px 0 8px;
+                    background: #d26a5c;
+                    color: white;
+                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
                 </div>
               </uib-accordion>
             </div>
@@ -94,15 +96,17 @@
           
           </div>
           <div class=" push-50">
-            <table class="table report_table2 table-bordered" style="table-layout: fixed;">
+            <table class="table non-degree-table report_table2 table-bordered zebra-table" style="table-layout: fixed;">
               <colgroup>
+                <col width="55px">
                 <col width="7%">
-                <col width="40%">
-                <col width="17%">
-                <col width="9%">
-                <col width="9%">
-                <col width="9%">
-                <col width="9%">
+                <col width="42%">
+                <col width="137px">
+                <col width="78px">
+                <col width="78px">
+                <col width="78px">
+                <col width="78px">
+                <col width="82px">
               </colgroup>
               <!-- table header -->
               <thead>
@@ -113,7 +117,7 @@
                     color: rgba(255,255,255,0.85);
                     border-left: 0;
                     "></td>
-                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: left;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" rowspan="2">UNIVERSITY SCHOOL</td>
+                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: left;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="2" rowspan="2">BUSINESS SCHOOLS</td>
                   <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 17px;" colspan="1" rowspan="2">CURRENT OFFERINGS</td>
                   <td class="bg-info text-center" colspan="2" style="
                     color: rgba(255,255,255,0.85);
@@ -122,33 +126,40 @@
                     ">
                     CATEGORIES
                   </td>
-                  <td class="bg-info text-center" colspan="2" style="color: rgba(255,255,255,0.85);border-right: 0;">
+                  <td class="bg-info text-center" colspan="2" style="color: rgba(255,255,255,0.85);">
                    COURSES
                   </td>
+                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 13px;" colspan="1" rowspan="2">
+                    LAST RELEASED TIME
+                  </td>
                 </tr>
-                <tr class="font-w600 text-primary bg-" style="background: #edf6fd;">
-                  <td class="bg-info" style="
+                <tr class="font-w600 text-primary" style="background: #edf6fd;">
+                  <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
                     border: 0;
+                    font-size: 10px
                     ">
                     <span>ADDITION(S)</span>
                   </td>
-                  <td class="bg-info" style="
+                  <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
+                    font-size: 10px
                     ">
                     <span>REMOVAL(S)</span>
                   </td>
-                  <td class="bg-info" style="
+                  <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
+                    font-size: 10px
                     ">
                     <span>ADDITION(S)</span>
                   </td>
-                  <td class="bg-info" style="
+                  <td class="bg-info text-center" style="
                     padding: 5px 10px;
                     color: rgba(255,255,255,0.85);
+                    font-size: 10px;
                     border: 0;
                     ">
                     <span>REMOVAL(S)</span>
@@ -159,7 +170,8 @@
               <!-- table body -->
               <tbody>
                 <tr>
-
+                  <td rowspan="2" class="text-center td-bordered">
+                  </td>
                   <td style="
                     border-right: 0;
                     padding: 4px;
@@ -186,7 +198,7 @@
 
                   </td>
 
-                  <td class="font-w600 text-left text-info" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Categories:<span class="badge badge-info pull-right">{{categories_compared.length - _.where(categories_compared, {updated: 2}).length}}</span>
+                  <td class="font-w600 text-left text-info" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">Categories:<span class="badge badge-info pull-right">{{cat_offer}}</span>
                   </td>
 
                   <td rowspan="2">
@@ -211,12 +223,16 @@
                     <span ng-if="course_rm!==0" class="badge badge-danger">- {{course_rm}}</span>
                     <span ng-if="course_rm===0" class="badge badge-default">-&nbsp; -</span>
                   </td>
+                  <td rowspan="2">
+                    <div class="font-w100" ng-if="lastReleasedDate">{{lastReleasedDate | amUtc | amLocal |  amDateFormat:'MM/DD'}}</div>
+                    <div class="font-w100" ng-if="!lastReleasedDate">No previous reports</div>
+                  </td>
                 </tr>
                 <tr>
                   <td class="font-w500 text-left text-warning" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
 
                     <ul style="padding-left:20px; margin-bottom: 0">
-                      <li>Courses:<span class="badge badge-warning pull-right">{{_.uniq(_.difference(_.flatten(_.pluck(categories_compared, 'courses')), _.filter(_.flatten(_.pluck(categories_compared, 'courses')), {updated: 2})), 'object_id').length}}</span></li>
+                      <li>Courses:<span class="badge badge-warning pull-right">{{course_offer}}</span></li>
                     </ul>
 
                     
@@ -438,10 +454,10 @@
 
                           </td>
 
-                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
                             <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY"                                                          
+                                                data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
                                                 data-uib-popover="{{course.type_old}}"
 
                                                 ng-show="course.type_old"
@@ -453,8 +469,8 @@
                                                     </span>                                   
                                                 </div> 
 
-                            <span ng-if="course.type">{{course.type}}</span>
-                            <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
+                            <span ng-show="course.type" ng-class="{location-dashline: course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-map-marker" aria-hidden="true" ng-show="course.location_info"></i> {{course.type}}</span>
+                            <span ng-show="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
                           <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
