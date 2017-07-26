@@ -56,7 +56,7 @@ from json import dumps, loads
 from rest_framework.renderers import JSONRenderer
 from django.core.exceptions import ObjectDoesNotExist
 from .authentication import BaseJSONWebTokenAuthentication
-from .api_decorators import *
+#from .api_decorators import *
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -613,7 +613,7 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-    @maintain_upgrid_tag_for_programs
+    
     def create(self, request, *args, **kwargs):
         user = request.user
         if 'client' not in request.data or 'client_program' not in request.data:
@@ -650,7 +650,7 @@ class ClientAndProgramRelationAPI(mixins.ListModelMixin, generics.CreateAPIView)
                             status=HTTP_201_CREATED)
         return Response({"success": ("Client and Program relation has been created.")}, status=HTTP_201_CREATED)
 
-    @maintain_upgrid_tag_for_programs
+    
     def delete(self, request):
         if 'client_program' not in request.data or 'client' not in request.data:
             return Response({"Failed": ("client and client_program is required")}, status=HTTP_400_BAD_REQUEST)
@@ -712,7 +712,10 @@ class CreateOrChangeSubUser(APIView):
             for field in update_fields:
                 if field in request.data:
                     setattr(sub_user, field, request.data[field])
+
+
             sub_user.save_without_password()
+
             return Response({"success": "Sub user has been update."}, status=HTTP_200_OK)
 
     def post(self, request):
@@ -1140,6 +1143,17 @@ class ClientCRUD(APIView):
                 client.non_degree_schools.add(school)
 
         request.is_create = True
+
+        #add features attr for the user
+        try:        
+            for k,v in request.data['features']:
+                if v == True:
+                    feature = CustomerFeature.object_id.get(name = k)
+                    CustomerFeatureMapping.objects.create(
+                    customer = client,feature = feature)
+        except:
+            app_logger.exception("exception when create user and asign features to the user")
+
         ResetPassword().post(request)
 
         return Response({'client_id': client.id}, status=HTTP_201_CREATED)
@@ -1173,6 +1187,24 @@ class ClientCRUD(APIView):
             if field in request.data:
                 setattr(client, field, request.data[field])
         client.save_without_password()
+
+        #add features attr for the user
+        try:        
+            for k,v in request.data['features']:
+                if v == True:
+                    feature = CustomerFeature.object_id.get(name = k)
+                    CustomerFeatureMapping.objects.getOrCreate(
+                    customer = client,feature = feature)
+                elif v == False:
+                    feature = CustomerFeature.object_id.get(name = k)
+                    try:
+                        CustomerFeatureMapping.objects.get(
+                        customer = client,feature = feature).delete()
+                    except:
+                        app_logger.info("there is no feature to be deleted")
+        except:
+            app_logger.exception("exception when create user and asign features to the user")
+
 
         if 'competing_schools' in self.request.data:
             client.competing_schools.clear()
@@ -1221,7 +1253,7 @@ class UniversityCustomerProgramCRUD(APIView):
         serializer = UnivCustomerProgramSerializer(customer_program_list, many=True)
         return Response(serializer.data)
 
-    @maintain_upgrid_tag_for_programs
+    
     def post(self, request):
         perm = self.is_manager(request)
         if not perm:
@@ -1320,7 +1352,7 @@ class UniversityCustomerProgramCRUD(APIView):
                 # customer_program.save()
             return Response({"success": ("User programs has been modified.")}, status=HTTP_202_ACCEPTED)
 
-    @maintain_upgrid_tag_for_programs
+    
     def delete(self, request):
         perm = self.is_manager(request)
         if not perm:
