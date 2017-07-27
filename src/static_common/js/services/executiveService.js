@@ -5,7 +5,6 @@ angular.module('myApp')
     
      var updatedReport = function(old_data_raw, new_data_raw) {
 
-      console.log("new_data_raw="+JSON.stringify(new_data_raw))
       var school_data = angular.copy(new_data_raw);
       var school_data_old = angular.copy(old_data_raw);
       var school_cat_data = school_data.categories;
@@ -36,32 +35,6 @@ angular.module('myApp')
 
       for(var i=0; i<new_data.length; i++){
 
-        console.log("current data = "+JSON.stringify(new_data[i]));
-
-        // //filter the outdated schedule
-        // angular.forEach(school_cat_data[i].courses, function(value, index) {
-          
-        //   value.course_dates = _.filter(value.course_dates, function(date){ 
-
-        //     return moment(date.end_date).format() >= moment(value.date_modified.split('T')[0]).format(); 
-        //   })
-        //   console.log("element value = "+JSON.stringify(value));
-
-        // })
-
-        // //filter the old outdated schedule
-        // angular.forEach(school_cat_data[i].courses, function(value, index) {
-          
-        //   value.course_dates = _.filter(value.course_dates, function(date){ 
-
-        //     return moment(date.end_date).format() >= moment(value.date_modified.split('T')[0]).format(); 
-        //   })
-        //   console.log("element value = "+JSON.stringify(value));
-
-        // })
-
-
-        //newly added cat
         if(!_.contains(old_ids, school_cat_data[i].object_id)){
           school_cat_data[i]["updated"]= 1 
 
@@ -79,7 +52,7 @@ angular.module('myApp')
             //history time
             school_data['date_created_old'] = school_data_old.date_created
 
-          }
+          } else {
             //same name(no update on category)
             //check update on courses
             //school_cat_data[i]["updated"] = null;
@@ -110,12 +83,6 @@ angular.module('myApp')
               //updated course, no color
               var old_course_copy =  _.findWhere(old_course_data, {"object_id": course_data_copy[j].object_id})
               
-
-              //filter the schedule in the old data
-              old_course_copy.course_dates = _.filter(old_course_copy.course_dates, function(date){ 
-                return moment(date.end_date).format() >= moment(old_course_copy.date_modified.split('T')[0]).format(); 
-              })
-            
               //updated name
               if(course_data_copy[j].name !== old_course_copy.name){
                 course_data_copy[j]["name_old"] = old_course_copy.name ? old_course_copy.name : 'N/A';
@@ -139,7 +106,6 @@ angular.module('myApp')
                 //history time
                 school_data['date_created_old'] = school_data_old.date_created
               }
-
 
               //course_date
               if(!_.isEqual(course_data_copy[j].course_dates, old_course_copy.course_dates)){
@@ -206,7 +172,7 @@ angular.module('myApp')
 
               }
             }
-
+          }
         }
       }
 
@@ -226,7 +192,7 @@ angular.module('myApp')
             "object_id": "1b36a9bf-d84d-45c6-8938-63889f02f0b7",
             "ceeb": "1832_SBUS",
             "school": "Booth School of Business",
-            "university": "University of Chicago",
+            "university": "The University of Chicago",
             "logo": "http://www.iedp.com/media/2935/chicago-booth.jpg"
         },
         {
@@ -289,14 +255,14 @@ angular.module('myApp')
             "object_id": "298c92d3-4eb3-4b75-a273-88d26b727ba1",
             "ceeb": "6666",
             "school": "London Business School",
-            "university": "London Business School",
+            "university": "",
             "logo": "https://upload.wikimedia.org/wikipedia/commons/7/74/LBS_logo_.png"
         },
         {
             "object_id": "66938b15-c75b-4ce6-8412-ff5222a8807c",
             "ceeb": "8888",
             "school": "INSEAD - Institut Européen d'Administration des Affaires",
-            "university": "INSEAD",
+            "university": "",
             "logo": "http://worldscholarshipforum.com/wp-content/uploads/2017/04/INSEAD-Alumni-Fund-IAF-Diversity-Scholarships.png"
         }
     ]
