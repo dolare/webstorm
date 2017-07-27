@@ -112,9 +112,11 @@
 
                <td class="td-bordered text-center">
 
-               <a data-toggle="modal"  href="javascript:void(0)"  data-target="#amp_report"  ng-click="getReport(row.object_id, row1.object_id, row2.object_id)" class="link-effect">
+               <a data-toggle="modal"  href="javascript:void(0)"  data-target="#amp_report"  ng-click="getReport(row.object_id, row1.object_id, row2.object_id)" class="link-effect" ng-show="row2.amp_report_released_date">
                      View Report
                 </a>
+
+                <label class="label label-default" ng-hide="row2.amp_report_released_date"><i class="fa fa-refresh"></i> &nbsp;In Progress</label>
 
 
                </td>
