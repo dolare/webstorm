@@ -1146,10 +1146,11 @@ class ClientCRUD(APIView):
 
         #add features attr for the user
         try:        
-            for k,v in request.data['features']:
+            print(request.data['features'])
+            for k,v in request.data['features'].items():
                 if v == True:
                     print(k)
-                    feature = CustomerFeature.object_id.get(name = k)
+                    feature = CustomerFeature.objects.get(name = k)
                     CustomerFeatureMapping.objects.create(
                     customer = client,feature = feature)
         except:
@@ -1191,13 +1192,13 @@ class ClientCRUD(APIView):
 
         #add features attr for the user
         try:        
-            for k,v in request.data['features']:
+            for k,v in request.data['features'].items():
                 if v == True:
-                    feature = CustomerFeature.object_id.get(name = k)
+                    feature = CustomerFeature.objects.get(name = k)
                     CustomerFeatureMapping.objects.getOrCreate(
                     customer = client,feature = feature)
                 elif v == False:
-                    feature = CustomerFeature.object_id.get(name = k)
+                    feature = CustomerFeature.objects.get(name = k)
                     try:
                         CustomerFeatureMapping.objects.get(
                         customer = client,feature = feature).delete()

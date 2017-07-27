@@ -503,7 +503,7 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
 
     def get_features(self,obj):
         features_query = CustomerFeatureMapping.objects.filter(customer = obj)
-        features = {'whoops':False,'enhancement':False,'non-degree':False,'AMP':False}
+        features = {'whoops':None,'enhancement':None,'non-degree':None,'AMP':None}
 
         for feature in features_query:
             if feature.feature.name in features.keys():
