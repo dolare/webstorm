@@ -1148,6 +1148,7 @@ class ClientCRUD(APIView):
         try:        
             for k,v in request.data['features']:
                 if v == True:
+                    print(k)
                     feature = CustomerFeature.object_id.get(name = k)
                     CustomerFeatureMapping.objects.create(
                     customer = client,feature = feature)
