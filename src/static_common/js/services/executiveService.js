@@ -38,27 +38,27 @@ angular.module('myApp')
 
         console.log("current data = "+JSON.stringify(new_data[i]));
 
-        //filter the outdated schedule
-        angular.forEach(school_cat_data[i].courses, function(value, index) {
+        // //filter the outdated schedule
+        // angular.forEach(school_cat_data[i].courses, function(value, index) {
           
-          value.course_dates = _.filter(value.course_dates, function(date){ 
+        //   value.course_dates = _.filter(value.course_dates, function(date){ 
 
-            return moment(date.end_date).format() >= moment(value.date_modified.split('T')[0]).format(); 
-          })
-          console.log("element value = "+JSON.stringify(value));
+        //     return moment(date.end_date).format() >= moment(value.date_modified.split('T')[0]).format(); 
+        //   })
+        //   console.log("element value = "+JSON.stringify(value));
 
-        })
+        // })
 
-        //filter the old outdated schedule
-        angular.forEach(school_cat_data[i].courses, function(value, index) {
+        // //filter the old outdated schedule
+        // angular.forEach(school_cat_data[i].courses, function(value, index) {
           
-          value.course_dates = _.filter(value.course_dates, function(date){ 
+        //   value.course_dates = _.filter(value.course_dates, function(date){ 
 
-            return moment(date.end_date).format() >= moment(value.date_modified.split('T')[0]).format(); 
-          })
-          console.log("element value = "+JSON.stringify(value));
+        //     return moment(date.end_date).format() >= moment(value.date_modified.split('T')[0]).format(); 
+        //   })
+        //   console.log("element value = "+JSON.stringify(value));
 
-        })
+        // })
 
 
         //newly added cat

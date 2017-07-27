@@ -1495,7 +1495,7 @@ App.factory('AuthInterceptor',
           $state.go('404');
 
         //403
-        } else if(rejection.status === 403 && rejection.config.url.substr(0,26) === '/api/upgrid/reports/shared') {
+        } else if(rejection.status === 403 && (rejection.config.url.substr(0,26) === '/api/upgrid/reports/shared' || rejection.config.url.substr(0,37) === '/api/upgrid/non_degree/shared_reports')) {
 
 
           console.log("rejection = "+JSON.stringify(rejection));
