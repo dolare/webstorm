@@ -478,12 +478,13 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
     CeebID = SerializerMethodField()
     competing_schools = SerializerMethodField()
     customer_program = SerializerMethodField()
+    features = SerializerMethodField()
 
     class Meta:
         model = UniversityCustomer
         fields = ('username', 'id', 'is_demo', 'email', 'title', 'contact_name', 'position', 'position_level',
                   'phone', 'Ceeb', 'CeebID', 'department', 'account_type', 'service_level', 'service_until',
-                  'competing_schools', 'customer_program', 'is_active')
+                  'competing_schools', 'customer_program', 'is_active','features')
 
     def get_Ceeb(self, obj):
         return '{0} - {1} - {2}'.format(obj.Ceeb.ceeb, obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
@@ -499,6 +500,17 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
         programs = UniversityCustomerProgram.objects.filter(customer=obj)
         serializer = ClientProgramSerializer(programs, many=True)
         return serializer.data
+
+    def get_features(self,obj):
+        CustomerFeatureMapping.objects.filter(customer = obj)
+        features = {'whoops':None,'enhancement':None,'non-degree':None,'AMP':None}
+
+        for feature in features:
+            if feature.name in features.keys():
+                features['feature.name'] = True
+
+        return features
+
 
 
 class SubClientDetailSerializer(serializers.ModelSerializer):
