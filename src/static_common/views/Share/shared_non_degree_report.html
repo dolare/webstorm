@@ -151,7 +151,7 @@
               <td class="bg-info text-center" colspan="2" style="color: rgba(255,255,255,0.85);">
                 COURSES
               </td>
-              <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 13px;" colspan="1" rowspan="2">RELEASED TIME</td>
+              <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 13px;" colspan="1" rowspan="2">RELEASED DATE</td>
             </tr>
             <tr class="font-w600 text-primary" style="background: #edf6fd;">
               <td class="bg-info text-center" style="
@@ -189,7 +189,7 @@
           <!-- END table header -->
           <!-- table body -->
           <tbody>
-            <tr ng-repeat-start="row in schools">
+            <tr ng-repeat-start="row in schools | orderBy: 'school_name'">
 
               <td rowspan="2" class="text-center td-bordered bg-gray-lighterer">
                 <!-- checkbox one -->
@@ -210,12 +210,7 @@
 
                 <a data-js-blur class="link-effect" href="{{ '#school-' + $index }}" du-smooth-scroll>{{row.school_name}}
 
-                    <label ng-show="_.difference( _.pluck(row.categories, 'updated'), [1, 2, undefined]).length || _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'name_old'), [undefined]).length > 0 ||
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'url_old'), [undefined]).length>0 ||
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'course_dates_old'), [undefined]).length>0 ||
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'currency_old'), [undefined]).length>0 ||
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'type_old'), [undefined]).length>0 ||
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'tuition_number_old'), [undefined]).length>0"
+                    <label ng-show="row.hasUpdates"
 
                     class="label label-default text-success bg-success-light" style="
                                             /* background: transparent; */

@@ -287,7 +287,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
               console.log('Update is found.');
               $scope.readyToRelease = true;
               console.log('Ready? ' + $scope.readyToRelease);
-              $scope.hasUpdates = true;
+              $scope.hasUpdates = _.difference( _.pluck(categories_compared, 'updated'), [1, 2, undefined]).length || _.difference(_.pluck(_.flatten(_.pluck(categories_compared, 'courses')), 'name_old'), [undefined]).length > 0 || _.difference(_.pluck(_.flatten(_.pluck(categories_compared, 'courses')), 'url_old'), [undefined]).length>0 ||_.difference(_.pluck(_.flatten(_.pluck(categories_compared, 'courses')), 'course_dates_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck(categories_compared, 'courses')), 'currency_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck(categories_compared, 'courses')), 'type_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck(categories_compared, 'courses')), 'tuition_number_old'), [undefined]).length>0;
             }
             else {
               console.log('No update.');
