@@ -36,6 +36,32 @@ angular.module('myApp')
 
       for(var i=0; i<new_data.length; i++){
 
+        console.log("current data = "+JSON.stringify(new_data[i]));
+
+        //filter the outdated schedule
+        angular.forEach(school_cat_data[i].courses, function(value, index) {
+          
+          value.course_dates = _.filter(value.course_dates, function(date){ 
+
+            return moment(date.end_date).format() >= moment(value.date_modified.split('T')[0]).format(); 
+          })
+          console.log("element value = "+JSON.stringify(value));
+
+        })
+
+        //filter the old outdated schedule
+        angular.forEach(school_cat_data[i].courses, function(value, index) {
+          
+          value.course_dates = _.filter(value.course_dates, function(date){ 
+
+            return moment(date.end_date).format() >= moment(value.date_modified.split('T')[0]).format(); 
+          })
+          console.log("element value = "+JSON.stringify(value));
+
+        })
+
+
+        //newly added cat
         if(!_.contains(old_ids, school_cat_data[i].object_id)){
           school_cat_data[i]["updated"]= 1 
 
@@ -53,7 +79,7 @@ angular.module('myApp')
             //history time
             school_data['date_created_old'] = school_data_old.date_created
 
-          } else {
+          }
             //same name(no update on category)
             //check update on courses
             //school_cat_data[i]["updated"] = null;
@@ -84,6 +110,12 @@ angular.module('myApp')
               //updated course, no color
               var old_course_copy =  _.findWhere(old_course_data, {"object_id": course_data_copy[j].object_id})
               
+
+              //filter the schedule in the old data
+              old_course_copy.course_dates = _.filter(old_course_copy.course_dates, function(date){ 
+                return moment(date.end_date).format() >= moment(old_course_copy.date_modified.split('T')[0]).format(); 
+              })
+            
               //updated name
               if(course_data_copy[j].name !== old_course_copy.name){
                 course_data_copy[j]["name_old"] = old_course_copy.name ? old_course_copy.name : 'N/A';
@@ -107,6 +139,7 @@ angular.module('myApp')
                 //history time
                 school_data['date_created_old'] = school_data_old.date_created
               }
+
 
               //course_date
               if(!_.isEqual(course_data_copy[j].course_dates, old_course_copy.course_dates)){
@@ -173,7 +206,7 @@ angular.module('myApp')
 
               }
             }
-          }
+
         }
       }
 
