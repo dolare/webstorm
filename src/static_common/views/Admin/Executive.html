@@ -189,20 +189,13 @@
           </div>
           <!-- END SlimScroll Container -->
           <div style="position: fixed;bottom: 20px;right: 44px;">
-              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseConfirm()" popover-enable="releaseConfirmEnable" popover-is-open="releaseConfirmIsOpen" uib-popover-template="'releaseConfirmTemplate.html'" ><i class="si si-mouse"></i> Release</button>
+              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseConfirm()" popover-enable="$parent.releaseConfirmEnable" popover-is-open="$parent.releaseConfirmIsOpen" uib-popover-template="'releaseConfirmTemplate.html'" ><i class="si si-mouse"></i> Release</button>
 
               <script type="text/ng-template" id="releaseConfirmTemplate.html">
                   <label>Are you sure you want to release this Tracking Report?</label>
-                  <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseReport(); scrolltop_preview(); $parent.releaseConfirmEnable=false; $parent.releaseConfirmIsOpen=false" data-dismiss="modal">Yes</button>
-                  <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="$parent.releaseConfirmIsOpen=false">No</button>
+                  <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseReport(); scrolltop_preview(); toggleRCIsOpen(); toggleRCEnable()" data-dismiss="modal">Yes</button>
+                  <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="toggleRCIsOpen()">No</button>
               </script>
-
-              <!-- <label ng-show="readyToRelease">Report is ready to release!</label>
-
-              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseReport(); scrolltop_preview(); $parent.readyToRelease=false" data-dismiss="modal" ng-show="readyToRelease"><i class="si si-mouse"></i> Release</button>
-
-              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="$parent.readyToRelease=false" ng-show="readyToRelease"><i class="si si-mouse"></i> Cancel</button> -->
-              
 
           </div>
         </div>
@@ -273,7 +266,7 @@
               <button data-dismiss="modal" type="button" ng-click="scrolltop_edit()" data-js-blur><i class="si si-close"></i></button>
             </li>
           </ul>
-          <h3 class="block-title">History Report</h3>
+          <h3 class="block-title">Edit Report</h3>
         </div>
         <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_edit">
           <!-- SlimScroll Container -->
