@@ -494,7 +494,7 @@ angular.module('myApp').controller('AdminMainController',
 
                   
                 }).then(function(response) {
-                    console.log("client is = " + JSON.stringify(response));
+                    console.log("client is = " + JSON.stringify(response.data));
 
                     //get info
                     $scope.account_name = response.data.username;
@@ -504,6 +504,7 @@ angular.module('myApp').controller('AdminMainController',
                     $scope.title = response.data.title;
                     $scope.client_name = response.data.contact_name;
                     $scope.is_demo = response.data.is_demo;
+                    $scope.report_type = response.data.features;
                     $scope.position = response.data.position;
                     $scope.position_level = response.data.position_level;
                     $scope.phone = response.data.phone;
@@ -515,6 +516,7 @@ angular.module('myApp').controller('AdminMainController',
                     $scope.customer_program = response.data.customer_program;
 
 
+                    console.log("XXXX="+JSON.stringify($scope.report_type));
                     $timeout(function () {
                 //alert('initing');
             //select2 init
@@ -1073,7 +1075,7 @@ angular.module('myApp').controller('AdminMainController',
                 console.log("editing");
 
 
-                console.log("$scope.is_demo = " + $scope.is_demo);
+                console.log("$scope.report_type = " + JSON.stringify($scope.report_type));
 
                 //PUT general data
                 $http({
@@ -1096,7 +1098,8 @@ angular.module('myApp').controller('AdminMainController',
                         "department": $scope.department,
                         "service_level": $scope.service_level,
                         "competing_schools": competing_schools_obj,
-                        "is_demo": $scope.is_demo
+                        "is_demo": $scope.is_demo,
+                        "features": $scope.report_type
 
                     },
                     headers: {

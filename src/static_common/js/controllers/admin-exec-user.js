@@ -503,6 +503,7 @@ angular.module('myApp').controller('AdminExecUserController',
                     $scope.title = response.data.title;
                     $scope.client_name = response.data.contact_name;
                     $scope.is_demo = response.data.is_demo;
+                    $scope.report_type = response.data.features;
                     $scope.position = response.data.position;
                     $scope.position_level = response.data.position_level;
                     $scope.phone = response.data.phone;
@@ -1096,7 +1097,8 @@ angular.module('myApp').controller('AdminExecUserController',
                         "department": $scope.department,
                         "service_level": $scope.service_level,
                         "competing_schools": competing_schools_obj,
-                        "is_demo": $scope.is_demo
+                        "is_demo": $scope.is_demo,
+                        "features": $scope.report_type
 
                     },
                     headers: {

@@ -1195,7 +1195,7 @@ class ClientCRUD(APIView):
             for k,v in request.data['features'].items():
                 if v == True:
                     feature = CustomerFeature.objects.get(name = k)
-                    CustomerFeatureMapping.objects.getOrCreate(
+                    CustomerFeatureMapping.objects.get_or_create(
                     customer = client,feature = feature)
                 elif v == False:
                     feature = CustomerFeature.objects.get(name = k)
