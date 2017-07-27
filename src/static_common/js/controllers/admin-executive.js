@@ -9,7 +9,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       $scope._ = _;
 
     var token = authenticationSvc.getUserInfo().accessToken;
-    $scope.emptyExecutiveLabel = 'Currently there is no update of the reports.';
+    $scope.emptyExecutiveLabel = 'Currently there are no Non-degree schools.';
 
     $scope.date = new Date().toISOString();
 
@@ -56,12 +56,12 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       for (let i = $scope.non_degree_schools.length - 1; i >= 0; i--) {
         let s = $scope.non_degree_schools[i];
 
-        // select2 dropdown
+        // select2 dropdown (active reports)
         $timeout(function() {
           var page_size = 6;
-          $("#js-data-" + s.object_id).select2({
+          $("#js-data-active-" + s.object_id).select2({
             ajax: {
-              url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
+              url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
@@ -81,7 +81,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
                 // since we are using custom formatting functions we do not need to
                 // alter the remote JSON data, except to indicate that infinite
                 // scrolling can be used
-                console.log('Loaded history report list of ' + s.ceeb);
+                console.log('Loaded active report list of ' + s.school);
                 params.page = params.page || 1;
 
                 return {
@@ -119,7 +119,71 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           //     $("#js-data-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
           // });
 
-        }, 100);
+        });
+        // select2 dropdown (archived reports)
+        $timeout(function() {
+          var page_size = 6;
+          $("#js-data-inactive-" + s.object_id).select2({
+            ajax: {
+              url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=False',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              },
+              dataType: 'json',
+              data: function(params) {
+                var query = {
+                  search: params.term, // search term
+                  page: params.page,
+                  page_size: page_size
+                }
+
+                return query;
+              },
+              processResults: function(data, params) {
+                // parse the results into the format expected by Select2
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data, except to indicate that infinite
+                // scrolling can be used
+                console.log('Loaded archived report list of ' + s.school);
+                params.page = params.page || 1;
+
+                return {
+                  results: data.results.map(function(item) {
+                    return {
+                      id: item.object_id,
+                      text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
+                    };
+                  }),
+                  pagination: {
+                    more: (params.page * page_size) < data.count
+                  }
+                };
+              },
+
+              cache: true
+            },
+            // Permanently hide the search box
+            minimumResultsForSearch: Infinity,
+
+            placeholder: 'Please select a report.'
+
+          });
+
+          // Set default option as the latest report
+          // $.ajax({
+          //   url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
+          //   method: 'GET',
+          //   headers: {
+          //     'Authorization': 'JWT ' + token
+          //   },
+          //   dataType: 'json'
+          // }).then(function(data) {
+          //   if (data.results.length > 0)
+          //     $("#js-data-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+          // });
+
+        });
 
       } // END for loop
 
@@ -264,76 +328,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       }
     };
 
-    // $scope.checkUpdate = function() {
-    //   // If true, the report is ready to release, otherwise not
-    //   $scope.readyToRelease = false;
-    //   console.log('Ready? ' + $scope.readyToRelease);
-
-    //   // Get report list
-    //   $http({
-    //     url: '/api/upgrid/non_degree/reports?school=' + $scope.current_school_id,
-    //     method: 'GET',
-    //     headers: {
-    //       'Authorization': 'JWT ' + token
-    //     }
-    //   }).then(function(resp_reports) {
-    //     console.log('Loaded report list. There are ' + resp_reports.data.results.length + ' reports');
-
-    //     if (resp_reports.data.results.length > 0)
-    //       $http({
-    //         url: '/api/upgrid/non_degree/reports/' + resp_reports.data.results[0].object_id,
-    //         method: 'GET',
-    //         headers: {
-    //           'Authorization': 'JWT ' + token
-    //         }
-    //       }).then(function(resp_report) {
-    //         console.log('Latest report of ' + resp_report.data.school_name + ' retrieved.');
-
-    //         $http({
-    //           url: '/api/upgrid/non_degree/schools/' + $scope.current_school_id,
-    //           method: 'GET',
-    //           headers: {
-    //             'Authorization': 'JWT ' + token
-    //           }
-    //         }).then(function(resp_schoolpreview) {
-    //           console.log('Current data of ' + resp_schoolpreview.data.school + ' retrieved.');
-
-    //           var compareResult = executiveService.updatedReport(resp_report.data, resp_schoolpreview.data);
-
-    //           if (angular.toJson(compareResult) != angular.toJson(resp_schoolpreview.data)) {
-    //             console.log('Update is found.');
-    //             $scope.readyToRelease = true;
-    //             console.log('Ready? ' + $scope.readyToRelease);
-    //           }
-    //           else {
-    //             console.log('No update.');
-    //             $.notify({
-    //               // options
-    //               icon: "fa fa-warning",
-    //               message: 'There is no update for these programs, so the report cannot be released this time.'
-    //             }, {
-    //               // settings
-    //               type: 'warning',
-    //               placement: {
-    //                 from: "top",
-    //                 align: "center"
-    //               },
-    //               z_index: 1999,
-    //             });
-    //             $scope.readyToRelease = false;
-    //             console.log('Ready? ' + $scope.readyToRelease);
-    //           }
-    //         });
-    //       });
-    //     else {
-    //       console.log('No previous report.');
-    //       $scope.readyToRelease = true;
-    //       console.log('Ready? ' + $scope.readyToRelease);
-    //     }
-
-        
-    //   });
-    // };
+    
 
     $scope.releaseReport = function() {
       if ($scope.readyToRelease == true) {
@@ -507,7 +502,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             headers: {
               'Authorization': 'JWT ' + token
             }
-          }).then(function(resp_put) {
+          }).then(function(resp_patch) {
             console.log('School: ' + $scope.school + ', report # ' + $scope.current_report_id + ', modified.');
             $.notify({
               // options
@@ -540,6 +535,107 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           z_index: 1999,
         });
     };
+
+    $scope.archiveReport = function(reportId, schoolId) {
+      if (reportId == null) {
+        $.notify({
+
+          // options
+          icon: "fa fa-warning",
+          message: 'Please select a report from the dropdown list.'
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
+          },
+          z_index: 1999,
+        });
+      } else
+        $http({
+            url: '/api/upgrid/non_degree/reports/' + reportId,
+            method: 'PATCH',
+            data: {
+              active: 'False'
+            },
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+          }).then(function(resp_patch) {
+            console.log('School: ' + schoolId + ', report # ' + reportId + ', archived.');
+            $.notify({
+              // options
+              icon: 'fa fa-warning',
+              message: 'Report is successfully archived.'
+            }, {
+              // settings
+              type: 'warning',
+              placement: {
+                from: "top",
+                align: "center"
+              },
+              z_index: 1999,
+            });
+            // Update dropdown list display
+            $timeout(function(){
+              $("#js-data-active-" + schoolId).empty().trigger('change');
+            });
+          }).catch(function(error) {
+            console.log('an error occurred...' + JSON.stringify(error));
+          });
+    };
+
+    $scope.recoverReport = function(reportId, schoolId) {
+      if (reportId == null) {
+        $.notify({
+
+          // options
+          icon: "fa fa-warning",
+          message: 'Please select a report from the dropdown list.'
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
+          },
+          z_index: 1999,
+        });
+      } else
+        $http({
+            url: '/api/upgrid/non_degree/reports/' + reportId,
+            method: 'PATCH',
+            data: {
+              active: 'True'
+            },
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+          }).then(function(resp_patch) {
+            console.log('School: ' + schoolId + ', report # ' + reportId + ', recovered.');
+            $.notify({
+              // options
+              icon: 'fa fa-warning',
+              message: 'Report is successfully recovered.'
+            }, {
+              // settings
+              type: 'warning',
+              placement: {
+                from: "top",
+                align: "center"
+              },
+              z_index: 1999,
+            });
+            // Update dropdown list display
+            $timeout(function(){
+              $("#js-data-inactive-" + schoolId).empty().trigger('change');
+            });
+          }).catch(function(error) {
+            console.log('an error occurred...' + JSON.stringify(error));
+          });
+    };
+
 
 
     $scope.togglefullen_preview = function() {
