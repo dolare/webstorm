@@ -360,16 +360,21 @@ class SubuserListSerializer(serializers.ModelSerializer):
 
 class MainUserDetailSerializer(serializers.ModelSerializer):
     competing_schools = SerializerMethodField()
+    non_degree_schools = SerializerMethodField()
     university = SerializerMethodField()
     school = SerializerMethodField()
     
     class Meta:
         model = UniversityCustomer
         fields = ('username', 'is_demo', 'Ceeb', 'university', 'school', 'service_level', 'service_until',
-                  'account_type', 'position', 'contact_name','email', 'competing_schools')
+                  'account_type', 'position', 'contact_name', 'email', 'competing_schools', 'non_degree_schools',)
 
-    def get_competing_schools(self,obj):
+    def get_competing_schools(self, obj):
         serializer = UniversityAndSchoolSerializer(obj.competing_schools, many=True)
+        return serializer.data
+
+    def get_non_degree_schools(self, obj):
+        serializer = UniversityAndSchoolSerializer(obj.non_degree_schools, many=True)
         return serializer.data
 
     def get_university(self, obj):
@@ -393,21 +398,26 @@ class SubUserDetailSerializer(serializers.ModelSerializer):
     main_user_info = SerializerMethodField()
     university = SerializerMethodField()
     school = SerializerMethodField()
+    non_degree_schools = SerializerMethodField()
     
     class Meta:
         model = UniversityCustomer
         fields = ('main_user_info', 'can_ccemail', 'is_demo', 'Ceeb', 'university', 'school', 'service_until',
-                  'account_type', 'position', 'contact_name', 'email',)
+                  'account_type', 'position', 'contact_name', 'email', 'non_degree_schools', )
 
     def get_main_user_info(self, obj):
         main_user = UniversityCustomer.objects.get(Ceeb=obj.Ceeb, account_type="main", id=obj.main_user_id)
         return MainuserInfoSerializer(main_user).data
-        
+
     def get_university(self, obj):
         return obj.Ceeb.university_foreign_key.name
 
     def get_school(self, obj):
         return obj.Ceeb.school
+
+    def get_non_degree_schools(self, obj):
+        serializer = UniversityAndSchoolSerializer(obj.non_degree_schools, many=True)
+        return serializer.data
 
 
 class ClientAndProgramRelationSerializer(serializers.ModelSerializer):

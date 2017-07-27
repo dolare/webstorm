@@ -137,7 +137,7 @@
                    COURSES
                   </td>
 
-                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 13px;" colspan="1" rowspan="2">RELEASED TIME</td>
+                  <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 13px;" colspan="1" rowspan="2">RELEASED DATE</td>
 
 
                 </tr>
@@ -395,7 +395,7 @@
 
 
                     <div class="categoryheader" ng-class="{add: c.updated===1, rm: c.updated===2}" style="display: table;width: 100%;">
-                      <span style="display: table-cell;font-size: 21px;width:45%;">{{c.name}}&nbsp;<i class="fa fa-exclamation-circle font-s16 text-city" aria-hidden="true" data-popover-title="HISTORY ({{row.date_created_old | amUtc | amDateFormat:'MM/DD'}})"                                                          
+                      <span style="display: table-cell;font-size: 21px;width:45%;">{{c.name}}&nbsp;<i class="fa fa-exclamation-circle font-s16 text-city" aria-hidden="true" data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
                                                 data-uib-popover="{{c.updated}}"
 
                                                 ng-show="c.updated&&c.updated!==1&&c.updated!==2"
@@ -497,7 +497,7 @@
                             text-align: center;
                             ">{{$index + 1}}</td>
                           <td style="vertical-align: middle;padding: 15px;text-align: left;" class="ribbon ribbon-modern ribbon-success ribbon-update"><div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amDateFormat:'MM/DD'}})"                                                          
+                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
                                                 data-uib-popover="{{course.name_old}}"
 
                                                 ng-show="course.name_old"
@@ -517,7 +517,7 @@
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
                             <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amDateFormat:'MM/DD'}})"                                                          
+                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
                                                 data-uib-popover="{{course.type_old}}"
 
                                                 ng-show="course.type_old"
@@ -535,7 +535,7 @@
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
                             <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amDateFormat:'MM/DD'}})"                                                          
+                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
                                                 data-uib-popover="{{course.course_dates_old}}"
 
                                                 ng-show="course.course_dates_old"
@@ -557,7 +557,7 @@
                           </td>
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
                              <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amDateFormat:'MM/DD'}})"                                                          
+                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
                                                 data-uib-popover="{{course.tuition_number_old}}"
 
                                                 ng-show="course.tuition_number_old"
@@ -580,7 +580,7 @@
                             " class="ribbon ribbon-modern ribbon-success ribbon-update">
 
                             <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amDateFormat:'MM/DD'}})"                            
+                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})"                            
                                                 
                                                 data-uib-popover-html="'<a  href='+'{{course.url_old}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'" 
 
