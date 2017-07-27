@@ -139,7 +139,10 @@ class WhoopsReportsUpdateAPI(APIView):
             new_diff = {}
             diff["old"] = old_diff
             diff["new"] = new_diff
-            if not a or not b:
+            if not b and a:
+                diff["new"] = None
+                diff["old"] = a
+            elif not a or not b:
                 return None
             if len(a) == len(b) and len(a) == 0:
                 return None
