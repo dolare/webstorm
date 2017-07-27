@@ -52,7 +52,7 @@ class ReportSerializer(ModelSerializer):
 
     class Meta:
         model = NonDegreeReport
-        fields = ('object_id', 'school_name', 'university_name', 'school', 'date_created', 'categories', )
+        fields = ('object_id', 'school_name', 'university_name', 'school', 'date_created', 'categories', 'active',)
 
     def get_school_name(self, obj):
         return obj.school.school
