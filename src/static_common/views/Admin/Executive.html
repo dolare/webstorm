@@ -39,25 +39,20 @@
           <colgroup>
 
           <col width="10%" />
-          <col width="35%" />
+          <col width="20%" />
 
           <col width="80px" />
+          <col width="15%" />
           <col width="15%" />
         </colgroup>
 
         <thead>
           <tr>
-
-
             <th class="text-left">Ceeb</th>
             <th class="text-left">School</th>
-
-
-
             <th class="text-center">Release Preview</th>
-
-
             <th class="text-center">History</th>
+            <th class="text-center">Archived</th>
 
           </tr>
 
@@ -101,15 +96,22 @@
             </td>
 
             <td class="text-center">
-              <select id="js-data-{{row.object_id}}" ng-model="selectedReportId">
+              <select id="js-data-active-{{row.object_id}}" ng-model="selectedReportId_active">
                 <option></option>
               </select>
-              <button class="btn btn-default btn-white" ng-click="viewReport(selectedReportId)" data-js-blur>
+              <button class="btn btn-default btn-white" ng-click="viewReport(selectedReportId_active)" data-js-blur>
                 <a class="fa fa-cloud-download text-primary" style="vertical-align: middle;">
                 </a>
               </button>
-              <button class="btn btn-default btn-white" ng-click="editReport(selectedReportId)" data-js-blur>Edit</button>
+              <button class="btn btn-default btn-white" ng-click="editReport(selectedReportId_active)" data-js-blur>Edit</button>
+              <button class="btn btn-default btn-white" ng-click="archiveReport(selectedReportId_active,row.object_id)" data-js-blur>Archive</button>
 
+            </td>
+            <td class="text-center">
+              <select id="js-data-inactive-{{row.object_id}}" ng-model="selectedReportId_inactive">
+                <option></option>
+              </select>
+              <button class="btn btn-default btn-white" ng-click="recoverReport(selectedReportId_inactive,row.object_id)" data-js-blur>Recover</button>
             </td>
 
 

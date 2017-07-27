@@ -409,7 +409,10 @@ admin.site.register(Duration)
 admin.site.register(Curriculum)
 admin.site.register(Tuition)
 admin.site.register(Deadline)
+admin.site.register(CustomerFeature)
+admin.site.register(CustomerFeatureMapping)
 admin.site.register(TranscriptEvaluationProvider)
+
 
 admin.site.register(NonDegreeCategory, NonDegreeCategoryAdmin)
 admin.site.register(NonDegreeCourse, NonDegreeCourseAdmin)
