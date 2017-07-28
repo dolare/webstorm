@@ -1,60 +1,62 @@
 @media print {
-           
+		   
 
-    a[href]:after {
-        content: none !important;
-      }            
-
-
-      pre {
-            font-family: inherit;
-            background-color: inherit;
-            border: 0 ! important;
-            color: inherit;
-            line-height: inherit;
-            padding: 0;
-            vertical-align: top;
-            word-break: break-word;
-            margin: 0;
-            white-space: pre-wrap;
-            font-size: inherit;
-        } 
+	a[href]:after {
+		content: none !important;
+	  }            
 
 
-        .report_table2 pre {
-
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-        }  
-
-
-        .report_table1.table-bordered > tbody > tr > td {
-            border-color: #777 !important;
-        }
+  	pre {
+		font-family: inherit;
+		background-color: inherit;
+		border: 0 ! important;
+		color: inherit;
+		line-height: inherit;
+		padding: 0;
+		vertical-align: top;
+		word-break: break-word;
+		margin: 0;
+		white-space: pre-wrap;
+		font-size: inherit;
+	} 
 
 
-        .report_table2.table-bordered td {
-                border-color: #777 !important;
-            }
+	.report_table2 pre {
 
-            address td:nth-child(3) {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
-                border-bottom: 1px solid #777 !important;
-            }
-
-
-            address>.pull-right tr.pull-right>td {
-
-                border-bottom: 1px solid #777 !important;
-            }
+	}  
 
 
+	.report_table1.table-bordered > tbody > tr > td {
+		border-color: #777 !important;
+	}
+
+
+	.report_table2.table-bordered td {
+			border-color: #777 !important;
+		}
+
+	address td:nth-child(3) {
+
+		border-bottom: 1px solid #777 !important;
+	}
+
+
+	address>.pull-right tr.pull-right>td {
+
+		border-bottom: 1px solid #777 !important;
+	}
+
+	.panel-default {
+		width: 50%;
+	}
 
 
 }
