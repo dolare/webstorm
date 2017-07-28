@@ -114,26 +114,28 @@ angular.module('myApp')
 
                 if(old_course_copy.course_dates.length !== 0){
 
-                  if(old_course_copy.course_dates.length===1){
-                    course_data_copy[j]["course_dates_old"] = moment(old_course_copy.course_dates[0].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[0].end_date).format('MMM DD, YYYY');
-                  } else {
+                  // if(old_course_copy.course_dates.length===1){
+                  //   course_data_copy[j]["course_dates_old"] = moment(old_course_copy.course_dates[0].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[0].end_date).format('MMM DD, YYYY');
+                  // } else {
 
-                    old_course_copy.course_dates = orderByFilter(old_course_copy.course_dates, 'start_date');
+                  //   old_course_copy.course_dates = orderByFilter(old_course_copy.course_dates, 'start_date');
 
-                    for(var k=0; k<old_course_copy.course_dates.length; k++){
-                      console.log("k="+k);
-                      course_data_copy[j]["course_dates_old"] = (course_data_copy[j]["course_dates_old"] || '') + moment(old_course_copy.course_dates[k].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[k].end_date).format('MMM DD, YYYY');
+                  //   for(var k=0; k<old_course_copy.course_dates.length; k++){
+                  //     console.log("k="+k);
+                  //     course_data_copy[j]["course_dates_old"] = (course_data_copy[j]["course_dates_old"] || '') + moment(old_course_copy.course_dates[k].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[k].end_date).format('MMM DD, YYYY');
 
-                      console.log("format = "+moment().format('MMM DD, YYYY'))
+                  //     console.log("format = "+moment().format('MMM DD, YYYY'))
 
-                      if(k < old_course_copy.course_dates.length - 1){
-                        course_data_copy[j]["course_dates_old"] = course_data_copy[j]["course_dates_old"] + '; '
-                      }
+                  //     if(k < old_course_copy.course_dates.length - 1){
+                  //       course_data_copy[j]["course_dates_old"] = course_data_copy[j]["course_dates_old"] + '; '
+                  //     }
 
-                      console.log("time = "+course_data_copy[j]["course_dates_old"]);
-                    }
+                  //     console.log("time = "+course_data_copy[j]["course_dates_old"]);
+                  //   }
 
-                  }
+                  // }
+
+                  course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates
 
                 } else {
                   course_data_copy[j]["course_dates_old"] = 'N/A'

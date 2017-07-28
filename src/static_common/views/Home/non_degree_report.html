@@ -1,6 +1,10 @@
 
       <!-- SlimScroll Container -->
-     
+     <script type="text/ng-template" id="myPopoverTemplate.html">
+      
+      <span ng-repeat="d in course.course_dates_old | orderBy:'start_date'" ng-show="d.end_date>course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+      
+    </script>
          
           <div class="row">
             <div class="col-sm-6">
@@ -534,12 +538,14 @@
                           </td>
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
+                          <!-- data-uib-popover="{{course.course_dates_old}}" ng-show="course.course_dates_old"
+-->
                             <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
-                                                data-uib-popover="{{course.course_dates_old}}"
+                                                data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                      
+                                                data-uib-popover-template="'myPopoverTemplate.html'"
 
                                                 ng-show="course.course_dates_old"
-
+                                                
                                                 data-popover-placement="top-right" 
                                                 data-popover-animation="true"
                                                 data-popover-class="report-popover update-popover">                        
@@ -548,8 +554,9 @@
                                                 </div>  
 
                             <span ng-if="course.course_dates.length!==0">
-                              <span ng-repeat-start="d in course.course_dates | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span> - <span>{{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span>
-                              <br ng-repeat-end ng-if="!$last">
+                              
+                              <span ng-repeat="d in course.course_dates | orderBy:'start_date'" ng-show="d.end_date>course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                              
                             </span>
 
                             <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
