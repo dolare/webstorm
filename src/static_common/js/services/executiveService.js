@@ -192,7 +192,7 @@ angular.module('myApp')
             "object_id": "1b36a9bf-d84d-45c6-8938-63889f02f0b7",
             "ceeb": "1832_SBUS",
             "school": "Booth School of Business",
-            "university": "The University of Chicago",
+            "university": "University of Chicago",
             "logo": "http://www.iedp.com/media/2935/chicago-booth.jpg"
         },
         {
@@ -255,14 +255,14 @@ angular.module('myApp')
             "object_id": "298c92d3-4eb3-4b75-a273-88d26b727ba1",
             "ceeb": "6666",
             "school": "London Business School",
-            "university": "",
+            "university": "London Business School",
             "logo": "https://upload.wikimedia.org/wikipedia/commons/7/74/LBS_logo_.png"
         },
         {
             "object_id": "66938b15-c75b-4ce6-8412-ff5222a8807c",
             "ceeb": "8888",
             "school": "INSEAD - Institut Européen d'Administration des Affaires",
-            "university": "",
+            "university": "INSEAD",
             "logo": "http://worldscholarshipforum.com/wp-content/uploads/2017/04/INSEAD-Alumni-Fund-IAF-Diversity-Scholarships.png"
         }
     ]
