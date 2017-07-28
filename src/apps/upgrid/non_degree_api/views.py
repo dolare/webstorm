@@ -418,11 +418,12 @@ class AMPReportDetailAPI(PermissionMixin, RetrieveModelMixin, GenericAPIView):
     def get_queryset(self, *args, **kwargs):
         reports = NonDegreeAMPReport.objects.filter(webpage__nondegreecourseurl__object_id=self.url_id)\
             .filter(webpage__nondegreecourseurl__course__object_id=self.course_id)\
-            .filter(webpage__nondegreecourseurl__course__category__university_school__object_id=self.school_id)
+            .filter(webpage__nondegreecourseurl__course__category__university_school__object_id=self.school_id)\
+            .distinct()
         if not self.is_manager():
             user = UniversityCustomer.objects.get(id=self.request.user.id)
             reports = reports.filter(webpage__nondegreecourseurl__course__category__university_school__in
-                                     =user.non_degree_schools.all())
+                                     =user.non_degree_schools.all()).distinct()
         return reports
 
     def get(self, request, school_id, course_id, url_id, *args, **kwargs):
