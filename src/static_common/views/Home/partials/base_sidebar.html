@@ -183,6 +183,39 @@
                     </a>
                 </li>
 
+
+                <li class="animate-show" style="position: relative;" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb!=='2174'">
+                    <a data-ui-sref="amp" data-ui-sref-active="active" >
+                        <i class="icon-star"></i><span class="sidebar-mini-hide">AMP Report<label class="label label-default text-info bg-info-light" style="border: 1px solid #70b9eb;
+                                                    font-size: 8px;
+                                                    padding: 2px 4px;
+                                                    position: absolute;
+                                                    margin-left: 5px;
+                                                    top: 7px;
+                                                    background: transparent;
+                                                    border-radius: 10px;">BETA</label></span>
+                    </a>
+                </li>
+
+
+
+                <li class="animate-show" style="position: relative;" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb!=='2174'">
+                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="icon-puzzle"></i><span class="sidebar-mini-hide">Peers Analysis</span></a>
+                    <ul>
+                        <li class="push-5 push-5-t">
+                            <a data-ui-sref="comparison" data-ui-sref-active="active">Comparison Tool</a>
+                        </li>
+
+                        <li class="push-5 push-5-t">
+                            <a data-ui-sref="history" data-ui-sref-active="active">History Data</a>
+                        </li>
+                        
+                        
+                       
+                    </ul>
+                </li>
+
+
                 <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb==='2174'">
                     <a data-ui-sref="reports" data-ui-sref-active="active" style="position:relative;" ><i class="si si-folder-alt"></i><span shake count="count" class="badge badge-info pull-right programbadge" ng-if="oneui.settings.sidebarMini&&count>0" style="position: absolute;top:0px;left:26px;">{{count}}</span><span class="sidebar-mini-hide">Report Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span shake count="count" class="badge badge-info pull-right sidebar-mini-hide programbadge" style="position: absolute" ng-if="!oneui.settings.sidebarMini&&count>0" >{{count}}</span>
                     </a>
