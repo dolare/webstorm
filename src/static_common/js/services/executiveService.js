@@ -5,7 +5,6 @@ angular.module('myApp')
     
      var updatedReport = function(old_data_raw, new_data_raw) {
 
-      console.log("new_data_raw="+JSON.stringify(new_data_raw))
       var school_data = angular.copy(new_data_raw);
       var school_data_old = angular.copy(old_data_raw);
       var school_cat_data = school_data.categories;
@@ -36,32 +35,6 @@ angular.module('myApp')
 
       for(var i=0; i<new_data.length; i++){
 
-        console.log("current data = "+JSON.stringify(new_data[i]));
-
-        //filter the outdated schedule
-        angular.forEach(school_cat_data[i].courses, function(value, index) {
-          
-          value.course_dates = _.filter(value.course_dates, function(date){ 
-
-            return moment(date.end_date).format() >= moment(value.date_modified.split('T')[0]).format(); 
-          })
-          console.log("element value = "+JSON.stringify(value));
-
-        })
-
-        //filter the old outdated schedule
-        angular.forEach(school_cat_data[i].courses, function(value, index) {
-          
-          value.course_dates = _.filter(value.course_dates, function(date){ 
-
-            return moment(date.end_date).format() >= moment(value.date_modified.split('T')[0]).format(); 
-          })
-          console.log("element value = "+JSON.stringify(value));
-
-        })
-
-
-        //newly added cat
         if(!_.contains(old_ids, school_cat_data[i].object_id)){
           school_cat_data[i]["updated"]= 1 
 
@@ -79,7 +52,7 @@ angular.module('myApp')
             //history time
             school_data['date_created_old'] = school_data_old.date_created
 
-          }
+          } else {
             //same name(no update on category)
             //check update on courses
             //school_cat_data[i]["updated"] = null;
@@ -110,12 +83,6 @@ angular.module('myApp')
               //updated course, no color
               var old_course_copy =  _.findWhere(old_course_data, {"object_id": course_data_copy[j].object_id})
               
-
-              //filter the schedule in the old data
-              old_course_copy.course_dates = _.filter(old_course_copy.course_dates, function(date){ 
-                return moment(date.end_date).format() >= moment(old_course_copy.date_modified.split('T')[0]).format(); 
-              })
-            
               //updated name
               if(course_data_copy[j].name !== old_course_copy.name){
                 course_data_copy[j]["name_old"] = old_course_copy.name ? old_course_copy.name : 'N/A';
@@ -140,7 +107,6 @@ angular.module('myApp')
                 school_data['date_created_old'] = school_data_old.date_created
               }
 
-
               //course_date
               if(!_.isEqual(course_data_copy[j].course_dates, old_course_copy.course_dates)){
 
@@ -148,26 +114,28 @@ angular.module('myApp')
 
                 if(old_course_copy.course_dates.length !== 0){
 
-                  if(old_course_copy.course_dates.length===1){
-                    course_data_copy[j]["course_dates_old"] = moment(old_course_copy.course_dates[0].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[0].end_date).format('MMM DD, YYYY');
-                  } else {
+                  // if(old_course_copy.course_dates.length===1){
+                  //   course_data_copy[j]["course_dates_old"] = moment(old_course_copy.course_dates[0].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[0].end_date).format('MMM DD, YYYY');
+                  // } else {
 
-                    old_course_copy.course_dates = orderByFilter(old_course_copy.course_dates, 'start_date');
+                  //   old_course_copy.course_dates = orderByFilter(old_course_copy.course_dates, 'start_date');
 
-                    for(var k=0; k<old_course_copy.course_dates.length; k++){
-                      console.log("k="+k);
-                      course_data_copy[j]["course_dates_old"] = (course_data_copy[j]["course_dates_old"] || '') + moment(old_course_copy.course_dates[k].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[k].end_date).format('MMM DD, YYYY');
+                  //   for(var k=0; k<old_course_copy.course_dates.length; k++){
+                  //     console.log("k="+k);
+                  //     course_data_copy[j]["course_dates_old"] = (course_data_copy[j]["course_dates_old"] || '') + moment(old_course_copy.course_dates[k].start_date).format('MMM DD, YYYY') + '-' + moment(old_course_copy.course_dates[k].end_date).format('MMM DD, YYYY');
 
-                      console.log("format = "+moment().format('MMM DD, YYYY'))
+                  //     console.log("format = "+moment().format('MMM DD, YYYY'))
 
-                      if(k < old_course_copy.course_dates.length - 1){
-                        course_data_copy[j]["course_dates_old"] = course_data_copy[j]["course_dates_old"] + '; '
-                      }
+                  //     if(k < old_course_copy.course_dates.length - 1){
+                  //       course_data_copy[j]["course_dates_old"] = course_data_copy[j]["course_dates_old"] + '; '
+                  //     }
 
-                      console.log("time = "+course_data_copy[j]["course_dates_old"]);
-                    }
+                  //     console.log("time = "+course_data_copy[j]["course_dates_old"]);
+                  //   }
 
-                  }
+                  // }
+
+                  course_data_copy[j]["course_dates_old"] = old_course_copy.course_dates
 
                 } else {
                   course_data_copy[j]["course_dates_old"] = 'N/A'
@@ -206,7 +174,7 @@ angular.module('myApp')
 
               }
             }
-
+          }
         }
       }
 

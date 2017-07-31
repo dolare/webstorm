@@ -65,6 +65,7 @@ controller('ShareExecutiveController', ['$timeout', '$stateParams', '$scope', '$
 
 			for (var j = $scope.schools.length - 1; j >= 0; j--) {
 				var s = $scope.schools[j];
+				s.hasUpdates = _.difference( _.pluck(s.categories, 'updated'), [1, 2, undefined]).length || _.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'name_old'), [undefined]).length > 0 || _.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'url_old'), [undefined]).length>0 ||_.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'course_dates_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'currency_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'type_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'tuition_number_old'), [undefined]).length>0;
 				s.logo_url = executiveService.getLogoBySchoolName(s.school_name, s.university_name);
 
 				// Category offerings

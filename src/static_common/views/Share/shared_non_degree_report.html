@@ -151,7 +151,7 @@
               <td class="bg-info text-center" colspan="2" style="color: rgba(255,255,255,0.85);">
                 COURSES
               </td>
-              <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 13px;" colspan="1" rowspan="2">RELEASED TIME</td>
+              <td class="bg-info font-w600" style="vertical-align: middle;text-align: center;border-left: 0;color: rgba(255,255,255,0.85);font-size: 13px;" colspan="1" rowspan="2">RELEASED DATE</td>
             </tr>
             <tr class="font-w600 text-primary" style="background: #edf6fd;">
               <td class="bg-info text-center" style="
@@ -189,7 +189,7 @@
           <!-- END table header -->
           <!-- table body -->
           <tbody>
-            <tr ng-repeat-start="row in schools">
+            <tr ng-repeat-start="row in schools | orderBy: 'school_name'">
 
               <td rowspan="2" class="text-center td-bordered bg-gray-lighterer">
                 <!-- checkbox one -->
@@ -210,12 +210,7 @@
 
                 <a data-js-blur class="link-effect" href="{{ '#school-' + $index }}" du-smooth-scroll>{{row.school_name}}
 
-                    <label ng-show="_.difference( _.pluck(row.categories, 'updated'), [1, 2, undefined]).length || _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'name_old'), [undefined]).length > 0 ||
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'url_old'), [undefined]).length>0 ||
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'course_dates_old'), [undefined]).length>0 ||
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'currency_old'), [undefined]).length>0 ||
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'type_old'), [undefined]).length>0 ||
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'tuition_number_old'), [undefined]).length>0"
+                    <label ng-show="row.hasUpdates"
 
                     class="label label-default text-success bg-success-light" style="
                                             /* background: transparent; */
@@ -305,7 +300,7 @@
 
 
       <!-- schools report body-->
-      <div class="row non-degree-report-table" ng-repeat-start="row in schools" ng-hide="!show_school[row.object_id]">
+      <div class="row non-degree-report-table" ng-repeat-start="row in schools | orderBy: 'school_name'" ng-hide="!show_school[row.object_id]">
 
         <!-- school overview -->
         <div class="col-sm-3">
@@ -504,9 +499,8 @@
                             text-align: center;
                             ">{{$index + 1}}</td>
                     <td style="vertical-align: middle;padding: 15px;text-align: left;" class="ribbon ribbon-modern ribbon-success ribbon-update">
-                      <div class="ribbon-box font-w600" data-popover-title="HISTORY" data-uib-popover="{{course.name_old}}" ng-show="course.name_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
-                        <span class="label_new">new
-                                                    </span>
+                      <div class="ribbon-box font-w600" data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})" data-uib-popover="{{course.name_old}}" ng-show="course.name_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
+                        <span class="label_new">new</span>
                       </div>
 
                       <span ng-if="course.name">{{course.name}}</span>
@@ -516,19 +510,17 @@
 
                     <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
-                      <div class="ribbon-box font-w600" data-popover-title="HISTORY" data-uib-popover="{{course.type_old}}" ng-show="course.type_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
-                        <span class="label_new">new
-                                                    </span>
+                      <div class="ribbon-box font-w600" data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})" data-uib-popover="{{course.type_old}}" ng-show="course.type_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
+                        <span class="label_new">new</span>
                       </div>
 
-                      <span ng-if="course.type">{{course.type}}</span>
-                      <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
+                      <span ng-show="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-map-marker text-primary" aria-hidden="true" ng-show="course.location_info"></i> {{course.type}}</span>
+                      <span ng-show="!course.type" class="font-w600 text-gray label-na">N/A</span>
                     </td>
                     <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
-                      <div class="ribbon-box font-w600" data-popover-title="HISTORY" data-uib-popover="{{course.course_dates_old}}" ng-show="course.course_dates_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
-                        <span class="label_new">new
-                                                    </span>
+                      <div class="ribbon-box font-w600" data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})" data-uib-popover="{{course.course_dates_old}}" ng-show="course.course_dates_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
+                        <span class="label_new">new</span>
                       </div>
 
                       <span ng-if="course.course_dates.length!==0">
@@ -540,14 +532,11 @@
 
                     </td>
                     <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
-                      <div class="ribbon-box font-w600" data-popover-title="HISTORY" data-uib-popover="{{course.tuition_number_old}}" ng-show="course.tuition_number_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
-                        <span class="label_new">new
-                                                    </span>
+                      <div class="ribbon-box font-w600" data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})" data-uib-popover="{{course.tuition_number_old| currency:currency_symbols[course.currency]:0}}" ng-show="course.tuition_number_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
+                        <span class="label_new">new</span>
                       </div>
 
-                      <span ng-if="course.tuition_number">
-                            {{course.tuition_number | currency:currency_symbols[course.currency]:0}}
-                      </span>
+                      <span ng-show="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip="note: {{course.tuition_note}}" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-pencil-square-o text-primary" aria-hidden="true" ng-show="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
 
 
                       <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
@@ -556,9 +545,8 @@
                             padding: 15px;
                             " class="ribbon ribbon-modern ribbon-success ribbon-update">
 
-                      <div class="ribbon-box font-w600" data-popover-title="HISTORY" data-uib-popover-html="'<a  href='+'{{course.url_old}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'" ng-show="course.url_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
-                        <span class="label_new">new
-                                                    </span>
+                      <div class="ribbon-box font-w600" data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})" data-uib-popover-html="'<a  href='+'{{course.url_old}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'" ng-show="course.url_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
+                        <span class="label_new">new</span>
                       </div>
 
                       <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>

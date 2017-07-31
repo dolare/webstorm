@@ -634,10 +634,10 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
     $("#top-report").printThis({
       debug: false,
       importCSS: true,
-      importStyle: true,
+      importStyle: false,
       printContainer: true,
       loadCSS: "../static/css/print.css",
-      pageTitle: "Upgrid Reports",
+      pageTitle: "NON-DEGREE TRACKING REPORT",
       removeInline: false,
       printDelay: 333,
       header: null,
