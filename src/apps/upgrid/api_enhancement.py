@@ -573,6 +573,9 @@ class ClientViewEnhancementUpdate(APIView):
         except EnhancementUpdate.DoesNotExist:
             return Response({"failed": ("No EnhancementReportsViewUpdate matches the given query.")},
                             status=HTTP_403_FORBIDDEN)
+
+
+        #client's view and account manager has release a new version
         if update_report.cache_report and not client_id:
             
             update_report.most_recent = False
@@ -598,14 +601,20 @@ class ClientViewEnhancementUpdate(APIView):
             else:
                 update_diff = "None"
 
-
-
         else:
-            if update_report.existing_report and not zlib.decompress(update_report.existing_report) == b'':
-                existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
+            #if account manager's view
+            if client_id:
+                if update_report.cache_report:
+                    existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.cache_report)))
+                else:
+                    existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
+            #if client's view
+            if not client_id:
+                if update_report.existing_report and not zlib.decompress(update_report.existing_report) == b'':
+                    existing_report = JSONParser().parse(BytesIO(zlib.decompress(update_report.existing_report)))
 
-            else:
-                existing_report = "None"
+                else:
+                    existing_report = "None"
 
             if update_report.update_diff and client_id and not zlib.decompress(update_report.update_diff)==b'':  # if manager view report before client and has updates
                 update_diff = JSONParser().parse(BytesIO(zlib.decompress(update_report.update_diff)))
@@ -616,7 +625,6 @@ class ClientViewEnhancementUpdate(APIView):
                 else:
                     update_diff = ''
             else:
-
                 update_diff = "None"
 
 

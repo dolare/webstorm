@@ -140,36 +140,41 @@ class WhoopsReportsUpdateAPI(APIView):
             diff["old"] = old_diff
             diff["new"] = new_diff
             if not b and a:
-                diff["new"] = None
+                print('there is no errors now and has errors in previous version')
                 diff["old"] = a
-            elif not a or not b:
+                for k,v in a.items():
+                    if v != None and v != [] and v != {}:
+                        diff["new"][k] = []
+                    
+            elif not a and not b:
                 return None
-            if len(a) == len(b) and len(a) == 0:
-                return None
-            if isinstance(a, dict) and isinstance(b, dict):
-                for k, v in a.items():
-                    if not b.get(k):
-                        old_diff[k] = v
-                        new_diff[k] = None
-                    elif v != b[k]:
-                        old_diff[k] = v
-                        new_diff[k] = b[k]
-                for k, v in b.items():
-                    if not a.get(k):
-                        old_diff[k] = None
-                        new_diff[k] = v
+            else:
+                if len(a) == len(b) and len(a) == 0:
+                    return None
+                if isinstance(a, dict) and isinstance(b, dict):
+                    for k, v in a.items():
+                        if not b.get(k):
+                            old_diff[k] = v
+                            new_diff[k] = None
+                        elif v != b[k]:
+                            old_diff[k] = v
+                            new_diff[k] = b[k]
+                    for k, v in b.items():
+                        if not a.get(k):
+                            old_diff[k] = None
+                            new_diff[k] = v
 
-                print('res_dict1 == {0}'.format(diff))
-                for k, v in a.items():
-                    if (not v or len(v) == 0) and (not b.get(k) or len(b.get(k)) == 0):
-                        del old_diff[k]
-                        del new_diff[k]
-                    elif k == 'object_id': 
-                        if k in old_diff.keys():
+                    print('res_dict1 == {0}'.format(diff))
+                    for k, v in a.items():
+                        if (not v or len(v) == 0) and (not b.get(k) or len(b.get(k)) == 0):
                             del old_diff[k]
-                        if k in new_diff.keys():
                             del new_diff[k]
-                return diff
+                        elif k == 'object_id': 
+                            if k in old_diff.keys():
+                                del old_diff[k]
+                            if k in new_diff.keys():
+                                del new_diff[k]
+            return diff
 
         res_dict = compare(a, b)
         print('res_dict2 == {0}'.format(res_dict))
@@ -255,7 +260,9 @@ class WhoopsReportsUpdateAPI(APIView):
                     if new_whoops_report_dict is not None:
                         json_str = JSONRenderer().render(new_whoops_report_dict)  # render to bytes with utf-8 encoding
                         raw_new_whoops_report = zlib.compress(json_str)
-                        self.whoops_compare_process(wru, raw_new_whoops_report, new_whoops_report_dict)
+                    else:
+                        raw_new_whoops_report = None
+                    self.whoops_compare_process(wru, raw_new_whoops_report, new_whoops_report_dict)
 
     def put(self, request):
         if not self.is_manager(request):
