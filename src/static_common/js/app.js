@@ -912,6 +912,89 @@ App.config(function($stateProvider, $urlRouterProvider) {
     }
 
   }).
+
+
+  state('comparison', {
+
+    url: '/comparison_tool',
+    templateUrl: '/static/views/Home/comparison.html',
+    controller: 'ComparisonController',
+    parent: 'success_demo',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo) {
+          console.log("authenticated");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+        } else {
+          console.log('fail to see the page, route change error');
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsComparison: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                            
+
+                              '/static/js/controllers/comparison.js',
+                             
+                              
+                            ]
+                        });
+                    }],
+
+    }
+
+  }).
+
+
+  state('history', {
+
+    url: '/history_data',
+    templateUrl: '/static/views/Home/history.html',
+    controller: 'HistoryController',
+    parent: 'success_demo',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo) {
+          console.log("authenticated");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+        } else {
+          console.log('fail to see the page, route change error');
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsHistory: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                            
+
+                              '/static/js/controllers/history.js',
+                             
+                              
+                            ]
+                        });
+                    }],
+
+    }
+
+  }).
+
   state('reports', {
 
     url: '/reports',
