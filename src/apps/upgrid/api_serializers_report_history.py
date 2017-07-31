@@ -1,0 +1,4 @@
+
+
+class whoopsReportHistoryListSerializer(serializers.Serializer):
+	
