@@ -2105,3 +2105,11 @@ left: 35%;
 .location-dashline {
   border-bottom: 1px dashed;
 }
+
+
+.diff-report > pre{
+
+    background-color: white;
+    border: solid 0px white;
+    white-space: pre-line;
+}
