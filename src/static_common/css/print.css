@@ -251,51 +251,70 @@
   td.visible-sm {
     display: table-cell !important;
   }
+
+  .badge {
+    padding: 1px 9px 2px;
+    font-size: 12.025px;
+    font-weight: bold;
+    white-space: nowrap;
+    color: #ffffff !important;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+  }
+  .badge-default {
+    background-color: #636c72 !important;
+  }
+  .badge-primary {
+    background-color: #0275d8 !important;
+  }
+  .badge-success {
+    background-color: #5cb85c !important;
+  }
+  .badge-info {
+    background-color: #5bc0de !important;
+  }
+  .badge-warning {
+    background-color: #f0ad4e !important;
+  }
+  .badge-danger {
+    background-color: #d9534f !important;
+  }
   .course.add>td:first-child {
-    background: #46c37b;
-    color: white;
+    background: #46c37b !important;
+    color: white !important;
   }
-
   .course.rm>td:first-child {
-    background: #d26a5c;
-    color: white;
+    background: #d26a5c !important;
+    color: white !important;
   }
-
-
   .course.add>td:not(first-child) {
-    background: #e0f5e9;
-    color: #46c37b;
+    background: #e0f5e9 !important;
+    color: #46c37b !important;
   }
-
   .course.rm>td:not(first-child) {
-    background: #f9eae8;
-    color: #d26a5c;
+    background: #f9eae8 !important;
+    color: #d26a5c !important;
   }
-
   .categoryheader {
     font-size: 18px;
-    color:#999999;
-    background-color: #f4f4f4;
+    color:#999999 !important;
+    background-color: #f4f4f4 !important;
     border-left: 3px solid #999;
     padding: 4px 10px;
   }
-
   .categoryheader.add {
-    color: #3c763d;
-    background-color: #dff0d8;
+    color: #3c763d !important;
+    background-color: #dff0d8 !important;
     border-left: 3px solid #3c763d;
-
   }
-
   .categoryheader.rm {
-    color: #a94442;
-    background-color: #f2dede;
+    color: #a94442 !important;
+    background-color: #f2dede !important;
     border-left: 3px solid #a94442;
-
   }
-
-
   .non-degree-table.table-bordered td {
-      border: 1px solid #e5e5e5;
+    border: 1px solid #e5e5e5;
   }
+
 }
