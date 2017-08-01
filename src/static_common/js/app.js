@@ -880,6 +880,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                              'https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.5/pako.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/jsdiff/3.2.0/diff.min.js',
                               '/static/js/services/ajaxService.js',
                               '/static/js/third-party/clipboard.min.js',

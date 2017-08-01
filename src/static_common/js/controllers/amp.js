@@ -116,6 +116,7 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
 
       $scope.getReport = function(Id1, Id2, Id3) {
         console.log(Id1+ ' '+Id2+ ' '+Id3)
+        var final_diff = [];
 
         App.blocks('#amp_loading', 'state_loading');
         
@@ -145,11 +146,11 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
             // var amp_old = result.data.start_scan.raw_contents
             // var amp_new = result.data.end_scan.raw_contents
 
-            var amp_old = result.data.start_scan.text_contents
-            var amp_new = result.data.end_scan.text_contents
+            var amp_old = result.data.start_scan.raw_contents
+            var amp_new = result.data.end_scan.raw_contents
 
             console.log("xxx"+JSON.stringify(result.data));
-            var final_diff = differentiateTextContent(amp_old, amp_new)
+            final_diff = differentiateTextContent(amp_old, amp_new)
             console.log("final_diff = "+JSON.stringify(final_diff));
             App.blocks('#amp_loading', 'state_normal');
           }).
@@ -161,8 +162,15 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
 
       }
 
+    // function: clear the content of text difference report
+     $scope.clearDiffRpt = function () {
+      document.getElementById('diffRptContent').innerHTML = '';
+      
+     };
+
 
     var differentiateTextContent = function (checkedContent, newestContent) {
+      //$scope.clearDiffRpt();
       var differences = [],
           color = '',
           span = null;
@@ -219,6 +227,12 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
       angular.element(document.getElementById("amp_report")).toggleClass('fullscreen-modal');
       
 
+    }
+
+    $scope.scrolltop = function(){
+      $scope.clearDiffRpt();
+      angular.element(document.getElementById('scrolltop_non_degree')).scrollTop(0);
+      
     }
 
   $scope.printReport = function() {
