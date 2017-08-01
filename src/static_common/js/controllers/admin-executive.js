@@ -99,22 +99,22 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             // Permanently hide the search box
             minimumResultsForSearch: Infinity,
 
-            placeholder: 'Please select a report.'
+            placeholder: 'There are no reports yet.'
 
           });
 
           // Set default option as the latest report
-          // $.ajax({
-          //   url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
-          //   method: 'GET',
-          //   headers: {
-          //     'Authorization': 'JWT ' + token
-          //   },
-          //   dataType: 'json'
-          // }).then(function(data) {
-          //   if (data.results.length > 0)
-          //     $("#js-data-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-          // });
+          $.ajax({
+            url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
+            method: 'GET',
+            headers: {
+              'Authorization': 'JWT ' + token
+            },
+            dataType: 'json'
+          }).then(function(data) {
+            if (data.results.length > 0)
+              $("#js-data-active-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+          });
 
         });
         // select2 dropdown (archived reports)
@@ -163,22 +163,22 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             // Permanently hide the search box
             minimumResultsForSearch: Infinity,
 
-            placeholder: 'Please select a report.'
+            placeholder: 'There are no reports yet.'
 
           });
 
           // Set default option as the latest report
-          // $.ajax({
-          //   url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
-          //   method: 'GET',
-          //   headers: {
-          //     'Authorization': 'JWT ' + token
-          //   },
-          //   dataType: 'json'
-          // }).then(function(data) {
-          //   if (data.results.length > 0)
-          //     $("#js-data-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-          // });
+          $.ajax({
+            url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=False',
+            method: 'GET',
+            headers: {
+              'Authorization': 'JWT ' + token
+            },
+            dataType: 'json'
+          }).then(function(data) {
+            if (data.results.length > 0)
+              $("#js-data-inactive-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+          });
 
         });
 
@@ -594,7 +594,35 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             });
             // Update dropdown list display
             $timeout(function(){
-              $("#js-data-active-" + schoolId).empty().trigger('change');
+              // $("#js-data-active-" + schoolId).empty().trigger('change');
+              // Update the active list.
+              $.ajax({
+                url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=True',
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                },
+                dataType: 'json'
+              }).then(function(data) {
+                if (data.results.length > 0)
+                  $("#js-data-active-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+                else
+                  $("#js-data-active-" + schoolId).empty().trigger('change');
+              });
+              // Update the archived list.
+              $.ajax({
+                url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=False',
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                },
+                dataType: 'json'
+              }).then(function(data) {
+                if (data.results.length > 0)
+                  $("#js-data-inactive-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+                else
+                  $("#js-data-inactive-" + schoolId).empty().trigger('change');
+              });
             });
           }).catch(function(error) {
             console.log('an error occurred...' + JSON.stringify(error));
@@ -644,7 +672,35 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             });
             // Update dropdown list display
             $timeout(function(){
-              $("#js-data-inactive-" + schoolId).empty().trigger('change');
+              // $("#js-data-inactive-" + schoolId).empty().trigger('change');
+              // Update the active list.
+              $.ajax({
+                url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=True',
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                },
+                dataType: 'json'
+              }).then(function(data) {
+                if (data.results.length > 0)
+                  $("#js-data-active-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+                else
+                  $("#js-data-active-" + schoolId).empty().trigger('change');
+              });
+              // Update the archived list.
+              $.ajax({
+                url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=False',
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                },
+                dataType: 'json'
+              }).then(function(data) {
+                if (data.results.length > 0)
+                  $("#js-data-inactive-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+                else
+                  $("#js-data-inactive-" + schoolId).empty().trigger('change');
+              });
             });
           }).catch(function(error) {
             console.log('an error occurred...' + JSON.stringify(error));
