@@ -146,8 +146,8 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
             // var amp_old = result.data.start_scan.raw_contents
             // var amp_new = result.data.end_scan.raw_contents
 
-            var amp_old = result.data.start_scan.raw_contents
-            var amp_new = result.data.end_scan.raw_contents
+            var amp_old = result.data.start_scan.text_contents
+            var amp_new = result.data.end_scan.text_contents
 
             console.log("xxx"+JSON.stringify(result.data));
             final_diff = differentiateTextContent(amp_old, amp_new)

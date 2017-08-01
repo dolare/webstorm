@@ -2,7 +2,7 @@
       <!-- SlimScroll Container -->
      <script type="text/ng-template" id="myPopoverTemplate.html">
       
-      <span ng-repeat="d in course.course_dates_old | orderBy:'start_date'" ng-if="d.end_date>course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+      <span ng-repeat="d in course.course_dates_old | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
       
     </script>
          
