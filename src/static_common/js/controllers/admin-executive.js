@@ -50,138 +50,142 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
       console.log('number of schools:', $scope.non_degree_schools.length);
 
-      for (let i = $scope.non_degree_schools.length - 1; i >= 0; i--) {
-        let s = $scope.non_degree_schools[i];
+      for (var i = $scope.non_degree_schools.length - 1; i >= 0; i--) {
+        var s = $scope.non_degree_schools[i];
 
         // select2 dropdown (active reports)
-        $timeout(function() {
-          var page_size = 6;
-          $("#js-data-active-" + s.object_id).select2({
-            ajax: {
+        (function(s) {
+          $timeout(function() {
+            var page_size = 6;
+            $("#js-data-active-" + s.object_id).select2({
+              ajax: {
+                url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                },
+                dataType: 'json',
+                data: function(params) {
+                  var query = {
+                    search: params.term, // search term
+                    page: params.page,
+                    page_size: page_size
+                  }
+
+                  return query;
+                },
+                processResults: function(data, params) {
+                  // parse the results into the format expected by Select2
+                  // since we are using custom formatting functions we do not need to
+                  // alter the remote JSON data, except to indicate that infinite
+                  // scrolling can be used
+                  console.log('Loaded active report list of ' + s.school);
+                  params.page = params.page || 1;
+
+                  return {
+                    results: data.results.map(function(item) {
+                      return {
+                        id: item.object_id,
+                        text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
+                      };
+                    }),
+                    pagination: {
+                      more: (params.page * page_size) < data.count
+                    }
+                  };
+                },
+
+                cache: true
+              },
+              // Permanently hide the search box
+              minimumResultsForSearch: Infinity,
+
+              placeholder: 'There are no reports yet.'
+
+            });
+
+            // Set default option as the latest report
+            $.ajax({
               url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
               },
-              dataType: 'json',
-              data: function(params) {
-                var query = {
-                  search: params.term, // search term
-                  page: params.page,
-                  page_size: page_size
-                }
-
-                return query;
-              },
-              processResults: function(data, params) {
-                // parse the results into the format expected by Select2
-                // since we are using custom formatting functions we do not need to
-                // alter the remote JSON data, except to indicate that infinite
-                // scrolling can be used
-                console.log('Loaded active report list of ' + s.school);
-                params.page = params.page || 1;
-
-                return {
-                  results: data.results.map(function(item) {
-                    return {
-                      id: item.object_id,
-                      text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
-                    };
-                  }),
-                  pagination: {
-                    more: (params.page * page_size) < data.count
-                  }
-                };
-              },
-
-              cache: true
-            },
-            // Permanently hide the search box
-            minimumResultsForSearch: Infinity,
-
-            placeholder: 'There are no reports yet.'
+              dataType: 'json'
+            }).then(function(data) {
+              if (data.results.length > 0)
+                $("#js-data-active-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+            });
 
           });
-
-          // Set default option as the latest report
-          $.ajax({
-            url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
-            method: 'GET',
-            headers: {
-              'Authorization': 'JWT ' + token
-            },
-            dataType: 'json'
-          }).then(function(data) {
-            if (data.results.length > 0)
-              $("#js-data-active-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-          });
-
-        });
+        })(s);
+        
         // select2 dropdown (archived reports)
-        $timeout(function() {
-          var page_size = 6;
-          $("#js-data-inactive-" + s.object_id).select2({
-            ajax: {
+        (function(s) {
+          $timeout(function() {
+            var page_size = 6;
+            $("#js-data-inactive-" + s.object_id).select2({
+              ajax: {
+                url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=False',
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                },
+                dataType: 'json',
+                data: function(params) {
+                  var query = {
+                    search: params.term, // search term
+                    page: params.page,
+                    page_size: page_size
+                  }
+
+                  return query;
+                },
+                processResults: function(data, params) {
+                  // parse the results into the format expected by Select2
+                  // since we are using custom formatting functions we do not need to
+                  // alter the remote JSON data, except to indicate that infinite
+                  // scrolling can be used
+                  console.log('Loaded archived report list of ' + s.school);
+                  params.page = params.page || 1;
+
+                  return {
+                    results: data.results.map(function(item) {
+                      return {
+                        id: item.object_id,
+                        text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
+                      };
+                    }),
+                    pagination: {
+                      more: (params.page * page_size) < data.count
+                    }
+                  };
+                },
+
+                cache: true
+              },
+              // Permanently hide the search box
+              minimumResultsForSearch: Infinity,
+
+              placeholder: 'There are no reports yet.'
+
+            });
+
+            // Set default option as the latest report
+            $.ajax({
               url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=False',
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
               },
-              dataType: 'json',
-              data: function(params) {
-                var query = {
-                  search: params.term, // search term
-                  page: params.page,
-                  page_size: page_size
-                }
-
-                return query;
-              },
-              processResults: function(data, params) {
-                // parse the results into the format expected by Select2
-                // since we are using custom formatting functions we do not need to
-                // alter the remote JSON data, except to indicate that infinite
-                // scrolling can be used
-                console.log('Loaded archived report list of ' + s.school);
-                params.page = params.page || 1;
-
-                return {
-                  results: data.results.map(function(item) {
-                    return {
-                      id: item.object_id,
-                      text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
-                    };
-                  }),
-                  pagination: {
-                    more: (params.page * page_size) < data.count
-                  }
-                };
-              },
-
-              cache: true
-            },
-            // Permanently hide the search box
-            minimumResultsForSearch: Infinity,
-
-            placeholder: 'There are no reports yet.'
+              dataType: 'json'
+            }).then(function(data) {
+              if (data.results.length > 0)
+                $("#js-data-inactive-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+            });
 
           });
-
-          // Set default option as the latest report
-          $.ajax({
-            url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=False',
-            method: 'GET',
-            headers: {
-              'Authorization': 'JWT ' + token
-            },
-            dataType: 'json'
-          }).then(function(data) {
-            if (data.results.length > 0)
-              $("#js-data-inactive-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-          });
-
-        });
-
+        })(s);
       } // END for loop
 
     }).catch(function(error) {

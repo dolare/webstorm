@@ -1,40 +1,14 @@
 <div class="content content-boxed">
 
-  <!-- Stats -->
-  <div class="row text-uppercase">
-    <div class="col-xs-6 col-sm-6">
-      <div class="block block-rounded">
-        <div class="block-content block-content-full">
-          <div class="font-s12 font-w700">Total</div>
-          <a class="h2 font-w300 text-primary">{{update_client.length}}</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-6">
-      <div class="block block-rounded">
-        <div class="block-content block-content-full">
-          <div class="font-s12 font-w700">Active</div>
-          <a class="h2 font-w300 text-primary">{{update_client.length}}</a>
-        </div>
-      </div>
-    </div>
-
-
-
-  </div>
-  <!-- END Stats -->
-
-
-
   <!-- Customers -->
   <div class="block" id="loadingtable">
 
     <div class="block-content">
       <div class="">
 
-        <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyExecutiveLabel}}</div>
+        <div class="alert alert-warning" role="alert" ng-if="non_degree_schools.length===0">{{emptyExecutiveLabel}}</div>
 
-        <table class="table table-hover" st-table="non_degree_schools" ng-show="non_degree_schools.length>0" style="table-layout: fixed;">
+        <table class="table table-hover" st-table="non_degree_schools" ng-if="non_degree_schools.length>0" style="table-layout: fixed;">
 
           <colgroup>
 
@@ -58,8 +32,8 @@
 
         </thead>
 
-        <tbody ng-repeat="row in non_degree_schools">
-          <tr>
+        <tbody>
+          <tr ng-repeat="row in non_degree_schools">
 
 
             <td>
@@ -99,12 +73,15 @@
               <select id="js-data-active-{{row.object_id}}" ng-model="selectedReportId_active">
                 <option></option>
               </select>
-              <button class="btn btn-default btn-white" ng-click="viewReport(selectedReportId_active)" data-js-blur>
-                <a class="fa fa-cloud-download text-primary" style="vertical-align: middle;">
-                </a>
+              <button title="View report" class="btn btn-default btn-white" ng-click="viewReport(selectedReportId_active)" data-js-blur>
+                <a class="fa fa-file text-primary" style="vertical-align: middle;"></a>
               </button>
-              <button class="btn btn-default btn-white" ng-click="editReport(selectedReportId_active)" data-js-blur>Edit</button>
-              <button class="btn btn-default btn-white" ng-click="archiveReport(selectedReportId_active,row.object_id)" data-js-blur>Archive</button>
+              <button title="Edit report" class="btn btn-default btn-white" ng-click="editReport(selectedReportId_active)" data-js-blur>
+                <a class="fa fa-pencil-square-o text-primary" style="vertical-align: middle;"></a>
+              </button>
+              <button title="Archive report" class="btn btn-default btn-white" ng-click="archiveReport(selectedReportId_active,row.object_id)" data-js-blur>
+                <a class="fa fa-archive text-primary" style="vertical-align: middle;"></a>
+              </button>
 
             </td>
             <td class="text-center">

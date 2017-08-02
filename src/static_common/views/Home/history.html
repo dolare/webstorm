@@ -10,11 +10,95 @@
       </div>
     </div>
     <div class="block-content" style="padding-top:0; padding-left:30px; padding-right:30px">
+      <div class="alert alert-warning" role="alert" ng-if="schools.length==0">
+        {{emptyWarning}}
+      </div>
+      <table class="table table-hover" style="table-layout: fixed;" ng-if="schools.length>0">
+        <colgroup>
+          <col width="60%">
+          <col width="40%">
+        </colgroup>
+        <thead class="thead-inverse">
+          <tr class="bg-info" style="border: 1px solid #e3e3e3; color:white;">
+            <th style="padding-left:15px;" class="h4 font-w400">schools
+            </th>
+            <th>reports</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="s in schools">
+            
+            <td class="font-w500" style="padding-left:15px;">
+              <div class="pull-left" style="margin-right: 10px">
+                <img ng-src="{{s.logo_url}}" height="40" width="40">
+              </div>
+              <div>{{s.school}}<br>
+                <span class="text-muted"><small class="ng-binding text-uppercase" style="
+                  font-weight: 300;
+                  font-size: 12px;
+                  ">{{s.university}}</small></span>
+              </div>
+            </td>
 
-
+            <td>
              
+              <select style="max-width:50%;" id="js-data-{{s.object_id}}" ng-model="selectedReportId">
+                <option></option>
+              </select>
+              <button class="btn btn-default btn-white" ng-click="viewReport(selectedReportId)" data-js-blur>
+                <a class="fa fa-file text-primary" style="vertical-align: middle;">
+                </a>
+              </button>
 
 
+            </td>
+          </tr>
+        </tbody>
+        
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal of view report pop-up window-->
+<div class="modal fullscreen-modal fade" id="viewReport"  role="dialog" aria-labelledby="myModalLabel" >
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="block block-themed block-transparent remove-margin-b" id="viewReport_loading">
+        <div class="block-header bg-primary-dark">
+          <ul class="block-options">
+            <li>
+              <button ng-click="printReport_view()" type="button" data-js-blur><i class="si si-printer"></i></button>
+            </li>
+            <li>
+              <button type="button" ng-click="togglefullen_view(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
+            </li>
+            <li>
+              <button data-dismiss="modal" type="button" ng-click="scrolltop_view()" data-js-blur><i class="si si-close"></i></button>
+            </li>
+          </ul>
+          <h3 class="block-title">History Report</h3>
+        </div>
+        <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_view">
+          <!-- SlimScroll Container -->
+          <div class="block cart_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="top-report_view">
+            <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content_view">
+              <!-- ########### -->
+              <!-- dynamic templates -->
+              
+                <div ng-include src="'/static/views/Home/partials/reports/non_degree_viewreport.html'"></div>
+              
+              <!-- Footer -->
+             
+            </div>
+          </div>
+          <div style="position: fixed;bottom: 20px;right: 44px;">
+            <a  data-js-blur href="#top-report_view" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
+          </div>
+          <!-- END SlimScroll Container -->
+        </div>
+      </div>
     </div>
   </div>
 </div>
