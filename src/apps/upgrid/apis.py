@@ -1009,29 +1009,38 @@ class IsAccountManager(APIView):
             return Response("True", status=HTTP_200_OK)
 
         user = UniversityCustomer.objects.get(id = request.user.id)
-
-        if user.accounttype == "main":
+        print(user)
+        print('user')
+        print(user.account_type)
+        if user.account_type == "main":
+            print(user.id)
             try:
-                features_query = CustomerFeatureMapping.objects.get(
+                features_query = CustomerFeatureMapping.objects.filter(
                     customer = user)
+<<<<<<< HEAD
                 print('features')
                 print(features_query)
+=======
+                print(features_query)
+                print('features_query')
+>>>>>>> 92bc82ffa19732b1309bfe98a94f97bb8eb269de
             except:
                 features_query = None
         else:
             try:
-                features_query = CustomerFeatureMapping.objects.get(
+                features_query = CustomerFeatureMapping.objects.filter(
                     customer = uuid.UUID(user.main_user_id))
             except:
                 features_query = None
 
         features = []
         if features_query != None:
-            for feature in features_query:
-                features.append(feature.name)
+            for feature in features_query.all():
+                features.append(feature.feature.name)
         else:
             features = "False"
 
+        print(features)
         return Response(features, status=HTTP_200_OK)
 
 
