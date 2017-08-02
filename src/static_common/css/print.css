@@ -60,7 +60,7 @@
 /*Fix Bootstrap 3 Printing*/
 /*Non-degree table*/
 @media print {
-  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+/*  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
     float: left;
   }
   .col-sm-12 {
@@ -221,7 +221,7 @@
   }
   .hidden-xs {
     display: block !important;
-  }
+  }*/
   table.hidden-xs {
     display: table;
   }
@@ -280,6 +280,23 @@
   .badge-danger {
     background-color: #d9534f !important;
   }
+
+  .text-info {
+    color: #5bc0de !important;
+  }
+  .text-warning {
+    color: #f0ad4e !important;
+  }
+  .text-danger {
+    color: #d9534f !important;
+  }
+  .text-success {
+    color: #5cb85c !important;
+  }
+
+  td.text-warning>ul>li {
+    color: #f0ad4e !important;
+  }
   .course.add>td:first-child {
     background: #46c37b !important;
     color: white !important;
@@ -296,25 +313,36 @@
     background: #f9eae8 !important;
     color: #d26a5c !important;
   }
+  .report_table2.table > tbody > tr > td {
+    padding: 16px 10px !important;
+  }
+  .report_table2.table-bordered td {
+    border: 1px solid #ececec !important;
+  }
   .categoryheader {
     font-size: 18px;
     color:#999999 !important;
     background-color: #f4f4f4 !important;
-    border-left: 3px solid #999;
+    border-left: 3px solid #999 !important;
     padding: 4px 10px;
   }
   .categoryheader.add {
     color: #3c763d !important;
     background-color: #dff0d8 !important;
-    border-left: 3px solid #3c763d;
+    border-left: 3px solid #3c763d !important;
   }
   .categoryheader.rm {
     color: #a94442 !important;
     background-color: #f2dede !important;
-    border-left: 3px solid #a94442;
+    border-left: 3px solid #a94442 !important;
   }
-  .non-degree-table.table-bordered td {
-    border: 1px solid #e5e5e5;
+  img.logo-bg {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  img.logo-sm {
+    width: 60px !important;
+    height: 60px !important;
   }
 
 }
