@@ -174,7 +174,7 @@
 
 
                                             <button ng-if="!row.is_active" class="btn btn-default" ng-click="verify_email(row.email)">
-                                                <a  ng-class="verifying ? 'fa fa-refresh fa-spin text-primary': 'fa fa-envelope text-primary'" style="width: 11px">
+                                                <a data-uib-tooltip="Resend verification email" data-tooltip-placement="top" ng-class="verifying ? 'fa fa-refresh fa-spin text-primary': 'fa fa-envelope text-primary'" style="width: 11px">
                                                 </a>
 
                                             </button>

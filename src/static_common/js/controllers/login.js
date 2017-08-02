@@ -239,21 +239,35 @@ login.controller('LoginController',
                                  var ceeb = result;
                                  console.log("ccc ceeb= "+result)
 
+                                // if(authenticationSvc.getUserInfo().admin === "True"){
+                                //      $state.go('admin-dashboard')
+                                // }else{
+
+                                //     //console.log("authenticationSvc.getUserInfo().admin === False")
+                                //     if (ceeb==='2174') {
+                                //     //$location.url($stateParams.url);
+                                //         $state.go('non_degree');
+
+                                //     } else {
+                                //         $state.go('dashboard');
+                                //     }
+
+
+
+
+                                // }
+
                                 if(authenticationSvc.getUserInfo().admin === "True"){
-                                     $state.go('admin-dashboard')
-                                }else if(authenticationSvc.getUserInfo().admin === "False"){
-
-                                    console.log("authenticationSvc.getUserInfo().admin === False")
-                                    if (ceeb==='2174') {
-                                    //$location.url($stateParams.url);
+                                        $state.go('admin-dashboard');
+                                    } else if(_.contains(authenticationSvc.getUserInfo().admin, 'whoops') && _.contains(authenticationSvc.getUserInfo().admin, 'enhancement') ){
+                                        $state.go('dashboard');
+                                    } else if(_.contains(authenticationSvc.getUserInfo().admin, 'non-degree')) {
                                         $state.go('non_degree');
-
+                                    } else if(_.contains(authenticationSvc.getUserInfo().admin, 'AMP')){
+                                        $state.go('amp');
                                     } else {
                                         $state.go('dashboard');
                                     }
-
-
-                                }
                                 //progressJs().start().set(100).end();
                                 //App.blocks('#loginblock', 'state_normal');
 
@@ -295,8 +309,14 @@ login.controller('LoginController',
             console.log('before going to whoops = ' + authenticationSvc.getUserInfo());
             //console.log('before going to whoops, cookies = '+$cookies.get('userInfo'));
             if(authenticationSvc.getUserInfo().admin === "True"){
-                $state.go('admin');
-            }else if(authenticationSvc.getUserInfo().admin === "False"){
+                $state.go('admin-dashboard');
+            } else if(_.contains(authenticationSvc.getUserInfo().admin, 'whoops') && _.contains(authenticationSvc.getUserInfo().admin, 'enhancement') ){
+                $state.go('dashboard');
+            } else if(_.contains(authenticationSvc.getUserInfo().admin, 'non-degree')) {
+                $state.go('non_degree');
+            } else if(_.contains(authenticationSvc.getUserInfo().admin, 'AMP')){
+                $state.go('amp');
+            } else {
                 $state.go('dashboard');
             }
             

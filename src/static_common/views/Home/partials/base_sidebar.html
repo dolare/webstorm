@@ -114,19 +114,6 @@
                 </li>
 
 
-                <!-- <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <a data-ui-sref="updates" data-ui-sref-active="active" >
-                        <i class="si si-bulb"></i><span class="sidebar-mini-hide">Updates</span>
-                    </a>
-                </li> -->
-
-                <!-- <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <a data-ui-sref="executive" data-ui-sref-active="active" >
-                        <i class="icon-briefcase"></i><span class="sidebar-mini-hide">Executive Education</span>
-                    </a>
-                </li> -->
-
-
                 <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
                     <a data-ui-sref="quote" data-ui-sref-active="active" >
                         <i class="si si-bar-chart"></i><span class="sidebar-mini-hide">Pricing Quote</span>
@@ -143,36 +130,36 @@
 
 
 
-                <li class="animate-show nav-main-heading" ng-hide="admin==='True'&&avatar_id===''"><span class="sidebar-mini-hide" style="font-weight:bold;">Menu</span></li>
+                <li class="animate-show nav-main-heading" ng-show="(admin==='True'&&avatar_id!=='')||admin!=='True'"><span class="sidebar-mini-hide" style="font-weight:bold;">Menu</span></li>
 
-                <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb==='2174'">
+                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||(admin!=='True'&&_.contains(admin, 'whoops'))&&(admin!=='True'&&_.contains(admin, 'enhancement'))">
                     <a data-ui-sref="dashboard" data-ui-sref-active="active" >
                         <i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span>
                     </a>
                 </li>
 
-                <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb==='2174'">
+                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||(admin!=='True'&&_.contains(admin, 'whoops'))">
                     <a data-ui-sref="whoops" data-ui-sref-active="active" >
                         <i class="si si-wrench"></i><span class="sidebar-mini-hide">"Whoops!" Report</span>
                     </a>
                 </li>
-                <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb==='2174'">
+                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||(admin!=='True'&&_.contains(admin, 'enhancement'))">
                     <a data-ui-sref="enhancement" data-ui-sref-active="active" >
                         <i class="si si-rocket"></i><span class="sidebar-mini-hide">Enhancement Report</span>
                     </a>
                 </li>
 
                
-                <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb!=='2174'">
+                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||(admin!=='True'&&_.contains(admin, 'non-degree'))">
                     <a data-ui-sref="non_degree" data-ui-sref-active="active" >
                         <i class="icon-doc"></i><span class="sidebar-mini-hide">Exec. Ed. Report</span>
                     </a>
                 </li>
 
 
-                <li class="animate-show" style="position: relative;" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb!=='2174'">
+                <li class="animate-show" style="position: relative;" ng-show="(admin==='True'&&avatar_id!=='')||(admin!=='True'&&_.contains(admin, 'AMP'))">
                     <a data-ui-sref="amp" data-ui-sref-active="active" >
-                        <i class="icon-star"></i><span class="sidebar-mini-hide">AMP Report<label class="label label-default text-info bg-info-light" style="border: 1px solid #70b9eb;
+                        <i class="icon-star"></i><span class="sidebar-mini-hide">AMP Report <label class="label label-default text-info bg-info-light" style="border: 1px solid #70b9eb;
                                                     font-size: 8px;
                                                     padding: 2px 4px;
                                                     position: absolute;
@@ -184,8 +171,8 @@
                 </li>
 
 
-                <li class="animate-show" style="position: relative;" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb!=='2174'">
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="icon-puzzle"></i><span class="sidebar-mini-hide">Peer Analysis<label class="label label-default text-info bg-info-light" style="border: 1px solid #70b9eb;
+                <li class="animate-show" style="position: relative;" ng-show="(admin==='True'&&avatar_id!=='')||(admin!=='True'&&_.contains(admin, 'non-degree'))">
+                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="icon-puzzle"></i><span class="sidebar-mini-hide">Peer Analysis <label class="label label-default text-info bg-info-light" style="border: 1px solid #70b9eb;
                                                     font-size: 8px;
                                                     padding: 2px 4px;
                                                     position: absolute;
@@ -208,18 +195,18 @@
                 </li>
 
 
-                <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb==='2174'">
+                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||(admin!=='True'&&_.contains(admin, 'whoops')&&_.contains(admin, 'enhancement'))">
                     <a data-ui-sref="reports" data-ui-sref-active="active" style="position:relative;" ><i class="si si-folder-alt"></i><span shake count="count" class="badge badge-info pull-right programbadge" ng-if="oneui.settings.sidebarMini&&count>0" style="position: absolute;top:0px;left:26px;">{{count}}</span><span class="sidebar-mini-hide">Report Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span shake count="count" class="badge badge-info pull-right sidebar-mini-hide programbadge" style="position: absolute" ng-if="!oneui.settings.sidebarMini&&count>0" >{{count}}</span>
                     </a>
                 </li>
 
-                <li class="animate-show" ng-hide="admin==='True'&&avatar_id===''">
+                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||admin!=='True'">
                     <a data-ui-sref="profile" data-ui-sref-active="active" >
                         <i class="si si-user"></i><span class="sidebar-mini-hide">User Profile</span>
                     </a>
                 </li>
                 
-                <li class="animate-show" ng-hide="(admin==='True'&&avatar_id==='')||Ceeb==='2174'">
+                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||(admin!=='True'&&_.contains(admin, 'whoops')&&_.contains(admin, 'enhancement'))">
                     <a data-ui-sref="help" data-ui-sref-active="active" >
                         <i class="si si-support"></i><span class="sidebar-mini-hide">Client Support</span>
                     </a>
