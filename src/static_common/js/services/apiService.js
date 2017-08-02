@@ -31,7 +31,7 @@ angular.module('myApp')
                   admin: true
               }
 
-           } else if (response.data === "False"){
+           } else {
               upgridUser = {
                   admin: false
               }
@@ -305,7 +305,7 @@ angular.module('myApp')
                                 
 
                                 deferred.resolve(null);
-                            }else if(response.data === "False"){
+                            }else{
                                 console.log("entered client");
                                 $http({
                                     url: '/api/upgrid/user/',

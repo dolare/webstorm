@@ -6,7 +6,8 @@ controller('SuccessController',
     function(avatarService, $timeout, Ceeb, $scope, $window, $location, $http, authenticationSvc, $cookies, $state, apiService, $localStorage, $sessionStorage, cartCounter) {
         
         console.log("$scope.Ceeb = "+Ceeb);
-
+        $scope._ = _;
+        
         $scope.Ceeb = Ceeb;
 
         console.log("Ceeb code in success page is"+$scope.Ceeb);
