@@ -408,7 +408,7 @@ class AMPReportListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
         return self.list(request, *args, **kwargs)
 
 
-class AMPReportDetailAPI(PermissionMixin, RetrieveModelMixin, GenericAPIView):
+class AMPReportDetailAPI(PermissionMixin, RetrieveModelMixin, DestroyModelMixin, GenericAPIView):
     """
     Get list of user non-degree AMP report detail
     """
@@ -431,3 +431,11 @@ class AMPReportDetailAPI(PermissionMixin, RetrieveModelMixin, GenericAPIView):
         self.course_id = course_id
         self.url_id = url_id
         return self.retrieve(request, *args, **kwargs)
+
+    def delete(self, request, school_id, course_id, url_id, *args, **kwargs):
+        if not self.is_manager():
+            return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
+        self.school_id = school_id
+        self.course_id = course_id
+        self.url_id = url_id
+        return self.destroy(request, *args, **kwargs)
