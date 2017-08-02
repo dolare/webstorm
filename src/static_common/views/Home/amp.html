@@ -83,7 +83,10 @@
             </tr>
 
             <tr class="zebra-row-gray" ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls | orderBy: 'type_order'">
-               <td class="td-bordered text-center"><i class="fa fa-certificate text-warning" aria-hidden="true" ng-show = "row2.highlight"></i></td>
+               <td class="td-bordered text-center">
+               <!-- <i class="fa fa-certificate text-warning" aria-hidden="true" ng-show = "row2.highlight"></i>
+ -->
+               </td>
                
                
 
@@ -100,12 +103,18 @@
                </td>
 
                <td class="td-bordered">
-               <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>&nbsp; <span ng-show="row2.note">{{row2.note}}</span>
+              <label class="label label-success text-white bg-success ng-binding" style="
+             
+              font-size: 9px;
+              padding: 2px 4px;
+              font-size: 80%;
+              border-radius: 3px;
+              ">NOTE</label>  &nbsp; <span ng-show="row2.note">{{row2.note}}</span>
                <span ng-show="!row2.note">N/A</span>
                </td>
 
 
-               <td class="td-bordered text-info text-center" style="padding-left: 15px;"><a href="{{row2.url}}" target="_blank" style="color: #337ab7;border-bottom: 1px dashed">source</a>
+               <td class="td-bordered text-info text-center" style="padding-left: 15px;"><a href="{{row2.url}}" target="_blank" style="color: #337ab7;border-bottom: 1px dashed; font-style: italic;">source</a>
 
                </td>
 
@@ -121,7 +130,7 @@
 
                </td>
 
-               <td class="td-bordered text-center font-w100 text-muted"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i>&nbsp; <span style="font-size: 90%;">{{row2.amp_report_released_date | amUtc | amDateFormat:'MMM DD, YYYY HH:mm'}}</span></td>
+               <td class="td-bordered text-center font-w100 text-muted"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i>&nbsp; <span style="font-size: 90%;" ng-if="row2.amp_report_released_date">{{row2.amp_report_released_date | amUtc | amDateFormat:'MMM DD, YYYY HH:mm'}}</span><span ng-if="!row2.amp_report_released_date">N/A</span></td>
                
             </tr>
         </tbody>

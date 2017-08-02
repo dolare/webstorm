@@ -1014,6 +1014,8 @@ class IsAccountManager(APIView):
             try:
                 features_query = CustomerFeatureMapping.objects.get(
                     customer = user)
+                print('features')
+                print(features_query)
             except:
                 features_query = None
         else:
