@@ -3,7 +3,9 @@ controller('ProfileController',
   function(apiService, SUB, $log, avatarService, $timeout, ajaxService, $filter, tableDataService, List, $scope, $location, $window, $http, authenticationSvc, $state) {
 
     $scope.angular = angular;
+    $scope._ = _;
     var token = authenticationSvc.getUserInfo().accessToken;
+    $scope.is_manager = authenticationSvc.getUserInfo().admin
     $scope.username = List.profile.email;
 
     console.log("List is "+JSON.stringify(List));
