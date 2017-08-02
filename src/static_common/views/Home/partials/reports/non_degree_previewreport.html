@@ -391,7 +391,7 @@
 
                   <!-- END category header -->
                   <!-- course table under a category -->
-                  <div class="table-responsive">
+                  <div>
                     <table class="table report_table2 table-bordered table-hover non-degree-table" style="table-layout: fixed;margin-bottom: 0;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">
                       <colgroup>
                         <col width="6%">
@@ -472,31 +472,34 @@
                             <span ng-show="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-map-marker" aria-hidden="true" ng-show="course.location_info"></i> {{course.type}}</span>
                             <span ng-show="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
-                          <td style="padding: 8px 10px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
-
+                          <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
                             <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY"                                                          
-                                                data-uib-popover="{{course.course_dates_old}}"
+                                                data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                      
+                                                data-uib-popover-template="'course_dates.html'"
 
-                                                ng-show="course.course_dates_old"
-
+                                                ng-if="course.course_dates_old"
+                                                
                                                 data-popover-placement="top-right" 
                                                 data-popover-animation="true"
                                                 data-popover-class="report-popover update-popover">                        
                                                     <span class="label_new">new
                                                     </span>                                   
-                                                </div> 
+                                                </div>  
 
                             <span ng-if="course.course_dates.length!==0">
-                              <span ng-repeat-start="d in course.course_dates | orderBy:'start_date'">Start: {{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span><br>
-
-                              <span>End: {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span>
-                              <br ng-repeat-end ng-if="!$last">
+                              
+                              <span ng-repeat="d in course.course_dates | orderBy:'start_date'" ng-if="d.end_date>course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                              
                             </span>
 
-                            <span ng-if="course.course_dates.length===0" class="font-w600 text-gray label-na">N/A</span>
+                            <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
 
                           </td>
+                          <script type="text/ng-template" id="course_dates.html">
+      
+                            <span ng-repeat="d in course.course_dates_old | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                            
+                          </script>
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
                              <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
