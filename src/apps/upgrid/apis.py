@@ -993,7 +993,7 @@ class ShareReports(APIView):
             return Response(res)
 
 
-
+import uuid
 #check if user is account manager and return the features if user is client
 class IsAccountManager(APIView):
     def is_manager(self, request):
@@ -1008,19 +1008,29 @@ class IsAccountManager(APIView):
         if is_manager:
             return Response("True", status=HTTP_200_OK)
 
-        user = request.user
-        if user.accounttype == "main":
-            features_query = CustomerFeatureMapping.objects.get_or_create(
-                    customer = user)
-        else:
-            features_query = CustomerFeatureMapping.objects.get_or_create(
-                    customer = user.main_user_id)
+        user = UniversityCustomer.objects.get(id = request.user.id)
 
-        features = []
-        for feature in features_query:
-            features.append(feature.name)
+        # if user.accounttype == "main":
+        #     try:
+        #         features_query = CustomerFeatureMapping.objects.get(
+        #             customer = user)
+        #     except:
+        #         features_query = None
+        # else:
+        #     try:
+        #         features_query = CustomerFeatureMapping.objects.get(
+        #             customer = uuid.UUID(user.main_user_id))
+        #     except:
+        #         features_query = None
 
-        return Response(data = features, status=HTTP_200_OK)
+        # features = []
+        # if features_query != None:
+        #     for feature in features_query:
+        #         features.append(feature.name)
+        # else:
+        features = "False"
+
+        return Response(features, status=HTTP_200_OK)
 
 
 # get account manager's information

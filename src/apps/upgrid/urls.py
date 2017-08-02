@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from .apis import *
 from .api_enhancement import *
 from .api_whoops import *
-
+from .api_report_history import (whoopsReportHistoryList,enhancementReportHistoryList,whoopsReportHistory,enhancementReportHistory)
 
 urlpatterns=[
     ##############################################
@@ -185,4 +185,16 @@ urlpatterns=[
 
     # non-degree api
     url(r'api/upgrid/non_degree/', include('apps.upgrid.non_degree_api.urls', namespace='non_degree_api')),
+
+    # report history list and update
+    url(r'api/upgrid/history/whoops_report/$', whoopsReportHistoryList.as_view()),
+
+    url(r'api/upgrid/history/enhancement_report/$', enhancementReportHistoryList.as_view()),
+
+    url(r'api/upgrid/history/whoops_report/(?P<client_id>[0-9a-fA-F\-]+)/$', whoopsReportHistory.as_view()),
+
+    url(r'api/upgrid/history/ehhancement_report/(?P<client_id>[0-9a-fA-F\-]+)/$', enhancementReportHistory.as_view()),
+
 ]
+
+

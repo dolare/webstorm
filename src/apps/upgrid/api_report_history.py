@@ -1,27 +1,26 @@
 from rest_framework import generics, mixins
-from .api_serializers_report_history import whoopsReportHistoryListSerializer
+from .api_serializers_report_history import (whoopsReportHistorySerializer,enhancementReportHistorySerializer)
+from .pagination import CustomerPageNumberPagination
 
 class whoopsReportHistoryList(generics.ListAPIView):
-    serializer_class = whoopsReportHistoryListSerializer
+    serializer_class = whoopsReportHistorySerializer
     pagination_class = CustomerPageNumberPagination
     multiple_lookup_fields = ['customer_program','customer',]
 
 
 
 class enhancementReportHistoryList(generics.ListAPIView):
-    serializer_class = enhancementReportHistoryListSerializer
+    serializer_class = enhancementReportHistorySerializer
     pagination_class = CustomerPageNumberPagination
 
-
-    def get_queryset(self, *args, **kwargs):
-        #program_name = self.request.GET.get("name")
+    multiple_lookup_fields = ['customer_program','customer',]
 
 
-        return 
 
-class whoopsReport(generics.APIView):
+
+class whoopsReportHistory(generics.UpdateAPIView):
 	serializer_class = whoopsReportHistorySerializer
 
 
-class enhancementReport(generics.APIView):
+class enhancementReportHistory(generics.UpdateAPIView):
 	serializer_class = enhancementReportHistorySerializer
