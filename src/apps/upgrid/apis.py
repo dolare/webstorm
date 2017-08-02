@@ -1010,18 +1010,27 @@ class IsAccountManager(APIView):
 
         user = UniversityCustomer.objects.get(id = request.user.id)
 
-        if user.accounttype == "main":
-            features_query = CustomerFeatureMapping.objects.get_or_create(
-                    customer = user)
-        else:
-            features_query = CustomerFeatureMapping.objects.get_or_create(
-                    customer = uuid.UUID(user.main_user_id))
+        # if user.accounttype == "main":
+        #     try:
+        #         features_query = CustomerFeatureMapping.objects.get(
+        #             customer = user)
+        #     except:
+        #         features_query = None
+        # else:
+        #     try:
+        #         features_query = CustomerFeatureMapping.objects.get(
+        #             customer = uuid.UUID(user.main_user_id))
+        #     except:
+        #         features_query = None
 
-        features = []
-        for feature in features_query:
-            features.append(feature.name)
+        # features = []
+        # if features_query != None:
+        #     for feature in features_query:
+        #         features.append(feature.name)
+        # else:
+        features = "False"
 
-        return Response(data = features, status=HTTP_200_OK)
+        return Response(features, status=HTTP_200_OK)
 
 
 # get account manager's information
