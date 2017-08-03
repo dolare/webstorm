@@ -502,7 +502,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             $scope.school = resp_report.data.school_name;
             $scope.university = resp_report.data.university_name;
             $scope.categories = resp_report.data.categories;
-            $scope.catBeforeEdit = angular.toJson($scope.categories);
 
             $scope.logo_url = executiveService.getLogoBySchoolName($scope.school, $scope.university);
 
@@ -513,9 +512,12 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             $scope.course_offer = 0;
 
             for (let i = $scope.categories.length - 1; i >= 0; i--) {
-              $scope.categories[i].course_offer = $scope.categories[i].courses.length;
               $scope.course_offer += $scope.categories[i].courses.length;
             }
+
+            $scope.catBeforeEdit = angular.toJson($scope.categories);
+            // console.log('$scope.catBeforeEdit: ');
+            // console.log($scope.catBeforeEdit);
 
             $scope.$watch('report', function(newV, oldV) {
               console.log(angular.toJson(newV));
@@ -527,7 +529,9 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
     };
 
     $scope.saveReport = function() {
-      if ($scope.catBeforeEdit != angular.toJson($scope.categories))
+      // console.log('Current categories: ');
+      // console.log(angular.toJson($scope.categories));
+      if ($scope.catBeforeEdit != angular.toJson($scope.categories)) 
         $http({
             url: '/api/upgrid/non_degree/reports/' + $scope.current_report_id,
             method: 'PATCH',
@@ -539,6 +543,8 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             }
           }).then(function(resp_patch) {
             console.log('School: ' + $scope.school + ', report # ' + $scope.current_report_id + ', modified.');
+            // Update $scope.catBeforeEdit
+            $scope.catBeforeEdit = angular.toJson($scope.categories);
             $.notify({
               // options
               icon: 'fa fa-warning',
@@ -555,6 +561,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           }).catch(function(error) {
             console.log('an error occurred...' + JSON.stringify(error));
           });
+      
       else
         $.notify({
           // options
@@ -649,7 +656,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           });
     };
 
-    $scope.recoverReport = function(reportId, schoolId) {
+    $scope.unarchiveReport = function(reportId, schoolId) {
       if (reportId == null) {
         $.notify({
 
@@ -676,11 +683,11 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
               'Authorization': 'JWT ' + token
             }
           }).then(function(resp_patch) {
-            console.log('School: ' + schoolId + ', report # ' + reportId + ', recovered.');
+            console.log('School: ' + schoolId + ', report # ' + reportId + ', unarchived.');
             $.notify({
               // options
               icon: 'fa fa-warning',
-              message: 'Report is successfully recovered.'
+              message: 'Report is successfully unarchived.'
             }, {
               // settings
               type: 'warning',
