@@ -484,7 +484,12 @@
                                                 data-popover-class="report-popover update-popover">                        
                                                     <span class="label_new">new
                                                     </span>                                   
-                                                </div>  
+                                                </div>
+                            <script type="text/ng-template" id="course_dates.html">
+      
+                              <span ng-repeat="d in course.course_dates_old | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                              
+                            </script>
 
                             <span ng-if="course.course_dates.length!==0">
                               
@@ -495,30 +500,32 @@
                             <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
 
                           </td>
-                          <script type="text/ng-template" id="course_dates.html">
-      
-                            <span ng-repeat="d in course.course_dates_old | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
-                            
-                          </script>
+                          
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
-                             <div class="ribbon-box font-w600" 
+                            <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
-                                                data-uib-popover="{{course.tuition_number_old| currency:currency_symbols[course.currency]:0}}"
+                                                data-uib-popover-template="'tuition.html'"
 
-                                                ng-show="course.tuition_number_old"
+                                                ng-if="course.tuition_number_old"
 
                                                 data-popover-placement="top-right" 
                                                 data-popover-animation="true"
                                                 data-popover-class="report-popover update-popover">                        
                                                     <span class="label_new">new
                                                     </span>                                   
-                                                </div> 
+                                                </div>
+                            <script type="text/ng-template" id="tuition.html">
+      
+                              <span ng-if="course.tuition_number_old!='N/A'">{{course.tuition_number_old | currency:currency_symbols[course.currency]:0}}</span>
+
+                              <span ng-if="course.tuition_number_old=='N/A'">{{course.tuition_number_old}}</span>
+                              
+                            </script>
 
 
                             <span ng-show="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip="note: {{course.tuition_note}}" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-pencil-square-o text-primary" aria-hidden="true" ng-show="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
 
-
-                              <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
+                            <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
                           </td>
                           <td style="
                             padding: 15px;

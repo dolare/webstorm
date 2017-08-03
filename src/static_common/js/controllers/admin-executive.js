@@ -371,6 +371,22 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           },
         }).then(function(resp_post) {
           console.log('Released a report of ' + resp_post.data.school_name);
+          // Update History dropdown list display
+          $timeout(function() {
+            $.ajax({
+              url: '/api/upgrid/non_degree/reports?school=' + $scope.current_school_id + '&active=True',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              },
+              dataType: 'json'
+            }).then(function(data) {
+              if (data.results.length > 0)
+                $("#js-data-active-" + $scope.current_school_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+              else
+                $("#js-data-active-" + $scope.current_school_id).empty().trigger('change');
+            });
+          });
         }).catch(function(error) {
           console.log('an error occurred...' + JSON.stringify(error));
         });
