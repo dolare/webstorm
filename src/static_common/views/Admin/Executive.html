@@ -73,13 +73,13 @@
               <select id="js-data-active-{{row.object_id}}" ng-model="selectedReportId_active">
                 <option></option>
               </select>
-              <button title="View report" class="btn btn-default btn-white" ng-click="viewReport(selectedReportId_active)" data-js-blur>
+              <button class="btn btn-default btn-white" data-uib-tooltip="View report" data-tooltip-placement="top" ng-click="viewReport(selectedReportId_active)" data-js-blur>
                 <a class="fa fa-file text-primary" style="vertical-align: middle;"></a>
               </button>
-              <button title="Edit report" class="btn btn-default btn-white" ng-click="editReport(selectedReportId_active)" data-js-blur>
-                <a class="fa fa-pencil-square-o text-primary" style="vertical-align: middle;"></a>
+              <button class="btn btn-default btn-white" data-uib-tooltip="Edit report" data-tooltip-placement="top" ng-click="editReport(selectedReportId_active)" data-js-blur>
+                <a class="fa fa-edit text-primary" style="vertical-align: middle;"></a>
               </button>
-              <button title="Archive report" class="btn btn-default btn-white" ng-click="archiveReport(selectedReportId_active,row.object_id)" data-js-blur>
+              <button class="btn btn-default btn-white" data-uib-tooltip="Archive report" data-tooltip-placement="top" ng-click="archiveReport(selectedReportId_active,row.object_id)" data-js-blur>
                 <a class="fa fa-archive text-primary" style="vertical-align: middle;"></a>
               </button>
 
