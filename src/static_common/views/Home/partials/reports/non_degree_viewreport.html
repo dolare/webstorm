@@ -262,25 +262,24 @@
                             text-align: center;
                             ">{{$index + 1}}</td>
                         <td style="vertical-align: middle;padding: 8px 15px;text-align: left;">{{course.name}}</td>
-                        <td style="
-                            padding: 8px 10px;
-                            ">
-                          <span style="
-                              ">{{course.type}}</span>
+                        <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
+                          <span ng-if="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.location_info"></i> {{course.type}}</span>
+                          <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
                         </td>
                         <td style="
-                            padding: 8px 10px;
+                            padding: 15px;
                             ">
                           <span ng-repeat-start="d in course.course_dates | orderBy:'start_date'">Start: {{d.start_date | amUtc  | amDateFormat:'MMM DD, YYYY'}}</span><br><span>End: {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span><br ng-repeat-end ng-if="!$last">
                         </td>
-                        <td style="
-                            padding: 8px 10px;
-                            ">
-                          <span ng-if="course.tuition_number">{{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                        <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
+
+                          <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip="note: {{course.tuition_note}}" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+
                           <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
+                          
                         </td>
                         <td style="
-                            padding: 8px 10px;
+                            padding: 15px;
                             ">
                           <a href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
                         </td>
