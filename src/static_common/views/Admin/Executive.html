@@ -13,16 +13,16 @@
           <colgroup>
 
           <col width="10%" />
-          <col width="20%" />
+          <col width="30%" />
 
-          <col width="80px" />
-          <col width="15%" />
-          <col width="15%" />
+          <col width="10%" />
+          <col width="25%" />
+          <col width="25%" />
         </colgroup>
 
         <thead>
           <tr>
-            <th class="text-left">Ceeb</th>
+            <th class="text-center">Ceeb</th>
             <th class="text-left">School</th>
             <th class="text-center">Release Preview</th>
             <th class="text-center">History</th>
@@ -63,7 +63,7 @@
             <td class="text-center">
 
               <button class="btn btn-default btn-white" ng-click="previewReport(row.object_id)" data-js-blur>
-                <a class="fa fa-cloud-upload text-city" style="vertical-align: middle;">
+                <a class="fa fa-eye text-city" style="vertical-align: middle;">
                 </a>
               </button>
 
@@ -88,7 +88,9 @@
               <select id="js-data-inactive-{{row.object_id}}" ng-model="selectedReportId_inactive">
                 <option></option>
               </select>
-              <button class="btn btn-default btn-white" ng-click="recoverReport(selectedReportId_inactive,row.object_id)" data-js-blur>Recover</button>
+              <button class="btn btn-default btn-white" data-uib-tooltip="Unarchive report" data-tooltip-placement="top" ng-click="unarchiveReport(selectedReportId_inactive,row.object_id)" data-js-blur>
+                <a class="fa fa-undo text-primary" style="vertical-align: middle;"></a>
+              </button>
             </td>
 
 

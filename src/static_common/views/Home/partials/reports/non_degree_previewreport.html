@@ -179,7 +179,7 @@
                   <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">
 
                     <a data-js-blur class="link-effect" href="#schooloverview" du-smooth-scroll>{{school}}
-                    <label ng-show="hasUpdates"
+                    <label ng-if="hasUpdates"
 
                     class="label label-default text-success bg-success-light" style="
                                             /* background: transparent; */
@@ -440,7 +440,7 @@
                                                 data-popover-title="HISTORY"                                                          
                                                 data-uib-popover="{{course.name_old}}"
 
-                                                ng-show="course.name_old"
+                                                ng-if="course.name_old"
 
                                                 data-popover-placement="top-right" 
                                                 data-popover-animation="true"
@@ -460,7 +460,7 @@
                                                 data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
                                                 data-uib-popover="{{course.type_old}}"
 
-                                                ng-show="course.type_old"
+                                                ng-if="course.type_old"
 
                                                 data-popover-placement="top-right" 
                                                 data-popover-animation="true"
@@ -469,8 +469,8 @@
                                                     </span>                                   
                                                 </div> 
 
-                            <span ng-show="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-map-marker" aria-hidden="true" ng-show="course.location_info"></i> {{course.type}}</span>
-                            <span ng-show="!course.type" class="font-w600 text-gray label-na">N/A</span>
+                            <span ng-if="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-info-circle text-info" aria-hidden="true" ng-if="course.location_info"></i> {{course.type}}</span>
+                            <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
                             <div class="ribbon-box font-w600" 
@@ -523,7 +523,7 @@
                             </script>
 
 
-                            <span ng-show="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip="note: {{course.tuition_note}}" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-pencil-square-o text-primary" aria-hidden="true" ng-show="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                            <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip="note: {{course.tuition_note}}" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
 
                             <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
                           </td>
@@ -536,7 +536,7 @@
                                                 
                                                 data-uib-popover-html="'<a  href='+'{{course.url_old}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'" 
 
-                                                ng-show="course.url_old"
+                                                ng-if="course.url_old"
 
                                                 data-popover-placement="top-right" 
                                                 data-popover-animation="true"
