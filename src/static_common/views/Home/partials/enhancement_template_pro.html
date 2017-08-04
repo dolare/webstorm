@@ -1109,7 +1109,7 @@
                                                     <span><i class="fa fa-star"></i>
                                                     </span>                                   
                                                 </div> 
-
+                                                   
                                                     <span ng-if="row.school_cost_url&&row.tuition_per_unit"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} 
                                                         <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
                                                         <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
@@ -1939,6 +1939,7 @@
                                                     <span><i class="fa fa-star"></i>
                                                     </span>                                   
                                                 </div> 
+
 
                                                     <span ng-if="row.length !== 0">
                                                         <span ng-repeat="row3 in row">{{row3.name}}<br></span>

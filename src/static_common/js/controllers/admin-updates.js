@@ -267,6 +267,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              //array
              $scope.e_raw = response.data.existing_or_cache_report.program.concat(response.data.existing_or_cache_report.competing_programs);
 
+             //object_ids
              $scope.program_order = [];
              for(var i=0; i<$scope.e_raw.length; i++){
               $scope.program_order.push($scope.e_raw[i].object_id)
@@ -480,7 +481,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
            });
      }
 
-
+     //for enhancement updates
      $scope.confirm_update = function(category, index, keys) {
 
         console.log(category + ' '+ index + ' ' + keys);
@@ -494,40 +495,62 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
         } 
 
 
-        //console.log("confirm the raw = "+ JSON.stringify($scope.e_raw));
+        
 
         //push into array
-        //for 'ex', Intl_transcript' and 'Intl_eng_test'
+        //for 'ex', 'Intl_transcript' and 'Intl_eng_test'
         if(keys.length === 0){
 
+          console.log("check for 0 = "+_.has($scope.e_update[$scope.program_order[index]], category))
+          if(_.has($scope.e_update[$scope.program_order[index]], category)){
 
-                $scope.confirmed_diff_raw[$scope.program_order[index]][category] = $scope.e_update[$scope.program_order[index]][category];
-                $scope.e_raw[index][category] = $scope.e_update[$scope.program_order[index]][category];
+            console.log("$scope.e_update[$scope.program_order[index]][category]="+JSON.stringify($scope.e_update[$scope.program_order[index]][category]))
 
+            $scope.confirmed_diff_raw[$scope.program_order[index]][category] = $scope.e_update[$scope.program_order[index]][category];
+            $scope.e_raw[index][category] = $scope.e_update[$scope.program_order[index]][category];
+            console.log("checking $scope.e_raw[index][category]="+JSON.stringify($scope.e_raw[index][category]));
+          }
 
         } else {
 
             for(var i=0; i<keys.length; i++) {
 
+
               //each key
               if(keys[i].split(".").length === 1){
 
-                if($scope.confirmed_diff_raw[$scope.program_order[index]][category]===undefined){
-                  $scope.confirmed_diff_raw[$scope.program_order[index]][category] = {};
+                if(_.has($scope.e_update[$scope.program_order[index]][category], keys[i])){
+                  console.log("confirm the e_raw = "+ JSON.stringify($scope.e_raw));
+                console.log("tuition_unit="+$scope.e_raw[index][category][keys[i]]);
+
+                  if($scope.confirmed_diff_raw[$scope.program_order[index]][category]===undefined){
+                    $scope.confirmed_diff_raw[$scope.program_order[index]][category] = {};
+                  }
+
+
+                  $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
+                  $scope.e_raw[index][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
+
+                  console.log("1key="+keys[i]);
+                 
+
+                  console.log("confirmed 1key"+ $scope.e_update[$scope.program_order[index]][category][keys[i]])
+                  console.log("confirm the raw after= "+ JSON.stringify($scope.e_raw));
+                  console.log("1ooresult = "+JSON.stringify($scope.confirmed_diff_raw));
+
                 }
-
-
-                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
-                $scope.e_raw[index][category][keys[i]] = $scope.e_update[$scope.program_order[index]][category][keys[i]];
-
-                console.log("confirm the raw after= "+ JSON.stringify($scope.e_raw));
-                console.log("1ooresult = "+JSON.stringify($scope.confirmed_diff_raw));
-
 
 
               } else if (keys[i].split(".").length === 2) {
 
-                console.log("nested");
+                console.log("lets check 1= "+JSON.stringify($scope.e_update[$scope.program_order[index]][category]))
+                console.log("lets check 2= "+[keys[i].split(".")[0]])
+                console.log("lets check 3= "+_.has($scope.e_update[$scope.program_order[index]][category], [keys[i].split(".")[0]]))
+
+                if(_.has($scope.e_update[$scope.program_order[index]][category], [keys[i].split(".")[0]])){
+
+                   console.log("nested");
+
 
              
                 if($scope.confirmed_diff_raw[$scope.program_order[index]][category]===undefined){
@@ -539,6 +562,11 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
                 $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
                 $scope.e_raw[index][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
 
+
+
+                }
+
+               
               }
 
               console.log("confirm the raw after= "+ JSON.stringify($scope.e_raw));
