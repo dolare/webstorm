@@ -246,6 +246,54 @@ App.config(function($stateProvider, $urlRouterProvider) {
   }).
 
 
+   state('backdoor', {
+    url: '/backdoor',
+    parent: 'success_demo',
+    templateUrl: '/static/views/Admin/AdminBackdoor.html',
+    controller: 'AdminBackdoorController',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo && userInfo.admin === "True") {
+
+          //console.log("start logout");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+
+        } else {
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsAdminBackdoor: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                               
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                                '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                               
+                                '/static/js/controllers/admin-backdoor.js',
+   
+                            ]
+                        });
+                    }], 
+
+
+    }
+
+
+  }).
+
+
   state('admin-exec-user', {
     url: '/admin-exec-user',
     parent: 'success_demo',

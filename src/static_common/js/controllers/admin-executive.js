@@ -9,6 +9,8 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       $scope._ = _;
 
     var token = authenticationSvc.getUserInfo().accessToken;
+    $scope.itemsByPage = 25;
+    
     $scope.emptyExecutiveLabel = 'Currently there are no Non-degree schools.';
 
     $scope.date = new Date().toISOString();
@@ -48,7 +50,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       // Order schools by their names
       $scope.non_degree_schools = orderBy($scope.non_degree_schools, 'school');
 
-      console.log('number of schools:', $scope.non_degree_schools.length);
+      
 
       for (var i = $scope.non_degree_schools.length - 1; i >= 0; i--) {
         var s = $scope.non_degree_schools[i];
@@ -188,6 +190,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         })(s);
       } // END for loop
 
+      console.log('number of schools:', $scope.non_degree_schools.length);
     }).catch(function(error) {
       console.log('an error occurred...' + JSON.stringify(error));
 
