@@ -10,28 +10,38 @@ from json import dumps, loads
 from django.utils.six import BytesIO
 
 class whoopsReportHistoryList(generics.ListAPIView):
+	permission_classes = (permissions.IsAuthenticated,)
+	serializer_class = whoopsReportHistorySerializer
+	pagination_class = CustomerPageNumberPagination
+	lookup_fields = ('customer_program__degree','customer_program__program_name','customer__email')
 
-    serializer_class = whoopsReportHistorySerializer
-    pagination_class = CustomerPageNumberPagination
-    multiple_lookup_fields = ['customer_program','customer__email',]
 
 
-    def get_queryset(self):
-    	return WhoopsUpdate.objects.all()
+	def get_queryset(self):
+		print(self.request)
+		try:
+			query_set = WhoopsUpdate.objects.filter(customer__account_manager = self.request.user)
+			#print(query_set)
+			return query_set
+		except:
+			return None
 
 
 class enhancementReportHistoryList(generics.ListAPIView):
 	permission_classes = (permissions.IsAuthenticated,)
-
 	serializer_class = enhancementReportHistorySerializer
 	pagination_class = CustomerPageNumberPagination
+	lookup_fields = ('customer_program__degree','customer_program__program_name','customer__email')
 
-    multiple_lookup_fields = ['customer_program','customer__email',]
 
-
-    def get_queryset(self):
-        print(self.request)
-        return EnhancementUpdate.objects.all()
+	def get_queryset(self):
+		print(self.request)
+		try:
+			query_set = EnhancementUpdate.objects.filter(customer__account_manager = self.request.user)
+			#print(query_set)
+			return query_set
+		except:
+			return None
 
 
 

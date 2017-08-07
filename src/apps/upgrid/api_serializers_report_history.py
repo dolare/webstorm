@@ -18,16 +18,27 @@ class whoopsReportHistorySerializer(serializers.ModelSerializer):
 	customer_program = SerializerMethodField()
 
 	class Meta:
-	    model = WhoopsUpdate
-	    fields = ('customer', 'created', 'customer_program', 
-	              'existing_report', 'cache_report', 'initial_diff',
-	              'prev_diff', 'update_diff', 'most_recent','last_edit_time','object_id')
+		model = WhoopsUpdate
+		fields = ('customer', 'created', 'customer_program', 
+	          'existing_report', 'cache_report', 'initial_diff',
+	          'prev_diff', 'update_diff', 'most_recent','last_edit_time','object_id')
+
 
 	def get_customer(self,obj):
-		return obj.customer.email
+		try:
+			print(obj.customer.email)
+			return obj.customer.email
+		except Exception as e:
+			print(e)
+			return None
 
 	def get_customer_program(self,obj):
-		return "{0} | {1}".format(obj.customer_program.program.program_name,obj.customer_program.program.degree.name)
+		try:
+			print("{0} | {1}".format(obj.customer_program.program.program_name,obj.customer_program.program.degree.name))
+			return "{0} | {1}".format(obj.customer_program.program.program_name,obj.customer_program.program.degree.name)
+		except Exception as e:
+			print(e)
+			return None
 
 
 	def get_existing_report(self, obj):
@@ -61,6 +72,7 @@ class whoopsReportHistorySerializer(serializers.ModelSerializer):
 			return None
 
 
+
 class enhancementReportHistorySerializer(serializers.ModelSerializer):
 
 	existing_report = SerializerMethodField()
@@ -68,12 +80,24 @@ class enhancementReportHistorySerializer(serializers.ModelSerializer):
 	initial_diff = SerializerMethodField()
 	prev_diff = SerializerMethodField()
 	update_diff = SerializerMethodField()
+	customer = SerializerMethodField()
+	customer_program = SerializerMethodField()
 
 	class Meta:
 		model = EnhancementUpdate
 		fields = ('customer', 'created', 'customer_program', 
 	          'existing_report', 'cache_report', 'initial_diff',
-	          'prev_diff', 'update_diff', 'most_recent','last_edit_time')
+	          'prev_diff', 'update_diff', 'most_recent','last_edit_time','object_id')
+
+
+	def get_customer(self,obj):
+		print(obj.customer)
+		return obj.customer.email
+
+	def get_customer_program(self,obj):
+		print("{0} | {1}".format(obj.customer_program.program.program_name,obj.customer_program.program.degree.name))
+		return "{0} | {1}".format(obj.customer_program.program.program_name,obj.customer_program.program.degree.name)
+
 
 	def get_existing_report(self, obj):
 		if obj.existing_report != None:
