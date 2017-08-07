@@ -2,13 +2,22 @@ from rest_framework import generics, mixins
 from rest_framework import permissions
 from .api_serializers_report_history import (whoopsReportHistorySerializer,enhancementReportHistorySerializer)
 from .pagination import CustomerPageNumberPagination
+from .models import (WhoopsUpdate,EnhancementUpdate,)
+import zlib
+from django.utils import timezone
+from . import dbSerializers as dbLizer
+from json import dumps, loads
+from django.utils.six import BytesIO
 
 class whoopsReportHistoryList(generics.ListAPIView):
-	permission_classes = (permissions.IsAuthenticated,)
-	serializer_class = whoopsReportHistorySerializer
-	pagination_class = CustomerPageNumberPagination
-	multiple_lookup_fields = ['customer_program','customer',]
 
+    serializer_class = whoopsReportHistorySerializer
+    pagination_class = CustomerPageNumberPagination
+    multiple_lookup_fields = ['customer_program','customer__email',]
+
+
+    def get_queryset(self):
+    	return WhoopsUpdate.objects.all()
 
 
 class enhancementReportHistoryList(generics.ListAPIView):
@@ -17,8 +26,12 @@ class enhancementReportHistoryList(generics.ListAPIView):
 	serializer_class = enhancementReportHistorySerializer
 	pagination_class = CustomerPageNumberPagination
 
-	multiple_lookup_fields = ['customer_program','customer',]
+    multiple_lookup_fields = ['customer_program','customer__email',]
 
+
+    def get_queryset(self):
+        print(self.request)
+        return EnhancementUpdate.objects.all()
 
 
 
