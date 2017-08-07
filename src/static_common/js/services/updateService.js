@@ -427,21 +427,24 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('university_cost_url') 
                  ){
 
-                  create_array(e_show_update,'tuition_per_unit', order);
 
-                  var tuition_per_unit_tuition_per_unit = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit;
-                  var tuition_per_unit_school_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url;
-                  var tuition_per_unit_tuition_unit = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_unit;
-                  var tuition_per_unit_university_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).university_cost_url;
+                  if((((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit || e_raw[key]['tuition'].tuition_per_unit) {
+                    create_array(e_show_update,'tuition_per_unit', order);
 
-                  e_show_update['tuition_per_unit'][key] 
-                  = 
-                    (tuition_per_unit_tuition_per_unit ? e_update_diff[value]['tuition'].tuition_per_unit : e_raw[key]['tuition'].tuition_per_unit)
-                    ? ($filter('currency')(tuition_per_unit_tuition_per_unit ? e_update_diff[value]['tuition'].tuition_per_unit : e_raw[key]['tuition'].tuition_per_unit, 
-                    '$')
-                    + ' per ' 
-                    + (tuition_per_unit_tuition_unit ? (e_update_diff[value]['tuition'].tuition_unit ? e_update_diff[value]['tuition'].tuition_unit.name : "") : (e_raw[key]['tuition'].tuition_unit ? e_raw[key]['tuition'].tuition_unit.name : ""))
-                    ) : "N/A"
+                    var tuition_per_unit_tuition_per_unit = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit;
+                    var tuition_per_unit_school_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url;
+                    var tuition_per_unit_tuition_unit = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_unit;
+                    var tuition_per_unit_university_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).university_cost_url;
+
+                    e_show_update['tuition_per_unit'][key] 
+                    = 
+                      (tuition_per_unit_tuition_per_unit ? e_update_diff[value]['tuition'].tuition_per_unit : e_raw[key]['tuition'].tuition_per_unit)
+                      ? ($filter('currency')(tuition_per_unit_tuition_per_unit ? e_update_diff[value]['tuition'].tuition_per_unit : e_raw[key]['tuition'].tuition_per_unit, 
+                      '$')
+                      + ' per ' 
+                      + (tuition_per_unit_tuition_unit ? (e_update_diff[value]['tuition'].tuition_unit ? e_update_diff[value]['tuition'].tuition_unit.name : "") : (e_raw[key]['tuition'].tuition_unit ? e_raw[key]['tuition'].tuition_unit.name : ""))
+                      ) : "N/A"
+                  }
 
                 }
 
@@ -453,22 +456,26 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('university_cost_url') 
                  ){
 
-                  create_array(e_show_update,'tuition_per_unit_out_state', order);
 
-                  var tuition_per_unit_out_state_tuition_per_unit_out_state = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit_out_state;
-                  var tuition_per_unit_out_state_school_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url;
-                  var tuition_per_unit_out_state_tuition_unit = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_unit;
-                  var tuition_per_unit_out_state_university_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).university_cost_url;
+                  if((((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit_out_state || e_raw[key]['tuition'].tuition_per_unit_out_state) {
+                    create_array(e_show_update,'tuition_per_unit_out_state', order);
 
-                  e_show_update['tuition_per_unit_out_state'][key] 
-                  = 
-                    (tuition_per_unit_out_state_tuition_per_unit_out_state ? e_update_diff[value]['tuition'].tuition_per_unit_out_state : e_raw[key]['tuition'].tuition_per_unit_out_state)
-                    ? ($filter('currency')(tuition_per_unit_out_state_tuition_per_unit_out_state ? e_update_diff[value]['tuition'].tuition_per_unit_out_state : e_raw[key]['tuition'].tuition_per_unit_out_state, 
-                    '$')
-                    + ' per ' 
-                    + (tuition_per_unit_out_state_tuition_unit ? (e_update_diff[value]['tuition'].tuition_unit ? e_update_diff[value]['tuition'].tuition_unit.name : "") : (e_raw[key]['tuition'].tuition_unit ? e_raw[key]['tuition'].tuition_unit.name : ""))
-                    )
-                    : "N/A"
+                    var tuition_per_unit_out_state_tuition_per_unit_out_state = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit_out_state;
+                    var tuition_per_unit_out_state_school_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url;
+                    var tuition_per_unit_out_state_tuition_unit = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_unit;
+                    var tuition_per_unit_out_state_university_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).university_cost_url;
+
+                    e_show_update['tuition_per_unit_out_state'][key] 
+                    = 
+                      (tuition_per_unit_out_state_tuition_per_unit_out_state ? e_update_diff[value]['tuition'].tuition_per_unit_out_state : e_raw[key]['tuition'].tuition_per_unit_out_state)
+                      ? ($filter('currency')(tuition_per_unit_out_state_tuition_per_unit_out_state ? e_update_diff[value]['tuition'].tuition_per_unit_out_state : e_raw[key]['tuition'].tuition_per_unit_out_state, 
+                      '$')
+                      + ' per ' 
+                      + (tuition_per_unit_out_state_tuition_unit ? (e_update_diff[value]['tuition'].tuition_unit ? e_update_diff[value]['tuition'].tuition_unit.name : "") : (e_raw[key]['tuition'].tuition_unit ? e_raw[key]['tuition'].tuition_unit.name : ""))
+                      )
+                      : "N/A"
+                  }
+                  
 
 
                 }

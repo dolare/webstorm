@@ -273,7 +273,8 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
-                               
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
                                 '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
