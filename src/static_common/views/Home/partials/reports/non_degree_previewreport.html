@@ -487,7 +487,9 @@
                                                 </div>
                             <script type="text/ng-template" id="course_dates.html">
       
-                              <span ng-repeat="d in course.course_dates_old | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                              <span ng-if="course.course_dates_old!='N/A'" ng-repeat="d in course.course_dates_old | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+
+                              <span ng-if="course.course_dates_old=='N/A'">{{course.course_dates_old}}</span>
                               
                             </script>
 
@@ -523,7 +525,13 @@
                             </script>
 
 
-                            <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip="note: {{course.tuition_note}}" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                            <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+
+                            <script type="text/ng-template" id="tuition_note.html">
+
+                              <span>Note: <br><pre>{{course.tuition_note}}</pre></span>
+
+                            </script>
 
                             <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
                           </td>

@@ -215,7 +215,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       $q.all({
         // Get the report list
         reports: $http({
-          url: '/api/upgrid/non_degree/reports?school=' + schoolId,
+          url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=True',
           method: 'GET',
           headers: {
             'Authorization': 'JWT ' + token

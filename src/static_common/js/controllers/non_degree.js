@@ -75,7 +75,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
 
           $http({
-            url: '/api/upgrid/non_degree/reports?school=' + value.object_id,
+            url: '/api/upgrid/non_degree/reports?school=' + value.object_id + '&active=True',
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
@@ -195,7 +195,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
           console.log("value = "+value)
 
           $http({
-            url: '/api/upgrid/non_degree/reports?school=' + value,
+            url: '/api/upgrid/non_degree/reports?school=' + value + '&active=True',
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
@@ -413,7 +413,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
   //       //Retrieve the list of reports for a school
   //       $http({
-  //           url: '/api/upgrid/non_degree/reports?school=' + s.object_id,
+  //           url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
   //           method: 'GET',
   //           headers: {
   //             'Authorization': 'JWT ' + token
