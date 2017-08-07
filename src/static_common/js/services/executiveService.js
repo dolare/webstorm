@@ -15,6 +15,7 @@ angular.module('myApp')
       var old_data = old_data_raw.categories;
       var new_data = new_data_raw.categories;
 
+
       
       console.log('Start loop old');
 
@@ -99,16 +100,19 @@ angular.module('myApp')
                 school_data['date_created_old'] = school_data_old.date_created
               }
 
-              //updated repeatable
-              if(course_data_copy[j].Repeatable !== old_course_copy.Repeatable){
-                course_data_copy[j]["Repeatable_old"] = old_course_copy.Repeatable ? old_course_copy.Repeatable : 'N/A';
+              // //updated repeatable
+              // if(course_data_copy[j].Repeatable !== old_course_copy.Repeatable){
+              //   course_data_copy[j]["Repeatable_old"] = old_course_copy.Repeatable ? old_course_copy.Repeatable : 'N/A';
                 
-                //history time
-                school_data['date_created_old'] = school_data_old.date_created
-              }
+              //   //history time
+              //   school_data['date_created_old'] = school_data_old.date_created
+              // }
+
+              var date_new = _.filter(course_data_copy[j].course_dates, function(num){ return num.end_date > course_data_copy[j].date_modified; });
+              var date_old = _.filter(old_course_copy.course_dates, function(num){ return num.end_date > old_course_copy.date_modified; });
 
               //course_date
-              if(!_.isEqual(course_data_copy[j].course_dates, old_course_copy.course_dates)){
+              if(!_.isEqual(date_new, date_old)){
 
                 console.log("old_course_copy.course_dates="+JSON.stringify(old_course_copy.course_dates));
 
