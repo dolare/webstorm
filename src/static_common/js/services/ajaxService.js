@@ -23,7 +23,6 @@ angular.module('myApp').factory("ajaxService",
                         }).then(function(response) {
                             //  console.log("response.data.results[0] is "+JSON.stringify(response.data.results[0]));
                             // console.log("response.data.results[0].customer.split('#')[1] is "+JSON.stringify(response.data.results[0].customer.split('#')[1]));
-
                             console.log("@@@GOT! ajax detail=" + JSON.stringify(response));
                             deferred.resolve({
                                 raw: response.data,
@@ -179,9 +178,56 @@ angular.module('myApp').factory("ajaxService",
 
         }
 
+
+        // backdoor service
+
+        function backDoor(start, number, params, token, avatar) {
+
+            var deferred = $q.defer();
+
+            console.log("page num =  " + (start / number + 1));
+            console.log("number =" + number);
+            console.log("params="+JSON.stringify(params));
+
+                console.log("page number 25");
+                    
+                        $http({
+                            url: "/api/upgrid/history/whoops_report/" + (params.search.predicateObject ? ("?search=" + (params.search.predicateObject.customer_program ? params.search.predicateObject.customer_program : ""))  :""),
+                            method: 'GET',
+
+                            headers: {
+                                'Authorization': 'JWT ' + token
+                            }
+
+                        }).then(function(response) {
+                            //  console.log("response.data.results[0] is "+JSON.stringify(response.data.results[0]));
+                            // console.log("response.data.results[0].customer.split('#')[1] is "+JSON.stringify(response.data.results[0].customer.split('#')[1]));
+
+                            console.log("@@@GOT! ajax detail=" + JSON.stringify(response));
+                            deferred.resolve({
+                                raw: response.data,
+                                data: response.data.results,
+                                // total: response.data.count,
+                                // available: parseInt(response.data.results[0].customer.split('#')[1]),
+                                numberOfPages: Math.ceil(response.data.count / number)
+                            });
+                        }).
+                        catch(function(error) {
+                            console.log('an error occurred...' + JSON.stringify(error));
+
+                        });
+               
+
+            return deferred.promise;
+        }
+
+
+
+
         return {
             getResult: getResult,
-            nonDegree: nonDegree
+            nonDegree: nonDegree,
+            backDoor: backDoor
         };
 
     });
