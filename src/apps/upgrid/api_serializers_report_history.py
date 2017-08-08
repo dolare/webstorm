@@ -42,33 +42,38 @@ class whoopsReportHistorySerializer(serializers.ModelSerializer):
 
 
 	def get_existing_report(self, obj):
-		if obj.existing_report != None:
+		try:
 			return JSONParser().parse(BytesIO(zlib.decompress(obj.existing_report)))
-		else:
+		except Exception as e:
+			print(e)
 			return None
 
 	def get_cache_report(self, obj):
-		if obj.cache_report != None:
+		try:
 			return JSONParser().parse(BytesIO(zlib.decompress(obj.cache_report)))
-		else:
+		except Exception as e:
+			print(e)
 			return None
 
 	def get_initial_diff(self, obj):
-		if obj.initial_diff != None:
+		try:
 			return JSONParser().parse(BytesIO(zlib.decompress(obj.initial_diff)))
-		else:
+		except Exception as e:
+			print(e)
 			return None
 
 	def get_prev_diff(self, obj):
-		if obj.prev_diff != None:
+		try:
 			return JSONParser().parse(BytesIO(zlib.decompress(obj.prev_diff)))
-		else:
+		except Exception as e:
+			print(e)
 			return None
 
 	def get_update_diff(self, obj):
-		if obj.update_diff != None:
+		try:
 			return JSONParser().parse(BytesIO(zlib.decompress(obj.update_diff)))
-		else:
+		except Exception as e:
+			print(e)
 			return None
 
 
@@ -91,42 +96,54 @@ class enhancementReportHistorySerializer(serializers.ModelSerializer):
 
 
 	def get_customer(self,obj):
-		print(obj.customer)
-		return obj.customer.email
+		try:
+			print(obj.customer)
+		except Exception as e:
+			print(e)
+			return obj.customer.email
 
 	def get_customer_program(self,obj):
-		print("{0} | {1}".format(obj.customer_program.program.program_name,obj.customer_program.program.degree.name))
-		return "{0} | {1}".format(obj.customer_program.program.program_name,obj.customer_program.program.degree.name)
+		try:
+			print("{0} | {1}".format(obj.customer_program.program.program_name,obj.customer_program.program.degree.name))
+			return "{0} | {1}".format(obj.customer_program.program.program_name,obj.customer_program.program.degree.name)
+		except Exception as e:
+			print(e)
+			return None
 
 
 	def get_existing_report(self, obj):
-		if obj.existing_report != None:
+		try:
 			return JSONParser().parse(BytesIO(zlib.decompress(obj.existing_report)))
-		else:
+		except Exception as e:
+			print(e)
 			return None
 
 	def get_cache_report(self, obj):
-		if obj.cache_report != None:
+		try:
 			return JSONParser().parse(BytesIO(zlib.decompress(obj.cache_report)))
-		else:
+		except Exception as e:
+			print(e)
 			return None
 
 	def get_initial_diff(self, obj):
-		if obj.initial_diff != None:
+		try:
 			return JSONParser().parse(BytesIO(zlib.decompress(obj.initial_diff)))
-		else:
+		except Exception as e:
+			print(e)
 			return None
 
 	def get_prev_diff(self, obj):
-		if obj.prev_diff != None:
+		try:
 			return JSONParser().parse(BytesIO(zlib.decompress(obj.prev_diff)))
-		else:
+		except Exception as e:
+			print(e)
 			return None
 
 	def get_update_diff(self, obj):
-		if obj.update_diff != None:
+		try:
 			return JSONParser().parse(BytesIO(zlib.decompress(obj.update_diff)))
-		else:
+		except Exception as e:
+			print(e)
 			return None
 
 
