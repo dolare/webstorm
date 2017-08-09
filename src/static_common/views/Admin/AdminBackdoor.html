@@ -2,109 +2,24 @@
 
 
 
-                <!-- Customers -->
-                <div class="block" id="loadingtable">
-                    
-                    <div class="block-content">
+              <!-- -->
 
-
-
-
-                    <div class="row push-30">
-
-                    <div class="col-sm-6 border-r">
-                      <div class="row">
-                        <div class="col-sm-12">
-                        <div class="h2 text-muted push-20 push-15-t">Whoops Report</div>
-                      </div>
-
-                      </div>
-
-                      <div class="row push-20">
-                        <div class="col-sm-12">
-                          {{whoops_id}}
-                          <select class="js-data-whoops" style="width: 100%" ng-model="whoops_id">
-                                                            <option value="" selected="selected"></option>
-                                                        </select>
-                          </div>
-                      </div>
-
-
-                     <!--  <div class="row">
-                      <div class="col-sm-12">
-                        <button>View Report</button>
-
-                      </div>
-                        
-                      </div> -->
-                    </div>
-
-
-                    <div class="col-sm-6">
-                      <div class="row">
-                        <div class="col-sm-12">
-                        <div class="h2 text-muted push-20 push-15-t">Enhancement Report</div>
-                      </div>
-
-                      </div>
-
-                      <div class="row push-20">
-                        <div class="col-sm-12">
-                        {{enhancement_id}}
-                          <select class="js-data-enhancement" style="width: 100%" ng-model="enhancement_id" ng-change="get_depart()">
-                                                            <option value="" selected="selected"></option>
-                                                        </select>
-                          </div>
-                      </div>
-
-
-                      <!-- <div class="row">
-                      <div class="col-sm-12">
-                        <button>View Report</button>
-
-                      </div>
-                        
-                      </div> -->
-                    </div>
-
-
-                    </div>
-
-
-
-                    <!--  -->
-
-
-
-
-
-
-
-
-                    </div>
-                </div>
-
-
-
-
-
-
-                <div class="block">
-               
-                </div>
-                <!-- Customers -->
-                <div class="block" id="loadingclient">
-                    <div class="block-header">
-                        <!-- <ul class="block-options">
-                            <li>
-                                <button type="button" id="addnew" data-toggle="modal" data-target="#modal-large-add" ng-click="addnew()" style="color:#4d66ce;outline: none;" data-js-blur><i class="fa fa-plus"></i> Add new</button>
-                            </li>
-              
-                    </ul> -->
-                    <h3 class="block-title">Client List</h3>
-                </div>
-                <div class="block-content">
-                    <div class="">
+             
+                         
+                            <div class="block" id="loadingtable">
+                                <ul class="nav nav-tabs nav-tabs-alt nav-justified" data-toggle="tabs">
+                                    <li class="active">
+                                        <a href="#btabs-alt-static-justified-home" data-toggle="tab"><i class="fa fa-home"></i> Whoops Report</a>
+                                    </li>
+                                    <li>
+                                        <a href="#btabs-alt-static-justified-profile" data-toggle="tab"><i class="fa fa-pencil"></i> Enhancement Report</a>
+                                    </li>
+                                   
+                                </ul>
+                                <div class="block-content tab-content">
+                                    <div class="tab-pane active" id="btabs-alt-static-justified-home" style="padding-top: 10px">
+                                        
+                                      <div class="">
                     
                         <table class="table table-hover table-vcenter client-table" st-pagination-scroll st-table="whoops_data" st-pipe="whoops_pipe">
                             <colgroup>
@@ -135,8 +50,19 @@
                             <tr>
                                
 
-                                <th colspan="5" class="border-l border-r" style="background: #f0f4f8;">
-                                    <input st-search="customer_program" class="form-control" placeholder="global search ..." type="text" />
+                                <th colspan="4" class="border-l border-r" style="background: #f0f4f8;">
+
+                              
+                              
+                                <input st-search="customer_program" class="form-control" placeholder="whoops report search ..." type="text" />
+                     
+                              
+                      
+                               
+                                    
+
+                                    
+
                                 </th>
 
                                 
@@ -187,13 +113,108 @@
                 </tfoot>
             </table>
         </div>
-            <!-- <div class="text-center push">
-                        <button class="btn btn-xs btn-default" type="button">
-                            <i class="fa fa-arrow-down push-5-r text-primary"></i>Load More..
-                        </button>
-                    </div> -->
-                </div>
-            </div>
+
+
+                                    </div>
+                                    <div class="tab-pane" id="btabs-alt-static-justified-profile"  style="padding-top: 10px">
+                                        <div class="">
+                    
+                        <table class="table table-hover table-vcenter client-table" st-pagination-scroll st-table="enhancement_data" st-pipe="enhancement_pipe">
+                            <colgroup>
+                           
+                            <col width="35%" />
+                            <col width="35%" />
+                            <col width="20%" />
+                            <col width="10%" />
+                        </colgroup>
+                        <thead>
+                           
+
+
+                            <tr>
+                               
+                                <th st-sort="contact_name" class="text-left">Program</th>
+                                
+                                <!-- <th st-sort="university" class="text-left">University</th> -->
+                                <th class="text-center">
+
+                                    Client
+
+                                </th>
+                                
+                                <th class="text-center" style="min-width: 95px">Created</th>
+                                <th class="text-right" style="width:40px">View</th>
+                            </tr>
+                            <tr>
+                               
+
+                                <th colspan="4" class="border-l border-r" style="background: #f0f4f8;">
+
+                               
+                                <input st-search="customer_program" class="form-control" placeholder="enhancement report search ..." type="text" />
+
+                              
+                              
+                                    
+
+                                    
+
+                                </th>
+
+                                
+                            </tr>
+                        </thead>
+
+                        <tbody ng-repeat="row in enhancement_data">
+
+                            <tr>
+                    
+                        <td>
+                                {{row.customer_program.split('|')[0]}} ({{row.customer_program.split('|')[1]}} )
+                        </td>
+
+                        
+                        <td class="text-center">
+                            {{row.customer}}
+                        </td>
+                      
+                        <td class="text-center">
+                          
+
+                           {{row.created | amUtc | amDateFormat:'MMM DD, YYYY, HH:mm'}}
+                       </td>
+                                        <td class="text-right" style="width:40px">
+                                           <button>View</button>
+
+
+                                        </td>
+                                    </tr>
+
+
+
+                                </tbody>
+
+
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                           
+                        </td>
+                        <td colspan="2" class="text-center">
+                            <br>
+                            <br>
+                            <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                          
+
         </div>
 
 

@@ -181,7 +181,7 @@ angular.module('myApp').factory("ajaxService",
 
         // backdoor service
 
-        function backDoor(start, number, params, token, avatar) {
+        function backDoor(api_url, start, number, params, token, avatar) {
 
             var deferred = $q.defer();
 
@@ -192,7 +192,7 @@ angular.module('myApp').factory("ajaxService",
                 console.log("page number 25");
                     
                         $http({
-                            url: "/api/upgrid/history/whoops_report/" + (params.search.predicateObject ? ("?search=" + (params.search.predicateObject.customer_program ? params.search.predicateObject.customer_program : ""))  :""),
+                            url: api_url + (params.search.predicateObject ? ("?search=" + (params.search.predicateObject.customer_program ? params.search.predicateObject.customer_program : ""))  :""),
                             method: 'GET',
 
                             headers: {

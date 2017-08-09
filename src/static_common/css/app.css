@@ -1758,7 +1758,7 @@ p.narrow{
     z-index: 1;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+.board .nav-tabs > li.active > a, .board .nav-tabs > li.active > a:hover, .board .nav-tabs > li.active > a:focus {
     color: #555555;
     cursor: default;
     /* background-color: #ffffff; */
@@ -1833,19 +1833,19 @@ li.active span.round-tabs.five{
 
 
 
-.nav-tabs > li.active > a span.round-tabs{
+.board .nav-tabs > li.active > a span.round-tabs{
     background: #fafafa;
 }
-.nav-tabs > li {
+.board .nav-tabs > li {
     width: 50%;
 }
 
 
-#modal-large-edit .nav-tabs > li {
+#modal-large-edit .board .nav-tabs > li {
     width: 33%;
 }
 
-.nav-tabs > li:after {
+.board .nav-tabs > li:after {
     content: " ";
     position: absolute;
     left: 45%;
@@ -1857,7 +1857,7 @@ li.active span.round-tabs.five{
     transition:0.1s ease-in-out;
     
 }
-.nav-tabs > li.active:after {
+.board .nav-tabs > li.active:after {
     content: " ";
     position: absolute;
     left: 48%;
@@ -1868,7 +1868,7 @@ li.active span.round-tabs.five{
     border-bottom-color: #ddd;
     
 }
-.nav-tabs > li a{
+.board .nav-tabs > li a{
    width: 70px;
    height: 70px;
    margin: 20px auto;
@@ -1876,7 +1876,7 @@ li.active span.round-tabs.five{
    padding: 0;
 }
 
-.nav-tabs > li a:hover{
+.board .nav-tabs > li a:hover{
     background: transparent;
 }
 
@@ -1922,13 +1922,13 @@ line-height: 50px;
     .tab-content .head{
         font-size:20px;
         }
-    .nav-tabs > li a {
+    .board .nav-tabs > li a {
 width: 50px;
 height: 50px;
 line-height:50px;
 }
 
-.nav-tabs > li.active:after {
+.board .nav-tabs > li.active:after {
 content: " ";
 position: absolute;
 left: 35%;

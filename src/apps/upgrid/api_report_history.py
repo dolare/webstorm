@@ -38,8 +38,7 @@ class enhancementReportHistoryList(generics.ListAPIView):
 	permission_classes = (permissions.IsAuthenticated,)
 	serializer_class = enhancementReportHistorySerializer
 	pagination_class = CustomerPageNumberPagination
-	lookup_fields = ('customer_program__degree','customer_program__program_name','customer__email')
-
+	
 
 	def get_queryset(self):
 		print(self.request)
