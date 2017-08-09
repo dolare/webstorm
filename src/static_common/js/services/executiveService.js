@@ -50,16 +50,22 @@ angular.module('myApp')
           if(school_cat_data[i].name !== _.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).name){
             school_cat_data[i]["updated"] =   _.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).name
 
+            console.log("changed school name")
             //history time
             school_data['date_created_old'] = school_data_old.date_created
 
-          } else {
+          }
+
             //same name(no update on category)
             //check update on courses
             //school_cat_data[i]["updated"] = null;
             var course_data_copy = school_cat_data[i].courses
             var new_course_data = angular.copy(school_cat_data[i].courses)
             var old_course_data = angular.copy(_.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).courses)
+
+
+            console.log("new_course_data= "+JSON.stringify(new_course_data));
+            console.log("old_course_data= "+JSON.stringify(old_course_data));
 
             var new_course_ids = _.pluck(school_cat_data[i].courses, 'object_id');
             var old_course_ids = _.pluck(_.findWhere(old_data, {"object_id": school_cat_data[i].object_id}).courses, 'object_id');
@@ -178,7 +184,7 @@ angular.module('myApp')
 
               }
             }
-          }
+         
         }
       }
 
