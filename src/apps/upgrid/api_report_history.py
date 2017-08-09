@@ -20,11 +20,14 @@ class whoopsReportHistoryList(generics.ListAPIView):
 	def get_queryset(self):
 		print(self.request)
 		try:
-			query = self.request.GET.get("search");
-			query_set = WhoopsUpdate.objects.filter(customer__account_manager = self.request.user)
-			query_set = query_set.filter(Q(customer__email = search) | Q(customer_program__degree = search))
+			if "search" in self.request.GET.keys():
+				query = self.request.GET.get("search");
+				query_set = WhoopsUpdate.objects.filter(customer__account_manager = self.request.user)
+			#query_set = query_set.filter(Q(customer_program__degree = search) | Q(customer_program__program_name = search) | Q(customer__email = search))
 			#print(query_set)
-			return query_set
+				return query_set
+			else:
+				return WhoopsUpdate.objects.all()
 		except:
 			return None
 
@@ -39,9 +42,13 @@ class enhancementReportHistoryList(generics.ListAPIView):
 	def get_queryset(self):
 		print(self.request)
 		try:
-			query_set = EnhancementUpdate.objects.filter(customer__account_manager = self.request.user)
-			#print(query_set)
-			return query_set
+			if "search" in self.request.GET.keys():
+				query_set = EnhancementUpdate.objects.filter(customer__account_manager = self.request.user)
+				query_set = query_set.filter(Q(customer_program__degree = search) | Q(customer_program__program_name = search) | Q(customer__email = search))		
+				#print(query_set)
+				return query_set
+			else:
+				return EnhancementUpdate.objects.all()
 		except:
 			return None
 
