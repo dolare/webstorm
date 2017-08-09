@@ -20,10 +20,12 @@ class whoopsReportHistoryList(generics.ListAPIView):
 	def get_queryset(self):
 		print(self.request)
 		try:
+			print(self.request.GET.get("search"))
+			print('search value')
 			if "search" in self.request.GET.keys():
 				query = self.request.GET.get("search");
 				query_set = WhoopsUpdate.objects.filter(customer__account_manager = self.request.user)
-			#query_set = query_set.filter(Q(customer_program__degree = search) | Q(customer_program__program_name = search) | Q(customer__email = search))
+				query_set = query_set.filter(Q(customer_program__degree = search) | Q(customer_program__program_name = search) | Q(customer__email = search))
 			#print(query_set)
 				return query_set
 			else:
