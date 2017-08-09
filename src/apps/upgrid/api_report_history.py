@@ -8,14 +8,13 @@ from django.utils import timezone
 from . import dbSerializers as dbLizer
 from json import dumps, loads
 from django.utils.six import BytesIO
+from django.db.models import Q
 
 class whoopsReportHistoryList(generics.ListAPIView):
 	permission_classes = (permissions.IsAuthenticated,)
 	serializer_class = whoopsReportHistorySerializer
 	pagination_class = CustomerPageNumberPagination
-	lookup_fields = ('customer_program__degree','customer_program__program_name','customer__email')
-
-
+	
 
 	def get_queryset(self):
 		print(self.request)
@@ -25,13 +24,14 @@ class whoopsReportHistoryList(generics.ListAPIView):
 			if "search" in self.request.GET.keys():
 				query = self.request.GET.get("search");
 				query_set = WhoopsUpdate.objects.filter(customer__account_manager = self.request.user)
-				query_set = query_set.filter(Q(customer_program__degree = search) | Q(customer_program__program_name = search) | Q(customer__email = search))
+				query_set = query_set.filter(Q(customer_program__program__degree__name__icontains = query) | Q(customer_program__program__program_name__icontains = query) | Q(customer__email__icontains = query))
 			#print(query_set)
 				return query_set
 			else:
-				return WhoopsUpdate.objects.all()
-		except:
-			return None
+				return WhoopsUpdate.objects.filter(customer__account_manager = self.request.user)
+		except Exception as e:
+			print(e)
+			return WhoopsUpdate.objects.filter(customer__account_manager = self.request.user)
 
 
 class enhancementReportHistoryList(generics.ListAPIView):
@@ -45,14 +45,16 @@ class enhancementReportHistoryList(generics.ListAPIView):
 		print(self.request)
 		try:
 			if "search" in self.request.GET.keys():
+				query = self.request.GET.get("search");
 				query_set = EnhancementUpdate.objects.filter(customer__account_manager = self.request.user)
-				query_set = query_set.filter(Q(customer_program__degree = search) | Q(customer_program__program_name = search) | Q(customer__email = search))		
+				query_set = query_set.filter(Q(customer_program__program__degree__name__icontains = query) | Q(customer_program__program__program_name__icontains = query) | Q(customer__email__icontains = query))
 				#print(query_set)
 				return query_set
 			else:
-				return EnhancementUpdate.objects.all()
-		except:
-			return None
+				return EnhancementUpdate.objects.filter(customer__account_manager = self.request.user)
+		except Exception as e:
+			print(e)
+			return EnhancementUpdate.objects.filter(customer__account_manager = self.request.user)
 
 
 
