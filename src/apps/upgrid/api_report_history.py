@@ -58,13 +58,13 @@ class enhancementReportHistoryList(generics.ListAPIView):
 
 
 
-class whoopsReportHistory(generics.UpdateAPIView):
+class whoopsReportHistory(generics.UpdateAPIView,generics.RetrieveAPIView):
 	permission_classes = (permissions.IsAuthenticated,)
 
 	serializer_class = whoopsReportHistorySerializer
 
 
-class enhancementReportHistory(generics.UpdateAPIView):
+class enhancementReportHistory(generics.UpdateAPIView,generics.RetrieveAPIView):
 	permission_classes = (permissions.IsAuthenticated,)
 
 	serializer_class = enhancementReportHistorySerializer
