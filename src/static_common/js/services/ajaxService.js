@@ -108,6 +108,48 @@ angular.module('myApp').factory("ajaxService",
             return deferred.promise;
         }
 
+        function getPage(start, number, url, params, token) {
+            var parsedParams = '';
+
+            parsedParams += '&page=' + (Math.ceil(start / number) + 1);
+            parsedParams += '&page_size=' + number;
+            parsedParams += '&ordering=' + (params.sort.reverse ? '-' : '') + (params.sort.predicate ? params.sort.predicate : '');
+            parsedParams += '&search=' + ((params.search.hasOwnProperty('predicateObject') && params.search.predicateObject.hasOwnProperty('searchValue')) ? params.search.predicateObject.searchValue : '');
+
+            
+            var deferred = $q.defer();
+
+            console.log('number = ' + number);
+            console.log('tableState: ');
+            console.log(params);
+            console.log('params = ' + '"' + parsedParams + '"');
+            
+                    
+            $http({
+                url: url + parsedParams,
+                method: 'GET',
+
+                headers: {
+                    'Authorization': 'JWT ' + token
+                }
+
+            }).then(function(response) {
+                console.log("@@@GOT! ajax response, its data is: ");
+                console.log(JSON.stringify(response.data));
+                deferred.resolve({
+                    data: response.data,
+                    numberOfPages: Math.ceil(response.data.count / number)
+                });
+            }).
+            catch(function(error) {
+                console.log('an error occurred...' + JSON.stringify(error));
+                deferred.reject('an error occurred...' + JSON.stringify(error));
+
+            });
+            return deferred.promise;
+
+        }
+
         function nonDegree(token) {
 
            
@@ -226,6 +268,7 @@ angular.module('myApp').factory("ajaxService",
 
         return {
             getResult: getResult,
+            getPage: getPage,
             nonDegree: nonDegree,
             backDoor: backDoor
         };

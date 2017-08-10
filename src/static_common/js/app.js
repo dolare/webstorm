@@ -452,6 +452,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                                 '/static/js/services/updateService.js',
                                 '/static/js/controllers/admin-executive.js',
                                 '/static/js/services/executiveService.js',
+                                '/static/js/services/ajaxService.js',
    
                             ]
                         });
