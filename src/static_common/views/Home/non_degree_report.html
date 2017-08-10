@@ -558,7 +558,7 @@
 
                             <span ng-if="course.course_dates.length!==0">
                               
-                              <span ng-repeat="d in course.course_dates | orderBy:'start_date'" ng-if="d.end_date>course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                              <span ng-repeat="d in course.course_dates | orderBy:'start_date'" ng-if="d.end_date>=course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
                               
                             </span>
 

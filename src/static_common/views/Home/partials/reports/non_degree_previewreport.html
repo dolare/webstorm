@@ -457,7 +457,7 @@
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
                             <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
+                                                data-popover-title="HISTORY ({{lastReleasedDate | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
                                                 data-uib-popover="{{course.type_old}}"
 
                                                 ng-if="course.type_old"
@@ -474,7 +474,7 @@
                           </td>
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
                             <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                      
+                                                data-popover-title="HISTORY ({{lastReleasedDate | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                      
                                                 data-uib-popover-template="'course_dates.html'"
 
                                                 ng-if="course.course_dates_old"
@@ -495,7 +495,7 @@
 
                             <span ng-if="course.course_dates.length!==0">
                               
-                              <span ng-repeat="d in course.course_dates | orderBy:'start_date'" ng-if="d.end_date>course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                              <span ng-repeat="d in course.course_dates | orderBy:'start_date'" ng-if="d.end_date>=course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
                               
                             </span>
 
@@ -505,7 +505,7 @@
                           
                           <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
                             <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
+                                                data-popover-title="HISTORY ({{lastReleasedDate | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
                                                 data-uib-popover-template="'tuition.html'"
 
                                                 ng-if="course.tuition_number_old"
@@ -540,7 +540,7 @@
                             " class="ribbon ribbon-modern ribbon-success ribbon-update">
 
                             <div class="ribbon-box font-w600" 
-                                                data-popover-title="HISTORY ({{report_old.date_created | amUtc | amLocal | amDateFormat:'MM/DD'}})"                            
+                                                data-popover-title="HISTORY ({{lastReleasedDate | amUtc | amLocal | amDateFormat:'MM/DD'}})"                            
                                                 
                                                 data-uib-popover-html="'<a  href='+'{{course.url_old}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'" 
 

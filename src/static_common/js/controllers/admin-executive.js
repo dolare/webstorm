@@ -2,16 +2,16 @@
 
 'use strict';
 
-angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 'orderByFilter', 
-  function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService, $timeout, executiveService, orderBy) {
+angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 'orderByFilter', 'ajaxService', 
+  function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService, $timeout, executiveService, orderBy, ajaxService) {
 
     // Inject underscore into $scope
       $scope._ = _;
 
     var token = authenticationSvc.getUserInfo().accessToken;
-    $scope.itemsByPage = 25;
+    $scope.itemsByPage = 10;
     
-    $scope.emptyExecutiveLabel = 'Currently there are no Non-degree schools.';
+    $scope.emptyExecutiveLabel = 'No records.';
 
     $scope.date = new Date().toISOString();
 
@@ -36,165 +36,170 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       'null': '$', // The default currency sign is USD
     };
 
-    
+    $scope.non_degree_schools = []; // Retrieved schools from the following pipe function.
 
-    $http({
-      url: '/api/upgrid/non_degree/schools?is_non_degree=True',
-      method: 'GET',
-      headers: {
-        'Authorization': 'JWT ' + token
-      }
-    }).then(function(response) {
-      $scope.non_degree_schools = response.data.results;
+    $scope.callServer = function(tableState) {
 
-      // Order schools by their names
-      $scope.non_degree_schools = orderBy($scope.non_degree_schools, 'school');
+      App.blocks('#loadingtable', 'state_loading');
 
-      
+      var pagination = tableState.pagination;
+      var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
+      var number = tableState.pagination.number || 10; // Number of entries showed per page.
 
-      for (var i = $scope.non_degree_schools.length - 1; i >= 0; i--) {
-        var s = $scope.non_degree_schools[i];
+      var url = '/api/upgrid/non_degree/schools?is_non_degree=True';
 
-        // select2 dropdown (active reports)
-        (function(s) {
-          $timeout(function() {
-            var page_size = 6;
-            $("#js-data-active-" + s.object_id).select2({
-              ajax: {
+      console.log('About to getPage()!');
+
+      ajaxService.getPage(start, number, url, tableState, token).then(function(resp_schools) {
+        $scope.non_degree_schools = resp_schools.data.results;
+        tableState.pagination.numberOfPages = resp_schools.numberOfPages; // Set the number of pages so the pagination can update.
+        tableState.pagination.totalItemCount = resp_schools.data.count; // This property of tableState.pagination is currently not being used yet.
+
+        for (var i = $scope.non_degree_schools.length - 1; i >= 0; i--) {
+          var s = $scope.non_degree_schools[i];
+
+          // select2 dropdown (active reports)
+          (function(s) {
+            $timeout(function() {
+              var page_size = 6;
+              $("#js-data-active-" + s.object_id).select2({
+                ajax: {
+                  url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
+                  method: 'GET',
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  },
+                  dataType: 'json',
+                  data: function(params) {
+                    var query = {
+                      search: params.term, // search term
+                      page: params.page,
+                      page_size: page_size
+                    }
+
+                    return query;
+                  },
+                  processResults: function(data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    console.log('Loaded active report list of ' + s.school);
+                    params.page = params.page || 1;
+
+                    return {
+                      results: data.results.map(function(item) {
+                        return {
+                          id: item.object_id,
+                          text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
+                        };
+                      }),
+                      pagination: {
+                        more: (params.page * page_size) < data.count
+                      }
+                    };
+                  },
+
+                  cache: true
+                },
+                // Permanently hide the search box
+                minimumResultsForSearch: Infinity,
+
+                placeholder: 'There are no reports yet.'
+
+              });
+
+              // Set default option as the latest report
+              $.ajax({
                 url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
                 method: 'GET',
                 headers: {
                   'Authorization': 'JWT ' + token
                 },
-                dataType: 'json',
-                data: function(params) {
-                  var query = {
-                    search: params.term, // search term
-                    page: params.page,
-                    page_size: page_size
-                  }
+                dataType: 'json'
+              }).then(function(data) {
+                if (data.results.length > 0)
+                  $("#js-data-active-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+              });
 
-                  return query;
-                },
-                processResults: function(data, params) {
-                  // parse the results into the format expected by Select2
-                  // since we are using custom formatting functions we do not need to
-                  // alter the remote JSON data, except to indicate that infinite
-                  // scrolling can be used
-                  console.log('Loaded active report list of ' + s.school);
-                  params.page = params.page || 1;
-
-                  return {
-                    results: data.results.map(function(item) {
-                      return {
-                        id: item.object_id,
-                        text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
-                      };
-                    }),
-                    pagination: {
-                      more: (params.page * page_size) < data.count
+            });
+          })(s);
+          
+          // select2 dropdown (archived reports)
+          (function(s) {
+            $timeout(function() {
+              var page_size = 6;
+              $("#js-data-inactive-" + s.object_id).select2({
+                ajax: {
+                  url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=False',
+                  method: 'GET',
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  },
+                  dataType: 'json',
+                  data: function(params) {
+                    var query = {
+                      search: params.term, // search term
+                      page: params.page,
+                      page_size: page_size
                     }
-                  };
+
+                    return query;
+                  },
+                  processResults: function(data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    console.log('Loaded archived report list of ' + s.school);
+                    params.page = params.page || 1;
+
+                    return {
+                      results: data.results.map(function(item) {
+                        return {
+                          id: item.object_id,
+                          text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
+                        };
+                      }),
+                      pagination: {
+                        more: (params.page * page_size) < data.count
+                      }
+                    };
+                  },
+
+                  cache: true
                 },
+                // Permanently hide the search box
+                minimumResultsForSearch: Infinity,
 
-                cache: true
-              },
-              // Permanently hide the search box
-              minimumResultsForSearch: Infinity,
+                placeholder: 'There are no reports yet.'
 
-              placeholder: 'There are no reports yet.'
+              });
 
-            });
-
-            // Set default option as the latest report
-            $.ajax({
-              url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
-              method: 'GET',
-              headers: {
-                'Authorization': 'JWT ' + token
-              },
-              dataType: 'json'
-            }).then(function(data) {
-              if (data.results.length > 0)
-                $("#js-data-active-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-            });
-
-          });
-        })(s);
-        
-        // select2 dropdown (archived reports)
-        (function(s) {
-          $timeout(function() {
-            var page_size = 6;
-            $("#js-data-inactive-" + s.object_id).select2({
-              ajax: {
+              // Set default option as the latest report
+              $.ajax({
                 url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=False',
                 method: 'GET',
                 headers: {
                   'Authorization': 'JWT ' + token
                 },
-                dataType: 'json',
-                data: function(params) {
-                  var query = {
-                    search: params.term, // search term
-                    page: params.page,
-                    page_size: page_size
-                  }
-
-                  return query;
-                },
-                processResults: function(data, params) {
-                  // parse the results into the format expected by Select2
-                  // since we are using custom formatting functions we do not need to
-                  // alter the remote JSON data, except to indicate that infinite
-                  // scrolling can be used
-                  console.log('Loaded archived report list of ' + s.school);
-                  params.page = params.page || 1;
-
-                  return {
-                    results: data.results.map(function(item) {
-                      return {
-                        id: item.object_id,
-                        text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
-                      };
-                    }),
-                    pagination: {
-                      more: (params.page * page_size) < data.count
-                    }
-                  };
-                },
-
-                cache: true
-              },
-              // Permanently hide the search box
-              minimumResultsForSearch: Infinity,
-
-              placeholder: 'There are no reports yet.'
+                dataType: 'json'
+              }).then(function(data) {
+                if (data.results.length > 0)
+                  $("#js-data-inactive-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+              });
 
             });
+          })(s);
+        } // END for loop
 
-            // Set default option as the latest report
-            $.ajax({
-              url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=False',
-              method: 'GET',
-              headers: {
-                'Authorization': 'JWT ' + token
-              },
-              dataType: 'json'
-            }).then(function(data) {
-              if (data.results.length > 0)
-                $("#js-data-inactive-" + s.object_id).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-            });
+        console.log('Loaded school list, # of schools: ' + $scope.non_degree_schools.length);
 
-          });
-        })(s);
-      } // END for loop
-
-      console.log('number of schools:', $scope.non_degree_schools.length);
-    }).catch(function(error) {
-      console.log('an error occurred...' + JSON.stringify(error));
-
-    });
+        App.blocks('#loadingtable', 'state_normal');
+      }).catch(function(error) {
+        console.log('an error occurred...' + JSON.stringify(error));
+      });
+    };
 
     $scope.previewReport = function(schoolId) {
       // Release preview release popover-enable
@@ -276,7 +281,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
               'Authorization': 'JWT ' + token
             }
           }).then(function(resp_prev_report) {
-            $scope.report_old = resp_prev_report.data;
             console.log('Loaded latest report of ' + resp_prev_report.data.school_name);
 
             $scope.lastReleasedDate = resp_prev_report.data.date_created;
@@ -519,8 +523,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
             }
 
             $scope.catBeforeEdit = angular.toJson($scope.categories);
-            // console.log('$scope.catBeforeEdit: ');
-            // console.log($scope.catBeforeEdit);
 
             $scope.$watch('report', function(newV, oldV) {
               console.log(angular.toJson(newV));
