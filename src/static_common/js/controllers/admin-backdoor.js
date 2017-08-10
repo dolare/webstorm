@@ -6,6 +6,10 @@ angular.module('myApp').controller('AdminBackdoorController', ['$timeout', 'auth
 
     $scope.itemsByPage = 25;
 
+//     $state.go('admin-backdoor-reader', {
+//  'type'   : 'enhancement',
+//  'object_id' : 'njkandla'
+// });
 
 
     $scope.whoops_pipe = function(tableState){
