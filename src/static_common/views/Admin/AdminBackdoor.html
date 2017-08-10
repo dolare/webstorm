@@ -88,7 +88,8 @@
                            {{row.created | amUtc | amDateFormat:'MMM DD, YYYY, HH:mm'}}
                        </td>
                                         <td class="text-right" style="width:40px">
-                                           <button>View</button>
+                                           
+                                           <a type="button" data-ui-sref="admin-backdoor-reader({type: 'whoops', object_id: row.object_id})" target="_blank" class="btn btn-minw btn-rounded btn-info" type="button">View</a>
 
 
                                         </td>
@@ -171,11 +172,13 @@
                     
                         <td>
                                 {{row.customer_program.split('|')[0]}} ({{row.customer_program.split('|')[1]}} )
+
                         </td>
 
                         
                         <td class="text-center">
                             {{row.customer}}
+
                         </td>
                       
                         <td class="text-center">
@@ -184,12 +187,15 @@
                            {{row.created | amUtc | amDateFormat:'MMM DD, YYYY, HH:mm'}}
                        </td>
                                         <td class="text-right" style="width:40px">
-                                           <button>View</button>
+
+                                           <a type="button" data-ui-sref="admin-backdoor-reader({type: 'enhancement', object_id: row.object_id}) " target="_blank" class="btn btn-minw btn-rounded btn-info" type="button">View</a>
+                                          
+                                          
+                                          
 
 
                                         </td>
                                     </tr>
-
 
 
                                 </tbody>
