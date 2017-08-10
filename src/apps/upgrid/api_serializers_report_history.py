@@ -94,13 +94,13 @@ class enhancementReportHistorySerializer(serializers.ModelSerializer):
 	          'existing_report', 'cache_report', 'initial_diff',
 	          'prev_diff', 'update_diff', 'most_recent','last_edit_time','object_id')
 
-
 	def get_customer(self,obj):
 		try:
-			print(obj.customer)
+			print(obj.customer.email)
+			return obj.customer.email
 		except Exception as e:
 			print(e)
-			return obj.customer.email
+			return None
 
 	def get_customer_program(self,obj):
 		try:

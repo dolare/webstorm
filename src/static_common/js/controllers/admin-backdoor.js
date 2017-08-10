@@ -19,13 +19,14 @@ angular.module('myApp').controller('AdminBackdoorController', ['$timeout', 'auth
       var pagination = tableState.pagination;
       var start = pagination.start || 0;
       var number = pagination.number || 25;
+      var api_url = "/api/upgrid/history/whoops_report/"
         //ajaxService.getResult(start, number, tableState, token, "&cs=No").then(function (result) {
 
 
           var avatar = avatarService.getClientId() ? "&cid="+ avatarService.getClientId(): "";
           console.log("avatar = "+avatar);
 
-        ajaxService.backDoor(start, number, tableState, token, avatar).then(function (result) {
+        ajaxService.backDoor(api_url, start, number, tableState, token, avatar).then(function (result) {
           console.log("AJAX service called !");
 
           $scope.displayeddata = result.data;
@@ -37,10 +38,45 @@ angular.module('myApp').controller('AdminBackdoorController', ['$timeout', 'auth
 
           tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
 
-          //total num of programs
-          $scope.totalnum = result.data.count;
 
-        
+          App.blocks('#loadingtable', 'state_normal');
+
+
+
+        });
+
+    }
+
+
+
+    $scope.enhancement_pipe = function(tableState){
+      $scope.displayeddata_enhancement = [];
+      // $scope.isLoading = true;
+      console.log("~~~tableState= "+JSON.stringify(tableState));
+      App.blocks('#loadingtable', 'state_loading');
+
+
+
+      var pagination = tableState.pagination;
+      var start = pagination.start || 0;
+      var number = pagination.number || 25;
+      var api_url = "/api/upgrid/history/enhancement_report/"
+
+          var avatar = avatarService.getClientId() ? "&cid="+ avatarService.getClientId(): "";
+          console.log("avatar = "+avatar);
+
+        ajaxService.backDoor(api_url, start, number, tableState, token, avatar).then(function (result) {
+          console.log("AJAX service called !");
+
+          $scope.displayeddata_enhancement = result.data;
+
+          console.log("%%%result.raw="+JSON.stringify(result.raw));
+          console.log("%%%result.data="+JSON.stringify(result.data));
+
+          $scope.enhancement_data = $scope.displayeddata_enhancement;
+
+          tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
+
 
           App.blocks('#loadingtable', 'state_normal');
 
