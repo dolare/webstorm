@@ -3,18 +3,30 @@ from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCo
     NonDegreeCourseURL, NonDegreeAMPReport
 from webtracking.models import WebPage, WebPageScan
 
-from ..models import NonDegreeReport, NonDegreeSharedReport
+from ..models import NonDegreeReport, NonDegreeSharedReport, UniversityCustomer
+
+
+class UniversityCustomerSerializer(ModelSerializer):
+
+    class Meta:
+        model = UniversityCustomer
+        fields = ('id', 'username', 'email')
 
 
 class UniversitySchoolListSerializer(ModelSerializer):
     university = SerializerMethodField()
+    non_degree_client = SerializerMethodField()
 
     class Meta:
         model = UniversitySchool
-        fields = ('object_id', 'ceeb', 'school', 'university',)
+        fields = ('object_id', 'ceeb', 'school', 'university', 'non_degree_client')
 
     def get_university(self, obj):
         return obj.university_foreign_key.name
+
+    def get_non_degree_client(self, obj):
+        university_customers = obj.non_degree_user.all()
+        return UniversityCustomerSerializer(university_customers, many=True).data
 
 
 class UniversitySchoolDetailSerializer(ModelSerializer):
@@ -23,7 +35,7 @@ class UniversitySchoolDetailSerializer(ModelSerializer):
 
     class Meta:
         model = UniversitySchool
-        fields = ('object_id', 'ceeb', 'school', 'university', 'categories')
+        fields = ('object_id', 'ceeb', 'school', 'university', 'categories',)
 
     def get_university(self, obj):
         return obj.university_foreign_key.name
@@ -31,6 +43,18 @@ class UniversitySchoolDetailSerializer(ModelSerializer):
     def get_categories(self, obj):
         categories = NonDegreeCategory.objects.filter(university_school=obj).filter(active=True)
         return CategorySerializer(categories, many=True).data
+
+
+class UniversitySchoolClientSerializer(ModelSerializer):
+    non_degree_client = SerializerMethodField()
+
+    class Meta:
+        model = UniversitySchool
+        fields = ('object_id', 'ceeb', 'school', 'non_degree_client')
+
+    def get_non_degree_client(self, obj):
+        university_customers = obj.non_degree_user.all()
+        return UniversityCustomerSerializer(university_customers, many=True).data
 
 
 class ReportListSerializer(ModelSerializer):

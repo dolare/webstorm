@@ -21,7 +21,7 @@ from webtracking.models import WebPage, WebPageScan
 from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer, CategorySerializer, \
     ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer, SharedReportSerializer, \
     CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer, AMPReportDetailSerializer, \
-    ReportUpdateSerializer
+    ReportUpdateSerializer, UniversitySchoolClientSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport
@@ -62,6 +62,19 @@ class UniversitySchoolDetailAPI(PermissionMixin, RetrieveAPIView):
     """
     lookup_field = 'object_id'
     serializer_class = UniversitySchoolDetailSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        if self.is_manager():
+            return UniversitySchool.objects.all()
+        return UniversitySchool.objects.none()
+
+
+class UniversitySchoolClientAPI(PermissionMixin, RetrieveAPIView):
+    """
+    Retrieve school detail API
+    """
+    lookup_field = 'object_id'
+    serializer_class = UniversitySchoolClientSerializer
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
