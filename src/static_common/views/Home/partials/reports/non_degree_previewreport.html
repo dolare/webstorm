@@ -308,7 +308,7 @@
                     <div style="
                       font-weight: 600;
                       font-size: 16px;
-                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="">{{categories_compared.length - _.where(categories_compared, {updated: 2}).length}}</span></div>
+                      border-bottom: 1px dashed #ccc; padding-bottom:10px" class="push-15 text-center">CATEGORY OFFERINGS: <span class="">{{cat_offer}}</span></div>
                     <div class="row items-push text-center">
                       <div class="col-xs-6 border-r">
                         <div class="text-muted animated fadeIn" style="
@@ -341,48 +341,70 @@
                   <!-- category header -->
                   <div style="
                     border: 1px solid #ddd;
-                    padding: 35px 15px 18px 15px;
+                    padding: 0px 0 18px 0;
                     margin-right: 1px;
-                    border-top: 5px solid #70b9eb;
+                    border-top: 6px solid #70b9eb;
                     ">
-                    <p class="h3 font-w500 push-5 text-primary" style="
+
+                    <div class="text-right font-w400 text-info bg-info-light" style="
+                        margin-bottom: 14px;
+                        font-size:11px;
+                       
+                        padding:0 15px 1px 15px;
+                    ">{{school}} ({{university}})</div>
+
+                    <div style="padding:0 15px" class="push-25-t">
+                    <p class="h3 font-w500 push-10 text-muted" style="
                       display: inline-block;
-                      font-size: 28px;
-                      ">{{$index+1}} - CATEGORY</p>
+                      font-size: 17px;
+                      font-style: italic;
+                      ">Category:</p>
 
 
-                    <div class="categoryheader" ng-class="{add: c.updated===1, rm: c.updated===2}">
-                      {{c.name}}
+                    <div class="categoryheader" ng-class="{add: c.updated===1, rm: c.updated===2}" style="display: table;width: 100%;">
+                      <span style="display: table-cell;font-size: 21px;width:45%;">{{c.name}}&nbsp;<i class="fa fa-exclamation-circle font-s16 text-city" aria-hidden="true" data-popover-title="HISTORY ({{lastReleasedDate | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
+                                                data-uib-popover="{{c.updated}}"
+
+                                                ng-if="c.updated&&c.updated!==1&&c.updated!==2"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover-category"></i></span>
                       <div style="
-                        display: inline-block;
+                        display: table-cell;
+                        text-align: right;
                         padding: 5px 0px;
-                        font-size: 15px;
-                        " class="pull-right"><span style="
-                        font-weight: 600;
+                        font-size: 13px;
+                        "><span style="
+                        font-weight: 400;
                         ">COURSE OFFERINGS: &nbsp;<span class="badge badge-primary" style="
                         vertical-align: top;
                         margin-top: 1px;
-                        ">{{_.difference(c.courses, _.filter(c.courses, {updated: 2})).length}}</span></span>&nbsp;|&nbsp;&nbsp;<span class="text-muted">Addition(s):&nbsp; 
+                        ">{{c.course_offer}}</span></span>&nbsp;|&nbsp;&nbsp;Addition(s):&nbsp; 
 
-                        <span ng-if="_.filter(c.courses, {updated: 1}).length!==0" class="badge badge-success" style="
+                        <span ng-if="c.course_add!==0" class="badge badge-success" style="
                           font-size: 12px;
                           vertical-align: top;
                           margin-top: 1px;
-                          ">+ {{_.filter(c.courses, {updated: 1}).length}}</span>
-                        <span ng-if="_.filter(c.courses, {updated: 1}).length===0" class="badge badge-default" style="
+                          ">+ {{c.course_add}}</span>
+                        <span ng-if="c.course_add===0" class="badge badge-default" style="
                           vertical-align: top;
                           margin-top: 1px;
                           ">-&nbsp; -</span> |&nbsp;&nbsp;Removal(s): &nbsp;
-                        <span ng-if="_.filter(c.courses, {updated: 2}).length !== 0" class="badge badge-danger" style="
+                        <span ng-if="c.course_rm!== 0" class="badge badge-danger" style="
                           vertical-align: top;
                           margin-top: 1px;
-                          ">&nbsp;-&nbsp;{{_.filter(c.courses, {updated: 2}).length}}&nbsp;</span>
-                        <span ng-if="_.filter(c.courses, {updated: 2}).length === 0" class="badge badge-default" style="
+                          ">&nbsp;-&nbsp;{{c.course_rm}}&nbsp;</span>
+
+                        <span ng-if="c.course_rm=== 0" class="badge badge-default" style="
                           vertical-align: top;
                           margin-top: 1px;
-                          ">-&nbsp; -</span></span>
+                          ">-&nbsp; -</span>
+
                       </div>
 
+
+                    </div>
 
                     </div>
                   </div>
@@ -528,8 +550,13 @@
                             <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
 
                             <script type="text/ng-template" id="tuition_note.html">
-
-                              <span>Note: <br><pre>{{course.tuition_note}}</pre></span>
+                              
+                              <div style="text-align: left;">
+                                <div>Note: </div>
+                                <div>
+                                  <li ng-repeat="line in course.tuition_note.split('\n')">{{line}}</li>
+                                </div>
+                              </div>
 
                             </script>
 

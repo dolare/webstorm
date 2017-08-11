@@ -1,16 +1,15 @@
 /*Executive Education Admin controller*/
-
 'use strict';
 
-angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 'orderByFilter', 'ajaxService', 
+angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 'orderByFilter', 'ajaxService',
   function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService, $timeout, executiveService, orderBy, ajaxService) {
 
     // Inject underscore into $scope
-      $scope._ = _;
+    $scope._ = _;
 
     var token = authenticationSvc.getUserInfo().accessToken;
     $scope.itemsByPage = 10;
-    
+
     $scope.emptyExecutiveLabel = 'No records.';
 
     $scope.date = new Date().toISOString();
@@ -124,7 +123,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
             });
           })(s);
-          
+
           // select2 dropdown (archived reports)
           (function(s) {
             $timeout(function() {
@@ -217,118 +216,78 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       // assign the school id of this row to a field under $scope so that the releaseReport function in the popup window could access the current school id.
       $scope.current_school_id = schoolId;
 
-      $q.all({
-        // Get the report list
-        reports: $http({
-          url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=True',
-          method: 'GET',
-          headers: {
-            'Authorization': 'JWT ' + token
-          }
-        }),
-        // Get the current school programs' data
-        preview: $http({
-          url: '/api/upgrid/non_degree/schools/' + schoolId,
-          method: 'GET',
-          headers: {
-            'Authorization': 'JWT ' + token
-          }
-        })
-      }).then(function(response) {
-        var reports = response.reports.data; // Report list
-        var preview = response.preview.data; // Current school data
+      ajaxService.getReleasePreviewData(schoolId, token).then(function(response) {
+        $scope.currentData = response.currentData;
+        $scope.report_last = response.report_last;
+        $scope.report_compared = response.report_compared;
+        $scope.readyToRelease = response.readyToRelease;
+        console.log('Ready? ' + $scope.readyToRelease);
 
-        console.log('Loaded report list. There are ' + reports.results.length + ' reports');
-        console.log('Loaded current data of ' + preview.school);
-        
-        $scope.school = preview.school;
-        $scope.university = preview.university;
-        $scope.categories = preview.categories;
+        $scope.school = $scope.currentData.school;
+        $scope.university = $scope.currentData.university;
+        $scope.categories = $scope.currentData.categories;
         $scope.logo_url = executiveService.getLogoBySchoolName($scope.school, $scope.university);
 
         $scope.cat_offer = $scope.categories.length;
         $scope.course_offer = 0;
 
         for (var i = $scope.categories.length - 1; i >= 0; i--) {
-          $scope.categories[i].course_offer = $scope.categories[i].courses.length;
-          $scope.course_offer += $scope.categories[i].course_offer;
+          $scope.course_offer += $scope.categories[i].courses.length;
         }
 
-        // Get the compared data between the preview data(school's current data) and the previous report
+        // Compared categories.
+        $scope.categories_compared = $scope.report_compared.categories;
 
-        // if there is no previous report 
-        if (reports.count == 0) {
+        // The update sign showed in report overview, excluding cat_add, cat_rm, course_add and course_rm.
+        if (!$scope.readyToRelease) {
           $scope.hasUpdates = false;
-          $scope.categories_compared = preview.categories;
-          $scope.lastReleasedDate = null;
-          $scope.cat_add = 0;
-          $scope.cat_rm = 0;
-          $scope.course_add = 0;
-          $scope.course_rm = 0;
-
-          console.log('No previous report.');
-          $scope.readyToRelease = true;
-          console.log('Ready? ' + $scope.readyToRelease);
-
-          App.blocks('#previewReport_loading', 'state_normal');
+        } else {
+          $scope.hasUpdates = _.difference(_.pluck($scope.categories_compared, 'updated'), [1, 2, undefined]).length || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'name_old'), [undefined]).length > 0 || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'url_old'), [undefined]).length > 0 || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'course_dates_old'), [undefined]).length > 0 || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'currency_old'), [undefined]).length > 0 || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'type_old'), [undefined]).length > 0 || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'tuition_number_old'), [undefined]).length > 0;
         }
-        // else there would be a previous report, and get that report
-        else
-          $http({
-            url: '/api/upgrid/non_degree/reports/' + reports.results[0].object_id,
-            method: 'GET',
-            headers: {
-              'Authorization': 'JWT ' + token
-            }
-          }).then(function(resp_prev_report) {
-            console.log('Loaded latest report of ' + resp_prev_report.data.school_name);
 
-            $scope.lastReleasedDate = resp_prev_report.data.date_created;
+        $scope.lastReleasedDate = $scope.report_last.date_created ? $scope.report_last.date_created : null;
 
-            $scope.categories_compared = executiveService.updatedReport(resp_prev_report.data, preview).categories;
-            console.log('Got compared results!');
-            console.log('old categories: ');
-            console.log(angular.toJson(resp_prev_report.data.categories));
-            console.log('current categories: ');
-            console.log(angular.toJson($scope.categories));
-            console.log('compared categories: ');
-            console.log(angular.toJson($scope.categories_compared));
 
-            if (angular.toJson($scope.categories_compared) != angular.toJson($scope.categories)) {
-              console.log('Update is found.');
-              $scope.readyToRelease = true;
-              console.log('Ready? ' + $scope.readyToRelease);
-              $scope.hasUpdates = _.difference( _.pluck($scope.categories_compared, 'updated'), [1, 2, undefined]).length || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'name_old'), [undefined]).length > 0 || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'url_old'), [undefined]).length>0 ||_.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'course_dates_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'currency_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'type_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck($scope.categories_compared, 'courses')), 'tuition_number_old'), [undefined]).length>0;
-            }
-            else {
-              console.log('No update.');
-              $scope.readyToRelease = false;
-              console.log('Ready? ' + $scope.readyToRelease);
-              $scope.hasUpdates = false;
-            }
-            $scope.cat_add = _.filter($scope.categories_compared, {updated: 1}).length;
-            $scope.cat_rm = _.filter($scope.categories_compared, {updated: 2}).length;
 
-            $scope.course_add = 0;
-            $scope.course_rm = 0;
+        for (var i = $scope.categories_compared.length - 1; i >= 0; i--) {
+          $scope.categories_compared[i].course_offer = _.difference($scope.categories_compared[i].courses, _.filter($scope.categories_compared[i].courses, {
+            updated: 2
+          })).length;
+        }
 
-            for (let i = $scope.categories_compared.length - 1; i >= 0; i--) {
-              $scope.course_add += _.filter($scope.categories_compared[i].courses, {updated: 1}).length;
-              $scope.course_rm += _.filter($scope.categories_compared[i].courses, {updated: 2}).length;
-            }
-            App.blocks('#previewReport_loading', 'state_normal');
-          });
+
+        $scope.cat_add = _.filter($scope.categories_compared, {
+          updated: 1
+        }).length;
+        $scope.cat_rm = _.filter($scope.categories_compared, {
+          updated: 2
+        }).length;
+
+        $scope.course_add = 0;
+        $scope.course_rm = 0;
+
+        for (let i = $scope.categories_compared.length - 1; i >= 0; i--) {
+          $scope.categories_compared[i].course_add = _.filter($scope.categories_compared[i].courses, {
+            updated: 1
+          }).length;
+          $scope.categories_compared[i].course_rm = _.filter($scope.categories_compared[i].courses, {
+            updated: 2
+          }).length;
+          $scope.course_add += $scope.categories_compared[i].course_add;
+          $scope.course_rm += $scope.categories_compared[i].course_rm;
+        }
+        App.blocks('#previewReport_loading', 'state_normal');
       }).catch(function(error) {
         console.log('an error occurred...' + JSON.stringify(error));
       });
+
     };
 
     $scope.releaseConfirm = function() {
       if ($scope.readyToRelease == true) {
         $scope.releaseConfirmEnable = true;
         $scope.releaseConfirmIsOpen = true;
-      }
-      else {
+      } else {
         console.log('No update. Cannot release!');
         $.notify({
           // options
@@ -397,8 +356,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         }).catch(function(error) {
           console.log('an error occurred...' + JSON.stringify(error));
         });
-      }
-      else {
+      } else {
         console.log('Warning: duplicate clicks on "Yes".');
         $.notify({
           // options
@@ -414,7 +372,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
           z_index: 1999,
         });
       }
-      
+
     };
 
     $scope.viewReport = function(reportId) {
@@ -536,37 +494,37 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
     $scope.saveReport = function() {
       // console.log('Current categories: ');
       // console.log(angular.toJson($scope.categories));
-      if ($scope.catBeforeEdit != angular.toJson($scope.categories)) 
+      if ($scope.catBeforeEdit != angular.toJson($scope.categories))
         $http({
-            url: '/api/upgrid/non_degree/reports/' + $scope.current_report_id,
-            method: 'PATCH',
-            data: {
-              categories: $scope.categories
+          url: '/api/upgrid/non_degree/reports/' + $scope.current_report_id,
+          method: 'PATCH',
+          data: {
+            categories: $scope.categories
+          },
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+        }).then(function(resp_patch) {
+          console.log('School: ' + $scope.school + ', report # ' + $scope.current_report_id + ', modified.');
+          // Update $scope.catBeforeEdit
+          $scope.catBeforeEdit = angular.toJson($scope.categories);
+          $.notify({
+            // options
+            icon: 'fa fa-warning',
+            message: 'Changes have been saved!'
+          }, {
+            // settings
+            type: 'warning',
+            placement: {
+              from: "top",
+              align: "center"
             },
-            headers: {
-              'Authorization': 'JWT ' + token
-            }
-          }).then(function(resp_patch) {
-            console.log('School: ' + $scope.school + ', report # ' + $scope.current_report_id + ', modified.');
-            // Update $scope.catBeforeEdit
-            $scope.catBeforeEdit = angular.toJson($scope.categories);
-            $.notify({
-              // options
-              icon: 'fa fa-warning',
-              message: 'Changes have been saved!'
-            }, {
-              // settings
-              type: 'warning',
-              placement: {
-                from: "top",
-                align: "center"
-              },
-              z_index: 1999,
-            });
-          }).catch(function(error) {
-            console.log('an error occurred...' + JSON.stringify(error));
+            z_index: 1999,
           });
-      
+        }).catch(function(error) {
+          console.log('an error occurred...' + JSON.stringify(error));
+        });
+
       else
         $.notify({
           // options
@@ -601,64 +559,64 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         });
       } else
         $http({
-            url: '/api/upgrid/non_degree/reports/' + reportId,
-            method: 'PATCH',
-            data: {
-              active: 'False'
+          url: '/api/upgrid/non_degree/reports/' + reportId,
+          method: 'PATCH',
+          data: {
+            active: 'False'
+          },
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+        }).then(function(resp_patch) {
+          console.log('School: ' + schoolId + ', report # ' + reportId + ', archived.');
+          $.notify({
+            // options
+            icon: 'fa fa-warning',
+            message: 'Report is successfully archived.'
+          }, {
+            // settings
+            type: 'warning',
+            placement: {
+              from: "top",
+              align: "center"
             },
-            headers: {
-              'Authorization': 'JWT ' + token
-            }
-          }).then(function(resp_patch) {
-            console.log('School: ' + schoolId + ', report # ' + reportId + ', archived.');
-            $.notify({
-              // options
-              icon: 'fa fa-warning',
-              message: 'Report is successfully archived.'
-            }, {
-              // settings
-              type: 'warning',
-              placement: {
-                from: "top",
-                align: "center"
-              },
-              z_index: 1999,
-            });
-            // Update dropdown list display
-            $timeout(function(){
-              // $("#js-data-active-" + schoolId).empty().trigger('change');
-              // Update the active list.
-              $.ajax({
-                url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=True',
-                method: 'GET',
-                headers: {
-                  'Authorization': 'JWT ' + token
-                },
-                dataType: 'json'
-              }).then(function(data) {
-                if (data.results.length > 0)
-                  $("#js-data-active-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-                else
-                  $("#js-data-active-" + schoolId).empty().trigger('change');
-              });
-              // Update the archived list.
-              $.ajax({
-                url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=False',
-                method: 'GET',
-                headers: {
-                  'Authorization': 'JWT ' + token
-                },
-                dataType: 'json'
-              }).then(function(data) {
-                if (data.results.length > 0)
-                  $("#js-data-inactive-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-                else
-                  $("#js-data-inactive-" + schoolId).empty().trigger('change');
-              });
-            });
-          }).catch(function(error) {
-            console.log('an error occurred...' + JSON.stringify(error));
+            z_index: 1999,
           });
+          // Update dropdown list display
+          $timeout(function() {
+            // $("#js-data-active-" + schoolId).empty().trigger('change');
+            // Update the active list.
+            $.ajax({
+              url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=True',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              },
+              dataType: 'json'
+            }).then(function(data) {
+              if (data.results.length > 0)
+                $("#js-data-active-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+              else
+                $("#js-data-active-" + schoolId).empty().trigger('change');
+            });
+            // Update the archived list.
+            $.ajax({
+              url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=False',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              },
+              dataType: 'json'
+            }).then(function(data) {
+              if (data.results.length > 0)
+                $("#js-data-inactive-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+              else
+                $("#js-data-inactive-" + schoolId).empty().trigger('change');
+            });
+          });
+        }).catch(function(error) {
+          console.log('an error occurred...' + JSON.stringify(error));
+        });
     };
 
     $scope.unarchiveReport = function(reportId, schoolId) {
@@ -679,64 +637,64 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         });
       } else
         $http({
-            url: '/api/upgrid/non_degree/reports/' + reportId,
-            method: 'PATCH',
-            data: {
-              active: 'True'
+          url: '/api/upgrid/non_degree/reports/' + reportId,
+          method: 'PATCH',
+          data: {
+            active: 'True'
+          },
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+        }).then(function(resp_patch) {
+          console.log('School: ' + schoolId + ', report # ' + reportId + ', unarchived.');
+          $.notify({
+            // options
+            icon: 'fa fa-warning',
+            message: 'Report is successfully unarchived.'
+          }, {
+            // settings
+            type: 'warning',
+            placement: {
+              from: "top",
+              align: "center"
             },
-            headers: {
-              'Authorization': 'JWT ' + token
-            }
-          }).then(function(resp_patch) {
-            console.log('School: ' + schoolId + ', report # ' + reportId + ', unarchived.');
-            $.notify({
-              // options
-              icon: 'fa fa-warning',
-              message: 'Report is successfully unarchived.'
-            }, {
-              // settings
-              type: 'warning',
-              placement: {
-                from: "top",
-                align: "center"
-              },
-              z_index: 1999,
-            });
-            // Update dropdown list display
-            $timeout(function(){
-              // $("#js-data-inactive-" + schoolId).empty().trigger('change');
-              // Update the active list.
-              $.ajax({
-                url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=True',
-                method: 'GET',
-                headers: {
-                  'Authorization': 'JWT ' + token
-                },
-                dataType: 'json'
-              }).then(function(data) {
-                if (data.results.length > 0)
-                  $("#js-data-active-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-                else
-                  $("#js-data-active-" + schoolId).empty().trigger('change');
-              });
-              // Update the archived list.
-              $.ajax({
-                url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=False',
-                method: 'GET',
-                headers: {
-                  'Authorization': 'JWT ' + token
-                },
-                dataType: 'json'
-              }).then(function(data) {
-                if (data.results.length > 0)
-                  $("#js-data-inactive-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
-                else
-                  $("#js-data-inactive-" + schoolId).empty().trigger('change');
-              });
-            });
-          }).catch(function(error) {
-            console.log('an error occurred...' + JSON.stringify(error));
+            z_index: 1999,
           });
+          // Update dropdown list display
+          $timeout(function() {
+            // $("#js-data-inactive-" + schoolId).empty().trigger('change');
+            // Update the active list.
+            $.ajax({
+              url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=True',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              },
+              dataType: 'json'
+            }).then(function(data) {
+              if (data.results.length > 0)
+                $("#js-data-active-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+              else
+                $("#js-data-active-" + schoolId).empty().trigger('change');
+            });
+            // Update the archived list.
+            $.ajax({
+              url: '/api/upgrid/non_degree/reports?school=' + schoolId + '&active=False',
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              },
+              dataType: 'json'
+            }).then(function(data) {
+              if (data.results.length > 0)
+                $("#js-data-inactive-" + schoolId).append('<option selected value=' + data.results[0].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+              else
+                $("#js-data-inactive-" + schoolId).empty().trigger('change');
+            });
+          });
+        }).catch(function(error) {
+          console.log('an error occurred...' + JSON.stringify(error));
+        });
     };
 
 

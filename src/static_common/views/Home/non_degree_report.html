@@ -592,7 +592,12 @@
 
                             <script type="text/ng-template" id="tuition_note.html">
 
-                              <span>Note: <br><pre>{{course.tuition_note}}</pre></span>
+                              <div style="text-align: left;">
+                                <div>Note: </div>
+                                <div>
+                                  <li ng-repeat="line in course.tuition_note.split('\n')">{{line}}</li>
+                                </div>
+                              </div>
 
                             </script>
 
