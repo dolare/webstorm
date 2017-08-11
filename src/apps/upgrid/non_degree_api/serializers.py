@@ -10,7 +10,7 @@ class UniversityCustomerSerializer(ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('id', 'username', 'email')
+        fields = ('id', 'username', 'email', 'contact_name',)
 
 
 class UniversitySchoolListSerializer(ModelSerializer):
