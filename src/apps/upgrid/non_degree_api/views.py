@@ -22,10 +22,10 @@ from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer,
     ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer, SharedReportSerializer, \
     CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer, AMPReportDetailSerializer, \
     ReportUpdateSerializer, UniversitySchoolClientSerializer, UniversitySchoolCategorySerializer, \
-    UniversitySchoolCategoryCourseSerializer
+    CourseSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter, \
-    UniversitySchoolCategoryFilter, UniversitySchoolCategoryCourseFilter
+    UniversitySchoolCategoryFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport
 
 
@@ -71,12 +71,10 @@ class UniversitySchoolCategoryAPI(PermissionMixin, ListModelMixin, GenericAPIVie
     ordering = ('name', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
-        if self.is_manager():
-            non_degree_categories = NonDegreeCategory.objects.filter(university_school__object_id=self.school_id)
-        else:
-            non_degree_categories = NonDegreeCategory.objects.filter(university_school__object_id=self.school_id)\
-                                                     .filter(university_school__non_degree_user=self.request.user)
-        return non_degree_categories
+        categories = NonDegreeCategory.objects.filter(university_school__object_id=self.school_id)
+        if not self.is_manager():
+            categories = categories.filter(university_school__non_degree_user=self.request.user)
+        return categories
 
     def get(self, request, school_id, *args, **kwargs):
         self.school_id = school_id
@@ -88,22 +86,20 @@ class UniversitySchoolCategoryCourseAPI(PermissionMixin, ListModelMixin, Generic
     Get list of user university school courses API
     """
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    serializer_class = UniversitySchoolCategoryCourseSerializer
-    filter_class = UniversitySchoolCategoryCourseFilter
+    serializer_class = CourseSerializer
+    filter_class = CourseFilter
 
     search_fields = ('name', )
     ordering_fields = ('name', )
     ordering = ('name', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
-        if self.is_manager():
-            non_degree_courses = NonDegreeCourse.objects.filter(university_school__object_id=self.school_id)\
-                .filter(category__object_id=self.category_id).dictinct()
-        else:
-            non_degree_courses = NonDegreeCourse.objects.filter(university_school__non_degree_user=self.request.user)\
-                                                        .filter(university_school__object_id=self.school_id)\
-                                                        .filter(category__object_id=self.category_id).dictinct()
-        return non_degree_courses
+        courses = NonDegreeCourse.objects.filter(category__university_school__object_id=self.school_id) \
+                                         .filter(category__object_id=self.category_id)\
+                                         .filter(active=True).distinct()
+        if not self.is_manager():
+            courses = courses.filter(university_school__non_degree_user=self.request.user)
+        return courses
 
     def get(self, request, school_id, category_id, *args, **kwargs):
         self.school_id = school_id

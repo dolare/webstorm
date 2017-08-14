@@ -60,10 +60,3 @@ class UniversitySchoolCategoryFilter(FilterSet):
     class Meta:
         model = NonDegreeCategory
         fields = ['active', ]
-
-
-class UniversitySchoolCategoryCourseFilter(FilterSet):
-
-    class Meta:
-        model = NonDegreeCategory
-        fields = ['active', ]
