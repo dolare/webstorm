@@ -1,7 +1,10 @@
 import django_filters
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.filters import FilterSet
 
-from .models import UniversityCustomer, ClientAndProgramRelation
+from .models import UniversityCustomer, ClientAndProgramRelation, CustomerFeature, CustomerFeatureMapping
+NON_DEGREE_FEATURE = 'non-degree'
+AMP_FEATURE = 'AMP'
 
 
 class UniversityCustomerFilter(FilterSet):
@@ -22,9 +25,13 @@ class UniversityCustomerFilter(FilterSet):
         return queryset.filter(account_type='sub')
 
     def is_non_degree_user_filter(self, queryset, name, value):
+        try:
+            feature = CustomerFeature.objects.get(name=NON_DEGREE_FEATURE)
+        except ObjectDoesNotExist:
+            return queryset
         if value is True:
-            return queryset.exclude(non_degree_schools=None)
-        return queryset.filter(non_degree_schools=None)
+            return queryset.filter(customerfeaturemapping__feature=feature)
+        return queryset.exclude(customerfeaturemapping__feature=feature)
 
 
 class ClientAndProgramRelationFilter(FilterSet):
