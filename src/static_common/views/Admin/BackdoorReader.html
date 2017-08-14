@@ -1,6 +1,134 @@
-{{type}}<br>
-{{object_id}}
 
-<br>
 
-details: {{report_details}}
+<div>
+	
+<!-- <pre id=1><code class="language-javascript">function hello(name){
+    alert('Hello, '+name);
+}</code></pre>
+    <pre id=2><code class="language-javascript" data-linenumber>function hello(name){
+    alert('Hello, '+name);
+}</code></pre>
+    <pre id=3><code class="language-css" data-linenumber=1>p { color: red }</code></pre>
+    <pre id=4><code class="language-json" data-linenumber=40>{
+"name":"John",
+"age":30,
+"cars":[ "Ford", "BMW", "Fiat" ]
+}</code></pre> -->
+
+
+<div class="content" style="padding-top: 0;">
+    <h2 class="content-heading text-uppercase">customer<!--   &nbsp;&nbsp;|&nbsp;&nbsp; <button class="btn btn-xs text-uppercase btn-success" type="button">save</button> --></h2>
+</div>
+
+<div class="content content-full bg-white"> 
+    <!-- <pre class="pre-sh"><code class="json" contentEditable="true" ng-model="edit" ng-bind-html="report_details.customer | json"></code></pre> -->
+    <pre class="pre-sh"><code class="json" ng-bind-html="report_details.customer | json" ng-show="show_code"></code></pre>
+</div>
+
+<!--  -->
+
+<div class="content" style="padding-top: 0;">
+    <h2 class="content-heading text-uppercase">most_recent</h2>
+</div>
+
+<div class="content content-full bg-white">
+    <pre class="pre-sh"><code class="json" ng-bind-html = "report_details.most_recent | json" ng-show="show_code"></code></pre>
+</div>
+
+<!--  -->
+
+<div class="content" style="padding-top: 0;">
+    <h2 class="content-heading text-uppercase">created</h2>
+</div>
+
+<div class="content content-full bg-white">
+    <pre class="pre-sh"><code class="json" ng-bind-html = "report_details.created | json" ng-show="show_code"></code></pre>
+</div>
+
+<!--  -->
+
+<div class="content" style="padding-top: 0;">
+    <h2 class="content-heading text-uppercase">last_edit_time</h2>
+</div>
+
+<div class="content content-full bg-white">
+    <pre class="pre-sh"><code class="json" ng-bind-html = "report_details.last_edit_time | json" ng-show="show_code"></code></pre>
+</div>
+
+<!--  -->
+
+
+
+<div class="content" style="padding-top: 0;">
+    <h2 class="content-heading text-uppercase">customer_program</h2>
+</div>
+
+<div class="content content-full bg-white">
+    <pre class="pre-sh"><code class="json" ng-bind-html = "report_details.customer_program | json" ng-show="show_code"></code></pre>
+</div>
+
+<!--  -->
+
+<div class="content" style="padding-top: 0;">
+    <h2 class="content-heading text-uppercase">existing_report</h2>
+</div>
+
+<div class="content content-full bg-white">
+    <pre class="pre-sh"><code class="json" ng-bind-html = "report_details.existing_report | json" ng-show="show_code"></code></pre>
+</div>
+
+<!--  -->
+
+
+<div class="content" style="padding-top: 0;">
+    <h2 class="content-heading text-uppercase">cache_report</h2>
+</div>
+
+<div class="content content-full bg-white">
+    <pre class="pre-sh"><code class="json" ng-bind-html = "report_details.cache_report | json" ng-show="show_code"></code></pre>
+</div>
+
+<!--  -->
+
+
+<div class="content" style="padding-top: 0;">
+    <h2 class="content-heading text-uppercase">initial_diff</h2>
+</div>
+
+<div class="content content-full bg-white">
+    <pre class="pre-sh"><code class="json" ng-bind-html = "report_details.initial_diff | json" ng-show="show_code"></code></pre>
+</div>
+
+<!--  -->
+
+<div class="content" style="padding-top: 0;">
+    <h2 class="content-heading text-uppercase">prev_diff</h2>
+</div>
+
+<div class="content content-full bg-white">
+    <pre class="pre-sh"><code class="json" ng-bind-html = "report_details.prev_diff | json" ng-show="show_code"></code></pre>
+</div>
+
+<!--  -->
+
+<div class="content" style="padding-top: 0;">
+    <h2 class="content-heading text-uppercase">update_diff</h2>
+</div>
+
+<div class="content content-full bg-white">
+    <pre class="pre-sh"><code class="json" ng-bind-html = "report_details.update_diff | json" ng-show="show_code"></code></pre>
+</div>
+
+<!--  -->
+
+
+
+
+</div>
+<!-- 
+
+<div ng-if="type==='enhancement'">
+	{{report_details}}
+
+
+</div> -->

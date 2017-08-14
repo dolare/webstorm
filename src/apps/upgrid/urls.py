@@ -193,7 +193,7 @@ urlpatterns=[
 
     url(r'api/upgrid/history/whoops_report/(?P<client_id>[0-9a-fA-F\-]+)/$', whoopsReportHistory.as_view()),
 
-    url(r'api/upgrid/history/ehhancement_report/(?P<client_id>[0-9a-fA-F\-]+)/$', enhancementReportHistory.as_view()),
+    url(r'api/upgrid/history/enhancement_report/(?P<client_id>[0-9a-fA-F\-]+)/$', enhancementReportHistory.as_view()),
 
 ]
 

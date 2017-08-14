@@ -223,6 +223,14 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                                // 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js',
+                                // 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css',
+                                // // 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-okaidia.min.css',
+
+                                'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github-gist.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js',
+
                                 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
