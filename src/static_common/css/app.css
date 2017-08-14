@@ -2115,4 +2115,17 @@ left: 35%;
 }
 
 
+.comparison_height {
+  height: 250px;
+  overflow-y: scroll;
+  padding-top: 15px;
+}
 
+
+.table-striped-info > tbody > tr:nth-of-type(odd) {
+  background-color: #edf6fd;
+}
+
+.css-input-comparison {
+  margin: 4px 0;
+}
