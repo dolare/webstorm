@@ -64,6 +64,13 @@ class UniversitySchoolCategorySerializer(ModelSerializer):
         fields = ('object_id', 'name', )
 
 
+class UniversitySchoolCategoryCourseSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeCategory
+        fields = ('object_id', 'name', )
+
+
 class ReportListSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeReport
