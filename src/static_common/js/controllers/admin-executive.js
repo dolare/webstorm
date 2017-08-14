@@ -35,6 +35,73 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       'null': '$', // The default currency sign is USD
     };
 
+    // select2 dropdown (clients)
+    $timeout(function() {
+      var page_size = 6;
+      $("#js-data-clients").select2({
+        ajax: {
+          url: '/api/upgrid/user/university_customer/?is_non_degree_user=True',
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          },
+          dataType: 'json',
+          data: function(params) {
+            var query = {
+              search: params.term, // search term
+              page: params.page,
+              page_size: page_size
+            }
+
+            return query;
+          },
+          processResults: function(data, params) {
+            // parse the results into the format expected by Select2
+            // since we are using custom formatting functions we do not need to
+            // alter the remote JSON data, except to indicate that infinite
+            // scrolling can be used
+            console.log('Loaded client list');
+            console.log('client data: ');
+            console.log(data);
+            console.log('client params: ');
+            console.log(params);
+            params.page = params.page || 1;
+
+            return {
+              results: data.map(function(item) {
+                return {
+                  id: item.id,
+                  text: item.contact_name,
+                };
+              }),
+              pagination: {
+                more: (params.page * page_size) < data.count
+              }
+            };
+          },
+
+          cache: true
+        },
+        // Permanently hide the search box
+        minimumResultsForSearch: Infinity,
+
+        placeholder: 'Please select a client.'
+
+      });
+
+      // Set default option as all clients.
+      // $("#js-data-clients").append('<option selected value="">All clients</option>').trigger('change');
+
+      $scope.$watch('selectedClient', function(newV, oldV) {
+        console.log(newV);
+      });
+
+    });
+
+    $timeout(function() {
+      $("#js-data-clients").append('<option selected value="">All clients</option>').trigger('change');
+    });
+
     $scope.non_degree_schools = []; // Retrieved schools from the following pipe function.
 
     $scope.callServer = function(tableState) {
@@ -46,8 +113,6 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       var number = tableState.pagination.number || 10; // Number of entries showed per page.
 
       var url = '/api/upgrid/non_degree/schools?is_non_degree=True';
-
-      console.log('About to getPage()!');
 
       ajaxService.getPage(start, number, url, tableState, token).then(function(resp_schools) {
         $scope.non_degree_schools = resp_schools.data.results;
@@ -104,7 +169,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
                 // Permanently hide the search box
                 minimumResultsForSearch: Infinity,
 
-                placeholder: 'There are no reports yet.'
+                placeholder: 'No reports yet.'
 
               });
 
@@ -171,7 +236,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
                 // Permanently hide the search box
                 minimumResultsForSearch: Infinity,
 
-                placeholder: 'There are no reports yet.'
+                placeholder: 'No reports yet.'
 
               });
 
