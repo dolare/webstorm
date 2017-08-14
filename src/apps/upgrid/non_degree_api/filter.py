@@ -53,3 +53,12 @@ class AMPReportListFilter(FilterSet):
     class Meta:
         model = NonDegreeAMPReport
         fields = ['date_created', ]
+
+
+class UniversitySchoolCategoryFilter(FilterSet):
+
+    class Meta:
+        model = NonDegreeCategory
+        fields = ['active', ]
+
+

@@ -21,9 +21,10 @@ from webtracking.models import WebPage, WebPageScan
 from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer, CategorySerializer, \
     ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer, SharedReportSerializer, \
     CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer, AMPReportDetailSerializer, \
-    ReportUpdateSerializer, UniversitySchoolClientSerializer
+    ReportUpdateSerializer, UniversitySchoolClientSerializer, UniversitySchoolCategorySerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
-from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter
+from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter, \
+    UniversitySchoolCategoryFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport
 
 
@@ -54,6 +55,30 @@ class UniversitySchoolListAPI(PermissionMixin, ListAPIView):
         else:
             university_schools = UniversitySchool.objects.filter(non_degree_user=self.request.user)
         return university_schools
+
+
+class UniversitySchoolCategoryAPI(PermissionMixin, ListModelMixin, GenericAPIView):
+    """
+    Get list of user university school categories API
+    """
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    serializer_class = UniversitySchoolCategorySerializer
+    filter_class = UniversitySchoolCategoryFilter
+
+    search_fields = ('name', )
+    ordering_fields = ('name', )
+    ordering = ('name', )      # default ordering
+
+    def get_queryset(self, *args, **kwargs):
+        if self.is_manager():
+            non_degree_categories = NonDegreeCategory.objects.all()
+        else:
+            non_degree_categories = NonDegreeCategory.objects.filter(university_school__non_degree_user=self.request.user)
+        return non_degree_categories
+
+    def get(self, request, school_id, *args, **kwargs):
+        self.school_id = school_id
+        return self.list(request, *args, **kwargs)
 
 
 class UniversitySchoolDetailAPI(PermissionMixin, RetrieveAPIView):

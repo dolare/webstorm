@@ -50,11 +50,18 @@ class UniversitySchoolClientSerializer(ModelSerializer):
 
     class Meta:
         model = UniversitySchool
-        fields = ('object_id', 'ceeb', 'school', 'non_degree_client')
+        fields = ('object_id', 'ceeb', 'school', 'non_degree_client', )
 
     def get_non_degree_client(self, obj):
         university_customers = obj.non_degree_user.all()
         return UniversityCustomerSerializer(university_customers, many=True).data
+
+
+class UniversitySchoolCategorySerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeCategory
+        fields = ('object_id', 'name', )
 
 
 class ReportListSerializer(ModelSerializer):
