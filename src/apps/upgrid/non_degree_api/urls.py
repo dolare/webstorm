@@ -2,13 +2,18 @@ from django.conf.urls import url
 
 from .views import UniversitySchoolListAPI, UniversitySchoolDetailAPI, ReportAPI, ReportCreateListAPI, ReportOverview, \
     ReportOverviewLatest, SharedReportCreateAPI, SharedReportAPI, CourseListAPI, CourseURLListAPI, AMPReportListAPI, \
-    AMPReportDetailAPI
+    AMPReportDetailAPI, UniversitySchoolClientAPI, UniversitySchoolCategoryAPI, UniversitySchoolCategoryCourseAPI
 
 urlpatterns = [
 
     # api
     url(r'^schools$', UniversitySchoolListAPI.as_view(), name="schools"),
     url(r'^schools/(?P<object_id>[0-9a-fA-F\-]+)$', UniversitySchoolDetailAPI.as_view(), name="school_detail"),
+    url(r'^schools/(?P<object_id>[0-9a-fA-F\-]+)/clients$', UniversitySchoolClientAPI.as_view(), name="school_client"),
+    url(r'^schools/(?P<school_id>[0-9a-fA-F\-]+)/categories$', UniversitySchoolCategoryAPI.as_view(),
+        name="school_categories"),
+    url(r'^schools/(?P<school_id>[0-9a-fA-F\-]+)/categories/(?P<category_id>[0-9a-fA-F\-]+)/courses$',
+        UniversitySchoolCategoryCourseAPI.as_view(), name="school_course"),
     url(r'^reports$', ReportCreateListAPI.as_view(), name="reports"),
     url(r'^reports/(?P<object_id>[0-9a-fA-F\-]+)$', ReportAPI.as_view(), name="report"),
     url(r'^reports/overview/(?P<new_report_id>[0-9a-fA-F\-]+)/(?P<old_report_id>[0-9a-fA-F\-]+)$',

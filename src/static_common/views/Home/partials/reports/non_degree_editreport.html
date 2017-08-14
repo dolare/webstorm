@@ -265,6 +265,20 @@
                           <input type="text" ng-model="course.name">
                         </td>
                         <td style="padding: 8px 10px;">
+                          <i class="fa fa-info-circle text-info" 
+                            data-popover-title="Edit location info"                                      
+                            data-uib-popover-template="'edit_location_info.html'"
+
+                            data-popover-placement="top-right" 
+                            data-popover-animation="true"
+                            data-popover-class="report-popover"></i>
+                          <script type="text/ng-template" id="edit_location_info.html">
+      
+                            <div>
+                              <input type="text" ng-model="course.location_info">
+                            </div>
+                            
+                          </script>
                           <input type="text" ng-model="course.type" size="5">
                         </td>
                         <td style="
@@ -278,6 +292,20 @@
                         <td style="
                             padding: 8px 10px;
                             ">
+                          <i class="fa fa-info-circle text-info" 
+                            data-popover-title="Edit tuition note"                                      
+                            data-uib-popover-template="'edit_tuition_note.html'"
+
+                            data-popover-placement="top-right" 
+                            data-popover-animation="true"
+                            data-popover-class="report-popover"></i>
+                          <script type="text/ng-template" id="edit_tuition_note.html">
+      
+                            <div>
+                              <textarea rows="4" cols="30" ng-model="course.tuition_note"></textarea>
+                            </div>
+                            
+                          </script>
                           <span ng-if="course.tuition_number">{{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
                           <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span><br>
                           <input type="text" ng-model="course.currency" size="3">

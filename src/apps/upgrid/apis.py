@@ -47,6 +47,7 @@ from .models import (
 from .api_serializers import *
 from .filter import UniversityCustomerFilter, ClientAndProgramRelationFilter
 import os
+from .non_degree_api.pagination import BasePagination
 
 # used shared report
 import zlib
@@ -574,7 +575,6 @@ class CustomerDetail(APIView):
             return Response(data=serializer.data)
 
 
-
 class UniversityCustomerListAPI(generics.ListAPIView):
     """
     Get list of sub user
@@ -582,6 +582,7 @@ class UniversityCustomerListAPI(generics.ListAPIView):
     """
     filter_backends = (DjangoFilterBackend, )
     serializer_class = SubuserListSerializer
+    pagination_class = BasePagination
     filter_class = UniversityCustomerFilter
 
     def get_queryset(self, *args, **kwargs):
