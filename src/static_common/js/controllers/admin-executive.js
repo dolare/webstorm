@@ -35,76 +35,30 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       'null': '$', // The default currency sign is USD
     };
 
-    // select2 dropdown (clients)
-    $timeout(function() {
-      var page_size = 6;
-      $("#js-data-clients").select2({
-        ajax: {
-          url: '/api/upgrid/user/university_customer/?is_non_degree_user=True',
-          method: 'GET',
-          headers: {
-            'Authorization': 'JWT ' + token
-          },
-          dataType: 'json',
-          data: function(params) {
-            var query = {
-              search: params.term, // search term
-              page: params.page,
-              page_size: page_size
-            }
-
-            return query;
-          },
-          processResults: function(data, params) {
-            // parse the results into the format expected by Select2
-            // since we are using custom formatting functions we do not need to
-            // alter the remote JSON data, except to indicate that infinite
-            // scrolling can be used
-            console.log('Loaded client list');
-            console.log('client data: ');
-            console.log(data);
-            console.log('client params: ');
-            console.log(params);
-            params.page = params.page || 1;
-
-            return {
-              results: data.map(function(item) {
-                return {
-                  id: item.id,
-                  text: item.contact_name,
-                };
-              }),
-              pagination: {
-                more: (params.page * page_size) < data.count
-              }
-            };
-          },
-
-          cache: true
-        },
-        // Permanently hide the search box
-        minimumResultsForSearch: Infinity,
-
-        placeholder: 'Please select a client.'
-
+    $http({
+        url: '/api/upgrid/user/university_customer/?is_non_degree_user=True&page_size=100',
+        method: 'GET',
+        headers: {
+          'Authorization': 'JWT ' + token
+        }
+      })
+      .then(function(resp_clients) {
+        $scope.clients = resp_clients.data.results;
       });
 
-      // Set default option as all clients.
-      // $("#js-data-clients").append('<option selected value="">All clients</option>').trigger('change');
+    $scope.getSchoolsAPIFilters = {};
 
-      $scope.$watch('selectedClient', function(newV, oldV) {
-        console.log(newV);
-      });
-
-    });
-
-    $timeout(function() {
-      $("#js-data-clients").append('<option selected value="">All clients</option>').trigger('change');
-    });
+    $scope.updateSchools = function(clientId) {
+      $scope.getSchoolsAPIFilters.client_id = clientId;
+      var currentTableState = $scope.tableCtrl.tableState();
+      currentTableState.pagination.start = 0;
+      $scope.tableCtrl.pipe(currentTableState);
+    }
 
     $scope.non_degree_schools = []; // Retrieved schools from the following pipe function.
 
-    $scope.callServer = function(tableState) {
+    $scope.callServer = function(tableState, tableCtrl) {
+      $scope.tableCtrl = tableCtrl;
 
       App.blocks('#loadingtable', 'state_loading');
 
@@ -112,9 +66,9 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
       var number = tableState.pagination.number || 10; // Number of entries showed per page.
 
-      var url = '/api/upgrid/non_degree/schools?is_non_degree=True';
+      var url = '/api/upgrid/non_degree/schools?is_non_degree=True&client_id=';
 
-      ajaxService.getPage(start, number, url, tableState, token).then(function(resp_schools) {
+      ajaxService.getPage(start, number, url, tableState, token, $scope.getSchoolsAPIFilters).then(function(resp_schools) {
         $scope.non_degree_schools = resp_schools.data.results;
         tableState.pagination.numberOfPages = resp_schools.numberOfPages; // Set the number of pages so the pagination can update.
         tableState.pagination.totalItemCount = resp_schools.data.count; // This property of tableState.pagination is currently not being used yet.

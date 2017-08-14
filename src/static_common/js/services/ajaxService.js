@@ -108,7 +108,7 @@ angular.module('myApp').factory("ajaxService",
       return deferred.promise;
     }
 
-    function getPage(start, number, url, params, token) {
+    function getPage(start, number, url, params, token, filters) {
       var parsedParams = '';
 
       parsedParams += '&page=' + (Math.ceil(start / number) + 1);
@@ -116,6 +116,11 @@ angular.module('myApp').factory("ajaxService",
       parsedParams += '&ordering=' + (params.sort.reverse ? '-' : '') + (params.sort.predicate ? params.sort.predicate : '');
       parsedParams += '&search=' + ((params.search.hasOwnProperty('predicateObject') && params.search.predicateObject.hasOwnProperty('searchValue')) ? params.search.predicateObject.searchValue : '');
 
+      for (var f in filters) {
+        if (filters[f] != null) {
+          parsedParams += '&' + f + '=' + filters[f];
+        }
+      }
 
       var deferred = $q.defer();
 

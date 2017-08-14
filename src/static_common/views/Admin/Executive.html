@@ -7,8 +7,8 @@
     <div class="block" id="loadingtable">
       <div>
         <span>Filter by clients: </span>
-        <select id="js-data-clients" ng-model="selectedClient">
-          <option></option>
+        <select ng-model="selectedClient" id="non-degree-clients" name="non-degree-clients" ng-options="c.id as c.contact_name for c in clients" ng-change="updateSchools(selectedClient)">
+          <option value="">All clients</option>
         </select>
       </div>
 
