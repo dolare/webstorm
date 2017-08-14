@@ -1,6 +1,6 @@
 from rest_framework import generics, mixins
 from rest_framework import permissions
-from .api_serializers_report_history import (whoopsReportHistorySerializer,enhancementReportHistorySerializer)
+from .api_serializers_report_history import (WhoopsReportHistorySerializer,EnhancementReportHistorySerializer)
 from .pagination import CustomerPageNumberPagination
 from .models import (WhoopsUpdate,EnhancementUpdate,)
 import zlib
@@ -8,11 +8,14 @@ from django.utils import timezone
 from . import dbSerializers as dbLizer
 from json import dumps, loads
 from django.utils.six import BytesIO
+from rest_framework.response import Response
 from django.db.models import Q
+from rest_framework.status import (
+    HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST)
 
 class whoopsReportHistoryList(generics.ListAPIView):
 	permission_classes = (permissions.IsAuthenticated,)
-	serializer_class = whoopsReportHistorySerializer
+	serializer_class = WhoopsReportHistorySerializer
 	pagination_class = CustomerPageNumberPagination
 	
 
@@ -36,7 +39,7 @@ class whoopsReportHistoryList(generics.ListAPIView):
 
 class enhancementReportHistoryList(generics.ListAPIView):
 	permission_classes = (permissions.IsAuthenticated,)
-	serializer_class = enhancementReportHistorySerializer
+	serializer_class = EnhancementReportHistorySerializer
 	pagination_class = CustomerPageNumberPagination
 	
 
@@ -60,10 +63,24 @@ class enhancementReportHistoryList(generics.ListAPIView):
 class whoopsReportHistory(generics.UpdateAPIView,generics.RetrieveAPIView):
 	permission_classes = (permissions.IsAuthenticated,)
 
-	serializer_class = whoopsReportHistorySerializer
+	serializer_class = WhoopsReportHistorySerializer
+	queryset = WhoopsUpdate.objects.all()
+	
+
+
+	def get(self, request, client_id):
+		update = WhoopsUpdate.objects.get(object_id=client_id)
+		serializer = WhoopsReportHistorySerializer(update)
+		return Response(serializer.data, HTTP_200_OK)
+
 
 
 class enhancementReportHistory(generics.UpdateAPIView,generics.RetrieveAPIView):
 	permission_classes = (permissions.IsAuthenticated,)
+	queryset = EnhancementUpdate.objects.all()
+	serializer_class = EnhancementReportHistorySerializer
 
-	serializer_class = enhancementReportHistorySerializer
+	def get(self, request, client_id):
+		update = EnhancementUpdate.objects.get(object_id=client_id)
+		serializer = EnhancementReportHistorySerializer(update)
+		return Response(serializer.data, HTTP_200_OK)

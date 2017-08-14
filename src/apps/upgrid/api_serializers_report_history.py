@@ -8,7 +8,7 @@ from . import dbSerializers as dbLizer
 from json import dumps, loads
 from django.utils.six import BytesIO
 
-class whoopsReportHistorySerializer(serializers.ModelSerializer):
+class WhoopsReportHistorySerializer(serializers.ModelSerializer):
 	existing_report = SerializerMethodField()
 	cache_report = SerializerMethodField()
 	initial_diff = SerializerMethodField()
@@ -78,7 +78,7 @@ class whoopsReportHistorySerializer(serializers.ModelSerializer):
 
 
 
-class enhancementReportHistorySerializer(serializers.ModelSerializer):
+class EnhancementReportHistorySerializer(serializers.ModelSerializer):
 
 	existing_report = SerializerMethodField()
 	cache_report = SerializerMethodField()
