@@ -456,3 +456,16 @@ class NonDegreeSharedReport(BasedDatedObject):
     expired_time = models.DateTimeField(default=one_day_hence, blank=True)
     access_token = models.UUIDField(primary_key=False, unique=True, default=uuid.uuid4, editable=False)
 
+
+class NonDegreeWhoopsReport(BasedDatedObject):
+    object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    university_school = models.ForeignKey(UniversitySchool, on_delete=models.PROTECT, null=False,
+                                          related_name='non_degree_whoops_report')
+    note = models.TextField(null=True, blank=True)
+    active = models.BooleanField(default=True)
+
+    class Meta(BasedDatedObject.Meta):
+        ordering = [
+            '-date_created'
+        ]
+

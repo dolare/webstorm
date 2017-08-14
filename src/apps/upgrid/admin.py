@@ -9,12 +9,9 @@ from ceeb_program.models import *
 # #lib in same project
 from .models import *
 
-from django.contrib.admin.options import InlineModelAdmin
-
 
 class AutoUserModelAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        # models.CharField: {'widget': TextInput(attrs={'size':'20'})},
         models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 80})},
     }
 
@@ -36,17 +33,14 @@ class AutoUserModelAdmin(admin.ModelAdmin):
             messages.add_message(request, messages.ERROR, "Cannot modify record with view_only permission")
             return
 
-        if getattr(obj, 'created_by', None) is None:
-            obj.created_by = request.user
-        obj.modified_by = request.user
         obj.save()
 
 
 class SimpleObjectModelAdmin(AutoUserModelAdmin):
-    readonly_fields = ('object_id', 'date_created', 'date_modified', 'created_by', 'modified_by')
+    readonly_fields = ('object_id', 'date_created', 'date_modified',)
 
-    list_display = ('name', 'description', 'created_by', 'modified_by')
-    list_filter = ('date_created', 'date_modified', 'created_by', 'modified_by')
+    list_display = ('name', 'description',)
+    list_filter = ('date_created', 'date_modified',)
 
     search_fields = [
         'name',
@@ -59,8 +53,6 @@ class SimpleObjectModelAdmin(AutoUserModelAdmin):
                 'object_id',
                 'date_created',
                 'date_modified',
-                'created_by',
-                'modified_by',
             ]
         }),
         ('Details', {
@@ -121,249 +113,6 @@ class UniversityCustomerAdmin(admin.ModelAdmin):
     ]
 
 
-class NonDegreeCategoryURLInline(admin.TabularInline):
-    model = NonDegreeCategoryURL
-    extra = 0
-    classes = ('collapse',)
-
-    fieldsets = [
-        ('Notes', {
-            'classes': ('collapse', 'open'),
-            'fields': [
-                'type',
-                'note',
-                'url',
-            ]
-        }),
-    ]
-
-
-class NonDegreeCourseURLInline(admin.TabularInline):
-    model = NonDegreeCourseURL
-    extra = 0
-    classes = ('collapse',)
-
-    fieldsets = [
-        ('Notes', {
-            'classes': ('collapse', 'open'),
-            'fields': [
-                'type',
-                'note',
-                'url',
-            ]
-        }),
-    ]
-
-
-class NonDegreeCategoryURLAdmin(AutoUserModelAdmin):
-    readonly_fields = ('date_created', 'date_modified', 'created_by', 'modified_by')
-
-    list_display = ('note', 'url', 'date_created', 'date_modified', 'created_by', 'modified_by')
-    list_filter = ('date_created', 'date_modified', 'created_by', 'modified_by',)
-
-    search_fields = [
-        'type__name',
-        'note',
-        'url',
-    ]
-
-    fieldsets = [
-        ('Management Record', {
-            'classes': ('collapse',),
-            'fields': [
-                ('date_created', 'created_by'),
-                ('date_modified', 'modified_by'),
-            ]
-        }),
-        ('URL Identity', {
-            'classes': ('collapse', 'open'),
-            'fields': [
-                'category',
-                'type',
-                'note',
-                'url',
-                'webpage',
-                'processed_scan',
-            ]
-        }),
-    ]
-
-
-class NonDegreeCourseURLAdmin(AutoUserModelAdmin):
-    readonly_fields = ('date_created', 'date_modified', 'created_by', 'modified_by')
-
-    list_display = ('note', 'url', 'date_created', 'date_modified', 'created_by', 'modified_by')
-    list_filter = ('date_created', 'date_modified', 'created_by', 'modified_by',)
-
-    search_fields = [
-        'type__name',
-        'note',
-        'url',
-    ]
-
-    fieldsets = [
-        ('Management Record', {
-            'classes': ('collapse',),
-            'fields': [
-                ('date_created', 'created_by'),
-                ('date_modified', 'modified_by'),
-            ]
-        }),
-        ('URL Identity', {
-            'classes': ('collapse', 'open'),
-            'fields': [
-                'course',
-                'type',
-                'note',
-                'url',
-                'webpage',
-                'processed_scan',
-            ]
-        }),
-    ]
-
-
-class NonDegreeCourseDateInline(admin.TabularInline):
-    model = NonDegreeCourseDate
-    extra = 0
-    classes = ('collapse',)
-
-    fieldsets = [
-        ('Notes', {
-            'classes': ('collapse', 'open'),
-            'fields': [
-                'start_date',
-                'end_date',
-            ]
-        }),
-    ]
-
-
-class NonDegreeCourseDateAdmin(AutoUserModelAdmin):
-    readonly_fields = ('date_created', 'date_modified', 'created_by', 'modified_by')
-
-    list_display = ('course', 'start_date', 'end_date',)
-    list_filter = ('date_created', 'date_modified', 'created_by', 'modified_by',)
-
-    search_fields = [
-        'course',
-        'start_date',
-        'end_date',
-    ]
-
-    fieldsets = [
-        ('Management Record', {
-            'classes': ('collapse',),
-            'fields': [
-                ('date_created', 'created_by'),
-                ('date_modified', 'modified_by'),
-            ]
-        }),
-        ('CourseDate Identity', {
-            'classes': ('collapse', 'open'),
-            'fields': [
-                'course',
-                'start_date',
-                'end_date',
-            ]
-        }),
-    ]
-
-
-class NonDegreeCategoryAdmin(AutoUserModelAdmin):
-    save_as = True
-
-    inlines = [
-        NonDegreeCategoryURLInline,
-    ]
-    readonly_fields = ('object_id', 'date_created', 'date_modified', 'created_by', 'modified_by')
-
-    list_display = ('name', 'university_school', 'date_created', 'date_modified', 'created_by', 'modified_by')
-    list_filter = ('date_created', 'date_modified', 'created_by', 'modified_by',)
-    ordering = ('-version', 'name',)
-
-    search_fields = [
-        'name',
-        'university_school__ceeb',
-        'university_school__school',
-    ]
-
-    fieldsets = [
-        ('Management Record', {
-            'classes': ('collapse',),
-            'fields': [
-                'object_id',
-                ('date_created', 'created_by'),
-                ('date_modified', 'modified_by'),
-            ]
-        }),
-        ('Category Identity', {
-            'classes': ('collapse', 'open'),
-            'fields': [
-                'name',
-                'university_school',
-                'active',
-                'version',
-                'effective_date_start',
-                'effective_date_end',
-            ]
-        }),
-    ]
-
-
-class NonDegreeCourseAdmin(AutoUserModelAdmin):
-    save_as = True
-
-    inlines = [
-        NonDegreeCourseDateInline,
-        NonDegreeCourseURLInline,
-    ]
-    readonly_fields = ('object_id', 'date_created', 'date_modified', 'created_by', 'modified_by')
-
-    list_display = ('name', 'university_school', 'active', 'version', 'type', 'date_created', 'date_modified',
-                    'created_by', 'modified_by')
-    list_filter = ('active', 'version', 'type', 'Repeatable', 'date_created', 'date_modified', 'created_by',
-                   'modified_by',)
-
-    filter_horizontal = ('category',)
-    ordering = ('-version', 'name',)
-
-    search_fields = [
-        'name',
-        'university_school__ceeb',
-        'university_school__school',
-    ]
-
-    fieldsets = [
-        ('Management Record', {
-            'classes': ('collapse',),
-            'fields': [
-                'object_id',
-                ('date_created', 'created_by'),
-                ('date_modified', 'modified_by'),
-            ]
-        }),
-        ('Course Identity', {
-            'classes': ('collapse', 'open'),
-            'fields': [
-                'name',
-                'university_school',
-                'category',
-                'active',
-                'is_advanced_management_program',
-                'version',
-                'type',
-                'tuition',
-                ('currency', 'tuition_number'),
-                'tuition_note',
-                'Repeatable',
-                'effective_date_start',
-                'effective_date_end',
-            ]
-        }),
-    ]
-
-
 class NonDegreeSharedReportAdmin(AutoUserModelAdmin):
     readonly_fields = ('object_id', 'date_created', 'date_modified', 'created_by', 'access_token')
 
@@ -391,6 +140,32 @@ class NonDegreeSharedReportAdmin(AutoUserModelAdmin):
     ]
 
 
+class NonDegreeWhoopsReportAdmin(AutoUserModelAdmin):
+    readonly_fields = ('object_id', 'date_created', 'date_modified',)
+
+    list_display = ('object_id', 'active', 'university_school', 'date_created', )
+    list_filter = ('date_created', 'date_modified',)
+
+    fieldsets = [
+        ('Management Record', {
+            'classes': ('collapse',),
+            'fields': [
+                'object_id',
+                'date_created',
+                'date_modified',
+            ]
+        }),
+        ('Detail', {
+            'classes': ('collapse', 'open'),
+            'fields': [
+                'university_school',
+                'active',
+                'note',
+            ]
+        }),
+    ]
+
+
 admin.site.register(UniversityCustomer, UniversityCustomerAdmin)
 admin.site.register(UniversityCustomerProgram)
 admin.site.register(CustomerCompetingProgram)
@@ -413,12 +188,6 @@ admin.site.register(CustomerFeature)
 admin.site.register(CustomerFeatureMapping)
 admin.site.register(TranscriptEvaluationProvider)
 
-
-admin.site.register(NonDegreeCategory, NonDegreeCategoryAdmin)
-admin.site.register(NonDegreeCourse, NonDegreeCourseAdmin)
-admin.site.register(NonDegreeCategoryURL, NonDegreeCategoryURLAdmin)
-admin.site.register(NonDegreeCourseURL, NonDegreeCourseURLAdmin)
-admin.site.register(NonDegreeUrlTypeRef, SimpleObjectModelAdmin)
-admin.site.register(NonDegreeCourseDate, NonDegreeCourseDateAdmin)
 admin.site.register(NonDegreeSharedReport, NonDegreeSharedReportAdmin)
 admin.site.register(NonDegreeAMPReport)
+admin.site.register(NonDegreeWhoopsReport, NonDegreeWhoopsReportAdmin)
