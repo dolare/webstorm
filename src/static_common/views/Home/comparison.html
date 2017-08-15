@@ -22,7 +22,7 @@
 
                                 <div class="block-header" style="border-bottom: 1px solid #f4f4f4;">
                                    
-                                                <select class="form-control" ng-model="school1" id="simple-classic-school-non-degree" name="simple-classic-school-non-degree" ng-options="s.object_id as s.school for s in schools" ng-change="get_cat1(school1)">
+                                                <select class="form-control" ng-model="school1" id="simple-classic-school-non-degree" name="simple-classic-school-non-degree" ng-options="s.object_id as s.school+ ' (' + s.university + ')' for s in schools" ng-change="get_cat1(school1)">
                                                             <option value="">Please select the school</option>
                                                         </select>
                                             
@@ -67,7 +67,7 @@
                             <div class="block block-rounded block-opt-refresh-icon8">
                                 <div class="block-header" style="border-bottom: 1px solid #f4f4f4;">
                                        
-                                                 <select class="form-control" ng-model="school2" id="simple-classic-school-non-degree1" name="simple-classic-school-non-degree1" ng-options="s.object_id as s.school for s in schools" ng-change="get_cat2(school2)">
+                                                 <select class="form-control" ng-model="school2" id="simple-classic-school-non-degree1" name="simple-classic-school-non-degree1" ng-options="s.object_id as s.school +' ('  + s.university + ')' for s in schools" ng-change="get_cat2(school2)">
                                                             <option value="">Please select the school</option>
                                                         </select>
                                 </div>
