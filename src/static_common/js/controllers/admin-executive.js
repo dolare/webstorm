@@ -35,9 +35,30 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       'null': '$', // The default currency sign is USD
     };
 
+    $http({
+        url: '/api/upgrid/user/university_customer/?is_non_degree_user=True&page_size=100',
+        method: 'GET',
+        headers: {
+          'Authorization': 'JWT ' + token
+        }
+      })
+      .then(function(resp_clients) {
+        $scope.clients = resp_clients.data.results;
+      });
+
+    $scope.getSchoolsAPIFilters = {};
+
+    $scope.updateSchools = function(clientId) {
+      $scope.getSchoolsAPIFilters.client_id = clientId;
+      var currentTableState = $scope.tableCtrl.tableState();
+      currentTableState.pagination.start = 0;
+      $scope.tableCtrl.pipe(currentTableState);
+    }
+
     $scope.non_degree_schools = []; // Retrieved schools from the following pipe function.
 
-    $scope.callServer = function(tableState) {
+    $scope.callServer = function(tableState, tableCtrl) {
+      $scope.tableCtrl = tableCtrl;
 
       App.blocks('#loadingtable', 'state_loading');
 
@@ -45,11 +66,9 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
       var number = tableState.pagination.number || 10; // Number of entries showed per page.
 
-      var url = '/api/upgrid/non_degree/schools?is_non_degree=True';
+      var url = '/api/upgrid/non_degree/schools?is_non_degree=True&client_id=';
 
-      console.log('About to getPage()!');
-
-      ajaxService.getPage(start, number, url, tableState, token).then(function(resp_schools) {
+      ajaxService.getPage(start, number, url, tableState, token, $scope.getSchoolsAPIFilters).then(function(resp_schools) {
         $scope.non_degree_schools = resp_schools.data.results;
         tableState.pagination.numberOfPages = resp_schools.numberOfPages; // Set the number of pages so the pagination can update.
         tableState.pagination.totalItemCount = resp_schools.data.count; // This property of tableState.pagination is currently not being used yet.
@@ -104,7 +123,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
                 // Permanently hide the search box
                 minimumResultsForSearch: Infinity,
 
-                placeholder: 'There are no reports yet.'
+                placeholder: 'No reports yet.'
 
               });
 
@@ -171,7 +190,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
                 // Permanently hide the search box
                 minimumResultsForSearch: Infinity,
 
-                placeholder: 'There are no reports yet.'
+                placeholder: 'No reports yet.'
 
               });
 

@@ -317,9 +317,15 @@
                           <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
 
                           <span ng-if="!course.url" class="font-w600 text-gray label-na">N/A</span><br>
-                          <button data-js-blur type="button" class="btn btn-default" style="font-size: 16px;background: #fff;opacity: 0.8;width: 100%;display: block;text-align: center;border-radius: 4px; border-width: 2px;" uib-popover-template="'editCourseUrl.html'">E</button>
+                          <button data-js-blur type="button" class="btn btn-default" style="background: #fff;display: block;text-align: center;border-radius: 4px; border-width: 2px;"><i class="fa fa-pencil text-info" 
+                            data-popover-title="Edit course URL"                                      
+                            data-uib-popover-template="'edit_course_url.html'"
 
-                          <script type="text/ng-template" id="editCourseUrl.html">
+                            data-popover-placement="top-right" 
+                            data-popover-animation="true"
+                            data-popover-class="report-popover"></i></button>
+
+                          <script type="text/ng-template" id="edit_course_url.html">
                               <input type="text" ng-model="course.url">
                           </script>
                         </td>

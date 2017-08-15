@@ -1,33 +1,355 @@
 
-<!-- Page Content -->
-<div class="content content-boxed">
-  <!-- Table Sections (data-js-table-sections attribute is initialized in js/directives.js) -->
-  
-
-  <!-- Table Sections (data-js-table-checkable attribute is initialized in js/directives.js) -->
-  <div class="block block-rounded" id="reports">
-    <div class="block-header">
-            <!-- <div class="block-options">
-                <code>.data-js-table-checkable</code>
-              </div> -->
-              <!-- <h3 class="block-title">Checkable Table</h3> -->
-              <div class="col-sm-7">
-                <h1 class="page-heading">
-                  Comparison Tool <br>
-                </h1>
-                
-                
-                
-              </div>
-            </div>
-            <div class="block-content" style="padding-top:0; padding-left:30px; padding-right:30px">
-              <!-- If you put a checkbox in thead section, it will automatically toggle all tbody section checkboxes -->
-
-              <div class="alert alert-warning" role="alert">Coming soon...</div>
-
-             
+<!-- Page Header -->
+                <div class="content bg-gray-lighter">
+                    <div class="row items-push">
+                        <div class="col-sm-7 push-15">
+                            <h1 class="page-heading">
+                                Comparison Tool<br><small>- Compare courses between two schools. </small>
+                            </h1>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- END Page Header -->
+<!-- Dashboard Charts -->
+  <div class="content content-full">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="block block-rounded block-opt-refresh-icon8">
 
 
-      </div>
-    </div>
+
+
+                                <div class="block-header" style="border-bottom: 1px solid #f4f4f4;">
+                                   
+                                                <select class="form-control" ng-model="school1" id="simple-classic-school-non-degree" name="simple-classic-school-non-degree" ng-options="s.object_id as s.school for s in schools" ng-change="get_cat1(school1)">
+                                                            <option value="">Please select the school</option>
+                                                        </select>
+                                            
+                                       
+                                </div>
+                                <div class="block-content block-content-full text-center comparison_height frame">
+                                
+                                    <div ng-show="!cat1 || cat1.length===0" class="alert alert-warning">
+                                        
+                                        <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection.</p>
+                                    </div>
+
+
+                                    
+                                    <table ng-show="cat1.length>0" class="table table-striped-info table-borderless table-header-bg">
+                                        <colgroup>
+                                         
+                                          <col width="10%"/>
+                                          <col width="90%" />
+                                        </colgroup>
+                                        <tbody>
+                                           
+                                            <tr ng-repeat="row in cat1">
+                                                <td class="text-center"><label class="css-input css-radio css-radio-info push-10-r css-input-comparison">
+                                                <input type="radio" name="radio-comparison1" value="{{row.object_id}}" ng-model="$parent.radio_value1" required="required" ng-change="get_courses1($parent.school1, $parent.radio_value1)"><span></span>
+                                            </label>
+                                            </td>
+                                                <td class="text-right">{{row.name}}</td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+
+
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="block block-rounded block-opt-refresh-icon8">
+                                <div class="block-header" style="border-bottom: 1px solid #f4f4f4;">
+                                       
+                                                 <select class="form-control" ng-model="school2" id="simple-classic-school-non-degree1" name="simple-classic-school-non-degree1" ng-options="s.object_id as s.school for s in schools" ng-change="get_cat2(school2)">
+                                                            <option value="">Please select the school</option>
+                                                        </select>
+                                </div>
+                                <div class="block-content block-content-full text-center comparison_height frame">
+
+                                    <div ng-show="!cat2 || cat2.length===0" class="alert alert-warning">
+                                        
+                                        <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection.</p>
+                                    </div>
+
+                                    
+                                    <table ng-show="cat2.length>0" class="table table-striped-info table-borderless table-header-bg">
+                                        <colgroup>
+                                         
+                                          <col width="10%"/>
+                                          <col width="90%" />
+                                        </colgroup>
+                                        <tbody>
+                                           
+                                            <tr ng-repeat="row in cat2">
+                                                <td class="text-center"><label class="css-input css-radio css-radio-info push-10-r css-input-comparison">
+                                                <input type="radio" name="radio-comparison2" value="{{row.object_id}}" ng-model="$parent.radio_value2" required="required" ng-change="get_courses2($parent.school2, $parent.radio_value2)"><span></span>
+                                            </label>
+                                            </td>
+                                                <td class="text-right">{{row.name}}</td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block block-rounded block-opt-refresh-icon8">
+                                <div class="block-header font-w600" style="border-bottom: 1px solid #f4f4f4;">
+                                   
+                                               Comparison Result
+                                       
+                                </div>
+                                <div class="block-content block-content-full text-center">
+                                    
+
+                                    <div class="row">
+                                   <div class="col-md-6 border-r">
+
+                                  
+                                   <div ng-show="!courses1 || courses1.length===0" class="alert alert-warning">
+                                        
+                                        <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection.</p>
+                                    </div>
+
+
+                                   <table ng-show="courses1.length > 0" class="table push-15">
+                                        <colgroup>
+                                         
+                                          <col width="35%"/>
+                                          <col width="15%" />
+                                          <col width="30%"/>
+                                          <col width="20%" />
+                                        </colgroup>
+
+                                        <thead>
+                        <tr class="font-w600 text-primary">
+                         
+                          <td class="text-primary bg-gray-lighter font-w600 text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
+
+                          <td class="text-primary bg-gray-lighter font-w600text-center ex-table-headercell">
+                            
+                            TYPE
+                            
+                          </td>
+                          <td class="text-primary bg-gray-lighter font-w600 text-center ex-table-headercell">
+                            
+                            SCHEDULE
+                            
+                          </td>
+                          <td class="text-primary bg-gray-lighter font-w600 text-center ex-table-headercell">
+                           
+                            TUITION
+                           
+                          </td>
+                          
+                        </tr>
+                      </thead>
+
+                                        <tbody>
+                                           
+                                            <tr ng-repeat="course in courses1">
+                                                <td style="vertical-align: middle;padding: 15px;text-align: left;" >
+
+                          <span ng-if="course.name">{{course.name}} <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+                          <span ng-if="!course.name" class="font-w600 text-gray label-na">N/A</span>
+
+                          </td>
+
+
+                          <td style="padding: 15px;" >
+
+                          
+
+                            <span ng-if="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.location_info"></i> {{course.type}}</span>
+                            <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
+                          </td>
+                          <td style="padding: 15px;" >
+
+                         
+                            <script type="text/ng-template" id="course_dates.html">
+
+                              <span ng-if="course.course_dates_old!='N/A'" ng-repeat="d in course.course_dates_old | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+
+                              <span ng-if="course.course_dates_old=='N/A'">{{course.course_dates_old}}</span>
+
+                            </script>
+
+                            <span ng-if="course.course_dates.length>0">
+                              
+                              <span ng-repeat="d in course.course_dates | orderBy:'start_date'" ng-if="d.end_date>=course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                              
+                            </span>
+
+                            <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
+
+                          </td>
+                          
+                          <td style="padding: 15px;" >
+                        
+
+                            <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+
+                            <script type="text/ng-template" id="tuition_note.html">
+
+                              <div style="text-align: left;">
+                                <div>Note: </div>
+                                <div>
+                                  <li ng-repeat="line in course.tuition_note.split('\n')">{{line}}</li>
+                                </div>
+                              </div>
+
+                            </script>
+
+
+                            <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
+                          </td>
+                         
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                   </div>
+
+
+
+                                   <div class="col-md-6">
+
+                                    <div ng-show="!courses2 || courses2.length===0" class="alert alert-warning">
+                                        
+                                        <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection.</p>
+                                    </div>
+
+
+                                   <table ng-show="courses2.length > 0" class="table push-15">
+                                        <colgroup>
+                                         
+                                          <col width="35%"/>
+                                          <col width="15%" />
+                                          <col width="30%"/>
+                                          <col width="20%" />
+                                        </colgroup>
+
+                                        <thead>
+                        <tr class="font-w600 text-primary">
+                         
+                          <td class="text-primary bg-gray-lighter font-w600 text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
+
+                          <td class="text-primary bg-gray-lighter font-w600text-center ex-table-headercell">
+                            
+                            TYPE
+                            
+                          </td>
+                          <td class="text-primary bg-gray-lighter font-w600 text-center ex-table-headercell">
+                            
+                            SCHEDULE
+                            
+                          </td>
+                          <td class="text-primary bg-gray-lighter font-w600 text-center ex-table-headercell">
+                           
+                            TUITION
+                           
+                          </td>
+                          
+                        </tr>
+                      </thead>
+
+                                        <tbody>
+                                           
+                                            <tr ng-repeat="course in courses2">
+                                                <td style="vertical-align: middle;padding: 15px;text-align: left;" >
+
+                          <span ng-if="course.name">{{course.name}} <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+                          <span ng-if="!course.name" class="font-w600 text-gray label-na">N/A</span>
+
+                          </td>
+
+
+                          <td style="padding: 15px;" >
+
+                          
+
+                            <span ng-if="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.location_info"></i> {{course.type}}</span>
+                            <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
+                          </td>
+                          <td style="padding: 15px;" >
+
+                         
+                            <script type="text/ng-template" id="course_dates.html">
+
+                              <span ng-if="course.course_dates_old!='N/A'" ng-repeat="d in course.course_dates_old | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+
+                              <span ng-if="course.course_dates_old=='N/A'">{{course.course_dates_old}}</span>
+
+                            </script>
+
+                            <span ng-if="course.course_dates.length>0">
+                              
+                              <span ng-repeat="d in course.course_dates | orderBy:'start_date'" ng-if="d.end_date>=course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                              
+                            </span>
+
+                            <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
+
+                          </td>
+                          
+                          <td style="padding: 15px;" >
+                        
+
+                            <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+
+                            <script type="text/ng-template" id="tuition_note.html">
+
+                              <div style="text-align: left;">
+                                <div>Note: </div>
+                                <div>
+                                  <li ng-repeat="line in course.tuition_note.split('\n')">{{line}}</li>
+                                </div>
+                              </div>
+
+                            </script>
+
+
+                            <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
+                          </td>
+                         
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                   </div>
+
+                                   </div>
+
+
+
+
+                                </div>
+                               
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
   </div>
+                    <!-- END Dashboard Charts -->
