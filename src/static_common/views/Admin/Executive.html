@@ -20,16 +20,17 @@
 
           <col width="10%" />
           <col width="30%" />
-
           <col width="10%" />
-          <col width="25%" />
-          <col width="25%" />
+          <col width="10%" />
+          <col width="20%" />
+          <col width="20%" />
         </colgroup>
 
         <thead>
           <tr>
             <th class="text-center" st-sort="ceeb">Ceeb</th>
             <th class="text-left" st-sort="school">School</th>
+            <th class="text-center"># Clients</th>
             <th class="text-center">Release Preview</th>
             <th class="text-center">History</th>
             <th class="text-center">Archived</th>
@@ -67,7 +68,21 @@
 
             </td>
 
+            <td class="text-center">
+              <span class="badge badge-warning" uib-tooltip-template="'clients_info.html'" tooltip-placement="top">{{row.non_degree_client.length}}</span>
 
+              <script type="text/ng-template" id="clients_info.html">
+
+                <div style="text-align: left;">
+                  <div>Clients: </div>
+                  <div>
+                    <li ng-repeat="c in row.non_degree_client">{{c.contact_name}}</li>
+                  </div>
+                </div>
+
+              </script>
+
+            </td>
 
 
 
