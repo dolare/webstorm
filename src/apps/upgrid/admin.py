@@ -144,7 +144,11 @@ class NonDegreeWhoopsReportAdmin(AutoUserModelAdmin):
     readonly_fields = ('object_id', 'date_created', 'date_modified',)
 
     list_display = ('object_id', 'active', 'university_school', 'date_created', )
-    list_filter = ('date_created', 'date_modified',)
+    list_filter = ('active', 'date_created', 'date_modified',)
+    search_fields = [
+        'university_school__school',
+        'university_school__ceeb',
+    ]
 
     fieldsets = [
         ('Management Record', {
