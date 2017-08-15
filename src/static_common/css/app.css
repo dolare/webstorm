@@ -2123,7 +2123,8 @@ left: 35%;
 
 
 .table-striped-info > tbody > tr:nth-of-type(odd) {
-  background-color: #edf6fd;
+  /*background-color: #edf6fd;*/
+  background-color: #f8f8f8
 }
 
 .css-input-comparison {
