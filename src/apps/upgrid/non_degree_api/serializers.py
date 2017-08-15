@@ -3,7 +3,7 @@ from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCo
     NonDegreeCourseURL, NonDegreeAMPReport
 from webtracking.models import WebPage, WebPageScan
 
-from ..models import NonDegreeReport, NonDegreeSharedReport, UniversityCustomer
+from ..models import NonDegreeReport, NonDegreeSharedReport, UniversityCustomer, NonDegreeWhoopsReport
 
 
 class UniversityCustomerSerializer(ModelSerializer):
@@ -246,3 +246,10 @@ class AMPReportDetailSerializer(ModelSerializer):
         if reports:
             return reports.first().date_created
         return None
+
+
+class NonDegreeWhoopsReportListSerializer(ModelSerializer):
+    class Meta:
+        model = NonDegreeWhoopsReport
+        fields = ('object_id', 'active', 'note', 'date_created', 'date_modified', )
+
