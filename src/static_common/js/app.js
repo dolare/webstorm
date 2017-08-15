@@ -327,6 +327,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                                '/static/js/services/executiveService.js',
                                 '/static/js/services/ajaxService.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
