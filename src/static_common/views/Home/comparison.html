@@ -20,7 +20,7 @@
 
 
 
-                                <div class="block-header" style="border-bottom: 1px solid #f4f4f4;">
+                                <div class="block-header" style="border-bottom: 1px solid #f4f4f4; border-top: 6px solid #5c90d2; padding: 20px">
                                    
                                                 <select class="form-control" ng-model="school1" id="simple-classic-school-non-degree" name="simple-classic-school-non-degree" ng-options="s.object_id as s.school+ ' (' + s.university + ')' for s in schools" ng-change="get_cat1(school1)">
                                                             <option value="">Please select the school</option>
@@ -46,7 +46,7 @@
                                         <tbody>
                                            
                                             <tr ng-repeat="row in cat1">
-                                                <td class="text-center"><label class="css-input css-radio css-radio-info push-10-r css-input-comparison">
+                                                <td class="text-center"><label class="css-input css-radio css-radio-primary push-10-r css-input-comparison">
                                                 <input type="radio" name="radio-comparison1" value="{{row.object_id}}" ng-model="$parent.radio_value1" required="required" ng-change="get_courses1($parent.school1, $parent.radio_value1)"><span></span>
                                             </label>
                                             </td>
@@ -65,7 +65,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="block block-rounded block-opt-refresh-icon8">
-                                <div class="block-header" style="border-bottom: 1px solid #f4f4f4;">
+                                <div class="block-header" style="border-bottom: 1px solid #f4f4f4; border-top: 6px solid #46c37b; padding: 20px">
                                        
                                                  <select class="form-control" ng-model="school2" id="simple-classic-school-non-degree1" name="simple-classic-school-non-degree1" ng-options="s.object_id as s.school +' ('  + s.university + ')' for s in schools" ng-change="get_cat2(school2)">
                                                             <option value="">Please select the school</option>
@@ -88,11 +88,11 @@
                                         <tbody>
                                            
                                             <tr ng-repeat="row in cat2">
-                                                <td class="text-center"><label class="css-input css-radio css-radio-info push-10-r css-input-comparison">
+                                                <td class="text-center"><label class="css-input css-radio css-radio-success push-10-r css-input-comparison">
                                                 <input type="radio" name="radio-comparison2" value="{{row.object_id}}" ng-model="$parent.radio_value2" required="required" ng-change="get_courses2($parent.school2, $parent.radio_value2)"><span></span>
                                             </label>
                                             </td>
-                                                <td class="text-right text-primary font-w600">{{row.name}}</td>
+                                                <td class="text-right text-success font-w600">{{row.name}}</td>
                                                 
                                             </tr>
                                         </tbody>
