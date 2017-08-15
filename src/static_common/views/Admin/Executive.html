@@ -5,12 +5,6 @@
   <div class="block-content">
 
     <div class="block" id="loadingtable">
-      <div>
-        <span>Filter by clients: </span>
-        <select ng-model="selectedClient" id="non-degree-clients" name="non-degree-clients" ng-options="c.id as c.contact_name for c in clients" ng-change="updateSchools(selectedClient)">
-          <option value="">All clients</option>
-        </select>
-      </div>
 
       <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyExecutiveLabel}}</div>
 
@@ -27,6 +21,29 @@
         </colgroup>
 
         <thead>
+          
+          <tr class="wt-table-url-header-opt-row">
+            <th colspan="2">
+              <input class="form-control" st-search="searchValue" placeholder="search" type="search" />
+            </th>
+            <th colspan="4">
+              <div>
+                <div class="col-sm-6">
+                  <span class="font-w600">Filter by client: </span>
+                  <select ng-model="selectedClientId" id="non-degree-clients" name="non-degree-clients" ng-options="c.id as c.contact_name for c in clients" ng-change="updateSchools(selectedClientId)">
+                    <option value="">All clients</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <span class="font-w600">Filter by demo: </span>
+                  <select ng-model="selectedDemoId" id="non-degree-demos" name="non-degree-demos" ng-options="d.id as d.contact_name for d in demos" ng-change="updateSchools(selectedDemoId)">
+                    <option value="">All demos</option>
+                  </select>
+                </div>
+              </div>
+            </th>
+          </tr>
+
           <tr>
             <th class="text-center" st-sort="ceeb">Ceeb</th>
             <th class="text-left" st-sort="school">School</th>
@@ -35,11 +52,6 @@
             <th class="text-center">History</th>
             <th class="text-center">Archived</th>
 
-          </tr>
-          <tr class="wt-table-url-header-opt-row">
-            <th colspan="12">
-              <input class="form-control" st-search="searchValue" placeholder="search" type="search" />
-            </th>
           </tr>
 
         </thead>
@@ -69,7 +81,9 @@
             </td>
 
             <td class="text-center">
-              <span class="badge badge-warning" uib-tooltip-template="'clients_info.html'" tooltip-placement="top">{{row.non_degree_client.length}}</span>
+              <span class="badge badge-danger font-s13" ng-if="row.non_degree_client.length>0" uib-tooltip-template="'clients_info.html'" tooltip-placement="top">{{row.non_degree_client.length}}</span>
+
+              <span class="badge badge-default font-s13" ng-if="row.non_degree_client.length==0" uib-tooltip-template="'clients_info.html'" tooltip-placement="top">{{row.non_degree_client.length}}</span>
 
               <script type="text/ng-template" id="clients_info.html">
 
