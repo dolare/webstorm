@@ -2,27 +2,35 @@
 
   <!-- Customers -->
 
-    <div class="block-content">
-      <div class="block" id="loadingtable">
+  <div class="block-content">
 
-        <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyExecutiveLabel}}</div>
+    <div class="block" id="loadingtable">
+      <div>
+        <span>Filter by clients: </span>
+        <select ng-model="selectedClient" id="non-degree-clients" name="non-degree-clients" ng-options="c.id as c.contact_name for c in clients" ng-change="updateSchools(selectedClient)">
+          <option value="">All clients</option>
+        </select>
+      </div>
 
-        <table class="table table-hover" st-pipe="callServer" st-table="non_degree_schools" style="table-layout: fixed;">
+      <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyExecutiveLabel}}</div>
 
-          <colgroup>
+      <table class="table table-hover" st-pipe="callServer" st-table="non_degree_schools" style="table-layout: fixed;">
+
+        <colgroup>
 
           <col width="10%" />
           <col width="30%" />
-
           <col width="10%" />
-          <col width="25%" />
-          <col width="25%" />
+          <col width="10%" />
+          <col width="20%" />
+          <col width="20%" />
         </colgroup>
 
         <thead>
           <tr>
             <th class="text-center" st-sort="ceeb">Ceeb</th>
             <th class="text-left" st-sort="school">School</th>
+            <th class="text-center"># Clients</th>
             <th class="text-center">Release Preview</th>
             <th class="text-center">History</th>
             <th class="text-center">Archived</th>
@@ -30,7 +38,7 @@
           </tr>
           <tr class="wt-table-url-header-opt-row">
             <th colspan="12">
-              <input class="form-control" st-search="searchValue" placeholder="search" type="search"/>
+              <input class="form-control" st-search="searchValue" placeholder="search" type="search" />
             </th>
           </tr>
 
@@ -60,7 +68,21 @@
 
             </td>
 
+            <td class="text-center">
+              <span class="badge badge-warning" uib-tooltip-template="'clients_info.html'" tooltip-placement="top">{{row.non_degree_client.length}}</span>
 
+              <script type="text/ng-template" id="clients_info.html">
+
+                <div style="text-align: left;">
+                  <div>Clients: </div>
+                  <div>
+                    <li ng-repeat="c in row.non_degree_client">{{c.contact_name}}</li>
+                  </div>
+                </div>
+
+              </script>
+
+            </td>
 
 
 
@@ -129,13 +151,13 @@
         </tfoot>
       </table>
     </div>
-
+    
   </div>
 </div>
 
 
 <!-- Modal of release pop-up window-->
-<div class="modal fullscreen-modal fade" id="previewReport"  role="dialog" aria-labelledby="myModalLabel" >
+<div class="modal fullscreen-modal fade" id="previewReport" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="block block-themed block-transparent remove-margin-b" id="previewReport_loading">
@@ -159,25 +181,25 @@
             <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content_preview">
               <!-- ########### -->
               <!-- dynamic templates -->
-              
-                <div ng-include src="'/static/views/Home/partials/reports/non_degree_previewreport.html'"></div>
-              
+
+              <div ng-include src="'/static/views/Home/partials/reports/non_degree_previewreport.html'"></div>
+
               <!-- Footer -->
-             
+
             </div>
           </div>
           <div style="position: fixed;bottom: 80px;right: 44px;">
-            <a  data-js-blur href="#top-report_preview" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
+            <a data-js-blur href="#top-report_preview" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
           </div>
           <!-- END SlimScroll Container -->
           <div style="position: fixed;bottom: 20px;right: 44px;">
-              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseConfirm()" popover-enable="$parent.releaseConfirmEnable" popover-is-open="$parent.releaseConfirmIsOpen" uib-popover-template="'releaseConfirmTemplate.html'" ><i class="si si-mouse"></i> Release</button>
+            <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseConfirm()" popover-enable="$parent.releaseConfirmEnable" popover-is-open="$parent.releaseConfirmIsOpen" uib-popover-template="'releaseConfirmTemplate.html'"><i class="si si-mouse"></i> Release</button>
 
-              <script type="text/ng-template" id="releaseConfirmTemplate.html">
-                  <label>Are you sure you want to release this Tracking Report?</label>
-                  <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseReport(); scrolltop_preview(); toggleRCIsOpen(); toggleRCEnable()" data-dismiss="modal">Yes</button>
-                  <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="toggleRCIsOpen()">No</button>
-              </script>
+            <script type="text/ng-template" id="releaseConfirmTemplate.html">
+              <label>Are you sure you want to release this Tracking Report?</label>
+              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseReport(); scrolltop_preview(); toggleRCIsOpen(); toggleRCEnable()" data-dismiss="modal">Yes</button>
+              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="toggleRCIsOpen()">No</button>
+            </script>
 
           </div>
         </div>
@@ -189,7 +211,7 @@
 
 
 <!-- Modal of view report pop-up window-->
-<div class="modal fullscreen-modal fade" id="viewReport"  role="dialog" aria-labelledby="myModalLabel" >
+<div class="modal fullscreen-modal fade" id="viewReport" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="block block-themed block-transparent remove-margin-b" id="viewReport_loading">
@@ -213,15 +235,15 @@
             <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content_view">
               <!-- ########### -->
               <!-- dynamic templates -->
-              
-                <div ng-include src="'/static/views/Home/partials/reports/non_degree_viewreport.html'"></div>
-              
+
+              <div ng-include src="'/static/views/Home/partials/reports/non_degree_viewreport.html'"></div>
+
               <!-- Footer -->
-             
+
             </div>
           </div>
           <div style="position: fixed;bottom: 20px;right: 44px;">
-            <a  data-js-blur href="#top-report_view" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
+            <a data-js-blur href="#top-report_view" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
           </div>
           <!-- END SlimScroll Container -->
         </div>
@@ -232,7 +254,7 @@
 
 
 <!-- Modal of edit report pop-up window-->
-<div class="modal fullscreen-modal fade" id="editReport"  role="dialog" aria-labelledby="myModalLabel" >
+<div class="modal fullscreen-modal fade" id="editReport" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="block block-themed block-transparent remove-margin-b" id="editReport_loading">
@@ -256,18 +278,18 @@
             <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content_edit">
               <!-- ########### -->
               <!-- dynamic templates -->
-              
-                <div ng-include src="'/static/views/Home/partials/reports/non_degree_editreport.html'"></div>
-              
+
+              <div ng-include src="'/static/views/Home/partials/reports/non_degree_editreport.html'"></div>
+
               <!-- Footer -->
-             
+
             </div>
           </div>
           <div style="position: fixed;bottom: 80px;right: 44px;">
-            <a  data-js-blur href="#top-report_edit" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
+            <a data-js-blur href="#top-report_edit" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
           </div>
           <div style="position: fixed;bottom: 20px;right: 44px;">
-              <button data-js-blur type="button" class="btn btn-default" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="saveReport()"><i class="si si-mouse"></i> Save</button>
+            <button data-js-blur type="button" class="btn btn-default" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="saveReport()"><i class="si si-mouse"></i> Save</button>
           </div>
           <!-- END SlimScroll Container -->
         </div>
