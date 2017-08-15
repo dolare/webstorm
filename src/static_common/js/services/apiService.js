@@ -240,7 +240,7 @@ angular.module('myApp')
 
             var promise =  $http({
               //url: '/api/upgrid/accountmanager/',
-              url: '/api/upgrid/user/university_customer/?is_main_user=True&is_non_degree_user=False',
+              url: '/api/upgrid/user/university_customer/?is_non_degree_user=False&page_size=100',
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token
@@ -266,7 +266,7 @@ angular.module('myApp')
       var getExecClient = function(token) {
 
             var promise =  $http({
-              url: '/api/upgrid/user/university_customer/?is_main_user=True&is_non_degree_user=True',
+              url: '/api/upgrid/user/university_customer/?is_non_degree_user=True&page_size=100',
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token

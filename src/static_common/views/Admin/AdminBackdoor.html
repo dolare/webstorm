@@ -25,7 +25,8 @@
                             <colgroup>
                            
                             <col width="35%" />
-                            <col width="35%" />
+                            <col width="25%" />
+                            <col width="10%" />
                             <col width="20%" />
                             <col width="10%" />
                         </colgroup>
@@ -43,14 +44,15 @@
                                     Client
 
                                 </th>
-                                
+                                <th class="text-center">Most Recent</th>
                                 <th class="text-center" style="min-width: 95px">Created</th>
-                                <th class="text-right" style="width:40px">View</th>
+                                
+                                <th class="text-center">View</th>
                             </tr>
                             <tr>
                                
 
-                                <th colspan="4" class="border-l border-r" style="background: #f0f4f8;">
+                                <th colspan="5" class="border-l border-r" style="background: #f0f4f8;">
 
                               
                               
@@ -80,6 +82,12 @@
                         
                         <td class="text-center">
                             {{row.customer}}
+                        </td>
+
+                        <td class="text-center">
+                            <span ng-if="row.most_recent"><i class="fa fa-check text-success" aria-hidden="true"></i></span>
+                            <span ng-if="!row.most_recent"><i class="fa fa-times text-danger" aria-hidden="true"></i></span>
+                            
                         </td>
                       
                         <td class="text-center">
@@ -124,7 +132,8 @@
                             <colgroup>
                            
                             <col width="35%" />
-                            <col width="35%" />
+                            <col width="25%" />
+                            <col width="10%" />
                             <col width="20%" />
                             <col width="10%" />
                         </colgroup>
@@ -142,20 +151,23 @@
                                     Client
 
                                 </th>
-                                
+                                <th class="text-center">Most Recent</th>
                                 <th class="text-center" style="min-width: 95px">Created</th>
-                                <th class="text-right" style="width:40px">View</th>
+                                
+                                <th class="text-center">View</th>
                             </tr>
                             <tr>
                                
 
-                                <th colspan="4" class="border-l border-r" style="background: #f0f4f8;">
+                                <th colspan="5" class="border-l border-r" style="background: #f0f4f8;">
 
+                              
+                              
+                                <input st-search="customer_program" class="form-control" placeholder="whoops report search ..." type="text" />
+                     
+                              
+                      
                                
-                                <input st-search="customer_program" class="form-control" placeholder="enhancement report search ..." type="text" />
-
-                              
-                              
                                     
 
                                     
@@ -179,6 +191,13 @@
                         <td class="text-center">
                             {{row.customer}}
 
+                        </td>
+
+
+                        <td class="text-center">
+                            <span ng-if="row.most_recent"><i class="fa fa-check text-success" aria-hidden="true"></i></span>
+                            <span ng-if="!row.most_recent"><i class="fa fa-times text-danger" aria-hidden="true"></i></span>
+                            
                         </td>
                       
                         <td class="text-center">

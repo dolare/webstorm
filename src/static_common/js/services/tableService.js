@@ -308,23 +308,24 @@ angular.module('myApp')
 
 
 
-    var getClientList = function(List) {
+    var getClientList = function(List_raw) {
 
 
       var data = [];
       var sub_data = []
       console.log("LISTLIST="+JSON.stringify(List));
-
+      var List = List_raw.results
       for(var i=0; i<List.length; i++){
 
         if(List[i].account_type === 'main'){
           data.push(List[i]);
         } else if(List[i].account_type === 'sub'){
+          
           sub_data.push(List[i])
         }
       }
 
-      //console.log("sub_data="+JSON.stringify(sub_data));
+      //console.log("sub_data="+JSON.stringify(sub_data, null, 4));
 
       for(var i=0; i<data.length; i++){
         data[i].subuser = [];
@@ -332,7 +333,9 @@ angular.module('myApp')
 
       for(var i=0; i<sub_data.length; i++) {
 
+        
         for(var j=0; j<data.length; j++){
+          
           if(sub_data[i].main_user_id === data[j].id){
             data[j].subuser.push(sub_data[i]);
             break;
@@ -341,7 +344,7 @@ angular.module('myApp')
 
       }
 
-      console.log("client data="+JSON.stringify(data))
+      console.log("client data="+JSON.stringify(data, null, 4))
       
       return data;
 
