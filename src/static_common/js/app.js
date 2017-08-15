@@ -1054,6 +1054,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                                 'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
 
+                                // '/static/js/third-party/jquery-scrollLock.min.js',
                               '/static/js/controllers/comparison.js',
                              
                               
