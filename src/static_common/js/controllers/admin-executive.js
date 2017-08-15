@@ -36,7 +36,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
     };
 
     $http({
-        url: '/api/upgrid/user/university_customer/?is_non_degree_user=True&page_size=100',
+        url: '/api/upgrid/user/university_customer/?is_non_degree_user=True&is_demo=False&page_size=100',
         method: 'GET',
         headers: {
           'Authorization': 'JWT ' + token
@@ -46,10 +46,21 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
         $scope.clients = resp_clients.data.results;
       });
 
+    $http({
+        url: '/api/upgrid/user/university_customer/?is_non_degree_user=True&is_demo=True&page_size=100',
+        method: 'GET',
+        headers: {
+          'Authorization': 'JWT ' + token
+        }
+      })
+      .then(function(resp_clients) {
+        $scope.demos = resp_clients.data.results;
+      });
+
     $scope.getSchoolsAPIFilters = {};
 
-    $scope.updateSchools = function(clientId) {
-      $scope.getSchoolsAPIFilters.client_id = clientId;
+    $scope.updateSchools = function(userId) {
+      $scope.getSchoolsAPIFilters.client_id = userId;
       var currentTableState = $scope.tableCtrl.tableState();
       currentTableState.pagination.start = 0;
       $scope.tableCtrl.pipe(currentTableState);
