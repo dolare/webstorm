@@ -1,9 +1,15 @@
 var comparison = angular.module('myApp')
 comparison.controller('ComparisonController',
-  function($scope, $http, authenticationSvc, avatarService) {
+  function($scope, $http, authenticationSvc, avatarService, $timeout) {
 
   	var token = authenticationSvc.getUserInfo().accessToken;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
+
+    
+    
+    // $timeout( function(){
+    //         jQuery('.comparison_height').scrollLock();
+    //     }, 5000 );
 
   	 $http({
           url: '/api/upgrid/non_degree/schools?page_size=100',

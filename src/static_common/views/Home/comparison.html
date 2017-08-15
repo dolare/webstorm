@@ -28,7 +28,7 @@
                                             
                                        
                                 </div>
-                                <div class="block-content block-content-full text-center comparison_height frame">
+                                <div class="block-content block-content-full text-center comparison_height frame frame-white-track">
                                 
                                     <div ng-show="!cat1 || cat1.length===0" class="alert alert-warning">
                                         
@@ -37,7 +37,7 @@
 
 
                                     
-                                    <table ng-show="cat1.length>0" class="table table-striped-info table-borderless table-header-bg">
+                                    <table ng-show="cat1.length>0" class="table table-striped-gray table-borderless table-header-bg">
                                         <colgroup>
                                          
                                           <col width="10%"/>
@@ -50,7 +50,7 @@
                                                 <input type="radio" name="radio-comparison1" value="{{row.object_id}}" ng-model="$parent.radio_value1" required="required" ng-change="get_courses1($parent.school1, $parent.radio_value1)"><span></span>
                                             </label>
                                             </td>
-                                                <td class="text-right">{{row.name}}</td>
+                                                <td class="text-right text-primary font-w600">{{row.name}}</td>
                                                 
                                             </tr>
                                         </tbody>
@@ -71,7 +71,7 @@
                                                             <option value="">Please select the school</option>
                                                         </select>
                                 </div>
-                                <div class="block-content block-content-full text-center comparison_height frame">
+                                <div class="block-content block-content-full text-center comparison_height frame frame-white-track">
 
                                     <div ng-show="!cat2 || cat2.length===0" class="alert alert-warning">
                                         
@@ -79,7 +79,7 @@
                                     </div>
 
                                     
-                                    <table ng-show="cat2.length>0" class="table table-striped-info table-borderless table-header-bg">
+                                    <table ng-show="cat2.length>0" class="table table-striped-gray table-borderless table-header-bg">
                                         <colgroup>
                                          
                                           <col width="10%"/>
@@ -92,7 +92,7 @@
                                                 <input type="radio" name="radio-comparison2" value="{{row.object_id}}" ng-model="$parent.radio_value2" required="required" ng-change="get_courses2($parent.school2, $parent.radio_value2)"><span></span>
                                             </label>
                                             </td>
-                                                <td class="text-right">{{row.name}}</td>
+                                                <td class="text-right text-primary font-w600">{{row.name}}</td>
                                                 
                                             </tr>
                                         </tbody>
@@ -120,16 +120,17 @@
                                     
 
                                     <div class="row">
-                                   <div class="col-md-6 border-r">
+                                   <div class="col-md-6">
 
-                                  
-                                   <div ng-show="!courses1 || courses1.length===0" class="alert alert-warning">
+
+                                    <div class="block-content block-content-full text-center comparison_result_height frame frame-white-track">
+                                          <div ng-show="!courses1 || courses1.length===0" class="alert alert-warning">
                                         
                                         <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection.</p>
                                     </div>
 
 
-                                   <table ng-show="courses1.length > 0" class="table push-15">
+                                   <table ng-show="courses1.length > 0" class="table push-15 table-striped-info">
                                         <colgroup>
                                          
                                           <col width="35%"/>
@@ -139,21 +140,21 @@
                                         </colgroup>
 
                                         <thead>
-                        <tr class="font-w600 text-primary">
+                        <tr class="font-w600 bg-primary text-white">
                          
-                          <td class="text-primary bg-gray-lighter font-w600 text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
+                          <td class="font-w600 text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
 
-                          <td class="text-primary bg-gray-lighter font-w600text-center ex-table-headercell">
+                          <td class="font-w600text-center ex-table-headercell">
                             
                             TYPE
                             
                           </td>
-                          <td class="text-primary bg-gray-lighter font-w600 text-center ex-table-headercell">
+                          <td class="font-w600 text-center ex-table-headercell">
                             
                             SCHEDULE
                             
                           </td>
-                          <td class="text-primary bg-gray-lighter font-w600 text-center ex-table-headercell">
+                          <td class="font-w600 text-center ex-table-headercell">
                            
                             TUITION
                            
@@ -226,11 +227,18 @@
                                         </tbody>
                                     </table>
 
+                                    </div>
+                                  
+                                 
+
                                    </div>
 
 
 
                                    <div class="col-md-6">
+
+
+                                    <div class="block-content block-content-full text-center comparison_result_height frame frame-white-track">
 
                                     <div ng-show="!courses2 || courses2.length===0" class="alert alert-warning">
                                         
@@ -238,7 +246,7 @@
                                     </div>
 
 
-                                   <table ng-show="courses2.length > 0" class="table push-15">
+                                   <table ng-show="courses2.length > 0" class="table push-15 table-striped-success">
                                         <colgroup>
                                          
                                           <col width="35%"/>
@@ -248,21 +256,21 @@
                                         </colgroup>
 
                                         <thead>
-                        <tr class="font-w600 text-primary">
+                        <tr class="font-w600 text-white bg-success">
                          
-                          <td class="text-primary bg-gray-lighter font-w600 text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
+                          <td class="font-w600 text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
 
-                          <td class="text-primary bg-gray-lighter font-w600text-center ex-table-headercell">
+                          <td class="font-w600text-center ex-table-headercell">
                             
                             TYPE
                             
                           </td>
-                          <td class="text-primary bg-gray-lighter font-w600 text-center ex-table-headercell">
+                          <td class="font-w600 text-center ex-table-headercell">
                             
                             SCHEDULE
                             
                           </td>
-                          <td class="text-primary bg-gray-lighter font-w600 text-center ex-table-headercell">
+                          <td class="font-w600 text-center ex-table-headercell">
                            
                             TUITION
                            
@@ -334,6 +342,9 @@
                                             </tr>
                                         </tbody>
                                     </table>
+
+
+                                    </div>
                                    </div>
 
                                    </div>
