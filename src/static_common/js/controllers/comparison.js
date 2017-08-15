@@ -51,6 +51,7 @@ comparison.controller('ComparisonController',
 
      	} else {
      		$scope.cat1 = null
+     		$scope.courses1 = null
      	}
      	
      	
@@ -79,6 +80,7 @@ comparison.controller('ComparisonController',
      });
      	} else {
      		$scope.cat2 = null
+     		$scope.courses2 = null
      	}
      	
 
@@ -86,7 +88,7 @@ comparison.controller('ComparisonController',
 
 
 
-     $scope.get_courses = function(school_id, cat_id) {
+     $scope.get_courses1 = function(school_id, cat_id) {
      	
      	console.log("school_id="+school_id+" cat_id="+cat_id)
 
@@ -98,9 +100,35 @@ comparison.controller('ComparisonController',
           }
 	    }).then(function (response) {
 
-	       $scope.courses = response.data
+	       $scope.courses1 = response.data
 
-	       console.log("return cat"+ JSON.stringify($scope.courses, null, 4));
+	       console.log("return courses"+ JSON.stringify($scope.courses1, null, 4));
+	       
+	    }).
+	     catch(function(error){
+	        console.log('an error occurred...'+JSON.stringify(error));
+
+	     });
+
+     }
+
+
+
+     $scope.get_courses2 = function(school_id, cat_id) {
+     	
+     	console.log("school_id="+school_id+" cat_id="+cat_id)
+
+     	$http({
+          url: '/api/upgrid/non_degree/schools/'+ school_id +  '/categories/' + cat_id + '/courses',
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+	    }).then(function (response) {
+
+	       $scope.courses2 = response.data
+
+	       console.log("return courses"+ JSON.stringify($scope.courses2, null, 4));
 	       
 	    }).
 	     catch(function(error){
