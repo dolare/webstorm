@@ -342,7 +342,7 @@ class SubuserListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'title', 'department',
+        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'title', 'department', 'main_user_id',
                   'contact_name', 'position', 'phone', 'customer_program', 'university', 'school', 'account_type')
 
     def get_customer_program(self, obj):

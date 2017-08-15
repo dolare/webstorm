@@ -14,7 +14,7 @@ class UniversityCustomerFilter(FilterSet):
 
     class Meta:
         model = UniversityCustomer
-        fields = ['main_user_id', 'is_active', 'id']
+        fields = ['main_user_id', 'is_active', 'id', 'is_demo', ]
 
     def main_user_filter(self, queryset, name, value):
         return queryset.filter(main_user_id=str(value))
