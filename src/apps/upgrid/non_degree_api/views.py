@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework.permissions import AllowAny
@@ -22,11 +22,12 @@ from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer,
     ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer, SharedReportSerializer, \
     CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer, AMPReportDetailSerializer, \
     ReportUpdateSerializer, UniversitySchoolClientSerializer, UniversitySchoolCategorySerializer, \
-    CourseSerializer
+    CourseSerializer, NonDegreeWhoopsReportListSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter, \
-    UniversitySchoolCategoryFilter
-from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport
+    UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter
+from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport, \
+    NonDegreeWhoopsReport
 
 
 class PermissionMixin(object):
@@ -46,7 +47,7 @@ class UniversitySchoolListAPI(PermissionMixin, ListAPIView):
     pagination_class = UniversitySchoolPagination
     filter_class = UniversitySchoolFilter
 
-    search_fields = ('ceeb', 'school', )
+    search_fields = ('ceeb', 'school', 'university_foreign_key__name',)
     ordering_fields = ('ceeb', 'school', )
     ordering = ('ceeb', 'school', )      # default ordering
 
@@ -503,3 +504,28 @@ class AMPReportDetailAPI(PermissionMixin, RetrieveModelMixin, DestroyModelMixin,
         self.course_id = course_id
         self.url_id = url_id
         return self.destroy(request, *args, **kwargs)
+
+
+class NonDegreeWhoopsReportListAPI(PermissionMixin, ListAPIView):
+    """
+    Get list of user university school API
+    """
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    serializer_class = NonDegreeWhoopsReportListSerializer
+    pagination_class = BasePagination
+    filter_class = NonDegreeWhoopsReportFilter
+
+    search_fields = ('active',)
+    ordering_fields = ('date_created', 'date_modified')
+    ordering = ('-date_created', )      # default ordering
+
+    def get_queryset(self, *args, **kwargs):
+        if self.is_manager():
+            non_degree_whoops = NonDegreeWhoopsReport.objects.all()
+        else:
+            try:
+                user = UniversityCustomer.objects.get(id=self.request.user.id)
+            except ObjectDoesNotExist:
+                return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
+            non_degree_whoops = NonDegreeWhoopsReport.objects.filter(university_school=user.Ceeb)
+        return non_degree_whoops

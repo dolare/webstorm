@@ -5,7 +5,7 @@ from rest_framework.filters import FilterSet
 
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeAMPReport, \
     NonDegreeCourseURL
-from ..models import NonDegreeReport
+from ..models import NonDegreeReport, NonDegreeWhoopsReport
 
 
 class UniversitySchoolFilter(FilterSet):
@@ -60,3 +60,11 @@ class UniversitySchoolCategoryFilter(FilterSet):
     class Meta:
         model = NonDegreeCategory
         fields = ['active', ]
+
+
+class NonDegreeWhoopsReportFilter(FilterSet):
+    university_school = django_filters.UUIDFilter(name="university_school__object_id")
+
+    class Meta:
+        model = NonDegreeWhoopsReport
+        fields = ['active', 'university_school', ]

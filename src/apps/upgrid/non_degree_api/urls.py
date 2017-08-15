@@ -2,7 +2,8 @@ from django.conf.urls import url
 
 from .views import UniversitySchoolListAPI, UniversitySchoolDetailAPI, ReportAPI, ReportCreateListAPI, ReportOverview, \
     ReportOverviewLatest, SharedReportCreateAPI, SharedReportAPI, CourseListAPI, CourseURLListAPI, AMPReportListAPI, \
-    AMPReportDetailAPI, UniversitySchoolClientAPI, UniversitySchoolCategoryAPI, UniversitySchoolCategoryCourseAPI
+    AMPReportDetailAPI, UniversitySchoolClientAPI, UniversitySchoolCategoryAPI, UniversitySchoolCategoryCourseAPI, \
+    NonDegreeWhoopsReportListAPI
 
 urlpatterns = [
 
@@ -32,5 +33,6 @@ urlpatterns = [
     url(r'^schools/(?P<school_id>[0-9a-fA-F\-]+)/courses/(?P<course_id>[0-9a-fA-F\-]+)/urls/'
         r'(?P<url_id>[0-9a-fA-F\-]+)/amp_reports/(?P<object_id>[0-9a-fA-F\-]+)$', AMPReportDetailAPI.as_view(),
         name="amp_report_detail"),
+    url(r'^whoops_reports$', NonDegreeWhoopsReportListAPI.as_view(), name="reports"),
 ]
 
