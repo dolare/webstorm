@@ -46,7 +46,7 @@ class UniversitySchoolListAPI(PermissionMixin, ListAPIView):
     pagination_class = UniversitySchoolPagination
     filter_class = UniversitySchoolFilter
 
-    search_fields = ('ceeb', 'school', )
+    search_fields = ('ceeb', 'school', 'university_foreign_key__name',)
     ordering_fields = ('ceeb', 'school', )
     ordering = ('ceeb', 'school', )      # default ordering
 

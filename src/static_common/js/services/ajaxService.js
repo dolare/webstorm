@@ -324,6 +324,7 @@ angular.module('myApp').factory("ajaxService",
 
       var deferred = $q.defer();
 
+     
       console.log("page num =  " + (start / number + 1));
       console.log("number =" + number);
       console.log("params=" + JSON.stringify(params));
