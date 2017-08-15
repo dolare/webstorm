@@ -33,7 +33,7 @@ class UniversityCustomerFilter(FilterSet):
             main_user_qs = queryset.filter(customerfeaturemapping__feature=feature)
             sub_user_qs = UniversityCustomer.objects.filter(main_user_id__in=[str(user.id) for user in main_user_qs])
             return main_user_qs.union(sub_user_qs)
-        return UniversityCustomer.none()
+        return UniversityCustomer.objects.none()
 
 
 class ClientAndProgramRelationFilter(FilterSet):
