@@ -447,6 +447,8 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                                '/static/js/services/executiveService.js',
+                                '/static/js/services/ajaxService.js',
                                 '/static/js/third-party/angular-bootstrap-confirm.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
                                 '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
@@ -460,8 +462,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                                 '/static/js/services/updateService.js',
                                 '/static/js/controllers/admin-executive.js',
-                                '/static/js/services/executiveService.js',
-                                '/static/js/services/ajaxService.js',
+                                
    
                             ]
                         });
@@ -825,6 +826,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             files: [
                               '/static/js/services/tableService.js',
                               '/static/js/services/reportService.js',
+                              '/static/js/services/executiveService.js',
                               '/static/js/services/ajaxService.js',
                               '/static/js/third-party/clipboard.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
@@ -872,6 +874,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             files: [
                               '/static/js/services/tableService.js',
                               '/static/js/services/reportService.js',
+                              '/static/js/services/executiveService.js',
                               '/static/js/services/ajaxService.js',
                               '/static/js/services/updateService.js',
                               '/static/js/third-party/clipboard.min.js',
@@ -928,6 +931,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                              '/static/js/services/executiveService.js',
                               '/static/js/services/ajaxService.js',
                               '/static/js/third-party/clipboard.min.js',
                               '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
@@ -988,6 +992,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             files: [
                               'https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.5/pako.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/jsdiff/3.2.0/diff.min.js',
+                              '/static/js/services/executiveService.js',
                               '/static/js/services/ajaxService.js',
                               '/static/js/third-party/clipboard.min.js',
                               '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
@@ -998,7 +1003,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
                             
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
-                              '/static/js/services/executiveService.js',
+                              
 
                               '/static/js/controllers/amp.js',
                              
@@ -1206,6 +1211,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             serie: true,
                             files: [
                               '/static/js/services/tableService.js',
+                              '/static/js/services/executiveService.js',
                               '/static/js/services/ajaxService.js',
                               '/static/js/controllers/profile.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',

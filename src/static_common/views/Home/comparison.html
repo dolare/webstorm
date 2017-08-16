@@ -31,21 +31,27 @@
                                 </div>
                                 <div class="block-content block-content-full text-center comparison_height frame frame-white-track">
                                 
-                                    <div ng-show="!cat1 || cat1.length===0" class="alert alert-warning">
+                                    <div ng-show="!cat1" class="alert alert-warning">
                                         
                                         <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection.</p>
                                     </div>
 
 
                                     
-                                    <table ng-show="cat1.length>0" class="table table-striped-gray table-header-bg">
+                                    <div ng-show="cat1.length>=0">
+
+                                        <!-- <div class="pull-right font-w600 text-muted push-10">CATEGORIES: {{cat1.length}}</div> -->
+
+                                        <span class="badge badge-info push-10 pull-right">category(s)&nbsp;:&nbsp; {{cat1.length}}</span>
+
+                                        <table class="table table-striped-gray table-header-bg">
                                         <colgroup>
                                          
                                           <col width="10%"/>
                                           <col width="90%" />
                                         </colgroup>
                                         <tbody>
-                                           
+
                                             <tr ng-repeat="row in cat1">
                                                 <td class="text-center"><label class="css-input css-radio css-radio-primary push-10-r css-input-comparison">
                                                 <input type="radio" name="radio-comparison1" value="{{row.object_id}}" ng-model="$parent.radio_value1" required="required" ng-change="get_courses1($parent.school1, $parent.radio_value1)"><span></span>
@@ -56,6 +62,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    </div>
+                                    
 
 
 
@@ -75,13 +83,19 @@
                                 </div>
                                 <div class="block-content block-content-full text-center comparison_height frame frame-white-track">
 
-                                    <div ng-show="!cat2 || cat2.length===0" class="alert alert-warning">
+                                    <div ng-show="!cat2" class="alert alert-warning">
                                         
                                         <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection.</p>
                                     </div>
 
+
+                                    <div ng-show="cat2.length>=0">
+
+                                     
+                                        <span class="badge badge-info push-10 pull-right">category(s)&nbsp;:&nbsp; {{cat2.length}}</span>
+
                                     
-                                    <table ng-show="cat2.length>0" class="table table-striped-gray table-header-bg">
+                                    <table class="table table-striped-gray table-header-bg">
                                         <colgroup>
                                          
                                           <col width="10%"/>
@@ -99,6 +113,8 @@
                                             </tr>
                                         </tbody>
                                     </table>
+
+                                    </div>
 
                                     
                                 </div>
@@ -144,7 +160,7 @@
                                         <thead>
                         <tr class="font-w600 bg-primary text-white">
                          
-                          <td class="font-w600 text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
+                          <td class="font-w600 text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE <span class="badge badge-transparent" style="vertical-align: top;">{{courses1.length}}</span></td>
 
                           <td class="font-w600text-center ex-table-headercell">
                             
@@ -260,7 +276,7 @@
                                         <thead>
                         <tr class="font-w600 text-white bg-success">
                          
-                          <td class="font-w600 text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
+                          <td class="font-w600 text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE <span class="badge badge-transparent" style="vertical-align: top;">{{courses2.length}}</span></td>
 
                           <td class="font-w600text-center ex-table-headercell">
                             
