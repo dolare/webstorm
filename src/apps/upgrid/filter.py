@@ -30,10 +30,8 @@ class UniversityCustomerFilter(FilterSet):
         except ObjectDoesNotExist:
             return queryset
         if value is True:
-            main_user_qs = queryset.filter(customerfeaturemapping__feature=feature).filter(account_type='main')
-            sub_user_qs = UniversityCustomer.objects.filter(main_user_id__in=[str(user.id) for user in main_user_qs])
-            return main_user_qs.union(sub_user_qs)
-        return UniversityCustomer.objects.none()
+            return queryset.filter(customerfeaturemapping__feature=feature)
+        return queryset.exclude(customerfeaturemapping__feature=feature)
 
 
 class ClientAndProgramRelationFilter(FilterSet):
