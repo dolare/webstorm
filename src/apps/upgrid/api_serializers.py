@@ -335,6 +335,35 @@ class UniversityAndSchoolSerializer(serializers.ModelSerializer):
 
 # Used for main user get all his subuser detail
 
+class UniversityCustomerListSerializer(serializers.ModelSerializer):
+    customer_program = SerializerMethodField()
+    university = SerializerMethodField()
+    school = SerializerMethodField()
+    sub_user = SerializerMethodField()
+
+    class Meta:
+        model = UniversityCustomer
+        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'title', 'department', 'main_user_id',
+                  'contact_name', 'position', 'phone', 'customer_program', 'university', 'school', 'account_type',
+                  'sub_user',)
+
+    def get_customer_program(self, obj):
+        program_list = ClientAndProgramRelation.objects.filter(client=obj).values('client_program')
+        programs = UniversityCustomerProgram.objects.filter(object_id__in=program_list)
+        serializer = ClientProgramSerializer(programs, many=True)
+        return serializer.data
+
+    def get_university(self, obj):
+        return obj.Ceeb.university_foreign_key.name
+
+    def get_school(self, obj):
+        return obj.Ceeb.school
+
+    def get_sub_user(self, obj):
+        sub_users = UniversityCustomer.objects.filter(main_user_id=str(obj.id))
+        return SubuserListSerializer(sub_users, many=True).data
+
+
 class SubuserListSerializer(serializers.ModelSerializer):
     customer_program = SerializerMethodField()
     university = SerializerMethodField()
