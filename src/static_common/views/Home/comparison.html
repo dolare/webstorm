@@ -15,12 +15,13 @@
   <div class="content content-full">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="block block-rounded block-opt-refresh-icon8">
+                            <div class="block block-rounded block-opt-refresh-icon8" style="border-radius: 6px 6px 0 0">
 
 
 
 
-                                <div class="block-header" style="border-bottom: 1px solid #f4f4f4; border-top: 6px solid #5c90d2; padding: 20px">
+                                <div class="block-header" style="border-bottom: 1px solid #f4f4f4; border-top: 6px solid #5c90d2; padding: 20px; border-top-left-radius: 6px;
+    border-top-right-radius: 6px;">
                                    
                                                 <select class="form-control" ng-model="school1" id="simple-classic-school-non-degree" name="simple-classic-school-non-degree" ng-options="s.object_id as s.school+ ' (' + s.university + ')' for s in schools" ng-change="get_cat1(school1)">
                                                             <option value="">Please select the school</option>
@@ -37,7 +38,7 @@
 
 
                                     
-                                    <table ng-show="cat1.length>0" class="table table-striped-gray table-borderless table-header-bg">
+                                    <table ng-show="cat1.length>0" class="table table-striped-gray table-header-bg">
                                         <colgroup>
                                          
                                           <col width="10%"/>
@@ -64,8 +65,9 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="block block-rounded block-opt-refresh-icon8">
-                                <div class="block-header" style="border-bottom: 1px solid #f4f4f4; border-top: 6px solid #46c37b; padding: 20px">
+                            <div class="block block-rounded block-opt-refresh-icon8"  style="border-radius: 6px 6px 0 0;">
+                                <div class="block-header" style="border-bottom: 1px solid #f4f4f4; border-top: 6px solid #46c37b; padding: 20px;padding: 20px; border-top-left-radius: 6px;
+    border-top-right-radius: 6px;">
                                        
                                                  <select class="form-control" ng-model="school2" id="simple-classic-school-non-degree1" name="simple-classic-school-non-degree1" ng-options="s.object_id as s.school +' ('  + s.university + ')' for s in schools" ng-change="get_cat2(school2)">
                                                             <option value="">Please select the school</option>
@@ -79,7 +81,7 @@
                                     </div>
 
                                     
-                                    <table ng-show="cat2.length>0" class="table table-striped-gray table-borderless table-header-bg">
+                                    <table ng-show="cat2.length>0" class="table table-striped-gray table-header-bg">
                                         <colgroup>
                                          
                                           <col width="10%"/>
@@ -110,8 +112,8 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="block block-rounded block-opt-refresh-icon8">
-                                <div class="block-header font-w600" style="border-bottom: 1px solid #f4f4f4;">
+                            <div class="block block-rounded block-opt-refresh-icon8" style="border-top: 6px solid salmon;">
+                                <div class="block-header font-w600" style="border-bottom: 1px solid #f4f4f4;padding: 20px">
                                    
                                                Comparison Result
                                        
@@ -146,7 +148,7 @@
 
                           <td class="font-w600text-center ex-table-headercell">
                             
-                            TYPE
+                            FORMAT
                             
                           </td>
                           <td class="font-w600 text-center ex-table-headercell">
@@ -166,7 +168,7 @@
                                         <tbody>
                                            
                                             <tr ng-repeat="course in courses1">
-                                                <td style="vertical-align: middle;padding: 15px;text-align: left;" >
+                                                <td style="vertical-align: middle;padding: 10px;text-align: left;" >
 
                           <span ng-if="course.name">{{course.name}} <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-external-link" aria-hidden="true"></i></a></span>
                           <span ng-if="!course.name" class="font-w600 text-gray label-na">N/A</span>
@@ -174,14 +176,14 @@
                           </td>
 
 
-                          <td style="padding: 15px;" >
+                          <td style="padding: 10px;" >
 
                           
 
                             <span ng-if="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.location_info"></i> {{course.type}}</span>
                             <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
-                          <td style="padding: 15px;" >
+                          <td style="padding: 10px;" >
 
                          
                             <script type="text/ng-template" id="course_dates.html">
@@ -202,7 +204,7 @@
 
                           </td>
                           
-                          <td style="padding: 15px;" >
+                          <td style="padding: 10px;" >
                         
 
                             <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
@@ -262,7 +264,7 @@
 
                           <td class="font-w600text-center ex-table-headercell">
                             
-                            TYPE
+                            FORMAT
                             
                           </td>
                           <td class="font-w600 text-center ex-table-headercell">
@@ -282,7 +284,7 @@
                                         <tbody>
                                            
                                             <tr ng-repeat="course in courses2">
-                                                <td style="vertical-align: middle;padding: 15px;text-align: left;" >
+                                                <td style="vertical-align: middle;padding: 10px;text-align: left;" >
 
                           <span ng-if="course.name">{{course.name}} <a ng-if="course.url" href="{{course.url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-external-link" aria-hidden="true"></i></a></span>
                           <span ng-if="!course.name" class="font-w600 text-gray label-na">N/A</span>
@@ -290,14 +292,14 @@
                           </td>
 
 
-                          <td style="padding: 15px;" >
+                          <td style="padding: 10px;" >
 
                           
 
                             <span ng-if="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.location_info"></i> {{course.type}}</span>
                             <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
                           </td>
-                          <td style="padding: 15px;" >
+                          <td style="padding: 10px;" >
 
                          
                             <script type="text/ng-template" id="course_dates.html">
@@ -318,7 +320,7 @@
 
                           </td>
                           
-                          <td style="padding: 15px;" >
+                          <td style="padding: 10px;" >
                         
 
                             <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
