@@ -1027,6 +1027,68 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
 
+  state('non_degree_whoops', {
+
+    url: '/non_degree_whoops',
+    templateUrl: '/static/views/Home/non_degree_whoops.html',
+    controller: 'NonDegreeWhoopsController',
+    parent: 'success_demo',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo) {
+          console.log("authenticated");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+        } else {
+          console.log('fail to see the page, route change error');
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsNDW: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              'https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.5/pako.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/jsdiff/3.2.0/diff.min.js',
+                              '/static/js/services/executiveService.js',
+                              '/static/js/services/ajaxService.js',
+                              '/static/js/third-party/clipboard.min.js',
+                              '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+
+
+                              '/static/js/controllers/non_degree_whoops.js',
+
+
+                            ]
+                        });
+                    }],
+
+      //get raw data
+      // Table: function(depsNondegree, ajaxService, authenticationSvc) {
+      //   var userInfo = authenticationSvc.getUserInfo();
+      //   console.log('*************');
+      //   return ajaxService.nonDegree(userInfo.accessToken);
+
+      // }
+
+
+    }
+
+  }).
+
 
   state('comparison', {
 

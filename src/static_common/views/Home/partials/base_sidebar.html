@@ -176,6 +176,19 @@
                     </a>
                 </li>
 
+                <li class="animate-show" style="position: relative;" ng-show="(admin==='True'&&avatar_id!=='')||(admin!=='True'&&_.contains(admin, 'AMP'))">
+                    <a data-ui-sref="non_degree_whoops" data-ui-sref-active="active" >
+                        <i class="icon-star"></i><span class="sidebar-mini-hide">Exec. Ed. Whoops<label class="label label-default text-info bg-info-light" style="border: 1px solid #70b9eb;
+                                                    font-size: 8px;
+                                                    padding: 2px 4px;
+                                                    position: absolute;
+                                                    margin-left: 5px;
+                                                    top: 7px;
+                                                    background: transparent;
+                                                    border-radius: 10px;">BETA</label></span>
+                    </a>
+                </li>
+
 
                 <li class="animate-show" style="position: relative;" ng-show="(admin==='True'&&avatar_id!=='')||(admin!=='True'&&_.contains(admin, 'non-degree'))">
                     <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="icon-puzzle"></i><span class="sidebar-mini-hide">Peer Analysis <label class="label label-default text-info bg-info-light" style="border: 1px solid #70b9eb;
