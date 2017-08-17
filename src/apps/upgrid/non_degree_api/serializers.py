@@ -26,6 +26,7 @@ class UniversitySchoolListSerializer(ModelSerializer):
 
     def get_non_degree_client(self, obj):
         university_customers = obj.non_degree_user.all()
+        university_customers = university_customers.filter(is_demo=False)
         return UniversityCustomerSerializer(university_customers, many=True).data
 
 
