@@ -81,6 +81,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
       ajaxService.getPage(start, number, url, tableState, token, $scope.getSchoolsAPIFilters).then(function(resp_schools) {
         $scope.non_degree_schools = resp_schools.data.results;
+        $scope.schools_count = resp_schools.data.count;
         tableState.pagination.numberOfPages = resp_schools.numberOfPages; // Set the number of pages so the pagination can update.
         tableState.pagination.totalItemCount = resp_schools.data.count; // This property of tableState.pagination is currently not being used yet.
 
