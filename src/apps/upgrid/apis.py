@@ -577,11 +577,11 @@ class CustomerDetail(APIView):
 
 class UniversityCustomerListAPI(generics.ListAPIView):
     """
-    Get list of sub user
+    Get list of UniversityCustomer
 
     """
     filter_backends = (DjangoFilterBackend, )
-    serializer_class = SubuserListSerializer
+    serializer_class = UniversityCustomerListSerializer
     pagination_class = BasePagination
     filter_class = UniversityCustomerFilter
 
