@@ -1,4 +1,4 @@
-Django==1.11
+Django==1.10
 psycopg2==2.6.1
 wheel==0.24.0
 
