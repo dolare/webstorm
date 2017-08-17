@@ -448,7 +448,7 @@
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
                                                 placement="top-right"
-                                                on-confirm="confirm_update('program_detail', $index, ['job_placement', 'job_placement_url'])"
+                                                on-confirm="confirm_update('program_detail', $index, ['job_placement'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
                                                 cancel-button-type="default"
@@ -461,11 +461,49 @@
                                                     </span>                                   
                                                 </div> 
 
-                                                    <pre ng-if="row.job_placement&&row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;">{{row.job_placement}}</a></pre>
 
-                                                    <pre ng-if="row.job_placement&&!row.job_placement_url">{{row.job_placement}}</pre>
+                                                    <pre ng-if="row.job_placement">{{row.job_placement}}</pre>
 
                                                     <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.job_placement" >N/A</span>
+
+                                                </td>
+                                        </tr>
+
+
+                                         <tr  ng-hide = "only_update && !e_show_update['job_placement_url'].length">
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Job placement link</td>
+                                            <td class="ribbon ribbon-modern ribbon-city ribbon-update" ng-class="{'bg-highlight' : !row.job_placement_url && $index === 0,  'bg-gray-lighter' : !row.job_placement_url && $index !== 0}" ng-repeat = "row in e_array_final[0]">
+
+                                                <div class="ribbon-box font-w600" 
+
+                                                
+                                                mwl-confirm
+                                                title="{{popover.title}}"
+
+                                                message="{{e_show_update['job_placement_url'][$index]}}"
+
+                                                confirm-text="{{popover.confirmText}}"
+                                                cancel-text="{{popover.cancelText}}"
+                                                placement="top-right"
+                                                on-confirm="confirm_update('program_detail', $index, ['job_placement_url'])"
+                                                on-cancel=""
+                                                confirm-button-type="danger"
+                                                cancel-button-type="default"
+                                                animation="true"
+                                                
+
+                                                ng-show="e_show_update['job_placement_url'][$index]"
+                                                is-disabled = "!e_show_update['job_placement_url'][$index]">                        
+                                                    <span><i class="fa fa-star"></i>
+                                                    </span>                                   
+                                                </div> 
+
+                                                    <div ng-if="row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></div>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.job_placement_url" >N/A</span>
+
+
+
 
                                                 </td>
                                         </tr>
@@ -1097,7 +1135,7 @@
                                                 cancel-text="{{popover.cancelText}}"
                                                 placement="top-right"
 
-                                                on-confirm="confirm_update('tuition', $index, ['tuition_per_unit', 'tuition_unit.name', 'school_cost_url', 'university_cost_url'])"
+                                                on-confirm="confirm_update('tuition', $index, ['tuition_per_unit', 'tuition_unit.name'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
                                                 cancel-button-type="default"
@@ -1110,22 +1148,8 @@
                                                     </span>                                   
                                                 </div> 
                                                    
-                                                    <span ng-if="row.school_cost_url&&row.tuition_per_unit"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} 
-                                                        <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
-                                                        <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
-                                                         {{row.tuition_unit.name}}</a>
-                                                    </span>
-
-                                                    <span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit">
-                                                    <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }}  
-
-                                                        <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
-                                                        <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
-
-                                                    {{row.tuition_unit.name}}</a>
-                                                    </span>
-
-                                                    <span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit">
+                                                    
+                                                    <span ng-if="row.tuition_per_unit">
                                                     {{row.tuition_per_unit | currency }} 
                                                         <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
                                                         <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
@@ -1152,7 +1176,7 @@
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
                                                 placement="top-right"
-                                                on-confirm="confirm_update('tuition', $index, ['tuition_per_unit_out_state', 'tuition_unit.name', 'school_cost_url', 'university_cost_url'])"
+                                                on-confirm="confirm_update('tuition', $index, ['tuition_per_unit_out_state', 'tuition_unit.name'])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
                                                 cancel-button-type="default"
@@ -1165,26 +1189,56 @@
                                                     </span>                                   
                                                 </div> 
 
-                                                    <span ng-if="row.school_cost_url&&row.tuition_per_unit_out_state">
-                                                    <a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit_out_state | currency }} 
-                                                        <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
-                                                        <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
-
-                                                    {{row.tuition_unit.name}}</a></span>
-
-                                                    <span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit_out_state"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit_out_state | currency }} 
-                                                        <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
-                                                        <span ng-if="row.tuition_unit.name==='The whole program'">for </span> 
-                                                    {{row.tuition_unit.name}}</a>
-                                                    </span>
-
-                                                    <span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit_out_state">{{row.tuition_per_unit_out_state | currency }} 
+                                                    <span ng-if="row.tuition_per_unit_out_state">{{row.tuition_per_unit_out_state | currency }} 
                                                         <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
                                                         <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
                                                     {{row.tuition_unit.name}}
                                                     </span>
 
                                                     <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.tuition_per_unit_out_state" >N/A</span>
+
+                                                </td>
+                                        </tr>
+
+
+
+                                        <tr  ng-hide = "only_update && !e_show_update['tuition_url'].length">
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Tuition link</td>
+                                            <td class="ribbon ribbon-modern ribbon-city ribbon-update" ng-class="{'bg-highlight' : !row.school_cost_url&&!row.university_cost_url && $index === 0,  'bg-gray-lighter' : !row.school_cost_url&&!row.university_cost_url && $index !== 0}" ng-repeat = "row in e_array_final[2]">
+
+                                                <div class="ribbon-box font-w600"  
+                                                
+                                                mwl-confirm
+                                                title="{{popover.title}}"
+
+                                                message="{{e_show_update['tuition_url'][$index]}}"
+
+                                                confirm-text="{{popover.confirmText}}"
+                                                cancel-text="{{popover.cancelText}}"
+                                                placement="top-right"
+
+                                                on-confirm="confirm_update('tuition', $index, ['school_cost_url', 'university_cost_url'])"
+                                                on-cancel=""
+                                                confirm-button-type="danger"
+                                                cancel-button-type="default"
+                                                animation="true"
+                                                
+
+                                                ng-show="e_show_update['tuition_url'][$index]"
+                                                is-disabled = "!e_show_update['tuition_url'][$index]">                        
+                                                    <span><i class="fa fa-star"></i>
+                                                    </span>                                   
+                                                </div> 
+                                                   
+                                                    <span ng-if="row.school_cost_url"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
+                                                    </span>
+
+                                                    <span ng-if="!row.school_cost_url&&row.university_cost_url">
+                                                    <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
+                                                    </span>
+
+                                                   
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.school_cost_url && !row.university_cost_url" >N/A</span>
 
                                                 </td>
                                         </tr>

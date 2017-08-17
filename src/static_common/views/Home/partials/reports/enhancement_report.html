@@ -228,11 +228,34 @@
                                                     <span class="label_new">new
                                                     </span>                                   
                                                 </div> 
-                                                    <pre ng-if="row.job_placement&&row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;">{{row.job_placement}}</a></pre>
+                                                   
 
-                                                    <pre ng-if="row.job_placement&&!row.job_placement_url">{{row.job_placement}}</pre>
+                                                    <pre ng-if="row.job_placement">{{row.job_placement}}</pre>
 
                                                     <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.job_placement" >N/A</span>
+
+                                            </td>
+                                        </tr>
+
+                                         <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Job placement link</td>
+                                            <td class="ribbon ribbon-modern ribbon-city ribbon-update" ng-class="{'bg-highlight' : !row.job_placement_url && $index === 0,  'bg-gray-lighter' : !row.job_placement_url && $index !== 0}" ng-repeat = "row in report.e_array_final[0]">
+
+                                                <div class="ribbon-box font-w600" 
+                                                data-popover-title="HISTORY"                                                          
+                                                data-uib-popover-html= "'<a  href='+'{{e_show_update['job_placement_url'][$index]}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'"
+
+                                                ng-show="e_show_update['job_placement_url'][$index]"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover">                        
+                                                    <span class="label_new">new
+                                                    </span>                                   
+                                                </div> 
+                                                    <div ng-if="row.job_placement_url"><a href="{{row.job_placement_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a></div>
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.job_placement_url" >N/A</span>
 
                                             </td>
                                         </tr>
@@ -276,7 +299,7 @@
 
                                                 <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
-                                                data-uib-popover="{{e_show_update['additional_url'][$index]}}"
+                                                data-uib-popover-html = "'<a  href='+'{{e_show_update['additional_url'][$index]}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'"
 
                                                 ng-show="e_show_update['additional_url'][$index]"
 
@@ -306,7 +329,7 @@
 
                                                 <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
-                                                data-uib-popover="{{e_show_update['program_faq_url'][$index]}}"
+                                                data-uib-popover-html="'<a  href='+'{{e_show_update['program_faq_url'][$index]}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'"
 
                                                 ng-show="e_show_update['program_faq_url'][$index]"
 
@@ -335,7 +358,7 @@
 
                                                 <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
-                                                data-uib-popover="{{e_show_update['stats_profile_url'][$index]}}"
+                                                data-uib-popover-html="'<a  href='+'{{e_show_update['stats_profile_url'][$index]}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'"
 
                                                 ng-show="e_show_update['stats_profile_url'][$index]"
 
@@ -666,7 +689,7 @@
 
                                                 <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
-                                                data-uib-popover="{{e_show_update['curriculum_url'][$index]}}"
+                                                data-uib-popover-html = "'<a  href='+'{{e_show_update['curriculum_url'][$index]}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'"
 
                                                 ng-show="e_show_update['curriculum_url'][$index]"
 
@@ -710,20 +733,9 @@
                                                     </span>                                   
                                                 </div> 
 
-                                                    <span ng-if="row.school_cost_url&&row.tuition_per_unit"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} 
-                                                        <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
-                                                        <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
-                                                        {{row.tuition_unit.name}}</a>
-                                                    </span>
+                                                  
 
-                                                    <span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit">
-                                                    <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit | currency }} 
-                                                        <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
-                                                        <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
-                                                        {{row.tuition_unit.name}}</a>
-                                                    </span>
-
-                                                    <span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit">
+                                                    <span ng-if="row.tuition_per_unit">
                                                     {{row.tuition_per_unit | currency }} 
                                                         <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
                                                         <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
@@ -756,21 +768,8 @@
                                                 </div> 
 
 
-                                                    <span ng-if="row.school_cost_url&&row.tuition_per_unit_out_state">
-                                                    <a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit_out_state | currency }} 
-
-                                                        <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
-                                                        <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
-                                                    {{row.tuition_unit.name}}</a></span>
-
-                                                    <span ng-if="!row.school_cost_url&&row.university_cost_url&&row.tuition_per_unit_out_state"><a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;">{{row.tuition_per_unit_out_state | currency }} 
-                                                        <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
-                                                        <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
-
-                                                    {{row.tuition_unit.name}}</a>
-                                                    </span>
-
-                                                    <span ng-if="!row.school_cost_url&&!row.university_cost_url&&row.tuition_per_unit_out_state">{{row.tuition_per_unit_out_state | currency }}
+                                                
+                                                    <span ng-if="row.tuition_per_unit_out_state">{{row.tuition_per_unit_out_state | currency }}
                                                         <span ng-if="row.tuition_unit.name!=='The whole program'">per </span>
                                                         <span ng-if="row.tuition_unit.name==='The whole program'">for </span>
                                                      {{row.tuition_unit.name}}
@@ -778,6 +777,39 @@
 
                                                     <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="!row.tuition_per_unit_out_state" >N/A</span>
 
+
+                                            </td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <td class="text-primary font-w600" style="vertical-align: middle">Tuition link</td>
+                                            <td class="ribbon ribbon-modern ribbon-city ribbon-update" ng-class="{'bg-highlight' : !row.school_cost_url&&!row.university_cost_url && $index === 0,  'bg-gray-lighter' : !row.school_cost_url&&!row.university_cost_url && $index !== 0}" ng-repeat = "row in report.e_array_final[2]">
+
+                                                <div class="ribbon-box font-w600" 
+                                                data-popover-title="HISTORY"                                                          
+                                                data-uib-popover-html = "'<a  href='+'{{e_show_update['tuition_url'][$index]}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'"
+
+                                                ng-show="e_show_update['tuition_url'][$index]"
+
+                                                data-popover-placement="top-right" 
+                                                data-popover-animation="true"
+                                                data-popover-class="report-popover update-popover">                        
+                                                    <span class="label_new">new
+                                                    </span>                                   
+                                                </div> 
+
+                                                    <span ng-if="row.school_cost_url"><a href="{{row.school_cost_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
+                                                    </span>
+
+                                                    <span ng-if="!row.school_cost_url&&row.university_cost_url">
+                                                    <a href="{{row.university_cost_url}}" target="_blank" style="text-decoration: underline;"><i class="fa fa-link" aria-hidden="true"></i></a>
+                                                    </span>
+
+
+                                                    <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if=" !row.school_cost_url && !row.university_cost_url" >N/A</span>
+                                               
 
                                             </td>
                                         </tr>
@@ -826,7 +858,7 @@
 
                                                 <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
-                                                data-uib-popover="{{e_show_update['deadline_url'][$index]}}"
+                                                data-uib-popover-html="'<a  href='+'{{e_show_update['deadline_url'][$index]}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'"
 
                                                 ng-show="e_show_update['deadline_url'][$index]"
 
@@ -1672,7 +1704,8 @@
 
                                                 <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
-                                                data-uib-popover="{{e_show_update['additional_admissions_requirements'][$index]}}"
+                                                
+                                                data-uib-popover-html="'<a  href='+'{{e_show_update['additional_admissions_requirements'][$index]}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'"
 
                                                 ng-show="e_show_update['additional_admissions_requirements'][$index]"
 
@@ -2192,7 +2225,8 @@
 
                                                 <div class="ribbon-box font-w600" 
                                                 data-popover-title="HISTORY"                                                          
-                                                data-uib-popover="{{e_show_update['scholarship_url'][$index]}}"
+                                                
+                                                data-uib-popover-html="'<a  href='+'{{e_show_update['scholarship_url'][$index]}}'+' target=\'_blank\'><i class=\'fa fa-link\'></i></a>'"
 
                                                 ng-show="e_show_update['scholarship_url'][$index]"
 

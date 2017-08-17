@@ -118,7 +118,7 @@ angular.module('myApp')
 
                 // Job placement (job_placement)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('job_placement') 
-
+                   
                   ){
 
                   create_array(e_show_update,'job_placement', order);
@@ -127,6 +127,22 @@ angular.module('myApp')
                   
                   set_null(e_show_update,'job_placement', key)
                 }
+
+
+                // Job placement url (job_placement url)
+                if(
+                    (((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('job_placement_url')
+                  ){
+
+                  create_array(e_show_update,'job_placement_url', order);
+
+                  e_show_update['job_placement_url'][key] = e_update_diff[value]['program_detail'].job_placement_url;
+                  
+                  set_null(e_show_update,'job_placement_url', key)
+
+                }
+
+
 
                 // Online program (online_program)
                 if((((e_update_diff||{})[value]||{})['program_detail']||{}).hasOwnProperty('online_program')){
@@ -425,21 +441,17 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('tuition_unit') 
                  ){
 
-                  console.log("tuition_per_unit value after = "+(((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit)
-                  console.log("tuition_per_unit value before = "+e_raw[key]['tuition'].tuition_per_unit)
 
-                  if((((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit >=0 || e_raw[key]['tuition'].tuition_per_unit >= 0) {
+                  if((((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit || e_raw[key]['tuition'].tuition_per_unit) {
                     create_array(e_show_update,'tuition_per_unit', order);
 
                     var tuition_per_unit_tuition_per_unit = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit;
-                    var tuition_per_unit_school_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url;
                     var tuition_per_unit_tuition_unit = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_unit;
-                    var tuition_per_unit_university_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).university_cost_url;
 
                     e_show_update['tuition_per_unit'][key] 
                     = 
-                      tuition_per_unit_tuition_per_unit >= 0
-                      ? ($filter('currency')(tuition_per_unit_tuition_per_unit, 
+                      (tuition_per_unit_tuition_per_unit ? e_update_diff[value]['tuition'].tuition_per_unit : e_raw[key]['tuition'].tuition_per_unit)
+                      ? ($filter('currency')(tuition_per_unit_tuition_per_unit ? e_update_diff[value]['tuition'].tuition_per_unit : e_raw[key]['tuition'].tuition_per_unit, 
                       '$')
                       + ' per ' 
                       + (tuition_per_unit_tuition_unit ? (e_update_diff[value]['tuition'].tuition_unit ? e_update_diff[value]['tuition'].tuition_unit.name : "") : (e_raw[key]['tuition'].tuition_unit ? e_raw[key]['tuition'].tuition_unit.name : ""))
@@ -455,18 +467,16 @@ angular.module('myApp')
                  ){
 
 
-                  if((((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit_out_state >= 0 || e_raw[key]['tuition'].tuition_per_unit_out_state >= 0) {
+                  if((((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit_out_state || e_raw[key]['tuition'].tuition_per_unit_out_state) {
                     create_array(e_show_update,'tuition_per_unit_out_state', order);
 
                     var tuition_per_unit_out_state_tuition_per_unit_out_state = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_per_unit_out_state;
-                    var tuition_per_unit_out_state_school_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url;
                     var tuition_per_unit_out_state_tuition_unit = (((e_update_diff||{})[value]||{})['tuition']||{}).tuition_unit;
-                    var tuition_per_unit_out_state_university_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).university_cost_url;
 
                     e_show_update['tuition_per_unit_out_state'][key] 
                     = 
-                      tuition_per_unit_out_state_tuition_per_unit_out_state >= 0
-                      ? ($filter('currency')(tuition_per_unit_out_state_tuition_per_unit_out_state, 
+                      (tuition_per_unit_out_state_tuition_per_unit_out_state ? e_update_diff[value]['tuition'].tuition_per_unit_out_state : e_raw[key]['tuition'].tuition_per_unit_out_state)
+                      ? ($filter('currency')(tuition_per_unit_out_state_tuition_per_unit_out_state ? e_update_diff[value]['tuition'].tuition_per_unit_out_state : e_raw[key]['tuition'].tuition_per_unit_out_state, 
                       '$')
                       + ' per ' 
                       + (tuition_per_unit_out_state_tuition_unit ? (e_update_diff[value]['tuition'].tuition_unit ? e_update_diff[value]['tuition'].tuition_unit.name : "") : (e_raw[key]['tuition'].tuition_unit ? e_raw[key]['tuition'].tuition_unit.name : ""))
@@ -477,6 +487,31 @@ angular.module('myApp')
 
 
                 }
+
+
+                // Tuition url
+                if(
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('school_cost_url') || 
+                  (((e_update_diff||{})[value]||{})['tuition']||{}).hasOwnProperty('university_cost_url') 
+                 ){
+
+
+                
+                    create_array(e_show_update,'tuition_url', order);
+
+                    var tuition_per_unit_school_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).school_cost_url;
+                    var tuition_per_unit_university_cost_url = (((e_update_diff||{})[value]||{})['tuition']||{}).university_cost_url;
+
+                    e_show_update['tuition_url'][key] 
+                    = (tuition_per_unit_school_cost_url ? e_update_diff[value]['tuition'].school_cost_url : e_raw[key]['tuition'].school_cost_url ) 
+                    ? (tuition_per_unit_school_cost_url ? e_update_diff[value]['tuition'].school_cost_url : e_raw[key]['tuition'].school_cost_url )
+                    : (tuition_per_unit_university_cost_url ? e_update_diff[value]['tuition'].university_cost_url : e_raw[key]['tuition'].university_cost_url )
+
+
+                      set_null(e_show_update,'tuition_url', key)
+
+                }
+
 
                 // Other fees included
                 if(
@@ -529,9 +564,14 @@ angular.module('myApp')
                   var deadline_fall_early_get_deadline_fall_early_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_early_day_display 
 
                   e_show_update['deadline_fall_early'][key] 
-                  = (deadline_fall_early_get_deadline_fall_early_month_display && deadline_fall_early_get_deadline_fall_early_day_display) ? 
-                    (e_update_diff[value]['deadline'].get_deadline_fall_early_month_display + ' ' + e_update_diff[value]['deadline'].get_deadline_fall_early_day_display) 
-                    : 'N/A'
+                  = ((deadline_fall_early_get_deadline_fall_early_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_month_display : e_raw[key]['deadline'].get_deadline_fall_early_month_display)
+                    ? (deadline_fall_early_get_deadline_fall_early_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_month_display : e_raw[key]['deadline'].get_deadline_fall_early_month_display)
+                    : "")
+                  + ' '
+                  + ((deadline_fall_early_get_deadline_fall_early_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_day_display : e_raw[key]['deadline'].get_deadline_fall_early_day_display)
+                    ? (deadline_fall_early_get_deadline_fall_early_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_day_display : e_raw[key]['deadline'].get_deadline_fall_early_day_display)
+                    : "")
+                  
 
                   set_null(e_show_update,'deadline_fall_early', key)
 
@@ -551,9 +591,13 @@ angular.module('myApp')
 
 
                   e_show_update['deadline_fall_late'][key] 
-                  = (deadline_fall_late_get_deadline_fall_late_month_display && deadline_fall_late_get_deadline_fall_late_day_display) ? 
-                    (e_update_diff[value]['deadline'].get_deadline_fall_late_month_display + ' ' + e_update_diff[value]['deadline'].get_deadline_fall_late_day_display) 
-                    : 'N/A'
+                  = ((deadline_fall_late_get_deadline_fall_late_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_month_display : e_raw[key]['deadline'].get_deadline_fall_late_month_display)
+                    ? (deadline_fall_late_get_deadline_fall_late_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_month_display : e_raw[key]['deadline'].get_deadline_fall_late_month_display)
+                    : "")
+                  + ' '
+                  + ((deadline_fall_late_get_deadline_fall_late_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_day_display : e_raw[key]['deadline'].get_deadline_fall_late_day_display)
+                    ? (deadline_fall_late_get_deadline_fall_late_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_day_display : e_raw[key]['deadline'].get_deadline_fall_late_day_display)
+                    : "")
                   
 
                   set_null(e_show_update,'deadline_fall_late', key)
@@ -574,9 +618,13 @@ angular.module('myApp')
 
 
                   e_show_update['deadline_spring_early'][key] 
-                  = (deadline_spring_early_get_deadline_spring_early_month_display && deadline_spring_early_get_deadline_spring_early_day_display) ? 
-                    (e_update_diff[value]['deadline'].get_deadline_spring_early_month_display + ' ' + e_update_diff[value]['deadline'].get_deadline_spring_early_day_display) 
-                    : 'N/A'
+                  = ((deadline_spring_early_get_deadline_spring_early_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_month_display : e_raw[key]['deadline'].get_deadline_spring_early_month_display)
+                    ? (deadline_spring_early_get_deadline_spring_early_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_month_display : e_raw[key]['deadline'].get_deadline_spring_early_month_display)
+                    : "")
+                  + ' '
+                  + ((deadline_spring_early_get_deadline_spring_early_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_day_display : e_raw[key]['deadline'].get_deadline_spring_early_day_display)
+                    ? (deadline_spring_early_get_deadline_spring_early_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_day_display : e_raw[key]['deadline'].get_deadline_spring_early_day_display)
+                    : "")
                   
 
                   set_null(e_show_update,'deadline_spring_early', key)
@@ -597,9 +645,13 @@ angular.module('myApp')
 
 
                   e_show_update['deadline_spring_late'][key] 
-                  = (deadline_spring_late_get_deadline_spring_late_month_display && deadline_spring_late_get_deadline_spring_late_day_display) ? 
-                    (e_update_diff[value]['deadline'].get_deadline_spring_late_month_display + ' ' + e_update_diff[value]['deadline'].get_deadline_spring_late_day_display) 
-                    : 'N/A'
+                  = ((deadline_spring_late_get_deadline_spring_late_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_month_display : e_raw[key]['deadline'].get_deadline_spring_late_month_display)
+                    ? (deadline_spring_late_get_deadline_spring_late_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_month_display : e_raw[key]['deadline'].get_deadline_spring_late_month_display)
+                    : "")
+                  + ' '
+                  + ((deadline_spring_late_get_deadline_spring_late_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_day_display : e_raw[key]['deadline'].get_deadline_spring_late_day_display)
+                    ? (deadline_spring_late_get_deadline_spring_late_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_day_display : e_raw[key]['deadline'].get_deadline_spring_late_day_display)
+                    : "")
                   
 
                   set_null(e_show_update,'deadline_spring_late', key)
@@ -619,9 +671,13 @@ angular.module('myApp')
 
 
                   e_show_update['deadline_summer_early'][key] 
-                  = (deadline_summer_early_get_deadline_summer_early_month_display && deadline_summer_early_get_deadline_summer_early_day_display) ? 
-                    (e_update_diff[value]['deadline'].get_deadline_summer_early_month_display + ' ' + e_update_diff[value]['deadline'].get_deadline_summer_early_day_display) 
-                    : 'N/A'
+                  = ((deadline_summer_early_get_deadline_summer_early_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_month_display : e_raw[key]['deadline'].get_deadline_summer_early_month_display)
+                    ? (deadline_summer_early_get_deadline_summer_early_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_month_display : e_raw[key]['deadline'].get_deadline_summer_early_month_display)
+                    : "")
+                  + ' '
+                  + ((deadline_summer_early_get_deadline_summer_early_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_day_display : e_raw[key]['deadline'].get_deadline_summer_early_day_display)
+                    ? (deadline_summer_early_get_deadline_summer_early_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_day_display : e_raw[key]['deadline'].get_deadline_summer_early_day_display)
+                    : "")
                   
 
                   set_null(e_show_update,'deadline_summer_early', key)
@@ -642,9 +698,13 @@ angular.module('myApp')
 
 
                   e_show_update['deadline_summer_late'][key] 
-                  = (deadline_summer_late_get_deadline_summer_late_month_display && deadline_summer_late_get_deadline_summer_late_day_display) ? 
-                    (e_update_diff[value]['deadline'].get_deadline_summer_late_month_display + ' ' + e_update_diff[value]['deadline'].get_deadline_summer_late_day_display) 
-                    : 'N/A'
+                  = ((deadline_summer_late_get_deadline_summer_late_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_month_display : e_raw[key]['deadline'].get_deadline_summer_late_month_display)
+                    ? (deadline_summer_late_get_deadline_summer_late_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_month_display : e_raw[key]['deadline'].get_deadline_summer_late_month_display)
+                    : "")
+                  + ' '
+                  + ((deadline_summer_late_get_deadline_summer_late_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_day_display : e_raw[key]['deadline'].get_deadline_summer_late_day_display)
+                    ? (deadline_summer_late_get_deadline_summer_late_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_day_display : e_raw[key]['deadline'].get_deadline_summer_late_day_display)
+                    : "")
                   
 
                   set_null(e_show_update,'deadline_summer_late', key)
@@ -688,9 +748,13 @@ angular.module('myApp')
                   var scholarship_deadline_scholarship_deadline_day = (((e_update_diff||{})[value]||{})['deadline']||{}).scholarship_deadline_day 
 
                   e_show_update['scholarship_deadline'][key] 
-                  = (scholarship_deadline_scholarship_deadline_month && scholarship_deadline_scholarship_deadline_day) ?
-                    (e_update_diff[value]['deadline'].scholarship_deadline_month + '/' + e_update_diff[value]['deadline'].scholarship_deadline_day) :
-                    'N/A'
+                  = ((scholarship_deadline_scholarship_deadline_month ? e_update_diff[value]['deadline'].scholarship_deadline_month : e_raw[key]['deadline'].scholarship_deadline_month)
+                    ? (scholarship_deadline_scholarship_deadline_month ? e_update_diff[value]['deadline'].scholarship_deadline_month : e_raw[key]['deadline'].scholarship_deadline_month)
+                    : "")
+                  + '/'
+                  + ((scholarship_deadline_scholarship_deadline_day ? e_update_diff[value]['deadline'].scholarship_deadline_day : e_raw[key]['deadline'].scholarship_deadline_day)
+                    ? (scholarship_deadline_scholarship_deadline_day ? e_update_diff[value]['deadline'].scholarship_deadline_day : e_raw[key]['deadline'].scholarship_deadline_day)
+                    : "")
 
                   set_null(e_show_update,'scholarship_deadline', key)
 
@@ -710,9 +774,14 @@ angular.module('myApp')
 
 
                   e_show_update['international_deadline'][key] 
-                  = (international_deadline_get_international_deadline_month_display && international_deadline_get_international_deadline_day_display) ?
-                    (e_update_diff[value]['deadline'].get_international_deadline_month_display + ' ' + e_update_diff[value]['deadline'].get_international_deadline_day_display) :
-                    'N/A'
+                  = ((international_deadline_get_international_deadline_month_display ? e_update_diff[value]['deadline'].get_international_deadline_month_display : e_raw[key]['deadline'].get_international_deadline_month_display)
+                    ? (international_deadline_get_international_deadline_month_display ? e_update_diff[value]['deadline'].get_international_deadline_month_display : e_raw[key]['deadline'].get_international_deadline_month_display)
+                    : "")
+                  + ' '
+                  + ((international_deadline_get_international_deadline_day_display ? e_update_diff[value]['deadline'].get_international_deadline_day_display : e_raw[key]['deadline'].get_international_deadline_day_display)
+                    ? (international_deadline_get_international_deadline_day_display ? e_update_diff[value]['deadline'].get_international_deadline_day_display : e_raw[key]['deadline'].get_international_deadline_day_display)
+                    : "")
+                  
 
                   set_null(e_show_update,'international_deadline', key)
 
