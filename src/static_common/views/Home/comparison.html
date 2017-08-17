@@ -4,7 +4,7 @@
                     <div class="row items-push">
                         <div class="col-sm-7 push-5">
                             <h1 class="page-heading">
-                                Comparison Tool<br><small>- Compare courses between two schools. </small>
+                                Comparison Tool<br><small>- Compare courses at two different schools. </small>
                             </h1>
                         </div>
                         
@@ -53,7 +53,7 @@
                                         <tbody>
 
                                             <tr ng-repeat="row in cat1">
-                                                <td class="text-center"><label class="css-input css-radio css-radio-primary push-10-r css-input-comparison">
+                                                <td class="text-center"><label class="css-input css-radio css-radio-primary css-radio-darker-outline push-10-r css-input-comparison">
                                                 <input type="radio" name="radio-comparison1" value="{{row.object_id}}" ng-model="$parent.radio_value1" required="required" ng-change="get_courses1($parent.school1, $parent.radio_value1)"><span></span>
                                             </label>
                                             </td>
@@ -104,7 +104,7 @@
                                         <tbody>
                                            
                                             <tr ng-repeat="row in cat2">
-                                                <td class="text-center"><label class="css-input css-radio css-radio-success push-10-r css-input-comparison">
+                                                <td class="text-center"><label class="css-input css-radio css-radio-success css-radio-darker-outline push-10-r css-input-comparison">
                                                 <input type="radio" name="radio-comparison2" value="{{row.object_id}}" ng-model="$parent.radio_value2" required="required" ng-change="get_courses2($parent.school2, $parent.radio_value2)"><span></span>
                                             </label>
                                             </td>
@@ -144,7 +144,7 @@
                                     <div class="block-content block-content-full text-center comparison_result_height frame frame-white-track">
                                           <div ng-show="!courses1 || courses1.length===0" class="alert alert-warning">
                                         
-                                        <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection.</p>
+                                        <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection above.</p>
                                     </div>
 
 
@@ -260,7 +260,7 @@
 
                                     <div ng-show="!courses2 || courses2.length===0" class="alert alert-warning">
                                         
-                                        <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection.</p>
+                                        <p><i class="fa fa-info-circle"></i> &nbsp;Please make your selection above.</p>
                                     </div>
 
 
