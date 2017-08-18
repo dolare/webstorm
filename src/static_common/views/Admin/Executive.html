@@ -1,11 +1,8 @@
 <div class="content content-boxed">
 
-  <!-- Customers -->
+  <div class="block" id="loadingtable">
 
-  <div class="block-content">
-
-    <div class="block" id="loadingtable">
-
+   <div class="block-content">
       <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyExecutiveLabel}}</div>
 
       <table class="table table-hover" st-pipe="callServer" st-table="non_degree_schools" style="table-layout: fixed;">
@@ -22,31 +19,51 @@
 
         <thead>
           
-          <tr class="wt-table-url-header-opt-row">
-            <th colspan="2">
-              <input class="form-control" st-search="searchValue" placeholder="search" type="search" />
-            </th>
-            <th colspan="4">
-              <div>
-                <div class="col-sm-6">
-                  <span class="font-w600">Filter by client: </span>
-                  <select ng-model="selectedClientId" id="non-degree-clients" name="non-degree-clients" ng-options="c.id as c.contact_name for c in clients" ng-change="updateSchools(selectedClientId)">
-                    <option value="">All clients</option>
-                  </select>
+          <tr class="wt-table-url-header-opt-row text-white bg-primary">
+            <th colspan="6">
+              <div class="col-sm-6">
+                <input class="form-control" st-search="searchValue" placeholder="search" type="search" />
+              </div>
+              <div class="col-sm-6 form-horizontal">
+                <div class="col-sm-6 form-group">
+                  <label class="col-sm-3 control-label font-w600" for="non-degree-clients">Client:</label>
+                  <div class="col-sm-9">
+                    <select class="form-control" ng-model="selectedClientId" id="non-degree-clients" name="non-degree-clients" ng-options="c.id as c.contact_name for c in clients" ng-change="updateSchools(selectedClientId)">
+                      <option value="">All clients</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="col-sm-6">
-                  <span class="font-w600">Filter by demo: </span>
-                  <select ng-model="selectedDemoId" id="non-degree-demos" name="non-degree-demos" ng-options="d.id as d.contact_name for d in demos" ng-change="updateSchools(selectedDemoId)">
-                    <option value="">All demos</option>
-                  </select>
+
+                <div class="col-sm-6 form-group">
+                  <label class="col-sm-3 control-label font-w600" for="non-degree-demos">Demo:</label>
+                  <div class="col-sm-9">
+                    <select class="form-control" ng-model="selectedDemoId" id="non-degree-demos" name="non-degree-demos" ng-options="d.id as d.contact_name for d in demos" ng-change="updateSchools(selectedDemoId)">
+                      <option value="">All demos</option>
+                    </select>
+                  </div>
                 </div>
               </div>
+              
+
+              <!-- <div class="col-sm-3">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                      <label class="col-md-3 control-label" for="example-hf-email">Email</label>
+                      <div class="col-md-7">
+                          <input class="form-control" type="email" id="example-hf-email" name="example-hf-email" placeholder="Enter Email..">
+                      </div>
+                  </div>
+                                          
+                </form>
+              </div> -->
+
+              
             </th>
           </tr>
 
           <tr>
             <th class="text-center" st-sort="ceeb">Ceeb</th>
-            <th class="text-left" st-sort="school">School</th>
+            <th class="text-left" st-sort="school">School ({{schools_count}})</th>
             <th class="text-center"># Clients</th>
             <th class="text-center">Release Preview</th>
             <th class="text-center">History</th>
@@ -149,8 +166,8 @@
               <br><br>
               <div class="btn-group pull-left ng-scope tablepagenum">
 
-                <button type="button" ng-class="{'active':itemsByPage==10}" ng-click="itemsByPage=10" class="btn btn-default" data-js-blur>10</button>
-                <button type="button" ng-class="{'active':itemsByPage==20}" ng-click="itemsByPage=20" class="btn btn-default" data-js-blur>20</button>
+                <button type="button" ng-class="{'active':itemsByPage==15}" ng-click="itemsByPage=15" class="btn btn-default" data-js-blur>15</button>
+                <button type="button" ng-class="{'active':itemsByPage==30}" ng-click="itemsByPage=30" class="btn btn-default" data-js-blur>30</button>
 
               </div>
             </td>
@@ -163,10 +180,11 @@
 
           </tr>
         </tfoot>
-      </table>
+    </table>
     </div>
-    
+
   </div>
+    
 </div>
 
 

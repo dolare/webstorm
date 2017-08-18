@@ -8,7 +8,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
     $scope._ = _;
 
     var token = authenticationSvc.getUserInfo().accessToken;
-    $scope.itemsByPage = 10;
+    $scope.itemsByPage = 15;
 
     $scope.emptyExecutiveLabel = 'No records.';
 
@@ -75,12 +75,13 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
 
       var pagination = tableState.pagination;
       var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
-      var number = tableState.pagination.number || 10; // Number of entries showed per page.
+      var number = tableState.pagination.number || 15; // Number of entries showed per page.
 
       var url = '/api/upgrid/non_degree/schools?is_non_degree=True&client_id=';
 
       ajaxService.getPage(start, number, url, tableState, token, $scope.getSchoolsAPIFilters).then(function(resp_schools) {
         $scope.non_degree_schools = resp_schools.data.results;
+        $scope.schools_count = resp_schools.data.count;
         tableState.pagination.numberOfPages = resp_schools.numberOfPages; // Set the number of pages so the pagination can update.
         tableState.pagination.totalItemCount = resp_schools.data.count; // This property of tableState.pagination is currently not being used yet.
 
