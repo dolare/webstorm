@@ -61,8 +61,10 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
       $scope.showUrl = function (parentIndex, Index){
 
 
-          $http({
-            url: '/api/upgrid/non_degree/schools/' + $scope.school_table[parentIndex].object_id + '/courses/' + $scope.school_table[parentIndex].courses[Index].object_id + '/urls',
+          if($scope.school_table[parentIndex].courses[Index].available_url_number > 0 ){
+
+            $http({
+            url: '/api/upgrid/non_degree/schools/' + $scope.school_table[parentIndex].object_id + '/courses/' + $scope.school_table[parentIndex].courses[Index].object_id + '/urls?has_AMP_report=True',
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
@@ -112,6 +114,9 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
                 console.log('an error occurred...'+JSON.stringify(error));
           });
 
+          }
+
+          
       }
 
       $scope.getReport = function(Id1, Id2, Id3) {
