@@ -71,14 +71,14 @@
 
 <div class="content" style="padding-top: 0;">
     <h2 class="content-heading text-uppercase">existing_report   &nbsp;&nbsp;|&nbsp;&nbsp; <button class="btn btn-xs text-uppercase btn-primary" ng-click="edit_existing_report = !edit_existing_report" type="button">edit</button> 
-    <button class="btn btn-xs text-uppercase btn-success" ng-show="edit_existing_report" type="button" ng-click="save()">save</button></h2>
+    <button class="btn btn-xs text-uppercase btn-success" ng-show="edit_existing_report" type="button" ng-click="save(existing_report)">save</button></h2>
 </div>
 
 <div class="content content-full bg-white">
     <pre ng-show="!edit_existing_report" class="pre-sh"><code class="json" ng-bind-html = "report_details.existing_report | json" ng-show="show_code"></code></pre>
 
     
-    <pre ng-show="edit_existing_report"  ng-bind-html = "report_details.existing_report | json" ng-show="show_code" contenteditable ng-model="existing_report"></pre>
+    <pre ng-show="edit_existing_report"  ng-show="show_code" contenteditable ng-model="existing_report">{{report_details.existing_report | json}}</pre>
     
 </div>
 

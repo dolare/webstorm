@@ -74,11 +74,14 @@
           <tr ng-repeat-start="row1 in row.courses">
 
               <td class="td-bordered text-center">
-              <i class="text-primary" ng-click="showUrl($parent.$index, $index);showURL=!showURL " ng-class="showURL?'fa fa-minus':'fa fa-plus'"></i>
+
+              <i class="text-primary" ng-click="showUrl($parent.$index, $index);showURL=!showURL " ng-class="showURL?'fa fa-minus':'fa fa-plus'" ng-disabled="row1.available_url_number===0"></i>
+
+
            
               
               </td>
-              <td class="td-bordered" colspan="5" style="padding-left: 15px"><a data-js-blur class="link-effect" href="javascript:void(0)" ng-click="showUrl($parent.$index, $index);showURL=!showURL ">{{row1.name}}</a><button class="btn btn-xs btn-rounded btn-info pull-right" ng-show="showURL && row1.urls.length > 0" type="button" ng-click="sort_time($parent.$index, $index)">Sort by time</button></td>
+              <td class="td-bordered" colspan="5" style="padding-left: 15px"><a data-js-blur class="link-effect" href="javascript:void(0)" ng-click="showUrl($parent.$index, $index);showURL=!showURL ">{{row1.name}}</a> &nbsp;<span ng-class="row1.available_url_number>0?'badge badge-info':'badge badge-default'">{{row1.available_url_number}}</span><button class="btn btn-xs btn-rounded btn-info pull-right" ng-show="showURL && row1.urls.length > 0" type="button" ng-click="sort_time($parent.$index, $index)">Sort by time</button></td>
 
             </tr>
 
