@@ -6,22 +6,19 @@ non_degree_whoops.controller('NonDegreeWhoopsController',
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
 
 
-
-    // $timeout( function(){
-    //         jQuery('.comparison_height').scrollLock();
-    //     }, 5000 );
-
   	 $http({
-          url: '/api/upgrid/non_degree/schools?page_size=100',
+          url: '/api/upgrid/non_degree/whoops_reports',
           method: 'GET',
           headers: {
             'Authorization': 'JWT ' + token
           }
     }).then(function (response) {
 
-       $scope.schools = response.data.results
+       $scope.non_degree_whoops = response.data.results
 
-       console.log("return data"+ JSON.stringify($scope.schools, null, 4));
+       console.log("successful..............");
+       console.log(response);
+       console.log("return data"+ JSON.stringify($scope.non_degree_whoops, null, 4));
 
     }).
      catch(function(error){

@@ -1076,15 +1076,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
                         });
                     }],
 
-      //get raw data
-      // Table: function(depsNondegree, ajaxService, authenticationSvc) {
-      //   var userInfo = authenticationSvc.getUserInfo();
-      //   console.log('*************');
-      //   return ajaxService.nonDegree(userInfo.accessToken);
-
-      // }
-
-
     }
 
   }).
