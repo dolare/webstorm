@@ -588,7 +588,7 @@ class UniversityCustomerListAPI(generics.ListAPIView):
     def get_queryset(self, *args, **kwargs):
         user = self.request.user
         if UpgridAccountManager.objects.filter(id=user.id).exists():
-            return UniversityCustomer.objects.filter(account_manager=user)
+            return UniversityCustomer.objects.filter(account_manager=user).filter(account_type='main')
         else:
             return UniversityCustomer.objects.filter(main_user_id=str(user.id)).filter(is_active=True)
 

@@ -336,22 +336,14 @@ class UniversityAndSchoolSerializer(serializers.ModelSerializer):
 # Used for main user get all his subuser detail
 
 class UniversityCustomerListSerializer(serializers.ModelSerializer):
-    customer_program = SerializerMethodField()
     university = SerializerMethodField()
     school = SerializerMethodField()
     sub_user = SerializerMethodField()
 
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'title', 'department', 'main_user_id',
-                  'contact_name', 'position', 'phone', 'customer_program', 'university', 'school', 'account_type',
-                  'sub_user',)
-
-    def get_customer_program(self, obj):
-        program_list = ClientAndProgramRelation.objects.filter(client=obj).values('client_program')
-        programs = UniversityCustomerProgram.objects.filter(object_id__in=program_list)
-        serializer = ClientProgramSerializer(programs, many=True)
-        return serializer.data
+        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'department',
+                  'contact_name', 'university', 'school', 'account_type', 'sub_user',)
 
     def get_university(self, obj):
         return obj.Ceeb.university_foreign_key.name
@@ -365,20 +357,13 @@ class UniversityCustomerListSerializer(serializers.ModelSerializer):
 
 
 class SubuserListSerializer(serializers.ModelSerializer):
-    customer_program = SerializerMethodField()
     university = SerializerMethodField()
     school = SerializerMethodField()
 
     class Meta:
         model = UniversityCustomer
-        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'title', 'department', 'main_user_id',
-                  'contact_name', 'position', 'phone', 'customer_program', 'university', 'school', 'account_type')
-
-    def get_customer_program(self, obj):
-        program_list = ClientAndProgramRelation.objects.filter(client=obj).values('client_program')
-        programs = UniversityCustomerProgram.objects.filter(object_id__in=program_list)
-        serializer = ClientProgramSerializer(programs, many=True)
-        return serializer.data
+        fields = ('username', 'id', 'is_active', 'email', 'can_ccemail', 'department',
+                  'contact_name', 'university', 'school', 'account_type',)
 
     def get_university(self, obj):
         return obj.Ceeb.university_foreign_key.name
