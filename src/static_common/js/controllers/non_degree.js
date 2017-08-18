@@ -219,26 +219,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
   console.log("kakaka is "+JSON.stringify(kakaka));
 
-  $scope.currency_symbols = {
-      'USD': '$', // US Dollar
-      'EUR': '€', // Euro
-      'CRC': '₡', // Costa Rican Colón
-      'GBP': '£', // British Pound Sterling
-      'ILS': '₪', // Israeli New Sheqel
-      'INR': '₹', // Indian Rupee
-      'JPY': '¥', // Japanese Yen
-      'KRW': '₩', // South Korean Won
-      'NGN': '₦', // Nigerian Naira
-      'PHP': '₱', // Philippine Peso
-      'PLN': 'zł', // Polish Zloty
-      'PYG': '₲', // Paraguayan Guarani
-      'THB': '฿', // Thai Baht
-      'UAH': '₴', // Ukrainian Hryvnia
-      'VND': '₫', // Vietnamese Dong
-      'CNY': '¥', // Chinese Yuan
-      'SGD': 'S$', // Singapore Dollar
-      'null': '$', // The default currency sign is USD
-    };
+  $scope.currency_symbols = executiveService.getCurrencySymbols();
 
   $scope.check_storage = function(){
     console.log("$scope.$storage.non_degree="+JSON.stringify($scope.$storage.non_degree))
