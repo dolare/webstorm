@@ -162,10 +162,15 @@ class SharedReportSerializer(ModelSerializer):
 
 
 class CourseListSerializer(ModelSerializer):
+    available_url_number = SerializerMethodField()
 
     class Meta:
         model = NonDegreeCourse
-        fields = ('object_id', 'name',)
+        fields = ('object_id', 'name', 'available_url_number', )
+
+    def get_available_url_number(self, obj):
+        url_number = NonDegreeCourseURL.objects.filter(course=obj).filter(webpage__nondegreeampreport__isnull=False).distinct().count()
+        return url_number
 
 
 class CourseURLListSerializer(ModelSerializer):
