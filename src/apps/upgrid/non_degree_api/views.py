@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.db.models import Count
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, \
@@ -48,14 +49,16 @@ class UniversitySchoolListAPI(PermissionMixin, ListAPIView):
     filter_class = UniversitySchoolFilter
 
     search_fields = ('ceeb', 'school', 'university_foreign_key__name',)
-    ordering_fields = ('ceeb', 'school', )
+    ordering_fields = ('ceeb', 'school', 'num_university_costomers', )
     ordering = ('ceeb', 'school', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
-            university_schools = UniversitySchool.objects.all()
+            university_schools = UniversitySchool.objects.all()\
+                .annotate(num_university_costomers=Count('non_degree_user'))
         else:
-            university_schools = UniversitySchool.objects.filter(non_degree_user=self.request.user)
+            university_schools = UniversitySchool.objects.filter(non_degree_user=self.request.user)\
+                .annotate(num_university_costomers=Count('non_degree_user'))
         return university_schools
 
 

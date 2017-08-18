@@ -10,6 +10,7 @@ angular.module('myApp').controller('AdminBackdoorReaderController', ['$timeout',
     $scope.show_code = false
     
 
+
     if($scope.type === 'whoops'){
 
     $http({
@@ -62,6 +63,16 @@ angular.module('myApp').controller('AdminBackdoorReaderController', ['$timeout',
         console.log('an error occurred...'+JSON.stringify(error));
 
      });
+
+
+    }
+
+
+
+    $scope.save = function(value) {
+
+      console.log("existing_report= "+JSON.stringify(value))
+
 
 
     }

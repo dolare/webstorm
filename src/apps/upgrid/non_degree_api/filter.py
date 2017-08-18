@@ -42,10 +42,16 @@ class CourseFilter(FilterSet):
 
 class CourseURLFilter(FilterSet):
     course_id = django_filters.UUIDFilter(name="course__object_id")
+    has_AMP_report = django_filters.BooleanFilter(method="has_AMP_report_filter")
 
     class Meta:
         model = NonDegreeCourseURL
-        fields = ['course_id', ]
+        fields = ['course_id', 'has_AMP_report']
+
+    def has_AMP_report_filter(self, queryset, name, value):
+        if value is True:
+            return queryset.filter(webpage__nondegreeampreport__isnull=False).distinct()
+        return queryset.filter(webpage__nondegreeampreport__isnull=True).distinct()
 
 
 class AMPReportListFilter(FilterSet):
