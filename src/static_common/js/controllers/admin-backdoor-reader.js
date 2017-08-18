@@ -9,6 +9,7 @@ angular.module('myApp').controller('AdminBackdoorReaderController', ['$timeout',
 
     $scope.show_code = false
     
+    
 
     if($scope.type === 'whoops'){
 
