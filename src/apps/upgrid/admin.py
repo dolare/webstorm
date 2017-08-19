@@ -143,7 +143,7 @@ class NonDegreeSharedReportAdmin(AutoUserModelAdmin):
 class NonDegreeWhoopsReportAdmin(AutoUserModelAdmin):
     readonly_fields = ('object_id', 'date_created', 'date_modified',)
 
-    list_display = ('object_id', 'active', 'university_school', 'date_created', )
+    list_display = ('object_id', 'active', 'starred', 'completed', 'university_school', 'date_created', )
     list_filter = ('active', 'date_created', 'date_modified',)
     search_fields = [
         'university_school__school',
@@ -165,6 +165,8 @@ class NonDegreeWhoopsReportAdmin(AutoUserModelAdmin):
                 'university_school',
                 'active',
                 'note',
+                'starred',
+                'completed',
             ]
         }),
     ]

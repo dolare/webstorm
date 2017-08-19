@@ -530,5 +530,5 @@ class NonDegreeWhoopsReportListAPI(PermissionMixin, ListAPIView):
                 user = UniversityCustomer.objects.get(id=self.request.user.id)
             except ObjectDoesNotExist:
                 return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
-            non_degree_whoops = NonDegreeWhoopsReport.objects.filter(university_school=user.Ceeb)
+            non_degree_whoops = NonDegreeWhoopsReport.objects.filter(university_school=user.Ceeb).filter(active=True)
         return non_degree_whoops

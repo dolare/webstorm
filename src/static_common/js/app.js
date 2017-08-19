@@ -1068,7 +1068,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
                               'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
 
-
+                              '/static/js/third-party/base_pages_projects_view.js',
                               '/static/js/controllers/non_degree_whoops.js',
 
 

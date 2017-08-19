@@ -30,7 +30,7 @@
                             </li>
                             <li class="list-group-item">
                                 <span class="js-task-badge-starred badge badge-warning pull-right animated bounceIn"></span>
-                                <i class="fa fa-fw fa-list push-5-r"></i> Total
+                                <i class="fa fa-fw fa-list push-5-r"></i> Starred
                             </li>
                             <li class="list-group-item">
                                 <span class="js-task-badge-completed badge badge-success pull-right animated bounceIn"></span>
@@ -52,13 +52,21 @@
                 <h2 class="content-heading">Active</h2>
                 <div class="js-task-list">
                     <!-- Task -->
-                    <div class="js-task block block-rounded push-5 animated fadeIn" ng-repeat="whoop in non_degree_whoops">
+                    <div class="js-task block block-rounded push-5 animated fadeIn" ng-repeat="whoop in whoops_active" data-task-id="{{whoop.object_id}}" data-task-completed="false" data-task-starred="false">
                         <table class="block-table table-vcenter">
                             <tr>
-                                <td class="js-task-content font-w600">
+                                <td class="text-center" style="width: 50px;">
+                                    <label class="js-task-status css-input css-checkbox css-checkbox-primary css-checkbox-rounded">
+                                        <input type="checkbox"><span></span>
+                                    </label>
+                                </td>
+                                <td class="js-task-content font-w200">
                                     <pre style="white-space: pre-line; border: none; background-color: #fff; margin:0 0 0">{{whoop.note}}</pre>
                                 </td>
-                                <td style="width: 50px;">
+                                <td style="width: 100px;">
+                                    <button class="js-task-star btn btn-link text-warning" type="button">
+                                                    <i class="fa fa-star-o"></i>
+                                    </button>
                                     <button class="js-task-remove btn btn-link text-danger" type="button">
                                         <i class="fa fa-times"></i>
                                     </button>
@@ -70,19 +78,57 @@
                 </div>
                 <!-- END Tasks List -->
 
+                <!-- Starred Tasks List -->
+                <h2 class="content-heading">Starred</h2>
+                <div class="js-task-list-starred">
+                    <!-- Task -->
+                    <div class="js-task block block-rounded push-5 animated fadeIn" ng-repeat="whoop in whoops_starred" data-task-id="{{whoop.object_id}}" data-task-completed="false" data-task-starred="true">
+                        <table class="block-table table-vcenter">
+                            <tr>
+                                <td class="text-center" style="width: 50px;">
+                                    <label class="js-task-status css-input css-checkbox css-checkbox-primary css-checkbox-rounded">
+                                        <input type="checkbox"><span></span>
+                                    </label>
+                                </td>
+                                <td class="js-task-content font-w200">
+                                    <pre style="white-space: pre-line; border: none; background-color: #fff; margin:0 0 0">{{whoop.note}}</pre>
+                                </td>
+                                <td style="width: 100px;">
+                                    <button class="js-task-star btn btn-link text-warning" type="button">
+                                        <i class="fa fa-star"></i>
+                                    </button>
+                                    <button class="js-task-remove btn btn-link text-danger" type="button">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- END Task -->
+                </div>
+                <!-- END Starred Tasks List -->
+
                 <!-- Tasks List Completed -->
                 <h2 class="content-heading">Completed</h2>
                 <div class="js-task-list-completed">
                     <!-- Completed Task -->
-                    <div class="js-task block block-rounded push-5 animated fadeIn" ng-repeat="whoop in non_degree_whoops">
+                    <div class="js-task block block-rounded push-5 animated fadeIn"  ng-repeat="whoop in whoops_completed" data-task-id={{whoop.object_id}} data-task-completed="true" data-task-starred="{{whoop.starred}}">
                         <table class="block-table table-vcenter">
                             <tr>
-                                <td class="js-task-content font-w600">
+                                <td class="text-center" style="width: 50px;">
+                                    <label class="js-task-status css-input css-checkbox css-checkbox-primary css-checkbox-rounded">
+                                        <input type="checkbox" checked><span></span>
+                                    </label>
+                                </td>
+                                <td class="js-task-content font-w200">
                                     <del>
                                         <pre style="white-space: pre-line; border: none; background-color: #fff; margin:0 0 0">{{whoop.note}}</pre>
                                     </del>
                                 </td>
-                                <td style="width: 50px;">
+                                <td style="width: 100px;">
+                                    <button class="js-task-star btn btn-link text-warning" type="button">
+                                                        <i class="{{whoop.starred? 'fa fa-star' : 'fa fa-star-o'}}"></i>
+                                        </button>
                                     <button class="js-task-remove btn btn-link text-danger" type="button">
                                         <i class="fa fa-times"></i>
                                     </button>

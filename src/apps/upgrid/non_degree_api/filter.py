@@ -73,4 +73,4 @@ class NonDegreeWhoopsReportFilter(FilterSet):
 
     class Meta:
         model = NonDegreeWhoopsReport
-        fields = ['active', 'university_school', ]
+        fields = ['active', 'university_school', 'starred', 'completed', ]
