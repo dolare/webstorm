@@ -25,15 +25,15 @@
                     <div class="block-content">
                         <ul class="list-group push">
                             <li class="list-group-item">
-                                <span class="js-task-badge badge badge-primary pull-right animated bounceIn"></span>
+                                <span class="js-task-badge badge badge-primary pull-right animated bounceIn" ng-bind="whoops_active_number"></span>
                                 <i class="fa fa-fw fa-tasks push-5-r"></i> Active
                             </li>
                             <li class="list-group-item">
-                                <span class="js-task-badge-starred badge badge-warning pull-right animated bounceIn"></span>
+                                <span class="js-task-badge-starred badge badge-warning pull-right animated bounceIn" ng-bind="whoops_starred_number"></span>
                                 <i class="fa fa-fw fa-list push-5-r"></i> Starred
                             </li>
                             <li class="list-group-item">
-                                <span class="js-task-badge-completed badge badge-success pull-right animated bounceIn"></span>
+                                <span class="js-task-badge-completed badge badge-success pull-right animated bounceIn" ng-bind="whoops_completed_number"></span>
                                 <i class="fa fa-fw fa-check push-5-r"></i> Completed
                             </li>
                         </ul>
@@ -57,14 +57,14 @@
                             <tr>
                                 <td class="text-center" style="width: 50px;">
                                     <label class="js-task-status css-input css-checkbox css-checkbox-primary css-checkbox-rounded">
-                                        <input type="checkbox"><span></span>
+                                        <input type="checkbox" ng-click="taskSetCompleted(whoop.object_id)"><span></span>
                                     </label>
                                 </td>
                                 <td class="js-task-content font-w200">
                                     <pre style="white-space: pre-line; border: none; background-color: #fff; margin:0 0 0">{{whoop.note}}</pre>
                                 </td>
                                 <td style="width: 100px;">
-                                    <button class="js-task-star btn btn-link text-warning" type="button">
+                                    <button class="js-task-star btn btn-link text-warning" type="button" ng-click="taskStarAdd(whoop.object_id)">
                                                     <i class="fa fa-star-o"></i>
                                     </button>
                                     <button class="js-task-remove btn btn-link text-danger" type="button">
@@ -87,14 +87,14 @@
                             <tr>
                                 <td class="text-center" style="width: 50px;">
                                     <label class="js-task-status css-input css-checkbox css-checkbox-primary css-checkbox-rounded">
-                                        <input type="checkbox"><span></span>
+                                        <input type="checkbox" ng-click="taskSetCompleted(whoop.object_id)"><span></span>
                                     </label>
                                 </td>
                                 <td class="js-task-content font-w200">
                                     <pre style="white-space: pre-line; border: none; background-color: #fff; margin:0 0 0">{{whoop.note}}</pre>
                                 </td>
                                 <td style="width: 100px;">
-                                    <button class="js-task-star btn btn-link text-warning" type="button">
+                                    <button class="js-task-star btn btn-link text-warning" type="button" ng-click="taskStarRemove(whoop.object_id)">
                                         <i class="fa fa-star"></i>
                                     </button>
                                     <button class="js-task-remove btn btn-link text-danger" type="button">
@@ -117,7 +117,7 @@
                             <tr>
                                 <td class="text-center" style="width: 50px;">
                                     <label class="js-task-status css-input css-checkbox css-checkbox-primary css-checkbox-rounded">
-                                        <input type="checkbox" checked><span></span>
+                                        <input type="checkbox" checked ng-click="taskSetActive(whoop.object_id)"><span></span>
                                     </label>
                                 </td>
                                 <td class="js-task-content font-w200">

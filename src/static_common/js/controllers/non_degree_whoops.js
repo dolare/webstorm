@@ -9,19 +9,19 @@ non_degree_whoops.controller('NonDegreeWhoopsController',
   	 $http({
           url: '/api/upgrid/non_degree/whoops_reports?starred=False&completed=False',
           method: 'GET',
-          headers: {
-            'Authorization': 'JWT ' + token
-          }
-    }).then(function (response) {
+          headers: {'Authorization': 'JWT ' + token }
+     })
+     .then(function (response) {
 
        $scope.whoops_active = response.data.results
+       $scope.whoops_active_number = response.data.count
 
        console.log("successful..............");
        console.log(response);
        console.log("return data"+ JSON.stringify($scope.whoops_active, null, 4));
 
-    }).
-     catch(function(error){
+     })
+     .catch(function(error){
         console.log('an error occurred...'+JSON.stringify(error));
 
      });
@@ -35,6 +35,7 @@ non_degree_whoops.controller('NonDegreeWhoopsController',
     }).then(function (response) {
 
        $scope.whoops_starred = response.data.results
+       $scope.whoops_starred_number = response.data.count
 
        console.log("successful..............");
        console.log(response);
@@ -55,6 +56,7 @@ non_degree_whoops.controller('NonDegreeWhoopsController',
     }).then(function (response) {
 
        $scope.whoops_completed = response.data.results
+       $scope.whoops_completed_number = response.data.count
 
        console.log("successful..............");
        console.log(response);
@@ -66,120 +68,194 @@ non_degree_whoops.controller('NonDegreeWhoopsController',
 
      });
 
-    jQuery(function(){ BasePagesProjectsView.init(); });
+//    $scope.change_status = function()
+    var $tasks, $taskList, $taskListStarred, $taskListCompleted,
+        $taskBadge, $taskBadgeStarred, $taskBadgeCompleted;
+
+    // Set variables and default functionality
+    var initTasks = function(){
+        $tasks                  = jQuery('.js-tasks');
+        $taskList               = jQuery('.js-task-list');
+        $taskListStarred        = jQuery('.js-task-list-starred');
+        $taskListCompleted      = jQuery('.js-task-list-completed');
+
+//        $taskBadge              = jQuery('.js-task-badge');
+//        $taskBadgeStarred       = jQuery('.js-task-badge-starred');
+//        $taskBadgeCompleted     = jQuery('.js-task-badge-completed');
+
+        // Update badges
+//        badgesUpdate();
+
+        // Task status update on checkbox click
+        var $stask, $staskId;
+
+        $tasks.on('click', '.js-task-status', function(e){
+            e.preventDefault();
+
+            $stask           = jQuery(this).closest('.js-task');
+            $staskId         = $stask.attr('data-task-id');
+
+            // Check task status and toggle it
+            if ( $stask.attr('data-task-completed') === 'true' ) {
+                taskSetActive( $staskId );
+            } else {
+                taskSetCompleted( $staskId );
+            }
+        });
+
+        // Task starred status update on star click
+        var $ftask, $ftaskId;
+
+        $tasks.on('click', '.js-task-star', function(){
+            $ftask           = jQuery(this).closest('.js-task');
+            $ftaskId         = $ftask.attr('data-task-id');
+
+            // Check task starred status and toggle it
+            if ( $ftask.attr('data-task-starred') === 'true' ) {
+                taskStarRemove( $ftaskId );
+            } else {
+                taskStarAdd( $ftaskId );
+            }
+        });
+
+    };
+
+    // Update badges
+//    var badgesUpdate = function() {
+//        $taskBadge.text( $taskList.children().length || '' );
+//        $taskBadgeStarred.text( $taskListStarred.children().length || '' );
+//        $taskBadgeCompleted.text( $taskListCompleted.children().length || '' );
+//    };
+
+    // Star a task
+    $scope.taskStarAdd = function( $taskId ){
+        var form = new FormData();
+        form.append("starred", "true");
+
+        $http({
+            url: '/api/upgrid/non_degree/whoops_reports/'+ $taskId,
+            method: 'PUT',
+            headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
+            data: form,
+        })
+        .then(function (response) {
+            var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
+
+            // Check if exists and update accordignly the markup
+            if ( $task.length > 0 ) {
+                $task.attr('data-task-starred', true);
+                $task.find('.js-task-star > i').toggleClass('fa-star fa-star-o');
+
+                if ( $task.attr('data-task-completed') === 'false') {
+                    $task.prependTo($taskListStarred);
+                }
+            }
+        })
+        .catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+        });
 
 
-//     $scope.get_cat1 = function(school_id){
-//
-//     	if(school_id) {
-//     		$http({
-//          url: '/api/upgrid/non_degree/schools/'+ school_id +  '/categories',
-//          method: 'GET',
-//          headers: {
-//            'Authorization': 'JWT ' + token
-//          }
-//    }).then(function (response) {
-//
-//       $scope.cat1 = response.data
-//
-//       console.log("return cat"+ JSON.stringify($scope.cat1, null, 4));
-//
-//
-//
-//    }).
-//     catch(function(error){
-//        console.log('an error occurred...'+JSON.stringify(error));
-//
-//     });
-//
-//     	} else {
-//     		$scope.cat1 = null
-//     		$scope.courses1 = null
-//     	}
-//
-//
-//     }
-//
-//
-//     $scope.get_cat2 = function(school_id){
-//
-//     	if(school_id){
-//     		$http({
-//          url: '/api/upgrid/non_degree/schools/'+ school_id +  '/categories',
-//          method: 'GET',
-//          headers: {
-//            'Authorization': 'JWT ' + token
-//          }
-//    }).then(function (response) {
-//
-//       $scope.cat2 = response.data
-//
-//       console.log("return cat"+ JSON.stringify($scope.cat2, null, 4));
-//
-//    }).
-//     catch(function(error){
-//        console.log('an error occurred...'+JSON.stringify(error));
-//
-//     });
-//     	} else {
-//     		$scope.cat2 = null
-//     		$scope.courses2 = null
-//     	}
-//
-//
-//     }
-//
-//
-//
-//     $scope.get_courses1 = function(school_id, cat_id) {
-//
-//     	console.log("school_id="+school_id+" cat_id="+cat_id)
-//
-//     	$http({
-//          url: '/api/upgrid/non_degree/schools/'+ school_id +  '/categories/' + cat_id + '/courses',
-//          method: 'GET',
-//          headers: {
-//            'Authorization': 'JWT ' + token
-//          }
-//	    }).then(function (response) {
-//
-//	       $scope.courses1 = response.data
-//
-//	       console.log("return courses"+ JSON.stringify($scope.courses1, null, 4));
-//
-//	    }).
-//	     catch(function(error){
-//	        console.log('an error occurred...'+JSON.stringify(error));
-//
-//	     });
-//
-//     }
-//
-//
-//
-//     $scope.get_courses2 = function(school_id, cat_id) {
-//
-//     	console.log("school_id="+school_id+" cat_id="+cat_id)
-//
-//     	$http({
-//          url: '/api/upgrid/non_degree/schools/'+ school_id +  '/categories/' + cat_id + '/courses',
-//          method: 'GET',
-//          headers: {
-//            'Authorization': 'JWT ' + token
-//          }
-//	    }).then(function (response) {
-//
-//	       $scope.courses2 = response.data
-//
-//	       console.log("return courses"+ JSON.stringify($scope.courses2, null, 4));
-//
-//	    }).
-//	     catch(function(error){
-//	        console.log('an error occurred...'+JSON.stringify(error));
-//
-//	     });
-//
-//     }
+
+    };
+
+    // Unstar a task
+    $scope.taskStarRemove = function( $taskId ){
+        var form = new FormData();
+        form.append("starred", "false");
+
+        $http({
+            url: '/api/upgrid/non_degree/whoops_reports/'+ $taskId,
+            method: 'PUT',
+            headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
+            data: form,
+        })
+        .then(function (response) {
+            var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
+
+            // Check if exists and update accordignly the markup
+            if ( $task.length > 0 ) {
+                $task.attr('data-task-starred', false);
+                $task.find('.js-task-star > i').toggleClass('fa-star fa-star-o');
+
+                if ( $task.attr('data-task-completed') === 'false') {
+                    $task.prependTo($taskList);
+                }
+            }
+        })
+        .catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+        });
+
+
+    };
+
+    // Set a task to active
+    $scope.taskSetActive = function( $taskId ){
+        var form = new FormData();
+        form.append("completed", "false");
+
+        $http({
+            url: '/api/upgrid/non_degree/whoops_reports/'+ $taskId,
+            method: 'PUT',
+            headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
+            data: form,
+        })
+        .then(function (response) {
+            var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
+
+            // Check if exists and update accordignly
+            if ( $task.length > 0 ) {
+                $task.attr('data-task-completed', false);
+                $task.find('.js-task-status > input').prop('checked', false);
+                $task.find('.js-task-content > del').contents().unwrap();
+
+                if ( $task.attr('data-task-starred') === 'true') {
+                    $task.prependTo($taskListStarred);
+                } else {
+                    $task.prependTo($taskList);
+                }
+            }
+        })
+        .catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+        });
+
+
+    };
+
+    // Set a task to completed
+    $scope.taskSetCompleted = function( $taskId ){
+        var form = new FormData();
+        form.append("completed", "true");
+
+        $http({
+            url: '/api/upgrid/non_degree/whoops_reports/'+ $taskId,
+            method: 'PUT',
+            headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
+            data: form,
+        })
+        .then(function (response) {
+            var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
+
+            // Check if exists and update accordignly
+            if ( $task.length > 0 ) {
+                $task.attr('data-task-completed', true);
+                $task.find('.js-task-status > input').prop('checked', true);
+                $task.find('.js-task-content').wrapInner('<del></del>');
+                $task.prependTo($taskListCompleted);
+            }
+        })
+        .catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+        });
+
+    };
+
 
 
   });

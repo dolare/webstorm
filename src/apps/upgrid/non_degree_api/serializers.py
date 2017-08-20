@@ -260,3 +260,9 @@ class NonDegreeWhoopsReportListSerializer(ModelSerializer):
         model = NonDegreeWhoopsReport
         fields = ('object_id', 'active', 'note', 'date_created', 'date_modified', 'starred', 'completed', )
 
+
+class NonDegreeWhoopsReportCreateSerializer(ModelSerializer):
+    class Meta:
+        model = NonDegreeWhoopsReport
+        fields = ('object_id', 'starred', 'completed', )
+
