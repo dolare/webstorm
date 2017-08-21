@@ -41,8 +41,8 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
     console.log(response);
     console.log("return data"+ JSON.stringify($scope.whoops_active, null, 4));
 
-    }).
-    catch(function(error){
+    })
+    .catch(function(error){
     console.log('an error occurred...'+JSON.stringify(error));
 
     });
@@ -63,14 +63,14 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
     console.log(response);
     console.log("return data"+ JSON.stringify($scope.whoops_active, null, 4));
 
-    }).
-    catch(function(error){
+    })
+    .catch(function(error){
     console.log('an error occurred...'+JSON.stringify(error));
 
     });
 
-    var $tasks, $taskList, $taskListStarred, $taskListCompleted,
-        $taskBadge, $taskBadgeStarred, $taskBadgeCompleted;
+    var $tasks, $taskList, $taskListStarred, $taskListCompleted
+
     $tasks                  = jQuery('.js-tasks');
     $taskList               = jQuery('.js-task-list');
     $taskListStarred        = jQuery('.js-task-list-starred');
@@ -86,10 +86,8 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
 
         // Check task status and toggle it
         if ( $stask.attr('data-task-completed') === 'true' ) {
-            console.log("setActive");
             taskSetActive( $staskId );
         } else {
-            console.log("setCompleted");
             taskSetCompleted( $staskId );
         }
     });
@@ -103,10 +101,8 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
         // Check task starred status and toggle it
         if ( $ftask.attr('data-task-starred') === 'true' ) {
             taskStarRemove( $ftaskId );
-            console.log("taskStarRemove");
         } else {
             taskStarAdd( $ftaskId );
-            console.log("taskStarAdd");
         }
     });
 
@@ -122,7 +118,6 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
             data: form,
         })
         .then(function (response) {
-            console.log(response.data);
             var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
 
             // Check if exists and update accordignly the markup
@@ -132,6 +127,8 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
 
                 if ( $task.attr('data-task-completed') === 'false') {
                     $task.prependTo($taskListStarred);
+                    $scope.whoops_starred_number ++;
+                    $scope.whoops_active_number --;
                 }
             }
         })
@@ -156,7 +153,6 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
             data: form,
         })
         .then(function (response) {
-            console.log(response.data);
             var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
 
             // Check if exists and update accordignly the markup
@@ -166,6 +162,8 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
 
                 if ( $task.attr('data-task-completed') === 'false') {
                     $task.prependTo($taskList);
+                    $scope.whoops_starred_number --;
+                    $scope.whoops_active_number ++;
                 }
             }
         })
@@ -189,7 +187,6 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
             data: form,
         })
         .then(function (response) {
-            console.log(response.data);
             var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
 
             // Check if exists and update accordignly
@@ -200,10 +197,14 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
 
                 if ( $task.attr('data-task-starred') === 'true') {
                     $task.prependTo($taskListStarred);
+                    $scope.whoops_starred_number ++;
                 } else {
                     $task.prependTo($taskList);
+                    $scope.whoops_active_number ++;
                 }
             }
+            $scope.whoops_completed_number --;
+
         })
         .catch(function(error){
             console.log('an error occurred...'+JSON.stringify(error));
@@ -225,7 +226,6 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
             data: form,
         })
         .then(function (response) {
-            console.log(response.data);
             var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
 
             // Check if exists and update accordignly
@@ -234,7 +234,16 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
                 $task.find('.js-task-status > input').prop('checked', true);
                 $task.find('.js-task-content').wrapInner('<del></del>');
                 $task.prependTo($taskListCompleted);
+
+                // update task number
+                if ( $task.attr('data-task-starred') === 'true') {
+                    $scope.whoops_starred_number --;
+                } else {
+                    $scope.whoops_active_number --;
+                }
+                $scope.whoops_completed_number ++;
             }
+
         })
         .catch(function(error){
             console.log('an error occurred...'+JSON.stringify(error));
@@ -243,76 +252,5 @@ function($scope, $http, authenticationSvc, avatarService, $timeout) {
 
     };
 
-//    $scope.toggle_starred = function(data-task-id){
-//        $ftask           = jQuery(this).closest('.js-task');
-//        $ftaskId         = $ftask.attr('data-task-id');
-//
-//        // Check task starred status and toggle it
-//        if ( $ftask.attr('data-task-starred') === 'true' ) {
-//            taskStarRemove( $ftaskId );
-//        } else {
-//            taskStarAdd( $ftaskId );
-//        }
-//    }
-//    $scope.toggle_completed = function(data-task-id){
-//        $stask           = jQuery(this).closest('.js-task');
-//        $staskId         = $stask.attr('data-task-id');
-//
-//        // Check task status and toggle it
-//        if ( $stask.attr('data-task-completed') === 'true' ) {
-//            taskSetActive( $staskId );
-//        } else {
-//            taskSetCompleted( $staskId );
-//        }
-//    }
 
-
-    // Set variables and default functionality
-//    var initTasks = function(){
-//        $tasks                  = jQuery('.js-tasks');
-//        $taskList               = jQuery('.js-task-list');
-//        $taskListStarred        = jQuery('.js-task-list-starred');
-//        $taskListCompleted      = jQuery('.js-task-list-completed');
-//
-////        $taskBadge              = jQuery('.js-task-badge');
-////        $taskBadgeStarred       = jQuery('.js-task-badge-starred');
-////        $taskBadgeCompleted     = jQuery('.js-task-badge-completed');
-//
-//        // Task status update on checkbox click
-//        var $stask, $staskId;
-//
-//        $tasks.on('click', '.js-task-status', function(e){
-//            e.preventDefault();
-//
-//            $stask           = jQuery(this).closest('.js-task');
-//            $staskId         = $stask.attr('data-task-id');
-//
-//            // Check task status and toggle it
-//            if ( $stask.attr('data-task-completed') === 'true' ) {
-//                taskSetActive( $staskId );
-//            } else {
-//                taskSetCompleted( $staskId );
-//            }
-//        });
-//
-//        // Task starred status update on star click
-//        var $ftask, $ftaskId;
-//
-//        $tasks.on('click', '.js-task-star', function(){
-//            $ftask           = jQuery(this).closest('.js-task');
-//            $ftaskId         = $ftask.attr('data-task-id');
-//
-//            // Check task starred status and toggle it
-//            if ( $ftask.attr('data-task-starred') === 'true' ) {
-//                taskStarRemove( $ftaskId );
-//            } else {
-//                taskStarAdd( $ftaskId );
-//            }
-//        });
-//
-//    };
-
-
-
-
-  });
+});
