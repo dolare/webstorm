@@ -2,44 +2,23 @@
 
 'use strict';
 
-angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 'orderByFilter', 
-  function($q, $http, $scope, $window, authenticationSvc, updateService, $timeout, executiveService, orderBy) {
+angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 
+  function($q, $http, $scope, $window, authenticationSvc, updateService, $timeout, executiveService) {
     var token = authenticationSvc.getUserInfo().accessToken;
 
     $scope.emptyWarning = 'Currently there are no schools.';
 
-    $scope.currency_symbols = {
-      'USD': '$', // US Dollar
-      'EUR': '€', // Euro
-      'CRC': '₡', // Costa Rican Colón
-      'GBP': '£', // British Pound Sterling
-      'ILS': '₪', // Israeli New Sheqel
-      'INR': '₹', // Indian Rupee
-      'JPY': '¥', // Japanese Yen
-      'KRW': '₩', // South Korean Won
-      'NGN': '₦', // Nigerian Naira
-      'PHP': '₱', // Philippine Peso
-      'PLN': 'zł', // Polish Zloty
-      'PYG': '₲', // Paraguayan Guarani
-      'THB': '฿', // Thai Baht
-      'UAH': '₴', // Ukrainian Hryvnia
-      'VND': '₫', // Vietnamese Dong
-      'CNY': '¥', // Chinese Yuan
-      'SGD': 'S$', // Singapore Dollar
-      'null': '$', // The default currency sign is USD
-    };
+    $scope.currency_symbols = executiveService.getCurrencySymbols();
 
+    // Order schools by their names
     $http({
-      url: '/api/upgrid/non_degree/schools',
+      url: '/api/upgrid/non_degree/schools?ordering=school',
       method: 'GET',
       headers: {
         'Authorization': 'JWT ' + token
       }
     }).then(function(response) {
       $scope.schools = response.data.results;
-
-      // Order schools by their names
-      $scope.schools = orderBy($scope.schools, 'school');
 
       console.log('number of schools:', $scope.schools.length);
 
@@ -49,10 +28,24 @@ angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope'
         // School logos
         s.logo_url = executiveService.getLogoBySchoolName(s.school, s.university);
 
+        // Get number of history reports for each school
+        (function(s) {
+          $http({
+            url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
+            method: 'GET',
+            headers: {
+              'Authorization': 'JWT ' + token
+            }
+          }).then(function(resp_reports) {
+            s.numberOfHistoryReports = resp_reports.data.count == 0 ? 0 : resp_reports.data.count - 1;
+          });
+        })(s);
+        
+
         // select2 dropdown (history reports)
         (function(s) {
           $timeout(function() {
-            var page_size = 6;
+            var page_size = 7;
             $("#js-data-" + s.object_id).select2({
               ajax: {
                 url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
