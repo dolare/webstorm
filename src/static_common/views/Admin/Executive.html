@@ -43,28 +43,13 @@
                   </div>
                 </div>
               </div>
-              
-
-              <!-- <div class="col-sm-3">
-                <form class="form-horizontal">
-                  <div class="form-group">
-                      <label class="col-md-3 control-label" for="example-hf-email">Email</label>
-                      <div class="col-md-7">
-                          <input class="form-control" type="email" id="example-hf-email" name="example-hf-email" placeholder="Enter Email..">
-                      </div>
-                  </div>
-                                          
-                </form>
-              </div> -->
-
-              
             </th>
           </tr>
 
           <tr>
             <th class="text-center" st-sort="ceeb">Ceeb</th>
             <th class="text-left" st-sort="school">School ({{schools_count}})</th>
-            <th class="text-center"># Clients</th>
+            <th class="text-center" st-sort="num_university_costomers" st-sort-default="reverse"># Clients</th>
             <th class="text-center">Release Preview</th>
             <th class="text-center">History</th>
             <th class="text-center">Archived</th>
@@ -164,7 +149,7 @@
 
             <td colspan="3">
               <br><br>
-              <div class="btn-group pull-left ng-scope tablepagenum">
+              <div class="btn-group pull-left tablepagenum">
 
                 <button type="button" ng-class="{'active':itemsByPage==15}" ng-click="itemsByPage=15" class="btn btn-default" data-js-blur>15</button>
                 <button type="button" ng-class="{'active':itemsByPage==30}" ng-click="itemsByPage=30" class="btn btn-default" data-js-blur>30</button>
