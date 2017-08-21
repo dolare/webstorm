@@ -9,7 +9,7 @@ angular.module('myApp').controller('AdminMainController',
         $scope.itemsByPage = 25;
         $scope.orders = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-        $scope.client_data = tableDataService.getClientList(Client);
+        $scope.client_data = Client.results;
 
         //sorting in alphabetical order
         $scope.client_data.sort(function(a, b) {

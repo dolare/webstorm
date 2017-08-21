@@ -117,9 +117,9 @@
                                 <td>
 
                                 
-                                <button ng-show="row.subuser.length !== 0" class="btn btn-info" ng-click="show_sub=!show_sub" type="button" style="position:relative;"><i ng-class="show_sub? 'fa fa-minus': 'fa fa-plus'"></i><span class="badge badge-danger pull-right programbadge" style="position: absolute;top:-8px;left:26px;background: #d9534f;color: white;">{{row.subuser.length}}</span></button>
+                                <button ng-show="row.sub_user.length !== 0" class="btn btn-info" ng-click="show_sub=!show_sub" type="button" style="position:relative;"><i ng-class="show_sub? 'fa fa-minus': 'fa fa-plus'"></i><span class="badge badge-danger pull-right programbadge" style="position: absolute;top:-8px;left:26px;background: #d9534f;color: white;">{{row.sub_user.length}}</span></button>
 
-                                    <button ng-show="row.subuser.length === 0" class="btn btn-default" type="button" style="position:relative;" ng-disabled="true"><i ng-class="show_sub? 'fa fa-minus': 'fa fa-plus'"></i></button>
+                                    <button ng-show="row.sub_user.length === 0" class="btn btn-default" type="button" style="position:relative;" ng-disabled="true"><i ng-class="show_sub? 'fa fa-minus': 'fa fa-plus'"></i></button>
 
                                 </td>
                         <!-- <td class="text-center">
@@ -189,7 +189,7 @@
 
 
                                 <tbody ng-repeat-end ng-show="show_sub">
-                                    <tr class="bg-gray-lighter" ng-repeat="row1 in row.subuser">
+                                    <tr class="bg-gray-lighter" ng-repeat="row1 in row.sub_user">
 
                                         <td class="text-right">{{$index+1}}.</td>
                         <!-- <td class="text-center">
