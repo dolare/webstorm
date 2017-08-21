@@ -3,7 +3,31 @@
 angular.module('myApp')
   .factory('executiveService',['orderByFilter', '$sce', 'avatarService', '$http', '$q', 'authenticationSvc', function(orderByFilter, $sce, avatarService, $http, $q, authenticationSvc) {
     
-     var updatedReport = function(old_data_raw, new_data_raw) {
+    var getCurrencySymbols = function() {
+      return {
+        'USD': '$', // US Dollar
+        'EUR': '€', // Euro
+        'CRC': '₡', // Costa Rican Colón
+        'GBP': '£', // British Pound Sterling
+        'ILS': '₪', // Israeli New Sheqel
+        'INR': '₹', // Indian Rupee
+        'JPY': '¥', // Japanese Yen
+        'KRW': '₩', // South Korean Won
+        'NGN': '₦', // Nigerian Naira
+        'PHP': '₱', // Philippine Peso
+        'PLN': 'zł', // Polish Zloty
+        'PYG': '₲', // Paraguayan Guarani
+        'THB': '฿', // Thai Baht
+        'UAH': '₴', // Ukrainian Hryvnia
+        'VND': '₫', // Vietnamese Dong
+        'CNY': '¥', // Chinese Yuan
+        'SGD': 'S$', // Singapore Dollar
+        'BRL': 'R$', // Brazilian Real
+        'null': '$', // The default currency sign is USD
+      };
+    };
+
+    var updatedReport = function(old_data_raw, new_data_raw) {
 
       var school_data = angular.copy(new_data_raw);
       var school_data_old = angular.copy(old_data_raw);
@@ -190,7 +214,7 @@ angular.module('myApp')
 
       console.log('Comparison finished!');
       return school_data
-    }
+    };
 
     var schools = [
         {
@@ -276,10 +300,73 @@ angular.module('myApp')
             "school": "INSEAD - Institut Européen d'Administration des Affaires",
             "university": "INSEAD",
             "logo": "http://worldscholarshipforum.com/wp-content/uploads/2017/04/INSEAD-Alumni-Fund-IAF-Diversity-Scholarships.png"
-        }
-    ]
+        },
+        {
+            "object_id": "aa6916a1-60d9-40ba-b2ce-df3c9acf96e6",
+            "ceeb": "1111",
+            "school": "International Institute for Management Development",
+            "university": "IMD",
+            "logo": "http://www.imd.org/uupload/images/imd-logo-brands-of-the-world-200x200.jpg"
+        },
+        {
+            "object_id": "21f0c4fd-c064-4897-b1d7-115d7c4e55c6",
+            "ceeb": "1839_SBUS",
+            "school": "Ross School of Business",
+            "university": "University of Michigan - Ann Arbor",
+            "logo": "https://i.forbesimg.com/media/lists/colleges/university-of-michigan-ann-arbor/stephen-m-ross-school-of-business_200x200.jpg"
+        },
+        {
+            "object_id": "cb0ce0af-8466-41e8-bf21-ad61bf2f89a6",
+            "ceeb": "2222",
+            "school": "IESE Business School",
+            "university": "University of Navarra",
+            "logo": "https://i.forbesimg.com/media/lists/colleges/university-of-navarra/iese-business-school_416x416.jpg"
+        },
+        {
+            "object_id": "3cd83956-1f7a-4a62-9cf0-9f287813495b",
+            "ceeb": "3333",
+            "school": "Center for Creative Leadership",
+            "university": "CCL",
+            "logo": "https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAKnAAAAJDM2YmNjNmJkLTA1YmQtNDJiMy1iZmFjLTg2YzE0YWYxMDNmMQ.png"
+        },
+        {
+            "object_id": "4ccd5f19-fd95-479a-9445-ac97051d7893",
+            "ceeb": "4007_SBUS",
+            "school": "Thunderbird School Of Global Management",
+            "university": "Arizona State University",
+            "logo": "http://www.best-masters.com/assets/img/logo_ecole/570.gif"
+        },
+        {
+            "object_id": "2df0ae88-09ba-49b3-89b4-15d7fa1cd2f8",
+            "ceeb": "4832_CMGT",
+            "school": "Eller College of Management",
+            "university": "University of Arizona",
+            "logo": "https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAASPAAAAJGVlNTllZDcwLTZhZjktNGMzNC04MTg0LTg2ODZkOTUyMzQ5Yw.png"
+        },
+        {
+            "object_id": "30cbd322-aa7a-47d1-b56f-8724e0d4da7e",
+            "ceeb": "4837_SMGT",
+            "school": "Anderson School of Management",
+            "university": "University of California - Los Angeles",
+            "logo": "https://media.licdn.com/mpr/mpr/shrink_200_200/p/7/005/036/391/3f2be2a.png"
+        },
+        {
+            "object_id": "c7fa2e7f-d443-46b6-89c8-dd7f9c34442b",
+            "ceeb": "5816_SBUS",
+            "school": "Kenan-Flagler Business School",
+            "university": "The University of North Carolina at Chapel Hill",
+            "logo": "https://i.forbesimg.com/media/lists/colleges/university-of-north-carolina-at-chapel-hill/kenan-flagler-business-school_200x200.jpg"
+        },
+        {
+            "object_id": "d9dbfe31-ac96-4b18-bf5d-d354e7928814",
+            "ceeb": "5820_SBUS",
+            "school": "Darden School of Business",
+            "university": "University of Virginia",
+            "logo": "https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAhTAAAAJDk2OTlmM2U0LTJmOTktNGE1NC04ZThiLWIyZDk0ODQ2NTNjNA.png"
+        },
+    ];
 
-    var default_school_logo = "/static/img/school_default_logo.png"
+    var default_school_logo = "/static/img/school_default_logo.png";
 
     var getLogoById = function(schoolId) {
       var result = schools.filter(function(school) {
@@ -303,6 +390,7 @@ angular.module('myApp')
     };
 
     return {
+      getCurrencySymbols: getCurrencySymbols,
       updatedReport: updatedReport,
       getLogoById: getLogoById,
       getLogoBySchoolName: getLogoBySchoolName

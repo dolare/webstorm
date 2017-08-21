@@ -8,32 +8,14 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
     $scope._ = _;
 
     var token = authenticationSvc.getUserInfo().accessToken;
+
     $scope.itemsByPage = 15;
 
     $scope.emptyExecutiveLabel = 'No records.';
 
     $scope.date = new Date().toISOString();
 
-    $scope.currency_symbols = {
-      'USD': '$', // US Dollar
-      'EUR': '€', // Euro
-      'CRC': '₡', // Costa Rican Colón
-      'GBP': '£', // British Pound Sterling
-      'ILS': '₪', // Israeli New Sheqel
-      'INR': '₹', // Indian Rupee
-      'JPY': '¥', // Japanese Yen
-      'KRW': '₩', // South Korean Won
-      'NGN': '₦', // Nigerian Naira
-      'PHP': '₱', // Philippine Peso
-      'PLN': 'zł', // Polish Zloty
-      'PYG': '₲', // Paraguayan Guarani
-      'THB': '฿', // Thai Baht
-      'UAH': '₴', // Ukrainian Hryvnia
-      'VND': '₫', // Vietnamese Dong
-      'CNY': '¥', // Chinese Yuan
-      'SGD': 'S$', // Singapore Dollar
-      'null': '$', // The default currency sign is USD
-    };
+    $scope.currency_symbols = executiveService.getCurrencySymbols();
 
     $http({
         url: '/api/upgrid/user/university_customer/?is_non_degree_user=True&is_demo=False&page_size=100',
@@ -77,7 +59,7 @@ angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http'
       var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
       var number = tableState.pagination.number || 15; // Number of entries showed per page.
 
-      var url = '/api/upgrid/non_degree/schools?is_non_degree=True&client_id=';
+      var url = '/api/upgrid/non_degree/schools?is_non_degree=True';
 
       ajaxService.getPage(start, number, url, tableState, token, $scope.getSchoolsAPIFilters).then(function(resp_schools) {
         $scope.non_degree_schools = resp_schools.data.results;
