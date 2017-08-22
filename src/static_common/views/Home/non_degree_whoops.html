@@ -50,31 +50,68 @@
 
                 <!-- Tasks List -->
                 <h2 class="content-heading">Active</h2>
-                <div class="js-task-list">
+                <div>
                     <!-- Task -->
-
-                    <div class="js-task block block-rounded push-5 animated fadeIn" ng-repeat="whoop in whoops_active" data-task-id="{{whoop.object_id}}" data-task-completed="false" data-task-starred="false">
-                        <table class="block-table table-vcenter">
+                    <table class="table" st-pipe="callServer" st-table="whoops_active">
+                        <tbody class="js-task-list" ng-show="!isLoading">
+                        <tr ng-repeat="whoop in whoops_active"  class="js-task block block-rounded push-5" data-task-id="{{whoop.object_id}}" data-task-completed="{{whoop.completed}}" data-task-starred="whoop.starred">
+                            <td>
+                                <table class="block-table table-vcenter">
+                                        <tr>
+                                            <td class="text-center" style="width: 50px;">
+                                                <label class="js-task-status css-input css-checkbox css-checkbox-primary css-checkbox-rounded">
+                                                    <input type="checkbox"><span></span>
+                                                </label>
+                                            </td>
+                                            <td class="js-task-content font-w200">
+                                                <pre style="white-space: pre-line; border: none; background-color: #fff; margin:0 0 0">{{whoop.note}}</pre>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <button class="js-task-star btn btn-link text-warning" type="button">
+                                                                <i class="fa fa-star-o"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tbody ng-show="isLoading">
                             <tr>
-                                <td class="text-center" style="width: 50px;">
-                                    <label class="js-task-status css-input css-checkbox css-checkbox-primary css-checkbox-rounded">
-                                        <input type="checkbox"><span></span>
-                                    </label>
-                                </td>
-                                <td class="js-task-content font-w200">
-                                    <pre style="white-space: pre-line; border: none; background-color: #fff; margin:0 0 0">{{whoop.note}}</pre>
-                                </td>
-                                <td style="width: 100px;">
-                                    <button class="js-task-star btn btn-link text-warning" type="button">
-                                                    <i class="fa fa-star-o"></i>
-                                    </button>
-                                    <button class="js-task-remove btn btn-link text-danger" type="button">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </td>
+                                <td colspan="4" class="text-center">Loading ... </td>
                             </tr>
-                        </table>
-                    </div>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-center">
+                              <br><br>
+                              <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="3" st-displayed-pages="" style="text-align:right;"></div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <!--<div class="js-task block block-rounded push-5 animated fadeIn" ng-repeat="whoop in whoops_active" data-task-id="{{whoop.object_id}}" data-task-completed="false" data-task-starred="false">-->
+                        <!--<table class="block-table table-vcenter">-->
+                            <!--<tr>-->
+                                <!--<td class="text-center" style="width: 50px;">-->
+                                    <!--<label class="js-task-status css-input css-checkbox css-checkbox-primary css-checkbox-rounded">-->
+                                        <!--<input type="checkbox"><span></span>-->
+                                    <!--</label>-->
+                                <!--</td>-->
+                                <!--<td class="js-task-content font-w200">-->
+                                    <!--<pre style="white-space: pre-line; border: none; background-color: #fff; margin:0 0 0">{{whoop.note}}</pre>-->
+                                <!--</td>-->
+                                <!--<td style="width: 100px;">-->
+                                    <!--<button class="js-task-star btn btn-link text-warning" type="button">-->
+                                                    <!--<i class="fa fa-star-o"></i>-->
+                                    <!--</button>-->
+                                    <!--<button class="js-task-remove btn btn-link text-danger" type="button">-->
+                                        <!--<i class="fa fa-times"></i>-->
+                                    <!--</button>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
+                    <!--</div>-->
                     <!-- END Task -->
                 </div>
                 <!-- END Tasks List -->
@@ -97,9 +134,6 @@
                                 <td style="width: 100px;">
                                     <button class="js-task-star btn btn-link text-warning" type="button">
                                         <i class="fa fa-star"></i>
-                                    </button>
-                                    <button class="js-task-remove btn btn-link text-danger" type="button">
-                                        <i class="fa fa-times"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -129,9 +163,6 @@
                                 <td style="width: 100px;">
                                     <button class="js-task-star btn btn-link text-warning" type="button">
                                                         <i class="{{whoop.starred? 'fa fa-star' : 'fa fa-star-o'}}"></i>
-                                        </button>
-                                    <button class="js-task-remove btn btn-link text-danger" type="button">
-                                        <i class="fa fa-times"></i>
                                     </button>
                                 </td>
                             </tr>

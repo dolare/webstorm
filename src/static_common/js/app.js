@@ -1055,7 +1055,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             serie: true,
                             files: [
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
-
+                                '/static/js/services/nonDegreeWhoopsService.js',
                                 '/static/js/controllers/non_degree_whoops.js',
 
 
