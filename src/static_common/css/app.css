@@ -2168,3 +2168,11 @@ left: 35%;
     border: 1px solid #bbb;
 
 }
+
+.table.exec-ed-school-list tbody>tr>td:nth-child(2) {
+  border-right:0;
+}
+
+.table.exec-ed-school-list tbody>tr>td:nth-child(3) {
+  border-left:0;
+}

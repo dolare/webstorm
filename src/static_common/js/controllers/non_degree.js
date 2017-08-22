@@ -2,8 +2,11 @@
 'use strict';
 
 angular.module('myApp').
-controller('NonDegreeController', function($scope, $http, authenticationSvc, $localStorage, $sessionStorage, executiveService) {
+controller('NonDegreeController', function($scope, $http, authenticationSvc, $localStorage, $sessionStorage, executiveService, $timeout) {
   var token = authenticationSvc.getUserInfo().accessToken;
+
+  $scope.itemsByPage = 25;
+
   $scope.$storage = $localStorage;
 
   //console.log("table = "+JSON.stringify(Table));
@@ -242,9 +245,90 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
        $scope.school_report_pair = {};
 
         angular.forEach($scope.school_table, function(value, index) {
-         value["details"] = null;
+          // select2 dropdown (report to compare with)
+          (function(value) {
+            $timeout(function() {
+              var page_size = 7;
+              $("#js-data-" + value.object_id).select2({
+                ajax: {
+                  url: '/api/upgrid/non_degree/reports?school=' + value.object_id + '&active=True',
+                  method: 'GET',
+                  headers: {
+                    'Authorization': 'JWT ' + token
+                  },
+                  dataType: 'json',
+                  data: function(params) {
+                    var query = {
+                      search: params.term, // search term
+                      page: params.page,
+                      page_size: page_size
+                    }
+
+                    return query;
+                  },
+                  processResults: function(data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    console.log('Loaded active report list of ' + value.school);
+                    params.page = params.page || 1;
+
+                    if (data.previous == null) {
+                      console.log('Report list 1st page.');
+                      console.log('Report list including the latest one: ');
+                      console.log(data.results);
+                      data.results.splice(0,1);
+                      console.log('The latest report is removed: ');
+                      console.log(data.results);
+                    }
+                    return {
+                      results: data.results.map(function(item) {
+                        return {
+                          id: item.object_id,
+                          text: moment.utc(item.date_created).local().format('MM/DD/YYYY'),
+                        };
+                      }),
+                      pagination: {
+                        more: (params.page * page_size) < data.count
+                      }
+                    };
+                  },
+
+                  cache: true
+                },
+                // Permanently hide the search box
+                minimumResultsForSearch: Infinity,
+
+                placeholder: 'No reports yet.'
+
+              });
+
+              // Set default option as the latest report
+              $.ajax({
+                url: '/api/upgrid/non_degree/reports?school=' + value.object_id + '&active=True',
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                },
+                dataType: 'json'
+              }).then(function(data) {
+                if (data.results.length > 0) {
+                  value.lastReleaseDate = data.results[0].date_created;
+                  console.log(value.school + ' lastReleaseDate: ' + value.lastReleaseDate);
+                  if (data.results.length > 1)
+                    $("#js-data-" + value.object_id).append('<option selected value=' + data.results[1].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY') + '</option>').trigger('change');
+                }
+                else
+                  value.lastReleaseDate = null;
+                
+              });
+
+            });
+          })(value);
+          value["details"] = null;
         
-         value["logo_url"] = executiveService.getLogoBySchoolName(value.school, value.university)
+          value["logo_url"] = executiveService.getLogoBySchoolName(value.school, value.university)
 
          //console.log("value = "+JSON.stringify(value));
 

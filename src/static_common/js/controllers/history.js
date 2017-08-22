@@ -83,7 +83,7 @@ angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope'
                     results: data.results.map(function(item) {
                       return {
                         id: item.object_id,
-                        text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
+                        text: moment.utc(item.date_created).local().format('MM/DD/YYYY'),
                       };
                     }),
                     pagination: {

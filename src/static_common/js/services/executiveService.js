@@ -23,6 +23,7 @@ angular.module('myApp')
         'CNY': '¥', // Chinese Yuan
         'SGD': 'S$', // Singapore Dollar
         'BRL': 'R$', // Brazilian Real
+        'CHF': 'CHF', // Swiss Franc
         'null': '$', // The default currency sign is USD
       };
     };
