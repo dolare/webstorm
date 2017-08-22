@@ -286,7 +286,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
                       results: data.results.map(function(item) {
                         return {
                           id: item.object_id,
-                          text: moment.utc(item.date_created).local().format('MM/DD/YYYY'),
+                          text: moment.utc(item.date_created).local().format('MM/DD/YYYY HH:mm:ss'),
                         };
                       }),
                       pagination: {
@@ -304,28 +304,9 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
               });
 
-              // Set default option as the latest report
-              $.ajax({
-                url: '/api/upgrid/non_degree/reports?school=' + value.object_id + '&active=True',
-                method: 'GET',
-                headers: {
-                  'Authorization': 'JWT ' + token
-                },
-                dataType: 'json'
-              }).then(function(data) {
-                if (data.results.length > 0) {
-                  value.lastReleaseDate = data.results[0].date_created;
-                  console.log(value.school + ' lastReleaseDate: ' + value.lastReleaseDate);
-                  if (data.results.length > 1)
-                    $("#js-data-" + value.object_id).append('<option selected value=' + data.results[1].object_id + '>' + moment.utc(data.results[0].date_created).local().format('MM/DD/YYYY') + '</option>').trigger('change');
-                }
-                else
-                  value.lastReleaseDate = null;
-                
-              });
-
             });
           })(value);
+
           value["details"] = null;
         
           value["logo_url"] = executiveService.getLogoBySchoolName(value.school, value.university)
@@ -345,8 +326,16 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
             
             
             if(response.data.results.length>0) {
-
-
+              // If there is at least one report in the list, get the release date of the last report.
+              value.lastReleaseDate = response.data.results[0].date_created;
+              console.log(value.school + ' lastReleaseDate: ' + value.lastReleaseDate);
+              // If there are at leasat 2 reports in the list, you can select which report to compare the last released report with and set the default option as the report before the last one.
+              if (response.data.results.length > 1) {
+                $timeout(function(){
+                  $("#js-data-" + value.object_id).append('<option selected value=' + response.data.results[1].object_id + '>' + moment.utc(response.data.results[1].date_created).local().format('MM/DD/YYYY HH:mm:ss') + '</option>').trigger('change');
+                  console.log('triggered ' + value.school + ' report list.')
+                });
+              }
 
               //console.log("++++++++value.object_id="+value.object_id);
               //console.log("++++++++response.data.results[0].object_id="+response.data.results[0].object_id);
@@ -380,10 +369,12 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
                    catch(function(error){
                       console.log('an error occurred...'+JSON.stringify(error));
                   });
-               } else {
+              }
 
-
-               }
+              else {
+                // If there is no previous report, set lastReleaseDate to null.
+                value.lastReleaseDate = null;
+              }
 
 
             }).

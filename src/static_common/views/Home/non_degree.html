@@ -123,7 +123,7 @@
               <span ng-if="row.details.course_removed===0" class="badge badge-default">- -</span>
             </td>
             <td class="td-bordered">
-              <span ng-if="row.lastReleaseDate">{{row.lastReleaseDate | amUtc | amLocal |  amDateFormat:'MM/DD/YYYY'}}</span>
+              <span ng-if="row.lastReleaseDate">{{row.lastReleaseDate | amUtc | amLocal |  amDateFormat:'MM/DD/YYYY HH:mm:ss'}}</span>
               <span ng-if="!row.lastReleaseDate">No previous release</span>
             </td>
 
