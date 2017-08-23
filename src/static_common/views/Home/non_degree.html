@@ -21,12 +21,12 @@
         <colgroup>
           <col width="5%">
           <col width="40%">
-          <col width="20%">
+          <col width="22%">
           <col width="5%">
           <col width="5%">
           <col width="5%">
           <col width="5%">
-          <col width="15%">
+          <col width="13%">
         </colgroup>
         <thead class="thead-inverse">
           <tr class=" bg-info" style="border: 1px solid #e3e3e3; color:white;">
@@ -34,6 +34,7 @@
             <th style="padding-left:15px;" class="h4 font-w400">schools
             </th>
             <th class="h4 font-w400">
+              <i class="fa fa-info-circle" aria-hidden="true"  data-uib-tooltip="Select an older report to compare with the latest released one." data-tooltip-placement="top"></i>
               Report to compare with
             </th>
             <th colspan="2" class="h4 font-w400 text-center">
@@ -42,7 +43,7 @@
             <th colspan="2" class="h4 font-w400 text-center">
               courses
             </th>
-            <th class="h4 font-w400 text-center">Last Release</th>
+            <th class="h4 font-w400 text-center">Latest Release</th>
           </tr>
           <tr class="bg-gray-lighter">
             <th class="text-center th-bordered" style="vertical-align: middle; text-decoration: none; cursor: default;">
@@ -90,7 +91,7 @@
               </div>
             </td >
             <td class="td-bordered">
-              <select id="js-data-{{row.object_id}}" ng-model="selectedReportId">
+              <select id="js-data-{{row.object_id}}" ng-model="selectedReportId" ng-change="setReportPair(row.object_id, selectedReportId)">
                 <option></option>
               </select>
             </td>
@@ -100,7 +101,6 @@
 
 
             </td>
-
 
             <td class="text-center td-bordered" ng-show="row.details">
               
@@ -123,7 +123,7 @@
               <span ng-if="row.details.course_removed===0" class="badge badge-default">- -</span>
             </td>
             <td class="td-bordered">
-              <span ng-if="row.lastReleaseDate">{{row.lastReleaseDate | amUtc | amLocal |  amDateFormat:'MM/DD/YYYY HH:mm:ss'}}</span>
+              <span ng-if="row.lastReleaseDate">{{row.lastReleaseDate | amUtc | amLocal |  amDateFormat:'MM/DD/YYYY'}}</span>
               <span ng-if="!row.lastReleaseDate">No previous release</span>
             </td>
 
