@@ -48,7 +48,7 @@
           <tr class="bg-gray-lighter">
             <th class="text-center th-bordered" style="vertical-align: middle; text-decoration: none; cursor: default;">
               <!-- <i class="fa fa-search text-primary"></i> -->
-              <label class="css-input css-checkbox css-checkbox-primary">
+              <label class="css-input css-checkbox css-checkbox-primary" uib-tooltip="Select all" tooltip-placement="bottom">
               <input type="checkbox" ng-model="checkAll" ng-click="checkAll_None(checkAll)" ng-init="checkAll=true"><span></span>
               </label>
             </th>
@@ -91,9 +91,12 @@
               </div>
             </td >
             <td class="td-bordered">
-              <select id="js-data-{{row.object_id}}" ng-model="selectedReportId" ng-change="setReportPair(row.object_id, selectedReportId)">
-                <option></option>
-              </select>
+              <div class="form-material">
+                <select class="form-control" id="js-data-{{row.object_id}}" ng-model="selectedReportId" ng-change="setReportPair(row.object_id, selectedReportId)" style="width: 70%;">
+                  <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                </select>
+              </div>
+              
             </td>
             <td ng-show="row.details===null" colspan="4" class="td-bordered text-center">
              

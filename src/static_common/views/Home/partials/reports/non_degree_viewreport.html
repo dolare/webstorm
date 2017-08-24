@@ -139,10 +139,8 @@
                     ">
                   <h3 class="block-title text-left">School Overview</h3>
                 </div>
-                <div class="block-content block-content-full text-left bg-image" style="padding: 10px 15px;">
-                  <div>
-                    <img class="logo-bg" ng-src="{{logo_url}}" alt="Logo of {{school}}" width="50%">
-                  </div>
+                <div class="block-content block-content-full text-left bg-image" style="padding: 10px 30px;">
+                  <img class="logo-bg" ng-src="{{logo_url}}" alt="Logo of {{school}}" width="50%">
                 </div>
                 <div class="text-left bg-gray-lighter" style="
                     padding-left: 21px;
@@ -266,10 +264,16 @@
                           <span ng-if="course.type" ng-class="{'location-dashline': course.location_info}" data-uib-tooltip="location: {{course.location_info}}" data-tooltip-placement="top" data-tooltip-enable = "course.location_info"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.location_info"></i> {{course.type}}</span>
                           <span ng-if="!course.type" class="font-w600 text-gray label-na">N/A</span>
                         </td>
-                        <td style="
-                            padding: 15px;
-                            ">
-                          <span ng-repeat-start="d in course.course_dates | orderBy:'start_date'">Start: {{d.start_date | amUtc  | amDateFormat:'MMM DD, YYYY'}}</span><br><span>End: {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span><br ng-repeat-end ng-if="!$last">
+                        <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
+
+                          <span ng-if="course.course_dates.length!==0">
+                            
+                            <span ng-repeat="d in course.course_dates | orderBy:'start_date'" ng-if="d.end_date>=course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                            
+                          </span>
+
+                          <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
+
                         </td>
                         <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
