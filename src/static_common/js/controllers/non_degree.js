@@ -2,8 +2,11 @@
 'use strict';
 
 angular.module('myApp').
-controller('NonDegreeController', function($scope, $http, authenticationSvc, $localStorage, $sessionStorage, executiveService) {
+controller('NonDegreeController', function($scope, $http, authenticationSvc, $localStorage, $sessionStorage, executiveService, $timeout) {
   var token = authenticationSvc.getUserInfo().accessToken;
+
+  $scope.itemsByPage = 25;
+
   $scope.$storage = $localStorage;
 
   //console.log("table = "+JSON.stringify(Table));
@@ -40,78 +43,131 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
         'Authorization': 'JWT ' + token
       }
     })
-    .then(function(response) {
+    .then(function(resp_schools) {
 
-       console.log("return data"+ JSON.stringify(response.data.results));
-       $scope.school_table = response.data.results
-       $scope.school_report_pair = {};
+      console.log("resp_schools: "+ JSON.stringify(resp_schools.data.results));
+      $scope.school_table = resp_schools.data.results
+      $scope.school_report_pair = {};
+      angular.forEach($scope.school_table, function(value, index) {
+        // select2 dropdown (report to compare with)
+        (function(value) {
+          $timeout(function() {
+            var page_size = 7;
+            $("#js-data-" + value.object_id).select2({
+              ajax: {
+                url: '/api/upgrid/non_degree/reports?school=' + value.object_id + '&active=True',
+                method: 'GET',
+                headers: {
+                  'Authorization': 'JWT ' + token
+                },
+                dataType: 'json',
+                data: function(params) {
+                  var query = {
+                    search: params.term, // search term
+                    page: params.page,
+                    page_size: page_size
+                  }
 
-        angular.forEach($scope.school_table, function(value, index) {
-         value["details"] = null;
-        
-         value["logo_url"] = executiveService.getLogoBySchoolName(value.school, value.university)
+                  return query;
+                },
+                processResults: function(data, params) {
+                  // parse the results into the format expected by Select2
+                  // since we are using custom formatting functions we do not need to
+                  // alter the remote JSON data, except to indicate that infinite
+                  // scrolling can be used
+                  console.log('Loaded active report list of ' + value.school);
+                  params.page = params.page || 1;
 
-         //console.log("value = "+JSON.stringify(value));
-
-
-          $http({
-            url: '/api/upgrid/non_degree/reports?school=' + value.object_id + '&active=True',
-            method: 'GET',
-            headers: {
-              'Authorization': 'JWT ' + token
-            }
-          })
-          .then(function(response) {
-
-            
-            
-            if(response.data.results.length>0) {
-
-
-
-              //console.log("++++++++value.object_id="+value.object_id);
-              //console.log("++++++++response.data.results[0].object_id="+response.data.results[0].object_id);
-              
-              $scope.school_report_pair[value.object_id] = [];
-              $scope.school_report_pair[value.object_id].push(response.data.results[0].object_id);
-              $scope.school_report_pair[value.object_id].push(response.data.results.length>1? response.data.results[1].object_id:response.data.results[0].object_id)
-
-              console.log("$scope.school_report_pair="+JSON.stringify($scope.school_report_pair))
-              $http({
-                    url: '/api/upgrid/non_degree/reports/overview/' + response.data.results[0].object_id + '/' + (response.data.results.length>1? response.data.results[1].object_id:response.data.results[0].object_id),
-                    method: 'GET',
-                    headers: {
-                      'Authorization': 'JWT ' + token
+                  if (data.previous == null) {
+                    console.log('Report list 1st page.');
+                    console.log('Report list including the latest one: ');
+                    console.log(data.results);
+                    data.results.splice(0,1);
+                    console.log('The latest report is removed: ');
+                    console.log(data.results);
+                  }
+                  return {
+                    results: data.results.map(function(item) {
+                      return {
+                        id: item.object_id,
+                        text: moment.utc(item.date_created).local().format('MM/DD/YYYY'),
+                      };
+                    }),
+                    pagination: {
+                      more: (params.page * page_size) < data.count
                     }
-                  })
-                  .then(function(response) {
-                    
-                    value["details"] = {};
+                  };
+                },
 
-                    value.details["course_removed"] = response.data.course_removed
-                    value.details["course_added"] = response.data.course_added
-                    value.details["category_added"] = response.data.category_added
-                    value.details["category_removed"] = response.data.category_removed
+                cache: true
+              },
+              // Permanently hide the search box
+              minimumResultsForSearch: Infinity,
 
-                    $scope.$storage.non_degree[value.object_id] = true;
-                    
+              placeholder: 'No older reports.'
 
-
-                  }).
-                   catch(function(error){
-                      console.log('an error occurred...'+JSON.stringify(error));
-                  });
-               } else {
-
-
-               }
-
-
-            }).
-             catch(function(error){
-                console.log('an error occurred...'+JSON.stringify(error));
             });
+
+            // $("#js-data-" + value.object_id).on('change', function() {});
+
+          });
+        })(value);
+
+        value["details"] = null;
+      
+        value["logo_url"] = executiveService.getLogoBySchoolName(value.school, value.university)
+
+       //console.log("value = "+JSON.stringify(value));
+
+
+        $http({
+          url: '/api/upgrid/non_degree/reports?school=' + value.object_id + '&active=True',
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
         })
+        .then(function(resp_reports) {
+          console.log('processing ' + value.university + ' ' + value.school);
+          
+          
+          if(resp_reports.data.results.length>0) {
+            // If there is at least one report in the list, get the release date of the last report.
+            value.lastReleaseDate = resp_reports.data.results[0].date_created;
+
+            //console.log("++++++++value.object_id="+value.object_id);
+            //console.log("++++++++resp_reports.data.results[0].object_id="+resp_reports.data.results[0].object_id);
+            
+            $scope.school_report_pair[value.object_id] = new Array(2);
+            $scope.school_report_pair[value.object_id][0] = resp_reports.data.results[0].object_id;
+
+            if (resp_reports.data.results.length == 1) {
+              $scope.setReportPair(value.object_id, resp_reports.data.results[0].object_id);
+            }
+            else {
+              // If there are at leasat 2 reports in the list, you can select which report to compare the last released report with and set the default option as the report before the last one.
+              $timeout(function(){
+                $("#js-data-" + value.object_id).append('<option selected value=' + resp_reports.data.results[1].object_id + '>' + moment.utc(resp_reports.data.results[1].date_created).local().format('MM/DD/YYYY') + '</option>').trigger('change');
+              });
+            }
+
+            
+            $scope.$storage.non_degree[value.object_id] = true;
+            
+            
+            }
+
+            else {
+              // If there is no previous report, set lastReleaseDate to null.
+              value.lastReleaseDate = null;
+            }
+
+
+          }).
+           catch(function(error){
+              console.log('an error occurred...'+JSON.stringify(error));
+          });
+      });
 
 
         console.log("school_table = "+JSON.stringify($scope.school_table));
@@ -120,28 +176,55 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
         console.log('an error occurred...'+JSON.stringify(error));
     });
 
+    // The setReportPair function would be call every time the option of the REPORT TO COMPARE WITH dropdown in each row.
+    $scope.setReportPair = function(schoolId, oldReportId) {
+      if (oldReportId) {
+        var school = _.find($scope.school_table, function(res) {return res.object_id == schoolId;});
+        $scope.school_report_pair[schoolId][1] = oldReportId;
+        console.log('Generated report pair for ' + school.school);
+        $http({
+          url: '/api/upgrid/non_degree/reports/overview/' + $scope.school_report_pair[schoolId][0] + '/' + $scope.school_report_pair[schoolId][1],
+          method: 'GET',
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+        })
+        .then(function(resp_overview) {
+          
+          
+          school["details"] = {};
+
+          school.details["course_removed"] = resp_overview.data.course_removed;
+          school.details["course_added"] = resp_overview.data.course_added;
+          school.details["category_added"] = resp_overview.data.category_added;
+          school.details["category_removed"] = resp_overview.data.category_removed;
 
 
+          console.log('Generated details for ' + school.school + ' : ');
+          console.log(angular.toJson(school.details));
+        });
+      }
+    };
 
-     //view the reports
+
+    //view the reports
 
      $scope.view_report = function () {
 
       $scope.open_legend = false;
-       var selected_ids = [];
-       angular.forEach($scope.$storage.non_degree, function(value, key) {
-          if(value){
-            selected_ids.push(key)
-          }
+      var selected_ids = [];
+      angular.forEach($scope.$storage.non_degree, function(value, key) {
+        if(value){
+          selected_ids.push(key)
+        }
 
-        });
+      });
 
-       console.log("selected_ids="+JSON.stringify(selected_ids))
+      console.log("selected_ids="+JSON.stringify(selected_ids));
     
 
-       if(selected_ids.length===0){
-          $.notify({
-
+      if (selected_ids.length===0) {
+        $.notify({
           // options
           icon: "fa fa-warning",
           message: 'Please make a selection from the table.'
@@ -154,7 +237,8 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
           },
           z_index: 1999,
         });
-       } else {
+      }
+      else {
 
         jQuery('#ViewAll').modal('toggle');
 
@@ -167,109 +251,66 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
         //one id for one school
         angular.forEach(selected_ids, function(value, index) {
 
-          var report_history = [];
           var new_school_data;
           var old_school_data;
           var school_data_temp;
 
-          console.log("value = "+value)
+          console.log("value = " + value)
+
+          
+
+          console.log("test_id_new = " + $scope.school_report_pair[value][0]);
 
           $http({
-            url: '/api/upgrid/non_degree/reports?school=' + value + '&active=True',
+            url: '/api/upgrid/non_degree/reports/' + $scope.school_report_pair[value][0],
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
-            }
-          }).then(function(response) {
+            },
+          }).then(function(result) {
 
-            console.log("history ver.="+JSON.stringify(response.data.results))
-            //report_history = response.data.results;
-
-            report_history = angular.copy(response.data.results)
-
-            console.log("test_id_new="+report_history[0].object_id);
-
-            return $http({
-              url: '/api/upgrid/non_degree/reports/' + report_history[0].object_id,
-              method: 'GET',
-              headers: {
-                'Authorization': 'JWT ' + token
-              }
-              });
-            }).then(function(result) {
-
-              // $scope.new_school_data = response
-
-
-            console.log("new school data ="+JSON.stringify(result.data))
+            // console.log("new school data ="+JSON.stringify(result.data))
             new_school_data = result.data;
 
             new_school_data["logo_url"] = executiveService.getLogoBySchoolName(new_school_data.school_name, new_school_data.university_name);
 
-            var test_id = (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id);
+            var test_id = $scope.school_report_pair[value][1];
             console.log("test_id="+test_id)
 
-             return $http({
-                url: '/api/upgrid/non_degree/reports/' + (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id),
+            return $http({
+                url: '/api/upgrid/non_degree/reports/' + $scope.school_report_pair[value][1],
                 method: 'GET',
                 headers: {
                   'Authorization': 'JWT ' + token
                 }
               })
 
-              }).then(function(final_result) {
+          }).then(function(final_result) {
 
-                old_school_data = final_result.data;
-                console.log("old school data ="+JSON.stringify(final_result.data));
-                console.log("new_school_data ="+JSON.stringify(new_school_data));
-                school_data_temp = executiveService.updatedReport(old_school_data, new_school_data)
-                console.log("school_data_temp = "+JSON.stringify(school_data_temp))
+            old_school_data = final_result.data;
+            console.log("old school data ="+JSON.stringify(final_result.data));
+            console.log("new_school_data ="+JSON.stringify(new_school_data));
+            school_data_temp = executiveService.updatedReport(old_school_data, new_school_data)
+            console.log("school_data_temp = "+JSON.stringify(school_data_temp))
 
-                return $http({
-                    url: '/api/upgrid/non_degree/reports/overview/' + report_history[0].object_id + '/' + (report_history.length === 1 ? report_history[0].object_id : report_history[1].object_id),
-                    method: 'GET',
-                    headers: {
-                      'Authorization': 'JWT ' + token
-                    }
-                  });
+            var school = _.find($scope.school_table, function(res) {return res.object_id == value;});
 
-              }).then(function(overview_result) {
+            school_data_temp["course_added"] = school.details["course_added"];
+            school_data_temp["course_removed"] = school.details["course_removed"];
+            school_data_temp["category_added"] = school.details["category_added"];
+            school_data_temp["category_removed"] = school.details["category_removed"];
 
-                school_data_temp["course_removed"] = overview_result.data.course_removed
-                school_data_temp["course_added"] = overview_result.data.course_added
-                school_data_temp["category_added"] = overview_result.data.category_added
-                school_data_temp["category_removed"] = overview_result.data.category_removed
+            $scope.schools.push(school_data_temp);
 
-                $scope.schools.push(school_data_temp)
+            App.blocks('#viewall_loading', 'state_normal');
+            console.log("$scope.schools after ="+JSON.stringify($scope.schools));
+          }).catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+          });
 
-                App.blocks('#viewall_loading', 'state_normal');
-                console.log("$scope.schools after ="+JSON.stringify($scope.schools));
-
-
-                // var test_pluck = _.pluck($scope.schools[0].categories, 'courses')
-                // console.log("COURSESESE = "+JSON.stringify(test_pluck))
-                // var test_union = _.union(test_pluck)
-                // var test_flatten = _.flatten(test_pluck);
-                // console.log("TEST_FLATTEN"+JSON.stringify(test_flatten))
-                // console.log("TEST_FIND"+JSON.stringify(_.filter(test_flatten, {updated: 2})));
-                // var test_without = _.difference(test_flatten, _.filter(test_flatten, {updated: 2}))
-                // console.log("COURSESESE_haha = "+ _.uniq(_.difference(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), _.filter(_.flatten(_.pluck($scope.schools[0].categories, 'courses')), {updated: 2})), 'object_id').length);
-                
-
-              }).
-               catch(function(error){
-                  console.log('an error occurred...'+JSON.stringify(error));
-              });
-
-
-
-
-        })
-
-        
-
-       }
-     }
+        });
+      }
+     };
 
 
      $scope.checkAll_None = function(value) {
@@ -284,7 +325,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
 
       }
 
-     }
+     };
 
       $scope.htmlShare = function(day) {
       
@@ -349,187 +390,6 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
       });
 
     };
-
-
-////////////////////////////////////////////////////////////
-
-
-  // // Retrieve the list of subsribed schools
-  // $http({
-  //     url: '/api/upgrid/non_degree/schools',
-  //     method: 'GET',
-  //     headers: {
-  //       'Authorization': 'JWT ' + token
-  //     }
-  //   })
-  //   .then(function(resp_schools) {
-
-  //     $scope.school_list = resp_schools.data.results;
-
-
-  //     for (let i = $scope.school_list.length - 1; i >= 0; i--) {
-  //       let s = $scope.school_list[i];
-  //       s.selected = false;
-  //       s.logo_url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/LBS_logo_.png/150px-LBS_logo_.png';
-
-  //       /*
-
-  //       Update stats for this school: 
-  //       s.cat_add: category additions
-  //       s.cat_rm: category removals
-  //       s.course_add: course additions
-  //       s.course_rm: course removals
-
-  //       Their default values are null, which mean no reports released.
-
-  //       */
-  //       s.cat_add = null;
-  //       s.cat_rm = null;
-  //       s.course_add = null;
-  //       s.course_rm = null;
-
-  //       // True if there is at least one repleased report of this school
-  //       s.hasReport = false;
-
-  //       //Retrieve the list of reports for a school
-  //       $http({
-  //           url: '/api/upgrid/non_degree/reports?school=' + s.object_id + '&active=True',
-  //           method: 'GET',
-  //           headers: {
-  //             'Authorization': 'JWT ' + token
-  //           }
-  //         })
-  //         .then(function(resp_reports) {
-
-            
-  //           // School has only 1 report
-  //           if (resp_reports.data.results.length == 1) {
-  //             s.cat_add = 0;
-  //             s.cat_rm = 0;
-  //             s.course_add = 0;
-  //             s.course_rm = 0;
-
-  //             s.hasReport = true;
-  //           }
-  //           // School has at least 2 reports
-  //           else if (resp_reports.data.results.length > 1) {
-  //             // Retrieve stats of updates of the two latest reports
-  //             $http({
-  //                 url: '/api/upgrid/non_degree/reports/overview/' + resp_reports.data.results[0].object_id + '/' + resp_reports.data.results[1].object_id,
-  //                 method: 'GET',
-  //                 headers: {
-  //                   'Authorization': 'JWT ' + token
-  //                 }
-  //               })
-  //               .then(function(resp_overview) {
-  //                 s.cat_add = resp_overview.data.category_added;
-  //                 s.cat_rm = resp_overview.data.category_removed;
-  //                 s.course_add = resp_overview.data.course_added;
-  //                 s.course_rm = resp_overview.data.course_removed;
-  //               });
-
-  //             s.hasReport = true;
-  //           }
-  //         });
-  //     }
-
-  //     // Watch school for changes
-  //     $scope.$watch('school_list | filter: {selected: true}', function(nv) {
-  //       $scope.selectedSchoolIds = nv.map(function(school) {
-  //         return school.object_id;
-  //       });
-  //       console.log($scope.selectedSchoolIds);
-  //     }, true);
-
-
-
-  //   }).
-  //    catch(function(error){
-  //       console.log('an error occurred...'+JSON.stringify(error));
-
-  //   });
-
-
-
-
-
-
-  // // View selected schools
-  // $scope.viewReport = function() {
-  //   // $scope.selectedSchools = filterFilter($scope.school_list, {selected: true});
-  //   console.log($scope.selectedSchoolIds);
-
-    
-  // };
-
-  /*Non-degree Report Controller*/
-  // $http.get('http://api.fixer.io/latest?base=USD').then(function(response) {
-  //   $scope.fxRates = response.data;
-  //   $scope.currency_symbols = {
-  //     'USD': '$', // US Dollar
-  //     'EUR': '€', // Euro
-  //     'CRC': '₡', // Costa Rican Colón
-  //     'GBP': '£', // British Pound Sterling
-  //     'ILS': '₪', // Israeli New Sheqel
-  //     'INR': '₹', // Indian Rupee
-  //     'JPY': '¥', // Japanese Yen
-  //     'KRW': '₩', // South Korean Won
-  //     'NGN': '₦', // Nigerian Naira
-  //     'PHP': '₱', // Philippine Peso
-  //     'PLN': 'zł', // Polish Zloty
-  //     'PYG': '₲', // Paraguayan Guarani
-  //     'THB': '฿', // Thai Baht
-  //     'UAH': '₴', // Ukrainian Hryvnia
-  //     'VND': '₫', // Vietnamese Dong
-  //     'CNY': '¥', // Chinese Yuan
-  //   };
-  //   $scope.fxConvert = function(amount, currency) {
-  //     return amount / $scope.fxRates.rates[currency];
-  //   }
-  // });
-  // $http.get('/static/data/non-degree_report.json').then(function(response) {
-  //   $scope.universities = response.data.data;
-  //   $scope.date = response.data.date;
-  //   for (let i = 0; i < $scope.universities.length; i++) {
-  //     let s = $scope.universities[i];
-  //     // category offerings
-  //     s.cat_offer = s.categories.length;
-
-  //     s.course_offer = 0; // university course offerings
-  //     s.course_add = 0; // university course additions
-  //     s.course_rm = 0; // university course removals
-
-  //     // category additions
-  //     s.cat_add = 0;
-
-  //     // category removals
-  //     s.cat_rm = 0;
-
-  //     for (let j = 0; j < s.categories.length; j++) {
-  //       let c = s.categories[j]; // category course offerings
-  //       if (c.status == 'add')
-  //         s.cat_add++;
-  //       if (c.status == 'rm')
-  //         s.cat_rm++;
-
-  //       c.course_offer = c.courses.length;
-  //       c.course_add = 0; // category course additions
-  //       c.course_rm = 0; // category course removals
-  //       for (let k in c.courses) {
-  //         if (c.courses[k].status == 'add')
-  //           c.course_add++;
-  //         if (c.courses[k].status == 'rm')
-  //           c.course_rm++;
-  //       }
-
-  //       s.course_offer += c.course_offer;
-  //       s.course_add += c.course_add;
-  //       s.course_rm += c.course_rm;
-  //     }
-  //   }
-  // });
-  /*END Non-degree Report Controller*/
-
 
 
   $scope.togglefullen = function() {

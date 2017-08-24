@@ -1,8 +1,8 @@
 /*Executive Education Admin controller*/
 'use strict';
 
-angular.module('myApp').controller('ExecutiveController', ['$sce', '$q', '$http', '$scope', '$localStorage', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 'orderByFilter', 'ajaxService',
-  function($sce, $q, $http, $scope, $localStorage, $window, authenticationSvc, updateService, $timeout, executiveService, orderBy, ajaxService) {
+angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scope', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 'ajaxService',
+  function($q, $http, $scope, authenticationSvc, updateService, $timeout, executiveService, ajaxService) {
 
     // Inject underscore into $scope
     $scope._ = _;

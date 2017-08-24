@@ -15,13 +15,15 @@
       </div>
       <table class="table table-hover" style="table-layout: fixed;" ng-if="schools.length>0">
         <colgroup>
-          <col width="60%">
+          <col width="50%">
+          <col width="10%">
           <col width="40%">
         </colgroup>
         <thead class="thead-inverse">
           <tr class="bg-info" style="border: 1px solid #e3e3e3; color:white;">
             <th style="padding-left:15px;" class="h4 font-w600">schools
             </th>
+            <th class="text-right"># of reports</th>
             <th class="text-right">reports</th>
           </tr>
         </thead>
@@ -33,13 +35,16 @@
                 <img ng-src="{{s.logo_url}}" height="40" width="40">
               </div>
               <div>{{s.school}}<br>
-                <span class="text-muted"><small class="ng-binding text-uppercase" style="
+                <span class="text-muted"><small class="text-uppercase" style="
                   font-weight: 300;
                   font-size: 12px;
                   ">{{s.university}}</small></span>
               </div>
             </td>
-
+            <td class="text-right">
+              <span class="badge badge-primary" ng-if="s.numberOfHistoryReports>0">{{s.numberOfHistoryReports}}</span>
+              <span class="badge badge-default" ng-if="s.numberOfHistoryReports==0">{{s.numberOfHistoryReports}}</span>
+            </td>
             <td class="text-right">
              
               <select style="max-width:55%;" id="js-data-{{s.object_id}}" ng-model="selectedReportId">
