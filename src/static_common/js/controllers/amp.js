@@ -54,6 +54,8 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
 
       $scope.sort_time = function(parentIndex, Index) {
 
+        console.log("$scope.school_table[parentIndex].courses[Index]['urls'] = "+JSON.stringify($scope.school_table[parentIndex].courses[Index]['urls'], null, 4))
+        console.log("_.sortBy($scope.school_table[parentIndex].courses[Index]['urls'], 'amp_report_released_date') = "+JSON.stringify(_.sortBy($scope.school_table[parentIndex].courses[Index]['urls'], 'amp_report_released_date')))
         _.sortBy($scope.school_table[parentIndex].courses[Index]['urls'], 'amp_report_released_date').reverse();
       }
 

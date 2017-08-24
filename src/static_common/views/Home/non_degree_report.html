@@ -211,7 +211,12 @@
                                             font-size: 8px;
                                             padding: 2px 4px;
                                             position: absolute;
-                                            margin-left: 0px; top: -7px;">Updated</label></a>
+                                            margin-left: 0px; top: -7px;">Updated: 
+                                            {{_.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'url_old'), [undefined]).length +
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'course_dates_old'), [undefined]).length +
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'currency_old'), [undefined]).length +
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'type_old'), [undefined]).length +
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'tuition_number_old'), [undefined]).length}}</label></a>
 
                     <br>
                     <span class="text-muted">
