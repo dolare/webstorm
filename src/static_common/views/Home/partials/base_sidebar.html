@@ -220,7 +220,27 @@
                 
             </ul>
 
+
+
+
              <ul class="nav-main logout" style="position:absolute; bottom:10px; left: 20px; width: 100%">
+
+                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||((admin!=='True'&&_.contains(admin, 'non-degree'))||(admin!=='True'&&_.contains(admin, 'AMP')))">
+                    <div class="sidebar-mini-hide push-30" style="
+                    padding: 10px 10px 10px 20px;
+                    margin-right: 15px;
+                    background: rgba(255, 255, 255, 0.1);
+                    color: rgba(255,255,255,0.6);
+                    font-family: 'Roboto Mono', monospace;
+                    border-left: 6px solid #ff6b6b;">
+
+                    <div style="font-size:78%; color: rgba(255,255,255,0.9);" class="push-5 font-w600">Account manager</div>
+                    <div style="color: rgba(112, 185, 235, 0.9);font-size: 110%" class="font-w600 push-5">Gresham Fedora</div>
+                    (201) 292-3716 <br>
+                    gfedora@gridet.com</div>
+
+                </li>
+
                 <li class="animate-show" ng-show="admin==='True'&&avatar_id!==''">
                     <a href="javascript:void(0)" ng-click="signout_avatar()">
                         <i class="si si-eyeglasses"></i><span class="sidebar-mini-hide">End impersonation</span>

@@ -219,6 +219,7 @@ angular.module('myApp').controller('AdminMainController',
             $scope.account_type = "main";
 
             $scope.competing_edit = [];
+            $scope.competing_edit1 = [];
             $scope.competing_school_to_add = null;
 
 
@@ -352,6 +353,7 @@ angular.module('myApp').controller('AdminMainController',
                 }, 100);
 
 
+
             //tab 2
             ///load for ceeb and competing schools
             $http({
@@ -481,6 +483,72 @@ angular.module('myApp').controller('AdminMainController',
 
 
 
+
+             //for non-degree
+            $timeout(function () {
+                //alert('initing');
+            //select2 init
+
+                    jQuery(".js-data-ceeb-for-competing1").select2({
+                      ajax: {
+                        url: '/api/upgrid/non_degree/schools',
+                        dataType: 'json',
+                        headers: {
+                                'Authorization': 'JWT ' + token
+                              },
+
+
+                        data: function (params) {
+                          var query = {
+                            search: params.term,
+                            page: params.page
+                          }
+
+                          console.log("query="+JSON.stringify(query));
+                          // Query paramters will be ?search=[term]&page=[page]
+                          return query;
+                        },
+
+                        processResults: function (data, params) {
+                          // parse the results into the format expected by Select2
+                          // since we are using custom formatting functions we do not need to
+                          // alter the remote JSON data, except to indicate that infinite
+                          // scrolling can be used
+                          params.page = params.page || 1;
+                          console.log("data="+JSON.stringify(data))
+                          console.log("params="+JSON.stringify(params))
+                          return {
+                            results: data.results.map(function(item){
+                                return {
+
+                                    id: item.object_id + '|'+ item.ceeb + '|'+ item.school + '|' + item.university,
+                                    text: item.ceeb + '-' + item.school + '|' + item.university,
+
+
+                                }
+                            }),
+
+                            pagination: {
+                              more: (params.page * 10) < data.count
+                            }
+                            
+                          };
+                        },
+                        cache: true
+                      },
+
+                      minimumInputLength: 1,
+                      placeholder: "Please select the non-degree competing schools",
+                      
+                      
+                    });        //
+
+                        $scope.show_select2 = true
+
+                }, 100);
+
+
+
                     $scope.showtable = false;
 
 
@@ -513,6 +581,7 @@ angular.module('myApp').controller('AdminMainController',
                     $scope.department = response.data.department;
                     $scope.service_level = response.data.service_level;
                     $scope.competing_edit = response.data.competing_schools
+                    $scope.competing_edit1 = response.data.non_degree_schools
                     $scope.customer_program = response.data.customer_program;
 
 
@@ -1049,6 +1118,37 @@ angular.module('myApp').controller('AdminMainController',
 
         }
 
+        $scope.add_competing_school1 = function(){
+
+
+            if($scope.competing_school_to_add1){
+
+
+                  $scope.competing_edit1.push({
+                    "object_id": $scope.competing_school_to_add1.split('|')[0],
+                    "university_school": $scope.competing_school_to_add1.split('|')[1] + '-' + $scope.competing_school_to_add1.split('|')[2]+ ' | ' +$scope.competing_school_to_add1.split('|')[3]
+                });
+
+                $scope.competing_school_to_add1 = null;
+
+            } else {
+                $.notify({
+
+                        // options
+                        icon: "fa fa-warning",
+                        message: 'Please select a competing school.'
+                    }, {
+                        // settings
+                        type: 'warning',
+                        placement: {
+                            from: "top",
+                            align: "center"
+                        },
+                        z_index: 1999,
+                    });
+            }
+
+        }
 
         $scope.delete_competing_school = function(id){
 
@@ -1067,6 +1167,18 @@ angular.module('myApp').controller('AdminMainController',
 
                 competing_schools_obj.push({
                     "object_id": $scope.competing_edit[i].object_id
+                })
+                
+
+            }
+
+
+
+            var competing_schools_obj1 = [];
+            for (i=0; i< $scope.competing_edit1.length; i++){
+
+                competing_schools_obj1.push({
+                    "object_id": $scope.competing_edit1[i].object_id
                 })
                 
 
@@ -1098,6 +1210,7 @@ angular.module('myApp').controller('AdminMainController',
                         "department": $scope.department,
                         "service_level": $scope.service_level,
                         "competing_schools": competing_schools_obj,
+                        "non_degree_schools": competing_schools_obj1,
                         "is_demo": $scope.is_demo,
                         "features": $scope.report_type
 

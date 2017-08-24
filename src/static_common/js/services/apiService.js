@@ -441,7 +441,7 @@ angular.module('myApp')
 
                console.log("subuser is"+ JSON.stringify(response.data));
                 
-               return response.data;
+               return response.data.results;
 
              }).
              catch(function(error){

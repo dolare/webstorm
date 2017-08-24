@@ -32,7 +32,7 @@
         <thead class="thead-inverse">
           <tr class=" bg-info" style="border: 1px solid #e3e3e3; color:white;">
             <th></th>
-            <th st-sort="name" style="padding-left:15px;" class="h4 font-w400" colspan="5">school / university
+            <th style="padding-left:15px;" class="h4 font-w400" colspan="5">school / university
             </th>
 
           </tr>
@@ -81,11 +81,11 @@
            
               
               </td>
-              <td class="td-bordered" colspan="5" style="padding-left: 15px"><a data-js-blur class="link-effect" href="javascript:void(0)" ng-click="showUrl($parent.$index, $index);showURL=!showURL ">{{row1.name}}</a> &nbsp;<span ng-class="row1.available_url_number>0?'badge badge-info':'badge badge-default'">{{row1.available_url_number}}</span><button class="btn btn-xs btn-rounded btn-info pull-right" ng-show="showURL && row1.urls.length > 0" type="button" ng-click="sort_time($parent.$index, $index)">Sort by time</button></td>
+              <td class="td-bordered" colspan="5" style="padding-left: 15px"><a data-js-blur class="link-effect" href="javascript:void(0)" ng-click="showUrl($parent.$index, $index);showURL=!showURL ">{{row1.name}}</a> &nbsp;<span ng-class="row1.available_url_number>0?'badge badge-info':'badge badge-default'">{{row1.available_url_number}}</span><button class="btn btn-xs btn-rounded btn-info pull-right" ng-show="showURL && row1.urls.length > 0" type="button" ng-click="sort_time = !sort_time">Sort by <span ng-show="sort_time">time</span><span ng-show="!sort_time">default</span></button></td>
 
             </tr>
 
-            <tr class="zebra-row-gray" ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls | orderBy: 'type_order'">
+            <tr class="zebra-row-gray" ng-repeat-end ng-show="showURL" ng-repeat="row2 in row1.urls | orderBy: !sort_time ? '-amp_report_released_date':'type_order'">
                <td class="td-bordered text-center">
                <!-- <i class="fa fa-certificate text-warning" aria-hidden="true" ng-show = "row2.highlight"></i>
  -->
