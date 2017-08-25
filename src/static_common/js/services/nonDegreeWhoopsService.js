@@ -9,9 +9,15 @@ var randomsItems = [];
 
 //fake call to the server, normally this service would serialize table state to send it to the server (with query parameters for example) and parse the response
 //in our case, it actually performs the logic which would happened in the server
-function getPage(start, number, params, token) {
+function getPage(start, number, params, token, filter) {
       var parsedParams = '';
-
+//      var filter_str = '';
+      for (var filed in filter) {
+        if (filter.hasOwnProperty(filed)) {
+           parsedParams += '&' + filed + '=' + filter[filed]
+        }
+      }
+//      console.log('filter_str=' + filter_str);
       parsedParams += '&page=' + (Math.ceil(start / number) + 1);
       parsedParams += '&page_size=' + number;
 
@@ -21,6 +27,7 @@ function getPage(start, number, params, token) {
       console.log('tableState: ');
       console.log(params);
       console.log('params = ' + '"' + parsedParams + '"');
+//      var filter_str = "";
 
 
       $http({

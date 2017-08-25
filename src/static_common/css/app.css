@@ -2184,3 +2184,7 @@ left: 35%;
 .table.exec-ed-school-list thead>tr:nth-child(1)>th:nth-child(-n+3) {
   background-color: #809fff;
 }
+
+.strike {
+    text-decoration: line-through;
+}

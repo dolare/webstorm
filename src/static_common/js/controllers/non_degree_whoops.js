@@ -6,24 +6,56 @@ function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWho
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
 
     var ctrl = this;
+    $scope.active_filter = true;
+    $scope.starred_filter = false;
+    $scope.completed_filter = false;
 
-    $scope.callServer = function callServer(tableState) {
+    $scope.get_whoops_active = function get_whoops_active(tableState) {
         console.log("table state:")
         console.log(tableState)
         $scope.isLoading = true;
+        var filter = {'starred': false,
+                      'completed': false}
 
         var pagination = tableState.pagination;
 
         var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
-        var number = pagination.number || 3;  // Number of entries showed per page.
+        var number = pagination.number || 10;  // Number of entries showed per page.
 
-        nonDegreeWhoopsService.getPage(start, number, tableState, token).then(function (result) {
-            console.log(result.data.results);
+        nonDegreeWhoopsService.getPage(start, number, tableState, token, filter).then(function (result) {
+          console.log(result.data.results);
+          console.log(result);
           $scope.whoops_active = result.data.results;
+          $scope.whoops_number = result.data.count;
           tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
           $scope.isLoading = false;
         });
     };
+
+    $scope.set_whoops = function set_whoops(taskId, key, value){
+        console.log(taskId);
+        console.log(key);
+        console.log(value);
+
+        var form = new FormData();
+        form.append(key, value);
+
+        $http({
+            url: '/api/upgrid/non_degree/whoops_reports/'+ taskId,
+            method: 'PATCH',
+            headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
+            data: form,
+        })
+        .then(function (response) {
+            console.log('send success......');
+            console.log(response);
+        })
+        .catch(function(error){
+            console.log('an error occurred...'+JSON.stringify(error));
+
+        });
+
+    }
 
 
 //
