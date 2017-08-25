@@ -5,14 +5,8 @@ function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWho
     var token = authenticationSvc.getUserInfo().accessToken;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
 
-    var ctrl = this;
-    $scope.active_filter = true;
-    $scope.starred_filter = false;
-    $scope.completed_filter = false;
-
-    $scope.get_whoops_active = function get_whoops_active(tableState) {
-        console.log("table state:")
-        console.log(tableState)
+    $scope.get_whoops_active = function get_whoops_active(tableState, tableCtrlActive) {
+        $scope.tableCtrlActive = tableCtrlActive;
         $scope.isLoading = true;
         var filter = {'starred': false,
                       'completed': false}
@@ -26,8 +20,51 @@ function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWho
           console.log(result.data.results);
           console.log(result);
           $scope.whoops_active = result.data.results;
-          $scope.whoops_number = result.data.count;
+          $scope.whoops_active_number = result.data.count;
           tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
+          $scope.isLoading = false;
+        });
+    };
+
+    $scope.get_whoops_starred = function get_whoops_starred(tableState, tableCtrlStarred) {
+        $scope.tableCtrlStarred = tableCtrlStarred;
+        $scope.isLoading = true;
+        var filter = {'starred': true,
+                      'completed': false}
+
+        var pagination = tableState.pagination;
+
+        var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
+        var number = pagination.number || 10;  // Number of entries showed per page.
+
+        nonDegreeWhoopsService.getPage(start, number, tableState, token, filter).then(function (result) {
+          console.log(result.data.results);
+          console.log(result);
+          $scope.whoops_starred = result.data.results;
+          $scope.whoops_starred_number = result.data.count;
+          tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
+          $scope.isLoading = false;
+        });
+    };
+
+    $scope.get_whoops_completed = function get_whoops_completed(tableState, tableCtrlCompleted) {
+        $scope.tableCtrlCompleted = tableCtrlCompleted;
+        console.log("table state:")
+        console.log(tableState)
+        $scope.isLoading = true;
+        var filter = {'completed': true}
+
+        var pagination = tableState.pagination;
+
+        var start = pagination.start || 0;     // This is NOT the page number, but the index of item in the list that you want to use to display the table.
+        var number = pagination.number || 10;  // Number of entries showed per page.
+
+        nonDegreeWhoopsService.getPage(start, number, tableState, token, filter).then(function (result) {
+          console.log(result.data.results);
+          console.log(result);
+          $scope.whoops_completed = result.data.results;
+          $scope.whoops_completed_number = result.data.count;
+          tableState.pagination.numberOfPages = result.numberOfPages;  //set the number of pages so the pagination can update
           $scope.isLoading = false;
         });
     };
@@ -47,8 +84,9 @@ function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWho
             data: form,
         })
         .then(function (response) {
-            console.log('send success......');
-            console.log(response);
+            $scope.tableCtrlActive.pipe($scope.tableCtrlActive.tableState());
+            $scope.tableCtrlStarred.pipe($scope.tableCtrlStarred.tableState());
+            $scope.tableCtrlCompleted.pipe($scope.tableCtrlCompleted.tableState());
         })
         .catch(function(error){
             console.log('an error occurred...'+JSON.stringify(error));
@@ -56,246 +94,5 @@ function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWho
         });
 
     }
-
-
-//
-//    $http({
-//      url: '/api/upgrid/non_degree/whoops_reports?starred=False&completed=False',
-//      method: 'GET',
-//      headers: {'Authorization': 'JWT ' + token }
-//    })
-//    .then(function (response) {
-//
-//    $scope.whoops_active = response.data.results
-//    $scope.whoops_active_number = response.data.count
-//
-//    console.log("successful..............");
-//    console.log(response);
-//    console.log("return data"+ JSON.stringify($scope.whoops_active, null, 4));
-//
-//    })
-//    .catch(function(error){
-//    console.log('an error occurred...'+JSON.stringify(error));
-//
-//    });
-
-    $http({
-      url: '/api/upgrid/non_degree/whoops_reports?starred=True&completed=False',
-      method: 'GET',
-      headers: {
-        'Authorization': 'JWT ' + token
-      }
-    })
-    .then(function (response) {
-
-    $scope.whoops_starred = response.data.results
-    $scope.whoops_starred_number = response.data.count
-
-    })
-    .catch(function(error){
-    console.log('an error occurred...'+JSON.stringify(error));
-
-    });
-
-    $http({
-      url: '/api/upgrid/non_degree/whoops_reports?completed=True',
-      method: 'GET',
-      headers: {
-        'Authorization': 'JWT ' + token
-      }
-    })
-    .then(function (response) {
-
-    $scope.whoops_completed = response.data.results
-    $scope.whoops_completed_number = response.data.count
-    })
-    .catch(function(error){
-    console.log('an error occurred...'+JSON.stringify(error));
-
-    });
-//
-//    var $tasks, $taskList, $taskListStarred, $taskListCompleted
-//
-//    $tasks                  = jQuery('.js-tasks');
-//    $taskList               = jQuery('.js-task-list');
-//    $taskListStarred        = jQuery('.js-task-list-starred');
-//    $taskListCompleted      = jQuery('.js-task-list-completed');
-//
-//    // Task status update on checkbox click
-//    var $stask, $staskId;
-//    $tasks.on('click', '.js-task-status', function(e){
-//        e.preventDefault();
-//
-//        $stask           = jQuery(this).closest('.js-task');
-//        $staskId         = $stask.attr('data-task-id');
-//
-//        // Check task status and toggle it
-//        if ( $stask.attr('data-task-completed') === 'true' ) {
-//            taskSetActive( $staskId );
-//        } else {
-//            taskSetCompleted( $staskId );
-//        }
-//    });
-//
-//    // Task starred status update on star click
-//    var $ftask, $ftaskId;
-//    $tasks.on('click', '.js-task-star', function(){
-//        $ftask           = jQuery(this).closest('.js-task');
-//        $ftaskId         = $ftask.attr('data-task-id');
-//
-//        // Check task starred status and toggle it
-//        if ( $ftask.attr('data-task-starred') === 'true' ) {
-//            taskStarRemove( $ftaskId );
-//        } else {
-//            taskStarAdd( $ftaskId );
-//        }
-//    });
-//
-//    // Star a task
-//    var taskStarAdd = function( $taskId ){
-//        var form = new FormData();
-//        form.append("starred", "true");
-//
-//        $http({
-//            url: '/api/upgrid/non_degree/whoops_reports/'+ $taskId,
-//            method: 'PATCH',
-//            headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
-//            data: form,
-//        })
-//        .then(function (response) {
-//            var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
-//
-//            // Check if exists and update accordignly the markup
-//            if ( $task.length > 0 ) {
-//                $task.attr('data-task-starred', true);
-//                $task.find('.js-task-star > i').toggleClass('fa-star fa-star-o');
-//
-//                if ( $task.attr('data-task-completed') === 'false') {
-//                    $task.prependTo($taskListStarred);
-//                    $scope.whoops_starred_number ++;
-//                    $scope.whoops_active_number --;
-//                }
-//            }
-//        })
-//        .catch(function(error){
-//            console.log('an error occurred...'+JSON.stringify(error));
-//
-//        });
-//
-//
-//
-//    };
-//
-//    // Unstar a task
-//    var taskStarRemove = function( $taskId ){
-//        var form = new FormData();
-//        form.append("starred", "false");
-//
-//        $http({
-//            url: '/api/upgrid/non_degree/whoops_reports/'+ $taskId,
-//            method: 'PATCH',
-//            headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
-//            data: form,
-//        })
-//        .then(function (response) {
-//            var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
-//
-//            // Check if exists and update accordignly the markup
-//            if ( $task.length > 0 ) {
-//                $task.attr('data-task-starred', false);
-//                $task.find('.js-task-star > i').toggleClass('fa-star fa-star-o');
-//
-//                if ( $task.attr('data-task-completed') === 'false') {
-//                    $task.prependTo($taskList);
-//                    $scope.whoops_starred_number --;
-//                    $scope.whoops_active_number ++;
-//                }
-//            }
-//        })
-//        .catch(function(error){
-//            console.log('an error occurred...'+JSON.stringify(error));
-//
-//        });
-//
-//
-//    };
-//
-//    // Set a task to active
-//    var taskSetActive = function( $taskId ){
-//        var form = new FormData();
-//        form.append("completed", "false");
-//
-//        $http({
-//            url: '/api/upgrid/non_degree/whoops_reports/'+ $taskId,
-//            method: 'PATCH',
-//            headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
-//            data: form,
-//        })
-//        .then(function (response) {
-//            var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
-//
-//            // Check if exists and update accordignly
-//            if ( $task.length > 0 ) {
-//                $task.attr('data-task-completed', false);
-//                $task.find('.js-task-status > input').prop('checked', false);
-//                $task.find('.js-task-content > del').contents().unwrap();
-//
-//                if ( $task.attr('data-task-starred') === 'true') {
-//                    $task.prependTo($taskListStarred);
-//                    $scope.whoops_starred_number ++;
-//                } else {
-//                    $task.prependTo($taskList);
-//                    $scope.whoops_active_number ++;
-//                }
-//            }
-//            $scope.whoops_completed_number --;
-//
-//        })
-//        .catch(function(error){
-//            console.log('an error occurred...'+JSON.stringify(error));
-//
-//        });
-//
-//
-//    };
-//
-//    // Set a task to completed
-//    var taskSetCompleted = function( $taskId ){
-//        var form = new FormData();
-//        form.append("completed", "true");
-//
-//        $http({
-//            url: '/api/upgrid/non_degree/whoops_reports/'+ $taskId,
-//            method: 'PATCH',
-//            headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
-//            data: form,
-//        })
-//        .then(function (response) {
-//            var $task = jQuery('.js-task[data-task-id="' + $taskId + '"]');
-//
-//            // Check if exists and update accordignly
-//            if ( $task.length > 0 ) {
-//                $task.attr('data-task-completed', true);
-//                $task.find('.js-task-status > input').prop('checked', true);
-//                $task.find('.js-task-content').wrapInner('<del></del>');
-//                $task.prependTo($taskListCompleted);
-//
-//                // update task number
-//                if ( $task.attr('data-task-starred') === 'true') {
-//                    $scope.whoops_starred_number --;
-//                } else {
-//                    $scope.whoops_active_number --;
-//                }
-//                $scope.whoops_completed_number ++;
-//            }
-//
-//        })
-//        .catch(function(error){
-//            console.log('an error occurred...'+JSON.stringify(error));
-//
-//        });
-//
-//    };
-
 
 }]);
