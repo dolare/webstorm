@@ -17,12 +17,10 @@ function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWho
         var number = pagination.number || 10;  // Number of entries showed per page.
 
         nonDegreeWhoopsService.getPage(start, number, tableState, token, filter).then(function (result) {
-          console.log(result.data.results);
-          console.log(result);
-          $scope.whoops_active = result.data.results;
-          $scope.whoops_active_number = result.data.count;
-          tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
-          $scope.isLoading = false;
+            $scope.whoops_active = result.data.results;
+            $scope.whoops_active_number = result.data.count;
+            tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
+            $scope.isLoading = false;
         });
     };
 
@@ -38,19 +36,15 @@ function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWho
         var number = pagination.number || 10;  // Number of entries showed per page.
 
         nonDegreeWhoopsService.getPage(start, number, tableState, token, filter).then(function (result) {
-          console.log(result.data.results);
-          console.log(result);
-          $scope.whoops_starred = result.data.results;
-          $scope.whoops_starred_number = result.data.count;
-          tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
-          $scope.isLoading = false;
+            $scope.whoops_starred = result.data.results;
+            $scope.whoops_starred_number = result.data.count;
+            tableState.pagination.numberOfPages = result.numberOfPages;//set the number of pages so the pagination can update
+            $scope.isLoading = false;
         });
     };
 
     $scope.get_whoops_completed = function get_whoops_completed(tableState, tableCtrlCompleted) {
         $scope.tableCtrlCompleted = tableCtrlCompleted;
-        console.log("table state:")
-        console.log(tableState)
         $scope.isLoading = true;
         var filter = {'completed': true}
 
@@ -60,19 +54,14 @@ function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWho
         var number = pagination.number || 10;  // Number of entries showed per page.
 
         nonDegreeWhoopsService.getPage(start, number, tableState, token, filter).then(function (result) {
-          console.log(result.data.results);
-          console.log(result);
-          $scope.whoops_completed = result.data.results;
-          $scope.whoops_completed_number = result.data.count;
-          tableState.pagination.numberOfPages = result.numberOfPages;  //set the number of pages so the pagination can update
-          $scope.isLoading = false;
+            $scope.whoops_completed = result.data.results;
+            $scope.whoops_completed_number = result.data.count;
+            tableState.pagination.numberOfPages = result.numberOfPages;  //set the number of pages so the pagination can update
+            $scope.isLoading = false;
         });
     };
 
     $scope.set_whoops = function set_whoops(taskId, key, value){
-        console.log(taskId);
-        console.log(key);
-        console.log(value);
 
         var form = new FormData();
         form.append(key, value);
@@ -90,9 +79,7 @@ function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWho
         })
         .catch(function(error){
             console.log('an error occurred...'+JSON.stringify(error));
-
         });
-
     }
 
 }]);
