@@ -123,7 +123,7 @@ class CourseSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeCourse
         fields = ('object_id', 'name', 'date_modified', 'type', 'currency', 'tuition_number', 'tuition_note',
-                  'Repeatable', 'course_dates', 'url', 'location_info', )
+                  'Repeatable', 'course_dates', 'url', 'location_info', 'is_advanced_management_program',)
 
     def get_course_dates(self, obj):
         dates = NonDegreeCourseDate.objects.filter(course=obj)
