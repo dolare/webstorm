@@ -419,6 +419,7 @@ angular.module('myApp').controller('AdminMainController',
                 $scope.competing_school_to_add = null;
 
 
+
                 $timeout(function () {
                 //alert('initing');
             //select2 init
@@ -562,7 +563,7 @@ angular.module('myApp').controller('AdminMainController',
 
                   
                 }).then(function(response) {
-                    console.log("client is = " + JSON.stringify(response.data));
+                    console.log("client is = " + JSON.stringify(response.data, null, 4));
 
                     //get info
                     $scope.account_name = response.data.username;
@@ -581,7 +582,8 @@ angular.module('myApp').controller('AdminMainController',
                     $scope.department = response.data.department;
                     $scope.service_level = response.data.service_level;
                     $scope.competing_edit = response.data.competing_schools
-                    $scope.competing_edit1 = response.data.non_degree_schools
+
+                    $scope.competing_edit1 = response.data.non_degree_schools ? response.data.non_degree_schools : [];
                     $scope.customer_program = response.data.customer_program;
 
 
@@ -1121,8 +1123,9 @@ angular.module('myApp').controller('AdminMainController',
         $scope.add_competing_school1 = function(){
 
 
-            if($scope.competing_school_to_add1){
 
+            if($scope.competing_school_to_add1){
+                alert("haha")
 
                   $scope.competing_edit1.push({
                     "object_id": $scope.competing_school_to_add1.split('|')[0],
@@ -1130,6 +1133,7 @@ angular.module('myApp').controller('AdminMainController',
                 });
 
                 $scope.competing_school_to_add1 = null;
+
 
             } else {
                 $.notify({
