@@ -520,7 +520,7 @@ class NonDegreeWhoopsReportListAPI(PermissionMixin, ListAPIView):
 
     search_fields = ('active',)
     ordering_fields = ('date_created', 'date_modified')
-    ordering = ('-date_created', )      # default ordering
+    ordering = ('-date_modified', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
         if self.is_manager():
@@ -534,7 +534,7 @@ class NonDegreeWhoopsReportListAPI(PermissionMixin, ListAPIView):
         return non_degree_whoops
 
 
-class NonDegreeWhoopsReportupdateAPI(PermissionMixin, UpdateAPIView):
+class NonDegreeWhoopsReportUpdateAPI(PermissionMixin, UpdateAPIView):
     """
     update NonDegreeWhoopsReport API
     """

@@ -258,7 +258,7 @@ class AMPReportDetailSerializer(ModelSerializer):
 class NonDegreeWhoopsReportListSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeWhoopsReport
-        fields = ('object_id', 'active', 'note', 'date_created', 'date_modified', 'starred', 'completed', )
+        fields = ('object_id', 'note', 'date_created', 'date_modified', 'starred', 'completed', )
 
 
 class NonDegreeWhoopsReportCreateSerializer(ModelSerializer):
