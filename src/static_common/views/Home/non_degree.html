@@ -20,22 +20,21 @@
        <table st-table="school_table" class="table exec-ed-school-list" style="table-layout: fixed;">
         <colgroup>
           <col width="5%">
-          <col width="40%">
-          <col width="22%">
-          <col width="5%">
-          <col width="5%">
-          <col width="5%">
-          <col width="5%">
+          <col width="45%">
           <col width="13%">
+          <col width="5%">
+          <col width="5%">
+          <col width="5%">
+          <col width="5%">
+          <col width="17%">
         </colgroup>
         <thead class="thead-inverse">
-          <tr class=" bg-info" style="border: 1px solid #e3e3e3; color:white;">
+          <tr style="border: 1px solid #e3e3e3; color:white;">
             <th></th>
             <th style="padding-left:15px;" class="h4 font-w400">schools
             </th>
-            <th class="h4 font-w400">
-              <i class="fa fa-info-circle" aria-hidden="true"  data-uib-tooltip="Select an older report to compare with the latest released one." data-tooltip-placement="top"></i>
-              Report to compare with
+            <th class="h4 font-w400 text-center">
+              Latest Release
             </th>
             <th colspan="2" class="h4 font-w400 text-center">
               categories
@@ -43,12 +42,15 @@
             <th colspan="2" class="h4 font-w400 text-center">
               courses
             </th>
-            <th class="h4 font-w400 text-center">Latest Release</th>
+            <th class="h4 font-w400">
+              <i class="fa fa-info-circle" aria-hidden="true"  data-uib-tooltip="Select an older report to compare with the latest released one." data-tooltip-placement="top"></i>
+              Historical Values
+            </th>
           </tr>
           <tr class="bg-gray-lighter">
             <th class="text-center th-bordered" style="vertical-align: middle; text-decoration: none; cursor: default;">
               <!-- <i class="fa fa-search text-primary"></i> -->
-              <label class="css-input css-checkbox css-checkbox-primary">
+              <label class="css-input css-checkbox css-checkbox-primary" uib-tooltip="Select all" tooltip-placement="bottom">
               <input type="checkbox" ng-model="checkAll" ng-click="checkAll_None(checkAll)" ng-init="checkAll=true"><span></span>
               </label>
             </th>
@@ -91,9 +93,8 @@
               </div>
             </td >
             <td class="td-bordered">
-              <select id="js-data-{{row.object_id}}" ng-model="selectedReportId" ng-change="setReportPair(row.object_id, selectedReportId)">
-                <option></option>
-              </select>
+              <span ng-if="row.lastReleaseDate">{{row.lastReleaseDate | amUtc | amLocal |  amDateFormat:'MM/DD/YYYY'}}</span>
+              <span ng-if="!row.lastReleaseDate">No previous release</span>
             </td>
             <td ng-show="row.details===null" colspan="4" class="td-bordered text-center">
              
@@ -123,8 +124,11 @@
               <span ng-if="row.details.course_removed===0" class="badge badge-default">- -</span>
             </td>
             <td class="td-bordered">
-              <span ng-if="row.lastReleaseDate">{{row.lastReleaseDate | amUtc | amLocal |  amDateFormat:'MM/DD/YYYY'}}</span>
-              <span ng-if="!row.lastReleaseDate">No previous release</span>
+              <div class="form-material">
+                <select class="form-control" id="js-data-{{row.object_id}}" ng-model="selectedReportId" ng-change="setReportPair(row.object_id, selectedReportId)" style="width: 90%;">
+                  <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                </select>
+              </div>
             </td>
 
           </tr>

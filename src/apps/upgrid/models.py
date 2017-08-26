@@ -463,6 +463,8 @@ class NonDegreeWhoopsReport(BasedDatedObject):
                                           related_name='non_degree_whoops_report')
     note = models.TextField(null=True, blank=True)
     active = models.BooleanField(default=True)
+    starred = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False)
 
     class Meta(BasedDatedObject.Meta):
         ordering = [

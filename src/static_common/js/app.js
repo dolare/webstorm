@@ -1027,6 +1027,46 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
 
+  state('non_degree_whoops', {
+
+    url: '/non_degree_whoops',
+    templateUrl: '/static/views/Home/non_degree_whoops.html',
+    controller: 'NonDegreeWhoopsController',
+    parent: 'success_demo',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo) {
+          console.log("authenticated");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+        } else {
+          console.log('fail to see the page, route change error');
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsNDW: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                                '/static/js/services/nonDegreeWhoopsService.js',
+                                '/static/js/controllers/non_degree_whoops.js',
+
+
+                            ]
+                        });
+                    }],
+
+    }
+
+  }).
+
 
   state('comparison', {
 

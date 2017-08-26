@@ -31,14 +31,16 @@
           <tr ng-repeat="s in schools">
             
             <td class="font-w500" style="padding-left:15px;">
-              <div class="pull-left" style="margin-right: 10px">
-                <img ng-src="{{s.logo_url}}" height="40" width="40">
-              </div>
-              <div>{{s.school}}<br>
-                <span class="text-muted"><small class="text-uppercase" style="
-                  font-weight: 300;
-                  font-size: 12px;
-                  ">{{s.university}}</small></span>
+              <div class="row">
+                <div class="col-sm-2">
+                  <img ng-src="{{s.logo_url}}" height="40" width="40">
+                </div>
+                <div class="col-sm-10">{{s.school}}<br>
+                  <span class="text-muted"><small class="text-uppercase" style="
+                    font-weight: 300;
+                    font-size: 12px;
+                    ">{{s.university}}</small></span>
+                </div>
               </div>
             </td>
             <td class="text-right">

@@ -2165,14 +2165,26 @@ left: 35%;
 
 .css-radio.css-radio-darker-outline input + span {
 
-    border: 1px solid #bbb;
+  border: 1px solid #bbb;
 
-}
-
-.table.exec-ed-school-list tbody>tr>td:nth-child(2) {
-  border-right:0;
 }
 
 .table.exec-ed-school-list tbody>tr>td:nth-child(3) {
-  border-left:0;
+  border-right: 1px solid #bbb;
+}
+
+.table.exec-ed-school-list thead>tr:nth-child(2)>th:nth-child(2) {
+  border-right: 1px solid #bbb;
+}
+
+.table.exec-ed-school-list thead>tr:nth-child(1)>th:nth-child(n+4) {
+  background-color: #80b3ff;
+}
+
+.table.exec-ed-school-list thead>tr:nth-child(1)>th:nth-child(-n+3) {
+  background-color: #809fff;
+}
+
+.strike {
+    text-decoration: line-through;
 }

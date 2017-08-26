@@ -123,7 +123,7 @@ class CourseSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeCourse
         fields = ('object_id', 'name', 'date_modified', 'type', 'currency', 'tuition_number', 'tuition_note',
-                  'Repeatable', 'course_dates', 'url', 'location_info', )
+                  'Repeatable', 'course_dates', 'url', 'location_info', 'is_advanced_management_program',)
 
     def get_course_dates(self, obj):
         dates = NonDegreeCourseDate.objects.filter(course=obj)
@@ -258,5 +258,11 @@ class AMPReportDetailSerializer(ModelSerializer):
 class NonDegreeWhoopsReportListSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeWhoopsReport
-        fields = ('object_id', 'active', 'note', 'date_created', 'date_modified', )
+        fields = ('object_id', 'active', 'note', 'date_created', 'date_modified', 'starred', 'completed', )
+
+
+class NonDegreeWhoopsReportCreateSerializer(ModelSerializer):
+    class Meta:
+        model = NonDegreeWhoopsReport
+        fields = ('object_id', 'starred', 'completed', )
 

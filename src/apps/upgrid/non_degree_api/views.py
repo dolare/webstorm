@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, \
     DestroyModelMixin
-from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, CreateAPIView, \
+from rest_framework.generics import GenericAPIView, ListAPIView, UpdateAPIView, CreateAPIView, \
     RetrieveAPIView
 from rest_framework.filters import SearchFilter, OrderingFilter, DjangoFilterBackend
 from rest_framework.response import Response
@@ -23,7 +23,7 @@ from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer,
     ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer, SharedReportSerializer, \
     CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer, AMPReportDetailSerializer, \
     ReportUpdateSerializer, UniversitySchoolClientSerializer, UniversitySchoolCategorySerializer, \
-    CourseSerializer, NonDegreeWhoopsReportListSerializer
+    CourseSerializer, NonDegreeWhoopsReportListSerializer, NonDegreeWhoopsReportCreateSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter, \
     UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter
@@ -530,5 +530,24 @@ class NonDegreeWhoopsReportListAPI(PermissionMixin, ListAPIView):
                 user = UniversityCustomer.objects.get(id=self.request.user.id)
             except ObjectDoesNotExist:
                 return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
-            non_degree_whoops = NonDegreeWhoopsReport.objects.filter(university_school=user.Ceeb)
+            non_degree_whoops = NonDegreeWhoopsReport.objects.filter(university_school=user.Ceeb).filter(active=True)
+        return non_degree_whoops
+
+
+class NonDegreeWhoopsReportupdateAPI(PermissionMixin, UpdateAPIView):
+    """
+    update NonDegreeWhoopsReport API
+    """
+    lookup_field = 'object_id'
+    serializer_class = NonDegreeWhoopsReportCreateSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        if self.is_manager():
+            non_degree_whoops = NonDegreeWhoopsReport.objects.all()
+        else:
+            try:
+                user = UniversityCustomer.objects.get(id=self.request.user.id)
+            except ObjectDoesNotExist:
+                return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
+            non_degree_whoops = NonDegreeWhoopsReport.objects.filter(university_school=user.Ceeb).filter(active=True)
         return non_degree_whoops
