@@ -56,8 +56,8 @@
                 <div>
                     <table class="table block-table table-vcenter table-striped1 table-to-do" st-pipe="get_whoops_active" st-table="whoops_active">
                         <tbody ng-show="!isLoading">
-                            <tr ng-repeat-start="whoop in whoops_active" class="bg-white">
-                                <td class="text-center" style="width: 50px;" rowspan="2">
+                            <tr ng-repeat="whoop in whoops_active" class="bg-white">
+                                <td class="text-center" style="width: 50px;">
                                     <label class="css-input css-checkbox css-checkbox-primary css-checkbox-rounded">
                                         <input type="checkbox" ng-model="whoop.completed" ng-click="set_whoops(whoop.object_id, 'completed', whoop.completed)"><span></span>
                                     </label>
@@ -65,16 +65,17 @@
                                 <td class="font-w200">
                                     <pre ng-class='{strike:whoop.completed}' style="white-space: pre-line; border: none; background:inherit; margin:0 0 0">{{whoop.note}}</pre>
 
+
+                                    <div style="padding-left:9.5px; font-size: 95%;" class="text-muted">{{whoop.date_created | amUtc | amDateFormat:'MM-DD-YYYY, HH:mm'}}</div>
+
                                 </td>
-                                <td style="width: 50px;" rowspan="2">
+                                <td style="width: 50px;">
                                     <button class="btn btn-link text-warning" type="button" ng-click="whoop.starred=!whoop.starred; set_whoops(whoop.object_id, 'starred', whoop.starred)">
                                         <i class="fa" ng-class="{'fa-star':whoop.starred, 'fa-star-o':!whoop.starred}"></i>
                                     </button>
                                 </td>
                             </tr>
-                            <tr ng-repeat-end>
-                                <td>{{whoop.date_created}}</td>
-                            </r>
+                         
 
                         </tbody>
                         <tbody ng-show="isLoading">
@@ -120,6 +121,9 @@
                                 </td>
                                 <td class="font-w200">
                                     <pre ng-class='{strike:whoop.completed}' style="white-space: pre-line; border: none; background:inherit; margin:0 0 0">{{whoop.note}}</pre>
+
+                                    <div style="padding-left:9.5px; font-size: 95%;" class="text-muted">{{whoop.date_created | amUtc | amDateFormat:'MM-DD-YYYY, HH:mm'}}</div>
+
                                 </td>
                                 <td style="width: 50px;">
                                     <button class="btn btn-link text-warning" type="button" ng-click="whoop.starred=!whoop.starred; set_whoops(whoop.object_id, 'starred', whoop.starred)">
@@ -171,6 +175,8 @@
                                 </td>
                                 <td class="font-w200">
                                     <pre ng-class='{strike:whoop.completed}' style="white-space: pre-line; border: none; background-color: inherit; margin:0 0 0">{{whoop.note}}</pre>
+
+                                    <div style="padding-left:9.5px; font-size: 95%;" class="text-muted">{{whoop.date_created | amUtc | amDateFormat:'MM-DD-YYYY, HH:mm'}}</div>
                                 </td>
                                 <td style="width: 50px;">
                                     <button class="btn btn-link text-warning" type="button" ng-click="whoop.starred=!whoop.starred; set_whoops(whoop.object_id, 'starred', whoop.starred)">
