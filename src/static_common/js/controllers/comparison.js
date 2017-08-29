@@ -106,7 +106,14 @@ comparison.controller('ComparisonController',
           }
 	    }).then(function (response) {
 
-	       $scope.courses1 = response.data
+	       $scope.courses1 = response.data;
+
+         angular.forEach($scope.courses1, function(course, key) {
+          if (course.course_dates.length > 0 && course.tuition_number && !course.is_advanced_management_program) 
+            course.edr = getEDR(course.course_dates[0].start_date, course.course_dates[0].end_date, course.tuition_number);
+          else
+            course.edr = null;
+         });
 
 	       console.log("return courses"+ JSON.stringify($scope.courses1, null, 4));
 	       
@@ -132,7 +139,14 @@ comparison.controller('ComparisonController',
           }
 	    }).then(function (response) {
 
-	       $scope.courses2 = response.data
+	       $scope.courses2 = response.data;
+
+         angular.forEach($scope.courses2, function(course, key) {
+          if (course.course_dates.length > 0 && course.tuition_number && !course.is_advanced_management_program) 
+            course.edr = getEDR(course.course_dates[0].start_date, course.course_dates[0].end_date, course.tuition_number);
+          else
+            course.edr = null;
+         });
 
 	       console.log("return courses"+ JSON.stringify($scope.courses2, null, 4));
 	       
@@ -144,5 +158,11 @@ comparison.controller('ComparisonController',
 
      }
 
-
+    // Function to calculate EDR (Equivalent Daily Rate), given the course start date, end date and the amount of tuition
+    var getEDR = function(startDate, endDate, tuition) {
+      var start = new Date(startDate);
+      var end = new Date(endDate);
+      console.log((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000));
+      return tuition / ((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000) + 1);
+    }
   });
