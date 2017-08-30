@@ -13,6 +13,33 @@ angular.module('myApp').factory("avatarService",
             $cookies.put('upgrid_clientId', JSON.stringify(clientId));
         }
 
+
+        function getReportType(id, token) {
+
+            var promise =  $http({
+
+              url: '/api/upgrid/accountmanager/is_manager/?client_id='+id,
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            }).then(function (response) {
+
+               console.log("report_type="+ JSON.stringify(response.data));
+                
+               return response.data;
+
+             }).
+             catch(function(error){
+                console.log('an error occurred...'+JSON.stringify(error));
+
+             });
+            return promise;
+
+
+
+        }
+
         function signout() {
 
             clientId = "";
@@ -50,6 +77,7 @@ angular.module('myApp').factory("avatarService",
         return {
             register: register,
             signout: signout,
-            getClientId: getClientId
+            getClientId: getClientId,
+            getReportType: getReportType,
         };
     });

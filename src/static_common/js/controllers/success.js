@@ -25,7 +25,7 @@ controller('SuccessController',
         $scope.avatar_id = avatarService.getClientId();
 
         // if($scope.admin === 'True') {
-            
+
         //     if($scope.avatar_id) {
 
         //         $http({
@@ -146,6 +146,20 @@ controller('SuccessController',
            
            $scope.avatar_id = avatarService.getClientId();
            console.log("$scope.avatar_id="+$scope.avatar_id);
+
+
+           if($scope.avatar_id) {
+                avatarService.getReportType($scope.avatar_id, token).then(function(result) {
+                $scope.report_type = result
+
+                //alert("$scope.report_type="+JSON.stringify($scope.report_type, null, 4))
+                                
+            });
+           }
+
+          
+
+           
            
            if($scope.admin==='True'&&$scope.avatar_id){
             $http({

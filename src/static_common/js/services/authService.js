@@ -47,6 +47,7 @@ angular.module('myApp').factory("authenticationSvc",
 
                     console.log("authService admin = "+JSON.stringify(response.data));
 
+                    //alert("auth service = "+JSON.stringify(response.data))
                     if(rememberMe){
 
                         userInfo = {
