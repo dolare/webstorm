@@ -1005,11 +1005,19 @@ class IsAccountManager(APIView):
             return False
 
     def get(self, request):
-        is_manager = self.is_manager(request)
-        if is_manager:
-            return Response("True", status=HTTP_200_OK)
+        if 'client_id' in self.request.GET.keys():
+            try:
+                client_id = self.request.GET.get('client_id')
+                user = UniversityCustomer.objects.get(id = client_id)
+            except:
+                app_logger.exception("is_manager method error, client_id is wrong")
+        else:
+            is_manager = self.is_manager(request)
+            
+            if is_manager:
+                return Response("True", status=HTTP_200_OK)
 
-        user = UniversityCustomer.objects.get(id = request.user.id)
+            user = UniversityCustomer.objects.get(id = request.user.id)
         print(user)
         print('user')
         print(user.account_type)

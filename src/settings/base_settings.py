@@ -2,6 +2,9 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import datetime
+from django.conf import settings
+
+
 # BASE_DIR is parent directory of directory hosting this setting file
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -35,6 +38,7 @@ INSTALLED_APPS = (
     'rest_framework',
     #'rest_framework.authtoken',
     'rest_framework_docs',
+    #'rest_framework_tracking',
     #'nested_admin',
     # our apps
     'ceeb_program',
@@ -152,4 +156,5 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
+
 
