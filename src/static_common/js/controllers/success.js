@@ -22,6 +22,38 @@ controller('SuccessController',
 
 
         $scope.admin = authenticationSvc.getUserInfo().admin;
+        $scope.avatar_id = avatarService.getClientId();
+
+        // if($scope.admin === 'True') {
+            
+        //     if($scope.avatar_id) {
+
+        //         $http({
+        //           url: '/api/upgrid/user/'+$scope.avatar_id,
+        //           method: 'GET',
+        //           headers: {
+        //             'Authorization': 'JWT ' + token
+        //           }
+        //         }).then(function (response) {
+
+        //            $scope.Ceeb = response.data.Ceeb;
+        //            // alert("changed"+$scope.Ceeb);
+        //            console.log("apiservice Ceeb="+ JSON.stringify(Ceeb));
+                    
+        //         }).catch(function(error){
+        //             console.log('an error occurred...'+JSON.stringify(error));
+                    
+        //         });
+
+
+        //     } else {
+
+        //     }
+        // } else{ //not admin
+        //     $scope.report_type = $scope.admin;
+        // }
+
+        console.log("$scope.admin="+$scope.admin);
         //use ngStorage
         $scope.$storage = $localStorage;
 
@@ -104,7 +136,7 @@ controller('SuccessController',
         console.log('cookies after login: ' + $cookies.get('userInfo'));
         console.log('session after login: ' + $window.sessionStorage["userInfo"])
 
-        $scope.avatar_id = avatarService.getClientId();
+        
 
 
         //change ceeb in impersonation
