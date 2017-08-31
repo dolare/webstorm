@@ -530,7 +530,6 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
         return features
 
 
-
 class SubClientDetailSerializer(serializers.ModelSerializer):
     Ceeb = SerializerMethodField()
     CeebID = SerializerMethodField()
