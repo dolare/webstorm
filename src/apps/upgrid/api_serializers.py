@@ -492,13 +492,14 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
     CeebID = SerializerMethodField()
     competing_schools = SerializerMethodField()
     customer_program = SerializerMethodField()
+    non_degree_schools = SerializerMethodField
     features = SerializerMethodField()
 
     class Meta:
         model = UniversityCustomer
         fields = ('username', 'id', 'is_demo', 'email', 'title', 'contact_name', 'position', 'position_level',
                   'phone', 'Ceeb', 'CeebID', 'department', 'account_type', 'service_level', 'service_until',
-                  'competing_schools', 'customer_program', 'is_active','features')
+                  'competing_schools', 'customer_program', 'is_active','features','non_degree_schools')
 
     def get_Ceeb(self, obj):
         return '{0} - {1} - {2}'.format(obj.Ceeb.ceeb, obj.Ceeb.university_foreign_key, obj.Ceeb.school,)
@@ -507,8 +508,13 @@ class MainClientDetailSerializer(serializers.ModelSerializer):
         return obj.Ceeb.object_id
 
     def get_competing_schools(self, obj):
-
+        print('competing schools =======')
+        print(obj.competing_schools)
         return UniversityAndSchoolSerializer(obj.competing_schools, many=True).data
+
+    def get_non_degree_schools(self, obj):
+        serializer = UniversityAndSchoolSerializer(obj.non_degree_schools, many=True)
+        return serializer.data
 
     def get_customer_program(self, obj):
         programs = UniversityCustomerProgram.objects.filter(customer=obj)
