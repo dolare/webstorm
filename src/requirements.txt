@@ -29,4 +29,3 @@ Pillow==4.2.0
 # - on prod box, they are installed from tarballs bundled together
 # grid-core-db==0.25
 # webtracking-db==0.2
-

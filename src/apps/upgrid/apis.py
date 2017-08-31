@@ -1106,10 +1106,10 @@ class ClientCRUD(APIView):
 
         client = self.get_object(object_id)
         if client.account_type == 'sub':
-            serializer = SubClientDetailSerializer(client)
+            serializer = SubUserDetailSerializer(client)
             return Response(serializer.data, status=HTTP_200_OK)
         else:
-            serializer = MainClientDetailSerializer(client)
+            serializer = MainUserDetailSerializer(client)
             return Response(serializer.data, status=HTTP_200_OK)
 
     def post(self, request):
@@ -1256,7 +1256,7 @@ class ClientCRUD(APIView):
             client.competing_schools.clear()
             for school_id in self.request.data['non_degree_schools']:
                 school = UniversitySchool.objects.get(object_id=school_id['object_id'])
-                client.competing_schools.add(school)
+                client.non_degree_schools.add(school)
 
         return Response({"success": ("User has been modified.")}, status=HTTP_202_ACCEPTED)
 
