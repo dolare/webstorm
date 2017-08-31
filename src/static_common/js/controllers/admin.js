@@ -549,7 +549,6 @@ angular.module('myApp').controller('AdminMainController',
                 }, 100);
 
 
-
                     $scope.showtable = false;
 
 
