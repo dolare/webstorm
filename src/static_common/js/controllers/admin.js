@@ -576,7 +576,11 @@ angular.module('myApp').controller('AdminMainController',
                     $scope.position = response.data.position;
                     $scope.position_level = response.data.position_level;
                     $scope.phone = response.data.phone;
-                    $('#datepicker1').datepicker('setDate', new Date(response.data.service_until.split('T')[0].split('-')[0], response.data.service_until.split('T')[0].split('-')[1] - 1, response.data.service_until.split('T')[0].split('-')[2]));
+
+                    if(response.data.service_until){
+                        $('#datepicker1').datepicker('setDate', new Date(response.data.service_until.split('T')[0].split('-')[0], response.data.service_until.split('T')[0].split('-')[1] - 1, response.data.service_until.split('T')[0].split('-')[2]));
+                    }
+                    
                     //$scope.expiration_date = response.data.service_until.split('-')[1]+'/'+response.data.service_until.split('T')[0].split('-')[2]+'/'+response.data.service_until.split('-')[0].slice(-2);
                     $scope.department = response.data.department;
                     $scope.service_level = response.data.service_level;
