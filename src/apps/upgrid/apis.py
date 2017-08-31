@@ -1187,7 +1187,6 @@ class ClientCRUD(APIView):
             print(request.data['features'])
             for k,v in request.data['features'].items():
                 if v == True:
-                    print(k)
                     feature = CustomerFeature.objects.get(name = k)
                     CustomerFeatureMapping.objects.create(
                     customer = client,feature = feature)
@@ -1247,16 +1246,12 @@ class ClientCRUD(APIView):
 
         if 'competing_schools' in self.request.data:
             client.competing_schools.clear()
-            print(self.request.data['competing_schools'])
             for cp in self.request.data['competing_schools']:
                 school = UniversitySchool.objects.get(object_id=cp['object_id'])
-                print(school)
                 client.competing_schools.add(school)
-                print(client.competing_schools)
 
         if 'non_degree_schools' in self.request.data:
-            client.competing_schools.clear()
-            print(self.request.data['non_degree_schools'])
+            client.non_degree_schools.clear()
             for school_id in self.request.data['non_degree_schools']:
                 school = UniversitySchool.objects.get(object_id=school_id['object_id'])
                 client.non_degree_schools.add(school)

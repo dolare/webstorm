@@ -94,6 +94,7 @@ class UniversityCustomerAdmin(admin.ModelAdmin):
                 'Ceeb',
                 'department',
                 'account_manager',
+                'service_until',
             ]
         }),
         ('Sub User', {
