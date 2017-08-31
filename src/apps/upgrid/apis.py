@@ -1106,10 +1106,10 @@ class ClientCRUD(APIView):
 
         client = self.get_object(object_id)
         if client.account_type == 'sub':
-            serializer = SubUserDetailSerializer(client)
+            serializer = SubClientDetailSerializer(client)
             return Response(serializer.data, status=HTTP_200_OK)
         else:
-            serializer = MainUserDetailSerializer(client)
+            serializer = MainClientDetailSerializer(client)
             return Response(serializer.data, status=HTTP_200_OK)
 
     def post(self, request):
@@ -1226,7 +1226,6 @@ class ClientCRUD(APIView):
         for field in update_fields:
             if field in request.data:
                 setattr(client, field, request.data[field])
-        client.save_without_password()
 
         #add features attr for the user
         try:        
@@ -1248,15 +1247,21 @@ class ClientCRUD(APIView):
 
         if 'competing_schools' in self.request.data:
             client.competing_schools.clear()
+            print(self.request.data['competing_schools'])
             for cp in self.request.data['competing_schools']:
                 school = UniversitySchool.objects.get(object_id=cp['object_id'])
+                print(school)
                 client.competing_schools.add(school)
+                print(client.competing_schools)
 
         if 'non_degree_schools' in self.request.data:
             client.competing_schools.clear()
+            print(self.request.data['non_degree_schools'])
             for school_id in self.request.data['non_degree_schools']:
                 school = UniversitySchool.objects.get(object_id=school_id['object_id'])
                 client.non_degree_schools.add(school)
+
+        client.save_without_password()
 
         return Response({"success": ("User has been modified.")}, status=HTTP_202_ACCEPTED)
 
