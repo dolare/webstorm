@@ -540,14 +540,15 @@
                                                 </div>
                             <script type="text/ng-template" id="tuition.html">
       
-                              <span ng-if="course.tuition_number_old!='N/A'">{{course.tuition_number_old | currency:currency_symbols[course.currency]:0}}</span>
+                              <span ng-if="course.tuition_number_old!='N/A'">{{course.tuition_number_old | currency:course.currency_symbol:0}}</span>
 
                               <span ng-if="course.tuition_number_old=='N/A'">{{course.tuition_number_old}}</span>
                               
                             </script>
 
-
-                            <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                            <!-- In old reports, there is no "currency_symbol" field in a course object, thus the currency symbol needs to be referenced from $scope,currency_symbols. --> 
+                            <span ng-if="course.tuition_number&&!course.currency_symbol" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                            <span ng-if="course.tuition_number&&course.currency_symbol" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:course.currency_symbol:0}}</span>
 
                             <script type="text/ng-template" id="tuition_note.html">
                               

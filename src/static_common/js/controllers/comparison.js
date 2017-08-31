@@ -162,7 +162,7 @@ comparison.controller('ComparisonController',
     var getEDR = function(startDate, endDate, tuition) {
       var start = new Date(startDate);
       var end = new Date(endDate);
-      console.log((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000));
+      console.log('Number of days: ' + ((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)));
       return tuition / ((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000) + 1);
     }
   });

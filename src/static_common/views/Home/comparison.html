@@ -214,7 +214,7 @@
                       <td style="padding: 10px;">
 
 
-                        <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable="course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                        <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable="course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:course.currency_symbol:0}}</span>
 
                         <script type="text/ng-template" id="tuition_note.html">
 
@@ -230,7 +230,7 @@
                         <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
 
                         <br>
-                        <span class="badge badge-info" ng-if="course.edr" uib-tooltip="Equivalent Daily Rate">EDR: {{course.edr | currency:currency_symbols[course.currency]:0}}</span>
+                        <span class="badge badge-info" ng-if="course.edr" uib-tooltip="Equivalent Daily Rate">EDR: {{course.edr | currency:course.currency_symbol:0}}</span>
                       </td>
 
 
@@ -326,7 +326,7 @@
                       <td style="padding: 10px;">
 
 
-                        <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable="course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                        <span ng-if="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable="course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:course.currency_symbol:0}}</span>
 
                         <script type="text/ng-template" id="tuition_note.html">
 
@@ -343,7 +343,7 @@
 
                         <br>
 
-                        <span class="badge badge-info" ng-if="course.edr" uib-tooltip="Equivalent Daily Rate">EDR: {{course.edr | currency:currency_symbols[course.currency]:0}}</span>
+                        <span class="badge badge-info" ng-if="course.edr" uib-tooltip="Equivalent Daily Rate">EDR: {{course.edr | currency:course.currency_symbol:0}}</span>
                       </td>
 
 
