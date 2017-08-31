@@ -118,12 +118,14 @@ class CourseDateSerializer(ModelSerializer):
 class CourseSerializer(ModelSerializer):
     course_dates = SerializerMethodField()
     currency = SerializerMethodField()
+    currency_symbol = SerializerMethodField()
     url = SerializerMethodField()
 
     class Meta:
         model = NonDegreeCourse
-        fields = ('object_id', 'name', 'date_modified', 'type', 'currency', 'tuition_number', 'tuition_note',
-                  'Repeatable', 'course_dates', 'url', 'location_info', 'is_advanced_management_program',)
+        fields = ('object_id', 'name', 'date_modified', 'type', 'currency', 'currency_symbol', 'tuition_number',
+                  'tuition_note', 'Repeatable', 'course_dates', 'url', 'location_info',
+                  'is_advanced_management_program',)
 
     def get_course_dates(self, obj):
         dates = NonDegreeCourseDate.objects.filter(course=obj)
@@ -132,6 +134,11 @@ class CourseSerializer(ModelSerializer):
     def get_currency(self, obj):
         if getattr(obj, 'currency', None) is not None:
             return obj.currency.name
+        return None
+
+    def get_currency_symbol(self, obj):
+        if getattr(obj, 'currency', None) is not None:
+            return obj.currency.symbol
         return None
 
     def get_url(self, obj):
