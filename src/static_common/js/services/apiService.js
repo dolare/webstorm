@@ -239,8 +239,8 @@ angular.module('myApp')
       var getClient = function(token) {
 
             var promise =  $http({
-              //url: '/api/upgrid/accountmanager/',
-              url: '/api/upgrid/user/university_customer/?is_non_degree_user=False&page_size=100',
+              //url: '/api/upgrid/user/university_customer/?is_non_degree_user=False&page_size=100',
+              url: '/api/upgrid/user/university_customer/?page_size=100',
               method: 'GET',
               headers: {
                 'Authorization': 'JWT ' + token

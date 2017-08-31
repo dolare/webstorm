@@ -906,7 +906,7 @@
                                          
 
 
-                                            <div class="form-group" ng-show="report_type['enhancement']">
+                                            <div class="form-group">
                                                 <div class="col-sm-10 col-sm-offset-1">
                                                     <label for="radio-group3" class="col-md-3 control-label">Competing Schools</label>
                                                     <div class="col-md-9 control-label" style="text-align:left" id="listboxes">
@@ -929,14 +929,14 @@
                                                                         <td colspan="1">
 
 
-                                                                            <select class="js-data-ceeb-for-competing" style="width: 100%" ng-model="competing_school_to_add">
+                                                                            <select class="js-data-ceeb-for-competing" style="width: 100%" ng-model="competing_school_to_add" ng-disabled="!report_type['enhancement']">
                                                                                 <option value="" selected="selected">/option>
                                                                             </select>
 
                                                                         </td>
 
                                                                         <td class="text-center"> 
-                                                                             <button type="button" ng-click="add_competing_school()" class="btn btn-success text-white" data-uib-tooltip="Add" data-tooltip-placement="top">
+                                                                             <button type="button" ng-click="add_competing_school()" class="btn btn-success text-white" data-uib-tooltip="Add" data-tooltip-placement="top" ng-disabled="!report_type['enhancement']">
                                                                                 <i class="fa fa-plus">
                                                                                 </i>
                                                                             </button>
@@ -968,8 +968,8 @@
 
 
 
-<!-- 
-                                            <div class="form-group" ng-show="report_type['non-degree']||report_type['AMP']">
+
+                                            <div class="form-group">
                                                 <div class="col-sm-10 col-sm-offset-1">
                                                     <label for="radio-group3" class="col-md-3 control-label">Non-degree Competing Schools</label>
                                                     <div class="col-md-9 control-label" style="text-align:left" id="listboxes">
@@ -992,14 +992,14 @@
                                                                         <td colspan="1">
                                                                         
 
-                                                                            <select class="js-data-ceeb-for-competing1" style="width: 100%" ng-model="competing_school_to_add1">
+                                                                            <select class="js-data-ceeb-for-competing1" style="width: 100%" ng-model="competing_school_to_add1" ng-disabled="!report_type['non-degree']||report_type['AMP']">
                                                                                 <option value="" selected="selected">/option>
                                                                             </select>
 
                                                                         </td>
 
                                                                         <td class="text-center"> 
-                                                                             <button type="button" ng-click="add_competing_school1()" class="btn btn-success text-white" data-uib-tooltip="Add" data-tooltip-placement="top">
+                                                                             <button type="button" ng-click="add_competing_school1()" class="btn btn-success text-white" data-uib-tooltip="Add" data-tooltip-placement="top" ng-disabled="!report_type['non-degree']||report_type['AMP']">
                                                                                 <i class="fa fa-plus">
                                                                                 </i>
                                                                             </button>
@@ -1022,7 +1022,7 @@
                                                     </div>
                                                 </div>
                                             </div>
- -->
+
 
 
 

@@ -913,6 +913,8 @@ angular.module('myApp').controller('AdminMainController',
             }
 
 
+
+
             // adding
             var Base64 = {
                     _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
@@ -1125,7 +1127,7 @@ angular.module('myApp').controller('AdminMainController',
 
 
             if($scope.competing_school_to_add1){
-                alert("haha")
+                //alert("haha")
 
                   $scope.competing_edit1.push({
                     "object_id": $scope.competing_school_to_add1.split('|')[0],
@@ -1175,6 +1177,8 @@ angular.module('myApp').controller('AdminMainController',
                 
 
             }
+
+            console.log("competing_schools_obj="+JSON.stringify(competing_schools_obj, null, 4))
 
 
 
