@@ -1106,10 +1106,10 @@ class ClientCRUD(APIView):
 
         client = self.get_object(object_id)
         if client.account_type == 'sub':
-            serializer = SubUserDetailSerializer(client)
+            serializer = SubClientDetailSerializer(client)
             return Response(serializer.data, status=HTTP_200_OK)
         else:
-            serializer = MainUserDetailSerializer(client)
+            serializer = MainClientDetailSerializer(client)
             return Response(serializer.data, status=HTTP_200_OK)
 
     def post(self, request):
