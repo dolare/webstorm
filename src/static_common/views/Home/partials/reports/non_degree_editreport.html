@@ -306,7 +306,9 @@
                             </div>
                             
                           </script>
-                          <span ng-if="course.tuition_number">{{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                          <!-- In old reports, there is no "currency_symbol" field in a course object, thus the currency symbol needs to be referenced from $scope,currency_symbols. -->
+                          <span ng-if="course.tuition_number&&!course.currency_symbol">{{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                          <span ng-if="course.tuition_number&&course.currency_symbol">{{course.tuition_number | currency:course.currency_symbol:0}}</span>
                           <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span><br>
                           <input type="text" ng-model="course.currency" size="3">
                           <input type="text" ng-model="course.tuition_number" size="5">

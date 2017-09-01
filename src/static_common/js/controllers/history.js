@@ -2,8 +2,8 @@
 
 'use strict';
 
-angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope', '$window', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 
-  function($q, $http, $scope, $window, authenticationSvc, updateService, $timeout, executiveService) {
+angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope', '$window', 'authenticationSvc', '$timeout', 'executiveService', 
+  function($q, $http, $scope, $window, authenticationSvc, $timeout, executiveService) {
     var token = authenticationSvc.getUserInfo().accessToken;
 
     $scope.emptyWarning = 'Currently there are no schools.';

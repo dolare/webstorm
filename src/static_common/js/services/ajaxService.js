@@ -286,11 +286,11 @@ angular.module('myApp').factory("ajaxService",
 
             console.log('Got compared results!');
             console.log('Last report: ');
-            console.log(angular.toJson(report_last));
+            console.log(angular.toJson(report_last, 2));
             console.log('Current data: ');
-            console.log(angular.toJson(currentData));
+            console.log(angular.toJson(currentData, 2));
             console.log('Compared report: ');
-            console.log(angular.toJson(report_compared));
+            console.log(angular.toJson(report_compared, 2));
 
             if (angular.toJson(report_compared.categories) != angular.toJson(currentData.categories)) {
               console.log('Update is found.');

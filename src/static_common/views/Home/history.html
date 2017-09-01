@@ -15,15 +15,15 @@
       </div>
       <table class="table table-hover" style="table-layout: fixed;" ng-if="schools.length>0">
         <colgroup>
-          <col width="50%">
-          <col width="10%">
+          <col width="45%">
+          <col width="15%">
           <col width="40%">
         </colgroup>
         <thead class="thead-inverse">
           <tr class="bg-info" style="border: 1px solid #e3e3e3; color:white;">
             <th style="padding-left:15px;" class="h4 font-w600">schools
             </th>
-            <th class="text-right"># of reports</th>
+            <th class="text-right">No. of reports</th>
             <th class="text-right">reports</th>
           </tr>
         </thead>
@@ -52,8 +52,12 @@
               <select style="max-width:55%;" id="js-data-{{s.object_id}}" ng-model="selectedReportId">
                 <option></option>
               </select>
-              <button class="btn btn-default btn-white" ng-click="viewReport(selectedReportId)" data-js-blur>
+              <button class="btn btn-default btn-white" uib-tooltip="View report" tooltip-placement="bottom" ng-click="viewReport(selectedReportId)" data-js-blur>
                 <a class="fa fa-file text-primary" style="vertical-align: middle;">
+                </a>
+              </button>
+              <button class="btn btn-default btn-white" uib-tooltip="Share report" tooltip-placement="bottom" ng-click="" data-js-blur>
+                <a class="fa fa-share-alt text-danger" style="vertical-align: middle;">
                 </a>
               </button>
 
