@@ -524,5 +524,76 @@ angular.module('myApp').controller('xdf_4',
     	setTimeout(function(){jQuery('.chart2').data('easyPieChart').update($scope.school1.international_student_ratio);}, 100);
     	setTimeout(function(){jQuery('.chart3').data('easyPieChart').update($scope.school1.student_of_color);}, 100);
     	setTimeout(function(){jQuery('.chart4').data('easyPieChart').update($scope.school1.teachers_advanced);}, 100);
+
+
+
+      //for exec mockup page
+      $scope.school_list = [{
+        "name": "New York University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true
+      },
+     {
+        "name": "New York University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true
+      },
+
+      {
+        "name": "New York University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true 
+      },
+
+      {
+        "name": "New York University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true 
+      },
+
+      {
+        "name": "New York University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true 
+      },
+
+
+      {
+        "name": "New York University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true 
+      },
+
+      {
+        "name": "New York University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true 
+      },
+
+      {
+        "name": "New York University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true 
+      },
+
+      {
+        "name": "New York University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true 
+      },
+
+      ]
+
+
+
     	
 });
