@@ -1501,6 +1501,49 @@ App.config(function($stateProvider, $urlRouterProvider) {
                     }]
                 }
    
+  })
+
+  .state('exec_mockup', {
+    url: '/exec_mockup',
+    templateUrl: '/static/views/Share/exec_mockup.html',
+    controller: 'xdf',
+    resolve: {      
+
+
+                    auth: function($q, authenticationSvc) {
+
+                      var userInfo = authenticationSvc.getUserInfo();
+                      if (userInfo && userInfo.admin === "True") {
+
+                        //console.log("start logout");
+                        //console.log(userInfo);
+                        return $q.when(userInfo);
+
+                      } else {
+                        return $q.reject({
+                          authenticated: false
+                        });
+                      }
+                    },
+
+                    depsExecMockup: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              '/static/js/third-party/easy-pie-chart/jquery.easypiechart.min.js',
+                              '/static/js/controllers/xdf.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
+   
   }).
 
 
@@ -1675,9 +1718,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                     }]
                 }
    
-  })
-
-  ;
+  });
 
   //default route
   $urlRouterProvider.otherwise('/');
