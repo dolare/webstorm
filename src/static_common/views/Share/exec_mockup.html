@@ -19,7 +19,7 @@
                             <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
                             <small style="color:#aaa">upgrid.gridet.com</small>
 
-                            <div style="color: #666;">U.S. HIGH SCHOOL REPORT</div>
+                            <div style="color: #666;">Exec. Tracking Report</div>
                             </h1>
                             </div>
 
@@ -36,7 +36,8 @@
                             <div class="row">
 
                             	<div class="col-sm-5">
-	                            		<a class="block block-rounded block-link-hover3 text-center" href="javascript:void(0)">
+	                            
+	                           <!--  <a class="block block-rounded block-link-hover3 text-center" href="javascript:void(0)">
 	                                <div class="block-content block-content-full bg-info">
 	                                    <div class="h1 font-w700 text-white"><span class="h2 text-white-op"><i class="fa fa-arrow-up" aria-hidden="true"></i></span> 320</div>
 	                                    <div class="h5 text-white-op text-uppercase push-5-t">Users</div>
@@ -44,7 +45,29 @@
 	                                <div class="block-content block-content-full block-content-mini">
 	                                    <i class="fa fa-chevron-down text-info"></i> -2% This week
 	                                </div>
-	                            </a>
+	                            </a> -->
+
+
+	                            <div class="block">
+                                <ul class="nav nav-tabs nav-justified" data-toggle="tabs">
+                                    <li class="active">
+                                        <a href="#btabs-static-justified-home"><i class="fa fa-percent" aria-hidden="true"></i> &nbsp;Percentile</a>
+                                    </li>
+                                    <li>
+                                        <a href="#btabs-static-justified-profile"><i class="fa fa-line-chart" aria-hidden="true"></i> &nbsp;Score</a>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="block-content block-content-full bg-info text-center">
+	                                    <div class="h1 font-w700 text-white"><span class="h2 text-white-op"></span> 68</div>
+	                                    <div class="h5 text-white-op text-uppercase push-5-t">in percentile</div>
+	                                </div>
+	                                <div class="block-content block-content-full block-content-mini text-center">
+	                                    <span class="text-success"><i class="fa fa-arrow-up text-success" aria-hidden="true"></i> 2 This week</span>
+	                                </div>
+                            </div>
+
+
 					            </div>
 
 					            <div class="col-sm-7">
@@ -53,6 +76,7 @@
 
                             </div>
 
+                            <hr class="push-30">
 
                             <div class="row">
                             	<div class="col-sm-5">
@@ -88,15 +112,22 @@
                                         <div class="remove-margin-b">
                                             <div>
                                                 <table class="table remove-margin-b font-s13">
+                                                 <colgroup>
+								                      <col width="55%"/>
+								                      <col width="30%"/>
+								                      <col width="15%"/>
+								                  
+								                    </colgroup>
                                                     <tbody>
 
                                                         <tr ng-repeat = "row in school_list">
                                                             <td class="font-w600">
                                                                 <a href="javascript:void(0)">{{row.name}}</a>
                                                             </td>
-                                                            <td class="hidden-xs text-muted text-right" style="width: 70px;">{{row.report_date | amUtc |  amDateFormat:'MM  DD, YYYY'}}</td>
+                                                            <td class="hidden-xs text-muted text-right" style="width: 70px;">{{row.report_date | amUtc |  amDateFormat:'MM-DD, YYYY'}}</td>
                                                             <td class="font-w600 text-right" style="width: 70px;" ng-class="row.ranking_type ? 'text-success' : 'text-danger'"><i ng-class="row.ranking_type ? 'fa fa-arrow-up' : 'fa fa-arrow-down'" aria-hidden="true"></i> {{row.ranking}}</td>
                                                         </tr>
+
                                                      
                                                     </tbody>
                                                 </table>
@@ -116,1379 +147,409 @@
                             	<div class="col-sm-7">
 
 
+                            		<!-- Top Products -->
+                            <div class="block block-opt-refresh-icon4">
+                                <div class="block-header bg-gray-lighter">
+                                    <ul class="block-options">
+                                        <li>
+                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                        </li>
+                                    </ul>
+                                    <h3 class="block-title">Top Products</h3>
+                                </div>
+                                <div class="block-content" style="padding:5px 10px">
+                                   
+
+
+
+                                    <table class="table push-5">
+                                    	 <colgroup>
+								                      <col width="15%"/>
+								                      <col width="20%"/>
+								                      <col width="45%"/>
+								                      <col width="20%"/>
+								                  
+								        </colgroup>
+
+
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" style="width: 50px;">Sections</th>
+                                                <th>Title</th>
+                                                <th class="hidden-xs" style="width: 15%;">Note</th>
+                                                <th class="text-center" style="width: 100px;">Rankings</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr>
+                                        	<td class="text-center success text-success font-w600" rowspan="7">Program Introduction</td>
+
+                                        	<td>Location</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+                                        	<td>Online programs avaialbility</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+                                        	<td>Program features/overview</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+                                        	<td>Video - promotional</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+                                        <tr>
+                                        	
+                                        	<td>Faculty Introduction</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+                                        	<td>Brochure</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+                                        	<td>Fast Facts (ranking, alumni count, etc.)</td>
+
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	<td class="text-center info text-info font-w600" rowspan="4">Client</td>
+
+                                        	<td>Partnership Process / Service Process</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Client Testimonials</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Client List</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Client Success / case study / Curriculum sample</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                         <tr>
+                                        	<td class="text-center danger text-danger font-w600" rowspan="3">Inquiry</td>
+
+                                        	<td>FAQ</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Inquiry Form/Contact US</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+                                        <tr>
+                                        	
+
+                                        	<td>Primary contact info</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+
+
+                                        <tr>
+                                        	<td class="text-center warning text-warning font-w600" rowspan="5">Specific features</td>
+
+                                        	<td>News</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Awards</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+                                        <tr>
+                                        	
+
+                                        	<td>Video - sample of course</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                         <tr>
+                                        	
+
+                                        	<td>Industries</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Skillsets/topics</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        
+
+                                       
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                            <!-- END Top Products -->
 
                             	</div>
 
                             </div>
 
 
-
-
-            <div class="row">
-
-
-
-
-                <div class="col-lg-8">
-                    <div class="block block-rounded">
-                        <div class="block-header">
-                                       
-                                        <h3 class="block-title section-title bg-info-light" id="section1">Basic Information</h3>
-
-                                        <hr style="margin-bottom:0">
-                                    </div>
-
-
-                                    <div class="block-content block-content-full text-center" style="padding-top:10px">
-                                        <div class="row">
-
-                                           
-                                            <div class="col-sm-6">
-
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted" for="register1-username"><i class="fa fa-university text-primary" aria-hidden="true"></i>&nbsp; School Name</label>
-
-                                                    <div class="col-xs-12 text-left push-40 xdf-content">
-                                                        {{school1.school_name}} &nbsp;<a href="{{school1.website}}" target="_blank"><i class="fa fa-external-link text-primary font-s16" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </div>
-                                                </div>
-
-
-                                                <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted" for="register1-username"><i class="fa fa-map-marker text-primary" aria-hidden="true"></i>&nbsp; Address</label>
-
-                                                    <div class="col-xs-12 text-left push-40 xdf-content">
-                                                        {{school1.address}},<br>
-                                                        {{school1.address_plus}}
-                                                    </div>
-                                                </div>
-
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted" for="register1-username"><i class="fa fa-calendar-check-o text-primary" aria-hidden="true"></i>&nbsp; Year Established</label>
-
-                                                    <div class="col-xs-12 text-left xdf-content push-40">
-                                                        {{school1.establish_year}}<br><span> </span>
-
-                                                    </div>
-                                                </div>
-
-                                                </div>
-
-                                                
-
-                                                
-
-                                                
-
-                                                <!-- <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted" for="register1-username"><i class="fa fa-graduation-cap text-primary" aria-hidden="true"></i>&nbsp; Grades</label>
-
-                                                    <div class="col-xs-12 text-left xdf-content">
-                                                        {{school1.grades}}
-                                                    </div>
-                                                </div> -->
-
-                                                <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted" for="register1-username"><i class="fa fa-area-chart text-primary" aria-hidden="true"></i>&nbsp; Campus Size</label>
-
-                                                    <div class="col-xs-12 text-left push-40 xdf-content">
-                                                        {{school1.campus_size}}
-                                                    </div>
-                                                </div>
-
-
-                                                </div>
-
-                                                
-
-                                                <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted" for="register1-username"><i class="fa fa-pie-chart text-primary" aria-hidden="true"></i>&nbsp; Student Body</label>
-
-                                                    <div class="col-xs-12 text-left xdf-content push-20">   
-                                                        <span ng-class="school1.student_body === 'Boys'? 'text-info': 'text-bbb'">
-
-                                                            <i class="fa fa-mars" aria-hidden="true" data-uib-tooltip="Boys" data-tooltip-placement="top">
-                                                            </i>
-                                                        </span>
-
-                                                        <span ng-class="school1.student_body === 'Girls'? 'text-info': 'text-bbb'" style="padding-left: 20px">
-                                                            <i class="fa fa-venus" aria-hidden="true" data-uib-tooltip="Girls" data-tooltip-placement="top"></i>
-                                                        </span>
-
-                                                        <span ng-class="school1.student_body === 'Co-ed'? 'text-info': 'text-bbb'" style="padding-left: 18px">
-                                                            <i class="fa fa-venus-mars" aria-hidden="true" data-uib-tooltip="Co-ed" data-tooltip-placement="top"></i>
-                                                        </span>
-
-                                                    </div>
-                                                </div>
-
-
-                                                </div>
-
-
-                                                <div class="col-sm-6">
-
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted" for="register1-username"><i class="fa fa-black-tie text-primary" aria-hidden="true"></i>&nbsp; Dress Code</label>
-
-                                                    <div class="col-xs-12 text-left xdf-content push-20">
-                                                        <span ng-if="school1.dress_code==='Y'"><i class="fa fa-check text-success" aria-hidden="true"></i></span>
-                                                        <span ng-if="school1.dress_code==='N'"><i class="fa fa-times text-danger" aria-hidden="true"></i></span>
-                                                        <span ng-if="school1.dress_code==='N/A'" class="text-muted">N/A</span>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-
-
-                                                <!-- <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted" for="register1-username"><i class="fa fa-graduation-cap text-primary" aria-hidden="true"></i>&nbsp; Grades PG</label>
-
-                                                    <div class="col-xs-12 text-left xdf-content">
-                                                        <span ng-if="school1.pg==='Y'"><i class="fa fa-check text-success" aria-hidden="true"></i></span>
-                                                        <span ng-if="school1.pg==='N'"><i class="fa fa-times text-danger" aria-hidden="true"></i></span>
-                                                        <span ng-if="school1.pg==='N/A'" class="text-muted">N/A</span>
-                                                    </div>
-                                                </div> -->
-
-
-<!-- 
-                                            </div> -->
-
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-
-                                <div class="block block-rounded">
-                                    <!-- <div class="block-header">
-                                        <ul class="block-options">
-                                            
-                                        </ul>
-                                        <h3 class="block-title section-title" style="border: 0;">&nbsp;</h3>
-
-                                        <hr style="margin-bottom:0">
-                                    </div> -->
-
-
-                                    <div class="block-content block-content-full text-center" style="padding-top:28px; padding-bottom: 0px">
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <label class="col-xs-12 text-center text-muted push-10" for="register1-username"><i class="fa fa-certificate text-primary" aria-hidden="true"></i>&nbsp; Accreditation/Associations</label>
-
-
-                                                <div class="col-xs-12 text-center xdf-content" style="min-height: 122px; display: flex;justify-content: center; /* align horizontal */align-items: center; /* align vertical */">
-
-
-                                                    <div class="row">
-                                                        <div class="col-sm-6 push-10" ng-repeat="row in school1.associations">
-
-
-                                                            <span class="" style="" data-uib-tooltip="{{row.description}}" data-tooltip-placement="bottom" data-tooltip-enable="row.description!==''">{{row.name}} 
-                                                             
-                                                            </span>
-                                                     </div>
-
-
-                                                 </div>
-
-                                             </div>
-                                         </div>
-
-                                     </div>
-
-                                 </div>
-
-                             </div>
-
-
-                             <div class="block block-rounded" style="min-height:80px">
-                                    
-
-                                    <div class="block-content block-content-full text-center" style="padding: 16px 20px;">
-
-
-                                        <div class="row">
-                                            <div class="col-sm-6 text-center border-r">
-
-                                                <div style="font-size: 23px;" class="push-5 text-warning">{{school1.grades}}</div>
-
-
-                                                <label class="text-muted">Grades</label>
-                                            </div>
-
-                                            <div class="col-sm-6 text-center">
-                                                <div ng-if="school1.pg==='Y'" style="font-size: 23px;" class="push-5 "><i class="fa fa-check text-success" aria-hidden="true"></i></div>
-                                                <div ng-if="school1.pg==='N'" style="font-size: 23px;" class="push-5 "><i class="fa fa-times text-danger" aria-hidden="true"></i></div>
-                                                <div ng-if="school1.pg==='N/A'" class="text-muted"  style="font-size: 23px;" class="push-5">N/A</div>
-
-                                                <label class="text-muted">Grades PG?</label>
-                                            </div>
-
-                                        </div>
-
-
-
-                                    </div>
-
-                                </div>
-
-
-
-                                <div class="block block-rounded" style="min-height:80px">
-                                    
-
-                                    <div class="block-content block-content-full text-center" style="padding: 16px 20px;">
-
-
-                                        <div class="row">
-                                            <div class="col-sm-6 text-center border-r">
-
-                                                <span ng-if="school1.religion_affiliation.text === 'Y'">
-                                                    <a href="{{school1.religion_affiliation.url}}" target="_blank"><i class="fa fa-external-link text-primary push-10" aria-hidden="true" style="font-size: 23px"></i></a>
-                                                    <br>
-                                                </span>
-
-                                                <span ng-if="school1.religion_affiliation.text === 'N'">
-                                                    <div style="font-size: 18px; margin-bottom: 8px">No</div>
-                                                </span>
-
-                                                <span ng-if="school1.religion_affiliation.text === 'N/A'">
-                                                    <div style="font-size: 18px; margin-bottom: 8px">N/A</div>
-                                                </span>
-
-
-                                                <label class="text-muted">Religious Affiliation</label>
-                                            </div>
-
-                                            <div class="col-sm-6 text-center">
-                                                <a href="{{school1.student_club}}" target="_blank">
-                                                    <i class="fa fa-external-link text-primary push-10" aria-hidden="true" style="font-size: 23px"></i></a><br>
-                                                    <label class="text-muted">Student Clubs</label>
-                                                </div>
-
-                                            </div>
-
-
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="block block-rounded">
-
-
-                                        <div class="block-content block-content-full text-left" style="padding-top:25px">
-                                            <div class="row">
-
-                                                <div class="col-sm-6 border-r">
-                                                    <div class="form-group">
-                                                        <label class="col-xs-12 text-left text-muted push-15" for="register1-username"><i class="fa fa-cog text-primary" aria-hidden="true"></i>&nbsp; School Facilities</label>
-
-                                                        <div class="col-xs-12 text-left xdf-content">
-                                                            
-                                                            <span>{{school1.school_facilities}}</span><span ng-if="school1.school_facilities_url!=='N/A'">...<a href="{{school1.school_facilities_url}}" target="_blank">
-                                                                <i class="fa fa-external-link text-primary push-10" aria-hidden="true"></i></a></span>
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-
-                                                <div class="col-sm-6">
-
-
-                                                    <div class="form-group">
-                                                        <label class="col-xs-12 text-left text-muted push-15" for="register1-username"><i class="fa fa-tachometer text-primary" aria-hidden="true"></i>&nbsp; School Features</label>
-
-                                                        <div class="col-xs-12 text-left xdf-content">
-                                                            {{school1.school_features}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                             <!-- <div class="col-sm-4 border-r">
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted push-15" for="register1-username"><i class="fa fa-calendar-check-o text-primary" aria-hidden="true"></i>&nbsp; Religion affiliation</label>
-
-                                                    <div class="col-xs-12 text-left xdf-content">
-                                                        {{school1.religion_affiliation.text}}
-                                                    </div>
-                                                </div>
-                                            </div> -->
-
-                                             <!-- <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted push-15" for="register1-username"><i class="fa fa-calendar-check-o text-primary" aria-hidden="true"></i>&nbsp; Dress code</label>
-
-                                                    <div class="col-xs-12 text-left xdf-content">
-                                                        {{school1.dress_code}}
-                                                    </div>
-                                                </div>
-                                            </div> -->
-
-                                        </div>
-
-                                    </div>
-                                    <div class="block-content text-center">
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-lg-12">
-                            <hr style="border-color: #e5e5e5;margin-bottom: 35px;">
-                            </div>
-
-
-                            </div>
-
-
-
-                        <div class="row">
-
-                            <div class="col-lg-8">
-                                <div class="block block-rounded">
-                                    <div class="block-header">
-                                        <!-- <ul class="block-options">
-                                            <li>
-                                                <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo" style="    margin-top: 13px;"><i class="si si-refresh"></i></button>
-                                            </li>
-                                        </ul> -->
-                                        <h3 class="block-title section-title bg-info-light" id="section3">Statistics</h3>
-
-                                        <hr style="margin-bottom:0">
-                                    </div>
-
-
-                                    <div class="block-content block-content-full text-center" style="padding-top:10px">
-
-
-                                        <div class="form-group">
-                                            <label class="col-xs-12 text-center text-muted push-25" for="register1-username"><i class="fa fa-bar-chart text-primary" aria-hidden="true"></i>&nbsp; Student Demographics</label>
-
-                                        </div>
-
-                                        <div class="row">
-
-                                            <div class="col-sm-3">
-                                                <div style="font-size: 50px; padding-top:19px" class="push-30 text-orange">{{school1.student_number}}</div>
-
-
-                                                <label class="text-muted">Student Number</label>
-                                            </div>
-
-                                            <div class="col-sm-3">
-                                                <div class="pie-chart chart1 push-5" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#36bafa', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
-                                                    <span class="font-s16">{{school1.resident_student_ratio}}%
-                                                    </span>
-                                                </div>
-
-
-                                                <label class="text-muted">Boarding Student Ratio</label>
-                                            </div>
-
-                                            <div class="col-sm-3">
-                                                <div class="pie-chart chart2 push-5" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#36bafa', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
-                                                    <span class="font-s16">{{school1.international_student_ratio}}%</span>
-                                                </div>
-
-
-                                                <label class="text-muted">International Student Ratio</label>
-                                            </div>
-
-                                            <div class="col-sm-3">
-                                                <div class="pie-chart chart3 push-5" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#36bafa', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
-                                                    <span class="font-s16">{{school1.student_of_color}}%</span>
-                                                </div>
-
-
-                                                <label class="text-muted">Students of Color</label>
-                                            </div>
-
-
-                                        </div>
-
-                                        <hr>
-
-
-                                        <div class="form-group">
-                                            <label class="col-xs-12 text-center text-muted push-25" for="register1-username"><i class="fa fa-bar-chart text-primary" aria-hidden="true"></i>&nbsp; Class Statistics</label>
-
-                                        </div>
-
-                                        <div class="row">
-
-                                            <div class="col-sm-4">
-                                                <div style="font-size: 50px; padding-top:19px" class="push-30 text-flat">{{school1.class_size}}</div>
-
-
-                                                <label class="text-muted">Class Size (Avg.)</label>
-                                            </div>
-
-
-                                            <div class="col-sm-4">
-                                                <div class="pie-chart chart4 push-5" data-js-pie-chart="{lineWidth: 6, size: 110, barColor: '#ffa500', trackColor: '#eeeeee', scaleColor: '#dddddd'}" data-percent="0">
-                                                    <span class="font-s16">{{school1.teachers_advanced}}%</span>
-                                                </div>
-
-
-                                                <label class="text-muted">Teachers with an Advanced Degree</label>
-                                            </div>
-
-
-                                            <div class="col-sm-4">
-
-                                                <div style="font-size: 50px; padding-top:19px" class="push-30 text-city">{{school1.teacher_student_ratio}}</div>
-
-
-                                                <label class="text-muted">Student-Teacher Ratio</label>
-                                            </div>
-
-
-                                        </div>
-
-
-
-                                        <hr>
-
-
-                                        <div class="form-group">
-                                            <label class="col-xs-12 text-center text-muted push-25" for="register1-username"><i class="fa fa-bar-chart text-primary" aria-hidden="true"></i>&nbsp; SAT Statistics</label>
-
-                                        </div>
-
-                                        <div class="row">
-
-                                            <div class="col-sm-6 border-r">
-
-                                                <div class="label label-primary pull-left">SAT avg. (1600)</div>
-                                               <table class="table table-striped  push-20" style="min-height: 180px">
-
-                                            <tbody>
-
-
-                                                <tr>
-                                                   
-                                                    <td class="text-left">Reading and Writing</td>
-                                                    <td class="hidden-xs">
-                                                        {{school1.sat_avg_1600.reading_writing}}
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                   
-                                                    <td class="text-left">Maths</td>
-                                                    <td class="hidden-xs">
-                                                        {{school1.sat_avg_1600.math}}
-                                                    </td>
-                                                    
-                                                </tr>
-
-                                                <tr class="success">
-                                                   
-                                                    <td class="text-left">Total</td>
-                                                    <td class="hidden-xs">
-                                                        {{school1.sat_avg_1600.total}}
-                                                    </td>
-                                                    
-                                                </tr>
-                                               
-                                                
-                                               
-                                                
-                                            </tbody>
-                                        </table>
-                                            </div>
-
-
-                                            <div class="col-sm-6">
-                                                  <div class="label label-primary pull-left">SAT avg. (2400)</div>
-                                               <table class="table table-striped  push-20">
-
-                                            <tbody>
-
-
-                                                <tr>
-                                                   
-                                                    <td class="text-left">Critical reading</td>
-                                                    <td class="hidden-xs">
-                                                        {{school1.sat_avg_2400.reading}}
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                   
-                                                    <td class="text-left">Maths</td>
-                                                    <td class="hidden-xs">
-                                                        {{school1.sat_avg_2400.math}}
-                                                    </td>
-                                                    
-                                                </tr>
-
-                                                <tr>
-                                                   
-                                                    <td class="text-left">Maths</td>
-                                                    <td class="hidden-xs">
-                                                        {{school1.sat_avg_2400.writing}}
-                                                    </td>
-                                                    
-                                                </tr>
-
-                                                <tr class="success">
-                                                   
-                                                    <td class="text-left">Total</td>
-                                                    <td class="hidden-xs">
-                                                        {{school1.sat_avg_2400.total}}
-                                                    </td>
-                                                    
-                                                </tr>
-                                               
-                                                
-                                               
-                                                
-                                            </tbody>
-                                        </table>
-                                            </div>
-
-
-                                        </div>
-
-
-                                        <div class="row push-30-t">
-
-                                            <div class="col-sm-12">
-
-                                                <div class="label label-primary">SAT scale</div>
-
-                                                <div style="font-size: 50px; padding-top:19px" class="push-10 text-info">{{school1.sat_scale}}</div>
-
-
-                                                
-                                            </div>
-
-
-                                        </div>
-
-                                        <hr>
-                                        <div class="row">
-                                        <div class="form-group">
-                                            <label class="col-xs-12 text-center text-muted push-25" for="register1-username"><i class="fa fa-bar-chart text-primary" aria-hidden="true"></i>&nbsp; College Matriculation</label>
-
-                                            <div class="col-xs-12 text-center xdf-content" style="min-height: 100px; display: flex;justify-content: center; /* align horizontal */align-items: center; /* align vertical */">
-
-
-                                                    <div class="row">
-                                                       
-
-                                                     <span>{{school1.college_matriculation}}</span>...<span ng-if="school1.college_matriculation_url!=='N/A'"><a href="{{school1.college_matriculation_url}}" target="_blank">
-                                                                <i class="fa fa-external-link text-primary push-10" aria-hidden="true"></i></a></span>
-
-
-                                                 </div>
-
-                                             </div>
-
-
-                                        </div>
-
-
-                                        </div>
-
-
-                                        
-                                        <div class="row" ng-if="school1.school_name==='Phillips Academy Andover'">
-                                        <hr>
-                                        <div class="form-group" style="padding: 0 15px">
-                                            <label class="col-xs-12 text-center text-muted push-25" for="register1-username"><i class="fa fa-bar-chart text-primary" aria-hidden="true"></i>&nbsp; College Matriculation Trend Chart</label>
-
-                                           <img class="push-15-t" src="/static/img/xdf_chart.png" alt="" height="" width="100%">
-
-
-                                        </div>
-
-
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="block block-rounded">
-                                    <div class="block-header">
-                                        <!-- <ul class="block-options">
-                                            <li>
-                                                <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo" style="    margin-top: 13px;"><i class="si si-refresh"></i></button>
-                                            </li>
-                                        </ul> -->
-                                        <h3 class="block-title section-title bg-info-light" id="section2">Course setup</h3>
-
-                                        <hr style="margin-bottom:0">
-                                    </div>
-
-
-                                    <div class="block-content block-content-full text-center" style="padding-top:10px">
-
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <label class="col-xs-12 text-center text-muted push-30" for="register1-username"><i class="fa fa-star text-primary" aria-hidden="true"></i>&nbsp; Special Programs</label>
-
-
-                                                <div class="col-xs-12 text-center xdf-content" style=" display: flex;justify-content: center; align-items: center; font-size: 14px; padding-left: 30px; padding-right: 30px" >
-
-
-                                                    <div class="row">
-                                                        <div class="col-sm-12 push-20" ng-repeat="row in school1.special_programs">
-                                                            <span class="" style="">{{row}} 
-                                                             <!--  <i class="fa fa-info-circle font-s15" style="color:#777" aria-hidden="true"></i> -->
-                                                         </span>
-                                                     </div>
-                                                     <div style="margin-left: 15px">......
-
-                                                         <div class="push-20-t"><a href="{{school1.special_programs_url}}" target="_blank">
-                                                            <i class="fa fa-external-link text-primary push-10" aria-hidden="true"></i></a></div>
-                                                     </div>
-                                                     
-                                                    
-
-
-                                                 </div>
-
-                                             </div>
-                                         </div>
-
-                                     </div>
-
-
-                                     <hr>
-
-
-                                     <div class="row" style="padding: 0 15px">
-                                        <label class="col-xs-12 text-center text-muted push-25" for="register1-username"><i class="fa fa-star text-primary" aria-hidden="true"></i>&nbsp; Courses</label>
-
-
-                                        <table class="table table-striped push-50-t push-20">
-
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-left">1.</td>
-                                                    <td class="text-left">ESL</td>
-                                                    <td class="hidden-xs">
-                                                        <span ng-if="school1.ESL==='Y'"><i class="fa fa-check text-success" aria-hidden="true"></i></span>
-                                                        <span ng-if="school1.ESL==='N'"><i class="fa fa-times text-danger" aria-hidden="true"></i></span>
-                                                        <span ng-if="school1.ESL==='N/A'" class="text-muted">N/A</span>
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-left">2.</td>
-                                                    <td class="text-left">AP</td>
-                                                    <td class="hidden-xs">
-                                                        <span ng-if="school1.AP==='Y'"><i class="fa fa-check text-success" aria-hidden="true"></i></span>
-                                                        <span ng-if="school1.AP==='N'"><i class="fa fa-times text-danger" aria-hidden="true"></i></span>
-                                                        <span ng-if="school1.AP==='N/A'" class="text-muted">N/A</span>
-                                                    </td>
-                                                    
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="text-left">3.</td>
-                                                    <td class="text-left">Summer programs</td>
-                                                    <td class="hidden-xs">
-                                                        <span ng-if="school1.summer_programs==='Y'"><i class="fa fa-check text-success" aria-hidden="true"></i></span>
-                                                        <span ng-if="school1.summer_programs==='N'"><i class="fa fa-times text-danger" aria-hidden="true"></i></span>
-                                                        <span ng-if="school1.summer_programs==='N/A'" class="text-muted">N/A</span>
-                                                    </td>
-                                                    
-                                                </tr>
-                                               
-                                                
-                                               
-                                                
-                                            </tbody>
-                                        </table>
-
-
-
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                            <div class="col-lg-12">
-                            <hr style="border-color: #e5e5e5;margin-bottom: 35px;">
-                            </div>
-
-
-                            </div>
-
-
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="block block-rounded">
-                        <div class="block-header">
-                                        <!-- <ul class="block-options">
-                                            <li>
-                                                <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo" style="    margin-top: 13px;"><i class="si si-refresh"></i></button>
-                                            </li>
-                                        </ul> -->
-                                        <h3 class="block-title section-title bg-info-light" id="section4">Application Information</h3>
-
-                                        <hr style="margin-bottom:0">
-                                    </div>
-
-
-                                    <div class="block-content block-content-full text-center" style="padding-top:10px">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted" for="register1-username"><i class="fa fa-hourglass-half text-primary" aria-hidden="true"></i>&nbsp; Admissions Deadlines-Day</label>
-
-                                                    <div class="col-xs-12 text-left push-30 xdf-content">
-                                                        {{school1.deadline_day}}
-                                                    </div>
-                                                </div>
-
-
-                                                
-
-
-                                            </div>
-
-                                            <div class="col-sm-6">
-
-                                            <div class="form-group">
-                                                    <label class="col-xs-12 text-left text-muted" for="register1-username"><i class="fa fa-hourglass-half text-primary" aria-hidden="true"></i>&nbsp; Admissions Deadlines-Boarding</label>
-
-                                                    <div class="col-xs-12 text-left push-30 xdf-content">
-                                                        {{school1.deadline_boarding}}
-                                                    </div>
-                                                </div>
-
-
-                                                
-
-
-
-
-
-                                            </div>
-
-                                        </div>
-
-                                        
-                                        <hr>
-
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="col-xs-12 text-center text-muted push-25" for="register1-username" style="margin-top: 2px">
-
-                                                <i class="fa fa-check-square-o text-primary" aria-hidden="true"></i>&nbsp; Entrance Exam Required
-
-                                                </label>
-
-
-
-                                        <table class="table table-striped table-borderless text-center push-50 push-30-t">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 15%;"></th>
-                                            <th class="text-center">
-                                                <div data-uib-tooltip="Secondary School Admission Test" data-tooltip-placement="top">SSAT</div>
-                                                
-
-                                            </th>
-
-                                            <th class="text-center">
-                                                <div data-uib-tooltip="Independent School Entrance Examination" data-tooltip-placement="top">ISEE</div>
-                                            </th>
-
-                                            <th class="text-center">
-                                                <div data-uib-tooltip="Educational Records Bureau" data-tooltip-placement="top">ERB</div>
-                                            </th>
-                                            <th class="text-center">
-                                                <div data-uib-tooltip="Preliminary Scholastic Assessment Test" data-tooltip-placement="top">PSAT</div>
-                                            </th>
-                                            <th class="text-center">
-                                                <div data-uib-tooltip="American College Testing" data-tooltip-placement="top">ACT</div>
-                                            </th>
-
-                                            <th class="text-center">
-                                                <div data-uib-tooltip="Scholastic Assessment Test" data-tooltip-placement="top">SAT</div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Grade 9</td>
-                                            
-                                            
-                                            <td ng-repeat="row in school1.entrance_exam[0]">
-                                                
-                                                <span ng-if="row.name"><i class="si si-check text-success"></i></span>
-                                            
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Grade 10</td>
-                                            <td ng-repeat="row in school1.entrance_exam[1]">
-                                                
-                                                <span ng-if="row.name"><i class="si si-check text-success"></i></span>
-                                            
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Grade 11</td>
-                                            <td ng-repeat="row in school1.entrance_exam[2]">
-                                                
-                                                <span ng-if="row.name"><i class="si si-check text-success"></i></span>
-                                            
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Grade 12</td>
-                                            <td ng-repeat="row in school1.entrance_exam[3]">
-                                                
-                                                <span ng-if="row.name"><i class="si si-check text-success"></i></span>
-                                            
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>PG</td>
-                                            <td ng-repeat="row in school1.entrance_exam[4]">
-                                                
-                                                <span ng-if="row.name"><i class="si si-check text-success"></i></span>
-                                            
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    
-                                </table>
-
-
-                                            </div>
-                                        </div>
-
-                                   
-
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-
-                                <div class="block block-rounded">
-                                    
-
-                                    <div class="block-content block-content-full text-center" style="padding: 16px 20px">
-
-
-                                        <div class="row">
-                                            <div class="col-sm-12 text-center" style="padding:15px; min-height: 124px">
-
-                                                <label class="text-muted push-15"><i class="fa fa-th-large text-primary"></i> &nbsp;Online Application System</label>
-                                                
-
-                                                <div>{{school1.application_system}}</div>
-
-                                                <span ng-if="school1.application_system_url!=='N/A'">
-                                                ...<a href="{{school1.application_system_url}}" target="_blank">
-                                                            <i class="fa fa-external-link text-primary push-10" aria-hidden="true"></i></a>
-
-                                                            </span>
-
-                                                
-
-                                                
-
-                                            </div>
-
-                                           
-                                        </div>
-
-
-
-                                    </div>
-
-                                </div>
-
-
-                             <div class="block block-rounded" style="min-height:80px">
-                                    
-
-                                    <div class="block-content block-content-full text-center" style="padding: 16px 20px">
-
-
-                                        <div class="row">
-                                            <div class="col-sm-12 text-center">
-
-                                                <div style="font-size: 23px;" class="push-5 text-warning">
-
-                                                <span ng-if="school1.application_fee==='Y'">Yes</span>
-                                                <span ng-if="school1.application_fee==='N/A'">N/A</span>
-                                                <span ng-if="school1.application_fee!=='N/A'&&school1.application_fee!=='Y'"> {{school1.application_fee}}</span>
-                                                </div>
-
-
-                                                <label class="text-muted">Application Submission Fee</label>
-                                            </div>
-
-                                           
-                                        </div>
-
-
-
-                                    </div>
-
-                                </div>
-
-
-                                
-
-
-                                
-
-                             <div class="block block-rounded" style="min-height:80px">
-                                    <!-- <div class="block-header">
-                                        <ul class="block-options">
-                                            
-                                        </ul>
-                                        <h3 class="block-title section-title" style="border: 0;">&nbsp;</h3>
-
-                                        <hr style="margin-bottom:0">
-                                    </div> -->
-
-
-                                    <div class="block-content block-content-full text-center" style="padding: 16px 20px;">
-
-
-                                        <div class="row">
-                                            
-
-                                            <div class="col-sm-6 text-center border-r ">
-                                                <div ng-if="school1.toefl==='Y'" style="font-size: 23px;" class="push-5 "><i class="fa fa-check text-success" aria-hidden="true"></i></div>
-                                                <div ng-if="school1.toefl==='N'" style="font-size: 23px;" class="push-5 "><i class="fa fa-times text-danger" aria-hidden="true"></i></div>
-                                                <div ng-if="school1.toefl==='N/A'" class="text-muted"  style="font-size: 23px;" class="push-5">N/A</div>
-
-                                                <label class="text-muted">TOEFL</label>
-                                            </div>
-
-                                               
-
-
-
-                                            <div class="col-sm-6 text-center">
-                                                <div ng-if="school1.add_adhd==='Y'" style="font-size: 23px;" class="push-5 "><i class="fa fa-check text-success" aria-hidden="true"></i></div>
-                                                <div ng-if="school1.add_adhd==='N'" style="font-size: 23px;" class="push-5 "><i class="fa fa-times text-danger" aria-hidden="true"></i></div>
-                                                <div ng-if="school1.add_adhd==='N/A'" style="font-size: 18px;" class="push-10">N/A</div>
-
-                                                <label class="text-muted"> &nbsp;ADD/ADHD <i class="fa fa-question-circle"  data-uib-tooltip="Attention deficit hyperactivity disorder" data-tooltip-placement="top"></i></label>
-                                            </div>
-
-                                            <div class="col-sm-12">
-                                                 <hr>
-                                            </div>
-                                           
-
-                                            <div class="col-sm-6 text-center border-r" style="margin-top: 3px;">
-
-                                               
-
-                                                    <span ng-if="school1.on_campus_interview!=='N/A'">
-                                                            <a href="{{school1.on_campus_interview}}" target="_blank">
-                                                            <i class="fa fa-external-link text-primary push-10" aria-hidden="true" style="font-size: 23px"></i></a>
-
-                                                            </span>
-
-                                                         <div ng-if="school1.on_campus_interview==='N/A'" style="font-size: 18px" class="push-5">N/A</div>
-
-                                                        
-
-                                                    <label class="text-muted">On-Campus Interview</label>
-                                                </div>
-
-
-                                            <div class="col-sm-6 text-center" style="min-height: 76px;">
-
-                                               
-
-
-                                                <div ng-if="school1.third_party==='Y'" class="push-10"><i class="fa fa-check text-success" aria-hidden="true" style="font-size: 23px"></i></div>
-
-                                                        <div ng-if="school1.third_party==='N'" style="font-size: 23px;" class="push-10 "><i class="fa fa-times text-danger" aria-hidden="true"></i></div>
-
-                                                        <div ng-if="school1.third_party==='N/A'" class="tpush-10"  style="font-size: 18px;" class="push-10">N/A</div>
-
-
-                                                <label class="text-muted">Third Party Interview</label>
-                                            </div>
-
-
-
-                                            </div>
-
-
-
-                                        </div>
-
-                                    </div>
-
-
-
-
-
-                                    <!--  -->
-
-
-                                    <div class="block block-rounded" style="min-height:80px">
-                                    
-
-                                    <div class="block-content block-content-full text-center" style="padding: 16px 20px">
-
-
-                                        <div class="row">
-                                            <div class="col-sm-12 text-center">
-
-                                               
-                                            <div class="push-5">
-                                                <span ng-if="school1.visit_china!=='N/A'" style="font-size: 16px">
-                                                <a href="{{school1.visit_china_url}}" target="_blank">{{school1.visit_china}}</a>
-
-                                                </span>
-
-                                                <span ng-if="school1.visit_china==='N/A'" style="font-size: 18px">N/A</span>
-
-                                                </div>
-
-                                                <label class="text-muted">Visit to China Schedule</label>
-                                            </div>
-
-                                           
-                                        </div>
-
-
-
-                                    </div>
-
-                                </div>
-
-
-
-
-                                </div>
-
-                            </div>
-
-
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="block block-rounded">
-                        
-                        <div class="block-content block-content-full text-center" style="padding-top:10px">
-                                <div class="row">
-
-                                        <div class="form-group">
-                                            <label class="col-xs-12 text-center text-muted push-25 push-30-t" for="register1-username"><i class="fa fa-user text-primary" aria-hidden="true"></i>&nbsp; Admission Office Contact Information</label>
-
-                                        </div>
-
-
-                                        <div class="col-sm-6 border-r">
-                                                <div class="form-group">
-                                                    <!-- <label class="col-xs-12 text-center text-muted" for="register1-username"><i class="fa fa-phone text-primary" aria-hidden="true"></i>&nbsp; Admissions Office Phone Number</label> -->
-
-                                                    <span><i class="fa fa-phone text-primary" aria-hidden="true" style="font-size: 18px"></i></span> &nbsp;<span class=" push-25 xdf-content">
-                                                        {{school1.admission_phone}}
-                                                    </span>
-                                                </div>
-
-
-
-                                            </div>
-
-                                            <div class="col-sm-6">
-
-                                            <div class="form-group">
-                                                    <!-- <label class="col-xs-12 text-center text-muted" for="register1-username"><i class="fa fa-envelope-o text-primary" aria-hidden="true"></i>&nbsp; Admissions Office Email</label> -->
-
-                                                    <span><i class="fa fa-envelope-o text-primary" aria-hidden="true"  style="font-size: 18px"></i></span> &nbsp;<span class="push-25 xdf-content">
-                                                        {{school1.admission_email}}
-                                                    </span>
-                                                </div>
-
-                                                
-                                                
-
-
-
-
-
-                                            </div>
-
-                                            <div class="col-xs-12"><hr></div>
-                                            
-
-                                        <label class="col-xs-12 text-center text-muted push-30 push-20-t" for="register1-username"><i class="fa fa-user text-primary" aria-hidden="true"></i>&nbsp; Admissions Contacts<label ng-if="school1.school_name==='Phillips Academy Andover'" class="label label-default text-success bg-success-light" style="
-                                            /* background: transparent; */
-                                            border: 1px solid #46c37b;
-                                            font-size: 9px;
-                                            padding: 1px 4px;
-                                            position: absolute;
-                                            margin-left: 5px; top: -3px;">NEW</label></label>
-
-
-
-
-                                            <div class="col-sm-4 push-10-t" ng-repeat="row in school1.admission_contacts">
-                                                    
-                                                    <!-- Contact -->
-                        
-                                                    <div class="block block-rounded" style="border:1px solid #eee;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);">
-                                                        <div class="block-header bg-info">
-                                                            
-                                                            <div class="block-title show-name-ellipsis text-white">{{row.name}}</div>
-                                                        </div>
-                                                        
-                                                        <div class="block-content">
-                                                            <div class="text-center">
-                                                            </div>
-                                                            <table class="table table-borderless table-striped font-s13 push-15" style="min-height: 240px">
-                                                                <tbody>
-                                                                    <!-- <tr>
-                                                                            <td class="font-w600" style="width: 30%;">Category</td>
-                                                                            <td>Family</td>
-                                                                        </tr> -->
-
-                                                                    <tr class="info">
-                                                                        <td class="font-w600">Title</td>
-                                                                        <td>{{row.title}}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="font-w600">Phone</td>
-                                                                        <td>{{row.phone}}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="font-w600">Email</td>
-                                                                        <td>{{row.email}}</td>
-                                                                    </tr>
-                                                                     <tr class="warning">
-                                                                        <td class="font-w600">Note</td>
-                                                                        <td>{{row.note}}</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <!-- END Contact -->
-
-                                            </div>
-
-
-                                        </div>
-
-
-                        </div>
-
-                                    </div>
-
-
-                                    </div>
-
-
-                                    </div>
-
-
-                                    <div class="row">
-
-                            <div class="col-lg-12">
-                            <hr style="border-color: #e5e5e5;margin-bottom: 35px;">
-                            </div>
-
-
-                            </div>
-
-
-           <div class="row">
-                <div class="col-lg-6">
-                    <div class="block block-rounded">
-                        <div class="block-header">
-                                       
-                                        <h3 class="block-title section-title bg-info-light" id="section6">Campus Tours</h3>
-
-                                        <hr style="margin-bottom:0">
-                                    </div>
-
-
-                                    <div class="block-content block-content-full text-center" style="padding-top:10px">
-                                        <label class="col-xs-12 text-center text-muted push-25" for="register1-username"><i class="fa fa-flag text-primary" aria-hidden="true"></i>&nbsp; Campus Tours
-                                        <label ng-if="school1.school_name==='Phillips Academy Andover'" class="label label-default text-success bg-success-light" style="
-                                            /* background: transparent; */
-                                            border: 1px solid #46c37b;
-                                            font-size: 9px;
-                                            padding: 1px 4px;
-                                            position: absolute;
-                                            margin-left: 5px;    top: -3px;">NEW</label></label>
-
-
-                                        <table class="table table-striped push-30-t push-30">
-
-                                            <tbody>
-                                                <tr ng-repeat = "(key, value) in school1.visit_contact">
-                                                    
-                                                    <td class="text-left">{{key}}</td>
-                                                    <td class="hidden-xs text-right">
-                                                        {{value}}
-                                                    </td>
-                                                    
-                                                </tr>
-                                               
-
-                                               
-                                                
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                    </div>
-
-
-                                    </div>
-
-
-                <div class="col-lg-6">
-                    <div class="block block-rounded">
-                        <div class="block-header">
-                                       
-                                        <h3 class="block-title section-title bg-info-light" id="section5">Tuition</h3>
-
-                                        <hr style="margin-bottom:0">
-                                    </div>
-
-
-                                    <div class="block-content block-content-full text-center" style="padding-top:10px; min-height:238px">
-                                        <label class="col-xs-12 text-center text-muted push-25" for="register1-username"><i class="fa fa-globe text-primary" aria-hidden="true"></i>&nbsp; International Students Tuition (Estimated)</label>
-
-
-                                        <table class="table table-striped push-30-t push-30">
-
-                                            <tbody>
-                                                <tr ng-repeat = "(key, value) in school1.international_student_tuition">
-                                                    
-                                                    <td class="text-left">{{key}}</td>
-                                                    <td class="hidden-xs text-right">
-                                                        {{value | currency:undefined:0}}
-                                                    </td>
-                                                    
-                                                </tr>
-                                               
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                    </div>
-
-
-                                    </div>
-
-
-
-                   
-
-                 <div class="col-lg-6 " ng-if="school1.visit_contact_extra.name">
-                    <div class="block block-rounded">
-                       
-
-                                    <div class="block-content block-content-full text-center" style="padding-top:10px">
-                                        <label class="col-xs-12 text-center text-muted push-30 push-15-t" for="register1-username"><i class="fa fa-flag text-primary" aria-hidden="true"></i>&nbsp; Campus Tours Contact</label>
-
-                                        <div style="color:white">{{school1.visit_contact_extra.name}}</div>
-
-
-                                        <!-- Contact -->
-                        
-                                                    <div class="block block-rounded" style="border:1px solid #eee;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);">
-                                                        <div class="block-header bg-info">
-                                                            
-                                                            <div class="block-title show-name-ellipsis text-white">{{school1.visit_contact_extra.name}}</div>
-                                                        </div>
-                                                        
-                                                        <div class="block-content">
-                                                            <div class="text-center">
-                                                            </div>
-                                                            <table class="table table-borderless table-striped font-s13 push-15" style="min-height: 240px">
-                                                                <tbody>
-                                                                    <!-- <tr>
-                                                                            <td class="font-w600" style="width: 30%;">Category</td>
-                                                                            <td>Family</td>
-                                                                        </tr> -->
-
-                                                                    <tr class="info">
-                                                                        <td class="font-w600">Title</td>
-                                                                        <td>{{school1.visit_contact_extra.title}}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="font-w600">Phone</td>
-                                                                        <td>{{school1.visit_contact_extra.phone}}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="font-w600">Email</td>
-                                                                        <td>{{school1.visit_contact_extra.email}}</td>
-                                                                    </tr>
-                                                                     <tr class="warning">
-                                                                        <td class="font-w600">Note</td>
-                                                                        <td>{{school1.visit_contact_extra.note}}</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <!-- END Contact -->
-
-                                    </div>
-                                    </div>
-
-
-                                    </div>
-
-
-
-                                    </div>
-
-
-                        
