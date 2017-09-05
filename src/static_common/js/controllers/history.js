@@ -169,6 +169,78 @@ angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope'
 
     };
 
+    $scope.shareReport = function(reportId) {
+      if (reportId == null) {
+        $.notify({
+
+          // options
+          icon: "fa fa-warning",
+          message: 'Please select a report from the dropdown list.'
+        }, {
+          // settings
+          type: 'warning',
+          placement: {
+            from: "top",
+            align: "center"
+          },
+          z_index: 1999,
+        });
+      } else {
+        $("#shareReport").modal('toggle');
+        jQuery('.myTab-share a:first').tab('show');
+        $scope.reportId = reportId;
+      }
+    };
+
+    $scope.clearSharedValue = function() {
+      $scope.url = null;
+    };
+
+    $scope.htmlShare = function(day) {
+
+      jQuery('.myTab-share a:last').tab('show')
+
+      $scope.url = {
+        text: null
+      };
+
+      App.blocks('#shareReport_loading', 'state_loading');
+
+      $scope.copied = false;
+      new Clipboard('.btn');
+
+      $http({
+        url: '/api/upgrid/non_degree/shared_reports',
+        method: 'POST',
+        data: {
+          "reports": [$scope.reportId],
+          "expired_day": day,
+          "expired_sec": 0,
+
+        },
+        headers: {
+          'Authorization': 'JWT ' + token
+        },
+        'Content-Type': 'application/json'
+
+      }).then(function(response) {
+        console.log("share html RESPONSE is " + JSON.stringify(response.data));
+
+        $scope.expired_time = response.data.expired_time;
+
+        $scope.url = {
+          text: 'https://' + location.host + '/#/' + response.data.link + '/',
+        };
+
+        App.blocks('#shareReport_loading', 'state_normal');
+      }).
+      catch(function(error) {
+        console.log('an error occurred...' + JSON.stringify(error));
+        App.blocks('#shareReport_loading', 'state_normal');
+      });
+
+    };
+
     $scope.printReport_view = function() {
 
       $("#print-content_view").printThis({

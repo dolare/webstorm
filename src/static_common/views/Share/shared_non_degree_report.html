@@ -519,24 +519,70 @@
                     </td>
                     <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
 
-                      <div class="ribbon-box font-w600" data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})" data-uib-popover="{{course.course_dates_old}}" ng-show="course.course_dates_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
-                        <span class="label_new">new</span>
+                      <div class="ribbon-box font-w600" 
+                        data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                      
+                        data-uib-popover-template="'course_dates.html'"
+
+                        ng-if="course.course_dates_old"
+                        
+                        data-popover-placement="top-right" 
+                        data-popover-animation="true"
+                        data-popover-class="report-popover update-popover">                        
+                        <span class="label_new">new</span>                                   
                       </div>
+                      <script type="text/ng-template" id="course_dates.html">
+
+                        <span ng-if="course.course_dates_old!='N/A'" ng-repeat="d in course.course_dates_old | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+
+                        <span ng-if="course.course_dates_old=='N/A'">{{course.course_dates_old}}</span>
+
+                      </script>
 
                       <span ng-if="course.course_dates.length!==0">
-                              <span ng-repeat-start="d in course.course_dates | orderBy:'start_date'">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span> - <span>{{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}</span>
-                      <br ng-repeat-end ng-if="!$last">
+                        
+                        <span ng-repeat="d in course.course_dates | orderBy:'start_date'" ng-if="d.end_date>=course.date_modified">{{d.start_date | amUtc | amDateFormat:'MMM DD, YYYY'}} - {{d.end_date | amUtc | amDateFormat:'MMM DD, YYYY'}}<br ng-if="!$last"></span>
+                        
                       </span>
 
                       <span ng-if="course.course_dates.length===0"><label class="label label-default">To be announced</label></span>
 
                     </td>
                     <td style="padding: 15px;" class="ribbon ribbon-modern ribbon-success ribbon-update">
-                      <div class="ribbon-box font-w600" data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})" data-uib-popover="{{course.tuition_number_old| currency:currency_symbols[course.currency]:0}}" ng-show="course.tuition_number_old" data-popover-placement="top-right" data-popover-animation="true" data-popover-class="report-popover update-popover">
-                        <span class="label_new">new</span>
-                      </div>
+                      <div class="ribbon-box font-w600" 
+                        data-popover-title="HISTORY ({{row.date_created_old | amUtc | amLocal | amDateFormat:'MM/DD'}})"                                                          
+                        data-uib-popover-template="'tuition.html'"
 
-                      <span ng-show="course.tuition_number" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip="note: {{course.tuition_note}}" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-pencil-square-o text-primary" aria-hidden="true" ng-show="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                        ng-if="course.tuition_number_old"
+
+                        data-popover-placement="top-right" 
+                        data-popover-animation="true"
+                        data-popover-class="report-popover update-popover">                        
+                        <span class="label_new">new</span>                                   
+                      </div>
+                      <script type="text/ng-template" id="tuition.html">
+                        <!-- In old reports, there is no "currency_symbol" field in a course object, thus the currency symbol needs to be referenced from $scope,currency_symbols. -->
+                        <span ng-if="course.tuition_number_old!='N/A'&&!course.currency_symbol">{{course.tuition_number_old | currency:currency_symbols[course.currency]:0}}</span>
+                        <span ng-if="course.tuition_number_old!='N/A'&&course.currency_symbol">{{course.tuition_number_old | currency:currency_symbol:0}}</span>
+
+                        <span ng-if="course.tuition_number_old=='N/A'">{{course.tuition_number_old}}</span>
+                        
+                      </script>
+
+
+                      <!-- In old reports, there is no "currency_symbol" field in a course object, thus the currency symbol needs to be referenced from $scope,currency_symbols. -->
+                      <span ng-if="course.tuition_number&&!course.currency_symbol" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:currency_symbols[course.currency]:0}}</span>
+                      <span ng-if="course.tuition_number&&course.currency_symbol" ng-class="{'location-dashline': course.tuition_note}" data-uib-tooltip-template="'tuition_note.html'" data-tooltip-placement="top" data-tooltip-enable = "course.tuition_note"><i class="fa fa-info-circle text-primary" aria-hidden="true" ng-if="course.tuition_note"></i> {{course.tuition_number | currency:course.currency_symbol:0}}</span>
+
+                      <script type="text/ng-template" id="tuition_note.html">
+
+                        <div style="text-align: left;">
+                          <div>Note: </div>
+                          <div>
+                            <li ng-repeat="line in course.tuition_note.split('\n')">{{line}}</li>
+                          </div>
+                        </div>
+
+                      </script>
 
 
                       <span ng-if="!course.tuition_number"><label class="label label-default">To be announced</label></span>
