@@ -1,0 +1,555 @@
+<body class="frame">
+
+    
+
+    <div class="block block-themed block-transparent remove-margin-b ng-scope" id="enhancement_loading">
+
+
+        <div class="block-content fullscreen-container share-link" style="width:auto;padding:0;">
+
+
+            <!-- SlimScroll Container -->
+            <!-- <div data-js-slimscroll="{alwaysVisible: true, railVisible: true, color: '#fff',railOpacity: '0.4', size: '10px', height: '100%'}"> -->
+
+            <div class="block" style="padding:50px 100px;margin:0; background:#f3f5f7">
+                <div class="row">
+                            <div class="col-sm-6 col-xs-6">
+                          
+
+                            <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
+                            <small style="color:#aaa">upgrid.gridet.com</small>
+
+                            <div style="color: #666;">Exec. Tracking Report</div>
+                            </h1>
+                            </div>
+
+                            <div class="col-sm-6 col-xs-6">
+                            <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
+                            </div>
+                            </div>
+
+                            <hr style="border-color: #e5e5e5;" class="push-30 push-30-t">
+                	
+
+
+
+                            <div class="row">
+
+                            	<div class="col-sm-5">
+	                            
+	                           <!--  <a class="block block-rounded block-link-hover3 text-center" href="javascript:void(0)">
+	                                <div class="block-content block-content-full bg-info">
+	                                    <div class="h1 font-w700 text-white"><span class="h2 text-white-op"><i class="fa fa-arrow-up" aria-hidden="true"></i></span> 320</div>
+	                                    <div class="h5 text-white-op text-uppercase push-5-t">Users</div>
+	                                </div>
+	                                <div class="block-content block-content-full block-content-mini">
+	                                    <i class="fa fa-chevron-down text-info"></i> -2% This week
+	                                </div>
+	                            </a> -->
+
+
+	                            <div class="block">
+                                <ul class="nav nav-tabs nav-justified" data-toggle="tabs">
+                                    <li class="active">
+                                        <a href="#btabs-static-justified-home"><i class="fa fa-percent" aria-hidden="true"></i> &nbsp;Percentile</a>
+                                    </li>
+                                    <li>
+                                        <a href="#btabs-static-justified-profile"><i class="fa fa-line-chart" aria-hidden="true"></i> &nbsp;Score</a>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="block-content block-content-full bg-info text-center">
+	                                    <div class="h1 font-w700 text-white"><span class="h2 text-white-op"></span> 68</div>
+	                                    <div class="h5 text-white-op text-uppercase push-5-t">in percentile</div>
+	                                </div>
+	                                <div class="block-content block-content-full block-content-mini text-center">
+	                                    <span class="text-success"><i class="fa fa-arrow-up text-success" aria-hidden="true"></i> 2 This week</span>
+	                                </div>
+                            </div>
+
+
+					            </div>
+
+					            <div class="col-sm-7">
+
+					            </div>
+
+                            </div>
+
+                            <hr class="push-30">
+
+                            <div class="row">
+                            	<div class="col-sm-5">
+
+                            		<!-- All Orders -->
+                    <div class="block">
+                        <div class="block-header bg-gray-lighter">
+                            <ul class="block-options">
+                                <li class="dropdown">
+                                    <button type="button" data-toggle="dropdown">Filter <span class="caret"></span></button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li>
+                                            <a tabindex="-1" href="javascript:void(0)">School name</a>
+                                        </li>
+
+                                        <li>
+                                            <a tabindex="-1" href="javascript:void(0)">Time</a>
+                                        </li>
+
+                                        <li>
+                                            <a tabindex="-1" href="javascript:void(0)">Ranking</a>
+                                        </li>
+                                      
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h3 class="block-title">All Schools &nbsp;<span class="badge" style="vertical-align: top;">13</span></h3>
+                        </div>
+                        <div class="block-content">
+                            <div class="pull-t pull-r-l">
+                                        <!-- Slick slider (.js-slider class is initialized in App() -> uiHelperSlick()) -->
+                                        <!-- For more info and examples you can check out http://kenwheeler.github.io/slick/ -->
+                                        <div class="remove-margin-b">
+                                            <div>
+                                                <table class="table remove-margin-b font-s13">
+                                                 <colgroup>
+								                      <col width="55%"/>
+								                      <col width="30%"/>
+								                      <col width="15%"/>
+								                  
+								                    </colgroup>
+                                                    <tbody>
+
+                                                        <tr ng-repeat = "row in school_list">
+                                                            <td class="font-w600">
+                                                                <a href="javascript:void(0)">{{row.name}}</a>
+                                                            </td>
+                                                            <td class="hidden-xs text-muted text-right" style="width: 70px;">{{row.report_date | amUtc |  amDateFormat:'MM-DD, YYYY'}}</td>
+                                                            <td class="font-w600 text-right" style="width: 70px;" ng-class="row.ranking_type ? 'text-success' : 'text-danger'"><i ng-class="row.ranking_type ? 'fa fa-arrow-up' : 'fa fa-arrow-down'" aria-hidden="true"></i> {{row.ranking}}</td>
+                                                        </tr>
+
+                                                     
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                          
+                                        </div>
+                                        <!-- END Slick slider -->
+                                    </div>
+                           
+                        </div>
+                    </div>
+                    <!-- END All Orders -->
+
+
+                            	</div>
+
+                            	<div class="col-sm-7">
+
+
+                            		<!-- Top Products -->
+                            <div class="block block-opt-refresh-icon4">
+                                <div class="block-header bg-gray-lighter">
+                                    <ul class="block-options">
+                                        <li>
+                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                        </li>
+                                    </ul>
+                                    <h3 class="block-title">Top Products</h3>
+                                </div>
+                                <div class="block-content" style="padding:5px 10px">
+                                   
+
+
+
+                                    <table class="table push-5">
+                                    	 <colgroup>
+								                      <col width="15%"/>
+								                      <col width="20%"/>
+								                      <col width="45%"/>
+								                      <col width="20%"/>
+								                  
+								        </colgroup>
+
+
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" style="width: 50px;">Sections</th>
+                                                <th>Title</th>
+                                                <th class="hidden-xs" style="width: 15%;">Note</th>
+                                                <th class="text-center" style="width: 100px;">Rankings</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr>
+                                        	<td class="text-center success text-success font-w600" rowspan="7">Program Introduction</td>
+
+                                        	<td>Location</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+                                        	<td>Online programs avaialbility</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+                                        	<td>Program features/overview</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+                                        	<td>Video - promotional</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+                                        <tr>
+                                        	
+                                        	<td>Faculty Introduction</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+                                        	<td>Brochure</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+                                        	<td>Fast Facts (ranking, alumni count, etc.)</td>
+
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	<td class="text-center info text-info font-w600" rowspan="4">Client</td>
+
+                                        	<td>Partnership Process / Service Process</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Client Testimonials</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Client List</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Client Success / case study / Curriculum sample</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                         <tr>
+                                        	<td class="text-center danger text-danger font-w600" rowspan="3">Inquiry</td>
+
+                                        	<td>FAQ</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Inquiry Form/Contact US</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+                                        <tr>
+                                        	
+
+                                        	<td>Primary contact info</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+
+
+                                        <tr>
+                                        	<td class="text-center warning text-warning font-w600" rowspan="5">Specific features</td>
+
+                                        	<td>News</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Awards</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+                                        <tr>
+                                        	
+
+                                        	<td>Video - sample of course</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                         <tr>
+                                        	
+
+                                        	<td>Industries</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        <tr>
+                                        	
+
+                                        	<td>Skillsets/topics</td>
+                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="hidden-xs text-center">
+                                                    <div class="text-warning">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </td>
+
+
+                                        </tr>
+
+
+                                        
+
+                                       
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                            <!-- END Top Products -->
+
+                            	</div>
+
+                            </div>
+
+

@@ -139,6 +139,27 @@ angular.module('myApp').controller('AdminMainController',
             avatarService.register(id);
             console.log("avatarService.getClientId" + avatarService.getClientId());
 
+
+            avatarService.getReportType(id, token).then(function(result) {
+
+                $scope.report_type = result
+
+                console.log("xxxxxx$scope.report_type="+JSON.stringify($scope.report_type, null, 4))
+
+                if(_.contains($scope.report_type, 'whoops')&&_.contains($scope.report_type, 'enhancement')){
+                    $state.go('dashboard');
+                } else if (_.contains($scope.report_type, 'whoops')) {
+                    $state.go('whoops');
+                } else if (_.contains($scope.report_type, 'enhancement')) {
+                    $state.go('enhancement');
+                } else if (_.contains($scope.report_type, 'non-degree')) {
+                    $state.go('non_degree');
+                } else if (_.contains($scope.report_type, 'AMP')) {
+                    $state.go('amp');
+                } 
+                                
+            });
+
             $http({
                 url: '/api/upgrid/user/dashboard/' + avatarService.getClientId(),
                 method: 'GET',
@@ -159,7 +180,6 @@ angular.module('myApp').controller('AdminMainController',
 
             });
 
-            $state.go('dashboard');
 
         }
 

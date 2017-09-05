@@ -1,7 +1,104 @@
 
 angular.module('myApp').controller('xdf',
     function($scope) {
-    	
+    	 
+      //for exec mockup page
+      $scope.school_list = [{
+        "name": "New York University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 1,
+        "ranking_type": false
+      },
+     {
+        "name": "Fordham University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 4,
+        "ranking_type": false
+      },
+
+      {
+        "name": "Columbia University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 3,
+        "ranking_type": false 
+      },
+
+      {
+        "name": "Wharton School",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true 
+      },
+
+      {
+        "name": "MIT",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": false 
+      },
+
+
+      {
+        "name": "Yale University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 9,
+        "ranking_type": false 
+      },
+
+      {
+        "name": "London University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 6,
+        "ranking_type": true 
+      },
+
+      {
+        "name": "University of Chicago",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 7,
+        "ranking_type": false 
+      },
+
+      {
+        "name": "Harvard University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 1,
+        "ranking_type": true 
+      },
+
+      {
+        "name": "Stanford University",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 10,
+        "ranking_type": false 
+      },
+
+      {
+        "name": "UC-Berkeley",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 2,
+        "ranking_type": true 
+      },
+
+      {
+        "name": "INSEAD",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 3,
+        "ranking_type": true 
+      },
+
+      {
+        "name": "Northwestern",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 5,
+        "ranking_type": true 
+      },
+
+      
+      
+
+      ]
+
     	$scope.school1 = {
     		"SSAT_code": "5758",
     		"ISEE_code": "220030",
@@ -524,5 +621,8 @@ angular.module('myApp').controller('xdf_4',
     	setTimeout(function(){jQuery('.chart2').data('easyPieChart').update($scope.school1.international_student_ratio);}, 100);
     	setTimeout(function(){jQuery('.chart3').data('easyPieChart').update($scope.school1.student_of_color);}, 100);
     	setTimeout(function(){jQuery('.chart4').data('easyPieChart').update($scope.school1.teachers_advanced);}, 100);
+
+
+
     	
 });
