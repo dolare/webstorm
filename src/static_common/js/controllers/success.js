@@ -200,7 +200,7 @@ controller('SuccessController',
         $scope.signout_avatar = function(){
             delete $scope.$storage.upgrid;
             avatarService.signout();
-            $state.go('admin-dashboard');
+            $state.go('admin');
         }
 
 

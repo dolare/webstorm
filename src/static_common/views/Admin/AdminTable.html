@@ -869,9 +869,14 @@
                                                     <input type="checkbox" id="example-inline-checkbox3" name="example-inline-checkbox3" value="option3" ng-model="report_type['non-degree']"> Non-degree
                                                 </label>
 
+                                                &nbsp;<span ng-show="report_type['non-degree']"><span style="vertical-align: bottom">(</span> <label class="checkbox-inline text-info" for="example-inline-checkbox5">
+                                                    <input type="checkbox" id="example-inline-checkbox5" name="example-inline-checkbox5" value="option4" ng-model="report_type['quick-whoops']"> quick-whoops
+                                                </label> <span style="vertical-align: bottom">)</span></span>&nbsp;
+
                                                 <label class="checkbox-inline" for="example-inline-checkbox4">
                                                     <input type="checkbox" id="example-inline-checkbox4" name="example-inline-checkbox4" value="option3" ng-model="report_type['AMP']"> AMP
                                                 </label>
+
                                             </div>
                                             </div>
                                         </div>
@@ -992,7 +997,7 @@
                                                                         <td colspan="1">
                                                                         
 
-                                                                            <select class="js-data-ceeb-for-competing1" style="width: 100%" ng-model="competing_school_to_add1" ng-disabled="!report_type['non-degree']||report_type['AMP']">
+                                                                            <select class="js-data-ceeb-for-competing1" style="width: 100%" ng-model="competing_school_to_add1" ng-disabled="!report_type['non-degree']">
                                                                                 <option value="" selected="selected">/option>
                                                                             </select>
 
