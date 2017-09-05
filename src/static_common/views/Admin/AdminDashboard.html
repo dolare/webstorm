@@ -305,6 +305,11 @@
                                                     <input type="checkbox" id="example-inline-checkbox3" name="example-inline-checkbox3" value="option3" ng-model="report_type['non-degree']"> Non-degree
                                                 </label>
 
+
+                                                &nbsp;<span ng-show="report_type['non-degree']"><span style="vertical-align: bottom">(</span> <label class="checkbox-inline text-info" for="example-inline-checkbox5">
+                                                    <input type="checkbox" id="example-inline-checkbox5" name="example-inline-checkbox5" value="option4" ng-model="report_type['quick-whoops']"> quick-whoops
+                                                </label> <span style="vertical-align: bottom">)</span></span>&nbsp;
+
                                                 <label class="checkbox-inline" for="example-inline-checkbox4">
                                                     <input type="checkbox" id="example-inline-checkbox4" name="example-inline-checkbox4" value="option3" ng-model="report_type['AMP']"> AMP
                                                 </label>
@@ -402,7 +407,7 @@
 
 
                                             <!-- non degree -->
-                                            <div class="form-group" ng-show="report_type['non-degree']||report_type['AMP']">
+                                            <div class="form-group" ng-show="report_type['non-degree']">
                                                 <div class="col-sm-10 col-sm-offset-1">
                                                     <label for="radio-group3" class="col-md-3 control-label">Non-degree Competing Schools</label>
                                                     <div class="col-md-9 control-label" style="text-align:left" id="listboxes">
