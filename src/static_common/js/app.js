@@ -1146,6 +1146,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                              '/static/js/third-party/clipboard.min.js',
                               '/static/js/third-party/angular-bootstrap-confirm.min.js',
                               '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',

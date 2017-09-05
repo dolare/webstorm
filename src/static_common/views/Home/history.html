@@ -56,12 +56,10 @@
                 <a class="fa fa-file text-primary" style="vertical-align: middle;">
                 </a>
               </button>
-              <!-- <button class="btn btn-default btn-white" uib-tooltip="Share report" tooltip-placement="bottom" ng-click="" data-js-blur>
+              <!-- <button class="btn btn-default btn-white" uib-tooltip="Share report" tooltip-placement="bottom" ng-click="shareReport(selectedReportId)" data-js-blur>
                 <a class="fa fa-share-alt text-danger" style="vertical-align: middle;">
                 </a>
               </button> -->
-
-
             </td>
           </tr>
         </tbody>
@@ -108,6 +106,102 @@
             <a  data-js-blur href="#top-report_view" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
           </div>
           <!-- END SlimScroll Container -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal of Share the Link-->
+<div class="modal fade push-100-t" id="shareReport"  role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="block block-themed block-transparent remove-margin-b" id="shareReport_loading">
+        <div class="block-header bg-primary-dark">
+          <ul class="block-options">
+            <li>
+              <button data-dismiss="modal" type="button" ng-click="clearSharedValue()"><i class="si si-close"></i></button>
+            </li>
+          </ul>
+          <h3 class="block-title"><i class="fa fa-share-alt"></i>&nbsp; Share the Report</h3>
+        </div>
+        <div class="block-content" style="padding:0">
+          <div class="board">
+            <div class="board-inner">
+              <ul class="nav myTab-share">
+                <li class="active">
+                  <a href="#reports-days" data-toggle="tab" title="days" style="padding:0">
+                  </a>
+                </li>
+                <li>
+                  <a href="#reports-link" data-toggle="tab" title="link" style="padding:0">
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!-- TABS -->
+            <div class="tab-content tab-share">
+              <!-- TAB 1 -->
+              <div class="tab-pane  in active" id="reports-days">
+                <div class="block-content" style="padding: 10px 12px;">
+                  <div class="form-group">
+                    <div class="pull-left font-w600" style="padding-left: 8px;">I want this report link to expire in:</div>
+                  </div>
+                </div>
+                <div class="content-grid bg-gray-light" style="margin-bottom: 0; padding: 8px 10px 10px 10px">
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                      <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(1)">
+                        <div class="block-content block-content-full">
+                          <div class="font-w600 day-number" style="font-size: 49px">1</div>
+                          <div class="font-w600 push-15-t text-muted">Days</div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                      <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(2)">
+                        <div class="block-content block-content-full">
+                          <div class="font-w600 day-number" style="font-size: 49px">2</div>
+                          <div class="font-w600 push-15-t text-muted">Days</div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                      <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(7)">
+                        <div class="block-content block-content-full">
+                          <div class="font-w600 day-number" style="font-size: 49px">7</div>
+                          <div class="font-w600 push-15-t text-muted">Days</div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-3 day-grid">
+                      <a class="block block-link-hover3 text-center" href="javascript:void(0)" ng-click="htmlShare(14)">
+                        <div class="block-content block-content-full">
+                          <div class="font-w600 day-number" style="font-size: 49px">14</div>
+                          <div class="font-w600 push-15-t text-muted">Days</div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- TAB 2 -->
+              <div class="tab-pane" id="reports-link">
+                <div class="block-content">
+                  <div class="form-group">
+                    <label for="reportlink">Link: </label> 
+                    <label style="float:right" ng-show="copied">Copied!</label>
+                    <input type="url" ng-copy="copied=true" class="form-control" id="reportlink" ng-model= "url.text" select-on-click spellcheck="false">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" ng-show="url">
+          <span class="pull-left text-city">The link will be expired on {{expired_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY HH:mm'}}</span>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearSharedValue()">Cancel</button>
+          <button data-clipboard-target="#reportlink" type="button" class="btn btn-primary">Copy</button>
         </div>
       </div>
     </div>
