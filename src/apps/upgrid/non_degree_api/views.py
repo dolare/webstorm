@@ -23,7 +23,8 @@ from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer,
     ReportListSerializer, ReportSerializer, UniversitySchoolDetailSerializer, SharedReportSerializer, \
     CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer, AMPReportDetailSerializer, \
     ReportUpdateSerializer, UniversitySchoolClientSerializer, UniversitySchoolCategorySerializer, \
-    CourseSerializer, NonDegreeWhoopsReportListSerializer, NonDegreeWhoopsReportCreateSerializer
+    UniversitySchoolCategoryCourseSerializer, NonDegreeWhoopsReportListSerializer, \
+    NonDegreeWhoopsReportCreateSerializer, CourseSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter, \
     UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter
@@ -90,7 +91,7 @@ class UniversitySchoolCategoryCourseAPI(PermissionMixin, ListModelMixin, Generic
     Get list of user university school courses API
     """
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    serializer_class = CourseSerializer
+    serializer_class = UniversitySchoolCategoryCourseSerializer
     filter_class = CourseFilter
 
     search_fields = ('name', )
@@ -551,3 +552,48 @@ class NonDegreeWhoopsReportUpdateAPI(PermissionMixin, UpdateAPIView):
                 return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
             non_degree_whoops = NonDegreeWhoopsReport.objects.filter(university_school=user.Ceeb).filter(active=True)
         return non_degree_whoops
+
+
+class CategoryAPI(PermissionMixin, ListModelMixin, GenericAPIView):
+    """
+    Get list of user categories API
+    """
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    serializer_class = UniversitySchoolCategorySerializer
+    filter_class = UniversitySchoolCategoryFilter
+
+    search_fields = ('name', )
+    ordering_fields = ('name', )
+    ordering = ('name', )      # default ordering
+
+    def get_queryset(self, *args, **kwargs):
+        categories = NonDegreeCategory.objects.filter(active=True)
+        if not self.is_manager():
+            return categories.filter(university_school__non_degree_user=self.request.user)
+        return categories
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+class CourseAPI(PermissionMixin, ListModelMixin, GenericAPIView):
+    """
+    Get list of user courses API
+    """
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    serializer_class = CourseSerializer
+    pagination_class = BasePagination
+    filter_class = CourseFilter
+
+    search_fields = ('name', )
+    ordering_fields = ('name', )
+    ordering = ('name', )      # default ordering
+
+    def get_queryset(self, *args, **kwargs):
+        courses = NonDegreeCourse.objects.filter(active=True)
+        if not self.is_manager():
+            courses = courses.filter(university_school__non_degree_user=self.request.user)
+        return courses
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)

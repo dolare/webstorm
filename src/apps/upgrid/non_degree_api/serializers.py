@@ -112,10 +112,10 @@ class ReportCreateSerializer(ModelSerializer):
 class CourseDateSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeCourseDate
-        fields = ('object_id', 'start_date', 'end_date', )
+        fields = ('object_id', 'start_date', 'end_date', 'duration',)
 
 
-class CourseSerializer(ModelSerializer):
+class UniversitySchoolCategoryCourseSerializer(ModelSerializer):
     course_dates = SerializerMethodField()
     currency = SerializerMethodField()
     currency_symbol = SerializerMethodField()
@@ -157,7 +157,7 @@ class CategorySerializer(ModelSerializer):
 
     def get_courses(self, obj):
         courses = NonDegreeCourse.objects.filter(category=obj).filter(active=True)
-        return CourseSerializer(courses, many=True).data
+        return UniversitySchoolCategoryCourseSerializer(courses, many=True).data
 
 
 class SharedReportSerializer(ModelSerializer):
@@ -179,6 +179,13 @@ class CourseListSerializer(ModelSerializer):
         url_number = NonDegreeCourseURL.objects.filter(course=obj).filter(webpage__nondegreeampreport__isnull=False)\
                                                .distinct().count()
         return url_number
+
+
+class CourseSerializer(ModelSerializer):
+
+    class Meta:
+        model = NonDegreeCourse
+        fields = ('object_id', 'name', )
 
 
 class CourseURLListSerializer(ModelSerializer):

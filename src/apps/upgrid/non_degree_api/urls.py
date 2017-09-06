@@ -3,7 +3,7 @@ from django.conf.urls import url
 from .views import UniversitySchoolListAPI, UniversitySchoolDetailAPI, ReportAPI, ReportCreateListAPI, ReportOverview, \
     ReportOverviewLatest, SharedReportCreateAPI, SharedReportAPI, CourseURLListAPI, AMPReportListAPI, \
     AMPReportDetailAPI, UniversitySchoolClientAPI, UniversitySchoolCategoryAPI, UniversitySchoolCategoryCourseAPI, \
-    NonDegreeWhoopsReportListAPI, NonDegreeWhoopsReportUpdateAPI, UniversitySchoolCourseAPI
+    NonDegreeWhoopsReportListAPI, NonDegreeWhoopsReportUpdateAPI, UniversitySchoolCourseAPI, CategoryAPI, CourseAPI
 
 urlpatterns = [
 
@@ -36,5 +36,7 @@ urlpatterns = [
     url(r'^whoops_reports$', NonDegreeWhoopsReportListAPI.as_view(), name="whoops_reports"),
     url(r'^whoops_reports/(?P<object_id>[0-9a-fA-F\-]+)$', NonDegreeWhoopsReportUpdateAPI.as_view(),
         name="whoops_report"),
+    url(r'^categories$', CategoryAPI.as_view(), name="categories"),
+    url(r'^courses', CourseAPI.as_view(), name="courses"),
 ]
 
