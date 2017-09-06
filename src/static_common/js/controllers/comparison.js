@@ -1,18 +1,18 @@
 var comparison = angular.module('myApp')
 comparison.controller('ComparisonController',
-  function($scope, $http, authenticationSvc, avatarService, $timeout) {
+  function(avatarService, $scope, $http, authenticationSvc, avatarService, $timeout) {
 
     var token = authenticationSvc.getUserInfo().accessToken;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId() + '/' : "";
 
-
+    var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
     // $timeout( function(){
     //         jQuery('.comparison_height').scrollLock();
     //     }, 5000 );
 
     $http({
-      url: '/api/upgrid/non_degree/schools?page_size=100',
+      url: '/api/upgrid/non_degree/schools?page_size=100&client_id='+client_id,
       method: 'GET',
       headers: {
         'Authorization': 'JWT ' + token
@@ -110,7 +110,7 @@ comparison.controller('ComparisonController',
 
         angular.forEach($scope.courses1, function(course, key) {
           if (course.course_dates.length > 0 && course.tuition_number && !course.is_advanced_management_program)
-            course.edr = getEDR(course.course_dates[0].start_date, course.course_dates[0].end_date, course.tuition_number);
+            course.edr = getEDR(course.course_dates[0].duration, course.course_dates[0].start_date, course.course_dates[0].end_date, course.tuition_number);
           else
             course.edr = null;
         });
@@ -143,7 +143,7 @@ comparison.controller('ComparisonController',
 
         angular.forEach($scope.courses2, function(course, key) {
           if (course.course_dates.length > 0 && course.tuition_number && !course.is_advanced_management_program)
-            course.edr = getEDR(course.course_dates[0].start_date, course.course_dates[0].end_date, course.tuition_number);
+            course.edr = getEDR(course.course_dates[0].duration, course.course_dates[0].start_date, course.course_dates[0].end_date, course.tuition_number);
           else
             course.edr = null;
         });
@@ -159,10 +159,15 @@ comparison.controller('ComparisonController',
     }
 
     // Function to calculate EDR (Equivalent Daily Rate), given the course start date, end date and the amount of tuition
-    var getEDR = function(startDate, endDate, tuition) {
-      var start = new Date(startDate);
-      var end = new Date(endDate);
-      console.log('Number of days: ' + ((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)));
-      return tuition / ((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000) + 1);
+    var getEDR = function(duration, startDate, endDate, tuition) {
+      // if non-zero duration is passed to the function, use duration to calculate the EDR.
+      if (duration)
+        return tuition / duration;
+      else {
+        var start = new Date(startDate);
+        var end = new Date(endDate);
+        console.log('Number of days: ' + ((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)));
+        return tuition / ((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000) + 1);
+      }
     }
   });

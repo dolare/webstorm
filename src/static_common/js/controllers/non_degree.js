@@ -2,12 +2,14 @@
 'use strict';
 
 angular.module('myApp').
-controller('NonDegreeController', function($scope, $http, authenticationSvc, $localStorage, $sessionStorage, executiveService, $timeout) {
+controller('NonDegreeController', function(avatarService, $scope, $http, authenticationSvc, $localStorage, $sessionStorage, executiveService, $timeout) {
   var token = authenticationSvc.getUserInfo().accessToken;
 
   $scope.itemsByPage = 25;
 
   $scope.$storage = $localStorage;
+
+  var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
   //console.log("table = "+JSON.stringify(Table));
 
@@ -37,7 +39,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
   $scope.$storage.non_degree = {}
 
    $http({
-      url: '/api/upgrid/non_degree/schools',
+      url: '/api/upgrid/non_degree/schools?client_id='+client_id,
       method: 'GET',
       headers: {
         'Authorization': 'JWT ' + token
