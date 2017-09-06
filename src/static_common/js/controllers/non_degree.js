@@ -380,7 +380,7 @@ controller('NonDegreeController', function($scope, $http, authenticationSvc, $lo
             $scope.expired_time = response.data.expired_time;
 
             $scope.url = {
-                text: 'https://'+location.host + '/#/shared_reports/' + response.data.link +'/',
+                text: 'https://'+location.host + '/#/shared-non-degree-report/' + response.data.link +'/',
             };
 
       }).
