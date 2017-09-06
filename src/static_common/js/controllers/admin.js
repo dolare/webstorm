@@ -25,6 +25,32 @@ angular.module('myApp').controller('AdminMainController',
         console.log("$scope.school_list = "+JSON.stringify($scope.school_list))
 
 
+        $scope.filter_demo = function(){
+          
+
+            $http({
+             
+              url: '/api/upgrid/user/university_customer/?page_size=100'+ ($scope.demo_user ? ('&is_demo='+ ($scope.demo_user === 'demo' ? true: false)) : '') + ($scope.nondegree_user ? ('&is_non_degree_user='+ ($scope.nondegree_user === 'non_degree' ? true: false)) : ''),
+              method: 'GET',
+              headers: {
+                'Authorization': 'JWT ' + token
+              }
+            }).then(function (response) {
+
+               console.log("all client is="+ JSON.stringify(response.data));
+                
+               $scope.client_data = response.data.results;
+
+             }).
+             catch(function(error){
+                console.log('an error occurred...'+JSON.stringify(error));
+
+             });
+
+        }
+
+
+
         //For stats
         $scope.active_num = 0;
         $scope.client_num = Client.length;
