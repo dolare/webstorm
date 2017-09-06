@@ -24,7 +24,7 @@ from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer,
     CourseListSerializer, CourseURLListSerializer, AMPReportListSerializer, AMPReportDetailSerializer, \
     ReportUpdateSerializer, UniversitySchoolClientSerializer, UniversitySchoolCategorySerializer, \
     UniversitySchoolCategoryCourseSerializer, NonDegreeWhoopsReportListSerializer, \
-    NonDegreeWhoopsReportCreateSerializer, CourseSerializer
+    NonDegreeWhoopsReportCreateSerializer, CourseSerializer, CategoryListSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter, \
     UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter
@@ -559,7 +559,7 @@ class CategoryAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     Get list of user categories API
     """
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    serializer_class = UniversitySchoolCategorySerializer
+    serializer_class = CategoryListSerializer
     filter_class = UniversitySchoolCategoryFilter
 
     search_fields = ('name', )
