@@ -2,9 +2,10 @@
 
 'use strict';
 
-angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope', '$window', 'authenticationSvc', '$timeout', 'executiveService', 
-  function($q, $http, $scope, $window, authenticationSvc, $timeout, executiveService) {
+angular.module('myApp').controller('HistoryController', ['avatarService', '$q', '$http', '$scope', '$window', 'authenticationSvc', '$timeout', 'executiveService', 
+  function(avatarService, $q, $http, $scope, $window, authenticationSvc, $timeout, executiveService) {
     var token = authenticationSvc.getUserInfo().accessToken;
+    var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
     $scope.emptyWarning = 'Currently there are no schools.';
 
@@ -12,7 +13,7 @@ angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope'
 
     // Order schools by their names
     $http({
-      url: '/api/upgrid/non_degree/schools?ordering=school',
+      url: '/api/upgrid/non_degree/schools?ordering=school&client_id='+client_id,
       method: 'GET',
       headers: {
         'Authorization': 'JWT ' + token
@@ -136,7 +137,7 @@ angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope'
         App.blocks('#viewReport_loading', 'state_loading');
 
         $http({
-            url: '/api/upgrid/non_degree/reports/' + reportId,
+            url: '/api/upgrid/non_degree/reports/' + reportId+'&client_id='+client_id,
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
@@ -210,7 +211,7 @@ angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope'
       new Clipboard('.btn');
 
       $http({
-        url: '/api/upgrid/non_degree/shared_reports',
+        url: '/api/upgrid/non_degree/shared_reports?client_id'+client_id,
         method: 'POST',
         data: {
           "reports": [$scope.reportId],

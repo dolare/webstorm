@@ -1,9 +1,10 @@
 var non_degree_whoops = angular.module('myApp')
-non_degree_whoops.controller('NonDegreeWhoopsController', ['$scope', '$http', 'authenticationSvc', 'avatarService', '$timeout', 'nonDegreeWhoopsService',
-function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWhoopsService) {
+non_degree_whoops.controller('NonDegreeWhoopsController', ['avatarService', '$scope', '$http', 'authenticationSvc', 'avatarService', '$timeout', 'nonDegreeWhoopsService',
+function(avatarService, $scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWhoopsService) {
 
     var token = authenticationSvc.getUserInfo().accessToken;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId()+'/' : "";
+    var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
     $scope.get_whoops_active = function get_whoops_active(tableState, tableCtrlActive) {
         $scope.tableCtrlActive = tableCtrlActive;
@@ -67,7 +68,7 @@ function($scope, $http, authenticationSvc, avatarService, $timeout, nonDegreeWho
         form.append(key, value);
 
         $http({
-            url: '/api/upgrid/non_degree/whoops_reports/'+ taskId,
+            url: '/api/upgrid/non_degree/whoops_reports/'+ taskId + '?client_id='+client_id,
             method: 'PATCH',
             headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
             data: form,

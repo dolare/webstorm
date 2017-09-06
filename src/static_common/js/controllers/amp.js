@@ -2,17 +2,18 @@
 'use strict';
 
 angular.module('myApp').
-controller('AMPController', function(executiveService, $scope, $http, authenticationSvc, $localStorage, $sessionStorage) {
+controller('AMPController', function(avatarService, executiveService, $scope, $http, authenticationSvc, $localStorage, $sessionStorage) {
   var token = authenticationSvc.getUserInfo().accessToken;
   $scope.$storage = $localStorage;
 
   //console.log("table = "+JSON.stringify(Table));
 
   $scope._ = _;
- 
+  
+  var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 
   $http({
-      url:'/api/upgrid/non_degree/schools?is_AMP=True',
+      url:'/api/upgrid/non_degree/schools?is_AMP=True&client_id='+client_id,
       method: 'GET',
       headers: {
         'Authorization': 'JWT ' + token
@@ -28,7 +29,7 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
          value["logo_url"] = executiveService.getLogoBySchoolName(value.school, value.university)
 
           $http({
-            url: '/api/upgrid/non_degree/schools/' + value.object_id + '/courses?is_AMP=True',
+            url: '/api/upgrid/non_degree/schools/' + value.object_id + '/courses?is_AMP=True&client_id='+client_id,
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
@@ -66,7 +67,7 @@ controller('AMPController', function(executiveService, $scope, $http, authentica
           if($scope.school_table[parentIndex].courses[Index].available_url_number > 0 ){
 
             $http({
-            url: '/api/upgrid/non_degree/schools/' + $scope.school_table[parentIndex].object_id + '/courses/' + $scope.school_table[parentIndex].courses[Index].object_id + '/urls?has_AMP_report=True',
+            url: '/api/upgrid/non_degree/schools/' + $scope.school_table[parentIndex].object_id + '/courses/' + $scope.school_table[parentIndex].courses[Index].object_id + '/urls?has_AMP_report=True&client_id='+client_id,
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
