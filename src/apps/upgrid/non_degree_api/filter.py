@@ -26,18 +26,20 @@ class UniversitySchoolFilter(FilterSet):
 
 
 class ReportFilter(FilterSet):
+    client_id = django_filters.UUIDFilter(name="school__non_degree_user__id")
 
     class Meta:
         model = NonDegreeReport
-        fields = ['school', 'active', ]
+        fields = ['school', 'active', 'client_id', ]
 
 
 class CourseFilter(FilterSet):
     is_AMP = django_filters.BooleanFilter(name="is_advanced_management_program")
+    client_id = django_filters.UUIDFilter(name="university_school__non_degree_user__id")
 
     class Meta:
         model = NonDegreeCourse
-        fields = ['is_AMP', 'university_school', ]
+        fields = ['is_AMP', 'university_school', 'client_id', ]
 
 
 class CourseURLFilter(FilterSet):
@@ -70,7 +72,8 @@ class UniversitySchoolCategoryFilter(FilterSet):
 
 class NonDegreeWhoopsReportFilter(FilterSet):
     university_school = django_filters.UUIDFilter(name="university_school__object_id")
+    client_id = django_filters.UUIDFilter(name="university_school__non_degree_user__id")
 
     class Meta:
         model = NonDegreeWhoopsReport
-        fields = ['active', 'university_school', 'starred', 'completed', ]
+        fields = ['active', 'university_school', 'starred', 'completed', 'client_id', ]
