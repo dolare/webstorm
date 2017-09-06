@@ -229,7 +229,7 @@ angular.module('myApp').controller('HistoryController', ['$q', '$http', '$scope'
         $scope.expired_time = response.data.expired_time;
 
         $scope.url = {
-          text: 'https://' + location.host + '/#/' + response.data.link + '/',
+          text: 'https://' + location.host + '/#/shared-history-data/' + response.data.link + '/',
         };
 
         App.blocks('#shareReport_loading', 'state_normal');
