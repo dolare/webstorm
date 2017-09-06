@@ -366,7 +366,7 @@ class SharedReportCreateAPI(PermissionMixin, CreateAPIView):
 
         shared_report.save()
         shared_report.reports.add(*report_list)
-        link = 'shared_reports/{0}/{1}'.format(shared_report.object_id, shared_report.access_token)
+        link = '{0}/{1}'.format(shared_report.object_id, shared_report.access_token)
         return Response({'link': link, 'expired_time': shared_report.expired_time}, status=HTTP_201_CREATED)
 
 
@@ -392,7 +392,7 @@ class SharedReportAPI(PermissionMixin, GenericAPIView):
         return self.retrieve(request, object_id, access_token, *args, **kwargs)
 
 
-class CourseListAPI(PermissionMixin, ListModelMixin, GenericAPIView):
+class UniversitySchoolCourseAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     """
     Get list of user non-degree courses
     """
