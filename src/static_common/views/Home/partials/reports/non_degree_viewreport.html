@@ -39,7 +39,13 @@
               <div class="text-muted" style="
                 padding-left: 2px;
                 font-weight: 100;
-                ">Created: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY HH:mm'}}</div>
+                ">Release Date: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}
+              </div>
+              <div class="text-danger font-w600" ng-if="isShareMode" style="
+                padding-left: 2px;
+                font-weight: 100;
+                ">Expiration Date: {{expired_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}
+              </div>
             </div>
             <div class="col-sm-6">
               <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
