@@ -382,7 +382,7 @@ controller('NonDegreeController', function(avatarService, $scope, $http, authent
             $scope.expired_time = response.data.expired_time;
 
             $scope.url = {
-                text: 'https://'+location.host + '/#/' + response.data.link +'/',
+                text: 'https://'+location.host + '/#/shared-non-degree-report/' + response.data.link +'/',
             };
 
       }).
