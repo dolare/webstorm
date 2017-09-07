@@ -23,7 +23,7 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
     $scope.callServer_categories = function(tableState, tableCtrl) {
       $scope.tableCtrl_categories = tableCtrl;
       if ($scope.showResults) {
-        App.blocks('#loadingResults', 'state_loading');
+        App.blocks('#loadingCategories', 'state_loading');
 
         var pagination = tableState.pagination;
         var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
@@ -41,7 +41,7 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
             result.logo_url = executiveService.getLogoBySchoolName(result.school_name, result.university_name);
           });
 
-          App.blocks('#loadingResults', 'state_normal');
+          App.blocks('#loadingCategories', 'state_normal');
         });
       }
     }
@@ -49,7 +49,7 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
     $scope.callServer_courses = function(tableState, tableCtrl) {
       $scope.tableCtrl_courses = tableCtrl;
       if ($scope.showResults) {
-        App.blocks('#loadingResults', 'state_loading');
+        App.blocks('#loadingCourses', 'state_loading');
 
         var pagination = tableState.pagination;
         var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
@@ -67,7 +67,7 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
             result.logo_url = executiveService.getLogoBySchoolName(result.school_name, result.university_name);
           });
 
-          App.blocks('#loadingResults', 'state_normal');
+          App.blocks('#loadingCourses', 'state_normal');
         });
       }
     }
