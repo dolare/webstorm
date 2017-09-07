@@ -162,13 +162,17 @@ class CategorySerializer(ModelSerializer):
 
 class CategoryListSerializer(ModelSerializer):
     university_name = SerializerMethodField()
+    school_name = SerializerMethodField()
 
     class Meta:
         model = NonDegreeCategory
-        fields = ('object_id', 'name', 'university_school', 'university_name')
+        fields = ('object_id', 'name', 'school_name', 'university_name')
 
     def get_university_name(self, obj):
         return obj.university_school.university_foreign_key.name
+
+    def get_school_name(self, obj):
+        return obj.university_school.school
 
 
 class SharedReportSerializer(ModelSerializer):
@@ -195,13 +199,17 @@ class CourseListSerializer(ModelSerializer):
 class CourseSerializer(ModelSerializer):
     university_name = SerializerMethodField()
     categories = SerializerMethodField()
+    school_name = SerializerMethodField()
 
     class Meta:
         model = NonDegreeCourse
-        fields = ('object_id', 'name', 'university_school', 'university_name', 'categories', )
+        fields = ('object_id', 'name', 'school_name', 'university_name', 'categories', )
 
     def get_university_name(self, obj):
         return obj.university_school.university_foreign_key.name
+
+    def get_school_name(self, obj):
+        return obj.university_school.school
 
     def get_categories(self, obj):
         return UniversitySchoolCategorySerializer(obj.category.all(), many=True).data
