@@ -6,32 +6,70 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
     var token = authenticationSvc.getUserInfo().accessToken;
 
     $scope.searchType = 'categories';
-    $scope.searchKeyword = null;
     $scope.showResults = false;
     $scope.itemsByPage = 25;
 
+    // When clicking on the search button, let showResults be true and call the table pipe function.
     $scope.search = function() {
-        var url = '/api/upgrid/non_degree/' + $scope.searchType + '?search=' + $scope.searchKeyword;
-        $http({
-            url: '/api/upgrid/non_degree/' + $scope.searchType + '?search=' + $scope.searchKeyword,
-            method: 'GET',
-            headers: {
-              'Authorization': 'JWT ' + token
-            }
-          })
-          .then(function(response) {
-            $scope.searched = true;
-            $scope.results = response.data;
-            angular.forEach($scope.results, function(result, key) {
-              result.logo_url = executiveService.getLogoBySchoolName(result.school_name, result.university_name);
-            });
-          });
+      if ($.trim($scope.searchKeyword)) {
+        $scope.showResults = true;
+        if ($scope.searchType == 'categories')
+          $scope.tableCtrl_categories.pipe($scope.tableCtrl_categories.tableState());
+        else
+          $scope.tableCtrl_courses.pipe($scope.tableCtrl_courses.tableState());
+      }
     }
     // Smart table pipe function
-    $scope.callServer = function(tableState) {
-      App.blocks('#loadingResults', 'state_loading');
+    $scope.callServer_categories = function(tableState, tableCtrl) {
+      $scope.tableCtrl_categories = tableCtrl;
+      if ($scope.showResults) {
+        App.blocks('#loadingResults', 'state_loading');
 
+        var pagination = tableState.pagination;
+        var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
+        var number = tableState.pagination.number || 25; // Number of entries showed per page.
 
+        var url = '/api/upgrid/non_degree/categories' + '?search=' + $scope.searchKeyword;
+
+        ajaxService.getPage(start, number, url, tableState, token).then(function(response) {
+          $scope.results = response.data.results;
+          $scope.count = response.data.count;
+          tableState.pagination.numberOfPages = response.numberOfPages; // Set the number of pages so the pagination can update.
+          tableState.pagination.totalItemCount = response.data.count; // This property of tableState.pagination is currently not being used yet.
+
+          angular.forEach($scope.results, function(result, key) {
+            result.logo_url = executiveService.getLogoBySchoolName(result.school_name, result.university_name);
+          });
+
+          App.blocks('#loadingResults', 'state_normal');
+        });
+      }
+    }
+
+    $scope.callServer_courses = function(tableState, tableCtrl) {
+      $scope.tableCtrl_courses = tableCtrl;
+      if ($scope.showResults) {
+        App.blocks('#loadingResults', 'state_loading');
+
+        var pagination = tableState.pagination;
+        var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
+        var number = tableState.pagination.number || 25; // Number of entries showed per page.
+
+        var url = '/api/upgrid/non_degree/courses' + '?search=' + $scope.searchKeyword;
+
+        ajaxService.getPage(start, number, url, tableState, token).then(function(response) {
+          $scope.results = response.data.results;
+          $scope.count = response.data.count;
+          tableState.pagination.numberOfPages = response.numberOfPages; // Set the number of pages so the pagination can update.
+          tableState.pagination.totalItemCount = response.data.count; // This property of tableState.pagination is currently not being used yet.
+
+          angular.forEach($scope.results, function(result, key) {
+            result.logo_url = executiveService.getLogoBySchoolName(result.school_name, result.university_name);
+          });
+
+          App.blocks('#loadingResults', 'state_normal');
+        });
+      }
     }
 
 

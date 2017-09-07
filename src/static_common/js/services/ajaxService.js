@@ -115,7 +115,7 @@ angular.module('myApp').factory("ajaxService",
       parsedParams += '&page_size=' + number;
       if (params.sort.predicate)
         parsedParams += '&ordering=' + (params.sort.reverse ? '-' : '') + params.sort.predicate;
-      if ((params.search.hasOwnProperty('predicateObject') && params.search.predicateObject.hasOwnProperty('searchValue'))
+      if (params.search.hasOwnProperty('predicateObject') && params.search.predicateObject.hasOwnProperty('searchValue'))
         parsedParams += '&search=' + params.search.predicateObject.searchValue;
 
       for (var f in filters) {
