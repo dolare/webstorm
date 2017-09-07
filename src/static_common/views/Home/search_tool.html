@@ -12,79 +12,53 @@
 <!-- END Page Header -->
 <!-- Dashboard Charts -->
 <div class="content content-full">
-  <div class="input-group input-group-lg">
-    <input class="form-control" type="text" placeholder="Search keyword..">
-    <div class="input-group-btn">
-      <button class="btn btn-default"><i class="fa fa-search"></i></button>
-    </div>
-  </div>
-  <div>
-    <span>Popular keywords: </span>
-    <span>
-      <span class="badge badge-default" ng-repeat="keyword in keywords">{{keyword}}</span>
-    </span>
-  </div>
   <div class="row">
-    <div class="col-md-6">
-      <div class="block block-rounded block-opt-refresh-icon8" style="border-radius: 6px 6px 0 0">
-        <div class="block-header" style="border-bottom: 1px solid #f4f4f4; border-top: 6px solid #5c90d2; padding: 20px; border-top-left-radius: 6px;
-    border-top-right-radius: 6px;">
-          Categories: 
+    <div class="col-sm-2">
+      
+        <div class="radio">
+          <label class="css-input css-radio css-radio-default push-10-r">
+            <input type="radio" name="search-tool-group" ng-model="searchType" value="categories" checked><span></span> Categories
+          </label>
         </div>
-        <div class="block-content block-content-full text-center comparison_height frame frame-white-track">
-          <span class="badge badge-info push-10 pull-right">Categories: {{cat2.length}}</span>
-          <table class="table table-striped-gray table-header-bg">
-            <colgroup>
-
-              <col width="10%" />
-              <col width="90%" />
-            </colgroup>
-            <tbody>
-
-              <tr ng-repeat="row in cat2">
-                <td class="text-center"><label class="css-input css-radio css-radio-success css-radio-darker-outline push-10-r css-input-comparison">
-                                              <input type="radio" name="radio-comparison2" value="{{row.object_id}}" ng-model="$parent.radio_value2" required="required" ng-change="get_courses2($parent.school2, $parent.radio_value2)"><span></span>
-                                          </label>
-                </td>
-                <td class="text-right font-w600">{{row.name}}</td>
-
-              </tr>
-            </tbody>
-          </table>
+        <div class="radio">
+          <label class="css-input css-radio css-radio-default">
+            <input type="radio" name="search-tool-group" ng-model="searchType" value="courses"><span></span> Courses
+          </label>
         </div>
-
-      </div>
+      
     </div>
-    <div class="col-md-6">
-      <div class="block block-rounded block-opt-refresh-icon8" style="border-radius: 6px 6px 0 0;">
-        <div class="block-header" style="border-bottom: 1px solid #f4f4f4; border-top: 6px solid #46c37b; padding: 20px;padding: 20px; border-top-left-radius: 6px;
-    border-top-right-radius: 6px;">
-          Courses: 
-          
-        </div>
-        <div class="block-content block-content-full text-center comparison_height frame frame-white-track">
-          <span class="badge badge-info push-10 pull-right">Courses: {{cat2.length}}</span>
-          <table class="table table-striped-gray table-header-bg">
-            <colgroup>
-
-              <col width="10%" />
-              <col width="90%" />
-            </colgroup>
-            <tbody>
-              <tr ng-repeat="row in cat2">
-                <td class="text-center"><label class="css-input css-radio css-radio-success css-radio-darker-outline push-10-r css-input-comparison">
-                                              <input type="radio" name="radio-comparison2" value="{{row.object_id}}" ng-model="$parent.radio_value2" required="required" ng-change="get_courses2($parent.school2, $parent.radio_value2)"><span></span>
-                                          </label>
-                </td>
-                <td class="text-right font-w600">{{row.name}}</td>
-
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
+    <div class="input-group input-group-lg push-15-t col-sm-9">
+      <input class="form-control" type="text" ng-model="searchKeyword" placeholder="Search keyword..">
+      <div class="input-group-btn">
+        <button class="btn btn-default" ng-click="search(searchType, searchKeyword)"><i class="fa fa-search"></i></button>
       </div>
     </div>
   </div>
+  
+  <div class="block block-rounded block-opt-refresh-icon8" ng-show="searchType=='categories'">
+    <div class="block-header text-primary font-w600" style="border-bottom: 1px solid #f4f4f4; font-size: 18px">
+      Categories: 
+      <span class="badge badge-info">1{{categories.length}}</span>
+    </div>
+    <div class="block-content block-content-full text-center comparison_height frame frame-white-track">
+      
+      <table class="table table-striped-gray table-header-bg">
+        <colgroup>
+
+          <col width="10%" />
+          <col width="90%" />
+        </colgroup>
+        <tbody>
+
+          <tr ng-repeat="row in categories">
+            
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  
 </div>
 <!-- END Dashboard Charts -->

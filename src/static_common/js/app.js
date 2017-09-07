@@ -1171,7 +1171,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   state('search_tool', {
 
-    url: '/search_tool',
+    url: '/search-tool',
     templateUrl: '/static/views/Home/search_tool.html',
     controller: 'SearchToolController',
     parent: 'success_demo',
