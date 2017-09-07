@@ -560,6 +560,7 @@ class CategoryAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     """
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     serializer_class = CategoryListSerializer
+    pagination_class = BasePagination
     filter_class = UniversitySchoolCategoryFilter
 
     search_fields = ('name', )
