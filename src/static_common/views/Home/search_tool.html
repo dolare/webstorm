@@ -10,14 +10,14 @@
   </div>
 </div>
 <!-- END Page Header -->
-<!-- Dashboard Charts -->
+<!-- Page Body -->
 <div class="content content-full">
   <div class="row">
     <div class="col-sm-2">
       
         <div class="radio">
           <label class="css-input css-radio css-radio-default push-10-r">
-            <input type="radio" name="search-tool-group" ng-model="searchType" value="categories" checked><span></span> Categories
+            <input type="radio" name="search-tool-group" ng-model="searchType" value="categories"><span></span> Categories
           </label>
         </div>
         <div class="radio">
@@ -30,35 +30,68 @@
     <div class="input-group input-group-lg push-15-t col-sm-9">
       <input class="form-control" type="text" ng-model="searchKeyword" placeholder="Search keyword..">
       <div class="input-group-btn">
-        <button class="btn btn-default" ng-click="search(searchType, searchKeyword)"><i class="fa fa-search"></i></button>
+        <button class="btn btn-default" ng-click="search()"><i class="fa fa-search"></i></button>
       </div>
     </div>
   </div>
   
-  <div class="block block-rounded block-opt-refresh-icon8" ng-show="searchType=='categories'">
+  <div class="block block-rounded block-opt-refresh-icon8" id="loadingResults" ng-show="searchType=='categories'&&showResults">
     <div class="block-header text-primary font-w600" style="border-bottom: 1px solid #f4f4f4; font-size: 18px">
       Categories: 
-      <span class="badge badge-info">1{{categories.length}}</span>
+      <span class="badge badge-info">{{results.length}}</span>
     </div>
-    <div class="block-content block-content-full text-center comparison_height frame frame-white-track">
+    <div class="block-content block-content-full text-center frame frame-white-track">
       
-      <table class="table table-striped-gray table-header-bg">
+      <table class="table table-bordered table-striped-gray table-header-bg" st-pipe="callServer" st-table="results" style="table-layout: fixed;">
         <colgroup>
 
-          <col width="10%" />
-          <col width="90%" />
+          <col width="50%" />
+          <col width="50%" />
         </colgroup>
+        <thead>
+          <th class="text-center" st-sort="name">Category</th>
+          <th class="text-center">School</th>
+        </thead>
         <tbody>
-
-          <tr ng-repeat="row in categories">
-            
-
+          <tr ng-repeat="row in results">
+            <td>{{row.name}}</td>
+            <td class="font-w500 text-left">
+              <div class="row">
+                <div class="col-sm-2">
+                  <img ng-src="{{row.logo_url}}" height="40" width="40">
+                </div>
+                <div class="col-sm-10">{{row.school_name}}<br>
+                  <span class="text-muted"><small class="text-uppercase" style="
+                    font-weight: 300;
+                    font-size: 12px;
+                    ">{{row.university_name}}</small></span>
+                </div>
+              </div>
+            </td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3">
+              <br><br>
+              <div class="btn-group pull-left tablepagenum">
+
+                <button type="button" ng-class="{'active':itemsByPage==15}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>15</button>
+                <button type="button" ng-class="{'active':itemsByPage==30}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>30</button>
+
+              </div>
+            </td>
+
+            <td colspan="3" class="text-center">
+              <br><br>
+              <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
 
   </div>
   
 </div>
-<!-- END Dashboard Charts -->
+<!-- END Page Body -->
