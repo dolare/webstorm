@@ -19,6 +19,10 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
           $scope.tableCtrl_courses.pipe($scope.tableCtrl_courses.tableState());
       }
     }
+    $scope.pressedEnter = function(keyEvent) {
+      if (keyEvent.which == 13)
+        $scope.search();
+    }
     // Smart table pipe function
     $scope.callServer_categories = function(tableState, tableCtrl) {
       $scope.tableCtrl_categories = tableCtrl;

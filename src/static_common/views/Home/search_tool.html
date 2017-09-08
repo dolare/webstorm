@@ -28,7 +28,7 @@
       
     </div>
     <div class="input-group input-group-lg push-15-t col-sm-9">
-      <input class="form-control" type="text" ng-model="searchKeyword" placeholder="Search keyword..">
+      <input class="form-control" type="text" ng-model="searchKeyword" placeholder="Search keyword.." ng-keypress="pressedEnter($event)">
       <div class="input-group-btn">
         <button class="btn btn-default" ng-click="search()"><i class="fa fa-search"></i></button>
       </div>
