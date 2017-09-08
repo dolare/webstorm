@@ -17,12 +17,12 @@
     <div class="col-sm-2">
       
         <div class="radio">
-          <label class="css-input css-radio css-radio-default" ng-click="search()" ng-keypress="pressedEnter($event)">
+          <label class="css-input css-radio css-radio-primary" ng-click="search()" ng-keypress="pressedEnter($event)">
             <input type="radio" name="search-tool-group" ng-model="searchType" value="categories"><span></span> Categories
           </label>
         </div>
         <div class="radio">
-          <label class="css-input css-radio css-radio-default" ng-click="search()" ng-keypress="pressedEnter($event)">
+          <label class="css-input css-radio css-radio-primary" ng-click="search()" ng-keypress="pressedEnter($event)">
             <input type="radio" name="search-tool-group" ng-model="searchType" value="courses"><span></span> Courses
           </label>
         </div>
@@ -48,8 +48,8 @@
           <col width="50%" />
         </colgroup>
         <thead>
-          <th st-sort="name" st-sort-default="true">Category <span class="badge badge-info">{{count}}</span></th>
-          <th>School</th>
+          <th st-sort="name">Category <span class="badge badge-info">{{count}}</span></th>
+          <th st-sort="university_school__school" st-sort-default="true">School</th>
         </thead>
         <tbody>
           <tr ng-repeat="row in results_categories">
@@ -106,9 +106,9 @@
           <col width="40%" />
         </colgroup>
         <thead>
-          <th st-sort="name" st-sort-default="true">Course <span class="badge badge-info">{{count}}</span></th>
+          <th st-sort="name">Course <span class="badge badge-info">{{count}}</span></th>
           <th>Category</th>
-          <th>School</th>
+          <th st-sort="university_school__school" st-sort-default="true">School</th>
         </thead>
         <tbody>
           <tr ng-repeat="row in results_courses">

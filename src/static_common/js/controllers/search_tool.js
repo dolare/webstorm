@@ -12,11 +12,12 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
 
     // When clicking on the search button, clear old results and call corresponding smart table pipe function.
     $scope.search = function() {
-      $scope.results_categories = [];
-      $scope.results_courses = [];
-      $scope.showCategoryResults = false;
-      $scope.showCourseResults = false;
+      // If searchKeyword is an empty string or a string that only consists of spaces, it wouldn't do the search.
       if ($.trim($scope.searchKeyword)) {
+        $scope.results_categories = [];
+        $scope.results_courses = [];
+        $scope.showCategoryResults = false;
+        $scope.showCourseResults = false;
         if ($scope.searchType == 'categories') {
           $scope.tableCtrl_categories.pipe($scope.tableCtrl_categories.tableState());
           $scope.showCategoryResults = true;
