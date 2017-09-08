@@ -564,8 +564,8 @@ class CategoryAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     filter_class = UniversitySchoolCategoryFilter
 
     search_fields = ('name', )
-    ordering_fields = ('name', )
-    ordering = ('name', )      # default ordering
+    ordering_fields = ('university_school__school', 'name', )
+    ordering = ('university_school__school', 'name', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
         categories = NonDegreeCategory.objects.filter(active=True)
@@ -587,8 +587,8 @@ class CourseAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     filter_class = CourseFilter
 
     search_fields = ('name', )
-    ordering_fields = ('name', )
-    ordering = ('name', )      # default ordering
+    ordering_fields = ('name', 'university_school__school',)
+    ordering = ('university_school__school', 'name', )      # default ordering
 
     def get_queryset(self, *args, **kwargs):
         courses = NonDegreeCourse.objects.filter(active=True)
