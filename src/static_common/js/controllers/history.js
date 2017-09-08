@@ -137,7 +137,7 @@ angular.module('myApp').controller('HistoryController', ['avatarService', '$q', 
         App.blocks('#viewReport_loading', 'state_loading');
 
         $http({
-            url: '/api/upgrid/non_degree/reports/' + reportId+'&client_id='+client_id,
+            url: '/api/upgrid/non_degree/reports/' + reportId,
             method: 'GET',
             headers: {
               'Authorization': 'JWT ' + token
