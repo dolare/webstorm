@@ -3,7 +3,8 @@
   <div class="row items-push">
     <div class="col-sm-7 push-5">
       <h1 class="page-heading">
-        Search Tool<br><small>- Search categories and courses among all schools. </small>
+        Search Tool<br>
+        <small>- Find out trending keywords schools are using.</small>
       </h1>
     </div>
 
@@ -16,12 +17,12 @@
     <div class="col-sm-2">
       
         <div class="radio">
-          <label class="css-input css-radio css-radio-default push-10-r" ng-click="showResults=false">
+          <label class="css-input css-radio css-radio-default" ng-click="search()" ng-keypress="pressedEnter($event)">
             <input type="radio" name="search-tool-group" ng-model="searchType" value="categories"><span></span> Categories
           </label>
         </div>
         <div class="radio">
-          <label class="css-input css-radio css-radio-default" ng-click="showResults=false">
+          <label class="css-input css-radio css-radio-default" ng-click="search()" ng-keypress="pressedEnter($event)">
             <input type="radio" name="search-tool-group" ng-model="searchType" value="courses"><span></span> Courses
           </label>
         </div>
@@ -35,27 +36,23 @@
     </div>
   </div>
   <!-- Category Table -->
-  <div class="block block-rounded block-opt-refresh-icon8" id="loadingCategories" ng-show="(searchType=='categories'&&showResults)">
-    <div class="block-header text-primary font-w600" style="border-bottom: 1px solid #f4f4f4; font-size: 18px">
-      Categories: 
-      <span class="badge badge-info">{{count}}</span>
-    </div>
-    <div class="block-content block-content-full text-center frame frame-white-track">
-      <div ng-show="results.length==0" class="alert alert-warning">
+  <div class="block block-rounded block-opt-refresh-icon8" id="loadingCategories" ng-show="showCategoryResults">
+    <div class="block-content block-content-full frame frame-white-track">
+      <div ng-show="results_categories.length==0" class="alert alert-warning">
         <p><i class="fa fa-info-circle"></i> No matching results.</p>
       </div>
-      <table ng-show="results.length>0" class="table table-striped-gray table-header-bg" st-pipe="callServer_categories" st-table="results" style="table-layout: fixed;">
+      <table ng-show="results_categories.length>0" class="table table-striped-gray table-header-bg" st-pipe="callServer_categories" st-table="results_categories" style="table-layout: fixed;">
         <colgroup>
 
           <col width="50%" />
           <col width="50%" />
         </colgroup>
         <thead>
-          <th class="text-center" st-sort="name">Category</th>
-          <th class="text-center">School</th>
+          <th st-sort="name" st-sort-default="true">Category <span class="badge badge-info">{{count}}</span></th>
+          <th>School</th>
         </thead>
         <tbody>
-          <tr ng-repeat="row in results">
+          <tr ng-repeat="row in results_categories">
             <td>{{row.name}}</td>
             <td class="font-w500 text-left">
               <div class="row">
@@ -96,16 +93,12 @@
   </div>
   <!-- END Category Table -->
   <!-- Course Table -->
-  <div class="block block-rounded block-opt-refresh-icon8" id="loadingCourses" ng-show="(searchType=='courses'&&showResults)">
-    <div class="block-header text-primary font-w600" style="border-bottom: 1px solid #f4f4f4; font-size: 18px">
-      Courses: 
-      <span class="badge badge-info">{{count}}</span>
-    </div>
-    <div class="block-content block-content-full text-center frame frame-white-track">
-      <div ng-show="results.length==0" class="alert alert-warning">
+  <div class="block block-rounded block-opt-refresh-icon8" id="loadingCourses" ng-show="showCourseResults">
+    <div class="block-content block-content-full frame frame-white-track">
+      <div ng-show="results_courses.length==0" class="alert alert-warning">
         <p><i class="fa fa-info-circle"></i> No matching results.</p>
       </div>
-      <table ng-show="results.length>0" class="table table-striped-gray table-header-bg" st-pipe="callServer_courses" st-table="results" style="table-layout: fixed;">
+      <table ng-show="results_courses.length>0" class="table table-striped-gray table-header-bg" st-pipe="callServer_courses" st-table="results_courses" style="table-layout: fixed;">
         <colgroup>
 
           <col width="30%" />
@@ -113,12 +106,12 @@
           <col width="40%" />
         </colgroup>
         <thead>
-          <th class="text-center" st-sort="name">Course</th>
-          <th class="text-center">Category</th>
-          <th class="text-center">School</th>
+          <th st-sort="name" st-sort-default="true">Course <span class="badge badge-info">{{count}}</span></th>
+          <th>Category</th>
+          <th>School</th>
         </thead>
         <tbody>
-          <tr ng-repeat="row in results">
+          <tr ng-repeat="row in results_courses">
             <td>{{row.name}}</td>
             <td>
               <span ng-repeat="c in row.categories">{{c.name}}<br ng-if="!$last"></span>
