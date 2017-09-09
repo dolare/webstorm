@@ -12,26 +12,53 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
 
     // When clicking on the search button, clear old results and call corresponding smart table pipe function.
     $scope.search = function() {
-      // If searchKeyword is an empty string or a string that only consists of spaces, it wouldn't do the search.
-      if ($.trim($scope.searchKeyword)) {
+      // If inputKeyword is an empty string or a string that only consists of spaces, it wouldn't do the search.
+      // inputKeyword is the string in the input box. searchKeyword is the string used to search.
+      if ($.trim($scope.inputKeyword)) {
+        $scope.searchKeyword = $scope.inputKeyword;
         $scope.results_categories = [];
         $scope.results_courses = [];
         $scope.showCategoryResults = false;
         $scope.showCourseResults = false;
+        // categoryMode and courseMode are used to work with clickCategoryRadio and clickCourseRadio functions
         if ($scope.searchType == 'categories') {
+          $scope.categoryMode = true;
+          $scope.courseMode = false;
           $scope.tableCtrl_categories.pipe($scope.tableCtrl_categories.tableState());
           $scope.showCategoryResults = true;
         }
         else {
+          $scope.categoryMode = false;
+          $scope.courseMode = true;
           $scope.tableCtrl_courses.pipe($scope.tableCtrl_courses.tableState());
           $scope.showCourseResults = true;
         }
       }
-    }
+    };
     $scope.pressedEnter = function(keyEvent) {
       if (keyEvent.which == 13)
         $scope.search();
-    }
+    };
+    $scope.clickCategoryRadio = function() {
+      $scope.showCourseResults = false;
+      // If the inputKeyword is not empty, do search when clicking on the radio.
+      if ($.trim($scope.inputKeyword)) 
+        $scope.search();
+      // If the inputKeyword is empty and it was showing category results, show category results again. 
+      else if ($scope.categoryMode) {
+        $scope.showCategoryResults = true;
+      }
+    };
+    $scope.clickCourseRadio = function() {
+      $scope.showCategoryResults = false;
+      // If the inputKeyword is not empty, do search when clicking on the radio.
+      if ($.trim($scope.inputKeyword)) 
+        $scope.search();
+      // If the inputKeyword is empty and it was showing course results, show course results again. 
+      else if ($scope.courseMode) {
+        $scope.showCourseResults = true;
+      }
+    };
     // Smart table pipe function
     $scope.callServer_categories = function(tableState, tableCtrl) {
       $scope.tableCtrl_categories = tableCtrl;
@@ -57,7 +84,7 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
           App.blocks('#loadingCategories', 'state_normal');
         });
       }
-    }
+    };
 
     $scope.callServer_courses = function(tableState, tableCtrl) {
       $scope.tableCtrl_courses = tableCtrl;
@@ -83,7 +110,7 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
           App.blocks('#loadingCourses', 'state_normal');
         });
       }
-    }
+    };
 
 
   }
