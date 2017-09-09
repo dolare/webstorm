@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'webtracking',
     'apps.record_management',
     'apps.upgrid',
+    'service_interceptor',
 )
 
 
@@ -98,7 +99,7 @@ AUTHENTICATION_BACKENDS = (
     )
 
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     # whitenoise must be above others except SecurityMiddleware
     'whitenoise.middleware.WhiteNoiseMiddleware',   # whitenoise, http://whitenoise.evans.io/
@@ -107,6 +108,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'service_interceptor.interceptors.ServiceInterceptor',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
