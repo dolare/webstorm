@@ -6,23 +6,63 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
     var token = authenticationSvc.getUserInfo().accessToken;
 
     $scope.searchType = 'categories';
-    $scope.showResults = false;
+    $scope.showCategoryResults = false;
+    $scope.showCourseResults = false;
     $scope.itemsByPage = 25;
 
-    // When clicking on the search button, let showResults be true and call the table pipe function.
+    // When clicking on the search button, clear old results and call corresponding smart table pipe function.
     $scope.search = function() {
-      if ($.trim($scope.searchKeyword)) {
-        $scope.showResults = true;
-        if ($scope.searchType == 'categories')
+      // If inputKeyword is an empty string or a string that only consists of spaces, it wouldn't do the search.
+      // inputKeyword is the string in the input box. searchKeyword is the string used to search.
+      if ($.trim($scope.inputKeyword)) {
+        $scope.searchKeyword = $scope.inputKeyword;
+        $scope.results_categories = [];
+        $scope.results_courses = [];
+        $scope.showCategoryResults = false;
+        $scope.showCourseResults = false;
+        // categoryMode and courseMode are used to work with clickCategoryRadio and clickCourseRadio functions
+        if ($scope.searchType == 'categories') {
+          $scope.categoryMode = true;
+          $scope.courseMode = false;
           $scope.tableCtrl_categories.pipe($scope.tableCtrl_categories.tableState());
-        else
+          $scope.showCategoryResults = true;
+        }
+        else {
+          $scope.categoryMode = false;
+          $scope.courseMode = true;
           $scope.tableCtrl_courses.pipe($scope.tableCtrl_courses.tableState());
+          $scope.showCourseResults = true;
+        }
       }
-    }
+    };
+    $scope.pressedEnter = function(keyEvent) {
+      if (keyEvent.which == 13)
+        $scope.search();
+    };
+    $scope.clickCategoryRadio = function() {
+      $scope.showCourseResults = false;
+      // If the inputKeyword is not empty, do search when clicking on the radio.
+      if ($.trim($scope.inputKeyword)) 
+        $scope.search();
+      // If the inputKeyword is empty and it was showing category results, show category results again. 
+      else if ($scope.categoryMode) {
+        $scope.showCategoryResults = true;
+      }
+    };
+    $scope.clickCourseRadio = function() {
+      $scope.showCategoryResults = false;
+      // If the inputKeyword is not empty, do search when clicking on the radio.
+      if ($.trim($scope.inputKeyword)) 
+        $scope.search();
+      // If the inputKeyword is empty and it was showing course results, show course results again. 
+      else if ($scope.courseMode) {
+        $scope.showCourseResults = true;
+      }
+    };
     // Smart table pipe function
     $scope.callServer_categories = function(tableState, tableCtrl) {
       $scope.tableCtrl_categories = tableCtrl;
-      if ($scope.showResults) {
+      if ($scope.showCategoryResults) {
         App.blocks('#loadingCategories', 'state_loading');
 
         var pagination = tableState.pagination;
@@ -32,23 +72,23 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
         var url = '/api/upgrid/non_degree/categories' + '?search=' + $scope.searchKeyword;
 
         ajaxService.getPage(start, number, url, tableState, token).then(function(response) {
-          $scope.results = response.data.results;
+          $scope.results_categories = response.data.results;
           $scope.count = response.data.count;
           tableState.pagination.numberOfPages = response.numberOfPages; // Set the number of pages so the pagination can update.
           tableState.pagination.totalItemCount = response.data.count; // This property of tableState.pagination is currently not being used yet.
 
-          angular.forEach($scope.results, function(result, key) {
+          angular.forEach($scope.results_categories, function(result, key) {
             result.logo_url = executiveService.getLogoBySchoolName(result.school_name, result.university_name);
           });
 
           App.blocks('#loadingCategories', 'state_normal');
         });
       }
-    }
+    };
 
     $scope.callServer_courses = function(tableState, tableCtrl) {
       $scope.tableCtrl_courses = tableCtrl;
-      if ($scope.showResults) {
+      if ($scope.showCourseResults) {
         App.blocks('#loadingCourses', 'state_loading');
 
         var pagination = tableState.pagination;
@@ -58,19 +98,19 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
         var url = '/api/upgrid/non_degree/courses' + '?search=' + $scope.searchKeyword;
 
         ajaxService.getPage(start, number, url, tableState, token).then(function(response) {
-          $scope.results = response.data.results;
+          $scope.results_courses = response.data.results;
           $scope.count = response.data.count;
           tableState.pagination.numberOfPages = response.numberOfPages; // Set the number of pages so the pagination can update.
           tableState.pagination.totalItemCount = response.data.count; // This property of tableState.pagination is currently not being used yet.
 
-          angular.forEach($scope.results, function(result, key) {
+          angular.forEach($scope.results_courses, function(result, key) {
             result.logo_url = executiveService.getLogoBySchoolName(result.school_name, result.university_name);
           });
 
           App.blocks('#loadingCourses', 'state_normal');
         });
       }
-    }
+    };
 
 
   }

@@ -17,6 +17,9 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
+        'jsonentry': {
+            'format': '-' * 40 + '\n%(message)s',
+        },
         'simple': {
             'format': '[%(asctime)s] - %(levelname)s : %(message)s',
         },
@@ -44,7 +47,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': '/var/log/app/service.log',
-            'formatter': 'full'
+            'formatter': 'jsonentry'
         },
         'audit_log': {
             'level': 'INFO',

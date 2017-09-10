@@ -16,6 +16,8 @@ mkdir -p $TARGET_DEP_PACKAGE_PATH
 
 echo Copy dependencies
 cp ../grid-core-db/dist/grid-core-db-*.tar.gz $TARGET_DEP_PACKAGE_PATH
+cp ../webtracking-db/dist/webtracking-db-*.tar.gz $TARGET_DEP_PACKAGE_PATH
+cp ../service-interceptor/dist/service_interceptor-*.tar.gz $TARGET_DEP_PACKAGE_PATH
 
 echo prepare package
 git archive --format=tar HEAD:src/ | tar xf - -C $TARGET_PATH
