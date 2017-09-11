@@ -200,7 +200,10 @@
                     _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'course_dates_old'), [undefined]).length +
                     _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'currency_old'), [undefined]).length +
                     _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'type_old'), [undefined]).length +
-                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'tuition_number_old'), [undefined]).length}}</label></a>
+                    _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'tuition_number_old'), [undefined]).length 
+
+                    + _.difference(_.pluck(row.categories, 'updated'), [1, 2, undefined]).length
+                    + _.difference(_.pluck(_.flatten(_.pluck(row.categories, 'courses')), 'name_old'), [undefined]).length}}</label></a>
 
                     <br>
                     <span class="text-muted">
@@ -458,7 +461,7 @@
                         <col width="11%">
                       </colgroup>
                       <thead>
-                        <tr class="font-w600 text-primary" style="border-top: 1px solid #ccc; border-bottom: 2px solid #ccc;">
+                        <tr class="font-w600 text-primary" style="border-top: 1px solid #ccc;">
 
                           <td class="text-center" style="
                             border-right: 0;
