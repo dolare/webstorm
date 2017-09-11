@@ -2,7 +2,7 @@
 
 'use strict';
 
-angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$scope', 'authenticationSvc', 'executiveService', 'ajaxService', function($q, $http, $scope, authenticationSvc, executiveService, ajaxService) {
+angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$scope', '$timeout', 'authenticationSvc', 'executiveService', 'ajaxService', function($q, $http, $scope, $timeout, authenticationSvc, executiveService, ajaxService) {
     var token = authenticationSvc.getUserInfo().accessToken;
 
     $scope.searchType = 'categories';
@@ -76,9 +76,28 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
           $scope.count = response.data.count;
           tableState.pagination.numberOfPages = response.numberOfPages; // Set the number of pages so the pagination can update.
           tableState.pagination.totalItemCount = response.data.count; // This property of tableState.pagination is currently not being used yet.
-
           angular.forEach($scope.results_categories, function(result, key) {
+            // Get school logo url for each result.
             result.logo_url = executiveService.getLogoBySchoolName(result.school_name, result.university_name);
+          });
+
+          $timeout(function() {
+            // Create a regular expression with the searchKeyword.
+            var regexp = new RegExp('(' + $scope.searchKeyword + ')', 'ig');
+            // Put all matching string with span tag with the class "marked".
+            $('*', 'td.result_name').contents().filter(function() {
+              if (typeof (Node) == 'undefined') {
+                  return this.nodeType == 3;
+              }
+              else {
+                  return this.nodeType == Node.TEXT_NODE;
+              }
+            })
+            .each(function(index) {
+              var nodeText = $(this)[0].nodeValue;
+              nodeText = nodeText.replace(regexp, '<span class="marked">$1</span>');
+              $(this).replaceWith(nodeText);
+            });
           });
 
           App.blocks('#loadingCategories', 'state_normal');
@@ -104,7 +123,27 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
           tableState.pagination.totalItemCount = response.data.count; // This property of tableState.pagination is currently not being used yet.
 
           angular.forEach($scope.results_courses, function(result, key) {
+            // Get school logo url for each result.
             result.logo_url = executiveService.getLogoBySchoolName(result.school_name, result.university_name);
+          });
+
+          $timeout(function() {
+            // Create a regular expression with the searchKeyword.
+            var regexp = new RegExp('(' + $scope.searchKeyword + ')', 'ig');
+            // Put all matching string with span tag with the class "marked".
+            $('*', 'td.result_name').contents().filter(function() {
+              if (typeof (Node) == 'undefined') {
+                  return this.nodeType == 3;
+              }
+              else {
+                  return this.nodeType == Node.TEXT_NODE;
+              }
+            })
+            .each(function(index) {
+              var nodeText = $(this)[0].nodeValue;
+              nodeText = nodeText.replace(regexp, '<span class="marked">$1</span>');
+              $(this).replaceWith(nodeText);
+            });
           });
 
           App.blocks('#loadingCourses', 'state_normal');
