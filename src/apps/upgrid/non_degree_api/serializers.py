@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeCourseDate, \
-    NonDegreeCourseURL, NonDegreeAMPReport
+    NonDegreeCourseURL, NonDegreeAMPReport, NonDegreeCategoryURL
 from webtracking.models import WebPage, WebPageScan
 
 from ..models import NonDegreeReport, NonDegreeSharedReport, UniversityCustomer, NonDegreeWhoopsReport
@@ -153,7 +153,7 @@ class CategorySerializer(ModelSerializer):
 
     class Meta:
         model = NonDegreeCategory
-        fields = ('object_id', 'name', 'date_modified', 'courses',)
+        fields = ('object_id', 'name', 'date_modified', 'courses', )
 
     def get_courses(self, obj):
         courses = NonDegreeCourse.objects.filter(category=obj).filter(active=True)
@@ -162,13 +162,24 @@ class CategorySerializer(ModelSerializer):
 
 class CategoryListSerializer(ModelSerializer):
     university_name = SerializerMethodField()
+    school_name = SerializerMethodField()
+    URL = SerializerMethodField()
 
     class Meta:
         model = NonDegreeCategory
-        fields = ('object_id', 'name', 'university_school', 'university_name')
+        fields = ('object_id', 'name', 'school_name', 'university_name', 'URL', )
 
     def get_university_name(self, obj):
         return obj.university_school.university_foreign_key.name
+
+    def get_school_name(self, obj):
+        return obj.university_school.school
+
+    def get_URL(self, obj):
+        url = NonDegreeCategoryURL.objects.filter(category=obj).filter(type__name='Main')
+        if not url:
+            return None
+        return url.first().webpage.url
 
 
 class SharedReportSerializer(ModelSerializer):
@@ -195,16 +206,27 @@ class CourseListSerializer(ModelSerializer):
 class CourseSerializer(ModelSerializer):
     university_name = SerializerMethodField()
     categories = SerializerMethodField()
+    school_name = SerializerMethodField()
+    URL = SerializerMethodField()
 
     class Meta:
         model = NonDegreeCourse
-        fields = ('object_id', 'name', 'university_school', 'university_name', 'categories', )
+        fields = ('object_id', 'name', 'school_name', 'university_name', 'categories', 'URL', )
 
     def get_university_name(self, obj):
         return obj.university_school.university_foreign_key.name
 
+    def get_school_name(self, obj):
+        return obj.university_school.school
+
     def get_categories(self, obj):
         return UniversitySchoolCategorySerializer(obj.category.all(), many=True).data
+
+    def get_URL(self, obj):
+        url = NonDegreeCourseURL.objects.filter(course=obj).filter(type__name='Main')
+        if not url:
+            return None
+        return url.first().webpage.url
 
 
 class CourseURLListSerializer(ModelSerializer):

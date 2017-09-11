@@ -3,88 +3,157 @@
   <div class="row items-push">
     <div class="col-sm-7 push-5">
       <h1 class="page-heading">
-        Search Tool<br><small>- Search categories and courses among all schools. </small>
+        Search Tool<br>
+        <small>- Find out trending keywords schools are using.</small>
       </h1>
     </div>
 
   </div>
 </div>
 <!-- END Page Header -->
-<!-- Dashboard Charts -->
+<!-- Page Body -->
 <div class="content content-full">
-  <div class="input-group input-group-lg">
-    <input class="form-control" type="text" placeholder="Search keyword..">
-    <div class="input-group-btn">
-      <button class="btn btn-default"><i class="fa fa-search"></i></button>
-    </div>
-  </div>
-  <div>
-    <span>Popular keywords: </span>
-    <span>
-      <span class="badge badge-default" ng-repeat="keyword in keywords">{{keyword}}</span>
-    </span>
-  </div>
   <div class="row">
-    <div class="col-md-6">
-      <div class="block block-rounded block-opt-refresh-icon8" style="border-radius: 6px 6px 0 0">
-        <div class="block-header" style="border-bottom: 1px solid #f4f4f4; border-top: 6px solid #5c90d2; padding: 20px; border-top-left-radius: 6px;
-    border-top-right-radius: 6px;">
-          Categories: 
+    <div class="col-sm-2">
+      
+        <div class="radio">
+          <label class="css-input css-radio css-radio-primary" ng-click="clickCategoryRadio()" ng-keypress="pressedEnter($event)">
+            <input type="radio" name="search-tool-group" ng-model="searchType" value="categories"><span></span> Categories
+          </label>
         </div>
-        <div class="block-content block-content-full text-center comparison_height frame frame-white-track">
-          <span class="badge badge-info push-10 pull-right">Categories: {{cat2.length}}</span>
-          <table class="table table-striped-gray table-header-bg">
-            <colgroup>
-
-              <col width="10%" />
-              <col width="90%" />
-            </colgroup>
-            <tbody>
-
-              <tr ng-repeat="row in cat2">
-                <td class="text-center"><label class="css-input css-radio css-radio-success css-radio-darker-outline push-10-r css-input-comparison">
-                                              <input type="radio" name="radio-comparison2" value="{{row.object_id}}" ng-model="$parent.radio_value2" required="required" ng-change="get_courses2($parent.school2, $parent.radio_value2)"><span></span>
-                                          </label>
-                </td>
-                <td class="text-right font-w600">{{row.name}}</td>
-
-              </tr>
-            </tbody>
-          </table>
+        <div class="radio">
+          <label class="css-input css-radio css-radio-primary" ng-click="clickCourseRadio()" ng-keypress="pressedEnter($event)">
+            <input type="radio" name="search-tool-group" ng-model="searchType" value="courses"><span></span> Courses
+          </label>
         </div>
-
-      </div>
+      
     </div>
-    <div class="col-md-6">
-      <div class="block block-rounded block-opt-refresh-icon8" style="border-radius: 6px 6px 0 0;">
-        <div class="block-header" style="border-bottom: 1px solid #f4f4f4; border-top: 6px solid #46c37b; padding: 20px;padding: 20px; border-top-left-radius: 6px;
-    border-top-right-radius: 6px;">
-          Courses: 
-          
-        </div>
-        <div class="block-content block-content-full text-center comparison_height frame frame-white-track">
-          <span class="badge badge-info push-10 pull-right">Courses: {{cat2.length}}</span>
-          <table class="table table-striped-gray table-header-bg">
-            <colgroup>
-
-              <col width="10%" />
-              <col width="90%" />
-            </colgroup>
-            <tbody>
-              <tr ng-repeat="row in cat2">
-                <td class="text-center"><label class="css-input css-radio css-radio-success css-radio-darker-outline push-10-r css-input-comparison">
-                                              <input type="radio" name="radio-comparison2" value="{{row.object_id}}" ng-model="$parent.radio_value2" required="required" ng-change="get_courses2($parent.school2, $parent.radio_value2)"><span></span>
-                                          </label>
-                </td>
-                <td class="text-right font-w600">{{row.name}}</td>
-
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
+    <div class="input-group input-group-lg push-15-t col-sm-9">
+      <input class="form-control" type="text" ng-model="inputKeyword" placeholder="Search keyword.." ng-keypress="pressedEnter($event)">
+      <div class="input-group-btn">
+        <button class="btn btn-default" ng-click="search()"><i class="fa fa-search"></i></button>
       </div>
     </div>
   </div>
+  <!-- Category Table -->
+  <div class="block block-rounded block-opt-refresh-icon8" id="loadingCategories" ng-show="showCategoryResults">
+    <div class="block-content block-content-full frame frame-white-track">
+      <div ng-show="results_categories.length==0" class="alert alert-warning">
+        <p><i class="fa fa-info-circle"></i> No matching categories.</p>
+      </div>
+      <table ng-show="results_categories.length>0" class="table table-striped-gray table-header-bg" st-pipe="callServer_categories" st-table="results_categories" style="table-layout: fixed;">
+        <colgroup>
+
+          <col width="50%" />
+          <col width="50%" />
+        </colgroup>
+        <thead>
+          <th st-sort="name">Category <span class="badge badge-info">{{count}}</span></th>
+          <th st-sort="university_school__school" st-sort-default="true">School</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="row in results_categories">
+            <td>{{row.name}}</td>
+            <td class="font-w500 text-left">
+              <div class="row">
+                <div class="col-sm-2">
+                  <img ng-src="{{row.logo_url}}" height="40" width="40">
+                </div>
+                <div class="col-sm-10">{{row.school_name}}<br>
+                  <span class="text-muted"><small class="text-uppercase" style="
+                    font-weight: 300;
+                    font-size: 12px;
+                    ">{{row.university_name}}</small></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <br><br>
+              <div class="btn-group pull-left tablepagenum">
+
+                <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
+                <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button>
+
+              </div>
+            </td>
+
+            <td class="text-center">
+              <br><br>
+              <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+  <!-- END Category Table -->
+  <!-- Course Table -->
+  <div class="block block-rounded block-opt-refresh-icon8" id="loadingCourses" ng-show="showCourseResults">
+    <div class="block-content block-content-full frame frame-white-track">
+      <div ng-show="results_courses.length==0" class="alert alert-warning">
+        <p><i class="fa fa-info-circle"></i> No matching courses.</p>
+      </div>
+      <table ng-show="results_courses.length>0" class="table table-striped-gray table-header-bg" st-pipe="callServer_courses" st-table="results_courses" style="table-layout: fixed;">
+        <colgroup>
+
+          <col width="30%" />
+          <col width="30%" />
+          <col width="40%" />
+        </colgroup>
+        <thead>
+          <th st-sort="name">Course <span class="badge badge-info">{{count}}</span></th>
+          <th>Category</th>
+          <th st-sort="university_school__school" st-sort-default="true">School</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="row in results_courses">
+            <td>{{row.name}}</td>
+            <td>
+              <span ng-repeat="c in row.categories">{{c.name}}<br ng-if="!$last"></span>
+            </td>
+            <td class="font-w500 text-left">
+              <div class="row">
+                <div class="col-sm-2">
+                  <img ng-src="{{row.logo_url}}" height="40" width="40">
+                </div>
+                <div class="col-sm-10">{{row.school_name}}<br>
+                  <span class="text-muted"><small class="text-uppercase" style="
+                    font-weight: 300;
+                    font-size: 12px;
+                    ">{{row.university_name}}</small></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <br><br>
+              <div class="btn-group pull-left tablepagenum">
+
+                <button type="button" ng-class="{'active':itemsByPage==25}" ng-click="itemsByPage=25" class="btn btn-default" data-js-blur>25</button>
+                <button type="button" ng-class="{'active':itemsByPage==50}" ng-click="itemsByPage=50" class="btn btn-default" data-js-blur>50</button>
+
+              </div>
+            </td>
+
+            <td class="text-center" colspan="2">
+              <br><br>
+              <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+  <!-- END Course Table -->
+
 </div>
-<!-- END Dashboard Charts -->
+<!-- END Page Body -->

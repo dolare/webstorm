@@ -129,6 +129,7 @@ class ResetPassword(generics.GenericAPIView):
         except UniversityCustomer.DoesNotExist:
             try:
                 user_reset = UpgridAccountManager.objects.get(email=request.data['email'])
+                user_reset.contact_name = user_reset.email
             except UpgridAccountManager.DoesNotExist:
                 return HttpResponse(text, HTTP_200_OK)
         if user_reset:

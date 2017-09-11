@@ -113,8 +113,10 @@ angular.module('myApp').factory("ajaxService",
 
       parsedParams += '&page=' + (Math.ceil(start / number) + 1);
       parsedParams += '&page_size=' + number;
-      parsedParams += '&ordering=' + (params.sort.reverse ? '-' : '') + (params.sort.predicate ? params.sort.predicate : '');
-      parsedParams += '&search=' + ((params.search.hasOwnProperty('predicateObject') && params.search.predicateObject.hasOwnProperty('searchValue')) ? params.search.predicateObject.searchValue : '');
+      if (params.sort.predicate)
+        parsedParams += '&ordering=' + (params.sort.reverse ? '-' : '') + params.sort.predicate;
+      if (params.search.hasOwnProperty('predicateObject') && params.search.predicateObject.hasOwnProperty('searchValue'))
+        parsedParams += '&search=' + params.search.predicateObject.searchValue;
 
       for (var f in filters) {
         if (filters[f] != null) {

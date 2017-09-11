@@ -109,7 +109,7 @@ comparison.controller('ComparisonController',
         $scope.courses1 = response.data;
 
         angular.forEach($scope.courses1, function(course, key) {
-          if (course.course_dates.length > 0 && course.tuition_number && !course.is_advanced_management_program)
+          if (course.course_dates.length > 0 && course.tuition_number && !course.is_advanced_management_program && course.type == 'onsite')
             course.edr = getEDR(course.course_dates[0].duration, course.course_dates[0].start_date, course.course_dates[0].end_date, course.tuition_number);
           else
             course.edr = null;
@@ -142,7 +142,7 @@ comparison.controller('ComparisonController',
         $scope.courses2 = response.data;
 
         angular.forEach($scope.courses2, function(course, key) {
-          if (course.course_dates.length > 0 && course.tuition_number && !course.is_advanced_management_program)
+          if (course.course_dates.length > 0 && course.tuition_number && !course.is_advanced_management_program && course.type == 'onsite')
             course.edr = getEDR(course.course_dates[0].duration, course.course_dates[0].start_date, course.course_dates[0].end_date, course.tuition_number);
           else
             course.edr = null;
