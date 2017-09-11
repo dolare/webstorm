@@ -473,6 +473,8 @@ controller('NonDegreeController', function(avatarService, $scope, $http, authent
 
   $scope.printReport = function() {
 
+    //$scope.open_legend = true
+
     $("#top-report").printThis({
       debug: false,
       importCSS: true,

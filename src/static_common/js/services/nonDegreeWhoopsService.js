@@ -1,6 +1,9 @@
 angular.module('myApp')
-.factory('nonDegreeWhoopsService', ['$http', '$q', '$filter', '$timeout', function ($http, $q, $filter, $timeout) {
+.factory('nonDegreeWhoopsService', ['avatarService', '$http', '$q', '$filter', '$timeout', function (avatarService, $http, $q, $filter, $timeout) {
 
+
+
+  var client_id = avatarService.getClientId() ? avatarService.getClientId() : "";
 //this would be the service to call your server, a standard bridge between your model an $http
 
 // the database (normally on your server)
@@ -21,7 +24,7 @@ angular.module('myApp')
           parsedParams += '&page_size=' + number;
 
           $http({
-            url: '/api/upgrid/non_degree/whoops_reports?'+ parsedParams,
+            url: '/api/upgrid/non_degree/whoops_reports?'+ parsedParams + '&client_id='+client_id,
             method: 'GET',
 
             headers: {

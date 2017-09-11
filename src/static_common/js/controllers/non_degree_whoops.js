@@ -68,7 +68,7 @@ function(avatarService, $scope, $http, authenticationSvc, avatarService, $timeou
         form.append(key, value);
 
         $http({
-            url: '/api/upgrid/non_degree/whoops_reports/'+ taskId + '?client_id='+client_id,
+            url: '/api/upgrid/non_degree/whoops_reports/'+ taskId,
             method: 'PATCH',
             headers: {'Authorization': 'JWT ' + token, 'Content-Type': undefined, },
             data: form,

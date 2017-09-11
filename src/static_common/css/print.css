@@ -346,3 +346,39 @@
   }
 
 }
+
+.non-degree-table-overview.table colgroup>col:nth-child(2) {
+  width: 90px !important;
+}
+
+
+.non-degree-table-overview.table colgroup>col:nth-child(3) {
+  width: 450px !important;
+}
+
+/*.overview-block > .block-content:first-child {
+  display: inline-block !important;
+  border-right: 1px solid;
+}
+
+.overview-block > .block-content:nth-child(2){
+  margin-top: 80px !important;
+  /*float: right !important;
+}*/
+.overview-block > .block-content {
+  text-align: center !important;
+}
+
+.overview-block > .block-content > div{
+  text-align: center !important;
+}
+
+
+
+.logo-bg {
+  width: 250px;
+}
+
+.ribbon-update.ribbon-success .ribbon-box {
+    background-color: #46c37b !important;
+}

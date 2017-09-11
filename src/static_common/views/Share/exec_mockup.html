@@ -13,17 +13,17 @@
 
             <div class="block" style="padding:50px 100px;margin:0; background:#f3f5f7">
                 <div class="row">
-                            <div class="col-sm-6 col-xs-6">
+                            <div class="col-sm-8 col-xs-8">
                           
 
                             <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
                             <small style="color:#aaa">upgrid.gridet.com</small>
 
-                            <div style="color: #666;">Exec. Tracking Report</div>
+                            <div style="color: #666;">Custom Program Marketing Benchmark Report</div>
                             </h1>
                             </div>
 
-                            <div class="col-sm-6 col-xs-6">
+                            <div class="col-sm-4 col-xs-4">
                             <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
                             </div>
                             </div>
@@ -58,13 +58,26 @@
                                     </li>
                                     
                                 </ul>
-                                <div class="block-content block-content-full bg-info text-center">
-	                                    <div class="h1 font-w700 text-white"><span class="h2 text-white-op"></span> 68</div>
-	                                    <div class="h5 text-white-op text-uppercase push-5-t">in percentile</div>
+                                <div class="block-content block-content-full bg-success text-center">
+	                                    <div class="h1 font-w700 text-white">
+
+                                        <span class="h1 text-white-op"></span> 
+
+                                        <div>
+                                        <div style="font-size: 55px;    display: inline-block;">88%</div>
+                                        <div style="font-size: 15px;    display: inline-block;"><small style="color:white; font-weight:400; font-size: 14px"><div><i class="fa fa-arrow-up" aria-hidden="true"></i> 7%</div></small></div>
+
+                                        </div>
+
+
+                                        </div>
+
+
+	                                    <div class="h5 text-white-op text-uppercase push-5-t">NATIONAL AVERAGE: 72%</div>
 	                                </div>
-	                                <div class="block-content block-content-full block-content-mini text-center">
+	                              <!--   <div class="block-content block-content-full block-content-mini text-center">
 	                                    <span class="text-success"><i class="fa fa-arrow-up text-success" aria-hidden="true"></i> 2 This week</span>
-	                                </div>
+	                                </div> -->
                             </div>
 
 
@@ -89,21 +102,21 @@
                                     <button type="button" data-toggle="dropdown">Filter <span class="caret"></span></button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li>
-                                            <a tabindex="-1" href="javascript:void(0)">School name</a>
+                                            <a tabindex="-1" href="javascript:void(0)">“A→Z”</a>
                                         </li>
 
                                         <li>
-                                            <a tabindex="-1" href="javascript:void(0)">Time</a>
+                                            <a tabindex="-1" href="javascript:void(0)">“New→Old”</a>
                                         </li>
 
                                         <li>
-                                            <a tabindex="-1" href="javascript:void(0)">Ranking</a>
+                                            <a tabindex="-1" href="javascript:void(0)">Evaluation</a>
                                         </li>
                                       
                                     </ul>
                                 </li>
                             </ul>
-                            <h3 class="block-title">All Schools &nbsp;<span class="badge" style="vertical-align: top;">13</span></h3>
+                            <h3 class="block-title">Schools &nbsp;<span class="badge" style="vertical-align: top;">13</span></h3>
                         </div>
                         <div class="block-content">
                             <div class="pull-t pull-r-l">
@@ -111,21 +124,24 @@
                                         <!-- For more info and examples you can check out http://kenwheeler.github.io/slick/ -->
                                         <div class="remove-margin-b">
                                             <div>
-                                                <table class="table remove-margin-b font-s13">
+                                                <table class="table remove-margin-b font-s13 exec_mockup">
                                                  <colgroup>
 								                      <col width="55%"/>
-								                      <col width="30%"/>
-								                      <col width="15%"/>
+								                      
+								                      <col width="20%"/>
+                                                      <col width="25%"/>
 								                  
 								                    </colgroup>
                                                     <tbody>
 
-                                                        <tr ng-repeat = "row in school_list">
+                                                        <tr ng-repeat = "row in school_list" ng-class="{'bg-cyan': row.name==='Wharton School of the University of Pennsylvania'}">
                                                             <td class="font-w600">
                                                                 <a href="javascript:void(0)">{{row.name}}</a>
                                                             </td>
-                                                            <td class="hidden-xs text-muted text-right" style="width: 70px;">{{row.report_date | amUtc |  amDateFormat:'MM-DD, YYYY'}}</td>
-                                                            <td class="font-w600 text-right" style="width: 70px;" ng-class="row.ranking_type ? 'text-success' : 'text-danger'"><i ng-class="row.ranking_type ? 'fa fa-arrow-up' : 'fa fa-arrow-down'" aria-hidden="true"></i> {{row.ranking}}</td>
+                                                            
+                                                            <td class="font-w600 text-right" style="width: 70px;" ng-class="row.ranking_type ? 'text-success' : 'text-danger'"><i ng-class="row.ranking_type ? 'fa fa-arrow-up' : 'fa fa-arrow-down'" aria-hidden="true"></i> {{row.ranking}}%</td>
+
+                                                            <td class="hidden-xs text-muted text-right" style="width: 70px;">{{row.report_date | amUtc  |  amDateFormat:'MM-DD, YYYY'}}</td>
                                                         </tr>
 
                                                      
@@ -155,29 +171,27 @@
                                             <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
                                         </li>
                                     </ul>
-                                    <h3 class="block-title">Top Products</h3>
+                                    <h3 class="block-title">School Breakdown - <span class="font-s16 text-primary" style="text-transform: initial;text-decoration: underline;">Wharton School of the University of Pennsylvania</span></h3>
                                 </div>
                                 <div class="block-content" style="padding:5px 10px">
-                                   
-
-
+                               
 
                                     <table class="table push-5">
                                     	 <colgroup>
 								                      <col width="15%"/>
 								                      <col width="20%"/>
-								                      <col width="45%"/>
-								                      <col width="20%"/>
+								                      <col width="35%"/>
+								                      <col width="30%"/>
 								                  
 								        </colgroup>
 
 
                                         <thead>
                                             <tr>
-                                                <th class="text-center" style="width: 50px;">Sections</th>
-                                                <th>Title</th>
-                                                <th class="hidden-xs" style="width: 15%;">Note</th>
-                                                <th class="text-center" style="width: 100px;">Rankings</th>
+                                                <th class="text-center" style="width: 50px;">Category</th>
+                                                <th>Category</th>
+                                                <th class="hidden-xs" style="width: 15%;">Details</th>
+                                                <th class="text-center" style="width: 100px;">Rating</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -186,14 +200,17 @@
                                         	<td class="text-center success text-success font-w600" rowspan="7">Program Introduction</td>
 
                                         	<td>Location</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Base Location: 
+Philadelphia, San Francisco, Beijing<br><br>
+
+Travel to Client: Y   <i class="fa fa-external-link text-primary" aria-hidden="true"></i></td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
@@ -204,7 +221,7 @@
                                         <tr>
                                         	
                                         	<td>Online programs avaialbility</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Online programs avaialbility  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Online program introduction video  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Sample of Online instruction: Accounting Analytics with Prof. Brian Bushee  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Sample of Online instruction: Introduction to Marketing with Profs. Barbara Kahn, Peter Fader, David Bell  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Sample of Online instruction: What Is Entrepreneurship? with Profs. Karl Ulrich, Laura Huang, and others <i class="fa fa-external-link text-primary" aria-hidden="true"></i></td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
@@ -222,14 +239,14 @@
                                         <tr>
                                         	
                                         	<td>Program features/overview</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="text-left" style="font-size: 90%;font-weight: 600;color: #c9c9c9;">N/A</td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
@@ -240,31 +257,37 @@
                                         <tr>
                                         	
                                         	<td>Video - promotional</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Faculty Introduction: Professor Peter Fader on Developing Leaders at Wharton  <a href="https://executiveeducation.wharton.upenn.edu/video?videoId=1_0w56swpu" target="_blank"><i class="fa fa-external-link text-primary" aria-hidden="true"></i></a><br><br>Faculty Introduction: Professor Peter Cappelli: on the Wharton Approach to successful program design  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Faculty Introduction: Professor Peter Cappelli on the importance of thinking differently and organizational change  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Faculty Introduction: Professor Barbara Kahn on the Wharton community and the network formed through lifelong learning  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Faculty Introduction: Professor Mike Useem on the need for effective leadership in the face of change  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Faculty Introduction: Professor Sigal Barsade on Wharton's leadership philosophy  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Faculty Introduction: Professor Michael Roberts on the Wharton School’s reputation as a leader in teaching finance  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Faculty Introduction: Professor Nancy Rothbard says Wharton prepares leaders for new challenges  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Faculty Introduction: Professor Barbara Kahn on Wharton’s expertise in teaching marketing to executives  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Faculty Introduction: Professor Harbir Singh on the value of strategic partnerships  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Client Testimonials 1  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Client Testimonials 2 <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>General introduction <i class="fa fa-external-link text-primary" aria-hidden="true"></i></td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
 
                                         </tr>
 
+                                        <!--  <i class="fa fa-external-link text-primary" aria-hidden="true"></i> -->
                                         <tr>
                                         	
                                         	<td>Faculty Introduction</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Statement 1: We teach new ways of thinking about business, culture, and life. Not only are executives going to be better leaders, but they are going to understand why.”
+— Peter Fader, PhD, Professor of Marketing, The Wharton School
+  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Statement 2: Executive education is a process of changing your organization. One of the key things we do for you is to get your leaders is to think differently.”
+— Peter Cappelli, DPhil, Professor of Management, The Wharton School  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Statement 3: Change is hard. Research tells us that most organizations’ efforts fail. In part, that failure is due to the effort change takes. It’s a lengthy process, and it can get derailed at a number of key points. Knowing where they are can help leaders keep things on track.”
+- Nancy Rothbard, PhD
+David Pottruck Professor; Chairperson, Management Department, The Wharton School  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br></td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
@@ -275,14 +298,14 @@
                                         <tr>
                                         	
                                         	<td>Brochure</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Downloadable Brochure: Y/N  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br></td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
@@ -292,16 +315,16 @@
 
                                         <tr>
                                         	
-                                        	<td>Fast Facts (ranking, alumni count, etc.)</td>
+                                        	<td>Fast Facts (Evaluation, alumni count, etc.)</td>
 
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="text-left" style="font-size: 90%;font-weight: 600;color: #c9c9c9;">N/A</td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
@@ -313,14 +336,14 @@
                                         	<td class="text-center info text-info font-w600" rowspan="4">Client</td>
 
                                         	<td>Partnership Process / Service Process</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Discovery - Design - Delivery - Impact and Measurement  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br></td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
@@ -332,7 +355,7 @@
                                         	
 
                                         	<td>Client Testimonials</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Testimonial 1: We looked at a few institutions. Wharton rose to the top, both because of their intellectual capital and branding but also because of their ability to work with us and the partnership we generated early on.” — Venu Krishnamurthy, Citigold Managing Director  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Testimonial 1: We looked at a few institutions. Wharton rose to the top, both because of their intellectual capital and branding but also because of their ability to work with us and the partnership we generated early on.” — Venu Krishnamurthy, Citigold Managing Director  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br></td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
@@ -351,14 +374,34 @@
                                         	
 
                                         	<td>Client List</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td><pre>Microsoft
+Santander bank
+Hyundai
+Merck
+AXA
+Mitsui & Co.
+DSM
+SCG
+Standard Bank
+Philips
+Braskem
+Schlumberger
+Women's World Banking  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br><br>Google
+Citi
+Nissan
+GSK
+China Minsheng Bank
+Estee Lauder
+Bradesco
+Evonik
+NFL  <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br></pre></td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
@@ -370,7 +413,7 @@
                                         	
 
                                         	<td>Client Success / case study / Curriculum sample</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Course 1 - Braskem <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>DSM <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Merck <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Philips <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>SCG <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Schlumberger <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br>Women's World Banking <i class="fa fa-external-link text-primary" aria-hidden="true"></i><br><br></td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
@@ -389,14 +432,14 @@
                                         	<td class="text-center danger text-danger font-w600" rowspan="3">Inquiry</td>
 
                                         	<td>FAQ</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="text-left" style="font-size: 90%;font-weight: 600;color: #c9c9c9;">N/A</td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
@@ -408,7 +451,7 @@
                                         	
 
                                         	<td>Inquiry Form/Contact US</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Y</td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
@@ -425,8 +468,9 @@
                                         <tr>
                                         	
 
-                                        	<td>Primary contact info</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Primary contact information</td>
+                                        	<td>tel: +1 (215) 746 8093
+<br>email: customprograms@wharton.upenn.edu</td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
                                                         <i class="fa fa-star"></i>
@@ -447,14 +491,14 @@
                                         	<td class="text-center warning text-warning font-w600" rowspan="5">Specific features</td>
 
                                         	<td>News</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="text-left" style="font-size: 90%;font-weight: 600;color: #c9c9c9;">N/A</td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
@@ -466,35 +510,33 @@
                                         	
 
                                         	<td>Awards</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="text-left" style="font-size: 90%;font-weight: 600;color: #c9c9c9;">N/A</td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
-
 
                                         </tr>
 
                                         <tr>
                                         	
 
-                                        	<td>Video - sample of course</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td>Video - course sample</td>
+                                        	<td class="text-left" style="font-size: 90%;font-weight: 600;color: #c9c9c9;">N/A</td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
-
 
                                         </tr>
 
@@ -503,14 +545,14 @@
                                         	
 
                                         	<td>Industries</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="text-left" style="font-size: 90%;font-weight: 600;color: #c9c9c9;">N/A</td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 
@@ -522,14 +564,14 @@
                                         	
 
                                         	<td>Skillsets/topics</td>
-                                        	<td>Lorem ipsum dolor sit amet, arcu fermentum libero, nec quis nonummy rhoncus nulla feugiat, id non porttitor fusce.</td>
+                                        	<td class="text-left" style="font-size: 90%;font-weight: 600;color: #c9c9c9;">N/A</td>
                                         	<td class="hidden-xs text-center">
                                                     <div class="text-warning">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
+                                                        <i class="fa fa-star text-ccc"></i>
                                                     </div>
                                                 </td>
 

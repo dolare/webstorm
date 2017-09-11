@@ -3,35 +3,37 @@ angular.module('myApp').controller('xdf',
     function($scope) {
     	 
       //for exec mockup page
-      $scope.school_list = [{
-        "name": "New York University",
+      $scope.school_list = [
+       {
+        "name": "Wharton School of the University of Pennsylvania",
+        "report_date": "2017-07-17T21:29:32.524895Z",
+        "ranking": 7,
+        "ranking_type": true 
+      },
+      {
+        "name": "New York University: Stern School of Business",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 1,
         "ranking_type": false
       },
      {
-        "name": "Fordham University",
+        "name": "Fordham University: Gabelli School of Business",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 4,
         "ranking_type": false
       },
 
       {
-        "name": "Columbia University",
+        "name": "Columbia University Business School",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 3,
         "ranking_type": false 
       },
 
-      {
-        "name": "Wharton School",
-        "report_date": "2017-07-17T21:29:32.524895Z",
-        "ranking": 5,
-        "ranking_type": true 
-      },
+     
 
       {
-        "name": "MIT",
+        "name": "MIT: Sloan School of Management",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 5,
         "ranking_type": false 
@@ -39,42 +41,42 @@ angular.module('myApp').controller('xdf',
 
 
       {
-        "name": "Yale University",
+        "name": "Yale: School of Management",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 9,
         "ranking_type": false 
       },
 
       {
-        "name": "London University",
+        "name": "London Business School",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 6,
         "ranking_type": true 
       },
 
       {
-        "name": "University of Chicago",
+        "name": "Chicago: Booth School of Business",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 7,
         "ranking_type": false 
       },
 
       {
-        "name": "Harvard University",
+        "name": "Harvard Business School",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 1,
         "ranking_type": true 
       },
 
       {
-        "name": "Stanford University",
+        "name": "Stanford Graduate School of Business",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 10,
         "ranking_type": false 
       },
 
       {
-        "name": "UC-Berkeley",
+        "name": "UC-Berkeley: Haas School of Business",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 2,
         "ranking_type": true 
@@ -88,7 +90,7 @@ angular.module('myApp').controller('xdf',
       },
 
       {
-        "name": "Northwestern",
+        "name": "Northwestern: Kellogg School of Management",
         "report_date": "2017-07-17T21:29:32.524895Z",
         "ranking": 5,
         "ranking_type": true 

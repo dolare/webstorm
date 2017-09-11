@@ -13,7 +13,7 @@
       <div class="alert alert-warning" role="alert" ng-if="schools.length==0">
         {{emptyWarning}}
       </div>
-      <table class="table table-hover" style="table-layout: fixed;" ng-if="schools.length>0">
+      <table class="table table-hover table-bordered" style="table-layout: fixed;" ng-if="schools.length>0">
         <colgroup>
           <col width="45%">
           <col width="15%">
@@ -21,10 +21,10 @@
         </colgroup>
         <thead class="thead-inverse">
           <tr class="bg-info" style="border: 1px solid #e3e3e3; color:white;">
-            <th style="padding-left:15px;" class="h4 font-w600">schools
+            <th style="padding-left:15px; border-right: 0" class="h4 font-w600">schools
             </th>
-            <th class="text-right">No. of reports</th>
-            <th class="text-right">reports</th>
+            <th class="text-right" style="border-left: 0; border-right: 0">No. of reports</th>
+            <th class="text-right" style="border-left: 0;"">reports</th>
           </tr>
         </thead>
         <tbody>

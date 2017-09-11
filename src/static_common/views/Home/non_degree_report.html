@@ -3,20 +3,20 @@
     
          
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-xs-6">
               <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
-                <small>upgrid.gridet.com</small><br>TRACKING REPORT
+                <small>upgrid.gridet.com</small><div>TRACKING REPORT</div>
               </h1>
               <div class="text-muted" style="
                 padding-left: 2px;
                 font-weight: 100;
                 ">Report View Date: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-xs-6">
               <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
             </div>
           </div>
-          <hr class="hidden-print">
+          <hr>
           <!-- Invoice Info -->
 
 
@@ -24,10 +24,10 @@
 
           <div class="row items-push-2x">
             <!-- Company Info -->
-            <div class="col-sm-4 push-15">
+            <div class="col-sm-4 col-xs-6 push-15">
 
                 <uib-accordion>
-                <div uib-accordion-group class="panel-default" is-open="open_legend">
+                <div uib-accordion-group class="panel-default non-degree-legend" is-open="open_legend">
 
                   <uib-accordion-heading style="
                   background: #FFF8DC;
@@ -49,34 +49,18 @@
                     "><span class="badge badge-danger">&nbsp;- 1</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>New Removal(s)</span></p>
                   <p class="push-5-t" style="
                     margin-bottom: 0;
-                    "><span style="
-                    color: #3c763d;
-                    background-color: #dff0d8;
-                    padding: 0 5px;
-                    border-left: 3px solid #3c763d;
-                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Category</span></p>
+                    "><span>CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Category</span></p>
                   <p class="push-5-t" style="
                     margin-bottom: 0;
-                    "><span style="
-                    color: #a94442;
-                    background-color: #f2dede;
-                    padding: 0 5px;
-                    border-left: 3px solid #a94442;
-                    ">CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Category</span></p>
+                    "><span>CATEGORY</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Category</span></p>
                   <p class="push-5-t" style="
                     margin-bottom: 0;
-                    "><span style="
-                    padding: 0 22px 0 8px;
-                    background: #46c37b;
-                    color: white;
-                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
+                    "><span>COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly added Course</span></p>
                   <p class="push-5-t" style="
                     margin-bottom: 0;
-                    "><span style="
-                    padding: 0 22px 0 8px;
-                    background: #d26a5c;
-                    color: white;
-                    ">COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
+                    "><span>COURSE</span>&nbsp;&nbsp;-&nbsp;&nbsp;<span>Newly removed Course</span></p>
+
+
                 </div>
               </uib-accordion>
 
@@ -103,9 +87,9 @@
           </div>
           <div class=" push-50">
           
-            <table class="table non-degree-table report_table2 table-bordered zebra-table" style="table-layout: fixed;">
+            <table class="table non-degree-table-overview report_table2 table-bordered zebra-table" style="table-layout: fixed;">
               <colgroup>
-                <col width="55px">
+                <col width="55px" class="hidden-print">
                 <col width="7%">
                 <col width="42%">
                 <col width="137px">
@@ -119,7 +103,7 @@
               <thead>
                 <tr class="font-w600 text-primary bg-" style="background: #edf6fd;">
 
-                  <td rowspan="2" class="bg-info" style="
+                  <td rowspan="2" class="bg-info hidden-print" style="
                     border-right: 0;
                     color: rgba(255,255,255,0.85);
                     border-left: 0;
@@ -177,9 +161,9 @@
               <!-- END table header -->
               <!-- table body -->
               <tbody>
-                <tr ng-repeat-start="row in schools | orderBy: 'school_name'">
+                <tr ng-repeat-start="row in schools | orderBy: 'school_name'" ng-class="{'hidden-print': !show_school[row.object_id]}">
 
-                  <td rowspan="2" class="text-center td-bordered">
+                  <td rowspan="2" class="text-center td-bordered hidden-print">
                   <!-- checkbox one -->
                     <label class="css-input css-checkbox css-checkbox-primary"  data-tooltip-placement="top">
 
@@ -193,7 +177,7 @@
                   <td style="
                     border-right: 0;
                     padding: 4px;
-                    " rowspan="2"><img class="logo-sm" ng-src="{{row.logo_url}}" alt="Logo of {{row.school_name}}" height="58" width="58"></td>
+                    " rowspan="2"><img class="logo-sm" id="non-degree-logo-sm" ng-src="{{row.logo_url}}" alt="Logo of {{row.school_name}}"></td>
                   <td class="font-w600 text-left" style="vertical-align: middle;text-align: left;border-left: 0;" rowspan="2">
 
                     <a data-js-blur class="link-effect" href="{{ '#school-' + $index }}" du-smooth-scroll>{{row.school_name}}
@@ -259,7 +243,7 @@
                     <div class="font-w100">{{row.date_created | amUtc | amLocal |  amDateFormat:'MM/DD'}}</div>
                   </td>
                 </tr>
-                <tr ng-repeat-end>
+                <tr ng-repeat-end ng-class="{'hidden-print': !show_school[row.object_id]}">
                   <td class="font-w500 text-left text-warning" style="vertical-align: middle;text-align: left;border-left: 0;padding: 5px 10px;">
 
                     <ul style="padding-left:20px; margin-bottom: 0">
@@ -303,26 +287,29 @@
             
               <!-- school overview -->
               <div class="col-sm-3">
-                <div class="block col-sm-12" style="
+
+                <div class="block col-sm-12 overview-block" style="
                   border: 1px solid #cfcfcf;
                   padding-left: 0;
                   padding-right: 0;
                   " ng-attr-id="{{ 'school-' + $index }}">
-                  <div class="block-header bg-gray-light" style="
+
+                  <div class="block-header bg-info text-white" style="
                     border-bottom: 1px solid #cfcfcf;
                     ">
                     <h3 class="block-title text-left">School Overview</h3>
                   </div>
-                  <div class="block-content block-content-full text-left bg-image" style="padding: 10px 15px;">
+
+                  <div class="block-content block-content-full text-left bg-image" style="padding: 10px 15px 0px 15px;background-color: white">
                     <div>
                       <img class="logo-bg" ng-src="{{row.logo_url}}" alt="Logo of {{row.school_name}}" width="50%">
                     </div>
-                  </div>
-                  <div class="text-left bg-gray-lighter" style="
-                    padding-left: 21px;
-                    padding-right: 21px;
+
+                    <div class="text-left" style="
+                    padding-left: 5px;
+                    padding-top: 10px;
                     padding-bottom: 15px;
-                    padding-top: 0px;
+                    padding-top: 10px;
                     border-bottom: 1px solid #e4e4e4;
                     ">
                     <div style="
@@ -336,6 +323,10 @@
                       <br>
                       <div class="push-15-t font-w600">Released: {{row.date_created | amUtc | amLocal |  amDateFormat:'MM/DD'}}</div>
                   </div>
+                  </div>
+
+
+                  
 
 
 
@@ -378,7 +369,7 @@
                   <!-- category header -->
                   <div style="
                     border: 1px solid #ddd;
-                    padding: 0px 0 18px 0;
+                    padding: 0px 0 24px 0;
                     margin-right: 1px;
                     border-top: 6px solid #70b9eb;
                     ">
@@ -467,28 +458,29 @@
                         <col width="11%">
                       </colgroup>
                       <thead>
-                        <tr class="font-w600 text-primary" style="background: #edf6fd;">
-                          <td class="bg-info" style="
-                            border-right: 0;
-                            "></td>
-                          <td class="text-info-light  text-left bg-info font-w400 text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px">COURSE</td>
+                        <tr class="font-w600 text-primary" style="border-top: 1px solid #ccc; border-bottom: 2px solid #ccc;">
 
-                          <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
+                          <td class="text-center" style="
+                            border-right: 0;
+                            ">#</td>
+                          <td class="text-left text-left ex-table-headercell" style="padding-left: 15px; padding-right: 15px; border-left: 0; border-right: 0;">COURSE</td>
+
+                          <td class="text-center ex-table-headercell " style="border-left: 0;border-right: 0;">
                             
                             FORMAT
                             
                           </td>
-                          <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
+                          <td class="text-center ex-table-headercell " style="border-left: 0;border-right: 0;">
                             
                             SCHEDULE
                             
                           </td>
-                          <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
+                          <td class="text-center ex-table-headercell " style="border-left: 0;border-right: 0;">
                            
                             TUITION
                            
                           </td>
-                          <td class="text-info-light bg-info text-center ex-table-headercell font-w400">
+                          <td class="text-center ex-table-headercell" style="border-left: 0;">
                            
                             URL
                           
