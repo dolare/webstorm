@@ -65,6 +65,8 @@ class SimpleObjectModelAdmin(AutoUserModelAdmin):
 
 
 class UniversityCustomerAdmin(admin.ModelAdmin):
+    # change_form_template = 'admin/upgrid/universitycustomer/change_form.html'
+
     readonly_fields = ('id', 'data_joined', )
 
     list_display = ('username', 'email', 'is_active', 'data_joined', )
@@ -112,6 +114,10 @@ class UniversityCustomerAdmin(admin.ModelAdmin):
             ]
         }),
     ]
+
+    # def save_model(self, request, obj, form, change):
+    #     obj.set_password(obj.password)
+    #     obj.save()
 
 
 class NonDegreeSharedReportAdmin(AutoUserModelAdmin):

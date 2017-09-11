@@ -1,11 +1,11 @@
 import django_filters
 from django.db.models import Q
-from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.filters import FilterSet
 
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeAMPReport, \
     NonDegreeCourseURL
-from ..models import NonDegreeReport, NonDegreeWhoopsReport
+from ..models import NonDegreeReport, NonDegreeWhoopsReport, UniversityCustomer
 
 
 class UniversitySchoolFilter(FilterSet):
@@ -72,8 +72,18 @@ class UniversitySchoolCategoryFilter(FilterSet):
 
 class NonDegreeWhoopsReportFilter(FilterSet):
     university_school = django_filters.UUIDFilter(name="university_school__object_id")
-    client_id = django_filters.UUIDFilter(name="university_school__non_degree_user__id")
+    client_id = django_filters.UUIDFilter(method="filter_client_id")
 
     class Meta:
         model = NonDegreeWhoopsReport
         fields = ['active', 'university_school', 'starred', 'completed', 'client_id', ]
+
+    def filter_client_id(self, queryset, name, value):
+        if not value:
+            return queryset
+        try:
+            user = UniversityCustomer.objects.get(id=value)
+        except ObjectDoesNotExist:
+            return NonDegreeWhoopsReport.objects.none()
+        queryset = queryset.filter(university_school=user.Ceeb).filter(active=True)
+        return queryset
