@@ -179,7 +179,7 @@ class CategoryListSerializer(ModelSerializer):
         url = NonDegreeCategoryURL.objects.filter(category=obj).filter(type__name='Main')
         if not url or url is None:
             return None
-        return url.first().webpage.url
+        return url.first().url
 
 
 class SharedReportSerializer(ModelSerializer):
@@ -226,7 +226,7 @@ class CourseSerializer(ModelSerializer):
         url = NonDegreeCourseURL.objects.filter(course=obj).filter(type__name='Main')
         if not url or url is None:
             return None
-        return url.first().webpage.url
+        return url.first().url
 
 
 class CourseURLListSerializer(ModelSerializer):
