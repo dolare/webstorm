@@ -19,12 +19,12 @@ class UpgridUserInterceptor(object):
             request.META[GRIDET_ATTR_KEY] = {}
 
         request.META[GRIDET_ATTR_KEY][GRIDET_APP_NAME] = 'upgrid'
-        request.META[GRIDET_ATTR_KEY][GRIDET_CUSTOMER_ID] = request.user.id
+        request.META[GRIDET_ATTR_KEY][GRIDET_CUSTOMER_ID] = str(request.user.id)
         if hasattr(request.user, 'username')\
                 and len(request.user.username) > 0:
             request.META[GRIDET_ATTR_KEY]['CUSTOMER_NAME'] = request.user.username
         if hasattr(request.user, 'email') \
                 and len(request.user.email) > 0:
-            request.META[GRIDET_ATTR_KEY]['CUSTOMER_EMAIL'] = request.user.email
+            request.META[GRIDET_ATTR_KEY]['CUSTOMER_EMAIL'] = str(request.user.email)
 
         return response
