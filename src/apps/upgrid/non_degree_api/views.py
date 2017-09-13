@@ -169,18 +169,28 @@ class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
         if 'school' not in request.data:
             raise ValidationError("School object_id is required.")
         try:
+            print('ddd')
             school = UniversitySchool.objects.get(object_id=request.data['school'])
+            print('liu')
         except UniversitySchool.DoesNotExist:
             raise ValidationError("Can not find school with this object_id.")
 
         categories = NonDegreeCategory.objects.filter(university_school=school).filter(active=True)
+        print('pkd')
         data = JSONRenderer().render(CategorySerializer(categories, many=True).data)
+        print(',.ks')
+        print(data)
         return data
 
     def create(self, request, *args, **kwargs):
         if not self.is_manager():
             return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
+
         request.data['categories'] = self.create_report(request)
+
+        #response = super(ReportCreateListAPI, self).create(request, *args, **kwargs)
+
+        #print(response)
 
         return super(ReportCreateListAPI, self).create(request, *args, **kwargs)
 
