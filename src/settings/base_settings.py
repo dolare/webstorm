@@ -111,6 +111,8 @@ MIDDLEWARE = (
     'service_interceptor.interceptors.ServiceInterceptor',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.upgrid.interceptors.UpgridUserInterceptor',
+
 )
 
 ROOT_URLCONF = 'urls'

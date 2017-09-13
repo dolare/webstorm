@@ -53,7 +53,10 @@
         </thead>
         <tbody>
           <tr ng-repeat="row in results_categories">
-            <td>{{row.name}}</td>
+            <td  class="result_name">
+              <span ng-if="!row.URL">{{row.name}}</span>
+              <a ng-if="row.URL" href="{{row.URL}}" target="_blank">{{row.name}}</a>
+            </td>
             <td class="font-w500 text-left">
               <div class="row">
                 <div class="col-sm-2">
@@ -112,7 +115,10 @@
         </thead>
         <tbody>
           <tr ng-repeat="row in results_courses">
-            <td>{{row.name}}</td>
+            <td class="result_name">
+              <span ng-if="!row.URL">{{row.name}}</span>
+              <a ng-if="row.URL" href="{{row.URL}}" target="_blank">{{row.name}}</a>
+            </td>
             <td>
               <span ng-repeat="c in row.categories">{{c.name}}<br ng-if="!$last"></span>
             </td>
@@ -154,6 +160,5 @@
 
   </div>
   <!-- END Course Table -->
-
 </div>
 <!-- END Page Body -->
