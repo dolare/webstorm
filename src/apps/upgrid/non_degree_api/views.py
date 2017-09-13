@@ -180,9 +180,14 @@ class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
     def create(self, request, *args, **kwargs):
         if not self.is_manager():
             return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
-        request.data['categories'] = self.create_report(request)
+        data = request.POST.copy()
+        data['categories'] = self.create_report(request)
 
-        return super(ReportCreateListAPI, self).create(request, *args, **kwargs)
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
