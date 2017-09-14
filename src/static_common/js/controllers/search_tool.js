@@ -84,6 +84,8 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
           });
 
           $timeout(function() {
+            // Add backslash "\" in front of the parentheses in seachKeyword so that the parentheses in table content could be matched by the following regex.
+            $scope.searchKeyword = $scope.searchKeyword.replace(/([\(\)])/g, '\\$1');
             // Create a regular expression with the searchKeyword.
             var regexp = new RegExp('(' + $scope.searchKeyword + ')', 'ig');
             // Put all matching string with span tag with the class "marked".
@@ -130,6 +132,8 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
           });
 
           $timeout(function() {
+            // Add backslash "\" in front of the parentheses in seachKeyword so that the parentheses in table content could be matched by the following regex.
+            $scope.searchKeyword = $scope.searchKeyword.replace(/([\(\)])/g, '\\$1');
             // Create a regular expression with the searchKeyword.
             var regexp = new RegExp('(' + $scope.searchKeyword + ')', 'ig');
             // Put all matching string with span tag with the class "marked".
