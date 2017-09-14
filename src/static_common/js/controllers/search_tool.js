@@ -24,12 +24,14 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
         if ($scope.searchType == 'categories') {
           $scope.categoryMode = true;
           $scope.courseMode = false;
+          $scope.tableCtrl_categories.tableState().pagination.start = 0; // Reset the item index to 0 so that the page could be reset to 0 before conducting a new search.
           $scope.tableCtrl_categories.pipe($scope.tableCtrl_categories.tableState());
           $scope.showCategoryResults = true;
         }
         else {
           $scope.categoryMode = false;
           $scope.courseMode = true;
+          $scope.tableCtrl_courses.tableState().pagination.start = 0; // Reset the item index to 0 so that the page could be reset to 0 before conducting a new search.
           $scope.tableCtrl_courses.pipe($scope.tableCtrl_courses.tableState());
           $scope.showCourseResults = true;
         }
