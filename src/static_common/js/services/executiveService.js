@@ -142,8 +142,21 @@ angular.module('myApp')
               var date_new = _.filter(course_data_copy[j].course_dates, function(num){ return num.end_date > course_data_copy[j].date_modified; });
               var date_old = _.filter(old_course_copy.course_dates, function(num){ return num.end_date > old_course_copy.date_modified; });
 
+              // Since it could happen that only one of date_new and date_old holds the new property "duration", which leads to showing update even the dates are the same, here we first create a copy of both date_new and date_old, remove the "duration" property of these 2 copies and then use them to do the comparison.
+              var date_newWithoutDuration = angular.copy(date_new);
+              angular.forEach(date_newWithoutDuration, function(date, index) {
+                if (date.hasOwnProperty('duration'))
+                  delete date.duration;
+              });
+
+              var date_oldWithoutDuration = angular.copy(date_old);
+              angular.forEach(date_oldWithoutDuration, function(date, index) {
+                if (date.hasOwnProperty('duration'))
+                  delete date.duration;
+              });
+
               //course_date
-              if(!_.isEqual(date_new, date_old)){
+              if(!_.isEqual(date_newWithoutDuration, date_oldWithoutDuration)){
 
                 console.log("old_course_copy.course_dates="+JSON.stringify(old_course_copy.course_dates));
 
@@ -364,6 +377,20 @@ angular.module('myApp')
             "school": "Darden School of Business",
             "university": "University of Virginia",
             "logo": "https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAhTAAAAJDk2OTlmM2U0LTJmOTktNGE1NC04ZThiLWIyZDk0ODQ2NTNjNA.png"
+        },
+        {
+            "object_id": "84c11511-648f-473d-8deb-7fdff36f6c64",
+            "ceeb": "5187_SBUS",
+            "school": "Goizueta Business School",
+            "university": "Emory University",
+            "logo": "https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAx-AAAAJGQ0ZTIyMzY0LWM2M2ItNDU4NS1iZDJhLThkZDQ3ODRkNWNhZA.png"
+        },
+        {
+            "object_id": "73560ad0-23aa-404d-8a91-85f0d1b07752",
+            "ceeb": "1871_GSM",
+            "school": "Owen Graduate School of Management",
+            "university": "Vanderbilt University",
+            "logo": "https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAOMAAAAJGRkZmRmZDZiLTkyZjctNDViMC04YjcxLWE2OGM5ZDI0MTU3Mg.png"
         },
     ];
 

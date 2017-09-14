@@ -106,8 +106,19 @@
                                                             
                                 </th> -->
 
-                                <th colspan="3" class="border-l border-r" style="background: #f0f4f8;">
+                                <th colspan="2" class="border-l border-r" style="background: #f0f4f8;">
                                     <input st-search="" class="form-control" placeholder="global search ..." type="text" />
+                                </th>
+
+                                <th colspan="1" class="border-l border-r" style="background: #f0f4f8;">
+                                    
+                                    <select ng-model="active_filter" st-search="is_active" class="form-control" id="select-type" name="select-type">
+                                        <option value="">----</option>
+                                        
+                                        <option value="true" selected>active</option>
+                                        <option value="false">inactive</option>
+                                    </select>
+
                                 </th>
 
                                 <th colspan="3" style="background: #f0f4f8;">
@@ -116,7 +127,7 @@
                                         <div class="col-sm-6">
                                         
                                             <select ng-model="demo_user" ng-change="filter_demo()" class="form-control" id="select-demo" name="select-demo">
-                                                <option value="">demo filter</option>
+                                                <option value="">select an account type</option>
                                                 <option value="regular">clients</option>
                                                 <option value="demo">demo</option>
                                             </select>
@@ -125,7 +136,7 @@
 
                                         <div class="col-sm-6">
                                             <select ng-model="nondegree_user" class="form-control" ng-change="filter_demo()" id="select-nondegree" name="select-nondegree">
-                                            <option value="">non degree filter</option>
+                                            <option value="">select a product line</option>
                                             <option value="regular">regular</option>
                                             <option value="non_degree">exec ed</option>
                                         </select>
@@ -145,7 +156,7 @@
                             </tr>
                         </thead>
 
-                        <tbody ng-repeat-start="row in displayeddata">
+                        <tbody ng-repeat-start="row in displayeddata | filter: {is_active: active_filter}">
 
                             <tr>
                                 <td>
