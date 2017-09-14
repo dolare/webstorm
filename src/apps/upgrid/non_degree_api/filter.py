@@ -1,7 +1,12 @@
 import django_filters
-from django.db.models import Q
+import operator
+from functools import reduce
+from django.db import models
+from django.utils import six
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.filters import FilterSet
+from django.utils.translation import ugettext_lazy as _
+from rest_framework.compat import distinct
+from rest_framework.filters import FilterSet, SearchFilter
 
 from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCourse, NonDegreeAMPReport, \
     NonDegreeCourseURL
@@ -86,4 +91,40 @@ class NonDegreeWhoopsReportFilter(FilterSet):
         except ObjectDoesNotExist:
             return NonDegreeWhoopsReport.objects.none()
         queryset = queryset.filter(university_school=user.Ceeb).filter(active=True)
+        return queryset
+
+
+class MultipleSearchFilter(SearchFilter):
+    """
+    Multiple search Filter
+    """
+    # The URL query parameter used for the search.
+    search_param = 'multiple_search'
+
+    search_title = _('Multiple Search')
+    search_description = _('A multiple search term.')
+
+    def filter_queryset(self, request, queryset, view):
+        search_fields = getattr(view, 'multiple_search_fields', None)
+        search_terms = self.get_search_terms(request)
+
+        if not search_fields or not search_terms:
+            return queryset
+
+        orm_lookups = [
+            self.construct_search(six.text_type(search_field))
+            for search_field in search_fields
+        ]
+
+        base = queryset
+        queries = []
+        for search_term in search_terms:
+            queries += [
+                models.Q(**{orm_lookup: search_term})
+                for orm_lookup in orm_lookups
+            ]
+        queryset = queryset.filter(reduce(operator.or_, queries))
+
+        if self.must_call_distinct(queryset, search_fields):
+            queryset = distinct(queryset, base)
         return queryset

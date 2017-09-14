@@ -27,7 +27,7 @@ from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer,
     NonDegreeWhoopsReportCreateSerializer, CourseSerializer, CategoryListSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter, \
-    UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter
+    UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter, MultipleSearchFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport, \
     NonDegreeWhoopsReport
 
@@ -568,12 +568,13 @@ class CategoryAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     """
     Get list of user categories API
     """
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter, MultipleSearchFilter)
     serializer_class = CategoryListSerializer
     pagination_class = BasePagination
     filter_class = UniversitySchoolCategoryFilter
 
     search_fields = ('name', )
+    multiple_search_fields = ('name', )
     ordering_fields = ('university_school__school', 'name', )
     ordering = ('university_school__school', 'name', )      # default ordering
 
@@ -591,12 +592,13 @@ class CourseAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     """
     Get list of user courses API
     """
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter, MultipleSearchFilter)
     serializer_class = CourseSerializer
     pagination_class = BasePagination
     filter_class = CourseFilter
 
     search_fields = ('name', )
+    multiple_search_fields = ('name', )
     ordering_fields = ('name', 'university_school__school',)
     ordering = ('university_school__school', 'name', )      # default ordering
 
