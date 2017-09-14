@@ -320,10 +320,15 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              $scope.e_show_update = updateService.updateEnhancement(response.data, 'admin', $scope.program_order);
              console.log('$scope.e_show_update = '+JSON.stringify($scope.e_show_update));
 
+             console.log("xoxoxo e_show_update = "+JSON.stringify($scope.e_show_update))
+             console.log("xoxoxo e_show_update['intl_eng_test'] = "+JSON.stringify($scope.e_show_update['intl_eng_test']))
+             console.log("xoxoxo e_show_update['intl_eng_test'][0] = "+JSON.stringify($scope.e_show_update['intl_eng_test'][0]))
+
+
              App.blocks('#enhancement_loading', 'state_normal');
              console.log("$scope.e_array_final= "+JSON.stringify($scope.e_array_final));
              console.log("e_update="+JSON.stringify($scope.e_update));
-             console.log("diff = "+JSON.stringify(response.data.initial_diff));
+             //console.log("diff = "+JSON.stringify(response.data.initial_diff));
           }).
            catch(function(error){
               console.log('an error occurred...'+JSON.stringify(error));
@@ -498,7 +503,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
         
 
         //push into array
-        //for 'ex', 'Intl_transcript' and 'Intl_eng_test'
+        //for 'ex', 'Intl_transcript' and 'intl_eng_test'
         if(keys.length === 0){
 
           console.log("check for 0 = "+_.has($scope.e_update[$scope.program_order[index]], category))
@@ -509,6 +514,27 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
             $scope.confirmed_diff_raw[$scope.program_order[index]][category] = $scope.e_update[$scope.program_order[index]][category];
             $scope.e_raw[index][category] = $scope.e_update[$scope.program_order[index]][category];
             console.log("checking $scope.e_raw[index][category]="+JSON.stringify($scope.e_raw[index][category]));
+            
+
+            //update
+            
+
+             for(i=0; i<$scope.e_array_final[5].length; i++){
+                $scope.e_array_final[5][i] = $scope.e_raw[i]['required_exam']
+             }
+
+             for(i=0; i<$scope.e_array_final[6].length; i++){
+                $scope.e_array_final[6][i] = $scope.e_raw[i]['intl_transcript']
+             }
+
+
+             for(i=0; i<$scope.e_array_final[7].length; i++){
+                $scope.e_array_final[7][i] = $scope.e_raw[i]['intl_eng_test']
+             }
+
+
+
+
           }
 
         } else {

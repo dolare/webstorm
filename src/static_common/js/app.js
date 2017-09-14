@@ -931,6 +931,8 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
+                              'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js',
                               '/static/js/services/executiveService.js',
                               '/static/js/services/ajaxService.js',
                               '/static/js/third-party/clipboard.min.js',

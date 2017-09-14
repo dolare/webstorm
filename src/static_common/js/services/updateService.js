@@ -563,16 +563,25 @@ angular.module('myApp')
                   var deadline_fall_early_get_deadline_fall_early_month_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_early_month_display
                   var deadline_fall_early_get_deadline_fall_early_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_early_day_display 
 
-                  e_show_update['deadline_fall_early'][key] 
-                  = ((deadline_fall_early_get_deadline_fall_early_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_month_display : e_raw[key]['deadline'].get_deadline_fall_early_month_display)
-                    ? (deadline_fall_early_get_deadline_fall_early_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_month_display : e_raw[key]['deadline'].get_deadline_fall_early_month_display)
-                    : "")
-                  + ' '
-                  + ((deadline_fall_early_get_deadline_fall_early_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_day_display : e_raw[key]['deadline'].get_deadline_fall_early_day_display)
-                    ? (deadline_fall_early_get_deadline_fall_early_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_day_display : e_raw[key]['deadline'].get_deadline_fall_early_day_display)
-                    : "")
-                  
+                  // e_show_update['deadline_fall_early'][key] 
+                  // = ((deadline_fall_early_get_deadline_fall_early_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_month_display : e_raw[key]['deadline'].get_deadline_fall_early_month_display)
+                  //   ? (deadline_fall_early_get_deadline_fall_early_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_month_display : e_raw[key]['deadline'].get_deadline_fall_early_month_display)
+                  //   : "")
+                  // + ' '
+                  // + ((deadline_fall_early_get_deadline_fall_early_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_day_display : e_raw[key]['deadline'].get_deadline_fall_early_day_display)
+                  //   ? (deadline_fall_early_get_deadline_fall_early_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_day_display : e_raw[key]['deadline'].get_deadline_fall_early_day_display)
+                  //   : "")
 
+                  e_show_update['deadline_fall_early'][key] 
+                  = (deadline_fall_early_get_deadline_fall_early_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_month_display : '')
+                  + ' '
+                  + (deadline_fall_early_get_deadline_fall_early_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_early_day_display : '')
+                    
+
+                  if(e_show_update['deadline_fall_early'][key]===' '){
+                    e_show_update['deadline_fall_early'][key] = 'N/A'
+                  }
+                  
                   set_null(e_show_update,'deadline_fall_early', key)
 
                 }
@@ -590,15 +599,23 @@ angular.module('myApp')
                   var deadline_fall_late_get_deadline_fall_late_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_fall_late_day_display 
 
 
+                  // e_show_update['deadline_fall_late'][key] 
+                  // = ((deadline_fall_late_get_deadline_fall_late_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_month_display : e_raw[key]['deadline'].get_deadline_fall_late_month_display)
+                  //   ? (deadline_fall_late_get_deadline_fall_late_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_month_display : e_raw[key]['deadline'].get_deadline_fall_late_month_display)
+                  //   : "")
+                  // + ' '
+                  // + ((deadline_fall_late_get_deadline_fall_late_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_day_display : e_raw[key]['deadline'].get_deadline_fall_late_day_display)
+                  //   ? (deadline_fall_late_get_deadline_fall_late_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_day_display : e_raw[key]['deadline'].get_deadline_fall_late_day_display)
+                  //   : "")
+
                   e_show_update['deadline_fall_late'][key] 
-                  = ((deadline_fall_late_get_deadline_fall_late_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_month_display : e_raw[key]['deadline'].get_deadline_fall_late_month_display)
-                    ? (deadline_fall_late_get_deadline_fall_late_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_month_display : e_raw[key]['deadline'].get_deadline_fall_late_month_display)
-                    : "")
+                  = (deadline_fall_late_get_deadline_fall_late_month_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_month_display : '')
                   + ' '
-                  + ((deadline_fall_late_get_deadline_fall_late_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_day_display : e_raw[key]['deadline'].get_deadline_fall_late_day_display)
-                    ? (deadline_fall_late_get_deadline_fall_late_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_day_display : e_raw[key]['deadline'].get_deadline_fall_late_day_display)
-                    : "")
-                  
+                  + (deadline_fall_late_get_deadline_fall_late_day_display ? e_update_diff[value]['deadline'].get_deadline_fall_late_day_display : '')
+                   
+                  if(e_show_update['deadline_fall_late'][key]===' '){
+                    e_show_update['deadline_fall_late'][key] = 'N/A'
+                  }
 
                   set_null(e_show_update,'deadline_fall_late', key)
 
@@ -617,15 +634,24 @@ angular.module('myApp')
                   var deadline_spring_early_get_deadline_spring_early_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_spring_early_day_display 
 
 
+                  // e_show_update['deadline_spring_early'][key] 
+                  // = ((deadline_spring_early_get_deadline_spring_early_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_month_display : e_raw[key]['deadline'].get_deadline_spring_early_month_display)
+                  //   ? (deadline_spring_early_get_deadline_spring_early_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_month_display : e_raw[key]['deadline'].get_deadline_spring_early_month_display)
+                  //   : "")
+                  // + ' '
+                  // + ((deadline_spring_early_get_deadline_spring_early_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_day_display : e_raw[key]['deadline'].get_deadline_spring_early_day_display)
+                  //   ? (deadline_spring_early_get_deadline_spring_early_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_day_display : e_raw[key]['deadline'].get_deadline_spring_early_day_display)
+                  //   : "")
                   e_show_update['deadline_spring_early'][key] 
-                  = ((deadline_spring_early_get_deadline_spring_early_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_month_display : e_raw[key]['deadline'].get_deadline_spring_early_month_display)
-                    ? (deadline_spring_early_get_deadline_spring_early_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_month_display : e_raw[key]['deadline'].get_deadline_spring_early_month_display)
-                    : "")
+                  = (deadline_spring_early_get_deadline_spring_early_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_month_display : '')
                   + ' '
-                  + ((deadline_spring_early_get_deadline_spring_early_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_day_display : e_raw[key]['deadline'].get_deadline_spring_early_day_display)
-                    ? (deadline_spring_early_get_deadline_spring_early_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_day_display : e_raw[key]['deadline'].get_deadline_spring_early_day_display)
-                    : "")
-                  
+                  + (deadline_spring_early_get_deadline_spring_early_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_early_day_display : '')
+                    
+
+                  if(e_show_update['deadline_spring_early'][key]===' '){
+                    e_show_update['deadline_spring_early'][key] = 'N/A'
+                  }
+
 
                   set_null(e_show_update,'deadline_spring_early', key)
 
@@ -644,15 +670,24 @@ angular.module('myApp')
                   var deadline_spring_late_get_deadline_spring_late_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_spring_late_day_display 
 
 
+                  // e_show_update['deadline_spring_late'][key] 
+                  // = ((deadline_spring_late_get_deadline_spring_late_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_month_display : e_raw[key]['deadline'].get_deadline_spring_late_month_display)
+                  //   ? (deadline_spring_late_get_deadline_spring_late_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_month_display : e_raw[key]['deadline'].get_deadline_spring_late_month_display)
+                  //   : "")
+                  // + ' '
+                  // + ((deadline_spring_late_get_deadline_spring_late_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_day_display : e_raw[key]['deadline'].get_deadline_spring_late_day_display)
+                  //   ? (deadline_spring_late_get_deadline_spring_late_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_day_display : e_raw[key]['deadline'].get_deadline_spring_late_day_display)
+                  //   : "")
                   e_show_update['deadline_spring_late'][key] 
-                  = ((deadline_spring_late_get_deadline_spring_late_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_month_display : e_raw[key]['deadline'].get_deadline_spring_late_month_display)
-                    ? (deadline_spring_late_get_deadline_spring_late_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_month_display : e_raw[key]['deadline'].get_deadline_spring_late_month_display)
-                    : "")
+                  = (deadline_spring_late_get_deadline_spring_late_month_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_month_display : '')
                   + ' '
-                  + ((deadline_spring_late_get_deadline_spring_late_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_day_display : e_raw[key]['deadline'].get_deadline_spring_late_day_display)
-                    ? (deadline_spring_late_get_deadline_spring_late_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_day_display : e_raw[key]['deadline'].get_deadline_spring_late_day_display)
-                    : "")
-                  
+                  + (deadline_spring_late_get_deadline_spring_late_day_display ? e_update_diff[value]['deadline'].get_deadline_spring_late_day_display : '')
+                    
+
+                  if(e_show_update['deadline_spring_late'][key]===' '){
+                    e_show_update['deadline_spring_late'][key] = 'N/A'
+                  }
+
 
                   set_null(e_show_update,'deadline_spring_late', key)
 
@@ -670,15 +705,23 @@ angular.module('myApp')
                   var deadline_summer_early_get_deadline_summer_early_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_summer_early_day_display 
 
 
+                  // e_show_update['deadline_summer_early'][key] 
+                  // = ((deadline_summer_early_get_deadline_summer_early_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_month_display : e_raw[key]['deadline'].get_deadline_summer_early_month_display)
+                  //   ? (deadline_summer_early_get_deadline_summer_early_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_month_display : e_raw[key]['deadline'].get_deadline_summer_early_month_display)
+                  //   : "")
+                  // + ' '
+                  // + ((deadline_summer_early_get_deadline_summer_early_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_day_display : e_raw[key]['deadline'].get_deadline_summer_early_day_display)
+                  //   ? (deadline_summer_early_get_deadline_summer_early_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_day_display : e_raw[key]['deadline'].get_deadline_summer_early_day_display)
+                  //   : "")
                   e_show_update['deadline_summer_early'][key] 
-                  = ((deadline_summer_early_get_deadline_summer_early_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_month_display : e_raw[key]['deadline'].get_deadline_summer_early_month_display)
-                    ? (deadline_summer_early_get_deadline_summer_early_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_month_display : e_raw[key]['deadline'].get_deadline_summer_early_month_display)
-                    : "")
+                  = (deadline_summer_early_get_deadline_summer_early_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_month_display : '')
                   + ' '
-                  + ((deadline_summer_early_get_deadline_summer_early_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_day_display : e_raw[key]['deadline'].get_deadline_summer_early_day_display)
-                    ? (deadline_summer_early_get_deadline_summer_early_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_day_display : e_raw[key]['deadline'].get_deadline_summer_early_day_display)
-                    : "")
-                  
+                  + (deadline_summer_early_get_deadline_summer_early_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_early_day_display : '')
+                    
+
+                  if(e_show_update['deadline_summer_early'][key]===' '){
+                    e_show_update['deadline_summer_early'][key] = 'N/A'
+                  }
 
                   set_null(e_show_update,'deadline_summer_early', key)
 
@@ -697,14 +740,26 @@ angular.module('myApp')
                   var deadline_summer_late_get_deadline_summer_late_day_display = (((e_update_diff||{})[value]||{})['deadline']||{}).get_deadline_summer_late_day_display 
 
 
+                  // e_show_update['deadline_summer_late'][key] 
+                  // = ((deadline_summer_late_get_deadline_summer_late_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_month_display : e_raw[key]['deadline'].get_deadline_summer_late_month_display)
+                  //   ? (deadline_summer_late_get_deadline_summer_late_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_month_display : e_raw[key]['deadline'].get_deadline_summer_late_month_display)
+                  //   : "")
+                  // + ' '
+                  // + ((deadline_summer_late_get_deadline_summer_late_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_day_display : e_raw[key]['deadline'].get_deadline_summer_late_day_display)
+                  //   ? (deadline_summer_late_get_deadline_summer_late_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_day_display : e_raw[key]['deadline'].get_deadline_summer_late_day_display)
+                  //   : "")
+
                   e_show_update['deadline_summer_late'][key] 
-                  = ((deadline_summer_late_get_deadline_summer_late_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_month_display : e_raw[key]['deadline'].get_deadline_summer_late_month_display)
-                    ? (deadline_summer_late_get_deadline_summer_late_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_month_display : e_raw[key]['deadline'].get_deadline_summer_late_month_display)
-                    : "")
+                  = (deadline_summer_late_get_deadline_summer_late_month_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_month_display : '')
                   + ' '
-                  + ((deadline_summer_late_get_deadline_summer_late_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_day_display : e_raw[key]['deadline'].get_deadline_summer_late_day_display)
-                    ? (deadline_summer_late_get_deadline_summer_late_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_day_display : e_raw[key]['deadline'].get_deadline_summer_late_day_display)
-                    : "")
+                  + (deadline_summer_late_get_deadline_summer_late_day_display ? e_update_diff[value]['deadline'].get_deadline_summer_late_day_display : '')
+                    
+
+                  if(e_show_update['deadline_summer_late'][key]===' '){
+                    e_show_update['deadline_summer_late'][key] = 'N/A'
+                  }
+
+
                   
 
                   set_null(e_show_update,'deadline_summer_late', key)
@@ -748,13 +803,13 @@ angular.module('myApp')
                   var scholarship_deadline_scholarship_deadline_day = (((e_update_diff||{})[value]||{})['deadline']||{}).scholarship_deadline_day 
 
                   e_show_update['scholarship_deadline'][key] 
-                  = ((scholarship_deadline_scholarship_deadline_month ? e_update_diff[value]['deadline'].scholarship_deadline_month : e_raw[key]['deadline'].scholarship_deadline_month)
-                    ? (scholarship_deadline_scholarship_deadline_month ? e_update_diff[value]['deadline'].scholarship_deadline_month : e_raw[key]['deadline'].scholarship_deadline_month)
-                    : "")
+                  = (scholarship_deadline_scholarship_deadline_month ? e_update_diff[value]['deadline'].scholarship_deadline_month : '')
                   + '/'
-                  + ((scholarship_deadline_scholarship_deadline_day ? e_update_diff[value]['deadline'].scholarship_deadline_day : e_raw[key]['deadline'].scholarship_deadline_day)
-                    ? (scholarship_deadline_scholarship_deadline_day ? e_update_diff[value]['deadline'].scholarship_deadline_day : e_raw[key]['deadline'].scholarship_deadline_day)
-                    : "")
+                  + (scholarship_deadline_scholarship_deadline_day ? e_update_diff[value]['deadline'].scholarship_deadline_day : '')
+
+                  if(e_show_update['scholarship_deadline'][key] === '/') {
+                    e_show_update['scholarship_deadline'][key] = 'N/A'
+                  }
 
                   set_null(e_show_update,'scholarship_deadline', key)
 
@@ -774,14 +829,13 @@ angular.module('myApp')
 
 
                   e_show_update['international_deadline'][key] 
-                  = ((international_deadline_get_international_deadline_month_display ? e_update_diff[value]['deadline'].get_international_deadline_month_display : e_raw[key]['deadline'].get_international_deadline_month_display)
-                    ? (international_deadline_get_international_deadline_month_display ? e_update_diff[value]['deadline'].get_international_deadline_month_display : e_raw[key]['deadline'].get_international_deadline_month_display)
-                    : "")
+                  = (international_deadline_get_international_deadline_month_display ? e_update_diff[value]['deadline'].get_international_deadline_month_display : '')
                   + ' '
-                  + ((international_deadline_get_international_deadline_day_display ? e_update_diff[value]['deadline'].get_international_deadline_day_display : e_raw[key]['deadline'].get_international_deadline_day_display)
-                    ? (international_deadline_get_international_deadline_day_display ? e_update_diff[value]['deadline'].get_international_deadline_day_display : e_raw[key]['deadline'].get_international_deadline_day_display)
-                    : "")
+                  + (international_deadline_get_international_deadline_day_display ? e_update_diff[value]['deadline'].get_international_deadline_day_display : '')
                   
+                  if(e_show_update['international_deadline'][key] = ' '){
+                    e_show_update['international_deadline'][key] = 'N/A'
+                  }
 
                   set_null(e_show_update,'international_deadline', key)
 
@@ -1316,6 +1370,7 @@ angular.module('myApp')
                   (((e_update_diff||{})[value]||{}).hasOwnProperty('intl_eng_test')) 
                  ){
 
+                  
                   create_array(e_show_update,'intl_eng_test', order);
 
                    var eng_tests = [];
@@ -1324,9 +1379,12 @@ angular.module('myApp')
                       eng_tests.push(e_update_diff[value]['intl_eng_test'][k].name)
                     }
 
+                    console.log("xxxxxx eng_tests="+JSON.stringify(eng_tests, null, 4))
+
                     e_show_update['intl_eng_test'][key] 
                     = eng_tests.join(", ")
 
+                   
                   set_null(e_show_update,'intl_eng_test', key)
 
                 }

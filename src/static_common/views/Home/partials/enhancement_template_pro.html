@@ -37,7 +37,7 @@
                             </style>
                             <div class="row">
                             <div class="col-sm-6">
-                          
+                            
 
                             <h1 class="page-heading" style="margin-top:0; margin-bottom: 0">
                             <small>upgrid.gridet.com</small>
@@ -2651,7 +2651,7 @@
                                                 </td>
                                         </tr>
 
-                                        <tr  ng-hide = "only_update && !e_show_update['Intl_eng_test'].length">
+                                        <tr  ng-hide = "only_update && !e_show_update['intl_eng_test'].length">
                                             <td class="text-primary font-w600" style="vertical-align: middle">English language test</td>
 
                                             <td class="ribbon ribbon-modern ribbon-city ribbon-update" ng-class="{'bg-highlight' :row.length === 0 && $index === 0,  'bg-gray-lighter' :row.length === 0 && $index !== 0}" ng-repeat = "row in e_array_final[7]">
@@ -2661,29 +2661,33 @@
                                                 mwl-confirm
                                                 title="{{popover.title}}"
 
-                                                message="{{e_show_update['Intl_eng_test'][$index]}}"
+                                                message="{{e_show_update['intl_eng_test'][$index]}}"
 
                                                 confirm-text="{{popover.confirmText}}"
                                                 cancel-text="{{popover.cancelText}}"
                                                 placement="top-right"
-                                                on-confirm="confirm_update('Intl_eng_test', $index, [])"
+                                                on-confirm="confirm_update('intl_eng_test', $index, [])"
                                                 on-cancel=""
                                                 confirm-button-type="danger"
                                                 cancel-button-type="default"
                                                 animation="true"
                                                 
 
-                                                ng-show="e_show_update['Intl_eng_test'][$index]"
-                                                is-disabled = "!e_show_update['Intl_eng_test'][$index]">                        
+
+                                                ng-show="e_show_update['intl_eng_test'][$index]"
+                                                is-disabled = "!e_show_update['intl_eng_test'][$index]">                        
                                                     <span><i class="fa fa-star"></i>
                                                     </span>                                   
                                                 </div> 
+
+
 
                                                     <span ng-if="row.length !== 0">
                                                         <span ng-repeat="row2 in row">{{row2.name}}<br>
                                                         </span>
 
                                                     </span>
+
                                             
                                                     <span ng-class="{'font-w600 text-warning label-na' : $index === 0, 'font-w600 text-gray label-na' : $index !== 0}" ng-if="row.length === 0" >
                                                         N/A
