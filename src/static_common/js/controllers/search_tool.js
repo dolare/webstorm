@@ -24,12 +24,14 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
         if ($scope.searchType == 'categories') {
           $scope.categoryMode = true;
           $scope.courseMode = false;
+          $scope.tableCtrl_categories.tableState().pagination.start = 0; // Reset the item index to 0 so that the page could be reset to 0 before conducting a new search.
           $scope.tableCtrl_categories.pipe($scope.tableCtrl_categories.tableState());
           $scope.showCategoryResults = true;
         }
         else {
           $scope.categoryMode = false;
           $scope.courseMode = true;
+          $scope.tableCtrl_courses.tableState().pagination.start = 0; // Reset the item index to 0 so that the page could be reset to 0 before conducting a new search.
           $scope.tableCtrl_courses.pipe($scope.tableCtrl_courses.tableState());
           $scope.showCourseResults = true;
         }
@@ -82,6 +84,8 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
           });
 
           $timeout(function() {
+            // Add backslash "\" in front of the parentheses in seachKeyword so that the parentheses in table content could be matched by the following regex.
+            $scope.searchKeyword = $scope.searchKeyword.replace(/([\(\)])/g, '\\$1');
             // Create a regular expression with the searchKeyword.
             var regexp = new RegExp('(' + $scope.searchKeyword + ')', 'ig');
             // Put all matching string with span tag with the class "marked".
@@ -128,6 +132,8 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
           });
 
           $timeout(function() {
+            // Add backslash "\" in front of the parentheses in seachKeyword so that the parentheses in table content could be matched by the following regex.
+            $scope.searchKeyword = $scope.searchKeyword.replace(/([\(\)])/g, '\\$1');
             // Create a regular expression with the searchKeyword.
             var regexp = new RegExp('(' + $scope.searchKeyword + ')', 'ig');
             // Put all matching string with span tag with the class "marked".
