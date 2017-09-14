@@ -1,0 +1,168 @@
+{
+  "Leadership": {
+    "Leadership": 137,
+    "Leading": 75,
+    "Leaders": 23,
+    "Leader": 14,
+    "Lead": 3
+  },
+  "Strategic": {
+    "Strategic": 70,
+    "Strategy": 58,
+    "Strategies": 36,
+    "Strategically": 2,
+    "Strategizing": 1
+  },
+  "Executive": {
+    "Executive": 57,
+    "Executives": 27
+  },
+  "Innovation": {
+    "Innovation": 43,
+    "Innovative": 7,
+    "Innovate": 2,
+    "Innovations": 2,
+    "Innovating": 1,
+    "Innovator's": 1
+  },
+  "Marketing": {
+    "Marketing": 38,
+    "Markets": 8,
+    "Pricing": 7,
+    "Brand": 3,
+    "Branding": 3,
+    "BUNDLE": 3,
+    "Go-to-market": 2,
+    "Market": 1
+  },
+  "Management": {
+    "Management": 91,
+    "Managing": 17,
+    "Managers": 9,
+    "Operations": 8,
+    "Manager": 4,
+    "Decision-Making": 4,
+    "Decisions": 2,
+    "Managerial": 2
+  },
+  "Business": {
+    "Business": 49,
+    "Businesses": 3
+  },
+  "Development": {
+    "Development": 35,
+    "Developing": 14,
+    "Develop": 1
+  },
+  "Advanced": {
+    "Advanced": 30,
+    "Advantage": 9
+  },
+  "Global": {
+    "Global": 29,
+    "Globally": 2,
+    "Globalization": 1
+  },
+  "Corporate": {
+    "Corporate": 27,
+    "Corporations": 1
+  },
+  "Value": {
+    "Value": 24,
+    "Valuation": 7
+  },
+  "Change": {
+    "Change": 20,
+    "Changing": 5,
+    "Game-Changing": 2
+  },
+  "Performance": {
+    "Performance": 20,
+    "High-Performance": 5,
+    "Performing": 3,
+    "High-Performing": 2
+  },
+  "Organizational": {
+    "Organizational": 19,
+    "Organizations": 9,
+    "Organization": 8
+  },
+  "Impact": {
+    "Impact": 17,
+    "High-Impact": 3,
+    "Impactful": 1
+  },
+  "Analytics": {
+    "Analytics": 16,
+    "Analysis": 9,
+    "Analyst": 2
+  },
+  "Creating": {
+    "Creating": 16,
+    "Creation": 7,
+    "Creative": 2,
+    "Co-Creating": 1,
+    "Create": 1,
+    "Creativity": 1
+  },
+  "Teams": {
+    "Teams": 15,
+    "Team": 3
+  },
+  "Driving": {
+    "Driving": 15,
+    "Drive": 1,
+    "Driven": 1
+  },
+  "Growth": {
+    "Growth": 14,
+    "Growing": 2
+  },
+  "Competitive": {
+    "Competitive": 13,
+    "Competing": 2,
+    "Competencies": 1
+  },
+  "Design": {
+    "Design": 13,
+    "Designing": 2
+  },
+  "Negotiation": {
+    "Negotiation": 13,
+    "Negotiating": 4,
+    "Negotiations": 2
+  },
+  "Effective": {
+    "Effective": 12,
+    "Effectiveness": 4
+  },
+  "Maximizing": {
+    "Maximizing": 11,
+    "Maximize": 1,
+    "Maximum": 1
+  },
+  "Building": {
+    "Building": 10,
+    "Build": 2,
+    "Builds": 1
+  },
+  "Finance": {
+    "Finance": 27,
+    "Financial": 13,
+    "Economics": 3,
+    "Economy": 1,
+    "Ecosystem": 1,
+    "Ecosystems": 1,
+    "Financing": 1,
+    "Macroeconomics": 1
+  },
+  "Sales": {
+    "Sales": 10,
+    "Selling": 1
+  },
+  "Entrepreneurship": {
+    "Entrepreneurship": 6,
+    "Entrepreneur": 1,
+    "Entrepreneurial": 1
+  }
+}
