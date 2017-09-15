@@ -102,7 +102,6 @@ class UniversityCustomerAdmin(admin.ModelAdmin):
         ('Sub User', {
             'fields': [
                 'main_user_id',
-                'service_level',
                 'title',
                 'contact_name',
                 'position',
