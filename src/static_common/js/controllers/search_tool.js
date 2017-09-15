@@ -10,6 +10,13 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
     $scope.showCourseResults = false;
     $scope.itemsByPage = 25;
 
+    $http({
+      method: 'GET',
+      url: '/static/data/keyword.json'
+    }).then(function(resp_keyword_clusters) {
+      $scope.keywordClusters = resp_keyword_clusters.data;
+    });
+
     // When clicking on the search button, clear old results and call corresponding smart table pipe function.
     $scope.search = function() {
       // If inputKeyword is an empty string or a string that only consists of spaces, it wouldn't do the search.

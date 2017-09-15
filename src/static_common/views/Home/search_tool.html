@@ -29,11 +29,14 @@
       
     </div>
     <div class="input-group input-group-lg push-15-t col-sm-9">
-      <input class="form-control" type="text" ng-model="inputKeyword" placeholder="Search keyword.." ng-keypress="pressedEnter($event)">
+      <input class="form-control" id="input-search" type="text" ng-model="inputKeyword" placeholder="Search keyword.." ng-keypress="pressedEnter($event)">
       <div class="input-group-btn">
         <button class="btn btn-default" ng-click="search()"><i class="fa fa-search"></i></button>
       </div>
     </div>
+  </div>
+  <div>
+    
   </div>
   <!-- Category Table -->
   <div class="block block-rounded block-opt-refresh-icon8" id="loadingCategories" ng-show="showCategoryResults">
