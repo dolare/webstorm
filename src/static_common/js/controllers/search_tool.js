@@ -17,12 +17,26 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
       $scope.keywordClusters = resp_keyword_clusters.data;
     });
 
+    // When clicking on keyword cluster tag, append key words into search box.
+    $scope.appendKeywords = function(keywords) {
+      var index = 0;
+      angular.forEach(keywords, function(frequency, keyword) {
+        if ($('#search-input').val().length != 0 && !$('#search-input').val().endsWith(', '))
+          $('#search-input').val($('#search-input').val() + ', ');
+        $('#search-input').val($('#search-input').val() + keyword);
+        if (index < Object.keys(keywords).length - 1) {
+          $('#search-input').val($('#search-input').val() + ', ');
+        }
+        index++;
+      });
+    };
+
     // When clicking on the search button, clear old results and call corresponding smart table pipe function.
     $scope.search = function() {
       // If inputKeyword is an empty string or a string that only consists of spaces, it wouldn't do the search.
       // inputKeyword is the string in the input box. searchKeyword is the string used to search.
       if ($.trim($scope.inputKeyword)) {
-        $scope.searchKeyword = $scope.inputKeyword;
+        $scope.searchKeyword = $.trim($scope.inputKeyword);
         $scope.results_categories = [];
         $scope.results_courses = [];
         $scope.showCategoryResults = false;
@@ -78,7 +92,7 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
         var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
         var number = tableState.pagination.number || 25; // Number of entries showed per page.
 
-        var url = '/api/upgrid/non_degree/categories' + '?search=' + $scope.searchKeyword;
+        var url = '/api/upgrid/non_degree/categories' + '?multiple_search=' + $scope.searchKeyword;
 
         ajaxService.getPage(start, number, url, tableState, token).then(function(response) {
           $scope.results_categories = response.data.results;
@@ -125,7 +139,7 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
         var start = tableState.pagination.start || 0; // The index of item in the school list used to display in the table.
         var number = tableState.pagination.number || 25; // Number of entries showed per page.
 
-        var url = '/api/upgrid/non_degree/courses' + '?search=' + $scope.searchKeyword;
+        var url = '/api/upgrid/non_degree/courses' + '?multiple_search=' + $scope.searchKeyword;
 
         ajaxService.getPage(start, number, url, tableState, token).then(function(response) {
           $scope.results_courses = response.data.results;

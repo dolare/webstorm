@@ -29,14 +29,28 @@
       
     </div>
     <div class="input-group input-group-lg push-15-t col-sm-9">
-      <input class="form-control" id="input-search" type="text" ng-model="inputKeyword" placeholder="Search keyword.." ng-keypress="pressedEnter($event)">
+      <input class="form-control" id="search-input" type="text" ng-model="inputKeyword" placeholder="Search keyword.." ng-keypress="pressedEnter($event)">
       <div class="input-group-btn">
         <button class="btn btn-default" ng-click="search()"><i class="fa fa-search"></i></button>
       </div>
     </div>
   </div>
-  <div>
-    
+  <div class="row">
+    <div class="col-sm-2">
+      <h5>Popular keywords: </h3>
+    </div>
+    <div class="col-sm-9">
+      <button class="badge badge-info" ng-click="appendKeywords(keywords)" ng-repeat="(cluster, keywords) in keywordClusters" uib-tooltip-template="'keywordClusterTooltipTemplate.html'" tooltip-placement="bottom">
+        {{cluster}}
+      </button>
+      <script type="text/ng-template" id="keywordClusterTooltipTemplate.html">
+
+        <div style="text-align: left;">
+          <li ng-repeat="(keyword, frequency) in keywords">{{keyword}}</li>
+        </div>
+
+      </script>
+    </div>
   </div>
   <!-- Category Table -->
   <div class="block block-rounded block-opt-refresh-icon8" id="loadingCategories" ng-show="showCategoryResults">
