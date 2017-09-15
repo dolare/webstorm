@@ -320,11 +320,6 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
              $scope.e_show_update = updateService.updateEnhancement(response.data, 'admin', $scope.program_order);
              console.log('$scope.e_show_update = '+JSON.stringify($scope.e_show_update));
 
-             console.log("xoxoxo e_show_update = "+JSON.stringify($scope.e_show_update))
-             console.log("xoxoxo e_show_update['intl_eng_test'] = "+JSON.stringify($scope.e_show_update['intl_eng_test']))
-             console.log("xoxoxo e_show_update['intl_eng_test'][0] = "+JSON.stringify($scope.e_show_update['intl_eng_test'][0]))
-
-
              App.blocks('#enhancement_loading', 'state_normal');
              console.log("$scope.e_array_final= "+JSON.stringify($scope.e_array_final));
              console.log("e_update="+JSON.stringify($scope.e_update));
