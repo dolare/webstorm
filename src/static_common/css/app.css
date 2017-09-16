@@ -1622,6 +1622,10 @@ ul.help-ul>li {
   max-width: 80px;
 }
 
+.intro-icon1 {
+  max-width: 120px;
+}
+
 /*ribbon update*/
 .ribbon-update>.ribbon-box {
     position: absolute;
