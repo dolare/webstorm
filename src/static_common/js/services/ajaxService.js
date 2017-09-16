@@ -130,6 +130,7 @@ angular.module('myApp').factory("ajaxService",
       console.log('tableState: ');
       console.log(params);
       console.log('params = ' + '"' + parsedParams + '"');
+      console.log('URL: ' + url + parsedParams);
 
 
       $http({
