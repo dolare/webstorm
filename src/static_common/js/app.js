@@ -560,9 +560,35 @@ App.config(function($stateProvider, $urlRouterProvider) {
   }).
 
   //Client pages
-   state('intro', {
-    url: '/',
+   state('intro-regular', {
+    url: '/upgrid-regular',
     templateUrl: '/static/views/Login/intro.html',
+    controller: 'LoginController',
+    resolve: {
+                    depsIntro: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                '/static/js/services/apiService.js',
+                                '/static/js/controllers/login.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
+
+
+  }).
+
+
+    //Client pages
+   state('intro-exec', {
+    url: '/upgrid-exec-edu',
+    templateUrl: '/static/views/Login/intro1.html',
     controller: 'LoginController',
     resolve: {
                     depsIntro: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -1746,7 +1772,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   });
 
   //default route
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/upgrid-exec-edu');
 
 
 });
