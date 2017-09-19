@@ -783,6 +783,17 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
         formValues: true
       });
     };
-
+    $scope.preview_notification = function(){
+      $http({
+        url: '/api/upgrid/non_degree/preview_notification',
+        method: 'get',
+        headers: {
+            'Authorization': 'JWT ' + token
+          }
+        }
+        ).then(function(res){
+          console.log(res);
+        })
+    }
   }
 ]);
