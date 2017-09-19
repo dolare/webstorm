@@ -792,8 +792,23 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
           }
         }
         ).then(function(res){
-          console.log(res);
+          $scope.email = res.data;
+          console.log($scope.email);
         })
+    }
+    $scope.checkcontent = function(content){
+      $scope.email_content = content;
+    }
+    $scope.send_notification = function(){
+      $http({
+        url: '/api/upgrid/non_degree/send_notification',
+        method: 'post',
+        headers: {
+            'Authorization': 'JWT ' + token
+          }
+      }).then(function(res){
+        console.log(res);
+      })
     }
   }
 ]);
