@@ -423,7 +423,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('executive', {
     url: '/executive_education',
     parent: 'success_demo',
-    templateUrl: '/static/views/Admin/Executive.html',
+    templateUrl: '/static/views/Admin/AdminExecutive.html',
     controller: 'ExecutiveController',
     resolve: {
       auth: function($q, authenticationSvc) {
