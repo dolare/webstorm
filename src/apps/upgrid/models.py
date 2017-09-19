@@ -469,3 +469,8 @@ class NonDegreeWhoopsReport(BasedDatedObject):
             '-date_created'
         ]
 
+
+class NonDegreeReportCustomerMapping(BasedSimpleObject):
+    customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT, null=False)
+    report = models.ForeignKey(NonDegreeReport, on_delete=models.PROTECT, null=False)
+    is_sent = models.BooleanField(default=False)

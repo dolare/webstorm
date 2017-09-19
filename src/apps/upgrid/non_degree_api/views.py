@@ -29,8 +29,8 @@ from .pagination import UniversitySchoolPagination, ReportPagination, BasePagina
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter, \
     UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter, MultipleSearchFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport, \
-    NonDegreeWhoopsReport
-
+    NonDegreeWhoopsReport, NonDegreeReportCustomerMapping
+import uuid
 
 class PermissionMixin(object):
     def is_manager(self):
@@ -169,25 +169,38 @@ class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
         if 'school' not in request.data:
             raise ValidationError("School object_id is required.")
         try:
+            print('ddd')
             school = UniversitySchool.objects.get(object_id=request.data['school'])
+            print('liu')
         except UniversitySchool.DoesNotExist:
             raise ValidationError("Can not find school with this object_id.")
 
         categories = NonDegreeCategory.objects.filter(university_school=school).filter(active=True)
+        print('pkd')
         data = JSONRenderer().render(CategorySerializer(categories, many=True).data)
+        print(',.ks')
+        print(data)
         return data
 
     def create(self, request, *args, **kwargs):
         if not self.is_manager():
             return Response({"Failed": "Permission Denied!"}, status=HTTP_403_FORBIDDEN)
+
         data = request.POST.copy()
         data['categories'] = self.create_report(request)
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+        report = serializer.save()
         headers = self.get_success_headers(serializer.data)
+        #NodegereReportCustomerMapping.objects.create(, customer = )
+        customers = UniversityCustomer.objects.filter(non_degree_schools = report.school)
+        print(customers)
+        for customer in customers:
+            print('++')
+            NonDegreeReportCustomerMapping.objects.create(report = report, customer = customer)
         return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
+
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
