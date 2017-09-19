@@ -199,7 +199,7 @@ admin.site.register(Deadline)
 admin.site.register(CustomerFeature)
 admin.site.register(CustomerFeatureMapping)
 admin.site.register(TranscriptEvaluationProvider)
-
+admin.site.register(NonDegreeReportCustomerMapping)
 admin.site.register(NonDegreeSharedReport, NonDegreeSharedReportAdmin)
 admin.site.register(NonDegreeAMPReport)
 admin.site.register(NonDegreeWhoopsReport, NonDegreeWhoopsReportAdmin)

@@ -29,8 +29,8 @@ from .pagination import UniversitySchoolPagination, ReportPagination, BasePagina
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter, \
     UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter, MultipleSearchFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport, \
-    NonDegreeWhoopsReport
-
+    NonDegreeWhoopsReport, NonDegreeReportCustomerMapping
+import uuid
 
 class PermissionMixin(object):
     def is_manager(self):
@@ -191,8 +191,14 @@ class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+        report = serializer.save()
         headers = self.get_success_headers(serializer.data)
+        #NodegereReportCustomerMapping.objects.create(, customer = )
+        customers = UniversityCustomer.objects.filter(non_degree_schools = report.school)
+        print(customers)
+        for customer in customers:
+            print('++')
+            NonDegreeReportCustomerMapping.objects.create(report = report, customer = customer)
         return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
 
 
