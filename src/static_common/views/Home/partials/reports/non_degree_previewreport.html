@@ -539,8 +539,9 @@
                                                     </span>                                   
                                                 </div>
                             <script type="text/ng-template" id="tuition.html">
-      
-                              <span ng-if="course.tuition_number_old!='N/A'">{{course.tuition_number_old | currency:course.currency_symbol:0}}</span>
+                              <!-- In old reports, there is no "currency_symbol" field in a course object, thus the currency symbol needs to be referenced from $scope,currency_symbols. -->
+                              <span ng-if="course.tuition_number_old!='N/A'&&!course.currency_symbol">{{course.tuition_number_old | currency:currency_symbols[course.currency]:0}}</span>
+                              <span ng-if="course.tuition_number_old!='N/A'&&course.currency_symbol">{{course.tuition_number_old | currency:currency_symbol:0}}</span>
 
                               <span ng-if="course.tuition_number_old=='N/A'">{{course.tuition_number_old}}</span>
                               

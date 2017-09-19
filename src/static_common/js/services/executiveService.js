@@ -378,6 +378,20 @@ angular.module('myApp')
             "university": "University of Virginia",
             "logo": "https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAhTAAAAJDk2OTlmM2U0LTJmOTktNGE1NC04ZThiLWIyZDk0ODQ2NTNjNA.png"
         },
+        {
+            "object_id": "84c11511-648f-473d-8deb-7fdff36f6c64",
+            "ceeb": "5187_SBUS",
+            "school": "Goizueta Business School",
+            "university": "Emory University",
+            "logo": "https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAx-AAAAJGQ0ZTIyMzY0LWM2M2ItNDU4NS1iZDJhLThkZDQ3ODRkNWNhZA.png"
+        },
+        {
+            "object_id": "73560ad0-23aa-404d-8a91-85f0d1b07752",
+            "ceeb": "1871_GSM",
+            "school": "Owen Graduate School of Management",
+            "university": "Vanderbilt University",
+            "logo": "https://media.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAOMAAAAJGRkZmRmZDZiLTkyZjctNDViMC04YjcxLWE2OGM5ZDI0MTU3Mg.png"
+        },
     ];
 
     var default_school_logo = "/static/img/school_default_logo.png";

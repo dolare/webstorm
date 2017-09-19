@@ -27,7 +27,7 @@ from .serializers import UniversitySchoolListSerializer, ReportCreateSerializer,
     NonDegreeWhoopsReportCreateSerializer, CourseSerializer, CategoryListSerializer
 from .pagination import UniversitySchoolPagination, ReportPagination, BasePagination
 from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseURLFilter, AMPReportListFilter, \
-    UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter
+    UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter, MultipleSearchFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport, \
     NonDegreeWhoopsReport
 
@@ -245,31 +245,36 @@ class ReportOverviewMixin(object):
                     'category_removed': 0,
                     'course_added': 0,
                     'course_removed': 0}
-        old_report_categories = []
-        old_report_courses = []
-        category_added = 0
-        course_added = 0
+
+        old_report_dict = {}
+        category_added_num = 0
+        course_added_num = 0
+        category_same_num = 0
+        course_same_num = 0
+        old_report_course_num = 0
 
         for category in old_report['categories']:
-            old_report_categories.append(category['object_id'])
+            old_report_dict[category['object_id']] = []
             for course in category['courses']:
-                old_report_courses.append(course['object_id'])
+                old_report_dict[category['object_id']].append(course['object_id'])
+                old_report_course_num += 1
 
         for category in new_report['categories']:
-            if category['object_id'] not in old_report_categories:
-                category_added += 1
+            if category['object_id'] not in old_report_dict.keys():
+                category_added_num += 1
+                course_added_num += len(category['courses'])
             else:
-                old_report_categories.remove(category['object_id'])
-            for course in category['courses']:
-                if course['object_id'] not in old_report_courses:
-                    course_added += 1
-                else:
-                    old_report_courses.remove(course['object_id'])
+                category_same_num += 1
+                for course in category['courses']:
+                    if course['object_id'] not in old_report_dict[category['object_id']]:
+                        course_added_num += 1
+                    else:
+                        course_same_num += 1
 
-        return {'category_added': category_added,
-                'category_removed': len(old_report_categories),
-                'course_added': course_added,
-                'course_removed': len(old_report_courses)}
+        return {'category_added': category_added_num,
+                'category_removed': len(old_report['categories']) - category_same_num,
+                'course_added': course_added_num,
+                'course_removed': old_report_course_num - course_same_num}
 
 
 class ReportOverview(PermissionMixin, ReportOverviewMixin, APIView):
@@ -570,12 +575,13 @@ class CategoryAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     """
     Get list of user categories API
     """
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter, MultipleSearchFilter)
     serializer_class = CategoryListSerializer
     pagination_class = BasePagination
     filter_class = UniversitySchoolCategoryFilter
 
     search_fields = ('name', )
+    multiple_search_fields = ('name', )
     ordering_fields = ('university_school__school', 'name', )
     ordering = ('university_school__school', 'name', )      # default ordering
 
@@ -593,12 +599,13 @@ class CourseAPI(PermissionMixin, ListModelMixin, GenericAPIView):
     """
     Get list of user courses API
     """
-    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter, MultipleSearchFilter)
     serializer_class = CourseSerializer
     pagination_class = BasePagination
     filter_class = CourseFilter
 
     search_fields = ('name', )
+    multiple_search_fields = ('name', )
     ordering_fields = ('name', 'university_school__school',)
     ordering = ('university_school__school', 'name', )      # default ordering
 
