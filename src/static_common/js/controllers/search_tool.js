@@ -30,6 +30,7 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
         index++;
       });
       $scope.inputKeywords = $scope.inputKeywords.substring(0, 150);
+      $scope.search();
     };
 
     // When clicking on the search button, clear old results and call corresponding smart table pipe function.
