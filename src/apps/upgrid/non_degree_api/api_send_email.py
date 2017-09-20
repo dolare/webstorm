@@ -55,6 +55,9 @@ class SendNotification(APIView):
                                         to=[customer], bcc=cc_addresses_tuple)
                 message.content_subtype = 'html'
                 message.send()
+                
+                temp_report_mapping = NonDegreeReportCustomerMapping.objects.filter(customer__email = customer).update(is_sent = True)
+
     
         except(BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
             SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
