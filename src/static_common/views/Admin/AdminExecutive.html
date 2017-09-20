@@ -337,23 +337,26 @@
         	</div>
 			<div class="tab-pane active" id="btabs-alt-static-justified-email" style="padding-top: 10px">
 			<!-- Begain of Email -->
-				<table class='table table-bordered'>
+				<table class="table table-hover">
 					<colgroup>
-						<col width='80%'>
-						<col width='20%'>
+						<col width='70%'>
+						<col width='30%'>
 					</colgroup>
 					<thead>
-						<tr>
-							<th>Email address</th>
-							<th>Number of Updates</th>												
+						<tr style="cursor:default">
+							<th class='text-center decoration_none' style="cursor:default">Email address</th>
+							<th class='text-center decoration_none' style="cursor:default">Number of Updates</th>												
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat='(emails,content) in email' ng-click=' checkcontent(content)' data-toggle="modal" data-target="#modal-fadein">
-							<td>{{ emails }}</td>
-							<td><span class="badge badge-info" >{{ content.length }}</span></td>
+						<tr ng-repeat='(emails,content) in email' ng-click=' checkcontent(content)' data-toggle="modal" data-target="#modal-fadein" style="cursor:pointer">
+							<td class='text-center'>{{ emails }}</td>
+							<td class='text-center'><span class="badge badge-info" >{{ content.length }}</span></td>
 						</tr>
 					</tbody>
+					<tfoot>
+		        		<button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> Send Email</button>
+					</tfoot>
 				</table>
 				<div class="modal fade" id="modal-fadein" tabindex="-1" role="dialog" aria-hidden="true">
 		            <div class="modal-dialog">
@@ -377,7 +380,6 @@
 		                </div>
 		            </div>
 		        </div>
-		        <button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> Send Email</button>
 			<!-- End of Email -->
 			</div>
 		</div>
