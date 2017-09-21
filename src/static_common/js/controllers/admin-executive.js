@@ -810,7 +810,7 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
           }
       }).then(function(res){
         $scope.server_res = res.data.success;
-              $scope.email = {};
+              $scope.preview_notification();
          $.notify({
 
                         // options
