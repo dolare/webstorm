@@ -20,13 +20,19 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
 
     // When clicking on keyword cluster tag, append key words into search box.
     $scope.appendKeywords = function(keywords) {
+      // $scope.inputKeywords = '';
       var index = 0;
       angular.forEach(keywords, function(frequency, keyword) {
-        if ($scope.inputKeywords && !$scope.inputKeywords.endsWith(', ') && !$scope.inputKeywords.endsWith(','))
+        
+        // regular expression that match the keyword, but the match cannot be part of a word.
+        var regexp = new RegExp('^' + keyword + ',| ' + keyword + ',| ' + keyword + '$|^' + keyword + '$', 'i'); 
+        if ($scope.inputKeywords.search(regexp) == -1) {
+          if ($scope.inputKeywords && !$scope.inputKeywords.endsWith(', ') && !$scope.inputKeywords.endsWith(','))
           $scope.inputKeywords += ', ';
-        $scope.inputKeywords += keyword;
-        if (index < Object.keys(keywords).length - 1)
+          $scope.inputKeywords += keyword;
+          if (index < Object.keys(keywords).length - 1)
           $scope.inputKeywords += ', ';
+        }
         index++;
       });
       $scope.inputKeywords = $scope.inputKeywords.substring(0, 150);
