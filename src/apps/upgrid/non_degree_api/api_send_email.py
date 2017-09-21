@@ -32,10 +32,14 @@ class SendNotification(APIView):
         send_list = {}
         for query in query_set:
             if query.customer.email in send_list.keys():
-                send_list[query.customer.email].append("{},{}".format(query.report.school.school, query.report.categories))
+                send_list[query.customer.email]['report'].append("{},{}".format(query.report.school.school, query.report.categories))
             else:
-                send_list[query.customer.email] = []
-                send_list[query.customer.email].append("{},{}".format(query.report.school.school, query.report.categories))
+                send_list[query.customer.email] = {}
+                send_list[query.customer.email]['customer'] = {}
+                send_list[query.customer.email]['customer']['username'] = query.customer.username
+                send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb
+                send_list[query.customer.email]['report'] = []
+                send_list[query.customer.email]['report'].append("{},{}".format(query.report.school.school, query.report.categories))
 
         try:
             cc_addresses = [cc_email]
@@ -51,6 +55,9 @@ class SendNotification(APIView):
                                         to=[customer], bcc=cc_addresses_tuple)
                 message.content_subtype = 'html'
                 message.send()
+                
+                temp_report_mapping = NonDegreeReportCustomerMapping.objects.filter(customer__email = customer).update(is_sent = True)
+
     
         except(BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
             SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
@@ -66,9 +73,13 @@ class PreviewNotification(APIView):
         send_list = {}
         for query in query_set:
             if query.customer.email in send_list.keys():
-                send_list[query.customer.email].append("{},{}".format(query.report.school.school, query.report.categories))
+                send_list[query.customer.email]['report'].append("{},{}".format(query.report.school.school, query.report.categories))
             else:
-                send_list[query.customer.email] = []
-                send_list[query.customer.email].append("{},{}".format(query.report.school.school, query.report.categories))
-        
+                send_list[query.customer.email] = {}
+                send_list[query.customer.email]['customer'] = {}
+                send_list[query.customer.email]['customer']['username'] = query.customer.username
+                send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb.school
+                send_list[query.customer.email]['report'] = []
+                send_list[query.customer.email]['report'].append("{},{}".format(query.report.school.school, query.report.categories))
+            
         return HttpResponse(json.dumps(send_list), status=HTTP_200_OK)

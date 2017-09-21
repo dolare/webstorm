@@ -783,6 +783,7 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
         formValues: true
       });
     };
+    // code for email with 2 API 
     $scope.preview_notification = function(){
       $http({
         url: '/api/upgrid/non_degree/preview_notification',
@@ -792,6 +793,7 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
           }
         }
         ).then(function(res){
+          console.log(res)
           $scope.email = res.data;
           console.log($scope.email);
         })
@@ -807,7 +809,21 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
             'Authorization': 'JWT ' + token
           }
       }).then(function(res){
-        console.log(res);
+        $scope.server_res = res.data.success;
+              $scope.preview_notification();
+         $.notify({
+
+                        // options
+                        icon: "fa fa-check",
+                        message: $scope.server_res
+                    }, {
+                        // settings
+                        type: 'success',
+                        placement: {
+                            from: "top",
+                            align: "center"
+                        },
+                    });
       })
     }
   }
