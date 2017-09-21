@@ -335,51 +335,32 @@
 				</div>
 			<!-- End of Executive -->
         	</div>
-			<div class="tab-pane active" id="btabs-alt-static-justified-email" style="padding-top: 10px">
+			<div class="tab-pane active" id="btabs-alt-static-justified-email" ng-show='email' style="padding-top: 10px">
 			<!-- Begain of Email -->
 				<table class="table table-hover">
 					<colgroup>
-						<col width='70%'>
-						<col width='30%'>
+						<col width='33%'>
+						<col width='33%'>
+						<col width='33%'>
 					</colgroup>
 					<thead>
 						<tr style="cursor:default">
 							<th class='text-center decoration_none' style="cursor:default">Email address</th>
-							<th class='text-center decoration_none' style="cursor:default">Number of Updates</th>												
+							<th class='text-center decoration_none' style="cursor:default">School</th>									
+							<th class='text-center decoration_none' style="cursor:default">username</th>												
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat='(emails,content) in email' ng-click=' checkcontent(content)' data-toggle="modal" data-target="#modal-fadein" style="cursor:pointer">
+						<tr ng-repeat='(emails,content) in email' style="cursor:pointer">
 							<td class='text-center'>{{ emails }}</td>
-							<td class='text-center'><span class="badge badge-info" >{{ content.length }}</span></td>
+							<td class='text-center'>{{ content.customer.school }}</td>
+							<td class='text-center'>{{ content.customer.username }}</td>
 						</tr>
 					</tbody>
 					<tfoot>
 		        		<button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> Send Email</button>
 					</tfoot>
-				</table>
-				<div class="modal fade" id="modal-fadein" tabindex="-1" role="dialog" aria-hidden="true">
-		            <div class="modal-dialog">
-		                <div class="modal-content">
-		                    <div class="block block-themed block-transparent remove-margin-b">
-		                        <div class="block-header bg-primary-dark">
-		                            <ul class="block-options">
-		                                <li>
-		                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-		                                </li>
-		                            </ul>
-		                            <h3 class="block-title">Email Content</h3>
-		                        </div>
-		                        <div class="block-content">
-		                            {{ email_content }}
-		                        </div>
-		                    </div>
-		                    <div class="modal-footer">
-		                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"> Ok</button>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
+				</table>			
 			<!-- End of Email -->
 			</div>
 		</div>
