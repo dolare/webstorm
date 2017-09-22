@@ -40,17 +40,16 @@ class SendNotification(APIView):
                 send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb
                 send_list[query.customer.email]['report'] = []
                 send_list[query.customer.email]['report'].append("{},{}".format(query.report.school.school, query.report.categories))
-
-        try:
+    
             cc_addresses = [cc_email]
             cc_addresses_tuple = tuple(cc_addresses)
 
-            for (customer, content) in send_list.items():
-                html_content = ("{}".format(content))
-                print(customer)
-                print(content)
+        for (customer, content) in send_list.items():
+            html_content = ("{}".format(content))
+            print(customer)
+            print(content)
 
-
+            try:
                 message = EmailMessage(subject='Update Notification', body=html_content, 
                                         to=[customer], bcc=cc_addresses_tuple)
                 message.content_subtype = 'html'
@@ -58,11 +57,11 @@ class SendNotification(APIView):
                 
                 temp_report_mapping = NonDegreeReportCustomerMapping.objects.filter(customer__email = customer).update(is_sent = True)
 
-    
-        except(BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
-            SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
-            app_logger.exception('{0} when sending email. Error: {1}'.format(type(e).__name__, html_content))
-            raise ValidationError("Failed to send Email. {0}".format(type(e).__name__, html_content))
+            except(BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
+                SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
+            
+                app_logger.exception('{0} when sending email. Error: {1}'.format(type(e).__name__, html_content))
+                continue
         
         return Response({"success": ("email have been sent succussful.")}, status=HTTP_202_ACCEPTED)
 
