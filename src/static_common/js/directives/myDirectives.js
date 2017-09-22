@@ -43,7 +43,19 @@ App.directive('jsViewLoaderPro', function (ngProgressFactory) {
 });
 
 
-
+App.directive('firstDir', function() {
+    return {
+        restrict: 'AEC',
+        replace: true,
+        scope: {},
+        template: '<p ng-click="clearMessage()">Hello, {{message}}</p>',
+        link: function(scope, elem, attrs){
+            scope.$watch('message', function(value){
+                console.log("message changed")
+            })
+        }
+    }
+})
 
 App.directive('pageSelect', function() {
   return {
