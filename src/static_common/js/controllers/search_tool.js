@@ -8,8 +8,12 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
     $scope.searchType = 'categories';
     $scope.showCategoryResults = false;
     $scope.showCourseResults = false;
+    $scope.categoryMode = false;
+    $scope.courseMode = false;
     $scope.itemsByPage = 25;
     $scope.inputKeywords = '';
+    $scope.searchKeywords = '';
+    $scope.lastSearchKeywords = '';
 
     $http({
       method: 'GET',
@@ -20,22 +24,23 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
 
     // When clicking on keyword cluster tag, append key words into search box.
     $scope.appendKeywords = function(keywords) {
-      // $scope.inputKeywords = '';
+      $scope.inputKeywords = '';
       var index = 0;
       angular.forEach(keywords, function(frequency, keyword) {
         
-        // regular expression that match the keyword, but the match cannot be part of a word.
+        // Regular expression that match the keyword, but the match cannot be part of a word.
+        // The following logic is outdated since now we initialize $scope.inputKeywords to an empty string in every click.
         var regexp = new RegExp('^' + keyword + ',| ' + keyword + ',| ' + keyword + '$|^' + keyword + '$', 'i'); 
         if ($scope.inputKeywords.search(regexp) == -1) {
           if ($scope.inputKeywords && !$scope.inputKeywords.endsWith(', ') && !$scope.inputKeywords.endsWith(','))
-          $scope.inputKeywords += ', ';
+            $scope.inputKeywords += ', ';
           $scope.inputKeywords += keyword;
           if (index < Object.keys(keywords).length - 1)
-          $scope.inputKeywords += ', ';
+            $scope.inputKeywords += ', ';
         }
         index++;
       });
-      $scope.inputKeywords = $scope.inputKeywords.substring(0, 150);
+      // $scope.inputKeywords = $scope.inputKeywords.substring(0, 150);
       $scope.search();
     };
 
@@ -46,27 +51,33 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
       // If inputKeywords is an empty string or a string that only consists of spaces, it wouldn't do the search.
       // inputKeywords is the string in the input box. searchKeywords is the string used to search.
       if ($.trim($scope.inputKeywords)) {
-        console.log('Seach function called!');
         $scope.searchKeywords = $.trim($scope.inputKeywords);
-        $scope.results_categories = [];
-        $scope.results_courses = [];
-        $scope.showCategoryResults = false;
-        $scope.showCourseResults = false;
+        
+        
         // categoryMode and courseMode are used to work with clickCategoryRadio and clickCourseRadio functions
-        if ($scope.searchType == 'categories') {
+        if ($scope.searchType == 'categories' && (!$scope.categoryMode | $scope.lastSearchKeywords != $scope.searchKeywords)) {
+          console.log('Seach function called!');
+          $scope.lastSearchKeywords = $scope.searchKeywords;
+          $scope.results_categories = [];
+          $scope.results_courses = [];
           $scope.categoryMode = true;
           $scope.courseMode = false;
           $scope.tableCtrl_categories.tableState().pagination.start = 0; // Reset the item index to 0 so that the page could be reset to 0 before conducting a new search.
           $scope.tableCtrl_categories.pipe($scope.tableCtrl_categories.tableState());
           $scope.showCategoryResults = true;
         }
-        else {
+        else if ($scope.searchType == 'courses' && (!$scope.courseMode | $scope.lastSearchKeywords != $scope.searchKeywords)) {
+          console.log('Seach function called!');
+          $scope.lastSearchKeywords = $scope.searchKeywords;
+          $scope.results_categories = [];
+          $scope.results_courses = [];
           $scope.categoryMode = false;
           $scope.courseMode = true;
           $scope.tableCtrl_courses.tableState().pagination.start = 0; // Reset the item index to 0 so that the page could be reset to 0 before conducting a new search.
           $scope.tableCtrl_courses.pipe($scope.tableCtrl_courses.tableState());
           $scope.showCourseResults = true;
         }
+        
       }
     };
     $scope.pressedEnter = function(keyEvent) {
