@@ -30,7 +30,7 @@ from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseUR
     UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter, MultipleSearchFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport, \
     NonDegreeWhoopsReport, NonDegreeReportCustomerMapping
-import uuid
+
 
 class PermissionMixin(object):
     def is_manager(self):
@@ -623,3 +623,14 @@ class CourseAPI(PermissionMixin, ListModelMixin, GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+
+
+class CourseCountAPI(CourseAPI):
+    """
+    Get count of user courses API
+    """
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        count = queryset.count()
+        return Response({'count': count})
