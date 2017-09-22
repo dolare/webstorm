@@ -2,7 +2,7 @@
 
 'use strict';
 
-angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$scope', '$timeout', 'authenticationSvc', 'executiveService', 'ajaxService', function($q, $http, $scope, $timeout, authenticationSvc, executiveService, ajaxService) {
+angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$scope', '$timeout', '$filter', 'authenticationSvc', 'executiveService', 'ajaxService', function($q, $http, $scope, $timeout, $filter, authenticationSvc, executiveService, ajaxService) {
     var token = authenticationSvc.getUserInfo().accessToken;
 
     $scope.searchType = 'categories';
@@ -20,15 +20,23 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
 
     // When clicking on keyword cluster tag, append key words into search box.
     $scope.appendKeywords = function(keywords) {
+      // $scope.inputKeywords = '';
       var index = 0;
       angular.forEach(keywords, function(frequency, keyword) {
-        if ($scope.inputKeywords && !$scope.inputKeywords.endsWith(', ') && !$scope.inputKeywords.endsWith(','))
+        
+        // regular expression that match the keyword, but the match cannot be part of a word.
+        var regexp = new RegExp('^' + keyword + ',| ' + keyword + ',| ' + keyword + '$|^' + keyword + '$', 'i'); 
+        if ($scope.inputKeywords.search(regexp) == -1) {
+          if ($scope.inputKeywords && !$scope.inputKeywords.endsWith(', ') && !$scope.inputKeywords.endsWith(','))
           $scope.inputKeywords += ', ';
-        $scope.inputKeywords += keyword;
-        if (index < Object.keys(keywords).length - 1)
+          $scope.inputKeywords += keyword;
+          if (index < Object.keys(keywords).length - 1)
           $scope.inputKeywords += ', ';
+        }
         index++;
       });
+      $scope.inputKeywords = $scope.inputKeywords.substring(0, 150);
+      $scope.search();
     };
 
     // When clicking on the search button, clear old results and call corresponding smart table pipe function.
