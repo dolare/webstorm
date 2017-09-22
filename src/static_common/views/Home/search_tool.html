@@ -46,7 +46,8 @@
       <script type="text/ng-template" id="keywordClusterTooltipTemplate.html">
 
         <div style="text-align: left;">
-          <li ng-repeat="(keyword, frequency) in keywords">{{keyword}}</li>
+          <span class="font-w600">{{cluster}}</span>
+          <li ng-repeat="(keyword, frequency) in keywords" ng-if="$index>0">{{keyword}}</li>
         </div>
 
       </script>
@@ -74,7 +75,7 @@
               <span ng-if="!row.URL">{{row.name}}</span>
               <a ng-if="row.URL" href="{{row.URL}}" target="_blank">{{row.name}}</a>
             </td>
-            <td class="font-w500 text-left">
+            <td class="font-w600"text-left">
               <div class="row">
                 <div class="col-sm-2">
                   <img ng-src="{{row.logo_url}}" height="40" width="40">
@@ -139,7 +140,7 @@
             <td>
               <span ng-repeat="c in row.categories">{{c.name}}<br ng-if="!$last"></span>
             </td>
-            <td class="font-w500 text-left">
+            <td class="font-w600"text-left">
               <div class="row">
                 <div class="col-sm-2">
                   <img ng-src="{{row.logo_url}}" height="40" width="40">
