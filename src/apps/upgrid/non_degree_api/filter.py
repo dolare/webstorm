@@ -44,7 +44,7 @@ class CourseFilter(FilterSet):
 
     class Meta:
         model = NonDegreeCourse
-        fields = ['is_AMP', 'university_school', 'client_id', ]
+        fields = ['is_AMP', 'university_school', 'client_id', 'type', 'category', ]
 
 
 class CourseURLFilter(FilterSet):

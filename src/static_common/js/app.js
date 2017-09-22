@@ -423,7 +423,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   state('executive', {
     url: '/executive_education',
     parent: 'success_demo',
-    templateUrl: '/static/views/Admin/Executive.html',
+    templateUrl: '/static/views/Admin/AdminExecutive.html',
     controller: 'ExecutiveController',
     resolve: {
       auth: function($q, authenticationSvc) {
@@ -1372,6 +1372,24 @@ App.config(function($stateProvider, $urlRouterProvider) {
     parent: 'success_demo'
 
   }).
+  // Technical support
+  state('technicalSupport', {
+    url: '/technical-support',
+    templateUrl: '/static/views/Home/technical_support.html',
+    controller: 'TechnicalSupportController',
+    parent: 'success_demo',
+    resolve: {
+      depsShareWhoops: ['$ocLazyLoad', function($ocLazyLoad) {
+        return $ocLazyLoad.load({
+            insertBefore: '#css-bootstrap',
+            serie: true,
+            files: [
+              '/static/js/controllers/technical_support.js',
+            ]
+        });
+      }]
+  }
+  }).
 
   //share the report(s)
   state('shareWhoopsReport', {
@@ -1495,8 +1513,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                 }
 
   }).
-
-
+  
   //error pages
   state('404', {
     url: '/404',

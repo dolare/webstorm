@@ -3,9 +3,15 @@ from django.conf.urls import url
 from .views import UniversitySchoolListAPI, UniversitySchoolDetailAPI, ReportAPI, ReportCreateListAPI, ReportOverview, \
     ReportOverviewLatest, SharedReportCreateAPI, SharedReportAPI, CourseURLListAPI, AMPReportListAPI, \
     AMPReportDetailAPI, UniversitySchoolClientAPI, UniversitySchoolCategoryAPI, UniversitySchoolCategoryCourseAPI, \
-    NonDegreeWhoopsReportListAPI, NonDegreeWhoopsReportUpdateAPI, UniversitySchoolCourseAPI, CategoryAPI, CourseAPI
+    NonDegreeWhoopsReportListAPI, NonDegreeWhoopsReportUpdateAPI, UniversitySchoolCourseAPI, CategoryAPI, CourseAPI, \
+    CourseCountAPI
 
+from .api_send_email import SendNotification, PreviewNotification
 urlpatterns = [
+
+    #send email
+    url(r'^send_notification$', SendNotification.as_view(), name="notification"),
+    url(r'^preview_notification$', PreviewNotification.as_view(), name="schools"),
 
     # api
     url(r'^schools$', UniversitySchoolListAPI.as_view(), name="schools"),
@@ -37,6 +43,7 @@ urlpatterns = [
     url(r'^whoops_reports/(?P<object_id>[0-9a-fA-F\-]+)$', NonDegreeWhoopsReportUpdateAPI.as_view(),
         name="whoops_report"),
     url(r'^categories$', CategoryAPI.as_view(), name="categories"),
-    url(r'^courses', CourseAPI.as_view(), name="courses"),
+    url(r'^courses$', CourseAPI.as_view(), name="courses"),
+    url(r'^courses/count$', CourseCountAPI.as_view(), name="courses_count"),
 ]
 

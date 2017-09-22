@@ -1,0 +1,371 @@
+<div class="content content-boxed">
+    <div class="block" id="loadingtable">
+        <ul class="nav nav-tabs nav-tabs-alt nav-justified" data-toggle="tabs">
+            <li class="active">
+                <a href="#btabs-alt-static-justified-executive" data-toggle="tab">
+                	<i class="fa fa-home"></i> 
+                	Executive 
+                </a>
+            </li>
+            <li>
+                <a href="#btabs-alt-static-justified-email" data-toggle="tab" ng-click="preview_notification()">
+                <i class="fa fa-pencil"></i> 
+                Email
+                </a>
+            </li>
+        </ul>
+        <div class="block-content tab-content">
+            <div class="tab-pane active" id="btabs-alt-static-justified-executive" style="padding-top: 10px">
+            <!-- Begain of Executive -->
+        		<div class="content content-boxed">
+
+				  <div class="block" id="loadingtable">
+
+				   <div class="block-content">
+				      <div class="alert alert-warning" role="alert" ng-show="non_degree_schools.length===0">{{emptyExecutiveLabel}}</div>
+
+				      <table class="table table-hover" st-pipe="callServer" st-table="non_degree_schools" style="table-layout: fixed;">
+
+				        <colgroup>
+
+				          <col width="10%" />
+				          <col width="30%" />
+				          <col width="10%" />
+				          <col width="10%" />
+				          <col width="20%" />
+				          <col width="20%" />
+				        </colgroup>
+
+				        <thead>
+				          
+				          <tr class="wt-table-url-header-opt-row text-white bg-primary">
+				            <th colspan="6">
+				              <div class="col-sm-6">
+				                <input class="form-control" st-search="searchValue" placeholder="search" type="search" />
+				              </div>
+				              <div class="col-sm-6 form-horizontal">
+				                <div class="col-sm-6 form-group">
+				                  <label class="col-sm-3 control-label font-w600" for="non-degree-clients">Client:</label>
+				                  <div class="col-sm-9">
+				                    <select class="form-control" ng-model="selectedClientId" id="non-degree-clients" name="non-degree-clients" ng-options="c.id as c.contact_name for c in clients" ng-change="updateSchools(selectedClientId)">
+				                      <option value="">All clients</option>
+				                    </select>
+				                  </div>
+				                </div>
+
+				                <div class="col-sm-6 form-group">
+				                  <label class="col-sm-3 control-label font-w600" for="non-degree-demos">Demo:</label>
+				                  <div class="col-sm-9">
+				                    <select class="form-control" ng-model="selectedDemoId" id="non-degree-demos" name="non-degree-demos" ng-options="d.id as d.contact_name for d in demos" ng-change="updateSchools(selectedDemoId)">
+				                      <option value="">All demos</option>
+				                    </select>
+				                  </div>
+				                </div>
+				              </div>
+				            </th>
+				          </tr>
+
+				          <tr>
+				            <th class="text-center" st-sort="ceeb">Ceeb</th>
+				            <th class="text-left" st-sort="school">School ({{schools_count}})</th>
+				            <th class="text-center" st-sort="num_university_costomers" st-sort-default="reverse"># Clients</th>
+				            <th class="text-center">Release Preview</th>
+				            <th class="text-center">History</th>
+				            <th class="text-center">Archived</th>
+
+				          </tr>
+
+				        </thead>
+
+				        <tbody>
+				          <tr ng-repeat="row in non_degree_schools">
+
+
+				            <td>
+
+
+
+				              <label class="label label-default text-success bg-success-light" style="
+				              border: 1px solid #46c37b;
+				              font-size: 9px;
+				              padding: 1px 4px;
+				              margin-left: 5px;    top: -3px; font-size: 80%;">{{row.ceeb}}</label>
+
+				            </td>
+
+				            <td>
+
+				              {{row.school}}
+				              <div class="text-muted push-5-t" style="font-size:80%">{{row.university | uppercase}}
+				              </div>
+
+				            </td>
+
+				            <td class="text-center">
+				              <span class="badge badge-danger font-s13" ng-if="row.non_degree_client.length>0" uib-tooltip-template="'clients_info.html'" tooltip-placement="top">{{row.non_degree_client.length}}</span>
+
+				              <span class="badge badge-default font-s13" ng-if="row.non_degree_client.length==0" uib-tooltip-template="'clients_info.html'" tooltip-placement="top">{{row.non_degree_client.length}}</span>
+
+				              <script type="text/ng-template" id="clients_info.html">
+
+				                <div style="text-align: left;">
+				                  <div>Clients: </div>
+				                  <div>
+				                    <li ng-repeat="c in row.non_degree_client">{{c.contact_name}}</li>
+				                  </div>
+				                </div>
+
+				              </script>
+
+				            </td>
+
+
+
+				            <td class="text-center">
+
+				              <button class="btn btn-default btn-white" ng-click="previewReport(row.object_id)" data-js-blur>
+				                <a class="fa fa-eye text-city" style="vertical-align: middle;">
+				                </a>
+				              </button>
+
+				            </td>
+
+				            <td class="text-center">
+				              <select id="js-data-active-{{row.object_id}}" ng-model="selectedReportId_active">
+				                <option></option>
+				              </select>
+				              <button class="btn btn-default btn-white" data-uib-tooltip="View report" data-tooltip-placement="top" ng-click="viewReport(selectedReportId_active)" data-js-blur>
+				                <a class="fa fa-file text-primary" style="vertical-align: middle;"></a>
+				              </button>
+				              <button class="btn btn-default btn-white" data-uib-tooltip="Edit report" data-tooltip-placement="top" ng-click="editReport(selectedReportId_active)" data-js-blur>
+				                <a class="fa fa-edit text-primary" style="vertical-align: middle;"></a>
+				              </button>
+				              <button class="btn btn-default btn-white" data-uib-tooltip="Archive report" data-tooltip-placement="top" ng-click="archiveReport(selectedReportId_active,row.object_id)" data-js-blur>
+				                <a class="fa fa-archive text-primary" style="vertical-align: middle;"></a>
+				              </button>
+
+				            </td>
+				            <td class="text-center">
+				              <select id="js-data-inactive-{{row.object_id}}" ng-model="selectedReportId_inactive">
+				                <option></option>
+				              </select>
+				              <button class="btn btn-default btn-white" data-uib-tooltip="Unarchive report" data-tooltip-placement="top" ng-click="unarchiveReport(selectedReportId_inactive,row.object_id)" data-js-blur>
+				                <a class="fa fa-undo text-primary" style="vertical-align: middle;"></a>
+				              </button>
+				            </td>
+
+
+
+				          </tr>
+
+				        </tbody>
+
+
+				        <tfoot>
+				          <tr>
+
+
+
+				            <td colspan="3">
+				              <br><br>
+				              <div class="btn-group pull-left tablepagenum">
+
+				                <button type="button" ng-class="{'active':itemsByPage==15}" ng-click="itemsByPage=15" class="btn btn-default" data-js-blur>15</button>
+				                <button type="button" ng-class="{'active':itemsByPage==30}" ng-click="itemsByPage=30" class="btn btn-default" data-js-blur>30</button>
+
+				              </div>
+				            </td>
+
+				            <td colspan="3" class="text-center">
+				              <br><br>
+				              <div st-template="/static/views/Home/pagination.custom.html" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="" style="text-align:right;"></div>
+				            </td>
+
+
+				          </tr>
+				        </tfoot>
+				    </table>
+				    </div>
+
+				  </div>
+				    
+				</div>
+
+
+				<!-- Modal of release pop-up window-->
+				<div class="modal fullscreen-modal fade" id="previewReport" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content">
+				      <div class="block block-themed block-transparent remove-margin-b" id="previewReport_loading">
+				        <div class="block-header bg-primary-dark">
+				          <ul class="block-options">
+				            <li>
+				              <button ng-click="printReport_preview()" type="button" data-js-blur><i class="si si-printer"></i></button>
+				            </li>
+				            <li>
+				              <button type="button" ng-click="togglefullen_preview(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
+				            </li>
+				            <li>
+				              <button data-dismiss="modal" type="button" ng-click="scrolltop_preview(); readyToRelease=false" data-js-blur><i class="si si-close"></i></button>
+				            </li>
+				          </ul>
+				          <h3 class="block-title">Preview Report</h3>
+				        </div>
+				        <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_preview">
+				          <!-- SlimScroll Container -->
+				          <div class="block cart_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="top-report_preview">
+				            <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content_preview">
+				              <!-- ########### -->
+				              <!-- dynamic templates -->
+
+				              <div ng-include src="'/static/views/Home/partials/reports/non_degree_previewreport.html'"></div>
+
+				              <!-- Footer -->
+
+				            </div>
+				          </div>
+				          <div style="position: fixed;bottom: 80px;right: 44px;">
+				            <a data-js-blur href="#top-report_preview" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
+				          </div>
+				          <!-- END SlimScroll Container -->
+				          <div style="position: fixed;bottom: 20px;right: 44px;">
+				            <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseConfirm()" popover-enable="$parent.releaseConfirmEnable" popover-is-open="$parent.releaseConfirmIsOpen" uib-popover-template="'releaseConfirmTemplate.html'"><i class="si si-mouse"></i> Release</button>
+
+				            <script type="text/ng-template" id="releaseConfirmTemplate.html">
+				              <label>Are you sure you want to release this Tracking Report?</label>
+				              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="releaseReport(); scrolltop_preview(); toggleRCIsOpen(); toggleRCEnable()" data-dismiss="modal">Yes</button>
+				              <button data-js-blur type="button" class="btn btn-default release" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="toggleRCIsOpen()">No</button>
+				            </script>
+
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+
+
+				<!-- Modal of view report pop-up window-->
+				<div class="modal fullscreen-modal fade" id="viewReport" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content">
+				      <div class="block block-themed block-transparent remove-margin-b" id="viewReport_loading">
+				        <div class="block-header bg-primary-dark">
+				          <ul class="block-options">
+				            <li>
+				              <button ng-click="printReport_view()" type="button" data-js-blur><i class="si si-printer"></i></button>
+				            </li>
+				            <li>
+				              <button type="button" ng-click="togglefullen_view(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
+				            </li>
+				            <li>
+				              <button data-dismiss="modal" type="button" ng-click="scrolltop_view()" data-js-blur><i class="si si-close"></i></button>
+				            </li>
+				          </ul>
+				          <h3 class="block-title">History Report</h3>
+				        </div>
+				        <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_view">
+				          <!-- SlimScroll Container -->
+				          <div class="block cart_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="top-report_view">
+				            <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content_view">
+				              <!-- ########### -->
+				              <!-- dynamic templates -->
+
+				              <div ng-include src="'/static/views/Home/partials/reports/non_degree_viewreport.html'"></div>
+
+				              <!-- Footer -->
+
+				            </div>
+				          </div>
+				          <div style="position: fixed;bottom: 20px;right: 44px;">
+				            <a data-js-blur href="#top-report_view" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
+				          </div>
+				          <!-- END SlimScroll Container -->
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+
+				<!-- Modal of edit report pop-up window-->
+				<div class="modal fullscreen-modal fade" id="editReport" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content">
+				      <div class="block block-themed block-transparent remove-margin-b" id="editReport_loading">
+				        <div class="block-header bg-primary-dark">
+				          <ul class="block-options">
+				            <li>
+				              <button ng-click="printReport_edit()" type="button" data-js-blur><i class="si si-printer"></i></button>
+				            </li>
+				            <li>
+				              <button type="button" ng-click="togglefullen_edit(); actualscreen1 = !actualscreen1" data-js-blur><i ng-class="{'si si-size-fullscreen': actualscreen1, 'si si-size-actual': !actualscreen1 }"></i></button>
+				            </li>
+				            <li>
+				              <button data-dismiss="modal" type="button" ng-click="scrolltop_edit()" data-js-blur><i class="si si-close"></i></button>
+				            </li>
+				          </ul>
+				          <h3 class="block-title">Edit Report</h3>
+				        </div>
+				        <div class="block-content fullscreen-container frame" style="width:auto;padding:0;" du-scroll-container id="scrolltop_edit">
+				          <!-- SlimScroll Container -->
+				          <div class="block cart_block" style="padding:7px 12px 12px 12px;margin:0; background:#6a7074" id="top-report_edit">
+				            <div class="block-content block-content-full bg-white" style="height:100%;" id="print-content_edit">
+				              <!-- ########### -->
+				              <!-- dynamic templates -->
+
+				              <div ng-include src="'/static/views/Home/partials/reports/non_degree_editreport.html'"></div>
+
+				              <!-- Footer -->
+
+				            </div>
+				          </div>
+				          <div style="position: fixed;bottom: 80px;right: 44px;">
+				            <a data-js-blur href="#top-report_edit" style="font-size: 30px;background: #eee;opacity: 0.6;width: 44px;display: block;text-align: center;border-radius: 8px;" du-smooth-scroll><i class="fa fa-arrow-up"></i></a>
+				          </div>
+				          <div style="position: fixed;bottom: 20px;right: 44px;">
+				            <button data-js-blur type="button" class="btn btn-default" style="font-size: 16px;background: #fff;opacity: 0.8;width: auto;display: block;text-align: center;border-radius: 8px; border-width: 5px;" ng-click="saveReport()"><i class="si si-mouse"></i> Save</button>
+				          </div>
+				          <!-- END SlimScroll Container -->
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			<!-- End of Executive -->
+        	</div>
+			<div class="tab-pane" id="btabs-alt-static-justified-email" style="padding-top: 10px">
+			<!-- Begain of Email -->
+				<table class="table table-hover">
+					<colgroup>
+						<col width='33%'>
+						<col width='33%'>
+						<col width='33%'>
+					</colgroup>
+					<thead>
+						<tr style="cursor:default">
+							<th class='text-center decoration_none' style="cursor:default">Email address</th>
+							<th class='text-center decoration_none' style="cursor:default">School</th>									
+							<th class='text-center decoration_none' style="cursor:default">username</th>												
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat='(emails,content) in email' style="cursor:pointer">
+							<td class='text-center'>{{ emails }}</td>
+							<td class='text-center'>{{ content.customer.school }}</td>
+							<td class='text-center'>{{ content.customer.username }}</td>
+						</tr>
+					</tbody>
+					<tfoot>
+		        		<button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> Send Email</button>
+					</tfoot>
+				</table>			
+			<!-- End of Email -->
+			</div>
+		</div>
+	</div>
+</div>	
+
+
+
