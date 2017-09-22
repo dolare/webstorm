@@ -795,14 +795,30 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
         ).then(function(res){
           console.log(res)
           $scope.email = res.data;
-          console.log($scope.email);
         })
     }
     $scope.checkcontent = function(content){
       $scope.email_content = content;
     }
     $scope.send_notification = function(){
-      $http({
+      console.log($scope.email);
+      console.log(typeof($scope.email));
+      if(JSON.stringify($scope.email)=='{}'){
+        $.notify({
+
+                        // options
+                        icon: "fa fa-check",
+                        message: 'No Email need to be sent'
+                    }, {
+                        // settings
+                        type: 'error',
+                        placement: {
+                            from: "top",
+                            align: "center"
+                        },
+                    });
+      } else{
+        $http({
         url: '/api/upgrid/non_degree/send_notification',
         method: 'post',
         headers: {
@@ -824,7 +840,24 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
                             align: "center"
                         },
                     });
+      }).then(function(err){
+        if(err){
+          $.notify({
+
+                        // options
+                        icon: "fa fa-check",
+                        message: err
+                    }, {
+                        // settings
+                        type: 'success',
+                        placement: {
+                            from: "top",
+                            align: "center"
+                        },
+                    });
+        }
       })
+      }   
     }
   }
 ]);
