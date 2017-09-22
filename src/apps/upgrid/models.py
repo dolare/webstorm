@@ -477,3 +477,4 @@ class NonDegreeReportCustomerMapping(BasedDatedObject):
     customer = models.ForeignKey(UniversityCustomer, on_delete=models.PROTECT, null=False)
     report = models.ForeignKey(NonDegreeReport, on_delete=models.PROTECT, null=False)
     is_sent = models.BooleanField(default=False)
+    send_fail = models.BooleanField(default=True)
