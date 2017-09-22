@@ -86,46 +86,57 @@ class PreviewNotification(APIView):
         return HttpResponse(json.dumps(send_list), status=HTTP_200_OK)
 
 
-html = '<div style="margin: 30px auto;max-width: 600px;"> \
-      <div style="margin-bottom: 20px"> \
-        <img src="http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png" width="150px"> \
-      </div> \
-      <div style="background:white; padding: 20px 35px;border-radius: 8px "> \
-        <div style="text-align: left; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; font-size:18px ; color: rgb(41,61,119)"> \
-          Hello, {}! \
-        </div> \
-        <div style="font-family: sans-serif"></div> \
-          <p>New reports have been released.</p> \
-          <p>Here is a brief summary of the changes:</p> \
-          <div> \
-            <table> \
-					    <thead> \
-                <tr> \
-                  <th>Schools</th> \
-                  <th>Latest Release</th> \
-                  <th colspan=2>Categories</th> \
-                  <th colspan=2>Courses</th> \
-                </tr> \
-					    </thead> \
-					    <tbody> \
-                <tr> \
-                  <td> {}school</td> \
-                  <td> {}releasetime</td> \
-                  <td style="color: rgb(0,128,0)"> {}cateplus</td> \
-                  <td style="color: rgb(255,0,0)"> {}catemin</td> \
-                  <td style="color: rgb(0,128,0)"> {}courseplus</td> \
-                  <td style="color: rgb(255,0,0)"> {}coursemin</td> \
-                </tr> \
-					    </tbody> \
-            </table> \
-          </div> \
-          <p>If you want more details, please log in using the following link:</p> \
-          <a href="https:// {}">https:// {}</a><br /><br /> \
-          <div> \
-            Thanks! \
-          </div> \
-          <p>--</p> \
-          <p>Best Regards,</p> \
-          <p>- Gridology Team</p> \
-        </div> \
-      </div>' 
+html =    '<div style="margin: 30px auto;max-width: 600px;">\
+      <div style="margin-bottom: 20px">\
+        <img src="http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png" width="150px">\
+      </div>\
+      <div style="background:white; padding: 20px 35px;border-radius: 8px ">\
+        <div style="text-align: left; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:18px ; color: rgb(41,61,119)">\
+          Hello, %s!<br /><br /> \
+        </div>\
+        <div style="font-family: sans-serif;">\
+          <p>New reports have been released.</p>\
+          <p>Here is a brief summary of the changes:</p>\
+          <div>\
+            <table style="border:1px solid black; border-collapse:collapse;table-layout：fixed">\
+              <colgroup>\
+                <col width="40%" />\
+                <col width="20%" />\
+                <col width="10%" />\
+                <col width="10%" />\
+                <col width="10%" />\
+                <col width="10%" />\
+              </colgroup>\
+              <thead>\
+                <tr>\
+                  <th style="border:1px solid">Schools</th>\
+                  <th style="border:1px solid">Latest Release</th>\
+                  <th style="border:1px solid" colspan=2>Categories</th>\
+                  <th style="border:1px solid" colspan=2>Courses</th>\
+                </tr>\
+              </thead>\
+              <tbody>\
+                <tr>\
+                  <td style="border:1px solid;word-break:break-all">%school</td>\
+                  <td style="border:1px solid;word-break:break-all">%releasetime</td>\
+                  <td style="border:1px solid; color: rgb(0,128,0);word-break:break-all">%cateplus</td>\
+                  <td style="border:1px solid; color: rgb(255,0,0);word-break:break-all">%catemin</td>\
+                  <td style="border:1px solid; color: rgb(0,128,0);word-break:break-all">%courseplus</td>\
+                  <td style="border:1px solid; color: rgb(255,0,0);word-break:break-all">%coursemin</td>\
+                </tr>\
+              </tbody>\
+            </table>\
+            <br />\
+            <br />\
+          </div>\
+          <p>If you want more details, please log in using the following link:</p >\
+          <a href="https://%s">https://%s</a><br /><br />\
+          <div>\
+            Thanks!\
+          </div>\
+          <p>--</p>\
+          <p>Best Regards,</p>\
+          <p>- Gridology Team</p>\
+        </div>\
+      </div>\
+    </div>' 
