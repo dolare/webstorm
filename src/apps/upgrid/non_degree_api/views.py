@@ -253,34 +253,49 @@ class ReportOverviewMixin(object):
                     'course_removed': 0}
 
         old_report_dict = {}
-        category_added_num = 0
-        course_added_num = 0
-        category_same_num = 0
-        course_same_num = 0
-        old_report_course_num = 0
+        old_report_category = {}
+        old_report_course = {}
+        category_added = []
+        course_added = []
+        course_removed = []
 
         for category in old_report['categories']:
+            # Add all category and course to old_report_dict and save their name
             old_report_dict[category['object_id']] = []
+            old_report_category[category['object_id']] = category['name']
             for course in category['courses']:
                 old_report_dict[category['object_id']].append(course['object_id'])
-                old_report_course_num += 1
+                old_report_course[course['object_id']] = course['name']
 
         for category in new_report['categories']:
             if category['object_id'] not in old_report_dict.keys():
-                category_added_num += 1
-                course_added_num += len(category['courses'])
+                category_added.append(category['name'])
+                for course in category['courses']:
+                    course_added.append(course['name'])
             else:
-                category_same_num += 1
                 for course in category['courses']:
                     if course['object_id'] not in old_report_dict[category['object_id']]:
-                        course_added_num += 1
+                        course_added.append(course['name'])
                     else:
-                        course_same_num += 1
+                        old_report_dict[category['object_id']].remove(course['object_id'])
+                for course in old_report_dict[category['object_id']]:
+                    course_removed.append(old_report_course[course])
 
-        return {'category_added': category_added_num,
-                'category_removed': len(old_report['categories']) - category_same_num,
-                'course_added': course_added_num,
-                'course_removed': old_report_course_num - course_same_num}
+                del old_report_category[category['object_id']]
+                del old_report_dict[category['object_id']]
+
+        for cat_id, courses in old_report_dict.items():
+            for course in courses:
+                course_removed.append(old_report_course[course])
+
+        return {'category_added': len(category_added),
+                'category_added_name': category_added,
+                'category_removed': len(list(old_report_category.values())),
+                'category_removed_name': list(old_report_category.values()),
+                'course_added': len(course_added),
+                'course_added_name': course_added,
+                'course_removed': len(course_removed),
+                'course_removed_name': course_removed}
 
 
 class ReportOverview(PermissionMixin, ReportOverviewMixin, APIView):
