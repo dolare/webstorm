@@ -798,6 +798,10 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
         })
     }
     $scope.checkcontent = function(content){
+       $timeout( function(){
+            hljs.initHighlighting();
+            $scope.show_code = true
+        }, 100 );
       $scope.email_content = content;
     }
     $scope.send_notification = function(){
