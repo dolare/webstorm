@@ -31,7 +31,7 @@ class SendNotification(APIView):
 
     def post(self, request, *args, **kwargs):
 
-        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False, customer__active == True).order_by('-date_modified','report').distinct('date_modified','report')
+        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False, customer__is_active == True).order_by('-date_modified','report').distinct('date_modified','report')
         send_list = {}
         for query in query_set:
             if query.customer.email in send_list.keys():
@@ -58,16 +58,37 @@ class SendNotification(APIView):
         #generate the course and category changes and display as table rows
         for (customer, content) in send_list.items():
             html_tr = ''
-            print(content['report'])
+            # print(content)
+            # print(content['report'])
+
+            # Chenyuantry
+            # print('ChenyuanTry')
+            report_email = []
             for report in content['report']:
-                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True, customer__active = True).order_by('-date_created')[:2]
+                status = True
+                name = report['school_name']
+                for prereport in report_email:
+                    if name == prereport['school_name']:
+                        status = False
+                        if report['date_modified'].date()>prereport['date_modified'].date():
+                            report_email = [report if x==prereport else x for x in report_email]
+                if status:
+                    report_email.append(report)
+            # print(report_email)
+
+            # End of Chenyuantry
+            for report in report_email:
+                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True, customer__is_active = True).order_by('-date_created')[:2]
+
                 report_data = []
                 print(reportTwo)
                 if len(reportTwo) > 0:
                     for report_obj in reportTwo:
                         report_data.append(ReportSerializer(report_obj).data)
 
-                    diff_data = ReportOverview.count_diff(report_data[1], report_data[0])
+                    if len(report_data) == 1:
+                        report_data.append(None)
+                    diff_data = ReportOverview.count_diff(report_data[0], report_data[1])
                     print(diff_data)
                 
                 
@@ -76,7 +97,7 @@ class SendNotification(APIView):
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
                 print(report)
-                html_tr = tableRow.format(report['school_name'], report['date_modified'].date(), cr, ca, cor, coa) + html_tr
+                html_tr = tableRow.format(report['school_name'], report['date_modified'].date(), ca, cr, coa, cor) + html_tr
 
             print(html_tr)
             html_content = html.format(customer, html_tr)
