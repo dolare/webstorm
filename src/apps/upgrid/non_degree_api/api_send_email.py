@@ -31,7 +31,7 @@ class SendNotification(APIView):
 
     def post(self, request, *args, **kwargs):
 
-        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False, customer__is_active == True).order_by('-date_modified','report').distinct('date_modified','report')
+        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False, customer__is_active = True).order_by('-date_modified','report').distinct('date_modified','report')
         send_list = {}
         for query in query_set:
             if query.customer.email in send_list.keys():
@@ -44,7 +44,7 @@ class SendNotification(APIView):
                 send_list[query.customer.email] = {}
                 send_list[query.customer.email]['customer'] = {}
                 send_list[query.customer.email]['customer']['username'] = query.customer.username
-                send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb
+                send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb.school
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
@@ -123,7 +123,8 @@ class SendNotification(APIView):
 class PreviewNotification(APIView):
     def get(self, request, *args, **kwargs):
         query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False)
-                send_list = {}
+        send_list = {}
+        preview_data = {}
         for query in query_set:
             if query.customer.email in send_list.keys():
                 report_dict = {}
@@ -132,16 +133,28 @@ class PreviewNotification(APIView):
                 report_dict['date_modified'] = query.report.date_modified 
                 send_list[query.customer.email]['report'].append(report_dict)
             else:
+                preview_data[query.customer.email] = {}
+                preview_data[query.customer.email]['customer'] = {}
+                preview_data[query.customer.email]['customer']['username'] = query.customer.username
+                preview_data[query.customer.email]['customer']['school'] = query.customer.Ceeb.school
                 send_list[query.customer.email] = {}
                 send_list[query.customer.email]['customer'] = {}
                 send_list[query.customer.email]['customer']['username'] = query.customer.username
-                send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb
+                send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb.school
+
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_name'] = query.report.school.school
-                report_dict['date_modified'] = query.report.date_modified 
+                report_dict['date_modified'] = query.report.date_modified
                 send_list[query.customer.email]['report'].append(report_dict)
+
+                # preview_data[query.customer.email]['report'] = []
+                # preview_data_report_dict = {}
+                # preview_data_report_dict['school_name'] = query.report.school.school
+                # preview_data_report_dict['date_modified'] = str(query.report.date_modified)
+                # preview_data[query.customer.email]['report'].append(report_dict)
+    
     
             cc_addresses = [cc_email]
             cc_addresses_tuple = tuple(cc_addresses)
@@ -166,14 +179,14 @@ class PreviewNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
-                print(report)
                 html_tr = tableRow.format(report['school_name'], report['date_modified'].date(), cr, ca, cor, coa) + html_tr
 
-            print(html_tr)
             html_content = html.format(customer, html_tr)
-            send_list[query.customer.email]['email_content'] = html_content
-            
-        return HttpResponse(json.dumps(send_list), status=HTTP_200_OK)
+
+            preview_data[customer]['email_content'] = html_content
+        print('==========')    
+        print(preview_data)
+        return HttpResponse(json.dumps(preview_data), status=HTTP_200_OK)
 
 
 html = '<div style="margin: 30px auto;max-width: 600px;">\
