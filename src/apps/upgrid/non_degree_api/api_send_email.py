@@ -15,6 +15,8 @@ from smtplib import SMTPServerDisconnected,  SMTPSenderRefused, SMTPRecipientsRe
 from django.http import Http404, HttpResponse
 import logging
 import os
+from .views import ReportOverview
+from .serializers import ReportSerializer
 app_logger = logging.getLogger('app')
 import json
 
@@ -24,31 +26,80 @@ try:
 except KeyError:
     cc_email = "swang@gradgrid.com"
 
+
 class SendNotification(APIView):
 
     def post(self, request, *args, **kwargs):
 
-        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False)
+        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
         send_list = {}
         for query in query_set:
             if query.customer.email in send_list.keys():
-                send_list[query.customer.email]['report'].append("{},{}".format(query.report.school.school, query.report.categories))
+                report_dict = {}
+                report_dict['object_id'] = query.report.object_id
+                report_dict['school_name'] = query.report.school.school
+                report_dict['date_modified'] = query.report.date_modified 
+                send_list[query.customer.email]['report'].append(report_dict)
             else:
                 send_list[query.customer.email] = {}
                 send_list[query.customer.email]['customer'] = {}
                 send_list[query.customer.email]['customer']['username'] = query.customer.username
                 send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb
                 send_list[query.customer.email]['report'] = []
-                send_list[query.customer.email]['report'].append("{},{}".format(query.report.school.school, query.report.categories))
+                report_dict = {}
+                report_dict['object_id'] = query.report.object_id
+                report_dict['school_name'] = query.report.school.school
+                report_dict['date_modified'] = query.report.date_modified 
+                send_list[query.customer.email]['report'].append(report_dict)
     
             cc_addresses = [cc_email]
             cc_addresses_tuple = tuple(cc_addresses)
 
+        #generate the course and category changes and display as table rows
         for (customer, content) in send_list.items():
-            html_content = html.format(customer, 'school', '1','2','3','4','5','6','7')
-            print(customer)
-            print(content)
+            html_tr = ''
+            # print(content)
+            # print(content['report'])
 
+            # Chenyuantry
+            # print('ChenyuanTry')
+            report_email = []
+            for report in content['report']:
+                status = True
+                name = report['school_name']
+                for prereport in report_email:
+                    if name == prereport['school_name']:
+                        status = False
+                        if report['date_modified'].date()>prereport['date_modified'].date():
+                            report_email = [report if x==prereport else x for x in report_email]
+                if status:
+                    report_email.append(report)
+            # print(report_email)
+
+            # End of Chenyuantry
+            for report in report_email:
+                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True).order_by('-date_created')[:2]
+                report_data = []
+                print(reportTwo)
+                if len(reportTwo) > 0:
+                    for report_obj in reportTwo:
+                        report_data.append(ReportSerializer(report_obj).data)
+
+                    if len(report_data) == 1:
+                        report_data.append(None)
+                    diff_data = ReportOverview.count_diff(report_data[0], report_data[1])
+                    print(diff_data)
+                
+                
+                cr = diff_data['category_removed']
+                ca = diff_data['category_added']
+                cor = diff_data['course_removed']
+                coa = diff_data['course_added']
+                print(report)
+                html_tr = tableRow.format(report['school_name'], report['date_modified'].date(), ca, cr, coa, cor) + html_tr
+
+            print(html_tr)
+            html_content = html.format(customer, html_tr)
             try:
                 message = EmailMessage(subject='Update Notification', body=html_content, 
                                         to=[customer], bcc=cc_addresses_tuple)
@@ -86,13 +137,13 @@ class PreviewNotification(APIView):
         return HttpResponse(json.dumps(send_list), status=HTTP_200_OK)
 
 
-html =    '<div style="margin: 30px auto;max-width: 600px;">\
+html = '<div style="margin: 30px auto;max-width: 600px;">\
       <div style="margin-bottom: 20px">\
         <img src="http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png" width="150px">\
       </div>\
       <div style="background:white; padding: 20px 35px;border-radius: 8px ">\
         <div style="text-align: left; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:18px ; color: rgb(41,61,119)">\
-          Hello, %s!<br /><br /> \
+          Hello, {}!<br /><br /> \
         </div>\
         <div style="font-family: sans-serif;">\
           <p>New reports have been released.</p>\
@@ -114,23 +165,16 @@ html =    '<div style="margin: 30px auto;max-width: 600px;">\
                   <th style="border:1px solid" colspan=2>Categories</th>\
                   <th style="border:1px solid" colspan=2>Courses</th>\
                 </tr>\
+                {} \
               </thead>\
               <tbody>\
-                <tr>\
-                  <td style="border:1px solid;word-break:break-all">%school</td>\
-                  <td style="border:1px solid;word-break:break-all">%releasetime</td>\
-                  <td style="border:1px solid; color: rgb(0,128,0);word-break:break-all">%cateplus</td>\
-                  <td style="border:1px solid; color: rgb(255,0,0);word-break:break-all">%catemin</td>\
-                  <td style="border:1px solid; color: rgb(0,128,0);word-break:break-all">%courseplus</td>\
-                  <td style="border:1px solid; color: rgb(255,0,0);word-break:break-all">%coursemin</td>\
-                </tr>\
               </tbody>\
             </table>\
             <br />\
             <br />\
           </div>\
           <p>If you want more details, please log in using the following link:</p >\
-          <a href="https://%s">https://%s</a><br /><br />\
+          <a href="https://upgrid.gridet.com/#/non_degree">https://upgrid.gridet.com/#/non_degree</a><br /><br />\
           <div>\
             Thanks!\
           </div>\
@@ -140,3 +184,13 @@ html =    '<div style="margin: 30px auto;max-width: 600px;">\
         </div>\
       </div>\
     </div>' 
+
+
+tableRow = '<tr>\
+                  <td style="border:1px solid;word-break:break-all">{}</td>\
+                  <td style="border:1px solid;word-break:break-all">{}</td>\
+                  <td style="border:1px solid; color: rgb(0,128,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid; color: rgb(255,0,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid; color: rgb(0,128,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid; color: rgb(255,0,0);word-break:break-all">{}</td>\
+                </tr>'
