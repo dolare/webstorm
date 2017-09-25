@@ -31,7 +31,7 @@ class SendNotification(APIView):
 
     def post(self, request, *args, **kwargs):
 
-        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
+        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False, customer__is_active == True).order_by('-date_modified','report').distinct('date_modified','report')
         send_list = {}
         for query in query_set:
             if query.customer.email in send_list.keys():
@@ -78,7 +78,8 @@ class SendNotification(APIView):
 
             # End of Chenyuantry
             for report in report_email:
-                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True).order_by('-date_created')[:2]
+                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True, customer__is_active = True).order_by('-date_created')[:2]
+
                 report_data = []
                 print(reportTwo)
                 if len(reportTwo) > 0:
@@ -122,17 +123,55 @@ class SendNotification(APIView):
 class PreviewNotification(APIView):
     def get(self, request, *args, **kwargs):
         query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False)
-        send_list = {}
+                send_list = {}
         for query in query_set:
             if query.customer.email in send_list.keys():
-                send_list[query.customer.email]['report'].append("{},{}".format(query.report.school.school, query.report.categories))
+                report_dict = {}
+                report_dict['object_id'] = query.report.object_id
+                report_dict['school_name'] = query.report.school.school
+                report_dict['date_modified'] = query.report.date_modified 
+                send_list[query.customer.email]['report'].append(report_dict)
             else:
                 send_list[query.customer.email] = {}
                 send_list[query.customer.email]['customer'] = {}
                 send_list[query.customer.email]['customer']['username'] = query.customer.username
-                send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb.school
+                send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb
                 send_list[query.customer.email]['report'] = []
-                send_list[query.customer.email]['report'].append("{},{}".format(query.report.school.school, query.report.categories))
+                report_dict = {}
+                report_dict['object_id'] = query.report.object_id
+                report_dict['school_name'] = query.report.school.school
+                report_dict['date_modified'] = query.report.date_modified 
+                send_list[query.customer.email]['report'].append(report_dict)
+    
+            cc_addresses = [cc_email]
+            cc_addresses_tuple = tuple(cc_addresses)
+
+        #generate the course and category changes and display as table rows
+        for (customer, content) in send_list.items():
+            html_tr = ''
+            print(content['report'])
+            for report in content['report']:
+                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True).order_by('-date_created')[:2]
+                report_data = []
+                print(reportTwo)
+                if len(reportTwo) > 0:
+                    for report_obj in reportTwo:
+                        report_data.append(ReportSerializer(report_obj).data)
+
+                    diff_data = ReportOverview.count_diff(report_data[1], report_data[0])
+                    print(diff_data)
+                
+                
+                cr = diff_data['category_removed']
+                ca = diff_data['category_added']
+                cor = diff_data['course_removed']
+                coa = diff_data['course_added']
+                print(report)
+                html_tr = tableRow.format(report['school_name'], report['date_modified'].date(), cr, ca, cor, coa) + html_tr
+
+            print(html_tr)
+            html_content = html.format(customer, html_tr)
+            send_list[query.customer.email]['email_content'] = html_content
             
         return HttpResponse(json.dumps(send_list), status=HTTP_200_OK)
 
