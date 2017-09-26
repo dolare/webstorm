@@ -78,7 +78,7 @@ class SendNotification(APIView):
 
             # End of Chenyuantry
             for report in report_email:
-                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True, customer__is_active = True).order_by('-date_created')[:2]
+                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True).order_by('-date_created')[:2]
 
                 report_data = []
                 print(reportTwo)
@@ -149,13 +149,6 @@ class PreviewNotification(APIView):
                 report_dict['date_modified'] = query.report.date_modified
                 send_list[query.customer.email]['report'].append(report_dict)
 
-                # preview_data[query.customer.email]['report'] = []
-                # preview_data_report_dict = {}
-                # preview_data_report_dict['school_name'] = query.report.school.school
-                # preview_data_report_dict['date_modified'] = str(query.report.date_modified)
-                # preview_data[query.customer.email]['report'].append(report_dict)
-    
-    
             cc_addresses = [cc_email]
             cc_addresses_tuple = tuple(cc_addresses)
 
