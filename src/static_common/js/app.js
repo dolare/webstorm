@@ -1147,6 +1147,48 @@ App.config(function($stateProvider, $urlRouterProvider) {
   }).
 
 
+
+  state('visualization', {
+
+    url: '/visualization_tool',
+    templateUrl: '/static/views/Home/visualization.html',
+    controller: 'VisualizationController',
+    parent: 'success_demo',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo) {
+          console.log("authenticated");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+        } else {
+          console.log('fail to see the page, route change error');
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsVisualization: ['$ocLazyLoad', 'depsSuccess', function($ocLazyLoad, depsSuccess) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                              
+                              'https://cdnjs.cloudflare.com/ajax/libs/echarts/3.7.1/echarts.min.js',
+                              '/static/js/controllers/visualization.js',
+                             
+                              
+                            ]
+                        });
+                    }],
+
+    }
+
+  }).
+
+
   state('history', {
 
     url: '/history_data',

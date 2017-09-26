@@ -1,0 +1,80 @@
+<!-- Page Header -->
+<div class="content bg-gray-lighter">
+  <div class="row items-push">
+    <div class="col-sm-7 push-5">
+      <h1 class="page-heading">
+        Visualization Tool<br><small>- Compare courses at two different schools. </small>
+      </h1>
+    </div>
+
+  </div>
+</div>
+<!-- END Page Header -->
+<!-- Dashboard Charts -->
+<div class="content content-full">
+
+  <div class="col-sm-4">
+
+    <div class="block block-rounded">
+      <div class="block-content">
+
+
+        <button ng-click="refresh()">refresh</button>
+
+        <div class="row">
+          <div class="form-group">
+            <label class="col-xs-12">Course format</label>
+            <div class="col-xs-12">
+            <label class="checkbox-inline" for="course-format-online">
+                <input type="checkbox" id="course-format-online" name="course-format-online" value="option1" ng-change="aha('online')" ng-model="format1"> Online
+              </label>
+              <label class="checkbox-inline" for="course-format-onsite">
+                <input type="checkbox" id="course-format-onsite" name="course-format-onsite" value="option2" ng-change="aha('onsite')" ng-model="format2"> Onsite
+              </label>
+              <label class="checkbox-inline" for="course-format-hybrid">
+                <input type="checkbox" id="course-format-hybrid" name="course-format-hybrid" value="option3" ng-change="aha('hybrid')" ng-model="format3"> Hybrid
+              </label>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="form-group">
+            <label class="col-xs-12">Course type</label>
+            <div class="col-xs-12">
+              <label class="checkbox-inline" for="course-type-amp">
+                <input type="checkbox" id="course-type-amp" name="course-type-amp" value="option1" ng-change="aha('amp')" ng-model="type1"> AMP
+              </label>
+              <label class="checkbox-inline" for="course-type-non-amp">
+                <input type="checkbox" id="course-type-non-amp" name="course-type-non-amp" value="option2" ng-change="aha('non-amp')" ng-model="type2"> Non-AMP
+              </label>
+
+            </div>
+          </div>
+        </div>        
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <div class="col-sm-8">
+
+    <div class="block block-rounded">
+      <div class="block-content" >
+        <div id="main" class="push-30" style="width: 600px;height:400px;"></div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+</div>
+<!-- END Dashboard Charts -->
