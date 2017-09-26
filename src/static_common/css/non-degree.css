@@ -39,3 +39,49 @@
   
 }
 
+/* Specify styling for tooltip contents */
+.tooltip.category-added .tooltip-inner {
+  padding: 0 5px;
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-left: 3px solid #3c763d;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+/* Hide arrow */
+.tooltip.category-added .tooltip-arrow {
+  display: none;
+}
+
+.tooltip.category-removed .tooltip-inner {
+  padding: 0 5px;
+  color: #a94442;
+  background-color: #f2dede;
+  border-left: 3px solid #a94442;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+/* Hide arrow */
+.tooltip.category-removed .tooltip-arrow {
+  display: none;
+}
+
+.tooltip.course-added .tooltip-inner {
+  padding: 0 5px;
+  background-color: #46c37b;
+  color: white;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+/* Hide arrow */
+.tooltip.course-added .tooltip-arrow {
+  display: none;
+}
+
+.tooltip.course-removed .tooltip-inner {
+  padding: 0 5px;
+  background: #d26a5c;
+  color: white;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+/* Hide arrow */
+.tooltip.course-removed .tooltip-arrow {
+  display: none;
+}
