@@ -346,15 +346,15 @@
 					<thead>
 						<tr style="cursor:default">
 							<th class='text-center decoration_none' style="cursor:default">Email address</th>
-							<th class='text-center decoration_none' style="cursor:default">School</th>									
-							<th class='text-center decoration_none' style="cursor:default">username</th>												
+							<th class='text-center decoration_none' style="cursor:default">School</th>								
+							<th class='text-center decoration_none' style="cursor:default">Username</th>												
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat='(emails,content) in email' style="cursor:pointer" ng-click=' checkcontent(content.email_content)' data-toggle="modal" data-target="#modal-fadein">
-							<td class='text-center'>{{ emails }}</td>
-							<td class='text-center'>{{ content.customer.school }}</td>
-							<td class='text-center'>{{ content.customer.username }}</td>
+						<tr ng-repeat='email in emailarr track by $index' style="cursor:pointer" ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">
+							<td class='text-center'>{{ email.email_address }}</td>
+							<td class='text-center'>{{ email.school }}</td>
+							<td class='text-center'>{{ email.username }}</td>
 						</tr>
 					</tbody>
 					<tfoot>
