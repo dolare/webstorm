@@ -164,7 +164,9 @@ class PreviewNotification(APIView):
                     for report_obj in reportTwo:
                         report_data.append(ReportSerializer(report_obj).data)
 
-                    diff_data = ReportOverview.count_diff(report_data[1], report_data[0])
+                    if len(report_data) == 1:
+                        report_data.append(None)
+                    diff_data = ReportOverview.count_diff(report_data[0], report_data[1])
                     print(diff_data)
                 
                 
