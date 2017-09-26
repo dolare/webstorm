@@ -793,16 +793,35 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
           }
         }
         ).then(function(res){
-          console.log(res)
           $scope.email = res.data;
+          var emailarr = [];
+          var email_address;
+          for (email_address in $scope.email){
+            var emailel = {
+            'email_address':'',
+            'school':'',
+            'username':'',
+            'content':''
+            };
+            emailel.email_address = email_address;
+            emailel.school =  $scope.email[email_address].customer.school;
+            emailel.username =  $scope.email[email_address].customer.username;
+            emailel.content = $scope.email[email_address].email_content;
+            emailarr.push(emailel);
+          }
+          $scope.emailarr = emailarr
         })
     }
     $scope.checkcontent = function(content){
-      $scope.email_content = content;
+        $timeout( function(){
+            hljs.initHighlighting();
+            $scope.show_code = true
+        }, 100 );
+        var str = content
+        str = str.replace('\"','"')
+        $scope.email_content = str;
     }
     $scope.send_notification = function(){
-      console.log($scope.email);
-      console.log(typeof($scope.email));
       if(JSON.stringify($scope.email)=='{}'){
         $.notify({
 

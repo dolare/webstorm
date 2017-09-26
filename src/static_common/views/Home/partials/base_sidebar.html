@@ -1,17 +1,17 @@
 <!-- Sidebar Scroll Container -->
 <div id="sidebar-scroll">
-    <!-- Sidebar Content -->
-    <!-- Adding .sidebar-mini-hide to an element will hide it when the sidebar is in mini mode -->
-    <div class="sidebar-content" style="height: 100%;">
-        <!-- Side Header -->
-        <div class="side-header side-content bg-white-op">
-            <button class="btn btn-link text-gray pull-right hidden-md hidden-lg" type="button" data-ng-click="oneui.settings.sidebarOpenXs = false" data-js-blur>
+  <!-- Sidebar Content -->
+  <!-- Adding .sidebar-mini-hide to an element will hide it when the sidebar is in mini mode -->
+  <div class="sidebar-content" style="height: 100%;">
+    <!-- Side Header -->
+    <div class="side-header side-content bg-white-op">
+      <button class="btn btn-link text-gray pull-right hidden-md hidden-lg" type="button" data-ng-click="oneui.settings.sidebarOpenXs = false" data-js-blur>
                 <i class="fa fa-times"></i>
             </button>
-            <div class="btn-group pull-right" data-on-toggle="toggled(open)" data-uib-dropdown>
+      <div class="btn-group pull-right" data-on-toggle="toggled(open)" data-uib-dropdown>
 
-                <!-- change the color theme -->
-               <!--  <button class="btn btn-link text-gray" type="button" data-uib-dropdown-toggle>
+        <!-- change the color theme -->
+        <!--  <button class="btn btn-link text-gray" type="button" data-uib-dropdown-toggle>
                     <i class="si si-drop"></i>
                 </button>
                 <ul class="dropdown-menu-right font-s13 sidebar-mini-hide" data-uib-dropdown-menu>
@@ -46,151 +46,166 @@
                         </a>
                     </li>
                 </ul> -->
-            </div>
-            <a class="h5 text-white" data-js-blur>
-                <!-- LOGO -->
-                <!-- <img alt="Brand" src="./img/G-rid-trans.png" width="20"> -->
-                <!-- <i class="fa fa-circle-o-notch text-primary"></i>  -->
-                <!-- <span class="lead font-w700 text-primary">U</span> -->
-                <i class="glyphicon glyphicon-magnet text-primary"></i>
-                <span class="h4 font-w700 sidebar-mini-hide" style="letter-spacing:1.5px;color:white;margin-left: -2px;"><span class="text-primary">p</span>grid&nbsp;<span class="text-city font-w600" style="font-family: 'Playball', cursive; font-size: 21px; text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1);" ng-show="(admin!=='True'&&_.contains(admin, 'non-degree'))||(admin!=='True'&&_.contains(admin, 'AMP'))">Exec.Ed.</span>
-               <!--  <span class="text-city font-w600 font-s24" style="font-family: 'Playball', cursive; font-size: 21px; text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1);" ng-show="admin==='True'">Admin</span> -->
-                </span>
-                
+      </div>
+      <a class="h5 text-white" data-js-blur>
+        <!-- LOGO -->
+        <!-- <img alt="Brand" src="./img/G-rid-trans.png" width="20"> -->
+        <!-- <i class="fa fa-circle-o-notch text-primary"></i>  -->
+        <!-- <span class="lead font-w700 text-primary">U</span> -->
+        <i class="glyphicon glyphicon-magnet text-primary"></i>
+        <span class="h4 font-w700 sidebar-mini-hide" style="letter-spacing:1.5px;color:white;margin-left: -2px;"><span class="text-primary">p</span>grid&nbsp;<span class="text-city font-w600" style="font-family: 'Playball', cursive; font-size: 21px; text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1);" ng-show="(admin!=='True'&&_.contains(admin, 'non-degree'))||(admin!=='True'&&_.contains(admin, 'AMP'))">Exec.Ed.</span>
+        <!--  <span class="text-city font-w600 font-s24" style="font-family: 'Playball', cursive; font-size: 21px; text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1);" ng-show="admin==='True'">Admin</span> -->
+        </span>
 
-            </a>
 
-        </div>
-        <!-- END Side Header -->
+      </a>
 
-        <!-- Side Content -->
-        <div class="side-content">
-            <!-- Main navigation functionality (data-js-main-nav attribute is initialized in js/directives.js) -->
-            <ul class="nav-main" data-js-main-nav>
-                <!-- <li style="padding-left:20px;padding-right:30px;"><div class="sidebar-mini-hide" style="font-size:15px;font-weight:bold;color:#14adc4;font-family:"Source Sans Pro","Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;">Stay Abreast of the competing programs.</div><hr class="sidebar-mini-hide" style="margin-bottom:0;color:rgba(255,255,255,0.3);"/></li> -->
-                
-                <li class="nav-main-heading animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <span class="sidebar-mini-hide" style="font-weight:bold;">Admin</span>
-                </li>
+    </div>
+    <!-- END Side Header -->
 
-                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <a data-ui-sref="admin-dashboard" data-ui-sref-active="active" >
+    <!-- Side Content -->
+    <div class="side-content">
+      <!-- Main navigation functionality (data-js-main-nav attribute is initialized in js/directives.js) -->
+      <ul class="nav-main" data-js-main-nav>
+        <!-- <li style="padding-left:20px;padding-right:30px;"><div class="sidebar-mini-hide" style="font-size:15px;font-weight:bold;color:#14adc4;font-family:"Source Sans Pro","Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;">Stay Abreast of the competing programs.</div><hr class="sidebar-mini-hide" style="margin-bottom:0;color:rgba(255,255,255,0.3);"/></li> -->
+
+        <li class="nav-main-heading animate-show" ng-show="admin==='True'&&avatar_id===''">
+          <span class="sidebar-mini-hide" style="font-weight:bold;">Admin</span>
+        </li>
+
+        <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+          <a data-ui-sref="admin-dashboard" data-ui-sref-active="active">
                         <i class="si si-home"></i><span class="sidebar-mini-hide">Admin Dashboard</span>
                     </a>
-                </li>
+        </li>
 
 
-                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <a data-ui-sref="admin" data-ui-sref-active="active" >
+        <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+          <a data-ui-sref="admin" data-ui-sref-active="active">
                         <i class="icon-people"></i><span class="sidebar-mini-hide">Client Management</span>
                     </a>
-                </li>
+        </li>
 
 
-                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Regular</span></a>
-                    <ul>
-                     <!--    <li class="push-5 push-5-t">
+        <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+          <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Regular</span></a>
+          <ul>
+            <!--    <li class="push-5 push-5-t">
                             <a data-ui-sref="admin" data-ui-sref-active="active" >Client Management</a>
                         </li>
  -->
-                        <li class="push-5 push-5-t">
-                            <a data-ui-sref="updates" data-ui-sref-active="active">Updates</a>
-                        </li>
+            <li class="push-5 push-5-t">
+              <a data-ui-sref="updates" data-ui-sref-active="active">Updates</a>
+            </li>
 
 
 
-                        <li class="push-5 push-5-t">
-                            <a data-ui-sref="backdoor" data-ui-sref-active="active">Backdoor</a>
-                        </li>
-                        
-                        
-                       
-                    </ul>
-                </li>
+            <li class="push-5 push-5-t">
+              <a data-ui-sref="backdoor" data-ui-sref-active="active">Backdoor</a>
+            </li>
 
 
-                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="icon-briefcase"></i><span class="sidebar-mini-hide">Executive Education</span></a>
-                    <ul>
-                       <!--  <li class="push-5 push-5-t">
+
+          </ul>
+        </li>
+
+
+        <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+          <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="icon-briefcase"></i><span class="sidebar-mini-hide">Executive Education</span></a>
+          <ul>
+            <!--  <li class="push-5 push-5-t">
                             <a data-ui-sref="admin-exec-user" data-ui-sref-active="active">Client Management</a>
                         </li> -->
 
-                        <li class="push-5 push-5-t">
-                            <a data-ui-sref="executive" data-ui-sref-active="active">Updates</a>
-                        </li>
-                        
-                        
-                       
-                    </ul>
-                </li>
+            <li class="push-5 push-5-t">
+              <a data-ui-sref="executive" data-ui-sref-active="active">Updates</a>
+            </li>
 
 
-                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <a data-ui-sref="quote" data-ui-sref-active="active" >
+
+          </ul>
+        </li>
+
+
+        <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+          <a data-ui-sref="quote" data-ui-sref-active="active">
                         <i class="si si-bar-chart"></i><span class="sidebar-mini-hide">Pricing Quote</span>
                     </a>
-                </li>
+        </li>
 
 
 
-                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <a data-ui-sref="admin_profile" data-ui-sref-active="active" >
+        <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+          <a data-ui-sref="admin_profile" data-ui-sref-active="active">
                         <i class="si si-user-following"></i><span class="sidebar-mini-hide">Admin Profile</span>
                     </a>
-                </li>
+        </li>
 
-                <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
-                    <a href="http://ceedman.elasticbeanstalk.com/webtracking_management/" target="_blank">
+        <li class="animate-show" ng-show="admin==='True'&&avatar_id===''">
+          <a href="http://ceedman.elasticbeanstalk.com/webtracking_management/" target="_blank">
                         <i class="fa fa-cog" aria-hidden="true"></i><span class="sidebar-mini-hide">Webtracking</span>
                     </a>
-                </li>
+        </li>
 
 
 
-                <li class="animate-show nav-main-heading" ng-show="(admin==='True'&&avatar_id!=='')||admin!=='True'"><span class="sidebar-mini-hide" style="font-weight:bold;">Menu</span></li>
+        <li class="animate-show nav-main-heading" ng-show="(admin==='True'&&avatar_id!=='')||admin!=='True'"><span class="sidebar-mini-hide" style="font-weight:bold;">Menu</span></li>
 
-                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'whoops')&&_.contains(report_type, 'enhancement'))||(admin!=='True'&&_.contains(admin, 'whoops'))&&(admin!=='True'&&_.contains(admin, 'enhancement'))">
-                    <a data-ui-sref="dashboard" data-ui-sref-active="active" >
+        <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'whoops')&&_.contains(report_type, 'enhancement'))||(admin!=='True'&&_.contains(admin, 'whoops'))&&(admin!=='True'&&_.contains(admin, 'enhancement'))">
+          <a data-ui-sref="dashboard" data-ui-sref-active="active">
                         <i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span>
                     </a>
-                </li>
+        </li>
 
-                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'whoops'))||(admin!=='True'&&_.contains(admin, 'whoops'))">
-                    <a data-ui-sref="whoops" data-ui-sref-active="active" >
+        <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'whoops'))||(admin!=='True'&&_.contains(admin, 'whoops'))">
+          <a data-ui-sref="whoops" data-ui-sref-active="active">
                         <i class="si si-wrench"></i><span class="sidebar-mini-hide">"Whoops!" Report</span>
                     </a>
-                </li>
-                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'enhancement'))||(admin!=='True'&&_.contains(admin, 'enhancement'))">
-                    <a data-ui-sref="enhancement" data-ui-sref-active="active" >
+        </li>
+        <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'enhancement'))||(admin!=='True'&&_.contains(admin, 'enhancement'))">
+          <a data-ui-sref="enhancement" data-ui-sref-active="active">
                         <i class="si si-rocket"></i><span class="sidebar-mini-hide">Enhancement Report</span>
                     </a>
-                </li>
+        </li>
 
-               
-                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'non-degree'))||(admin!=='True'&&_.contains(admin, 'non-degree'))">
-                    <a data-ui-sref="non_degree" data-ui-sref-active="active" >
+
+        <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'non-degree'))||(admin!=='True'&&_.contains(admin, 'non-degree'))">
+          <a data-ui-sref="non_degree" data-ui-sref-active="active">
                         <i class="icon-doc"></i><span class="sidebar-mini-hide">Complete Tracking</span>
                     </a>
-                </li>
+        </li>
 
+        <li class="animate-show" style="position: relative;" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'non-degree'))||(admin!=='True'&&_.contains(admin, 'non-degree'))">
+          <a class="nav-submenu" data-toggle="nav-submenu" href="#">
+            <i class="icon-puzzle"></i>
+            <span class="sidebar-mini-hide">
+              Peer Analysis
+            </span>
+          </a>
+          <ul>
+            <li class="push-5 push-5-t">
+              <a data-ui-sref="history" data-ui-sref-active="active">History Data</a>
+            </li>
+            <li class="push-5 push-5-t">
+              <a data-ui-sref="comparison" data-ui-sref-active="active">Comparison Tool</a>
+            </li>
+            <li class="push-5 push-5-t">
+              <a data-ui-sref="search_tool" data-ui-sref-active="active">
+                Search Tool
+                <label class="label label-default text-info bg-info-light" style="border: 1px solid #70b9eb; font-size: 8px; padding: 2px 4px; position: absolute; margin-left: 5px; top: 7px; background: transparent; border-radius: 10px;">BETA</label>
+              </a>
+            </li>
+          </ul>
+        </li>
 
-                <li class="animate-show" style="position: relative;" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'AMP'))||(admin!=='True'&&_.contains(admin, 'AMP'))">
-                    <a data-ui-sref="amp" data-ui-sref-active="active" >
-                        <i class="icon-star"></i><span class="sidebar-mini-hide">AMP Report <label class="label label-default text-info bg-info-light" style="border: 1px solid #70b9eb;
-                                                    font-size: 8px;
-                                                    padding: 2px 4px;
-                                                    position: absolute;
-                                                    margin-left: 5px;
-                                                    top: 7px;
-                                                    background: transparent;
-                                                    border-radius: 10px;">BETA</label></span>
-                    </a>
-                </li>
+        <li class="animate-show" style="position: relative;" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'AMP'))||(admin!=='True'&&_.contains(admin, 'AMP'))">
+          <a data-ui-sref="amp" data-ui-sref-active="active">
+            <i class="icon-star"></i><span class="sidebar-mini-hide">AMP Report</span>
+          </a>
+        </li>
 
-                <li class="animate-show" style="position: relative;" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'quick-whoops'))||(admin!=='True'&&_.contains(admin, 'quick-whoops'))">
-                    <a data-ui-sref="non_degree_whoops" data-ui-sref-active="active" >
+        <li class="animate-show" style="position: relative;" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'quick-whoops'))||(admin!=='True'&&_.contains(admin, 'quick-whoops'))">
+          <a data-ui-sref="non_degree_whoops" data-ui-sref-active="active">
                         <i class="icon-note"></i><span class="sidebar-mini-hide">Exec. Ed. Whoops<label class="label label-default bg-info-light" style="border: 1px solid #FF6B6B;
                                                     font-size: 8px;
                                                     color: #FF6B6B;
@@ -201,63 +216,43 @@
                                                     background: transparent;
                                                     border-radius: 10px;">TRIAL</label></span>
                     </a>
-                </li>
+        </li>
 
 
-                <li class="animate-show" style="position: relative;" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'non-degree'))||(admin!=='True'&&_.contains(admin, 'non-degree'))">
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="icon-puzzle"></i><span class="sidebar-mini-hide">Peer Analysis <label class="label label-default text-info bg-info-light" style="border: 1px solid #70b9eb;
-                                                    font-size: 8px;
-                                                    padding: 2px 4px;
-                                                    position: absolute;
-                                                    margin-left: 5px;
-                                                    top: 7px;
-                                                    background: transparent;
-                                                    border-radius: 10px;">BETA</label></span></a>
-                    <ul>
-                        <li class="push-5 push-5-t">
-                            <a data-ui-sref="history" data-ui-sref-active="active">History Data</a>
-                        </li>
-                        <li class="push-5 push-5-t">
-                            <a data-ui-sref="comparison" data-ui-sref-active="active">Comparison Tool</a>
-                        </li>
-                        <!-- <li class="push-5 push-5-t">
-                            <a data-ui-sref="search_tool" data-ui-sref-active="active">Search Tool</a>
-                        </li> -->
-                    </ul>
-                </li>
 
 
-                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'whoops')&&_.contains(report_type, 'enhancement'))||(admin!=='True'&&_.contains(admin, 'whoops')&&_.contains(admin, 'enhancement'))">
-                    <a data-ui-sref="reports" data-ui-sref-active="active" style="position:relative;" ><i class="si si-folder-alt"></i><span shake count="count" class="badge badge-info pull-right programbadge" ng-if="oneui.settings.sidebarMini&&count>0" style="position: absolute;top:0px;left:26px;">{{count}}</span><span class="sidebar-mini-hide">Report Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span shake count="count" class="badge badge-info pull-right sidebar-mini-hide programbadge" style="position: absolute" ng-if="!oneui.settings.sidebarMini&&count>0" >{{count}}</span>
+
+        <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'whoops')&&_.contains(report_type, 'enhancement'))||(admin!=='True'&&_.contains(admin, 'whoops')&&_.contains(admin, 'enhancement'))">
+          <a data-ui-sref="reports" data-ui-sref-active="active" style="position:relative;"><i class="si si-folder-alt"></i><span shake count="count" class="badge badge-info pull-right programbadge" ng-if="oneui.settings.sidebarMini&&count>0" style="position: absolute;top:0px;left:26px;">{{count}}</span><span class="sidebar-mini-hide">Report Manager</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span shake count="count" class="badge badge-info pull-right sidebar-mini-hide programbadge" style="position: absolute" ng-if="!oneui.settings.sidebarMini&&count>0" >{{count}}</span>
                     </a>
-                </li>
+        </li>
 
-                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||admin!=='True'">
-                    <a data-ui-sref="profile" data-ui-sref-active="active" >
+        <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||admin!=='True'">
+          <a data-ui-sref="profile" data-ui-sref-active="active">
                         <i class="si si-user"></i><span class="sidebar-mini-hide">User Profile</span>
                     </a>
-                </li>
-                
-                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'whoops')&&_.contains(report_type, 'enhancement'))||(admin!=='True'&&_.contains(admin, 'whoops')&&_.contains(admin, 'enhancement'))">
-                    <a data-ui-sref="help" data-ui-sref-active="active" >
+        </li>
+
+        <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'whoops')&&_.contains(report_type, 'enhancement'))||(admin!=='True'&&_.contains(admin, 'whoops')&&_.contains(admin, 'enhancement'))">
+          <a data-ui-sref="help" data-ui-sref-active="active">
                         <i class="si si-support"></i><span class="sidebar-mini-hide">Client Support</span>
                     </a>
-                </li>
-                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||admin!=='True'">
-                    <a data-ui-sref="technicalSupport" data-ui-sref-active="active" >
+        </li>
+        <!-- <li class="animate-show" ng-show="(admin==='True'&&avatar_id!=='')||admin!=='True'">
+          <a data-ui-sref="technicalSupport" data-ui-sref-active="active">
                         <i class="si si-support"></i><span class="sidebar-mini-hide">Technical Support</span>
                     </a>
-                </li>
-                
-            </ul>
+        </li> -->
+
+      </ul>
 
 
 
 
-             <ul class="nav-main logout" style="position:absolute; bottom:10px; left: 20px; width: 100%">
+      <ul class="nav-main logout" style="position:absolute; bottom:10px; left: 20px; width: 100%">
 
-                <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'non-degree')&&_.contains(report_type, 'AMP'))||((admin!=='True'&&_.contains(admin, 'non-degree'))||(admin!=='True'&&_.contains(admin, 'AMP')))">
-                    <div class="sidebar-mini-hide push-20" style="
+        <li class="animate-show" ng-show="(admin==='True'&&avatar_id!==''&&_.contains(report_type, 'non-degree')&&_.contains(report_type, 'AMP'))||((admin!=='True'&&_.contains(admin, 'non-degree'))||(admin!=='True'&&_.contains(admin, 'AMP')))">
+          <div class="sidebar-mini-hide push-20" style="
                     
                     margin-right: 15px;
                     background: rgba(255, 255, 255, 0.1);
@@ -267,33 +262,33 @@
                     border-top-right-radius: 4px;
                     border-bottom-right-radius: 4px;">
 
-                    <div style="font-size:78%; color: rgba(255,255,255,0.8);padding: 2px 10px 2px 20px;background: rgba(255,255,255,0.1); cursor:pointer" class="font-w600" ng-init="show_manager=true" ng-click="show_manager=!show_manager">Account manager <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': show_manager, 'glyphicon-chevron-right': !show_manager}" style="margin-top: 2px;"></i></div>
+            <div style="font-size:78%; color: rgba(255,255,255,0.8);padding: 2px 10px 2px 20px;background: rgba(255,255,255,0.1); cursor:pointer" class="font-w600" ng-init="show_manager=true" ng-click="show_manager=!show_manager">Account manager <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': show_manager, 'glyphicon-chevron-right': !show_manager}" style="margin-top: 2px;"></i></div>
 
-                    <div style="padding: 6px 10px 10px 20px;" ng-if="show_manager">
-                    <div style="color: rgba(112, 185, 235, 0.9);font-size: 110%" class="font-w600 push-5">Gresham Fedora</div>
-                    (201) 292-3716 <br>
-                    gfedora@gridet.com</div>
+            <div style="padding: 6px 10px 10px 20px;" ng-if="show_manager">
+              <div style="color: rgba(112, 185, 235, 0.9);font-size: 110%" class="font-w600 push-5">Gresham Fedora</div>
+              (201) 292-3716 <br> gfedora@gridet.com
+            </div>
 
 
-                    </div>
+          </div>
 
-                </li>
+        </li>
 
-                <li class="animate-show" ng-show="admin==='True'&&avatar_id!==''">
-                    <a href="javascript:void(0)" ng-click="signout_avatar()">
+        <li class="animate-show" ng-show="admin==='True'&&avatar_id!==''">
+          <a href="javascript:void(0)" ng-click="signout_avatar()">
                         <i class="si si-eyeglasses"></i><span class="sidebar-mini-hide">End impersonation</span>
                     </a>
-                </li>
+        </li>
 
-                <li>
-                    <a href="javascript:void(0)" ng-click="logout()">
+        <li>
+          <a href="javascript:void(0)" ng-click="logout()">
                         <i class="si si-power"></i><span class="sidebar-mini-hide">Log out</span>
                     </a>
-                </li>
+        </li>
 
-             </ul>
+      </ul>
 
-            <!--  <ul class="nav-main" data-js-main-nav style="position; absolute; bottom: 10px">
+      <!--  <ul class="nav-main" data-js-main-nav style="position; absolute; bottom: 10px">
                 <li>
                     <a data-ui-sref="help" data-ui-sref-active="active">
                         <i class="si si-question"></i><span class="sidebar-mini-hide">Client Support</span>
@@ -301,15 +296,15 @@
                 </li>
              </ul> -->
 
-            <!-- <li style="position:absolute;bottom:10px;">
+      <!-- <li style="position:absolute;bottom:10px;">
                     <a data-ui-sref="help" data-ui-sref-active="active">
                         <i class="si si-question"></i><span class="sidebar-mini-hide">Log out</span>
                     </a>
                 </li> -->
 
-        </div>
-        <!-- END Side Content -->
     </div>
-    <!-- Sidebar Content -->
+    <!-- END Side Content -->
+  </div>
+  <!-- Sidebar Content -->
 </div>
 <!-- END Sidebar Scroll Container -->
