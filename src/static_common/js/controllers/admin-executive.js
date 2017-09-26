@@ -798,15 +798,16 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
         })
     }
     $scope.checkcontent = function(content){
-       $timeout( function(){
+        $timeout( function(){
             hljs.initHighlighting();
             $scope.show_code = true
         }, 100 );
-      $scope.email_content = content;
+        var str = content
+        str = str.replace('\"','"')
+        console.log('content+'+str);
+        $scope.email_content = str;
     }
     $scope.send_notification = function(){
-      console.log($scope.email);
-      console.log(typeof($scope.email));
       if(JSON.stringify($scope.email)=='{}'){
         $.notify({
 
