@@ -46,6 +46,7 @@
   background-color: #dff0d8;
   border-left: 3px solid #3c763d;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  text-align: left;
 }
 /* Hide arrow */
 .tooltip.category-added .tooltip-arrow {
@@ -58,6 +59,7 @@
   background-color: #f2dede;
   border-left: 3px solid #a94442;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  text-align: left;
 }
 /* Hide arrow */
 .tooltip.category-removed .tooltip-arrow {
@@ -69,6 +71,7 @@
   background-color: #46c37b;
   color: white;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  text-align: left;
 }
 /* Hide arrow */
 .tooltip.course-added .tooltip-arrow {
@@ -80,6 +83,7 @@
   background: #d26a5c;
   color: white;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  text-align: left;
 }
 /* Hide arrow */
 .tooltip.course-removed .tooltip-arrow {
