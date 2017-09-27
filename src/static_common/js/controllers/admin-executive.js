@@ -783,7 +783,8 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
         formValues: true
       });
     };
-    // code for email with 2 API 
+
+    //API for get email details
     $scope.preview_notification = function(){
       $http({
         url: '/api/upgrid/non_degree/preview_notification',
@@ -796,8 +797,9 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
           $scope.email = res.data;
           var emailarr = [];
           var email_address;
+          //transfer object from api to array
           for (email_address in $scope.email){
-            var emailel = {
+            var emailel = {   
             'email_address':'',
             'school':'',
             'username':'',
@@ -811,7 +813,9 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
           }
           $scope.emailarr = emailarr
         })
-    }
+    };
+
+    //content in Model
     $scope.checkcontent = function(content){
         $timeout( function(){
             hljs.initHighlighting();
@@ -820,9 +824,11 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
         var str = content
         str = str.replace('\"','"')
         $scope.email_content = str;
-    }
+    };
+
+    //api for send email
     $scope.send_notification = function(){
-      if(JSON.stringify($scope.email)=='{}'){
+      if(JSON.stringify($scope.email)=='{}'){ //check email without api calls using content from last preview_notification api
         $.notify({
 
                         // options
@@ -877,6 +883,6 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
         }
       })
       }   
-    }
+    };
   }
 ]);
