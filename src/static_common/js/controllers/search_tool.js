@@ -14,6 +14,7 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
     $scope.inputKeywords = '';
     $scope.searchKeywords = '';
     $scope.lastSearchKeywords = '';
+    $scope.inputAlertIsOpen = false;
 
     $http({
       method: 'GET',
@@ -40,7 +41,6 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
         }
         index++;
       });
-      // $scope.inputKeywords = $scope.inputKeywords.substring(0, 150);
       $scope.search();
     };
 
@@ -48,9 +48,10 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
     $scope.search = function() {
       console.log('inputKeywords: ' + $scope.inputKeywords);
       console.log('$.trim($scope.inputKeywords): ' + $.trim($scope.inputKeywords));
-      // If inputKeywords is an empty string or a string that only consists of spaces, it wouldn't do the search.
+      // Inputkeywords should consist of at least two alphanumeric characters, otherwise an notification will be shown.
       // inputKeywords is the string in the input box. searchKeywords is the string used to search.
-      if ($.trim($scope.inputKeywords)) {
+      var alphanumericFound = $.trim($scope.inputKeywords).match(/[A-Za-z0-9]/g);
+      if (alphanumericFound && alphanumericFound.length >= 2) {
         $scope.searchKeywords = $.trim($scope.inputKeywords);
         
         
@@ -78,6 +79,13 @@ angular.module('myApp').controller('SearchToolController', ['$q', '$http', '$sco
           $scope.showCourseResults = true;
         }
         
+      }
+      else {
+        // alert('Pleasat enter at least 2 alphanumeric characters.');
+        $scope.inputAlertIsOpen = true;
+        $timeout(function() {
+          $scope.inputAlertIsOpen = false;
+        }, 2000);
       }
     };
     $scope.pressedEnter = function(keyEvent) {
