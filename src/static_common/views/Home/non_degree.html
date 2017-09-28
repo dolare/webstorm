@@ -131,7 +131,7 @@
 
             <script type="text/ng-template" id="categoryAddedTooltip.html">
               <div>
-                <li ng-repeat="element in row.details.category_added_name" ng-if="$index<5">{{element}}</li>
+                <li ng-repeat="element in row.details.category_added_name track by $index" ng-if="$index<5">{{element}}</li>
                 <span ng-if="row.details.category_added_name.length>5">...</span>
               </div>
             </script>
@@ -144,7 +144,7 @@
 
             <script type="text/ng-template" id="categoryRemovedTooltip.html">
               <div>
-                <li ng-repeat="element in row.details.category_removed_name" ng-if="$index<5">{{element}}</li>
+                <li ng-repeat="element in row.details.category_removed_name track by $index" ng-if="$index<5">{{element}}</li>
                 <span ng-if="row.details.category_removed_name.length>5">...</span>
               </div>
             </script>
@@ -157,7 +157,7 @@
 
             <script type="text/ng-template" id="courseAddedTooltip.html">
               <div>
-                <li ng-repeat="element in row.details.course_added_name" ng-if="$index<5">{{element}}</li>
+                <li ng-repeat="element in row.details.course_added_name track by $index" ng-if="$index<5">{{element}}</li>
                 <span ng-if="row.details.course_added_name.length>5">...</span>
               </div>
             </script>
@@ -170,7 +170,7 @@
 
             <script type="text/ng-template" id="courseRemovedTooltip.html">
               <div>
-                <li ng-repeat="element in row.details.course_removed_name" ng-if="$index<5">{{element}}</li>
+                <li ng-repeat="element in row.details.course_removed_name track by $index" ng-if="$index<5">{{element}}</li>
                 <span ng-if="row.details.course_removed_name.length>5">...</span>
               </div>
             </script>
