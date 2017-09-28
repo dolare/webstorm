@@ -76,6 +76,9 @@ class UniversitySchoolCategoryFilter(FilterSet):
 
 
 class NonDegreeWhoopsReportFilter(FilterSet):
+    """
+    Non-Degree Whoops Report Filter
+    """
     university_school = django_filters.UUIDFilter(name="university_school__object_id")
     client_id = django_filters.UUIDFilter(method="filter_client_id")
 
@@ -96,7 +99,11 @@ class NonDegreeWhoopsReportFilter(FilterSet):
 
 class MultipleSearchFilter(SearchFilter):
     """
-    Multiple search Filter
+    Multiple search Filter, for search fields with or relationship.
+    For example:
+    With data: aabbcc
+    search key word: bb,dd,ff,gg,hh
+    data 'aabbcc' will be reached
     """
     # The URL query parameter used for the search.
     search_param = 'multiple_search'
