@@ -5,6 +5,7 @@ tmp/
 *.log
 *.pyc
 __pycache__/
+node_modules
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
