@@ -125,24 +125,56 @@
 
             <td class="text-center td-bordered" ng-show="row.details">
               
-              <span ng-if="row.details.category_added>0" class="badge badge-success">+ {{row.details.category_added}}</span>
+              <span ng-if="row.details.category_added>0" class="badge badge-success" uib-tooltip-template="'categoryAddedTooltip.html'" tooltip-class="category-added">+ {{row.details.category_added}}</span>
               <span ng-if="row.details.category_added===0" class="badge badge-default">- -</span>
             </td>
+
+            <script type="text/ng-template" id="categoryAddedTooltip.html">
+              <div>
+                <li ng-repeat="element in row.details.category_added_name" ng-if="$index<5">{{element}}</li>
+                <span ng-if="row.details.category_added_name.length>5">...</span>
+              </div>
+            </script>
+
             <td class="text-center td-bordered" ng-show="row.details">
               
-              <span ng-if="row.details.category_removed>0" class="badge badge-danger">- {{row.details.category_removed}}</span>
+              <span ng-if="row.details.category_removed>0" class="badge badge-danger" uib-tooltip-template="'categoryRemovedTooltip.html'" tooltip-class="category-removed">- {{row.details.category_removed}}</span>
               <span ng-if="row.details.category_removed===0" class="badge badge-default">- -</span>
             </td>
+
+            <script type="text/ng-template" id="categoryRemovedTooltip.html">
+              <div>
+                <li ng-repeat="element in row.details.category_removed_name" ng-if="$index<5">{{element}}</li>
+                <span ng-if="row.details.category_removed_name.length>5">...</span>
+              </div>
+            </script>
+
             <td class="text-center td-bordered" ng-show="row.details">
               
-              <span ng-if="row.details.course_added>0" class="badge badge-success">+ {{row.details.course_added}}</span>
+              <span ng-if="row.details.course_added>0" class="badge badge-success" uib-tooltip-template="'courseAddedTooltip.html'" tooltip-class="course-added">+ {{row.details.course_added}}</span>
               <span ng-if="row.details.course_added===0" class="badge badge-default">- -</span>
             </td>
+
+            <script type="text/ng-template" id="courseAddedTooltip.html">
+              <div>
+                <li ng-repeat="element in row.details.course_added_name" ng-if="$index<5">{{element}}</li>
+                <span ng-if="row.details.course_added_name.length>5">...</span>
+              </div>
+            </script>
+
             <td class="text-center td-bordered" ng-show="row.details">
              
-              <span ng-if="row.details.course_removed>0" class="badge badge-danger">- {{row.details.course_removed}}</span>
+              <span ng-if="row.details.course_removed>0" class="badge badge-danger"  uib-tooltip-template="'courseRemovedTooltip.html'" tooltip-class="course-removed">- {{row.details.course_removed}}</span>
               <span ng-if="row.details.course_removed===0" class="badge badge-default">- -</span>
             </td>
+
+            <script type="text/ng-template" id="courseRemovedTooltip.html">
+              <div>
+                <li ng-repeat="element in row.details.course_removed_name" ng-if="$index<5">{{element}}</li>
+                <span ng-if="row.details.course_removed_name.length>5">...</span>
+              </div>
+            </script>
+
             <td class="td-bordered text-center">
               <div class="form-material">
                 <select class="form-control" id="js-data-{{row.object_id}}" ng-model="selectedReportId" ng-change="setReportPair(row.object_id, selectedReportId)" style="width: 90%;">

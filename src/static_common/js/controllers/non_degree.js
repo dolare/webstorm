@@ -200,7 +200,10 @@ controller('NonDegreeController', function(avatarService, $scope, $http, authent
           school.details["course_added"] = resp_overview.data.course_added;
           school.details["category_added"] = resp_overview.data.category_added;
           school.details["category_removed"] = resp_overview.data.category_removed;
-
+          school.details["category_added_name"] = resp_overview.data.category_added_name;
+          school.details["category_removed_name"] = resp_overview.data.category_removed_name;
+          school.details["course_added_name"] = resp_overview.data.course_added_name;
+          school.details["course_removed_name"] = resp_overview.data.course_removed_name;
 
           console.log('Generated details for ' + school.school + ' : ');
           console.log(angular.toJson(school.details));
