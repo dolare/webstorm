@@ -134,7 +134,7 @@ class PreviewNotification(APIView):
                 preview_data[query.customer.email] = {}
                 preview_data[query.customer.email]['username'] = query.customer.username
                 preview_data[query.customer.email]['school'] = query.customer.Ceeb.school
-                preview_data[query.customer.email]['university'] = query.customer.Ceeb.schooluniversity_foreign_key.name
+                # preview_data[query.customer.email]['university'] = query.customer.Ceeb.schooluniversity_foreign_key.name
                 send_list[query.customer.email] = {}
                 send_list[query.customer.email]['customer'] = {}
                 send_list[query.customer.email]['customer']['username'] = query.customer.username
