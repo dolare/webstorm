@@ -10,13 +10,78 @@ visualization.controller('VisualizationController',
 
     var myChart = echarts.init(document.getElementById('main'));
 
+
     $scope.selection = []
 
-    for(var i=0; i<6; i++){
+    var bar_result = [0,0,0,0,0,0,0, 0, 0, 0];
+    
+    $scope.reset = function(index){
+        alert(bar_result)
+
+        
+        $scope.selection[index].school = null;
+        $scope.selection[index].category = null;
+
+        bar_result[index]= 0
+
+        alert(bar_result)
+
+        option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : [],
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'',
+            type:'bar',
+            barWidth: '70%',
+             label: {
+                normal: {
+                    show: true,
+                    position: 'inside'
+                }
+            },
+            data:bar_result
+        }
+    ]
+};
+
+myChart.setOption(option);
+
+    }
+
+
+    for(var i=0; i<10; i++){
 
             $scope.selection[i] = {
                 'categories': [],
-                'select': null
+                'select': null,
+                'school': null,
+                'category': null,
             }
            
 
@@ -86,7 +151,7 @@ visualization.controller('VisualizationController',
 
     }
 
-var bar_result = [0,0,0,0,0,0];
+
 
 option = {
     color: ['#3398DB'],
@@ -105,7 +170,7 @@ option = {
     xAxis : [
         {
             type : 'category',
-            data : ['BS1', 'BS2', 'BS3', 'BS4', 'BS5', 'BS6'],
+            data : [],
             axisTick: {
                 alignWithLabel: true
             }
@@ -163,59 +228,59 @@ $scope.refresh=function() {
 
                     console.log("bar_result="+JSON.stringify(bar_result, null, 4))
                                      option = {
-    color: ['#3398DB'],
-    tooltip : {
-        trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis : [
-        {
-            type : 'category',
-            data : ['BS1', 'BS2', 'BS3', 'BS4', 'BS5', 'BS6'],
-            axisTick: {
-                alignWithLabel: true
-            }
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value'
-        }
-    ],
-    series : [
-        {
-            name:'',
-            type:'bar',
-            barWidth: '70%',
-             label: {
-                normal: {
-                    show: true,
-                    position: 'inside'
-                }
-            },
-            data:bar_result
-        }
-    ]
-};
+                    color: ['#3398DB'],
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : [],
+                            axisTick: {
+                                alignWithLabel: true
+                            }
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'',
+                            type:'bar',
+                            barWidth: '70%',
+                             label: {
+                                normal: {
+                                    show: true,
+                                    position: 'inside'
+                                }
+                            },
+                            data:bar_result
+                        }
+                    ]
+                };
 
-myChart.setOption(option);
+                myChart.setOption(option);
 
-                }).catch(function(error){
-                     console.log('an error occurred...'+JSON.stringify(error));
-                });
+                                }).catch(function(error){
+                                     console.log('an error occurred...'+JSON.stringify(error));
+                                });
 
 
 
-            } else {
-                bar_result[index] = 0
+                            } else {
+                                bar_result[index] = 0
 
 
                 option = {
@@ -235,7 +300,7 @@ myChart.setOption(option);
     xAxis : [
         {
             type : 'category',
-            data : ['BS1', 'BS2', 'BS3', 'BS4', 'BS5', 'BS6'],
+            data : [],
             axisTick: {
                 alignWithLabel: true
             }
