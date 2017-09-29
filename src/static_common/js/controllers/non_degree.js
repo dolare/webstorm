@@ -14,7 +14,7 @@ controller('NonDegreeController', function(avatarService, $scope, $http, authent
   //console.log("table = "+JSON.stringify(Table));
 
   $scope.$storage.non_degree = null
-
+  // Introduce Underscore.js;
   $scope._ = _;
   $scope.testObject = {one: 1, two: 2, three: 3, four: 4};
 
