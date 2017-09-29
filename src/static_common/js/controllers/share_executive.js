@@ -2,14 +2,15 @@
 angular.module('myApp').
 controller('ShareExecutiveController', ['$timeout', '$stateParams', '$scope', '$location', '$window', '$http', '$state', 'orderByFilter', 'executiveService', function($timeout, $stateParams, $scope, $location, $window, $http, $state, orderBy, executiveService) {
 			
-		angular.element(document.getElementsByTagName("body")).addClass('frame');
+		$scope.isShared = true;
 
-		
+		// Introduce Underscore.js;
+  		$scope._ = _;
 
 		$scope.currency_symbols = executiveService.getCurrencySymbols();
 
 		
-		App.blocks('#sharedNonDegree_loading', 'state_loading');
+		App.blocks('#sharedTrackingReport_loading', 'state_loading');
 		
 		console.log("share executive, URL params = "+$stateParams.param1+'/'+$stateParams.param2+'/');
 
@@ -24,7 +25,7 @@ controller('ShareExecutiveController', ['$timeout', '$stateParams', '$scope', '$
 
 			console.log("shared executive, # of reports: "+ response.data.reports.length)
 
-			$scope.date_created = response.data.date_created;
+			$scope.date = response.data.date_created;
 
 			$scope.expired_time = response.data.expired_time;
 			
@@ -47,7 +48,6 @@ controller('ShareExecutiveController', ['$timeout', '$stateParams', '$scope', '$
 
 			for (var j = $scope.schools.length - 1; j >= 0; j--) {
 				var s = $scope.schools[j];
-				s.hasUpdates = _.difference( _.pluck(s.categories, 'updated'), [1, 2, undefined]).length || _.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'name_old'), [undefined]).length > 0 || _.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'url_old'), [undefined]).length>0 ||_.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'course_dates_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'currency_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'type_old'), [undefined]).length>0 || _.difference(_.pluck(_.flatten(_.pluck(s.categories, 'courses')), 'tuition_number_old'), [undefined]).length>0;
 				s.logo_url = executiveService.getLogoBySchoolName(s.school_name, s.university_name);
 
 				// Category offerings
@@ -74,7 +74,7 @@ controller('ShareExecutiveController', ['$timeout', '$stateParams', '$scope', '$
                 }
 			}
 
-			App.blocks('#sharedNonDegree_loading', 'state_normal');
+			App.blocks('#sharedTrackingReport_loading', 'state_normal');
 
 		}).catch(function(error){
 		console.log('an error occurred...'+JSON.stringify(error));

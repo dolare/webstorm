@@ -1510,7 +1510,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   state('sharedNonDegreeReport', {
     url: '/shared-non-degree-report/:param1/:param2/',
-    templateUrl: '/static/views/Share/shared_non_degree_report.html',
+    templateUrl: '/static/views/Share/shared_tracking_report.html',
     controller: 'ShareExecutiveController',
     resolve: {
                     depsShareExecutive: ['$ocLazyLoad', function($ocLazyLoad) {

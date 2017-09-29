@@ -339,14 +339,18 @@
 			<!-- Begain of Email -->
 				<table class="table table-hover">
 					<colgroup>
-						<col width='33%'>
-						<col width='33%'>
-						<col width='33%'>
+						<col width='15%'>
+						<col width='25%'>
+						<col width='25%'>
+						<col width='20%'>
+						<col width='15%'>
 					</colgroup>
 					<thead>
 						<tr style="cursor:default">
 							<th class='text-center decoration_none' style="cursor:default">Email address</th>
-							<th class='text-center decoration_none' style="cursor:default">School</th>								
+							<th class='text-center decoration_none' style="cursor:default">School</th>	
+							<th class='text-center decoration_none' style="cursor:default">University</th>	
+							<th class='text-center decoration_none' style="cursor:default">Client Name</th>	
 							<th class='text-center decoration_none' style="cursor:default">Username</th>												
 						</tr>
 					</thead>
@@ -354,6 +358,8 @@
 						<tr ng-repeat='email in emailarr track by $index' style="cursor:pointer" ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">
 							<td class='text-center'>{{ email.email_address }}</td>
 							<td class='text-center'>{{ email.school }}</td>
+							<td class='text-center'>{{ email.university }}</td>
+							<td class='text-center'>{{ email.client_name }}</td>
 							<td class='text-center'>{{ email.username }}</td>
 						</tr>
 					</tbody>
