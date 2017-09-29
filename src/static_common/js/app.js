@@ -1177,7 +1177,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
-                              
+                              'https://cdnjs.cloudflare.com/ajax/libs/angularjs-dropdown-multiselect/1.11.8/angularjs-dropdown-multiselect.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/echarts/3.7.1/echarts.min.js',
                               '/static/js/controllers/visualization.js',
                              

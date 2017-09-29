@@ -24,7 +24,7 @@
             
          
 
-<div class="col-xs-12">
+<!-- <div class="col-xs-12">
 <label>Course format: &nbsp;</label>
 <label class="radio-inline" for="example-inline-radio2">
 <input type="radio" id="example-inline-radio2" name="example-inline-radios" ng-model="course_format" value="onsite" ng-change="refresh()"> Onsite
@@ -38,6 +38,21 @@
 <input type="radio" id="example-inline-radio3" name="example-inline-radios" ng-model="course_format" value="hybrid" ng-change="refresh()"> Hybrid
 </label>
 </div>
+ -->
+
+
+<div class="col-xs-12">
+<label>Course format: &nbsp;</label>
+<label class="checkbox-inline" for="course-format-checkbox1">
+<input type="checkbox" id="course-format-checkbox1" name="course-format-checkbox1" value="option1" ng-model="course_format_onsite"> Onsite
+</label>
+<label class="checkbox-inline" for="course-format-checkbox2">
+<input type="checkbox" id="course-format-checkbox2" name="course-format-checkbox2" value="option2" ng-model="course_format_online"> Online
+</label>
+<label class="checkbox-inline" for="example-inline-checkbox3">
+<input type="checkbox" id="course-format-checkbox3" name="course-format-checkbox3" value="option3" ng-model="course_format_hybrid"> Hybrid
+</label>
+</div>
 
           </div>
         </div>
@@ -49,15 +64,14 @@
             
 
 
-
-
             <div class="col-xs-12">
             <label>Course type: &nbsp;</label>
-<label class="radio-inline" for="example1-inline-radio1">
-<input type="radio" id="example1-inline-radio1" name="example1-inline-radios" ng-model="course_type" value="amp" ng-change="refresh()"> AMP
+
+<label class="checkbox-inline" for="course-type-checkbox1">
+<input type="checkbox" id="course-type-checkbox1" name="course-type-checkbox1" value="option1" ng-model="course_type_amp"> AMP
 </label>
-<label class="radio-inline" for="example1-inline-radio2">
-<input type="radio" id="example1-inline-radio2" name="example1-inline-radios" ng-model="course_type" value="non-amp" ng-change="refresh()"> Non-AMP
+<label class="checkbox-inline" for="course-type-checkbox2">
+<input type="checkbox" id="course-type-checkbox2" name="course-type-checkbox2" value="option2" ng-model="course_type_non_amp"> Non-AMP
 </label>
 
 </div>
@@ -86,11 +100,18 @@
                               
                              
                                
-                                  <select class="form-control" ng-model="row.category" id="simple-classic-category" name="simple-classic-category" ng-options="p.object_id as p.name for p in row.categories" ng-change="set_category(row.category, $index); refresh()">
+                              <!--     <select class="form-control" ng-model="row.category" id="simple-classic-category" name="simple-classic-category" ng-options="p.object_id as p.name for p in row.categories" ng-change="set_category(row.category, $index); refresh()">
                                                             <option value="">CATEGORIES</option>
                             </select> 
+ -->
 
-                            <button ng-click="reset($index)" class="btn btn-default btn-block"><i class="fa fa-undo"></i></button>
+                            <div class="dropup push-5">
+
+                            <div ng-dropdown-multiselect="" options="row.categories" selected-model="row.category" extra-settings="selection_settings"></div>
+                            
+
+                            </div>
+                            <button ng-click="reset($index)" class="btn btn-info btn-block"><i class="fa fa-undo"></i></button>
                             
                        
            </div>

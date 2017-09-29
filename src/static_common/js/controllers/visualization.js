@@ -11,12 +11,14 @@ visualization.controller('VisualizationController',
     var myChart = echarts.init(document.getElementById('main'));
 
 
+    
+
     $scope.selection = []
 
     var bar_result = [0,0,0,0,0,0,0, 0, 0, 0];
-    
+
     $scope.reset = function(index){
-        alert(bar_result)
+        //alert(bar_result)
 
         
         $scope.selection[index].school = null;
@@ -24,7 +26,7 @@ visualization.controller('VisualizationController',
 
         bar_result[index]= 0
 
-        alert(bar_result)
+        //alert(bar_result)
 
         option = {
     color: ['#3398DB'],
@@ -81,7 +83,7 @@ myChart.setOption(option);
                 'categories': [],
                 'select': null,
                 'school': null,
-                'category': null,
+                'category': [],
             }
            
 
@@ -131,7 +133,26 @@ myChart.setOption(option);
         
 
 
-        $scope.selection[index].categories = categories.data
+        
+
+        var temp_selection = []
+        for(var k=0; k<categories.data.length; k++){
+            // temp_selection[k]['id'] = categories.data[k].object_id
+            // temp_selection[k]['label'] = categories.data[k].name
+
+            temp_selection.push({
+                'id': categories.data[k].object_id, 
+                'label': categories.data[k].name
+            })
+        }
+
+        $scope.selection[index].categories = temp_selection
+
+        //$scope.selection[index].categories = [ {id: 1, label: "David adnk asdjaks askdmakd asdmlaksdad"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}]; 
+        //$scope.example2model = []; 
+        //$scope.example2data = [ {id: 1, label: "David adnk asdjaks askdmakd asdmlaksdad"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}]; 
+        //$scope.example2settings = {displayProp: 'label'};
+        $scope.selection_settings = {displayProp: 'label'};
 
     }).catch(function(error){
          console.log('an error occurred...'+JSON.stringify(error));
