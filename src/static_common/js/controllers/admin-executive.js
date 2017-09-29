@@ -803,6 +803,8 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
             var emailel = {   
             'email_address':'',
             'school':'',
+            'university':'',
+            'client_name':'',
             'username':'',
             'content':''
             };
