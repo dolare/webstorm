@@ -810,6 +810,8 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
             };
             emailel.email_address = email_address;
             emailel.school =  $scope.email[email_address].school;
+            emailel.university =  $scope.email[email_address].university;
+            emailel.client_name = $scope.email[email_address].client_name;
             emailel.username =  $scope.email[email_address].username;
             emailel.content = $scope.email[email_address].email_content;
             emailarr.push(emailel);
