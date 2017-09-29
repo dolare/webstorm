@@ -140,7 +140,7 @@ class UniversitySchoolClientAPI(PermissionMixin, RetrieveAPIView):
 
 class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
     """
-    Get list of user non-degree report API
+    Get list of user non-degree report API & Create non-degree report API
     """
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
     pagination_class = ReportPagination
@@ -169,17 +169,12 @@ class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
         if 'school' not in request.data:
             raise ValidationError("School object_id is required.")
         try:
-            print('ddd')
             school = UniversitySchool.objects.get(object_id=request.data['school'])
-            print('liu')
         except UniversitySchool.DoesNotExist:
             raise ValidationError("Can not find school with this object_id.")
 
         categories = NonDegreeCategory.objects.filter(university_school=school).filter(active=True)
-        print('pkd')
         data = JSONRenderer().render(CategorySerializer(categories, many=True).data)
-        print(',.ks')
-        print(data)
         return data
 
     def create(self, request, *args, **kwargs):
@@ -193,14 +188,10 @@ class ReportCreateListAPI(PermissionMixin, CreateModelMixin, ListAPIView):
         serializer.is_valid(raise_exception=True)
         report = serializer.save()
         headers = self.get_success_headers(serializer.data)
-        #NodegereReportCustomerMapping.objects.create(, customer = )
-        customers = UniversityCustomer.objects.filter(non_degree_schools = report.school)
-        print(customers)
+        customers = UniversityCustomer.objects.filter(non_degree_schools=report.school)
         for customer in customers:
-            print('++')
-            NonDegreeReportCustomerMapping.objects.create(report = report, customer = customer)
+            NonDegreeReportCustomerMapping.objects.create(report=report, customer=customer)
         return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
-
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
