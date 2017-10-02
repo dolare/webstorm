@@ -65,6 +65,7 @@ class SendNotification(APIView):
             email = str(customer)
             clientname = send_list[email]["customer"]["clientname"]
             firstname = clientname.split(' ',1)[0]
+            university = send_list[email]["university"]
 
             report_email = []
             for report in content['report']:
@@ -96,7 +97,7 @@ class SendNotification(APIView):
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
                 print(report)
-                html_tr = tableRow.format(report['school_name'], report['date_modified'].date(), ca, cr, coa, cor) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+university, report['date_modified'].date(), ca, cr, coa, cor) + html_tr
 
             
             
@@ -163,8 +164,11 @@ class PreviewNotification(APIView):
             html_tr = ''         
             print(content['report'])
             email = str(customer)
+            print("bao")
+            print(send_list)
             clientname = send_list[email]["customer"]["clientname"]
             firstname = clientname.split(' ',1)[0]
+            university = send_list[email]["university"]
 
             report_email = []
             for report in content['report']:
@@ -194,7 +198,7 @@ class PreviewNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
-                html_tr = tableRow.format(report['school_name'], report['date_modified'].date(), cr, ca, cor, coa) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+university, report['date_modified'].date(), cr, ca, cor, coa) + html_tr
 
                 
             if html_tr == '':
