@@ -347,7 +347,7 @@
 					</colgroup>
 					<thead>
 						<tr style="cursor:default">
-							<th></th>
+							<th class='text-center decoration_none bg-gray-lighterer' style="cursor:default"></th>
 							<th class='text-center decoration_none' style="cursor:default">Email address</th>
 							<th class='text-center decoration_none' style="cursor:default">School</th>	
 							<th class='text-center decoration_none' style="cursor:default">Client Name</th>	
@@ -356,9 +356,9 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat='email in emailarr track by $index' style="cursor:pointer">
-							<td class="text-center">
+							<td class="text-center bg-gray-lighterer">
 								<label class="css-input css-checkbox css-checkbox-primary">
-									<input type="checkbox" checked/><span></span>
+									<input type="checkbox" checked disabled/><span></span>
 								</label>
 							</td>
 							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.email_address }}</td>
@@ -392,7 +392,7 @@
 		                    </div>
 		                    <div class="modal-footer">
 		                        <button class="btn btn-sm btn-default" type="button" data-dismiss="modal"> Cancel </button>
-		                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"> &nbspSend&nbsp </button>
+		                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"> &nbsp&nbspSend&nbsp&nbsp </button>
 		                    </div>
 		                </div>
 		            </div>
