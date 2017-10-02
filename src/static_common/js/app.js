@@ -9,8 +9,6 @@ var App = angular.module('myApp', [
   'ui.bootstrap',
   'oc.lazyLoad',
   'ngAnimate',
-  'ngSanitize',
-
 ]);
 
 
