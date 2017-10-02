@@ -10,7 +10,6 @@ var App = angular.module('myApp', [
   'oc.lazyLoad',
   'ngAnimate',
   'ngSanitize',
-
 ]);
 
 
@@ -460,6 +459,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css',
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                                'https:////ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js',
                                 '/static/js/services/updateService.js',
                                 '/static/js/controllers/admin-executive.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css',
