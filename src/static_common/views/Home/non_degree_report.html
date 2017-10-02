@@ -1,6 +1,5 @@
 
       <!-- SlimScroll Container -->
-    
          
           <div class="row">
             <div class="col-sm-6 col-xs-6">
@@ -10,7 +9,13 @@
               <div class="text-muted" style="
                 padding-left: 2px;
                 font-weight: 100;
-                ">Report View Date: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}</div>
+                ">Report View Date: {{date | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}
+              </div>
+              <div class="text-danger font-w600" ng-if="isShared" style="
+                padding-left: 2px;
+                font-weight: 100;
+                ">Expiration Date: {{expired_time | amUtc | amLocal | amDateFormat:'MMM DD, YYYY'}}
+              </div>
             </div>
             <div class="col-sm-6 col-xs-6">
               <img src="/static/img/G-rid-6.png" alt="" height="50" class="pull-right" style="margin-top: 17px">
@@ -450,7 +455,7 @@
 
                   <!-- END category header -->
                   <!-- course table under a category -->
-                  <div class="">
+                  <div>
                     <table class="table report_table2 table-bordered table-hover non-degree-table" style="table-layout: fixed;margin-bottom: 0;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; border-bottom: 5px solid #70b9eb;">
                       <colgroup>
                         <col width="5%">
@@ -648,5 +653,4 @@
           <!-- END schools report body-->
           <hr style="margin-bottom: 8px;">
           <p class="text-muted text-left"><small><strong>Gridology Education &amp; Technology, Inc.</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oak Tree Center, 2024 Center Ave, Fort Lee, NJ 07024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="http://www.gridet.com" target="_blank"><strong>gridet</strong>.com</a></small></p>
-     
       <!-- END SlimScroll Container -->

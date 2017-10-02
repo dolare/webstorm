@@ -46,6 +46,8 @@ class SendNotification(APIView):
                 send_list[query.customer.email]['customer'] = {}
                 send_list[query.customer.email]['customer']['username'] = query.customer.username
                 send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb.school
+                send_list[query.customer.email]['customer']['clientname'] = query.customer.contact_name 
+                send_list[query.customer.email]['university'] = query.customer.Ceeb.university
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
@@ -60,6 +62,9 @@ class SendNotification(APIView):
         #generate the course and category changes and display as table rows
         for (customer, content) in send_list.items():
             html_tr = ''
+            email = str(customer)
+            clientname = send_list[email]["customer"]["clientname"]
+            firstname = clientname.split(' ',1)[0]
 
             report_email = []
             for report in content['report']:
@@ -98,7 +103,7 @@ class SendNotification(APIView):
             if html_tr == '':
                 continue
             print(html_tr)
-            html_content = html.format(customer, html_tr)
+            html_content = html.format(firstname, html_tr)
             try:
                 message = EmailMessage(subject='Update Notification', body=html_content, 
                                         to=[customer], bcc=cc_addresses_tuple)
@@ -134,11 +139,14 @@ class PreviewNotification(APIView):
                 preview_data[query.customer.email] = {}
                 preview_data[query.customer.email]['username'] = query.customer.username
                 preview_data[query.customer.email]['school'] = query.customer.Ceeb.school
-                # preview_data[query.customer.email]['university'] = query.customer.Ceeb.schooluniversity_foreign_key.name
+                preview_data[query.customer.email]['clientname'] = query.customer.contact_name 
+                preview_data[query.customer.email]['university'] = query.customer.Ceeb.university
                 send_list[query.customer.email] = {}
                 send_list[query.customer.email]['customer'] = {}
                 send_list[query.customer.email]['customer']['username'] = query.customer.username
                 send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb.school
+                send_list[query.customer.email]['customer']['clientname'] = query.customer.contact_name 
+                send_list[query.customer.email]['university'] = query.customer.Ceeb.university
 
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
@@ -154,6 +162,9 @@ class PreviewNotification(APIView):
         for (customer, content) in send_list.items():
             html_tr = ''         
             print(content['report'])
+            email = str(customer)
+            clientname = send_list[email]["customer"]["clientname"]
+            firstname = clientname.split(' ',1)[0]
 
             report_email = []
             for report in content['report']:
@@ -189,7 +200,7 @@ class PreviewNotification(APIView):
             if html_tr == '':
                 del preview_data[customer]
                 continue 
-            html_content = html.format(customer, html_tr)
+            html_content = html.format(firstname, html_tr)
 
             preview_data[customer]['email_content'] = html_content
         print('==========')    
@@ -197,11 +208,11 @@ class PreviewNotification(APIView):
         return HttpResponse(json.dumps(preview_data), status=HTTP_200_OK)
 
 
-html = '<div style="margin: 30px auto;max-width: 600px;">\
+html = '<div style="margin: 30px auto;max-width: 80%;">\
       <div style="margin-bottom: 20px">\
         <img src="http://www.gridet.com/wp-content/uploads/2016/06/G-rid-6.png" width="150px">\
       </div>\
-      <div style="background:white; padding: 20px 35px;border-radius: 8px ">\
+      <div style="background:white; padding: 10px 15px;border-radius: 8px ">\
         <div style="text-align: left; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:18px ; color: rgb(41,61,119)">\
           Hello, {}!<br /><br /> \
         </div>\
@@ -212,11 +223,12 @@ html = '<div style="margin: 30px auto;max-width: 600px;">\
             <table style="border:1px solid black; border-collapse:collapse;table-layout：fixed">\
               <colgroup>\
                 <col width="40%" />\
-                <col width="20%" />\
-                <col width="10%" />\
-                <col width="10%" />\
-                <col width="10%" />\
-                <col width="10%" />\
+                <col width="15%" />\
+                <col width="9%" />\
+                <col width="9%" />\
+                <col width="9%" />\
+                <col width="9%" />\
+                <col width="9%" />\
               </colgroup>\
               <thead>\
                 <tr>\
@@ -224,6 +236,7 @@ html = '<div style="margin: 30px auto;max-width: 600px;">\
                   <th style="border:1px solid">Latest Release</th>\
                   <th style="border:1px solid" colspan=2>Categories</th>\
                   <th style="border:1px solid" colspan=2>Courses</th>\
+                  <th style="border:1px solid">Updates</th>\
                 </tr>\
                 {} \
               </thead>\
