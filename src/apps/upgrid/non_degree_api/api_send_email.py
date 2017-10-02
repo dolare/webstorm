@@ -222,19 +222,17 @@ html = '<div style="margin: 30px auto;max-width: 80%;">\
           <div>\
             <table style="border:1px solid black; border-collapse:collapse;table-layout：fixed">\
               <colgroup>\
-                <col width="25%" />\
-                <col width="25%" />\
-                <col width="10%" />\
-                <col width="8%" />\
-                <col width="8%" />\
-                <col width="8%" />\
-                <col width="8%" />\
-                <col width="8%" />\
+                <col width="40%" />\
+                <col width="15%" />\
+                <col width="9%" />\
+                <col width="9%" />\
+                <col width="9%" />\
+                <col width="9%" />\
+                <col width="9%" />\
               </colgroup>\
               <thead>\
                 <tr>\
                   <th style="border:1px solid">Schools</th>\
-                  <th style="border:1px solid">University</th>\
                   <th style="border:1px solid">Latest Release</th>\
                   <th style="border:1px solid" colspan=2>Categories</th>\
                   <th style="border:1px solid" colspan=2>Courses</th>\
