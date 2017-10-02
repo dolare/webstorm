@@ -794,6 +794,7 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
           }
         }
         ).then(function(res){
+          console.log(res);
           $scope.email = res.data;
           var emailarr = [];
           var email_address;
@@ -802,12 +803,16 @@ angular.module('myApp').controller('ExecutiveController', ['$q', '$http', '$scop
             var emailel = {   
             'email_address':'',
             'school':'',
+            'university':'',
+            'client_name':'',
             'username':'',
             'content':''
             };
             emailel.email_address = email_address;
-            emailel.school =  $scope.email[email_address].customer.school;
-            emailel.username =  $scope.email[email_address].customer.username;
+            emailel.school =  $scope.email[email_address].school;
+            emailel.university =  $scope.email[email_address].university;
+            emailel.client_name = $scope.email[email_address].clientname;
+            emailel.username =  $scope.email[email_address].username;
             emailel.content = $scope.email[email_address].email_content;
             emailarr.push(emailel);
           }

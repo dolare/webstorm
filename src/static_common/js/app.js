@@ -1175,7 +1175,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
-                              
+                              'https://cdnjs.cloudflare.com/ajax/libs/angularjs-dropdown-multiselect/1.11.8/angularjs-dropdown-multiselect.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/echarts/3.7.1/echarts.min.js',
                               '/static/js/controllers/visualization.js',
                              
@@ -1508,7 +1508,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   state('sharedNonDegreeReport', {
     url: '/shared-non-degree-report/:param1/:param2/',
-    templateUrl: '/static/views/Share/shared_non_degree_report.html',
+    templateUrl: '/static/views/Share/shared_tracking_report.html',
     controller: 'ShareExecutiveController',
     resolve: {
                     depsShareExecutive: ['$ocLazyLoad', function($ocLazyLoad) {
