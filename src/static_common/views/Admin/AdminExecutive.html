@@ -339,32 +339,39 @@
 			<!-- Begain of Email -->
 				<table class="table table-hover">
 					<colgroup>
-						<col width='20%'>
-						<col width='40%'>
-						<col width='20%'>
-						<col width='20%'>
+						<col width='8'>
+						<col width='18%'>
+						<col width='38%'>
+						<col width='18%'>
+						<col width='18%'>
 					</colgroup>
 					<thead>
 						<tr style="cursor:default">
+							<th></th>
 							<th class='text-center decoration_none' style="cursor:default">Email address</th>
 							<th class='text-center decoration_none' style="cursor:default">School</th>	
 							<th class='text-center decoration_none' style="cursor:default">Client Name</th>	
-							<th class='text-center decoration_none' style="cursor:default">Username</th>												
+							<th class='text-center decoration_none' style="cursor:default">Username</th>			
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat='email in emailarr track by $index' style="cursor:pointer" ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">
-							<td class='text-center'>{{ email.email_address }}</td>
-							<td class='text-center'>
+						<tr ng-repeat='email in emailarr track by $index' style="cursor:pointer">
+							<td class="text-center">
+								<label class="css-input css-checkbox css-checkbox-primary">
+									<input type="checkbox" checked/><span></span>
+								</label>
+							</td>
+							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.email_address }}</td>
+							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">
 								{{ email.school }}<br />
 								{{ email.university }}
 							</td>
-							<td class='text-center'>{{ email.client_name }}</td>
-							<td class='text-center'>{{ email.username }}</td>
+							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.client_name }}</td>
+							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.username }}</td>
 						</tr>
 					</tbody>
 					<tfoot>
-		        		<button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> Send Email</button>
+		        		<button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> &nbspSend&nbsp </button>
 					</tfoot>
 				</table>	
 				<!-- Email contentModal -->
@@ -384,7 +391,8 @@
 		                        </div>
 		                    </div>
 		                    <div class="modal-footer">
-		                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"> Ok</button>
+		                        <button class="btn btn-sm btn-default" type="button" data-dismiss="modal"> Cancel </button>
+		                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"> &nbspSend&nbsp </button>
 		                    </div>
 		                </div>
 		            </div>
