@@ -15,7 +15,27 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './test/admin.spec.js'
+      'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-route.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-cookies.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.0/bootstrap.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/oclazyload/1.0.9/ocLazyLoad.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.4/ui-bootstrap.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.4/ui-bootstrap-tpls.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-messages.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+      './node_modules/angular-mocks/angular-mocks.js',      
+      './test/**/*.js',
+      './js/app.js',
+      './js/controller/admin.js',
+      './js/services/authService.js',
     ],
 
 
@@ -46,7 +66,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes
