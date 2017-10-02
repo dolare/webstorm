@@ -41,10 +41,13 @@ class ReportFilter(FilterSet):
 class CourseFilter(FilterSet):
     is_AMP = django_filters.BooleanFilter(name="is_advanced_management_program")
     client_id = django_filters.UUIDFilter(name="university_school__non_degree_user__id")
+    type = django_filters.MultipleChoiceFilter(name="type", choices=(("onsite", "On site"),
+                                                                     ("online", "Online"),
+                                                                     ("hybrid", "Hybrid"),))
 
     class Meta:
         model = NonDegreeCourse
-        fields = ['is_AMP', 'university_school', 'client_id', 'type', 'category', ]
+        fields = ['is_AMP', 'university_school', 'client_id', 'category', 'type', ]
 
 
 class CourseURLFilter(FilterSet):
