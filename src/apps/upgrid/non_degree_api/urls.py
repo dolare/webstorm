@@ -9,7 +9,7 @@ from .views import UniversitySchoolListAPI, UniversitySchoolDetailAPI, ReportAPI
 from .api_send_email import SendNotification, PreviewNotification
 urlpatterns = [
 
-    #send email
+    # send email
     url(r'^send_notification$', SendNotification.as_view(), name="notification"),
     url(r'^preview_notification$', PreviewNotification.as_view(), name="schools"),
 

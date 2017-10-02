@@ -45,9 +45,11 @@ class AccessTokenTests(APITestCase):
     Testing API '/api/upgrid/access_token/'
     """
     def setUp(self):
-        UpgridAccountManager.objects.create(username="testing",
-                                            password="password",
-                                            email="testing@testing.edu")
+        manager = UpgridAccountManager.objects.create(username="testing",
+                                                      email="testing@testing.edu")
+        manager.set_password("password")
+        manager.is_active = True
+        manager.save()
 
     def test_create_user(self):
         """
@@ -79,7 +81,11 @@ class AccessTokenTests(APITestCase):
         url = '/api/upgrid/access_token/'
         data = {'email': b'testing@testing.edu', 'password': b'cGFzc3dvcmQ='}
         response = client.post(url, data, format='json')
+        print(response)
+        print(dir(response))
+        print(response.data)
         self.assertEqual(response.status_code, 200)
+
         self.assertTrue('token' in response.data, "Did not return token.")
 
     def tearDown(self):
@@ -96,14 +102,19 @@ class UserBaseAPITestCase(APITestCase):
     """
     def setUp(self):
         self.account_manager_data = {'username': 'account_manager',
-                                     'password': 'password',
+                                     'is_active': True,
                                      'email': 'account_manager@testing.edu', }
         self.university_customer_data = {'username': 'university_customer',
-                                         'password': 'password',
+                                         'is_active': True,
                                          'email': 'university_customer@testing.edu', }
         self.account_manager_user = UpgridAccountManager.objects.create(**self.account_manager_data)
+        self.account_manager_user.set_password('password')
+        self.account_manager_user.save()
         self.account_manager_token = jwt_encode_handler(jwt_payload_handler(self.account_manager_user))
+
         self.university_customer_user = UniversityCustomer.objects.create(**self.university_customer_data)
+        self.university_customer_user.set_password('password')
+        self.university_customer_user.save()
         self.university_customer_token = jwt_encode_handler(jwt_payload_handler(self.university_customer_user))
 
     def tearDown(self):
@@ -337,69 +348,68 @@ class AccountManagerClientTests(DataBaseAPITestCase):
         # self.assertEqual("User deleted!", response.data['Success'])
 
 
-class AccountManagerClientCustomerProgramTests(DataBaseAPITestCase):
-    """
-    Testing api/upgrid/accountmanager/client/customer_program/$
-    UniversityCustomerProgramCRUD
-    """
-
-    def test_get_Customer_program_with_not_account_manager(self):
-        university_customer = UniversityCustomer.objects.get(username='cky22@M')
-        url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
-        response = APIClient().get(url, HTTP_AUTHORIZATION='JWT ' + self.university_customer_token)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        self.assertTrue('Failed' in response.data, "Did not return 'Failed'")
-        self.assertEqual("Permission Denied!", response.data['Failed'])
-
-    def test_get_Customer_program_with_account_manager(self):
-        account_manager = UpgridAccountManager.objects.get(username='cky2')
-        account_manager_token = jwt_encode_handler(jwt_payload_handler(account_manager))
-        university_customer = UniversityCustomer.objects.get(username='cky22@M')
-        url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
-        response = APIClient().get(url, HTTP_AUTHORIZATION='JWT ' + account_manager_token)
-        print(response.data)
-        self.assertEqual(response.status_code, 200)
-
-    def test_post_Customer_program_with_not_account_manager(self):
-        university_customer = UniversityCustomer.objects.get(username='cky22@M')
-        url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
-        response = APIClient().post(url, HTTP_AUTHORIZATION='JWT ' + self.university_customer_token)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        self.assertTrue('Failed' in response.data, "Did not return 'Failed'")
-        self.assertEqual("Permission Denied!", response.data['Failed'])
-
-    def test_post_Customer_program_with_no_data(self):
-        account_manager = UpgridAccountManager.objects.get(username='cky2')
-        account_manager_token = jwt_encode_handler(jwt_payload_handler(account_manager))
-        university_customer = UniversityCustomer.objects.get(username='cky22@M')
-
-        url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
+# class AccountManagerClientCustomerProgramTests(DataBaseAPITestCase):
+#     """
+#     Testing api/upgrid/accountmanager/client/customer_program/$
+#     UniversityCustomerProgramCRUD
+#     """
+#
+#     def test_get_Customer_program_with_not_account_manager(self):
+#         university_customer = UniversityCustomer.objects.get(username='cky22@M')
+#         url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
+#         response = APIClient().get(url, HTTP_AUTHORIZATION='JWT ' + self.university_customer_token)
+#         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+#         self.assertTrue('Failed' in response.data, "Did not return 'Failed'")
+#         self.assertEqual("Permission Denied!", response.data['Failed'])
+#
+#     def test_get_Customer_program_with_account_manager(self):
+#         account_manager = UpgridAccountManager.objects.get(username='cky2')
+#         account_manager_token = jwt_encode_handler(jwt_payload_handler(account_manager))
+#         university_customer = UniversityCustomer.objects.get(username='cky22@M')
+#         url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
+#         response = APIClient().get(url, HTTP_AUTHORIZATION='JWT ' + account_manager_token)
+#         self.assertEqual(response.status_code, 200)
+#
+#     def test_post_Customer_program_with_not_account_manager(self):
+#         university_customer = UniversityCustomer.objects.get(username='cky22@M')
+#         url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
+#         response = APIClient().post(url, HTTP_AUTHORIZATION='JWT ' + self.university_customer_token)
+#         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+#         self.assertTrue('Failed' in response.data, "Did not return 'Failed'")
+#         self.assertEqual("Permission Denied!", response.data['Failed'])
+#
+#     def test_post_Customer_program_with_no_data(self):
+#         account_manager = UpgridAccountManager.objects.get(username='cky2')
+#         account_manager_token = jwt_encode_handler(jwt_payload_handler(account_manager))
+#         university_customer = UniversityCustomer.objects.get(username='cky22@M')
+#
+#         url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
+#         # response = APIClient().post(url, data={}, HTTP_AUTHORIZATION='JWT ' + account_manager_token)
+#         # self.assertEqual(response.status_code, 200)
+#
+#     def test_put_Customer_program_with_not_account_manager(self):
+#         university_customer = UniversityCustomer.objects.get(username='cky22@M')
+#         url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
+#         response = APIClient().put(url, HTTP_AUTHORIZATION='JWT ' + self.university_customer_token)
+#         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+#         self.assertTrue('Failed' in response.data, "Did not return 'Failed'")
+#         self.assertEqual("Permission Denied!", response.data['Failed'])
+#
+#     def test_put_Customer_program_with_no_data(self):
+#         account_manager = UpgridAccountManager.objects.get(username='cky2')
+#         account_manager_token = jwt_encode_handler(jwt_payload_handler(account_manager))
+#         university_customer = UniversityCustomer.objects.get(username='cky22@M')
+#
+#         url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
         # response = APIClient().post(url, data={}, HTTP_AUTHORIZATION='JWT ' + account_manager_token)
         # self.assertEqual(response.status_code, 200)
 
-    def test_put_Customer_program_with_not_account_manager(self):
-        university_customer = UniversityCustomer.objects.get(username='cky22@M')
-        url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
-        response = APIClient().put(url, HTTP_AUTHORIZATION='JWT ' + self.university_customer_token)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        self.assertTrue('Failed' in response.data, "Did not return 'Failed'")
-        self.assertEqual("Permission Denied!", response.data['Failed'])
 
-    def test_put_Customer_program_with_no_data(self):
-        account_manager = UpgridAccountManager.objects.get(username='cky2')
-        account_manager_token = jwt_encode_handler(jwt_payload_handler(account_manager))
-        university_customer = UniversityCustomer.objects.get(username='cky22@M')
-
-        url = '/api/upgrid/accountmanager/client/customer_program/' + str(university_customer.id) + '/'
-        # response = APIClient().post(url, data={}, HTTP_AUTHORIZATION='JWT ' + account_manager_token)
-        # self.assertEqual(response.status_code, 200)
-
-
-class AccountManagerClientCompetingProgramTests(DataBaseAPITestCase):
-    """
-    Testing api/upgrid/accountmanager/client/competing_program/
-    CustomerCompetingProgramCRUD
-    """
+# class AccountManagerClientCompetingProgramTests(DataBaseAPITestCase):
+#     """
+#     Testing api/upgrid/accountmanager/client/competing_program/
+#     CustomerCompetingProgramCRUD
+#     """
 
     # def test_get_Customer_program_with_not_account_manager(self):
     #     university_customer = UniversityCustomer.objects.get(username='cky22@M')
