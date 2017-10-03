@@ -19,6 +19,7 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
         }
         ).then(function(res){
           console.log(res);
+          App.blocks('#emailloading', 'state_loading');
           $scope.email = res.data;
           var emailarr = [];
           var email_address;
@@ -41,6 +42,8 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
             emailarr.push(emailel);
           }
           $scope.emailarr = emailarr
+          App.blocks('#emailloading', 'state_normal');
+
         })
     })();
 
