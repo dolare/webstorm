@@ -476,6 +476,64 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   }).
 
+  state('email', {
+    url: '/email',
+    parent: 'success_demo',
+    templateUrl: '/static/views/Admin/AdminEmail.html',
+    controller: 'EmailController',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo && userInfo.admin === "True") {
+
+          //console.log("start logout");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+
+        } else {
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsAdminUpdates: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                '/static/js/services/executiveService.js',
+                                '/static/js/services/ajaxService.js',
+                                '/static/js/third-party/angular-bootstrap-confirm.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                                '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                                'https:////ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js',
+                                '/static/js/services/updateService.js',
+                                '/static/js/controllers/admin-email.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js',
+                                
+   
+                            ]
+                        });
+                    }], 
+
+
+    }
+
+
+  }).
+
+
   state('quote', {
     url: '/quote',
     parent: 'success_demo',
