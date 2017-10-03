@@ -205,16 +205,20 @@ class CourseListSerializer(ModelSerializer):
 
 class CourseSerializer(ModelSerializer):
     university_name = SerializerMethodField()
+    university_abbr = SerializerMethodField()
     categories = SerializerMethodField()
     school_name = SerializerMethodField()
     URL = SerializerMethodField()
 
     class Meta:
         model = NonDegreeCourse
-        fields = ('object_id', 'name', 'school_name', 'university_name', 'categories', 'URL', )
+        fields = ('object_id', 'name', 'school_name', 'university_name', 'categories', 'URL', 'university_abbr', )
 
     def get_university_name(self, obj):
         return obj.university_school.university_foreign_key.name
+
+    def get_university_abbr(self, obj):
+        return obj.university_school.university_foreign_key.abbreviation
 
     def get_school_name(self, obj):
         return obj.university_school.school
