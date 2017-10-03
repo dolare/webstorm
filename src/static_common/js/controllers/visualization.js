@@ -11,7 +11,11 @@ visualization.controller('VisualizationController',
     var myChart = echarts.init(document.getElementById('main'));
 
 
-    
+    $scope.course_type_amp = true
+    $scope.course_type_non_amp = true
+    $scope.course_format_onsite = true
+    $scope.course_format_online = true
+    $scope.course_format_hybrid = true
 
     $scope.selection = []
 
@@ -22,7 +26,8 @@ visualization.controller('VisualizationController',
 
         
         $scope.selection[index].school = null;
-        $scope.selection[index].category = null;
+        $scope.selection[index].category = [];
+        $scope.selection[index].categories = []
 
         bar_result[index]= 0
 
@@ -223,6 +228,12 @@ myChart.setOption(option);
 // $scope.reset(index){
 //     $scope.selection
 // }
+
+$scope.$watch('selection', function(newNames, oldNames) {
+  //alert("changed")
+  $scope.refresh()
+}, true);
+
       
 $scope.refresh=function() {
 
@@ -231,12 +242,19 @@ $scope.refresh=function() {
 
     angular.forEach($scope.selection, function(value, index) {
     
-                   
+           
 
-            if(value.select){
+            if(value.category.length!==0 && ($scope.course_type_amp || $scope.course_type_non_amp)){
+
+                //alert("entered")
+                var temp_cat = ''
+                for(var j=0; j<value.category.length; j++){
+
+                    temp_cat = temp_cat + ((j===0 ? '' : '&category=') + value.category[j].id)
+                }
 
                 $http({
-                  url: '/api/upgrid/non_degree/courses/count?category='+ value.select + ($scope.course_format ? ($scope.course_format === 'online'? '&type=online': ($scope.course_format === 'onsite'? '&type=onsite': '&type=hybrid')) : '') + ($scope.course_type ? ($scope.course_type === 'amp'? '&is_AMP=True': '&is_AMP=false'): ''),
+                  url: '/api/upgrid/non_degree/courses?category='+ temp_cat + ($scope.course_format_onsite ? '&type=onsite':'') + ($scope.course_format_online ? '&type=online':'') + ($scope.course_format_hybrid ? '&type=hybrid':'') + ($scope.course_type_amp && $scope.course_type_non_amp ? '' : (($scope.course_type_amp ? '&is_AMP=True' : '') + ($scope.course_type_non_amp ? '&is_AMP=False' : ''))),
                   method: 'GET',
                   headers: {
                     'Authorization': 'JWT ' + token
