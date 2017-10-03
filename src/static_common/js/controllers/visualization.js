@@ -17,9 +17,6 @@ visualization.controller('VisualizationController',
     $scope.course_format_online = true
     $scope.course_format_hybrid = true
 
-    
-
-
 
     $scope.reset = function(index){
         //alert(bar_result)
