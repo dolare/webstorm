@@ -1,6 +1,6 @@
 var visualization = angular.module('myApp')
 visualization.controller('VisualizationController',
-  function(avatarService, $scope, $http, authenticationSvc) {
+  function(avatarService, $scope, $http, authenticationSvc, $q) {
 
     var token = authenticationSvc.getUserInfo().accessToken;
     var avatar_value = avatarService.getClientId() ? avatarService.getClientId() + '/' : "";
@@ -17,9 +17,9 @@ visualization.controller('VisualizationController',
     $scope.course_format_online = true
     $scope.course_format_hybrid = true
 
-    $scope.selection = []
+    
 
-    var bar_result = [0,0,0,0,0,0,0, 0, 0, 0];
+
 
     $scope.reset = function(index){
         //alert(bar_result)
@@ -80,21 +80,10 @@ visualization.controller('VisualizationController',
 myChart.setOption(option);
 
     }
+    //end of reset
 
 
-    for(var i=0; i<10; i++){
-
-            $scope.selection[i] = {
-                'categories': [],
-                'select': null,
-                'school': null,
-                'category': [],
-            }
-           
-
-        }
-    
-
+    //init get all schools
     $http({
       url: '/api/upgrid/non_degree/schools?page_size=100&client_id='+client_id,
       method: 'GET',
@@ -108,76 +97,49 @@ myChart.setOption(option);
         
         $scope.schools = schools.data.results 
 
+        $scope.selection = []
 
-        
-
-    }).catch(function(error){
-         console.log('an error occurred...'+JSON.stringify(error));
-    });
-
-    $scope.aha = function(type) {
-
-      console.log("type="+type)
-
-    }
-
-    
-
-
-    $scope.get_category = function(school, index){
-        $http({
-      url: '/api/upgrid/non_degree/schools/'+school+'/categories',
-      method: 'GET',
-      headers: {
-        'Authorization': 'JWT ' + token
-      }
-    })
-    .then(function(categories) {
-
-        console.log("cat are "+JSON.stringify(categories, null, 4))
-        
+        var bar_result = [];
 
 
         
+        angular.forEach($scope.schools, function(school, index) {
 
-        var temp_selection = []
-        for(var k=0; k<categories.data.length; k++){
-            // temp_selection[k]['id'] = categories.data[k].object_id
-            // temp_selection[k]['label'] = categories.data[k].name
+            bar_result.push(0)
 
-            temp_selection.push({
-                'id': categories.data[k].object_id, 
-                'label': categories.data[k].name
-            })
-        }
+            $scope.selection[index] = {
+                'categories': [],
+                'select': null,
+                'school': school.object_id,
+                'category': [],
+            }
 
-        $scope.selection[index].categories = temp_selection
 
-        //$scope.selection[index].categories = [ {id: 1, label: "David adnk asdjaks askdmakd asdmlaksdad"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}]; 
-        //$scope.example2model = []; 
-        //$scope.example2data = [ {id: 1, label: "David adnk asdjaks askdmakd asdmlaksdad"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}]; 
-        //$scope.example2settings = {displayProp: 'label'};
-        $scope.selection_settings = {displayProp: 'label'};
+            $scope.get_category(school.object_id, index, true)
 
-    }).catch(function(error){
-         console.log('an error occurred...'+JSON.stringify(error));
-    });
 
-    }
+
+        })
 
 
 
 
-    $scope.set_category = function(cat, index){
 
-        $scope.selection[index].select = cat
+
+
+
+
+    // for(var i=0; i<11; i++){
+
+    //         $scope.selection[i] = {
+    //             'categories': [],
+    //             'select': null,
+    //             'school': null,
+    //             'category': [],
+    //         }
+    //     }
 
         
-
-
-    }
-
-
 
 option = {
     color: ['#3398DB'],
@@ -225,9 +187,104 @@ option = {
 
 myChart.setOption(option);
 
-// $scope.reset(index){
-//     $scope.selection
-// }
+
+        
+
+    }).catch(function(error){
+         console.log('an error occurred...'+JSON.stringify(error));
+    });
+
+    $scope.aha = function(type) {
+
+      console.log("type="+type)
+
+    }
+
+    
+
+
+    $scope.get_category = function(school, index, check_all){
+
+        if(school){
+
+        
+        $http({
+      url: '/api/upgrid/non_degree/schools/'+school+'/categories',
+      method: 'GET',
+      headers: {
+        'Authorization': 'JWT ' + token
+      }
+    })
+    .then(function(categories) {
+
+        console.log("cat are "+JSON.stringify(categories, null, 4))
+        
+        var temp_selection = []
+        for(var k=0; k<categories.data.length; k++){
+            // temp_selection[k]['id'] = categories.data[k].object_id
+            // temp_selection[k]['label'] = categories.data[k].name
+
+            temp_selection.push({
+                'id': categories.data[k].object_id, 
+                'label': categories.data[k].name
+            })
+        }
+
+        $scope.selection[index].categories = temp_selection
+
+        //$scope.selection[index].categories = [ {id: 1, label: "David adnk asdjaks askdmakd asdmlaksdad"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}]; 
+        //$scope.example2model = []; 
+        //$scope.example2data = [ {id: 1, label: "David adnk asdjaks askdmakd asdmlaksdad"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}]; 
+        //$scope.example2settings = {displayProp: 'label'};
+        $scope.selection_settings = {displayProp: 'label'};
+
+        if(check_all){
+
+            var temp_categories = []
+
+            for(var p=0; p<$scope.selection[index].categories.length;p++){
+                temp_categories.push({
+                    'id': $scope.selection[index].categories[p].id
+                })
+            }
+            console.log("temp_categories="+JSON.stringify(temp_categories, null, 4))
+
+            $scope.selection[index].category = temp_categories
+
+        }
+
+
+
+    }).catch(function(error){
+         console.log('an error occurred...'+JSON.stringify(error));
+    });
+} else {
+    
+    $scope.selection[index].school = null;
+        $scope.selection[index].category = [];
+        $scope.selection[index].categories = []
+
+        bar_result[index]= 0
+
+}
+
+    }
+
+
+
+
+
+
+
+    $scope.set_category = function(cat, index){
+
+        $scope.selection[index].select = cat
+
+        
+
+
+    }
+
 
 $scope.$watch('selection', function(newNames, oldNames) {
   //alert("changed")
@@ -320,6 +377,7 @@ $scope.refresh=function() {
 
                             } else {
                                 bar_result[index] = 0
+
 
 
                 option = {

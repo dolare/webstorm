@@ -15,14 +15,18 @@ class UniversityCustomerSerializer(ModelSerializer):
 
 class UniversitySchoolListSerializer(ModelSerializer):
     university = SerializerMethodField()
+    university_abbr = SerializerMethodField()
     non_degree_client = SerializerMethodField()
 
     class Meta:
         model = UniversitySchool
-        fields = ('object_id', 'ceeb', 'school', 'university', 'non_degree_client')
+        fields = ('object_id', 'ceeb', 'school', 'university', 'non_degree_client', 'university_abbr',)
 
     def get_university(self, obj):
         return obj.university_foreign_key.name
+
+    def get_university_abbr(self, obj):
+        return obj.university_foreign_key.abbreviation
 
     def get_non_degree_client(self, obj):
         university_customers = obj.non_degree_user.all()

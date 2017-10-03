@@ -51,14 +51,14 @@ class DataBaseAPITestCase(UserBaseAPITestCase):
     fixtures = ['auth_data.json', 'ceeb_data_v0.13.json', 'upgrid_data.json', ]
 
 
-class SchoolAPITestCase(DataBaseAPITestCase):
-    """
-    Testing API for '^schools'
-    """
-
-    def test_user_school(self):
-        """
-        Ensure
-        """
-        user = UpgridBaseUser.objects.get(username="testing")
-        self.assertTrue(user is not None, msg="user not create.")
+# class SchoolAPITestCase(DataBaseAPITestCase):
+#     """
+#     Testing API for '^schools'
+#     """
+#
+#     def test_user_school(self):
+#         """
+#         Ensure
+#         """
+#         user = UpgridBaseUser.objects.get(username="testing")
+#         self.assertTrue(user is not None, msg="user not create.")
