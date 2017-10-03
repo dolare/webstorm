@@ -1,5 +1,5 @@
 <div class="content content-boxed">
-    <div class="block" id="loadingtable">
+    <div class="block" id="emailloading">
         <ul class="nav nav-tabs nav-tabs-alt nav-justified" data-toggle="tabs">
             <li class="active">
                 <a href="#btabs-alt-static-justified-pending" data-toggle="tab" ng-click="preview_notification()">
@@ -16,6 +16,7 @@
         </ul>
         <div class="block-content tab-content">
             <div class="tab-pane active" id="btabs-alt-static-justified-pending" style="padding-top: 10px">
+            	<button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> &nbspSend&nbsp </button>
             	<!-- Begain of Email -->
 				<table class="table table-hover">
 					<colgroup>
@@ -31,7 +32,7 @@
 							<th class='text-center decoration_none' style="cursor:default">Email address</th>
 							<th class='text-center decoration_none' style="cursor:default">School</th>	
 							<th class='text-center decoration_none' style="cursor:default">Client Name</th>	
-							<th class='text-center decoration_none' style="cursor:default">Username</th>			
+							<th class='text-center decoration_none' style="cursor:default">Last Sent</th>			
 						</tr>
 					</thead>
 					<tbody>
@@ -47,12 +48,9 @@
 								{{ email.university }}
 							</td>
 							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.client_name }}</td>
-							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.username }}</td>
+							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.last_sent }}</td>
 						</tr>
 					</tbody>
-					<tfoot>
-		        		<button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> &nbspSend&nbsp </button>
-					</tfoot>
 				</table>	
 				<!-- Email contentModal -->
 				<div class="modal fade" id="modal-fadein" tabindex="-1" role="dialog" aria-hidden="true">
