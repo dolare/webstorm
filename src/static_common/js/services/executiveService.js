@@ -229,169 +229,254 @@ angular.module('myApp')
       console.log('Comparison finished!');
       return school_data
     };
-
+    // School logo images must be png format. The naming convention is ceeb + "_logo.png". When adding a new school logo, upload the image file to AWS S3 first and then creat the object in the following schools array with the logo URL from AWS S3.
     var schools = [
         {
             "object_id": "58aaefe8-7c58-454b-aeb9-b59f7e3decda",
             "ceeb": "1565_SMGT",
             "school": "Kellogg School of Management",
             "university": "Northwestern University",
-            "logo": "static/data/logo/1565_SMGT_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/1565_SMGT_logo.png"
         },
         {
             "object_id": "1b36a9bf-d84d-45c6-8938-63889f02f0b7",
             "ceeb": "1832_SBUS",
             "school": "Booth School of Business",
             "university": "University of Chicago",
-            "logo": "static/data/logo/1832_SBUS_logo.jpg"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/1832_SBUS_logo.png"
         },
         {
             "object_id": "284cc3cd-af08-43e5-822c-b46ca3b5df7f",
             "ceeb": "2174",
             "school": "Business School",
             "university": "Columbia University",
-            "logo": "static/data/logo/2174_logo.jpg"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/2174_logo.png"
         },
         {
             "object_id": "69cf9a6f-9fcc-46ff-a1b8-f463bf4d9db0",
             "ceeb": "2582",
             "school": "Leonard N. Stern School of Business",
             "university": "New York University",
-            "logo": "static/data/logo/2582_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/2582_logo.png"
         },
         {
             "object_id": "7d8bd8f0-90f1-4149-befd-ee4a97f6cf77",
             "ceeb": "2926_BUS",
             "school": "Wharton School",
             "university": "University of Pennsylvania",
-            "logo": "static/data/logo/2926_BUS_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/2926_BUS_logo.png"
         },
         {
             "object_id": "fb5fe7fe-8944-45c8-91b4-ea186ab66f8e",
             "ceeb": "3427",
             "school": "Business School",
             "university": "Harvard University",
-            "logo": "static/data/logo/3427_logo.jpg"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/3427_logo.png"
         },
         {
             "object_id": "94594fd2-c2cd-41e2-92b0-0a378fa036be",
             "ceeb": "3514_SMGT",
             "school": "Sloan School of Management",
             "university": "Massachusetts Institute of Technology",
-            "logo": "static/data/logo/3514_SMGT_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/3514_SMGT_logo.png"
         },
         {
             "object_id": "9af319fd-f54a-474d-a74e-bf2c709ef63c",
             "ceeb": "3987_SMGT",
             "school": "School of Management",
             "university": "Yale University",
-            "logo": "static/data/logo/3987_SMGT_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/3987_SMGT_logo.png"
         },
         {
             "object_id": "ad0ae299-9a8f-46fc-9ba0-9b3804ab9e9f",
             "ceeb": "4704_GSB",
             "school": "Graduate School of Business",
             "university": "Stanford University",
-            "logo": "static/data/logo/4704_GSB_logo.jpg"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/4704_GSB_logo.png"
         },
         {
             "object_id": "428dc1aa-a9f8-49dc-8ef8-6b99c26e33fd",
             "ceeb": "4833_HSB",
             "school": "Haas School of Business",
             "university": "University of California - Berkeley",
-            "logo": "static/data/logo/4833_HSB_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/4833_HSB_logo.png"
         },
         {
             "object_id": "298c92d3-4eb3-4b75-a273-88d26b727ba1",
             "ceeb": "6666",
             "school": "London Business School",
             "university": "London Business School",
-            "logo": "static/data/logo/6666_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/6666_logo.png"
         },
         {
             "object_id": "66938b15-c75b-4ce6-8412-ff5222a8807c",
             "ceeb": "8888",
             "school": "INSEAD - Institut Européen d'Administration des Affaires",
             "university": "INSEAD",
-            "logo": "static/data/logo/8888_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/8888_logo.png"
         },
         {
             "object_id": "aa6916a1-60d9-40ba-b2ce-df3c9acf96e6",
             "ceeb": "1111",
             "school": "International Institute for Management Development",
             "university": "IMD",
-            "logo": "static/data/logo/1111_logo.jpg"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/1111_logo.png"
         },
         {
             "object_id": "21f0c4fd-c064-4897-b1d7-115d7c4e55c6",
             "ceeb": "1839_SBUS",
             "school": "Ross School of Business",
             "university": "University of Michigan - Ann Arbor",
-            "logo": "static/data/logo/1839_SBUS_logo.jpg"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/1839_SBUS_logo.png"
         },
         {
             "object_id": "cb0ce0af-8466-41e8-bf21-ad61bf2f89a6",
             "ceeb": "2222",
             "school": "IESE Business School",
             "university": "University of Navarra",
-            "logo": "static/data/logo/2222_logo.jpg"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/2222_logo.png"
         },
         {
             "object_id": "3cd83956-1f7a-4a62-9cf0-9f287813495b",
             "ceeb": "3333",
             "school": "Center for Creative Leadership",
             "university": "CCL",
-            "logo": "static/data/logo/3333_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/3333_logo.png"
         },
         {
             "object_id": "4ccd5f19-fd95-479a-9445-ac97051d7893",
             "ceeb": "4007_SBUS",
             "school": "Thunderbird School Of Global Management",
             "university": "Arizona State University",
-            "logo": "static/data/logo/4007_SBUS_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/4007_SBUS_logo.png"
         },
         {
             "object_id": "2df0ae88-09ba-49b3-89b4-15d7fa1cd2f8",
             "ceeb": "4832_CMGT",
             "school": "Eller College of Management",
             "university": "University of Arizona",
-            "logo": "static/data/logo/4832_CMGT_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/4832_CMGT_logo.png"
         },
         {
             "object_id": "30cbd322-aa7a-47d1-b56f-8724e0d4da7e",
             "ceeb": "4837_SMGT",
             "school": "Anderson School of Management",
             "university": "University of California - Los Angeles",
-            "logo": "static/data/logo/4837_SMGT_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/4837_SMGT_logo.png"
         },
         {
             "object_id": "c7fa2e7f-d443-46b6-89c8-dd7f9c34442b",
             "ceeb": "5816_SBUS",
             "school": "Kenan-Flagler Business School",
             "university": "The University of North Carolina at Chapel Hill",
-            "logo": "static/data/logo/5816_SBUS_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/5816_SBUS_logo.png"
         },
         {
             "object_id": "d9dbfe31-ac96-4b18-bf5d-d354e7928814",
             "ceeb": "5820_SBUS",
             "school": "Darden School of Business",
             "university": "University of Virginia",
-            "logo": "static/data/logo/5820_SBUS_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/5820_SBUS_logo.png"
         },
         {
             "object_id": "84c11511-648f-473d-8deb-7fdff36f6c64",
             "ceeb": "5187_SBUS",
             "school": "Goizueta Business School",
             "university": "Emory University",
-            "logo": "static/data/logo/5187_SBUS_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/5187_SBUS_logo.png"
         },
         {
             "object_id": "73560ad0-23aa-404d-8a91-85f0d1b07752",
             "ceeb": "1871_GSM",
             "school": "Owen Graduate School of Management",
             "university": "Vanderbilt University",
-            "logo": "static/data/logo/1871_GSM_logo.png"
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/1871_GSM_logo.png"
         },
+        {
+            "object_id": "6f673d9f-74b2-4573-aa6c-24283069aa61",
+            "ceeb": "1592_CBUS",
+            "school": "Fisher College of Business",
+            "university": "Ohio State University",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/1592_CBUS_logo.png"
+        },
+        {
+            "object_id": "b508fbc1-a020-4e69-a00c-db0fe1c88294",
+            "ceeb": "1843_CBUS",
+            "school": "Haslam College of Business",
+            "university": "The University of Tennessee",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/1843_CBUS_logo.png"
+        },
+        {
+            "object_id": "1471d830-00d1-48de-8415-5ad153843334",
+            "ceeb": "2098_GSM",
+            "school": "Graduate School of Management",
+            "university": "Cornell University",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/2098_GSM_logo.png"
+        },
+        {
+            "object_id": "f4bc5e20-a385-4c9a-9198-db0276d13278",
+            "ceeb": "2660_CBUS",
+            "school": "Smeal College of Business",
+            "university": "Pennsylvania State University",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/2660_CBUS_logo.png"
+        },
+        {
+            "object_id": "d62eb43d-c29c-4e4e-9ea6-8f2ca6aee1cf",
+            "ceeb": "2940_SBUS",
+            "school": "Joseph M. Katz Graduate School of Business and College of Business Administration",
+            "university": "University of Pittsburgh",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/2940_SBUS_logo.png"
+        },
+        {
+            "object_id": "dc3c7fd5-6c49-4f7c-8aff-f9f3e0ed5fc1",
+            "ceeb": "3351_SBUS",
+            "school": "Tuck School of Business",
+            "university": "Dartmouth College",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/3351_SBUS_logo.png"
+        },
+        {
+            "object_id": "ec5196d6-d71f-473f-b196-c6bd592eb1c8",
+            "ceeb": "5555",
+            "school": "Said Business School",
+            "university": "University of Oxford",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/5555_logo.png"
+        },
+        {
+            "object_id": "42337336-84f5-404e-8cd9-f80022b7b0f9",
+            "ceeb": "5813_CBUS",
+            "school": "Terry College of Business",
+            "university": "University of Georgia",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/5813_CBUS_logo.png"
+        },
+        {
+            "object_id": "a71e9253-306c-4263-88a6-957ebd84fcd2",
+            "ceeb": "5818_SBUS",
+            "school": "Darla Moore School of Business",
+            "university": "University of South Carolina",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/5818_SBUS_logo.png"
+        },
+        {
+            "object_id": "2c95418c-8a07-4083-bfde-8dff5289a5e1",
+            "ceeb": "7777",
+            "school": "ESMT Berlin",
+            "university": "ESMT Berlin",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/7777_logo.png"
+        },
+        {
+            "object_id": "1c4969a9-41c4-4eec-b28a-ae187578cc14",
+            "ceeb": "6609_SBUS",
+            "school": "Jones Graduate School of Business",
+            "university": "Rice University",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/6609_SBUS_logo.png"
+        },
+        {
+            "object_id": "f1bd1f21-27e3-4a58-b34d-607d04124748",
+            "ceeb": "6929_SBUS",
+            "school": "Olin Business School",
+            "university": "Washington University in St Louis",
+            "logo": "https://s3.us-east-2.amazonaws.com/publicresource.upgrid/upgrid-school-logos/6929_SBUS_logo.png"
+        },
+
     ];
 
     var default_school_logo = "/static/img/school_default_logo.png";
