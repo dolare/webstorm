@@ -131,6 +131,15 @@ class SendNotification(APIView):
 class PreviewNotification(APIView):
     def get(self, request, *args, **kwargs):
         query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False)
+
+        if 'is_demo' in request.GET.keys():
+            is_demo = request.GET.get("is_demo")
+            query_set = NonDegreeReportCustomerMapping.objects.filter(is_demo = is_demo)
+
+        if 'is_active' in request.GET.keys():
+            is_active = request.GET.get("is_active")
+            query_set = NonDegreeReportCustomerMapping.objects.filter(is_active = is_active)
+
         query_set2 = NonDegreeReportCustomerMapping.objects.filter(is_sent = True)
         send_list = {}
         preview_data = {}
