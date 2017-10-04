@@ -31,7 +31,8 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
             'university':'',
             'client_name':'',
             'username':'',
-            'content':''
+            'content':'',
+            'last_sent':''
             };
             emailel.email_address = email_address;
             emailel.school =  $scope.email[email_address].school;
@@ -39,6 +40,7 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
             emailel.client_name = $scope.email[email_address].clientname;
             emailel.username =  $scope.email[email_address].username;
             emailel.content = $scope.email[email_address].email_content;
+            emailel.last_sent = $scope.email[email_address].date_lastsent;
             emailarr.push(emailel);
           }
           $scope.emailarr = emailarr
