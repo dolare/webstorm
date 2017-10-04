@@ -40,6 +40,7 @@ class SendNotification(APIView):
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_name'] = query.report.school.school
+                report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified
                 send_list[query.customer.email]['report'].append(report_dict)
             else:
@@ -53,6 +54,7 @@ class SendNotification(APIView):
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_name'] = query.report.school.school
+                report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified 
                 send_list[query.customer.email]['report'].append(report_dict)
     
@@ -66,7 +68,6 @@ class SendNotification(APIView):
             email = str(customer)
             clientname = send_list[email]["customer"]["clientname"]
             firstname = clientname.split(' ',1)[0]
-            university = send_list[email]["university"]
 
             report_email = []
             for report in content['report']:
@@ -98,7 +99,7 @@ class SendNotification(APIView):
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
                 print(report)
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+university, report['date_modified'].date(), ca, cr, coa, cor) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), ca, cr, coa, cor) + html_tr
 
             
             
@@ -139,6 +140,7 @@ class PreviewNotification(APIView):
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_name'] = query.report.school.school
+                report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified 
                 send_list[query.customer.email]['report'].append(report_dict)
             else:
@@ -157,6 +159,7 @@ class PreviewNotification(APIView):
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_name'] = query.report.school.school
+                report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified
                 send_list[query.customer.email]['report'].append(report_dict)
 
@@ -177,7 +180,6 @@ class PreviewNotification(APIView):
             email = str(customer)
             clientname = send_list[email]["customer"]["clientname"]
             firstname = clientname.split(' ',1)[0]
-            university = send_list[email]["university"]
 
             report_email = []
             for report in content['report']:
@@ -207,7 +209,7 @@ class PreviewNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+university, report['date_modified'].date(), cr, ca, cor, coa) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), cr, ca, cor, coa) + html_tr
 
                 
             if html_tr == '':
