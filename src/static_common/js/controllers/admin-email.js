@@ -9,7 +9,7 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
 
     var token = authenticationSvc.getUserInfo().accessToken;
     //API for get email details
-    $scope.preview_notification = (function(){
+    $scope.preview_notification = function(){
       $http({
         url: '/api/upgrid/non_degree/preview_notification',
         method: 'get',
@@ -45,8 +45,8 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
           App.blocks('#emailloading', 'state_normal');
 
         })
-    })();
-
+    };
+    $scope.preview_notification();
     //content in Model
     $scope.checkcontent = function(content){
         $timeout( function(){
