@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST)
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from django.core.mail import BadHeaderError, EmailMessage
 from ..models import *
 from django.core.exceptions import ValidationError
@@ -19,10 +20,11 @@ from .views import ReportOverview
 from .serializers import ReportSerializer
 app_logger = logging.getLogger('app')
 import json
+import time, datetime
+from ..pagination import CustomerPageNumberPagination
 
 try:
     cc_email = os.environ["CC_EMAIL"]
-    #cc_email = os.environ["CC_EMAIL"]
 except KeyError:
     cc_email = "swang@gradgrid.com"
 
@@ -31,15 +33,18 @@ class SendNotification(APIView):
 
     def post(self, request, *args, **kwargs):
 
-        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False, customer__is_active = True).order_by('-date_modified','report').distinct('date_modified','report')
+        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
         send_list = {}
-        
+        if 'email' in request.GET.get['email']:
+            query_set = query_set.filter(customer__email = email)
+
         for query in query_set:
             if query.customer.email in send_list.keys():
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_name'] = query.report.school.school
-                report_dict['date_modified'] = query.report.date_modified 
+                report_dict['university_name'] = query.report.school.university
+                report_dict['date_modified'] = query.report.date_modified
                 send_list[query.customer.email]['report'].append(report_dict)
             else:
                 send_list[query.customer.email] = {}
@@ -52,6 +57,7 @@ class SendNotification(APIView):
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_name'] = query.report.school.school
+                report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified 
                 send_list[query.customer.email]['report'].append(report_dict)
     
@@ -65,7 +71,6 @@ class SendNotification(APIView):
             email = str(customer)
             clientname = send_list[email]["customer"]["clientname"]
             firstname = clientname.split(' ',1)[0]
-            university = send_list[email]["university"]
 
             report_email = []
             for report in content['report']:
@@ -97,7 +102,7 @@ class SendNotification(APIView):
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
                 print(report)
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+university, report['date_modified'].date(), ca, cr, coa, cor) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), ca, cr, coa, cor) + html_tr
 
             
             
@@ -110,8 +115,10 @@ class SendNotification(APIView):
                                         to=[customer], bcc=cc_addresses_tuple)
                 message.content_subtype = 'html'
                 message.send()
+
                 
-                temp_report_mapping = NonDegreeReportCustomerMapping.objects.filter(customer__email = customer).update(is_sent = True, send_fail = False)
+                
+                temp_report_mapping = NonDegreeReportCustomerMapping.objects.filter(customer__email = customer).update(is_sent = True, send_fail = False, email_content=html_content)
  
             except(BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
                 SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
@@ -120,20 +127,34 @@ class SendNotification(APIView):
                 app_logger.exception('{0} when sending email. Error: {1}'.format(type(e).__name__, html_content))
                
                 continue
-        
-        return Response({"success": ("email have been sent succussful.")}, status=HTTP_202_ACCEPTED)
+
+        date_email_sent = time.strftime("%x")
+
+        return Response({"success": ("email have been sent succussful."),"date_email_sent": date_email_sent}, status=HTTP_202_ACCEPTED)
 
 
 class PreviewNotification(APIView):
     def get(self, request, *args, **kwargs):
         query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False)
+
+        if 'is_demo' in request.GET.keys():
+            is_demo = request.GET.get("is_demo")
+            query_set = NonDegreeReportCustomerMapping.objects.filter(is_demo = is_demo)
+
+        if 'is_active' in request.GET.keys():
+            is_active = request.GET.get("is_active")
+            query_set = NonDegreeReportCustomerMapping.objects.filter(is_active = is_active)
+
+        query_set2 = NonDegreeReportCustomerMapping.objects.filter(is_sent = True)
         send_list = {}
         preview_data = {}
+        date_sent_list = []
         for query in query_set:
             if query.customer.email in send_list.keys():
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_name'] = query.report.school.school
+                report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified 
                 send_list[query.customer.email]['report'].append(report_dict)
             else:
@@ -148,27 +169,31 @@ class PreviewNotification(APIView):
                 send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb.school
                 send_list[query.customer.email]['customer']['clientname'] = query.customer.contact_name 
                 send_list[query.customer.email]['university'] = query.customer.Ceeb.university
-
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_name'] = query.report.school.school
+                report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified
                 send_list[query.customer.email]['report'].append(report_dict)
 
             cc_addresses = [cc_email]
             cc_addresses_tuple = tuple(cc_addresses)
 
+        for query in query_set2:
+            if query.customer.email in send_list.keys():
+                send_list[query.customer.email]['date_sent'] = query.report.date_modified.date()
+                date_sent_list.append(send_list[query.customer.email]['date_sent'])
+                preview_data[query.customer.email]['date_lastsent'] = str(max(date_sent_list))
+                send_list[query.customer.email]['date_lastsent'] = max(date_sent_list)
+
         #generate the course and category changes and display as table rows
         for (customer, content) in send_list.items():
-            html_tr = ''         
+            html_tr = ''        
             print(content['report'])
             email = str(customer)
-            print("bao")
-            print(send_list)
             clientname = send_list[email]["customer"]["clientname"]
             firstname = clientname.split(' ',1)[0]
-            university = send_list[email]["university"]
 
             report_email = []
             for report in content['report']:
@@ -198,7 +223,7 @@ class PreviewNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+university, report['date_modified'].date(), cr, ca, cor, coa) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), cr, ca, cor, coa) + html_tr
 
                 
             if html_tr == '':
@@ -211,6 +236,17 @@ class PreviewNotification(APIView):
         print(preview_data)
         return HttpResponse(json.dumps(preview_data), status=HTTP_200_OK)
 
+
+class SendEmailHistory(ListAPIView):
+    pagination_class = CustomerPageNumberPagination
+    def get_queryset(self, *args, **kwargs):
+        query_set = NonDegreeReportCustomerMapping.objects.filter(send_fail = False, is_sent = True).order_by('-date_modified','report').distinct('date_modified','report')
+        
+
+        return query_set
+
+
+        
 
 html = '<div style="margin: 30px auto;max-width: 80%;">\
       <div style="margin-bottom: 20px">\
@@ -252,10 +288,6 @@ html = '<div style="margin: 30px auto;max-width: 80%;">\
           </div>\
           <p>If you want more details, please log in using the following link:</p >\
           <a href="https://upgrid.gridet.com/#/non_degree">https://upgrid.gridet.com/#/non_degree</a><br /><br />\
-          <div>\
-            Thanks!\
-          </div>\
-          <p>--</p>\
           <p>Best Regards,</p>\
           <p>- Gridology Team</p>\
         </div>\

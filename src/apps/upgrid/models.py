@@ -469,7 +469,7 @@ class NonDegreeWhoopsReport(BasedDatedObject):
             '-date_created'
         ]
 
-
+#was used to sent email notification
 class NonDegreeReportCustomerMapping(BasedDatedObject):
 
     object_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -478,3 +478,4 @@ class NonDegreeReportCustomerMapping(BasedDatedObject):
     report = models.ForeignKey(NonDegreeReport, on_delete=models.PROTECT, null=False)
     is_sent = models.BooleanField(default=False)
     send_fail = models.BooleanField(default=True)
+    email_content = models.TextField(null=True, blank=True)
