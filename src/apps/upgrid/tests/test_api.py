@@ -81,9 +81,6 @@ class AccessTokenTests(APITestCase):
         url = '/api/upgrid/access_token/'
         data = {'email': b'testing@testing.edu', 'password': b'cGFzc3dvcmQ='}
         response = client.post(url, data, format='json')
-        print(response)
-        print(dir(response))
-        print(response.data)
         self.assertEqual(response.status_code, 200)
 
         self.assertTrue('token' in response.data, "Did not return token.")
