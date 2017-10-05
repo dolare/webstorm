@@ -8,7 +8,7 @@
                 </a>
             </li>
             <li>
-                <a href="#btabs-alt-static-justified-history" data-toggle="tab">
+                <a href="#btabs-alt-static-justified-history" data-toggle="tab" ng-click='email_history()'>
                 	<i class="fa fa-pencil"></i> 
                 	History
                 </a>
@@ -16,7 +16,7 @@
         </ul>
         <div class="block-content tab-content">
             <div class="tab-pane active" id="btabs-alt-static-justified-pending" style="padding-top: 10px">
-            	<button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> &nbspSend&nbsp </button>
+            	<!-- <button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> &nbspSend&nbsp </button> -->
             	<!-- Begain of Email -->
 				<table class="table table-hover">
 					<colgroup>
@@ -64,13 +64,13 @@
 									<input type="checkbox" checked disabled/><span></span>
 								</label>
 							</td>
-							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.email_address }}</td>
-							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">
+							<td class='text-center' ng-click=' checkcontent(email)' data-toggle="modal" data-target="#modal-fadein">{{ email.email_address }}</td>
+							<td class='text-center' ng-click=' checkcontent(email)' data-toggle="modal" data-target="#modal-fadein">
 								{{ email.school }}<br />
 								{{ email.university }}
 							</td>
-							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.client_name }}</td>
-							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.last_sent }}</td>
+							<td class='text-center' ng-click=' checkcontent(email)' data-toggle="modal" data-target="#modal-fadein">{{ email.client_name }}</td>
+							<td class='text-center' ng-click=' checkcontent(email)' data-toggle="modal" data-target="#modal-fadein">{{ email.last_sent }}</td>
 						</tr>
 					</tbody>
 				</table>	
@@ -92,7 +92,7 @@
 		                    </div>
 		                    <div class="modal-footer">
 		                        <button class="btn btn-sm btn-default" type="button" data-dismiss="modal"> Cancel </button>
-		                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"> &nbsp&nbspSend&nbsp&nbsp </button>
+		                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal" ng-click='individual_send()'> &nbsp&nbspSend&nbsp&nbsp </button>
 		                    </div>
 		                </div>
 		            </div>
@@ -102,7 +102,69 @@
         	</div>
 			<div class="tab-pane" id="btabs-alt-static-justified-history" style="padding-top: 10px">
 			<!-- Begain of History -->
-				<h1>History</h1>
+				<table st-table = 'history_arr' class="table table-hover">
+					<colgroup>
+						<col width='20%'>
+						<col width='30%'>
+						<col width='20%'>
+						<col width='30%'>
+					</colgroup>
+					<thead>
+						<tr>
+							<th class='text-center decoration_none' style="cursor:default">Email address</th>
+							<th class='text-center decoration_none' style="cursor:default">School</th>	
+							<th class='text-center decoration_none' style="cursor:default">Client Name</th>	
+							<th class='text-center decoration_none' style="cursor:default">Sent Time</th>	
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat='email in history_arr track by $index' style="cursor:pointer">
+							<td class='text-center' ng-click=' check_history_content(email)' data-toggle="modal" data-target="#modal2-fadein">{{ email.customer__email }}</td>
+							<td class='text-center' ng-click=' check_history_content(email)' data-toggle="modal" data-target="#modal2-fadein">
+								{{ email.school }}<br />
+								{{ email.university }}
+							</td>
+							<td class='text-center' ng-click=' check_history_content(email)' data-toggle="modal" data-target="#modal2-fadein">{{ email.client_name }}</td>
+							<td class='text-center' ng-click=' check_history_content(email)' data-toggle="modal" data-target="#modal2-fadein">{{ email.date_modified }}</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="4" class="text-center">
+								<div class='block-content'>
+									<nav>
+										<ul class="pagination">
+											<li ng-class='previous_class()'><a ng-click='previous_page()'><i class="fa fa-angle-left"></i></a></li>
+											<li ng-repeat='page in pagination_number_arr' ng-class = 'page_class({{ page }})'><a ng-click='page_change(page)'>{{ page }}</a></li>
+											<li  ng-class='next_class()'><a ng-click='next_page()'><i class="fa fa-angle-right"></i></a></li>
+										</ul>	
+									</nav>
+								</div>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+				<div class="modal fade" id="modal2-fadein" tabindex="-1" role="dialog" aria-hidden="true">
+		            <div class="modal-dialog modal-lg">
+		                <div class="modal-content">
+		                    <div class="block block-themed block-transparent remove-margin-b">
+		                        <div class="block-header bg-primary-dark">
+		                            <ul class="block-options">
+		                                <li>
+		                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+		                                </li>
+		                            </ul>
+		                            <h3 class="block-title">Email Content</h3>
+		                        </div>
+		                        <div class="block-content" ng-bind-html='email_content'>
+		                        </div>
+		                    </div>
+		                    <div class="modal-footer">
+		                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"> OK </button>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
 			<!-- End of History -->
 			</div>
 		</div>

@@ -17,7 +17,7 @@ from django.http import Http404, HttpResponse
 import logging
 import os
 from .views import ReportOverview
-from .serializers import ReportSerializer
+from .serializers import ReportSerializer, NonDegreeReportCustomerMappingSerializer
 app_logger = logging.getLogger('app')
 import json
 import time, datetime
@@ -35,7 +35,8 @@ class SendNotification(APIView):
 
         query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
         send_list = {}
-        if 'email' in request.GET.keys():
+        if 'email' in request.data.keys():
+            email = request.data['email']
             query_set = query_set.filter(customer__email = email)
         print(query_set)
         for query in query_set:
@@ -250,6 +251,7 @@ class PreviewNotification(APIView):
 
 
 class SendEmailHistory(ListAPIView):
+    serializer_class = NonDegreeReportCustomerMappingSerializer
     pagination_class = CustomerPageNumberPagination
     def get_queryset(self, *args, **kwargs):
         query_set = NonDegreeReportCustomerMapping.objects.filter(send_fail = False, is_sent = True).order_by('-date_modified','report').distinct('date_modified','report')
