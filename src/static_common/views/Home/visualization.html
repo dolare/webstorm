@@ -16,7 +16,7 @@
 
   <div class="col-sm-12">
 
-    <div class="block block-rounded">
+    <div class="block block-rounded" id="chart_block">
       <div class="block-content" >
 
         <div class="row">
@@ -80,55 +80,6 @@
 
 
         <div id="main" style="width: 950px;height:400px;"></div>
-<!-- 
-
-        <div style="width:870px; margin-left:55px">
-          
-        <div class="row">
-            
-            <div ng-repeat = "row in selection">
-
-            
-            <div class="form-group col-sm-1" style="padding-left: 3px; padding-right: 3px">
-                          
-                              
-                              
-                                
-                            <select class="form-control push-5" ng-model="row.school" id="simple-classic-school" name="simple-classic-school" ng-options="p.object_id as p.school+' | '+p.university for p in schools" ng-change="get_category(row.school, $index)">
-                                                            <option value="">SCHOOL</option>
-                            </select> 
-                              
-                             
-                           
-
-                            <div class="dropup push-5">
-
-                           
-                            <div ng-dropdown-multiselect="" options="row.categories" selected-model="row.category" extra-settings="selection_settings"></div>
-                            
-
-                            </div>
-                     
-                            
-                       
-           </div>
-
-
-
-
-
-
-        </div>
-
-
-
-        </div>
-
-          
-
-        </div> -->
-
-
 
         <div style="width: 870px; margin-left: 50px">
 
@@ -159,8 +110,7 @@
 
                             
                             </div>
-                          <!--   <button ng-click="reset($index)" class="btn btn-info btn-block"><i class="fa fa-undo"></i></button> -->
-                            
+                       
                        
            </div>
 
