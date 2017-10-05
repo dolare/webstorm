@@ -35,7 +35,8 @@ class SendNotification(APIView):
 
         query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
         send_list = {}
-        if 'email' in request.GET.keys():
+        if 'email' in request.data.keys():
+            email = request.data['email']
             query_set = query_set.filter(customer__email = email)
         print(query_set)
         for query in query_set:
@@ -137,20 +138,20 @@ class PreviewNotification(APIView):
     def get(self, request, *args, **kwargs):
         query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
         print(query_set)
+  
         try:
             if 'is_demo' in request.GET.keys() and request.GET.get("is_demo") != None:
                 app_logger.info(request.GET.get("is_demo"))
                 is_demo = request.GET.get("is_demo")
-                query_set = NonDegreeReportCustomerMapping.objects.filter(customer__is_demo = is_demo)
+                query_set = query_set.filter(customer__is_demo = is_demo)
 
             if 'is_active' in request.GET.keys() and request.GET.get("is_active") != None:
                 app_logger.info(request.GET.get("is_active"))
                 is_active = request.GET.get("is_active")
-                query_set = NonDegreeReportCustomerMapping.objects.filter(customer__is_active = is_active)
+                query_set = query_set.filter(customer__is_active = is_active)
         except Exception as e:
             app_logger.error(e)
             return Response({"Failed": ("error input !")}, status=HTTP_400_BAD_REQUEST)
-
 
         query_set2 = NonDegreeReportCustomerMapping.objects.filter(is_sent = True)
         send_list = {}

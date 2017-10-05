@@ -55,16 +55,62 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
     };
     $scope.preview_notification();
     //content in Model
-    $scope.checkcontent = function(content){
+    $scope.checkcontent = function(email){
         $timeout( function(){
             hljs.initHighlighting();
             $scope.show_code = true
         }, 100 );
-        var str = content
-        str = str.replace('\"','"')
+        var str = email.content
         $scope.email_content = str;
-    };
+        $scope.email_need_send = email.email_address;
+        console.log($scope.email_need_send);
 
+    };
+    $scope.individual_send = function(){
+        console.log($scope.email_need_send);
+        $http({
+          url: '/api/upgrid/non_degree/send_notification',
+          method: 'post',
+          data: {
+            email: $scope.email_need_send
+          },
+          headers: {
+            'Authorization': 'JWT ' + token
+          }
+        }).then(function(res){
+          $scope.server_res = res.data.success;
+          $scope.preview_notification();
+          $.notify({
+
+                        // options
+                        icon: "fa fa-check",
+                        message: $scope.server_res
+                    }, {
+                        // settings
+                        type: 'success',
+                        placement: {
+                            from: "top",
+                            align: "center"
+                        },
+                    });
+        }).then(function(err){
+        if(err){
+          $.notify({
+
+                        // options
+                        icon: "fa fa-check",
+                        message: err
+                    }, {
+                        // settings
+                        type: 'success',
+                        placement: {
+                            from: "top",
+                            align: "center"
+                        },
+                    });
+          }
+        });
+    }
     //api for send email
     $scope.send_notification = function(){
       if(JSON.stringify($scope.email)=='{}'){ //check email without api calls using content from last preview_notification api
@@ -89,9 +135,9 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
             'Authorization': 'JWT ' + token
           }
       }).then(function(res){
-        $scope.server_res = res.data.success;
-              $scope.preview_notification();
-         $.notify({
+          $scope.server_res = res.data.success;
+          $scope.preview_notification();
+          $.notify({
 
                         // options
                         icon: "fa fa-check",
