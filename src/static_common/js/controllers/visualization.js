@@ -10,6 +10,9 @@ visualization.controller('VisualizationController',
 
     var myChart = echarts.init(document.getElementById('main'));
 
+    $scope.selection_settings = {displayProp: 'label', styleActive: true, groupBy: 'name'};
+    $scope.text_settings = {buttonDefaultText : 'Cat.', dynamicButtonTextSuffix: '  ✔'}
+
 
     $scope.course_type_amp = true
     $scope.course_type_non_amp = true
@@ -204,7 +207,6 @@ myChart.setOption(option);
 
         if(school){
 
-        
         $http({
       url: '/api/upgrid/non_degree/schools/'+school+'/categories',
       method: 'GET',
@@ -215,7 +217,8 @@ myChart.setOption(option);
     .then(function(categories) {
 
         console.log("cat are "+JSON.stringify(categories, null, 4))
-        
+        $scope.selection[index].category = []
+
         var temp_selection = []
         for(var k=0; k<categories.data.length; k++){
             // temp_selection[k]['id'] = categories.data[k].object_id
@@ -223,7 +226,8 @@ myChart.setOption(option);
 
             temp_selection.push({
                 'id': categories.data[k].object_id, 
-                'label': categories.data[k].name
+                'label': categories.data[k].name,
+                'name': 'categories'
             })
         }
 
@@ -233,16 +237,17 @@ myChart.setOption(option);
         //$scope.example2model = []; 
         //$scope.example2data = [ {id: 1, label: "David adnk asdjaks askdmakd asdmlaksdad"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}]; 
         //$scope.example2settings = {displayProp: 'label'};
-        $scope.selection_settings = {displayProp: 'label'};
+            //$scope.selection_settings = {displayProp: 'label', styleActive: true, groupByTextProvider: function(groupValue) { if (groupValue) {return 'Categories'} }, groupBy: 'label'};
+
 
         if(check_all){
 
             var temp_categories = []
 
             for(var p=0; p<$scope.selection[index].categories.length;p++){
-                temp_categories.push({
-                    'id': $scope.selection[index].categories[p].id
-                })
+                temp_categories.push(
+                    $scope.selection[index].categories[p]
+                )
             }
             console.log("temp_categories="+JSON.stringify(temp_categories, null, 4))
 
