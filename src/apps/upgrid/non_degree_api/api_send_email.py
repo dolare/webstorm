@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK, HTTP_201_CREATED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT, HTTP_403_FORBIDDEN, HTTP_400_BAD_REQUEST)
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from django.core.mail import BadHeaderError, EmailMessage
 from ..models import *
 from django.core.exceptions import ValidationError
@@ -20,10 +21,10 @@ from .serializers import ReportSerializer
 app_logger = logging.getLogger('app')
 import json
 import time, datetime
+from ..pagination import CustomerPageNumberPagination
 
 try:
     cc_email = os.environ["CC_EMAIL"]
-    #cc_email = os.environ["CC_EMAIL"]
 except KeyError:
     cc_email = "swang@gradgrid.com"
 
@@ -32,9 +33,11 @@ class SendNotification(APIView):
 
     def post(self, request, *args, **kwargs):
 
-        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False, customer__is_active = True).order_by('-date_modified','report').distinct('date_modified','report')
+        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
         send_list = {}
-        
+        if 'email' in request.GET.get['email']:
+            query_set = query_set.filter(customer__email = email)
+
         for query in query_set:
             if query.customer.email in send_list.keys():
                 report_dict = {}
@@ -112,8 +115,10 @@ class SendNotification(APIView):
                                         to=[customer], bcc=cc_addresses_tuple)
                 message.content_subtype = 'html'
                 message.send()
+
                 
-                temp_report_mapping = NonDegreeReportCustomerMapping.objects.filter(customer__email = customer).update(is_sent = True, send_fail = False)
+                
+                temp_report_mapping = NonDegreeReportCustomerMapping.objects.filter(customer__email = customer).update(is_sent = True, send_fail = False, email_content=html_content)
  
             except(BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
                 SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
@@ -231,6 +236,17 @@ class PreviewNotification(APIView):
         print(preview_data)
         return HttpResponse(json.dumps(preview_data), status=HTTP_200_OK)
 
+
+class SendEmailHistory(ListAPIView):
+    pagination_class = CustomerPageNumberPagination
+    def get_queryset(self, *args, **kwargs):
+        query_set = NonDegreeReportCustomerMapping.objects.filter(send_fail = False, is_sent = True).order_by('-date_modified','report').distinct('date_modified','report')
+        
+
+        return query_set
+
+
+        
 
 html = '<div style="margin: 30px auto;max-width: 80%;">\
       <div style="margin-bottom: 20px">\
