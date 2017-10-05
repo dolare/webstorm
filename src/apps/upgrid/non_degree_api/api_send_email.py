@@ -42,6 +42,7 @@ class SendNotification(APIView):
             if query.customer.email in send_list.keys():
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
+                report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
                 report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified
@@ -56,6 +57,7 @@ class SendNotification(APIView):
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
+                report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
                 report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified 
@@ -85,7 +87,7 @@ class SendNotification(APIView):
                     report_email.append(report)
 
             for report in report_email:
-                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True).order_by('-date_created')[:2]
+                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_id'], active = True).order_by('-date_created')[:2]
 
                 report_data = []
                 print(reportTwo)
@@ -160,6 +162,7 @@ class PreviewNotification(APIView):
             if query.customer.email in send_list.keys():
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
+                report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
                 report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified 
@@ -179,6 +182,7 @@ class PreviewNotification(APIView):
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
+                report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
                 report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified
@@ -205,9 +209,9 @@ class PreviewNotification(APIView):
             report_email = []
             for report in content['report']:
                 status = True
-                name = report['school_name']
+                name = report['school_id']
                 for prereport in report_email:
-                    if name == prereport['school_name']:
+                    if name == prereport['school_id']:
                         status = False
                         if report['date_modified'].date()>prereport['date_modified'].date():
                             report_email = [report if x==prereport else x for x in report_email]
@@ -215,9 +219,10 @@ class PreviewNotification(APIView):
                     report_email.append(report)
 
             for report in report_email:
-                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True).order_by('-date_created')[:2]
+                reportTwo = NonDegreeReport.objects.filter(school__object_id = report['school_id'], active = True).order_by('-date_created')[:2]
                 report_data = []
-                #print(reportTwo)
+                print("bao")
+                print(reportTwo)
                 if len(reportTwo) > 1:
                     for report_obj in reportTwo:
                         report_data.append(ReportSerializer(report_obj).data)
