@@ -84,7 +84,7 @@ class SchoolDetailAPITestCase(UserBaseAPITestCase):
 
     def test_school_detail_with_manager(self):
         """
-        Test school API with manager account
+        Test school detail API with manager account
         """
         url = reverse('upgrid:non_degree_api:school_detail', args=['580bbf8b-642b-4eb7-914c-03a054981719'])
         response = APIClient().get(url, format='json', HTTP_AUTHORIZATION='JWT ' + self.manager_token)
@@ -112,11 +112,11 @@ class SchoolClientsAPITestCase(UserBaseAPITestCase):
 
     def test_school_clients_with_manager(self):
         """
-        Test school API with manager account
+        Test school clients API with manager account
         """
         url = reverse('upgrid:non_degree_api:school_client', args=['580bbf8b-642b-4eb7-914c-03a054981719'])
         response = APIClient().get(url, format='json', HTTP_AUTHORIZATION='JWT ' + self.manager_token)
-        print(response.data)
+        # print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue('object_id' in response.data, "Did not return object_id.")
         self.assertTrue('ceeb' in response.data, "Did not return ceeb.")
@@ -131,3 +131,57 @@ class SchoolClientsAPITestCase(UserBaseAPITestCase):
         url = reverse('upgrid:non_degree_api:school_client', args=['580bbf8b-642b-4eb7-914c-03a054981719'])
         response = APIClient().get(url, {}, format='json', HTTP_AUTHORIZATION='JWT ' + self.customer_token)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+class SchoolCategoriesAPITestCase(UserBaseAPITestCase):
+    """
+    Testing API for '^schools/(?P<school_id>[0-9a-fA-F\-]+)/categories$'
+    """
+
+    def test_school_Categories_with_manager(self):
+        """
+        Test school Categories API with manager account
+        """
+        url = reverse('upgrid:non_degree_api:school_categories', args=['580bbf8b-642b-4eb7-914c-03a054981719'])
+        response = APIClient().get(url, format='json', HTTP_AUTHORIZATION='JWT ' + self.manager_token)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue('object_id' in response.data[0], "Did not return object_id.")
+        self.assertTrue('name' in response.data[0], "Did not return name.")
+
+    def test_school_Categories_with_customer(self):
+        """
+        Test school Categories API with university customer
+        """
+        url = reverse('upgrid:non_degree_api:school_categories', args=['580bbf8b-642b-4eb7-914c-03a054981719'])
+        response = APIClient().get(url, format='json', HTTP_AUTHORIZATION='JWT ' + self.customer_token)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue('object_id' in response.data[0], "Did not return object_id.")
+        self.assertTrue('name' in response.data[0], "Did not return name.")
+
+
+class SchoolCategoryCoursesAPITestCase(UserBaseAPITestCase):
+    """
+    Testing API for '^schools/(?P<school_id>[0-9a-fA-F\-]+)/categories/(?P<category_id>[0-9a-fA-F\-]+)/courses$'
+    """
+
+    def test_school_Category_courses_with_manager(self):
+        """
+        Test school Categories API with manager account
+        """
+        url = reverse('upgrid:non_degree_api:school_category_courses', args=['580bbf8b-642b-4eb7-914c-03a054981719',
+                                                                             'ada0a9a5-5288-449b-9b27-74a6c20530a3'])
+        response = APIClient().get(url, format='json', HTTP_AUTHORIZATION='JWT ' + self.manager_token)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue('object_id' in response.data[0], "Did not return object_id.")
+        self.assertTrue('name' in response.data[0], "Did not return name.")
+
+    def test_school_Category_courses_with_customer(self):
+        """
+        Test school Categories API with university customer
+        """
+        url = reverse('upgrid:non_degree_api:school_category_courses', args=['580bbf8b-642b-4eb7-914c-03a054981719',
+                                                                             'ada0a9a5-5288-449b-9b27-74a6c20530a3'])
+        response = APIClient().get(url, format='json', HTTP_AUTHORIZATION='JWT ' + self.customer_token)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue('object_id' in response.data[0], "Did not return object_id.")
+        self.assertTrue('name' in response.data[0], "Did not return name.")
