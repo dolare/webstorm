@@ -145,7 +145,7 @@
                               
                               
                                 
-                            <select class="form-control push-5" ng-model="row.school" id="simple-classic-school" name="simple-classic-school" ng-options="p.object_id as p.school+' | '+p.university for p in schools" ng-change="get_category(row.school, $index,)">
+                            <select class="form-control push-5" ng-model="row.school" id="simple-classic-school" name="simple-classic-school" ng-options="p.object_id as p.university_abbr + ' | ' + p.school for p in schools" ng-change="get_category(row.school, $index, false)">
                                                             <option value="">SCHOOL</option>
                             </select> 
                               
@@ -153,8 +153,10 @@
                             <div class="dropup push-5">
 
                            
-                            <div ng-dropdown-multiselect="" options="row.categories" selected-model="row.category" extra-settings="selection_settings"></div>
+                            <div ng-dropdown-multiselect="" options="row.categories" selected-model="row.category" extra-settings="selection_settings" translation-texts="text_settings"></div>
                             
+
+
                             
                             </div>
                           <!--   <button ng-click="reset($index)" class="btn btn-info btn-block"><i class="fa fa-undo"></i></button> -->
