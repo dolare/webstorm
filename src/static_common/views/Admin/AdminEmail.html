@@ -16,7 +16,7 @@
         </ul>
         <div class="block-content tab-content">
             <div class="tab-pane active" id="btabs-alt-static-justified-pending" style="padding-top: 10px">
-            	<button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> &nbspSend&nbsp </button>
+            	<!-- <button class="btn btn-primary" style='float:right' type="button" ng-click='send_notification()'> &nbspSend&nbsp </button> -->
             	<!-- Begain of Email -->
 				<table class="table table-hover">
 					<colgroup>
@@ -64,13 +64,13 @@
 									<input type="checkbox" checked disabled/><span></span>
 								</label>
 							</td>
-							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.email_address }}</td>
-							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">
+							<td class='text-center' ng-click=' checkcontent(email)' data-toggle="modal" data-target="#modal-fadein">{{ email.email_address }}</td>
+							<td class='text-center' ng-click=' checkcontent(email)' data-toggle="modal" data-target="#modal-fadein">
 								{{ email.school }}<br />
 								{{ email.university }}
 							</td>
-							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.client_name }}</td>
-							<td class='text-center' ng-click=' checkcontent(email.content)' data-toggle="modal" data-target="#modal-fadein">{{ email.last_sent }}</td>
+							<td class='text-center' ng-click=' checkcontent(email)' data-toggle="modal" data-target="#modal-fadein">{{ email.client_name }}</td>
+							<td class='text-center' ng-click=' checkcontent(email)' data-toggle="modal" data-target="#modal-fadein">{{ email.last_sent }}</td>
 						</tr>
 					</tbody>
 				</table>	
@@ -92,7 +92,7 @@
 		                    </div>
 		                    <div class="modal-footer">
 		                        <button class="btn btn-sm btn-default" type="button" data-dismiss="modal"> Cancel </button>
-		                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"> &nbsp&nbspSend&nbsp&nbsp </button>
+		                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal" ng-click='individual_send()'> &nbsp&nbspSend&nbsp&nbsp </button>
 		                    </div>
 		                </div>
 		            </div>

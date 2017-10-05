@@ -35,7 +35,8 @@ class SendNotification(APIView):
 
         query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
         send_list = {}
-        if 'email' in request.GET.keys():
+        if 'email' in request.data.keys():
+            email = request.data['email']
             query_set = query_set.filter(customer__email = email)
         print(query_set)
         for query in query_set:
