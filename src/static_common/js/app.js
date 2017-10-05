@@ -515,6 +515,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                                 'https:////ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js',
+                                "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css",
                                 '/static/js/services/updateService.js',
                                 '/static/js/controllers/admin-email.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css',
@@ -614,31 +615,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
 
     }
-
-  }).
-
-  //front
-   state('front', {
-    url: '/',
-    templateUrl: '/static/views/Login/front.html',
-    controller: 'LoginController',
-    resolve: {
-                    depsIntro: ['$ocLazyLoad', function($ocLazyLoad) {
-                        return $ocLazyLoad.load({
-                            insertBefore: '#css-bootstrap',
-                            serie: true,
-                            files: [
-                                '/static/js/services/apiService.js',
-                                '/static/js/controllers/login.js',
-                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
-                                'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css',
-                                'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js',
-                                
-                            ]
-                        });
-                    }]
-                }
-
 
   }).
 
@@ -1258,7 +1234,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
-                              'https://cdnjs.cloudflare.com/ajax/libs/angularjs-dropdown-multiselect/2.0.0-beta.10/angularjs-dropdown-multiselect.min.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angularjs-dropdown-multiselect/1.11.8/angularjs-dropdown-multiselect.min.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/echarts/3.7.1/echarts.min.js',
                               '/static/js/controllers/visualization.js',
                              
@@ -1914,7 +1890,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   });
 
   //default route
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/upgrid-exec-edu');
 
 
 });

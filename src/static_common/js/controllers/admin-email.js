@@ -9,7 +9,6 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
     $scope.active_user = 'active';
     var token = authenticationSvc.getUserInfo().accessToken;
     //API for get email details
-    
     $scope.preview_notification = function(){
       $http({
         url: '/api/upgrid/non_degree/preview_notification',
@@ -28,7 +27,7 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
           $scope.email = res.data;
           var emailarr = [];
           var email_address;
-          //transfer object from api to array
+          //transfer object data to array
           for (email_address in $scope.email){
             var emailel = {   
             'email_address':'',
@@ -66,6 +65,7 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
         console.log($scope.email_need_send);
 
     };
+    //API for individual_send
     $scope.individual_send = function(){
         console.log($scope.email_need_send);
         $http({
@@ -111,6 +111,7 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
           }
         });
     }
+
     //api for send email
     $scope.send_notification = function(){
       if(JSON.stringify($scope.email)=='{}'){ //check email without api calls using content from last preview_notification api
@@ -169,5 +170,99 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
       })
       }   
     };
+    //API for email History
+    $scope.pagenumber = 1;
+    $scope.email_history = function(){
+      $http({
+        url: '/api/upgrid/non_degree/sent_email_history',
+        method: 'get',
+        params: {
+          page: $scope.pagenumber
+        },
+        headers: {
+            'Authorization': 'JWT ' + token
+        }
+      }).then(function(res){
+        $scope.history_data = res.data;
+        $scope.history_arr = res.data.results;
+        $scope.previous_url = res.data.previous;
+        $scope.next_url = res.data.next;
+        if($scope.pagenumber==1){
+          $scope.email_pagination = $scope.history_arr.length;
+        }
+        $scope.custom_pagination();
+
+      }).then(function(err){
+        console.log(err);
+      })
+    }
+    $scope.previous_page = function(){
+      $http({
+        url: $scope.previous_url,
+        method: 'get',
+        headers: {
+            'Authorization': 'JWT ' + token
+        }
+      }).then(function(res){
+        $scope.history_data = res.data;
+        $scope.history_arr = res.data.results;
+        $scope.previous_url = res.data.previous;
+        $scope.next_url = res.data.next;
+      }).then(function(err){
+        console.log(err);
+      })
+    };
+    $scope.next_page = function(){
+      $http({
+        url: $scope.next_url,
+        method: 'get',
+        headers: {
+            'Authorization': 'JWT ' + token
+        }
+      }).then(function(res){
+        $scope.history_data = res.data;
+        $scope.history_arr = res.data.results;
+        $scope.previous_url = res.data.previous;
+        $scope.next_url = res.data.next;
+      }).then(function(err){
+        console.log(err);
+      }) 
+    };
+    $scope.page_change = function(page){
+        $scope.pagenumber = page;
+        $scope.email_history();
+    }
+    $scope.custom_pagination = function(){
+      $scope.email_total = $scope.history_data.count;
+      var page = Math.ceil($scope.email_total/$scope.email_pagination);
+      $scope.pagination_number_arr = [];
+      for (var i = 1; i<page+1;i++){
+        $scope.pagination_number_arr.push(i)
+      }
+    }
+    $scope.check_history_content = function(email){
+      $timeout( function(){
+          hljs.initHighlighting();
+          $scope.show_code = true
+      }, 100 );
+      var str = email.email_content
+      $scope.email_content = str;
+      $scope.email_need_send = email.email_address;
+    };
+    $scope.page_class = function(page){
+      if($scope.pagenumber == page){
+        return 'active';
+      }
+    };
+    $scope.previous_class = function(){
+      if(!$scope.previous_url){
+        return 'disabled';
+      }
+    };
+    $scope.next_class = function(){
+      if(!$scope.next_url){
+        return 'disabled';
+      }
+    }
   }
 ]);
