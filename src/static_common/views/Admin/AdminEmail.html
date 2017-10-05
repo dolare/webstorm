@@ -36,6 +36,28 @@
 						</tr>
 					</thead>
 					<tbody>
+						<tr>
+							<td colspan="2">
+								<select ng-model="active_user" ng-change="preview_notification()" class="form-control" id="select-type" name="select-type">
+                                    <option value="">----</option>
+                                    <option value="active" selected>active</option>
+                                    <option value="inactive">inactive</option>
+                                </select>
+							</td>
+							<td>
+								<select ng-model="demo_user" class="form-control" ng-change="preview_notification()" id="select-demo" name="select-demo">
+	                                <option value="">select an account type</option>
+	                                <option value="regular">clients</option>
+	                                <option value="demo">demo</option>
+	                            </select>
+							</td>
+							<td colspan="2">
+								<select ng-model="nondegree_user" class="form-control" ng-change="preview_notification()" id="select-nondegree" name="select-nondegree">
+                                    <option value="">select a product line</option>
+	                                <option value="non_degree" selected>exec ed</option>
+	                            </select>
+							</td>
+						</tr>
 						<tr ng-repeat='email in emailarr track by $index' style="cursor:pointer">
 							<td class="text-center bg-gray-lighterer">
 								<label class="css-input css-checkbox css-checkbox-primary">

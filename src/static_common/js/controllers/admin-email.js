@@ -14,6 +14,10 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
       $http({
         url: '/api/upgrid/non_degree/preview_notification',
         method: 'get',
+        params:{
+          is_active: $scope.active_user?($scope.active_user=='active'?'True':'False'):null,
+          is_demo:$scope.demo_user?($scope.demo_user=='demo'?'True':'False'):null
+        },
         headers: {
             'Authorization': 'JWT ' + token
           }
