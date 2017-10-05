@@ -38,9 +38,9 @@
 					<tbody>
 						<tr>
 							<td colspan="2">
-								<select ng-model="active_user" ng-change="preview_notification()" class="form-control" id="select-type" name="select-type">
+								<select ng-model="active_user" ng-init='active_user="active"' ng-change="preview_notification()" class="form-control" id="select-type" name="select-type">
                                     <option value="">----</option>
-                                    <option value="active" selected>active</option>
+                                    <option value="active">active</option>
                                     <option value="inactive">inactive</option>
                                 </select>
 							</td>
@@ -54,7 +54,7 @@
 							<td colspan="2">
 								<select ng-model="nondegree_user" class="form-control" ng-change="preview_notification()" id="select-nondegree" name="select-nondegree">
                                     <option value="">select a product line</option>
-	                                <option value="non_degree" selected>exec ed</option>
+	                                <option value="non_degree">exec ed</option>
 	                            </select>
 							</td>
 						</tr>

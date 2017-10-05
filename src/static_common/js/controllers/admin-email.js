@@ -6,7 +6,7 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
 
     // Inject underscore into $scope
     $scope._ = _;
-
+    $scope.active_user = 'active';
     var token = authenticationSvc.getUserInfo().accessToken;
     //API for get email details
     
