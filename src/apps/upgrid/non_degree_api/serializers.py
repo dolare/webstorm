@@ -326,6 +326,11 @@ class NonDegreeWhoopsReportCreateSerializer(ModelSerializer):
         fields = ('object_id', 'starred', 'completed', )
 
 class NonDegreeReportCustomerMappingSerializer(ModelSerializer):
+    customer__email = SerializerMethodField()
     class Meta:
         model = NonDegreeReportCustomerMapping
         fields = ('customer__email','date_modified','email_content','is_sent','send_fail')
+
+    def get_customer__email(self, obj):
+        return obj.customer.email
+
