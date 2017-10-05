@@ -73,7 +73,7 @@ class SchoolsAPITestCase(UserBaseAPITestCase):
         """
         url = reverse('upgrid:non_degree_api:schools')
         response = APIClient().get(url, {}, format='json', HTTP_AUTHORIZATION='JWT ' + self.customer_token)
-        print(response.data)
+        # print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
@@ -101,5 +101,33 @@ class SchoolDetailAPITestCase(UserBaseAPITestCase):
         Always return 404, because school detail API only for manager.
         """
         url = reverse('upgrid:non_degree_api:school_detail', args=['580bbf8b-642b-4eb7-914c-03a054981719'])
+        response = APIClient().get(url, {}, format='json', HTTP_AUTHORIZATION='JWT ' + self.customer_token)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+class SchoolClientsAPITestCase(UserBaseAPITestCase):
+    """
+    Testing API for '^schools/(?P<object_id>[0-9a-fA-F\-]+)/clients$'
+    """
+
+    def test_school_clients_with_manager(self):
+        """
+        Test school API with manager account
+        """
+        url = reverse('upgrid:non_degree_api:school_client', args=['580bbf8b-642b-4eb7-914c-03a054981719'])
+        response = APIClient().get(url, format='json', HTTP_AUTHORIZATION='JWT ' + self.manager_token)
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue('object_id' in response.data, "Did not return object_id.")
+        self.assertTrue('ceeb' in response.data, "Did not return ceeb.")
+        self.assertTrue('school' in response.data, "Did not return school.")
+        self.assertTrue('non_degree_client' in response.data, "Did not return non_degree_client.")
+
+    def test_school_clients_with_customer(self):
+        """
+        Test school clients API with university customer
+        Always return 404, because school clients API only for manager.
+        """
+        url = reverse('upgrid:non_degree_api:school_client', args=['580bbf8b-642b-4eb7-914c-03a054981719'])
         response = APIClient().get(url, {}, format='json', HTTP_AUTHORIZATION='JWT ' + self.customer_token)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
