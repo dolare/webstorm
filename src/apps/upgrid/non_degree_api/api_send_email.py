@@ -105,7 +105,7 @@ class SendNotification(APIView):
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
                 #print(report)
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "-"+str(cr), "+"+str(ca), "-"+str(cor), "+"+str(coa)) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor)) + html_tr
 
             
             
@@ -234,7 +234,7 @@ class PreviewNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "-"+str(cr), "+"+str(ca), "-"+str(cor), "+"+str(coa)) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor)) + html_tr
                 
             if html_tr == '':
                 del preview_data[customer]
@@ -309,8 +309,8 @@ html = '<div style="margin: 30px auto;max-width: 80%;">\
 tableRow = '<tr>\
                   <td style="border:1px solid;word-break:break-all">{}</td>\
                   <td style="border:1px solid;word-break:break-all">{}</td>\
-                  <td style="border:1px solid; color: rgb(0,128,0);word-break:break-all">{}</td>\
-                  <td style="border:1px solid; color: rgb(255,0,0);word-break:break-all">{}</td>\
-                  <td style="border:1px solid; color: rgb(0,128,0);word-break:break-all">{}</td>\
-                  <td style="border:1px solid; color: rgb(255,0,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid; font-color: rgb(0,128,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid; font-color: rgb(255,0,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid; font-color: rgb(0,128,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid; font-color: rgb(255,0,0);word-break:break-all">{}</td>\
                 </tr>'
