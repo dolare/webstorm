@@ -1238,8 +1238,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
                               '/static/js/services/apiService.js',
                               'https://cdnjs.cloudflare.com/ajax/libs/angularjs-dropdown-multiselect/2.0.0-beta.10/angularjs-dropdown-multiselect.min.js',
 
-                              'https://cdnjs.cloudflare.com/ajax/libs/angularjs-dropdown-multiselect/1.11.8/angularjs-dropdown-multiselect.min.js',
-
                               'https://cdnjs.cloudflare.com/ajax/libs/echarts/3.7.1/echarts.min.js',
                               '/static/js/controllers/visualization.js',
                              
