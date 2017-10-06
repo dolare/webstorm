@@ -96,7 +96,8 @@
                               
                               
                                 
-                            <select class="form-control push-5" ng-model="row.school" id="simple-classic-school" name="simple-classic-school" ng-options="p.object_id as p.university_abbr + ' | ' + p.school for p in schools" ng-change="get_category(row.school, $index, false)">
+                            <!-- <select class="form-control push-5" ng-model="row.school" id="simple-classic-school" name="simple-classic-school" ng-options="p.object_id as p.university_abbr + ' | ' + p.school for p in schools" ng-change="get_category(row.school, $index, false)"> -->
+                            <select class="form-control push-5" ng-model="row.school" id="simple-classic-school" name="simple-classic-school" ng-options="p.object_id as p.university_abbr + ' | ' + p.school for p in schools">
                                                             <option value="">SCHOOL</option>
                             </select> 
                               

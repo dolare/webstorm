@@ -12,6 +12,8 @@ visualization.controller('VisualizationController',
     var myChart = echarts.init(document.getElementById('main'));
 
     $scope.selection_settings = {displayProp: 'label', styleActive: true, groupBy: 'name'};
+    // $scope.selection_settings = {displayProp: 'label', styleActive: true, groupByTextProvider: function(groupValue) { if (groupValue) {return 'Categories'} }, groupBy: 'label'};
+
     $scope.text_settings = {buttonDefaultText : 'Cat.', dynamicButtonTextSuffix: '  ✔'}
 
 
@@ -113,21 +115,21 @@ visualization.controller('VisualizationController',
             $scope.selection[index] = {
                 'categories': [],
                 'select': null,
-                // 'school': school.object_id,
-                'school': $scope.schools[0].object_id,
+                'school': school.object_id,
+                // 'school': $scope.schools[0].object_id,
                 'category': [],
             }
 
 
             // $scope.get_category(school.object_id, index, true)
             // $scope.get_category($scope.schools[0].object_id, index, true)
-            apiService.getCategories(token, $scope.schools[0].object_id, index, $scope.selection, true).then(function(result) {
+            apiService.getCategories(token, $scope.schools[index].object_id, index, $scope.selection, true).then(function(result) {
                 console.log("result="+JSON.stringify(result, null, 4))
                 $scope.selection = result
             })
 
 
-            promises.push(apiService.getCategories(token, $scope.schools[0].object_id, index, $scope.selection, true));
+            promises.push(apiService.getCategories(token, $scope.schools[index].object_id, index, $scope.selection, true));
 
         })
 
@@ -233,10 +235,11 @@ myChart.setOption(option);
         //$scope.example2model = []; 
         //$scope.example2data = [ {id: 1, label: "David adnk asdjaks askdmakd asdmlaksdad"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}]; 
         //$scope.example2settings = {displayProp: 'label'};
-            //$scope.selection_settings = {displayProp: 'label', styleActive: true, groupByTextProvider: function(groupValue) { if (groupValue) {return 'Categories'} }, groupBy: 'label'};
+        //$scope.selection_settings = {displayProp: 'label', styleActive: true, groupByTextProvider: function(groupValue) { if (groupValue) {return 'Categories'} }, groupBy: 'label'};
 
-
-        if(check_all){
+        console.log("temp_selection="+JSON.stringify(temp_selection, null, 4))
+        //if(check_all){
+       
 
             var temp_categories = []
 
@@ -249,7 +252,10 @@ myChart.setOption(option);
 
             $scope.selection[index].category = temp_categories
 
-        }
+
+            $scope.refresh_one(index)
+
+        // end of check_all
 
 
 
@@ -302,15 +308,18 @@ $scope.$watch('selection', function(newVal, oldVal) {
     console.log("oldVal="+JSON.stringify(oldVal, null, 4))
   console.log("newVal="+JSON.stringify(newVal, null, 4))
 
+
+
     for(var q=0; q<oldVal.length; q++){
 
         if(oldVal[q].school === newVal[q].school && 
              _.isEqual(oldVal[q].category, newVal[q].category) ){
 
-        } else {
-            console.log("qqq")
-            $scope.refresh_one(q)
+        } else if (oldVal[q].school !== newVal[q].school){
+            $scope.get_category(newVal[q].school, q, true)
 
+        } else if(!_.isEqual(oldVal[q].category, newVal[q].category)) {
+            $scope.refresh_one(q)
         }
     }
 
@@ -322,16 +331,20 @@ $scope.$watch('selection', function(newVal, oldVal) {
 }, true);
 
 
-$scope.get_bar_result = function (value, index, bar_result) {
+$scope.get_bar_result = function (index) {
 
+
+    console.log("###get one bar result###")
+    console.log("###selected=###"+JSON.stringify($scope.selection[index].category, null, 4))
     var deferred = $q.defer();
 
-    
+        
 
         var temp_cat = ''
-        for(var j=0; j<value.category.length; j++){
+        
+        for(var j=0; j<$scope.selection[index].category.length; j++){
 
-            temp_cat = temp_cat + ((j===0 ? '' : '&category=') + value.category[j].id)
+            temp_cat = temp_cat + ((j===0 ? '' : '&category=') + $scope.selection[index].category[j].id)
         }
 
         
@@ -347,9 +360,9 @@ $scope.get_bar_result = function (value, index, bar_result) {
 
         console.log("temp_cat="+JSON.stringify(temp_cat, null, 4))
         console.log("value.data.count="+value.data.count)        
-        bar_result[index] = value.data.count
+        $scope.bar_result[index] = value.data.count
 
-        deferred.resolve(bar_result[index]);
+        deferred.resolve($scope.bar_result[index]);
          
     }).catch(function(error){
          console.log('an error occurred...'+JSON.stringify(error));
@@ -367,9 +380,10 @@ $scope.refresh_one = function(index) {
 
     var promises_bar = []
     
+    console.log("index === "+index)
     
             if($scope.selection[index].category.length!==0 && ($scope.course_type_amp || $scope.course_type_non_amp)){
-                $scope.get_bar_result($scope.selection[index], index, $scope.bar_result).then(function(result) {
+                $scope.get_bar_result(index).then(function(result) {
                     console.log("refresh result = "+JSON.stringify(result, null, 4))
                     $scope.bar_result[index] = result
 
@@ -377,7 +391,7 @@ $scope.refresh_one = function(index) {
 
                 })
 
-                promises_bar.push($scope.get_bar_result($scope.selection[index], index, $scope.bar_result))
+                promises_bar.push($scope.get_bar_result(index))
 
 
             } else {
@@ -392,7 +406,9 @@ $scope.refresh_one = function(index) {
 
      $q.all(promises_bar).then(function() {
             
+            console.log()
 
+            console.log("refreshing one")
             $scope.init_bar = false
 
             App.blocks('#chart_block', 'state_normal');
@@ -456,21 +472,21 @@ $scope.refresh=function() {
 
     App.blocks('#chart_block', 'state_loading');
 
-    //var bar_result = [];
 
+    console.log("**********************")
     var promises_bar = []
     angular.forEach($scope.selection, function(value, index) {
     
            
 
             if(value.category.length!==0 && ($scope.course_type_amp || $scope.course_type_non_amp)){
-                $scope.get_bar_result(value, index, $scope.bar_result).then(function(result) {
+                $scope.get_bar_result(index).then(function(result) {
                     console.log("refresh result = "+JSON.stringify(result, null, 4))
                     $scope.bar_result[index] = result
 
                 })
 
-                promises_bar.push($scope.get_bar_result(value, index, $scope.bar_result))
+                promises_bar.push($scope.get_bar_result(index))
 
 
             } else {
