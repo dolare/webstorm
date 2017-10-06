@@ -104,8 +104,9 @@ class SendNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
+                up = diff_data['updated']
                 #print(report)
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor)) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor), up) + html_tr
 
             
             
@@ -234,7 +235,8 @@ class PreviewNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor)) + html_tr
+                up = diff_data['updated']
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor), up) + html_tr
                 
             if html_tr == '':
                 del preview_data[customer]
@@ -253,7 +255,6 @@ class SendEmailHistory(ListAPIView):
     def get_queryset(self, *args, **kwargs):
         query_set = NonDegreeReportCustomerMapping.objects.filter(send_fail = False, is_sent = True).order_by('-date_modified','report').distinct('date_modified','report')
         
-
         return query_set
 
 
@@ -313,4 +314,5 @@ tableRow = '<tr>\
                   <td style="border:1px solid black; color: rgb(255,0,0);word-break:break-all">{}</td>\
                   <td style="border:1px solid black; color: rgb(0,128,0);word-break:break-all">{}</td>\
                   <td style="border:1px solid black; color: rgb(255,0,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid black; color: rgb(0,128,0);word-break:break-all">{}</td>\
                 </tr>'
