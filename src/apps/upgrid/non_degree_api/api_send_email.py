@@ -270,7 +270,7 @@ html = '<div style="margin: 30px auto;max-width: 80%;">\
         </div>\
         <div style="font-family: sans-serif;">\
           <p>New reports have been released.</p>\
-          <p>Here is a brief summary of the changes:</p>\
+          <p>Here is a brief summary of the most recent changes:</p>\
           <div>\
             <table style="border:1px solid black; border-collapse:collapse;table-layout：fixed">\
               <colgroup>\
