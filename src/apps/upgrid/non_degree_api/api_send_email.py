@@ -78,9 +78,9 @@ class SendNotification(APIView):
             report_email = []
             for report in content['report']:
                 status = True
-                name = report['school_name']
+                name = report['school_id']
                 for prereport in report_email:
-                    if name == prereport['school_name']:
+                    if name == prereport['school_id']:
                         status = False
                         if report['date_modified'].date()>prereport['date_modified'].date():
                             report_email = [report if x==prereport else x for x in report_email]
@@ -88,7 +88,7 @@ class SendNotification(APIView):
                     report_email.append(report)
 
             for report in report_email:
-                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_id'], active = True).order_by('-date_created')[:2]
+                reportTwo = NonDegreeReport.objects.filter(school__object_id=report['school_id'], active = True).order_by('-date_created')[:2]
 
                 report_data = []
                 print(reportTwo)
@@ -105,7 +105,7 @@ class SendNotification(APIView):
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
                 #print(report)
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), ca, cr, coa, cor) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "-"+str(cr), "+"+str(ca), "-"+str(cor), "+"+str(coa)) + html_tr
 
             
             
@@ -222,8 +222,6 @@ class PreviewNotification(APIView):
             for report in report_email:
                 reportTwo = NonDegreeReport.objects.filter(school__object_id = report['school_id'], active = True).order_by('-date_created')[:2]
                 report_data = []
-                print("bao")
-                print(reportTwo)
                 if len(reportTwo) > 1:
                     for report_obj in reportTwo:
                         report_data.append(ReportSerializer(report_obj).data)
@@ -236,8 +234,7 @@ class PreviewNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), cr, ca, cor, coa) + html_tr
-
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "-"+str(cr), "+"+str(ca), "-"+str(cor), "+"+str(coa)) + html_tr
                 
             if html_tr == '':
                 del preview_data[customer]
