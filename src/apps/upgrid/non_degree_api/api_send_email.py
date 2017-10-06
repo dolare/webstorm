@@ -309,8 +309,8 @@ html = '<div style="margin: 30px auto;max-width: 80%;">\
 tableRow = '<tr>\
                   <td style="border:1px solid;word-break:break-all">{}</td>\
                   <td style="border:1px solid;word-break:break-all">{}</td>\
-                  <td style="border:1px solid; font-color: rgb(0,128,0);word-break:break-all">{}</td>\
-                  <td style="border:1px solid; font-color: rgb(255,0,0);word-break:break-all">{}</td>\
-                  <td style="border:1px solid; font-color: rgb(0,128,0);word-break:break-all">{}</td>\
-                  <td style="border:1px solid; font-color: rgb(255,0,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid black; color: rgb(0,128,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid black; color: rgb(255,0,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid black; color: rgb(0,128,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid black; color: rgb(255,0,0);word-break:break-all">{}</td>\
                 </tr>'

@@ -199,7 +199,9 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
         App.blocks('#emailloading', 'state_normal');
 
       }).then(function(err){
-        console.log(err);
+        if(err){
+          console.log(err);
+        }
       })
     }
 
@@ -220,7 +222,9 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
         App.blocks('#emailloading', 'state_normal');
         $scope.pagenumber = $scope.pagenumber-1;
       }).then(function(err){
-        console.log(err);
+        if(err){
+          console.log(err);
+        }
       })
     };
     $scope.next_page = function(){
