@@ -218,6 +218,7 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
         $scope.previous_url = res.data.previous;
         $scope.next_url = res.data.next;
         App.blocks('#emailloading', 'state_normal');
+        $scope.pagenumber = $scope.pagenumber-1;
       }).then(function(err){
         console.log(err);
       })
@@ -236,6 +237,7 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
         $scope.previous_url = res.data.previous;
         $scope.next_url = res.data.next;
         App.blocks('#emailloading', 'state_normal');
+        $scope.pagenumber = $scope.pagenumber+1;
       }).then(function(err){
         console.log(err);
       }) 
