@@ -6,13 +6,6 @@ from rest_framework_jwt.settings import api_settings
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
-from base64 import b64encode
-import json
-# from mock import patch
-from ceeb_program.models import (
-    Curriculum, Deadline, Duration, Program, Requirement, Scholarship, Tuition,
-    UniversitySchool
-    )
 
 from apps.upgrid.models import UpgridBaseUser, UpgridAccountManager, UniversityCustomer, UniversityCustomerProgram
 
@@ -24,22 +17,6 @@ class UserBaseAPITestCase(APITestCase):
     fixtures = ['auth_data_10_3.json', 'webtracking_data.json', 'ceeb_data_v0.28.json', 'upgrid_data_10_3.json', ]
 
     def setUp(self):
-        # self.account_manager_data = {'username': 'account_manager',
-        #                              'is_active': True,
-        #                              'email': 'account_manager@testing.edu', }
-        # self.university_customer_data = {'username': 'university_customer',
-        #                                  'email': 'university_customer@testing.edu',
-        #                                  'is_active': True,
-        #                                  }
-        # self.account_manager = UpgridAccountManager.objects.create(**self.account_manager_data)
-        # self.account_manager.set_password('password')
-        # self.account_manager.save()
-        # self.account_manager_token = jwt_encode_handler(jwt_payload_handler(self.account_manager))
-        #
-        # self.university_customer = UniversityCustomer.objects.create(**self.university_customer_data)
-        # self.university_customer.set_password('password')
-        # self.university_customer.save()
-        # self.university_customer_token = jwt_encode_handler(jwt_payload_handler(self.university_customer))
         self.customer = UniversityCustomer.objects.get(email="cky1@gustr.com")
         self.customer_token = jwt_encode_handler(jwt_payload_handler(self.customer))
         self.manager = UpgridAccountManager.objects.get(email="ckykokoko@gmail.com")
@@ -64,7 +41,6 @@ class SchoolsAPITestCase(UserBaseAPITestCase):
         """
         url = reverse('upgrid:non_degree_api:schools')
         response = APIClient().get(url, {}, format='json', HTTP_AUTHORIZATION='JWT ' + self.manager_token)
-        # print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_schools_with_university_customer(self):
@@ -73,7 +49,6 @@ class SchoolsAPITestCase(UserBaseAPITestCase):
         """
         url = reverse('upgrid:non_degree_api:schools')
         response = APIClient().get(url, {}, format='json', HTTP_AUTHORIZATION='JWT ' + self.customer_token)
-        # print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
@@ -116,7 +91,6 @@ class SchoolClientsAPITestCase(UserBaseAPITestCase):
         """
         url = reverse('upgrid:non_degree_api:school_client', args=['580bbf8b-642b-4eb7-914c-03a054981719'])
         response = APIClient().get(url, format='json', HTTP_AUTHORIZATION='JWT ' + self.manager_token)
-        # print(response.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue('object_id' in response.data, "Did not return object_id.")
         self.assertTrue('ceeb' in response.data, "Did not return ceeb.")
@@ -185,3 +159,57 @@ class SchoolCategoryCoursesAPITestCase(UserBaseAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue('object_id' in response.data[0], "Did not return object_id.")
         self.assertTrue('name' in response.data[0], "Did not return name.")
+
+
+class ReportsAPITestCase(UserBaseAPITestCase):
+    """
+    Testing API for '^reports$'
+    """
+
+    def test_get_reports_with_manager(self):
+        """
+        Test reports API with manager account
+        """
+        url = reverse('upgrid:non_degree_api:reports')
+        response = APIClient().get(url, format='json', HTTP_AUTHORIZATION='JWT ' + self.manager_token)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue('object_id' in response.data['results'][0], "Did not return object_id.")
+        self.assertTrue('school' in response.data['results'][0], "Did not return school.")
+        self.assertTrue('date_created' in response.data['results'][0], "Did not return date_created.")
+        self.assertTrue('active' in response.data['results'][0], "Did not return active.")
+
+    def test_get_reports_with_university_customer(self):
+        """
+        Test reports API with university customer
+        """
+        url = reverse('upgrid:non_degree_api:reports')
+        response = APIClient().get(url, format='json', HTTP_AUTHORIZATION='JWT ' + self.customer_token)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue('object_id' in response.data['results'][0], "Did not return object_id.")
+        self.assertTrue('school' in response.data['results'][0], "Did not return school.")
+        self.assertTrue('date_created' in response.data['results'][0], "Did not return date_created.")
+        self.assertTrue('active' in response.data['results'][0], "Did not return active.")
+
+    def test_post_reports_with_manager(self):
+        """
+        Test reports API with manager account
+        """
+        url = reverse('upgrid:non_degree_api:reports')
+        data = {'school': '580bbf8b-642b-4eb7-914c-03a054981719',
+                'school_name': 'cky_school',
+                'university_name': 'cky_university'}
+        response = APIClient().post(url, data, HTTP_AUTHORIZATION='JWT ' + self.manager_token)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue('school_name' in response.data, "Did not return school_name.")
+        self.assertTrue('university_name' in response.data, "Did not return university_name.")
+        self.assertTrue('school' in response.data, "Did not return school.")
+        self.assertTrue('categories' in response.data, "Did not return categories.")
+
+    def test_post_reports_with_university_customer(self):
+        """
+        Test reports API with university customer
+        """
+        url = reverse('upgrid:non_degree_api:reports')
+        response = APIClient().post(url, {'school': '580bbf8b-642b-4eb7-914c-03a054981719'}, format='json',
+                                    HTTP_AUTHORIZATION='JWT ' + self.customer_token)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
