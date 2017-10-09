@@ -140,7 +140,10 @@ angular.module('myApp')
               // }
 
               var date_new = _.filter(course_data_copy[j].course_dates, function(num){ return num.end_date > course_data_copy[j].date_modified; });
-              var date_old = _.filter(old_course_copy.course_dates, function(num){ return num.end_date > old_course_copy.date_modified; });
+              //var date_old = _.filter(old_course_copy.course_dates, function(num){ return num.end_date > old_course_copy.date_modified; });
+              var date_old = _.filter(old_course_copy.course_dates, function(num){ return num.end_date > course_data_copy[j].date_modified; });
+
+
 
               // Since it could happen that only one of date_new and date_old holds the new property "duration", which leads to showing update even the dates are the same, here we first create a copy of both date_new and date_old, remove the "duration" property of these 2 copies and then use them to do the comparison.
               var date_newWithoutDuration = angular.copy(date_new);
@@ -157,6 +160,10 @@ angular.module('myApp')
 
               //course_date
               if(!_.isEqual(date_newWithoutDuration, date_oldWithoutDuration)){
+
+                console.log("original data="+JSON.stringify(course_data_copy[j].course_dates, null, 4))
+                console.log("date_new="+JSON.stringify(date_new, null, 4))
+                console.log("date_old="+JSON.stringify(date_old, null, 4))
 
                 console.log("old_course_copy.course_dates="+JSON.stringify(old_course_copy.course_dates));
 
