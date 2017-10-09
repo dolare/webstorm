@@ -241,7 +241,8 @@ class ReportOverviewMixin(object):
             return {'category_added': 0,
                     'category_removed': 0,
                     'course_added': 0,
-                    'course_removed': 0}
+                    'course_removed': 0,
+                    'updated' : 0}
 
         old_report_dict = {}
         old_report_category = {}
@@ -249,6 +250,7 @@ class ReportOverviewMixin(object):
         category_added = []
         course_added = []
         course_removed = []
+        updated = 0
 
         for category in old_report['categories']:
             # Add all category and course to old_report_dict and save their name
@@ -257,6 +259,24 @@ class ReportOverviewMixin(object):
             for course in category['courses']:
                 old_report_dict[category['object_id']].append(course['object_id'])
                 old_report_course[course['object_id']] = course['name']
+                old_report_course['type'] = course['type']
+                old_report_course['tuition_number'] = course['tuition_number']
+                old_report_course['url'] = course['url']
+            
+        for category in new_report['categories']:
+            if category['object_id'] in old_report_dict.keys():
+                if category['name'] != old_report_category[category['object_id']]:
+                    updated += 1
+                for course in category['courses']:
+                    if course['object_id'] in old_report_dict[category['object_id']]:
+                        if course['name'] != old_report_course[course['object_id']]:
+                            updated += 1
+                        elif course['type'] != old_report_course['type']:
+                            updated += 1
+                        elif course['tuition_number'] != old_report_course['tuition_number']:
+                            updated += 1
+                        elif course['url'] != old_report_course['url']:
+                            updated += 1
 
         for category in new_report['categories']:
             if category['object_id'] not in old_report_dict.keys():
@@ -286,7 +306,8 @@ class ReportOverviewMixin(object):
                 'course_added': len(course_added),
                 'course_added_name': course_added,
                 'course_removed': len(course_removed),
-                'course_removed_name': course_removed}
+                'course_removed_name': course_removed,
+                'updated': updated}
 
 
 class ReportOverview(PermissionMixin, ReportOverviewMixin, APIView):
