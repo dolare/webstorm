@@ -17,7 +17,7 @@ from django.http import Http404, HttpResponse
 import logging
 import os
 from .views import ReportOverview
-from .serializers import ReportSerializer
+from .serializers import ReportSerializer, NonDegreeReportCustomerMappingSerializer
 app_logger = logging.getLogger('app')
 import json
 import time, datetime
@@ -43,6 +43,7 @@ class SendNotification(APIView):
             if query.customer.email in send_list.keys():
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
+                report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
                 report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified
@@ -57,6 +58,7 @@ class SendNotification(APIView):
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
+                report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
                 report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified 
@@ -76,9 +78,9 @@ class SendNotification(APIView):
             report_email = []
             for report in content['report']:
                 status = True
-                name = report['school_name']
+                name = report['school_id']
                 for prereport in report_email:
-                    if name == prereport['school_name']:
+                    if name == prereport['school_id']:
                         status = False
                         if report['date_modified'].date()>prereport['date_modified'].date():
                             report_email = [report if x==prereport else x for x in report_email]
@@ -86,7 +88,7 @@ class SendNotification(APIView):
                     report_email.append(report)
 
             for report in report_email:
-                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True).order_by('-date_created')[:2]
+                reportTwo = NonDegreeReport.objects.filter(school__object_id=report['school_id'], active = True).order_by('-date_created')[:2]
 
                 report_data = []
                 print(reportTwo)
@@ -102,8 +104,9 @@ class SendNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
+                up = diff_data['updated']
                 #print(report)
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), ca, cr, coa, cor) + html_tr
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor), up) + html_tr
 
             
             
@@ -161,6 +164,7 @@ class PreviewNotification(APIView):
             if query.customer.email in send_list.keys():
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
+                report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
                 report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified 
@@ -180,6 +184,7 @@ class PreviewNotification(APIView):
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
+                report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
                 report_dict['university_name'] = query.report.school.university
                 report_dict['date_modified'] = query.report.date_modified
@@ -206,9 +211,9 @@ class PreviewNotification(APIView):
             report_email = []
             for report in content['report']:
                 status = True
-                name = report['school_name']
+                name = report['school_id']
                 for prereport in report_email:
-                    if name == prereport['school_name']:
+                    if name == prereport['school_id']:
                         status = False
                         if report['date_modified'].date()>prereport['date_modified'].date():
                             report_email = [report if x==prereport else x for x in report_email]
@@ -216,9 +221,8 @@ class PreviewNotification(APIView):
                     report_email.append(report)
 
             for report in report_email:
-                reportTwo = NonDegreeReport.objects.filter(school__school=report['school_name'], active = True).order_by('-date_created')[:2]
+                reportTwo = NonDegreeReport.objects.filter(school__object_id = report['school_id'], active = True).order_by('-date_created')[:2]
                 report_data = []
-                #print(reportTwo)
                 if len(reportTwo) > 1:
                     for report_obj in reportTwo:
                         report_data.append(ReportSerializer(report_obj).data)
@@ -231,8 +235,8 @@ class PreviewNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), cr, ca, cor, coa) + html_tr
-
+                up = diff_data['updated']
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor), up) + html_tr
                 
             if html_tr == '':
                 del preview_data[customer]
@@ -246,11 +250,11 @@ class PreviewNotification(APIView):
 
 
 class SendEmailHistory(ListAPIView):
+    serializer_class = NonDegreeReportCustomerMappingSerializer
     pagination_class = CustomerPageNumberPagination
     def get_queryset(self, *args, **kwargs):
         query_set = NonDegreeReportCustomerMapping.objects.filter(send_fail = False, is_sent = True).order_by('-date_modified','report').distinct('date_modified','report')
         
-
         return query_set
 
 
@@ -266,9 +270,9 @@ html = '<div style="margin: 30px auto;max-width: 80%;">\
         </div>\
         <div style="font-family: sans-serif;">\
           <p>New reports have been released.</p>\
-          <p>Here is a brief summary of the changes:</p>\
+          <p>Here is a brief summary of the most recent changes:</p>\
           <div>\
-            <table style="border:1px solid black; border-collapse:collapse;table-layout：fixed">\
+            <table style="border:1px solid black; text-align:center; border-collapse:collapse;table-layout：fixed">\
               <colgroup>\
                 <col width="40%" />\
                 <col width="15%" />\
@@ -306,8 +310,9 @@ html = '<div style="margin: 30px auto;max-width: 80%;">\
 tableRow = '<tr>\
                   <td style="border:1px solid;word-break:break-all">{}</td>\
                   <td style="border:1px solid;word-break:break-all">{}</td>\
-                  <td style="border:1px solid; color: rgb(0,128,0);word-break:break-all">{}</td>\
-                  <td style="border:1px solid; color: rgb(255,0,0);word-break:break-all">{}</td>\
-                  <td style="border:1px solid; color: rgb(0,128,0);word-break:break-all">{}</td>\
-                  <td style="border:1px solid; color: rgb(255,0,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid black; color: rgb(0,128,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid black; color: rgb(255,0,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid black; color: rgb(0,128,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid black; color: rgb(255,0,0);word-break:break-all">{}</td>\
+                  <td style="border:1px solid black; color: rgb(0,128,0);word-break:break-all">{}</td>\
                 </tr>'
