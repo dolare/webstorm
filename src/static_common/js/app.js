@@ -10,7 +10,6 @@ var App = angular.module('myApp', [
   'oc.lazyLoad',
   'ngAnimate',
   'ngSanitize',
-
 ]);
 
 
@@ -460,8 +459,65 @@ App.config(function($stateProvider, $urlRouterProvider) {
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css',
                                 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                                'https:////ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js',
                                 '/static/js/services/updateService.js',
                                 '/static/js/controllers/admin-executive.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js',
+                                
+   
+                            ]
+                        });
+                    }], 
+    }
+
+
+  }).
+
+  state('email', {
+    url: '/email',
+    parent: 'success_demo',
+    templateUrl: '/static/views/Admin/AdminEmail.html',
+    controller: 'EmailController',
+    resolve: {
+      auth: function($q, authenticationSvc) {
+
+        var userInfo = authenticationSvc.getUserInfo();
+        if (userInfo && userInfo.admin === "True") {
+
+          //console.log("start logout");
+          //console.log(userInfo);
+          return $q.when(userInfo);
+
+        } else {
+          return $q.reject({
+            authenticated: false
+          });
+        }
+      },
+
+      depsAdminUpdates: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                '/static/js/services/executiveService.js',
+                                '/static/js/services/ajaxService.js',
+                                '/static/js/third-party/angular-bootstrap-confirm.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
+                                '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-css/1.4.6/select2-bootstrap.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
+                                'https:////ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js',
+                                "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css",
+                                '/static/js/services/updateService.js',
+                                '/static/js/controllers/admin-email.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css',
                                 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js',
                                 
@@ -475,6 +531,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
 
   }).
+
 
   state('quote', {
     url: '/quote',
@@ -560,6 +617,32 @@ App.config(function($stateProvider, $urlRouterProvider) {
     }
 
   }).
+
+    //front
+   state('front', {
+    url: '/',
+    templateUrl: '/static/views/Login/front.html',
+    controller: 'LoginController',
+    resolve: {
+                    depsIntro: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load({
+                            insertBefore: '#css-bootstrap',
+                            serie: true,
+                            files: [
+                                '/static/js/services/apiService.js',
+                                '/static/js/controllers/login.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js',
+                                'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css',
+                                'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js',
+                                
+                            ]
+                        });
+                    }]
+                }
+
+
+  }).
+
 
   //Client pages
    state('intro-regular', {
@@ -1177,7 +1260,10 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
-                              
+
+                              '/static/js/services/apiService.js',
+                              'https://cdnjs.cloudflare.com/ajax/libs/angularjs-dropdown-multiselect/2.0.0-beta.10/angularjs-dropdown-multiselect.min.js',
+
                               'https://cdnjs.cloudflare.com/ajax/libs/echarts/3.7.1/echarts.min.js',
                               '/static/js/controllers/visualization.js',
                              
@@ -1510,7 +1596,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 
   state('sharedNonDegreeReport', {
     url: '/shared-non-degree-report/:param1/:param2/',
-    templateUrl: '/static/views/Share/shared_non_degree_report.html',
+    templateUrl: '/static/views/Share/shared_tracking_report.html',
     controller: 'ShareExecutiveController',
     resolve: {
                     depsShareExecutive: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -1833,7 +1919,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
   });
 
   //default route
-  $urlRouterProvider.otherwise('/upgrid-exec-edu');
+  $urlRouterProvider.otherwise('/');
 
 
 });

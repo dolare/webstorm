@@ -3,7 +3,7 @@ from ceeb_program.models import UniversitySchool, NonDegreeCategory, NonDegreeCo
     NonDegreeCourseURL, NonDegreeAMPReport, NonDegreeCategoryURL
 from webtracking.models import WebPage, WebPageScan
 
-from ..models import NonDegreeReport, NonDegreeSharedReport, UniversityCustomer, NonDegreeWhoopsReport
+from ..models import NonDegreeReport, NonDegreeSharedReport, UniversityCustomer, NonDegreeWhoopsReport, NonDegreeReportCustomerMapping
 
 
 class UniversityCustomerSerializer(ModelSerializer):
@@ -15,14 +15,18 @@ class UniversityCustomerSerializer(ModelSerializer):
 
 class UniversitySchoolListSerializer(ModelSerializer):
     university = SerializerMethodField()
+    university_abbr = SerializerMethodField()
     non_degree_client = SerializerMethodField()
 
     class Meta:
         model = UniversitySchool
-        fields = ('object_id', 'ceeb', 'school', 'university', 'non_degree_client')
+        fields = ('object_id', 'ceeb', 'school', 'university', 'non_degree_client', 'university_abbr',)
 
     def get_university(self, obj):
         return obj.university_foreign_key.name
+
+    def get_university_abbr(self, obj):
+        return obj.university_foreign_key.abbreviation
 
     def get_non_degree_client(self, obj):
         university_customers = obj.non_degree_user.all()
@@ -320,4 +324,13 @@ class NonDegreeWhoopsReportCreateSerializer(ModelSerializer):
     class Meta:
         model = NonDegreeWhoopsReport
         fields = ('object_id', 'starred', 'completed', )
+
+class NonDegreeReportCustomerMappingSerializer(ModelSerializer):
+    customer__email = SerializerMethodField()
+    class Meta:
+        model = NonDegreeReportCustomerMapping
+        fields = ('customer__email','date_modified','email_content','is_sent','send_fail')
+
+    def get_customer__email(self, obj):
+        return obj.customer.email
 
