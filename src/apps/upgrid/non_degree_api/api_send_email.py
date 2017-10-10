@@ -96,6 +96,7 @@ class SendNotification(APIView):
                     for report_obj in reportTwo:
                         report_data.append(ReportSerializer(report_obj).data)
                     diff_data = ReportOverview.count_diff(report_data[0], report_data[1])
+                    diff_update = ReportOverview.count_diff_update(report_data[0], report_data[1])
                     #print(diff_data)
                 else:
                     continue
@@ -104,8 +105,8 @@ class SendNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
-                up = diff_data['updated']
-                #print(report)
+                up = diff_update['updated']
+                
                 html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor), up) + html_tr
 
             
@@ -139,8 +140,8 @@ class SendNotification(APIView):
 
 class PreviewNotification(APIView):
     def get(self, request, *args, **kwargs):
-        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
-        print(query_set)
+        query_set = NonDegreeReportCustomerMapping.objects.filter(customer__account_manager = request.user).filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
+        #print(query_set)
   
         try:
             if 'is_demo' in request.GET.keys() and request.GET.get("is_demo") != None:
@@ -156,7 +157,7 @@ class PreviewNotification(APIView):
             app_logger.error(e)
             return Response({"Failed": ("error input !")}, status=HTTP_400_BAD_REQUEST)
 
-        query_set2 = NonDegreeReportCustomerMapping.objects.filter(is_sent = True)
+        query_set2 = NonDegreeReportCustomerMapping.objects.filter(customer__account_manager = request.user).filter(is_sent = True)
         send_list = {}
         preview_data = {}
         date_sent_list = []
@@ -227,7 +228,7 @@ class PreviewNotification(APIView):
                     for report_obj in reportTwo:
                         report_data.append(ReportSerializer(report_obj).data)
                     diff_data = ReportOverview.count_diff(report_data[0], report_data[1])
-                    #print(diff_data)
+                    diff_update = ReportOverview.count_diff_update(report_data[0], report_data[1])
                 else:
                     continue
                 
@@ -235,7 +236,7 @@ class PreviewNotification(APIView):
                 ca = diff_data['category_added']
                 cor = diff_data['course_removed']
                 coa = diff_data['course_added']
-                up = diff_data['updated']
+                up = diff_update['updated']
                 html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor), up) + html_tr
                 
             if html_tr == '':

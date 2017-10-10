@@ -70,7 +70,7 @@ class UniversityCustomerAdmin(admin.ModelAdmin):
     readonly_fields = ('id', 'data_joined', )
 
     list_display = ('username', 'email', 'is_active', 'data_joined', )
-    list_filter = ('is_active', 'data_joined',)
+    list_filter = ('is_active', 'data_joined', 'account_manager',)
 
     filter_horizontal = ('competing_schools', 'non_degree_schools', )
     search_fields = [
