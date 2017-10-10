@@ -146,6 +146,17 @@ class NonDegreeSharedReportAdmin(AutoUserModelAdmin):
     ]
 
 
+class NonDegreeReportCustomerMappingAdmin(admin.ModelAdmin):
+    readonly_fields = ('object_id', 'email', 'school')
+    list_display = ('object_id', 'email', 'school')
+    list_filter= ('customer__email', 'report__school__school')
+
+    def email(self,obj):
+        return obj.customer.email
+
+    def school(self,obj):
+        return obj.report.school.school
+
 class NonDegreeWhoopsReportAdmin(AutoUserModelAdmin):
     readonly_fields = ('object_id', 'date_created', 'date_modified',)
 
@@ -199,7 +210,7 @@ admin.site.register(Deadline)
 admin.site.register(CustomerFeature)
 admin.site.register(CustomerFeatureMapping)
 admin.site.register(TranscriptEvaluationProvider)
-admin.site.register(NonDegreeReportCustomerMapping)
+admin.site.register(NonDegreeReportCustomerMapping, NonDegreeReportCustomerMappingAdmin)
 admin.site.register(NonDegreeSharedReport, NonDegreeSharedReportAdmin)
 admin.site.register(NonDegreeAMPReport)
 admin.site.register(NonDegreeWhoopsReport, NonDegreeWhoopsReportAdmin)
