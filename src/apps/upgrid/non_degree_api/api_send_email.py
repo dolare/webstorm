@@ -140,7 +140,7 @@ class SendNotification(APIView):
 
 class PreviewNotification(APIView):
     def get(self, request, *args, **kwargs):
-        query_set = NonDegreeReportCustomerMapping.objects.filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
+        query_set = NonDegreeReportCustomerMapping.objects.filter(customer__account_manager = request.user).filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
         #print(query_set)
   
         try:
@@ -157,7 +157,7 @@ class PreviewNotification(APIView):
             app_logger.error(e)
             return Response({"Failed": ("error input !")}, status=HTTP_400_BAD_REQUEST)
 
-        query_set2 = NonDegreeReportCustomerMapping.objects.filter(is_sent = True)
+        query_set2 = NonDegreeReportCustomerMapping.objects.filter(customer__account_manager = request.user).filter(is_sent = True)
         send_list = {}
         preview_data = {}
         date_sent_list = []
