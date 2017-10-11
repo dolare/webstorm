@@ -297,7 +297,7 @@ login.controller('LoginController',
                 };
 
                 console.log($window.sessionStorage["userInfo"]);
-                //console.log("remember me value: "+$scope.rememberMe);
+                console.log("remember me value: "+$scope.rememberMe);
 
 
 
