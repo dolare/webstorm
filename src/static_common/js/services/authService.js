@@ -33,7 +33,7 @@ angular.module('myApp').factory("authenticationSvc",
                     //console.log(result);
                     //make a user object
                     token = result.data.token;
-
+                    console.log('give me the token'+token);
                     return $http({
                               url: '/api/upgrid/accountmanager/is_manager/',
                               method: 'GET',
