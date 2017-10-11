@@ -30,8 +30,6 @@ from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseUR
     UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter, MultipleSearchFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport, \
     NonDegreeWhoopsReport, NonDegreeReportCustomerMapping
-import logging
-app_logger = logging.getLogger('app')
 
 class PermissionMixin(object):
     def is_manager(self):
@@ -312,34 +310,11 @@ class ReportOverviewMixin(object):
         for category in new_report['categories']:
             if category['object_id'] in old_report_category.keys():
                 #compare categories name
-
-                app_logger.info("Bao000000000000000000000000_____________update_info:")
-                app_logger.info("1")
-                app_logger.info(category['name'])
-                app_logger.info(old_report_category[category['object_id']]['name'])
-                
                 if category['name'] != old_report_category[category['object_id']]['name']:
                     updated += 1
                 for course in category['courses']:
                     if course['object_id'] in old_report_course.keys():
                         #compare courses name, type, tuition, schedule, url
-                    
-                        app_logger.info("2")
-                        app_logger.info(course['name'])
-                        app_logger.info(old_report_course[course['object_id']]['name'])
-                        app_logger.info("3")
-                        app_logger.info(course['type'])
-                        app_logger.info(old_report_course[course['object_id']]['type'])
-                        app_logger.info("4")
-                        app_logger.info(course['tuition_number'])
-                        app_logger.info(old_report_course[course['object_id']]['tuition'])
-                        app_logger.info("5")
-                        app_logger.info(course['url'])
-                        app_logger.info(old_report_course[course['object_id']]['url'])
-                        app_logger.info("6")
-                        app_logger.info(course['course_dates'])
-                        app_logger.info(old_report_course[course['object_id']]['course_dates'])
-                    
                         if course['name'] != old_report_course[course['object_id']]['name']:
                             updated += 1
                         if course['type'] != old_report_course[course['object_id']]['type']:

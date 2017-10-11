@@ -45,7 +45,7 @@ class SendNotification(APIView):
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
-                report_dict['university_name'] = query.report.school.university
+                report_dict['university_name'] = query.report.school.university_foreign_key.name
                 report_dict['date_modified'] = query.report.date_modified
                 send_list[query.customer.email]['report'].append(report_dict)
             else:
@@ -54,13 +54,13 @@ class SendNotification(APIView):
                 send_list[query.customer.email]['customer']['username'] = query.customer.username
                 send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb.school
                 send_list[query.customer.email]['customer']['clientname'] = query.customer.contact_name 
-                send_list[query.customer.email]['university'] = query.customer.Ceeb.university
+                send_list[query.customer.email]['university'] = query.customer.Ceeb.university_foreign_key.name
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
-                report_dict['university_name'] = query.report.school.university
+                report_dict['university_name'] = query.report.school.university_foreign_key.name
                 report_dict['date_modified'] = query.report.date_modified 
                 send_list[query.customer.email]['report'].append(report_dict)
     
@@ -140,11 +140,7 @@ class SendNotification(APIView):
 
 class PreviewNotification(APIView):
     def get(self, request, *args, **kwargs):
-        query_set = NonDegreeReportCustomerMapping.objects.filter(customer__account_manager = request.user).filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report') 
-        app_logger.info("baooooooo000000000000000000000_query_info:")
-        for instance in query_set:
-            app_logger.info(instance.customer.account_manager)
-  
+        query_set = NonDegreeReportCustomerMapping.objects.filter(customer__account_manager = request.user).filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')   
         try:
             if 'is_demo' in request.GET.keys() and request.GET.get("is_demo") != None:
                 app_logger.info(request.GET.get("is_demo"))
@@ -169,7 +165,7 @@ class PreviewNotification(APIView):
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
-                report_dict['university_name'] = query.report.school.university
+                report_dict['university_name'] = query.report.school.university_foreign_key.name
                 report_dict['date_modified'] = query.report.date_modified 
                 send_list[query.customer.email]['report'].append(report_dict)
             else:
@@ -177,19 +173,19 @@ class PreviewNotification(APIView):
                 preview_data[query.customer.email]['username'] = query.customer.username
                 preview_data[query.customer.email]['school'] = query.customer.Ceeb.school
                 preview_data[query.customer.email]['clientname'] = query.customer.contact_name 
-                preview_data[query.customer.email]['university'] = query.customer.Ceeb.university
+                preview_data[query.customer.email]['university'] = query.customer.Ceeb.university_foreign_key.name
                 send_list[query.customer.email] = {}
                 send_list[query.customer.email]['customer'] = {}
                 send_list[query.customer.email]['customer']['username'] = query.customer.username
                 send_list[query.customer.email]['customer']['school'] = query.customer.Ceeb.school
                 send_list[query.customer.email]['customer']['clientname'] = query.customer.contact_name 
-                send_list[query.customer.email]['university'] = query.customer.Ceeb.university
+                send_list[query.customer.email]['university'] = query.customer.Ceeb.university_foreign_key.name
                 send_list[query.customer.email]['report'] = []
                 report_dict = {}
                 report_dict['object_id'] = query.report.object_id
                 report_dict['school_id'] = query.report.school.object_id
                 report_dict['school_name'] = query.report.school.school
-                report_dict['university_name'] = query.report.school.university
+                report_dict['university_name'] = query.report.school.university_foreign_key.name
                 report_dict['date_modified'] = query.report.date_modified
                 send_list[query.customer.email]['report'].append(report_dict)
 
