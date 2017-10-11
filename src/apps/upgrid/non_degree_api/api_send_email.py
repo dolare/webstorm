@@ -140,8 +140,10 @@ class SendNotification(APIView):
 
 class PreviewNotification(APIView):
     def get(self, request, *args, **kwargs):
-        query_set = NonDegreeReportCustomerMapping.objects.filter(customer__account_manager = request.user).filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report')
-        #print(query_set)
+        query_set = NonDegreeReportCustomerMapping.objects.filter(customer__account_manager = request.user).filter(is_sent = False).order_by('-date_modified','report').distinct('date_modified','report') 
+        app_logger.info("baooooooo000000000000000000000_query_info:")
+        for instance in query_set:
+            app_logger.info(instance.customer.account_manager)
   
         try:
             if 'is_demo' in request.GET.keys() and request.GET.get("is_demo") != None:
