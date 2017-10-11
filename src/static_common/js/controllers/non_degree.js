@@ -39,7 +39,7 @@ controller('NonDegreeController', function(avatarService, $scope, $http, authent
   $scope.$storage.non_degree = {}
 
    $http({
-      url: '/api/upgrid/non_degree/schools?client_id='+client_id,
+      url: '/api/upgrid/non_degree/schools?client_id='+client_id+'&page_size=100',
       method: 'GET',
       headers: {
         'Authorization': 'JWT ' + token
