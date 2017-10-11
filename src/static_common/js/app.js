@@ -496,7 +496,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
         }
       },
 
-      depsAdminUpdates: ['$ocLazyLoad', function($ocLazyLoad) {
+      depsAdminEmail: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             insertBefore: '#css-bootstrap',
                             serie: true,

@@ -295,6 +295,7 @@ controller('NonDegreeController', function(avatarService, $scope, $http, authent
             old_school_data = final_result.data;
             console.log("old school data ="+JSON.stringify(final_result.data));
             console.log("new_school_data ="+JSON.stringify(new_school_data));
+
             school_data_temp = executiveService.updatedReport(old_school_data, new_school_data)
             console.log("school_data_temp = "+JSON.stringify(school_data_temp))
 
