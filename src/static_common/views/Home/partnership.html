@@ -18,18 +18,29 @@
 				<thead class="thead-inverse">
 					<tr class=" bg-info" style="border: 1px solid #e3e3e3; color:white;">
 						<div class="input-group input-group-lg">
-							<input class="form-control" type="text" placeholder="Search Clients or Schools by name.." />
+							<input class="form-control" id="Search" name="Search" type="search" placeholder="Search Clients or Schools by name.." />
+							<style type="text/css">
+								#Search::-webkit-search-cancel-button{
+								    position:relative;
+								    right:10px;    
+								}
+							</style>
 							<div class="input-group-btn">
 								<button class="btn btn-default"><i class="fa fa-search"></i></button>
 							</div>
 						</div>
 					</tr>
 					<tr>
-						<th class='text-center decoration_none'>Client</th>
-						<th class='text-center decoration_none' style="width: 30%;">School</th>
+						<th class='text-center decoration_none'>Client<i class='fa fa-sort'></i></th>
+						<th class='text-center decoration_none' style="width: 30%;">School<i class='fa fa-sort'></i></th>
 						<th class='text-center decoration_none' style="width: 15%;">Case Study</th>
 						<th class='text-center decoration_none' style="width: 100px;">Posted</th>
 					</tr>
+					<style type="text/css">
+						th:hover{
+							text-decoration: none!important;
+						}
+					</style>
 				</thead>
 				<tbody>
 					<tr>

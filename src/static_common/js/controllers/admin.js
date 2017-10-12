@@ -576,7 +576,7 @@ angular.module('myApp').controller('AdminMainController',
                             }),
 
                             pagination: {
-                              more: (params.page * 10) < data.count
+                              more: (params.page * 25) < data.count
                             }
                             
                           };
