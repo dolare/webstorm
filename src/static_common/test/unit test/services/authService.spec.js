@@ -138,24 +138,22 @@ describe('Auth Service', function() {
   // test cases for getUserInfo method in auth service
   describe('get user info',function(){
 
+    afterEach(function(){
+      $cookies.remove('upgrid_userInfo');
+    })
+
     it('should return the information of userInfo',function(){
 
-      var info,userIn;
+      var userInfo, userIn;
 
       authService.login(mock_data.username, mock_data.password, mock_data.rememberMe).then(res=>{
-        info = res;
+        userInfo = res;
       });
 
       userIn = authService.getUserInfo();
 
-      expect(userIn).toEqual(info);
+      expect(userIn).toEqual(userInfo);
     });
   });
-
-  describe('init method',function(){
-
-  });
-
-  
 
 });

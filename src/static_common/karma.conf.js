@@ -37,6 +37,7 @@ module.exports = function(config) {
       './test/**/**/*.js',
       './js/app.js',
       './js/controller/admin.js',
+      './js/services/avatarService.js',
       './js/services/authService.js',
       './js/third-party/progress.js'
     ],
