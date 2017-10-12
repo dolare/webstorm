@@ -152,6 +152,10 @@ describe('Auth Service', function() {
     });
   });
 
+  describe('init method',function(){
+
+  });
+
   
 
 });
