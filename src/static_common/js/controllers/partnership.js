@@ -4,7 +4,7 @@
 angular.module('myApp').
 controller('PartnershipController', function(avatarService, executiveService, $scope, $http, authenticationSvc, $localStorage, $sessionStorage) {
 	var token = authenticationSvc.getUserInfo().accessToken;
-	$scope.$storage = $localStorage;
+
 	$scope.partnership_data = [
 		{"Client_list":"Ericsson","University_school":"Columbia Business School","Case_study":"http://go-execed.gsb.columbia.edu/l/48172/2017-07-09/5dbtw2/48172/124191/ColumbiaBusinessSchool_Ericsson_CaseStudy.pdf ",},
 		{"Client_list":"AmBev","University_school":"Columbia Business School",},
@@ -63,36 +63,77 @@ controller('PartnershipController', function(avatarService, executiveService, $s
 		{"Client_list":"ATD","University_school":"Yale School of Management",},
 		{"Client_list":"Seminarium International","University_school":"Yale School of Management",}
 	]
-	
+	//count the number of clients and schools
+	$scope.init_func=function(){
+		var client_arr = [];
+		var school_arr = [];
+		for(var i=0;i<$scope.partnership_data.length;i++){
+			var client_track=0,
+				school_track=0;
+			for (var k=0;k<client_arr.length;k++){
+				if(client_arr[k].Client_list==$scope.partnership_data[i].Client_list){
+					client_track=1;
+				}
+			}
+			for (var k=0;k<school_arr.length;k++){
+				if(school_arr[k].University_school==$scope.partnership_data[i].University_school){
+					school_track=1;
+				}
+			}
+			if(client_track==0){
+				client_arr.push($scope.partnership_data[i]);
+			}
+			if(school_track==0){
+				school_arr.push($scope.partnership_data[i]);
+			}
+		}
+		$scope.client_num=client_arr.length;
+		$scope.school_num=school_arr.length;
+	};
+	$scope.init_func();
+	//click client and sort same logic with school and pdf(case study)
 	$scope.sortClient=function(){
 		$scope.partnershipFilter('Client_list',$scope.client_sort);
-		$scope.school_sort=1
+		$scope.school_sort=1;
+		$scope.case_sort=1;
 		if($scope.client_sort<3){
 			$scope.client_sort++
 		} else if($scope.client_sort==3){
 			$scope.client_sort=1
 		};
 	}
-	$scope.sortCountry=function(){
-		$scope.partnershipFilter('Country',$scope.country_sort);
-		if($scope.country_sort<3){
-			$scope.country_sort++
-		} else if($scope.country_sort==3){
-			$scope.country_sort=1
-		};
-	}
+	// $scope.sortCountry=function(){
+	// 	$scope.partnershipFilter('Country',$scope.country_sort);
+	// 	if($scope.country_sort<3){
+	// 		$scope.country_sort++
+	// 	} else if($scope.country_sort==3){
+	// 		$scope.country_sort=1
+	// 	};
+	// }
 	$scope.sortSchool=function(){
 		$scope.partnershipFilter('University_school',$scope.school_sort);
-		$scope.client_sort=1
+		$scope.client_sort=1;
+		$scope.case_sort=1;
 		if($scope.school_sort<3){
 			$scope.school_sort++
 		} else if($scope.school_sort==3){
 			$scope.school_sort=1
 		};
 	}
+	$scope.sortPDF=function(){
+		$scope.partnershipFilter('Case_study',$scope.case_sort);
+		$scope.client_sort=1;
+		$scope.school_sort=1;
+		if($scope.case_sort<3){
+			$scope.case_sort++
+		} else if($scope.case_sort==3){
+			$scope.case_sort=1
+		};
+	}
 	
 	
-	
+	//ng-repeat orderby;
+	//custom filter set expression and reverse
 	
 	$scope.partnershipFilter = function(sort,num){
 		if(num==1){
@@ -107,6 +148,8 @@ controller('PartnershipController', function(avatarService, executiveService, $s
 			return null;
 		}
 	}
+
+	//custom pagination
     $scope.pagenumber = 1;
     $scope.pagination_number_arr= [1];	
 });
