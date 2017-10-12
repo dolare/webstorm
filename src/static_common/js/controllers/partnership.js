@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('myApp').
-controller('PartnershipController', function(avatarService, executiveService, $scope, $http, authenticationSvc, $localStorage, $sessionStorage) {
+controller('PartnershipController', function(avatarService, executiveService, $scope, $timeout, $http, authenticationSvc, $localStorage, $sessionStorage) {
 	var token = authenticationSvc.getUserInfo().accessToken;
 
 	$scope.partnership_data = [
@@ -91,6 +91,35 @@ controller('PartnershipController', function(avatarService, executiveService, $s
 		$scope.school_num=school_arr.length;
 	};
 	$scope.init_func();
+	$scope.change_num = function(){
+		$timeout(function(){
+			var client_arr = [];
+			var school_arr = [];
+			for(var i=0;i<$scope.after_filter_data.length;i++){
+				var client_track=0,
+					school_track=0;
+				for (var k=0;k<client_arr.length;k++){
+					if(client_arr[k].Client_list==$scope.after_filter_data[i].Client_list){
+						client_track=1;
+					}
+				}
+				for (var k=0;k<school_arr.length;k++){
+					if(school_arr[k].University_school==$scope.after_filter_data[i].University_school){
+						school_track=1;
+					}
+				}
+				if(client_track==0){
+					client_arr.push($scope.after_filter_data[i]);
+				}
+				if(school_track==0){
+					school_arr.push($scope.after_filter_data[i]);
+				}
+			}
+			$scope.client_num=client_arr.length;
+			$scope.school_num=school_arr.length;
+		},200);
+		
+	}
 	//click client and sort same logic with school and pdf(case study)
 	$scope.sortClient=function(){
 		$scope.partnershipFilter('Client_list',$scope.client_sort);
