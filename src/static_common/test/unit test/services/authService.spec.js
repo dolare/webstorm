@@ -18,13 +18,13 @@ describe('Auth Service', function() {
   // Inject service into the authService variable 
 
 
-  beforeEach(inject(function(_authenticationSvc_, _$httpBackend_, _$http_){
+  beforeEach(inject(function(_authenticationSvc_, _$httpBackend_, _$http_, _$rootScope_, _$cookies_){
     authService = _authenticationSvc_;
     $httpBackend = _$httpBackend_;
     $http = _$http_;
+    scope = _$rootScope_.$new();
+    $cookies = _$cookies_;
   }));
-
-
 
 
   // A simple test to verify the Users service exists
@@ -32,33 +32,29 @@ describe('Auth Service', function() {
     expect(authService).toBeDefined();
   });
 
-
-
-
+  // test cases for log in method in auth service 
   describe('log in method',function(){
-
-
-    // afterEach(function(){
-    //   $httpBackend.verifyNoOutstandingExpectation();
-    //   $httpBackend.verifyNoOutstandingRequest();
-    // })
-
 
     //log in method should exist
     it('should exist',function(){
       expect(authService.login).toBeDefined();
     });
 
-
-    // test it is true to return value when consuming service 
-    it('should return not null value',function(){
-      authService.login('zmai@gridet.com','123321',true).then(function(result){
-        expect(result).not.toBeNull();
+    //simple test for log in method and return correct value
+    it('should resolve the promise when pass the mock_data and put the upgrid_userInfo cookies',function(){
+      authService.login(mock_data.username, mock_data.password, mock_data.rememberMe)
+      .then(res=>{
+        expect(res).toBeDefined();
       });
-    });
+
+      expect($cookies.get('upgrid_userInfo')).not.toBeNull();
+
+    })
 
     // mock http post request 
     it('should invoke http post request with right parameters',function(){
+
+      // set up mock http request back end and return specific detail
       $httpBackend.expect('POST','/api/upgrid/access_token/',{
         "email":mock_data.username,
         "password":mock_data.password
@@ -67,13 +63,9 @@ describe('Auth Service', function() {
           'Content-Type': 'application/json'
         }
       }).respond(200);
-      //,{
-      //     'Content-Type': 'application/json',
-      //     "Accept":"application/json, text/plain, */*"
-      //   }).respond({});
 
-      // authService.login(mock_data.username, mock_data.password, mock_data.rememberMe);
 
+      // set up the pending request
       $http({
 
         url: '/api/upgrid/access_token/',
@@ -88,10 +80,15 @@ describe('Auth Service', function() {
 
     });
 
+      //flush the pending request
       $httpBackend.flush();
     });
 
+
+    // a simple test for the get requst in log in method
     it('should invoke http get request with token return true',function(){
+
+      // set up the mock http back end and return specific detail
       $httpBackend.expect('GET','/api/upgrid/accountmanager/is_manager/',function(headers){
         return {
           "Authorization" :'JWT' + mock_data.accessToken
@@ -99,8 +96,7 @@ describe('Auth Service', function() {
       }).respond('True');
 
 
-
-
+      // set up the pending request
       $http({
               url: '/api/upgrid/accountmanager/is_manager/',
               method: 'GET',
@@ -111,14 +107,50 @@ describe('Auth Service', function() {
               expect(data.data).toEqual('True');
               
             });
-
+      // flush the pending request.      
       $httpBackend.flush();
-
-
     })
 
   });
 
+  // test cases for log out method in auth service
+  describe('log out method',function(){
+
+    var userInfo;
+
+    beforeEach(function(){
+      authService.login(mock_data.username, mock_data.password, mock_data.rememberMe)
+      .then(res=>{
+        userInfo = res;
+      });
+      userInfo = authService.logout();
+    })
+
+    it('should return null value',function(){
+      expect(userInfo).not.toBeNull();
+    });
+
+    it('upgrid_userInfo in cookies should be undefined',function(){
+      expect($cookies.get('upgrid_userInfo')).not.toBeDefined();
+    });
+  });
+
+  // test cases for getUserInfo method in auth service
+  describe('get user info',function(){
+
+    it('should return the information of userInfo',function(){
+
+      var info,userIn;
+
+      authService.login(mock_data.username, mock_data.password, mock_data.rememberMe).then(res=>{
+        info = res;
+      });
+
+      userIn = authService.getUserInfo();
+
+      expect(userIn).toEqual(info);
+    });
+  });
 
   
 
