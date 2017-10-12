@@ -24,7 +24,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
 
     
 
-
+    App.blocks('#loadingtable', 'state_loading');
     $http({
           url: '/api/upgrid/update/dashboard/',
           method: 'GET',
@@ -33,7 +33,7 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
           }
     }).then(function (response) {
 
-      App.blocks('#loadingtable', 'state_loading');
+      
       $scope.full_clients = response.data;
       console.log("loading")
       console.log("raw client = "+JSON.stringify(response.data))
