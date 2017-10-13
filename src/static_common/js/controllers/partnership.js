@@ -33,7 +33,7 @@ controller('PartnershipController', function(avatarService, executiveService, $s
 		{"Client_list":"Indian School of Business","University_school":"Kellogg School of Management Northwestern University",},
 		{"Client_list":"IPADE Business School","University_school":"Kellogg School of Management Northwestern University",},
 		{"Client_list":"Sasin Graduate Institute of Business Administration of Chulalongkorn University","University_school":"Kellogg School of Management Northwestern University",},
-		{"Client_list":"Seminarium Internacional","University_school":"Kellogg School of Management Northwestern University",},
+		{"Client_list":"Seminarium International","University_school":"Kellogg School of Management Northwestern University",},
 		{"Client_list":"The American University in Cairo School of Business","University_school":"Kellogg School of Management Northwestern University",},
 		{"Client_list":"CISCO","University_school":"Rutgers Business School-Newark and New Brunswick",},
 		{"Client_list":"ETS","University_school":"Rutgers Business School-Newark and New Brunswick",},
