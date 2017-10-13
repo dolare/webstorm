@@ -2,7 +2,6 @@
 describe('Avatar Service',function(){
 	var avatarService,
 		$cookies,
-		$http,
 		$httpBackend;
 
 	var mock_data = {
@@ -16,7 +15,7 @@ describe('Avatar Service',function(){
 
 
 	// inject service and hold it with a variable avatarService	
-	beforeEach(inject(function(_avatarService_, _$cookies_, _$http_, _$httpBackend_){
+	beforeEach(inject(function(_avatarService_, _$cookies_, _$httpBackend_){
 		avatarService = _avatarService_;
 		$cookies = _$cookies_;
 		$httpBackend = _$httpBackend_;
@@ -29,7 +28,7 @@ describe('Avatar Service',function(){
 	});
 
 	//test register method in avatar service
-	describe('register',function(){
+	describe('Register',function(){
 		it('should have cookie with upgrid_clientId having correct number',function(){
 			avatarService.register(2);
 			expect($cookies.get('upgrid_clientId')).toEqual("2");
@@ -40,7 +39,6 @@ describe('Avatar Service',function(){
 	// test get report type function in avatar service
 	describe('Get Report type',function(){
 
-		var test;
 		it('should return whoops with mock id and token',function(){
 			$httpBackend.when("GET",'/api/upgrid/accountmanager/is_manager/?client_id='+mock_data.id, {},function(headers){
 				return {
@@ -54,8 +52,50 @@ describe('Avatar Service',function(){
 
 			$httpBackend.flush();
 		});
+	});
+
+	// test sign out method in avatar service
+	describe('Sign out', function(){
+
+		var clientId;
+
+		//since clientId is null it and nothing in cookies before running register
+		beforeEach(function(){
+            clientId = 2;
+			avatarService.register(clientId);
+		});
+
+		it("should remove the in the upgrid_clientId in cookies and the returned clientId equal to ''",function(){
+			expect($cookies.get('upgrid_clientId')).toEqual('2');
+			clientId = avatarService.signout();
+			expect($cookies.get('upgrid_clientId')).not.toBeDefined();
+			expect(clientId).toEqual('');
+		});
+	});
+
+	// test get client Id in avatar service
+	describe('Get client Id',function(){
+
+		var clientId;
+
+		afterEach(function(){
+			avatarService.signout();
+		})
+
+		// when client id equal to 2
+		it('should return clientId equal to 2',function(){
+			avatarService.register(2);
+			clientId = avatarService.getClientId();
+			expect(clientId).toEqual(2);
+		});
+
+		// when client id is has no value
+		it("should return equal to ''",function(){
+			clientId = avatarService.getClientId();
+			expect(clientId).toEqual('');
+		})
+	});
 
 
-	})
 
 })
