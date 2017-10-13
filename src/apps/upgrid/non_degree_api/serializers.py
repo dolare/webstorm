@@ -17,10 +17,13 @@ class UniversitySchoolListSerializer(ModelSerializer):
     university = SerializerMethodField()
     university_abbr = SerializerMethodField()
     non_degree_client = SerializerMethodField()
+    categories_number = SerializerMethodField()
+    courses_number = SerializerMethodField()
 
     class Meta:
         model = UniversitySchool
-        fields = ('object_id', 'ceeb', 'school', 'university', 'non_degree_client', 'university_abbr',)
+        fields = ('object_id', 'ceeb', 'school', 'university', 'non_degree_client', 'university_abbr',
+                  'categories_number', 'courses_number', )
 
     def get_university(self, obj):
         return obj.university_foreign_key.name
@@ -32,6 +35,12 @@ class UniversitySchoolListSerializer(ModelSerializer):
         university_customers = obj.non_degree_user.all()
         university_customers = university_customers.filter(is_demo=False)
         return UniversityCustomerSerializer(university_customers, many=True).data
+
+    def get_categories_number(self, obj):
+        return NonDegreeCategory.objects.filter(university_school=obj).filter(active=True).count()
+
+    def get_courses_number(self, obj):
+        return NonDegreeCourse.objects.filter(university_school=obj).filter(active=True).count()
 
 
 class UniversitySchoolDetailSerializer(ModelSerializer):
