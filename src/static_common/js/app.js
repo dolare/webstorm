@@ -1149,7 +1149,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
       auth: function($q, authenticationSvc) {
 
         var userInfo = authenticationSvc.getUserInfo();
-        if (userInfo && userInfo.admin === "True") {
+        if (userInfo) {
           console.log("authenticated");
           //console.log(userInfo);
           return $q.when(userInfo);
