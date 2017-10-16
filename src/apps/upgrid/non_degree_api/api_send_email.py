@@ -74,18 +74,30 @@ class SendNotification(APIView):
             email = str(customer)
             clientname = send_list[email]["customer"]["clientname"]
             firstname = clientname.split(' ',1)[0]
-
+            current_school_list = UniversitySchool.objects.filter(non_degree_user__email=email)
             report_email = []
+            customer_schools_list = []
+            report_schools_list = []
+            removed_schools_list = []
+
+            for instance in current_school_list:
+                customer_schools_list.append(str(instance.object_id))
+
             for report in content['report']:
                 status = True
                 name = report['school_id']
-                for prereport in report_email:
-                    if name == prereport['school_id']:
-                        status = False
-                        if report['date_modified'].date()>prereport['date_modified'].date():
-                            report_email = [report if x==prereport else x for x in report_email]
-                if status:
-                    report_email.append(report)
+                report_schools_list.append(str(name))
+                for string in report_schools_list:
+                    if not string in customer_schools_list:
+                        removed_schools_list.append(string)
+                if not str(name) in removed_schools_list:
+                    for prereport in report_email:
+                        if name == prereport['school_id']:
+                            status = False
+                            if report['date_modified'].date()>prereport['date_modified'].date():
+                                report_email = [report if x==prereport else x for x in report_email]
+                    if status:
+                        report_email.append(report)
 
             for report in report_email:
                 reportTwo = NonDegreeReport.objects.filter(school__object_id=report['school_id'], active = True).order_by('-date_created')[:2]
@@ -159,6 +171,7 @@ class PreviewNotification(APIView):
         send_list = {}
         preview_data = {}
         date_sent_list = []
+        schools_list = {}
         for query in query_set:
             if query.customer.email in send_list.keys():
                 report_dict = {}
@@ -206,18 +219,30 @@ class PreviewNotification(APIView):
             email = str(customer)
             clientname = send_list[email]["customer"]["clientname"]
             firstname = clientname.split(' ',1)[0]
-
+            current_school_list = UniversitySchool.objects.filter(non_degree_user__email=email)
             report_email = []
+            customer_schools_list = []
+            report_schools_list = []
+            removed_schools_list = []
+            
+            for instance in current_school_list:
+                customer_schools_list.append(str(instance.object_id))
+
             for report in content['report']:
                 status = True
                 name = report['school_id']
-                for prereport in report_email:
-                    if name == prereport['school_id']:
-                        status = False
-                        if report['date_modified'].date()>prereport['date_modified'].date():
-                            report_email = [report if x==prereport else x for x in report_email]
-                if status:
-                    report_email.append(report)
+                report_schools_list.append(str(name))
+                for string in report_schools_list:
+                    if not string in customer_schools_list:
+                        removed_schools_list.append(string)
+                if not str(name) in removed_schools_list:
+                    for prereport in report_email:
+                        if name == prereport['school_id']:
+                            status = False
+                            if report['date_modified'].date()>prereport['date_modified'].date():
+                                report_email = [report if x==prereport else x for x in report_email]
+                    if status:
+                        report_email.append(report)
 
             for report in report_email:
                 reportTwo = NonDegreeReport.objects.filter(school__object_id = report['school_id'], active = True).order_by('-date_created')[:2]
