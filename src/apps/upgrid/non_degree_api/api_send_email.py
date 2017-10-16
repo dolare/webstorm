@@ -113,22 +113,39 @@ class SendNotification(APIView):
                 else:
                     continue
 
-                cr = diff_data['category_removed']
-                ca = diff_data['category_added']
-                cor = diff_data['course_removed']
-                coa = diff_data['course_added']
-                up = diff_update['updated']
-                
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor), up) + html_tr
-
-            
+                cr = str(diff_data['category_removed'])
+                ca = str(diff_data['category_added'])
+                cor = str(diff_data['course_removed'])
+                coa = str(diff_data['course_added'])
+                up = str(diff_update['updated'])
+                if cr == '0':
+                    cr = '-'
+                elif cr != '0':
+                    cr = '-' + cr
+                if ca == '0':
+                    ca = '-'
+                elif ca != '0':
+                    ca = '+' + ca
+                if cor == '0':
+                    cor = '-'
+                elif cor != '0':
+                    cor = '-' + cor
+                if coa == '0':
+                    coa = '-'
+                elif coa != '0':
+                    coa = '+' + coa
+                if up == '0':
+                    up = '-'
+                elif up != '0':
+                    up = '+' + up
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), ca, cr,  coa, cor, up) + html_tr 
             
             if html_tr == '':
                 continue
             #print(html_tr)
             html_content = html.format(firstname, html_tr)
             try:
-                message = EmailMessage(subject='Update Notification', body=html_content, 
+                message = EmailMessage(subject="Peers' Most Recent Updates", body=html_content, 
                                         to=[customer], bcc=cc_addresses_tuple)
                 message.content_subtype = 'html'
                 message.send()
@@ -255,12 +272,32 @@ class PreviewNotification(APIView):
                 else:
                     continue
                 
-                cr = diff_data['category_removed']
-                ca = diff_data['category_added']
-                cor = diff_data['course_removed']
-                coa = diff_data['course_added']
-                up = diff_update['updated']
-                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), "+"+str(ca), "-"+str(cr),  "+"+str(coa), "-"+str(cor), up) + html_tr
+                cr = str(diff_data['category_removed'])
+                ca = str(diff_data['category_added'])
+                cor = str(diff_data['course_removed'])
+                coa = str(diff_data['course_added'])
+                up = str(diff_update['updated'])
+                if cr == '0':
+                    cr = '-'
+                elif cr != '0':
+                    cr = '-' + cr
+                if ca == '0':
+                    ca = '-'
+                elif ca != '0':
+                    ca = '+' + ca
+                if cor == '0':
+                    cor = '-'
+                elif cor != '0':
+                    cor = '-' + cor
+                if coa == '0':
+                    coa = '-'
+                elif coa != '0':
+                    coa = '+' + coa
+                if up == '0':
+                    up = '-'
+                elif up != '0':
+                    up = '+' + up
+                html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), ca, cr,  coa, cor, up) + html_tr
                 
             if html_tr == '':
                 del preview_data[customer]
@@ -322,10 +359,10 @@ html = '<div style="margin: 30px auto;max-width: 80%;">\
             <br />\
             <br />\
           </div>\
-          <p>If you want more details, please log in using the following link:</p >\
+          <p>For more details, please log in using the following link:</p >\
           <a href="https://upgrid.gridet.com/#/non_degree">https://upgrid.gridet.com/#/non_degree</a><br /><br />\
           <p>Best Regards,</p>\
-          <p>- Gridology Team</p>\
+          <p>Gridology Team</p>\
         </div>\
       </div>\
     </div>' 
