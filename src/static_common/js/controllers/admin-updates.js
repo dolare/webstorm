@@ -579,10 +579,16 @@ angular.module('myApp').controller('UpdatesController', ['$sce', '$q', '$http', 
                 }
 
 
-                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]] = {};
-                $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
-                $scope.e_raw[index][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
-
+                // $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]] = {};
+                // $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
+                // $scope.e_raw[index][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
+                if($scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]]) {
+                  $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = $scope.e_update[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]];
+                  $scope.e_raw[index][category][keys[i].split(".")[0]][keys[i].split(".")[1]]
+                } else {
+                   $scope.confirmed_diff_raw[$scope.program_order[index]][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = null
+                   $scope.e_raw[index][category][keys[i].split(".")[0]][keys[i].split(".")[1]] = null
+                }
 
 
                 }
