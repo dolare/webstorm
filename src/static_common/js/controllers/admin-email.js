@@ -1,8 +1,8 @@
 /*Executive Education Admin controller*/
 'use strict';
 
-angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 'ajaxService',
-  function($q, $http, $scope, authenticationSvc, updateService, $timeout, executiveService, ajaxService) {
+angular.module('myApp').controller('EmailController', ['$http', '$scope', 'authenticationSvc', '$timeout',
+  function($http, $scope, authenticationSvc, $timeout) {
 
     // Inject underscore into $scope
     $scope._ = _;

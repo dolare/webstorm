@@ -501,8 +501,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
                             insertBefore: '#css-bootstrap',
                             serie: true,
                             files: [
-                                '/static/js/services/executiveService.js',
-                                '/static/js/services/ajaxService.js',
                                 '/static/js/third-party/angular-bootstrap-confirm.min.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js',
                                 '/static/js/third-party/bootstrap-notify/bootstrap-notify.min.js',
@@ -516,7 +514,6 @@ App.config(function($stateProvider, $urlRouterProvider) {
                                 'https://cdnjs.cloudflare.com/ajax/libs/angular-scroll/1.0.0/angular-scroll.min.js',
                                 'https:////ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-sanitize.js',
                                 "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css",
-                                '/static/js/services/updateService.js',
                                 '/static/js/controllers/admin-email.js',
                                 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css',
                                 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js',
