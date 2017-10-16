@@ -1,17 +1,18 @@
-describe('EmailCtrl', function(){
+describe('Controllers', function(){
 	beforeEach(angular.mock.module('myApp'));
-	var $controller;
-	beforeEach(function(){
-		inject(function($injector){
-			injector = $injector;
-		})
-	});
+	describe('Testing EmailController',function(){
+		var scope, emailctrl;
 
-	beforeEach(inject(function(_$controller_){
-    // The injector unwraps the underscores (_) from around the parameter names when matching
-    $controller = _$controller_;
-	}));
-	it('should exit',function(){
-		
+		beforeEach(inject(function($controller, $rootScope){
+			scope = $rootScope.$new();
+			emailctrl = $controller('EmailController',{
+				scope:scope
+			});
+		}));
+		it('should initialize the pagenumber',function(){
+			expect(scope.pagenumber).toBeDefined();
+			expect(scope.pagenumber).toBe(1);
+		})	
 	})
+	
 });

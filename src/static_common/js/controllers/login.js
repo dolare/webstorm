@@ -220,10 +220,11 @@ login.controller('LoginController',
                 authenticationSvc.login($scope.username, $scope.password, $scope.rememberMe)
                     .then(function(result) {
                         //App.blocks('#loginblock', 'state_loading');
+
                         var token = authenticationSvc.getUserInfo().accessToken;
                         $scope.userInfo = result;
                         //console.log('congrats');
-                        console.log("success userInfo: " + $scope.userInfo);
+                        console.log("success userInfo: " + $scope.userInfo.password);
                         $scope.error = '';
                         $scope.message = '';
 
@@ -297,7 +298,7 @@ login.controller('LoginController',
                 };
 
                 console.log($window.sessionStorage["userInfo"]);
-                //console.log("remember me value: "+$scope.rememberMe);
+                // console.log("remember me value: "+$scope.rememberMe);
 
 
 
