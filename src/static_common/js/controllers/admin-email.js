@@ -1,7 +1,9 @@
 /*Executive Education Admin controller*/
 'use strict';
 
-angular.module('myApp').controller('EmailController', ['$http', '$scope', 'authenticationSvc', '$timeout', function($http, $scope, authenticationSvc, $timeout) {
+angular.module('myApp').controller('EmailController', ['$http', '$scope', 'authenticationSvc', '$timeout',
+  function($http, $scope, authenticationSvc, $timeout) {
+
 
     // Inject underscore into $scope
     $scope.active_user = 'active';
