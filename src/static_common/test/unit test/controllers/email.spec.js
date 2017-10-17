@@ -41,11 +41,31 @@ describe('EmailController', function(){
 	}));
 
 
-	it('Controller should exist',function(){
+	it('should exist',function(){
 		expect(EmailController).toBeDefined();
 	});
-	it('pagination should be init',function(){
+	it('should get init status',function(){
 		expect($scope.pagenumber).toBeDefined();
+		expect($scope.active_user).toBeDefined();
 		expect($scope.pagenumber).toBe(1);
+		expect($scope.active_user).toBe('active');
 	})
+	describe('preview_notification method',function(){
+		
+	})
+	// it('Function to be defined',function(){
+	// 	expect($scope.preview_notification).toBeDefined();
+	// 	expect($scope.preview_notification).toBeDefined();
+	// 	expect($scope.individual_send).toBeDefined();
+	// 	expect($scope.send_notification).toBeDefined();
+	// 	expect($scope.email_history).toBeDefined();
+	// 	expect($scope.previous_page).toBeDefined();
+	// 	expect($scope.next_page).toBeDefined();
+	// 	expect($scope.page_change).toBeDefined();
+	// 	expect($scope.custom_pagination).toBeDefined();
+	// 	expect($scope.check_history_content).toBeDefined();
+	// 	expect($scope.page_class).toBeDefined();
+	// 	expect($scope.previous_class).toBeDefined();
+	// 	expect($scope.next_class).toBeDefined();
+	// })
 });
