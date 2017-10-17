@@ -1,13 +1,16 @@
 /*Executive Education Admin controller*/
 'use strict';
 
-angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 'authenticationSvc', 'updateService', '$timeout', 'executiveService', 'ajaxService',
-  function($q, $http, $scope, authenticationSvc, updateService, $timeout, executiveService, ajaxService) {
-
-    // Inject underscore into $scope
-    $scope._ = _;
+angular.module('myApp').controller('EmailController', ['$http', '$scope', 'authenticationSvc', '$timeout',
+  function($http, $scope, authenticationSvc, $timeout) {
+    //initialized the environment
+    //set user type default to active
     $scope.active_user = 'active';
+    //set page to 1
+    $scope.pagenumber = 1;
+
     var token = authenticationSvc.getUserInfo().accessToken;
+    
     //API for get email details
     $scope.preview_notification = function(){
       App.blocks('#emailloading', 'state_loading');
@@ -171,8 +174,6 @@ angular.module('myApp').controller('EmailController', ['$q', '$http', '$scope', 
       }   
     };
     //API for email History
-    //default current page number and fetch data use sent_email_history api
-    $scope.pagenumber = 1;
 
     $scope.email_history = function(){
       App.blocks('#emailloading', 'state_loading');
