@@ -109,7 +109,6 @@ class SendNotification(APIView):
                         report_data.append(ReportSerializer(report_obj).data)
                     diff_data = ReportOverview.count_diff(report_data[0], report_data[1])
                     diff_update = ReportOverview.count_diff_update(report_data[0], report_data[1])
-                    #print(diff_data)
                 else:
                     continue
 
@@ -119,41 +118,38 @@ class SendNotification(APIView):
                 coa = str(diff_data['course_added'])
                 up = str(diff_update['updated'])
                 if cr == '0':
-                    cr = '-'
+                    cr = '<span style="color:gray">-</span>'
                 elif cr != '0':
                     cr = '-' + cr
                 if ca == '0':
-                    ca = '-'
+                    ca = '<span style="color:gray">-</span>'
                 elif ca != '0':
                     ca = '+' + ca
                 if cor == '0':
-                    cor = '-'
+                    cor = '<span style="color:gray">-</span>'
                 elif cor != '0':
                     cor = '-' + cor
                 if coa == '0':
-                    coa = '-'
+                    coa = '<span style="color:gray">-</span>'
                 elif coa != '0':
                     coa = '+' + coa
                 if up == '0':
-                    up = '-'
+                    up = '<span style="color:gray">-</span>'
                 elif up != '0':
                     up = '+' + up
                 html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), ca, cr,  coa, cor, up) + html_tr 
             
             if html_tr == '':
                 continue
-            #print(html_tr)
             html_content = html.format(firstname, html_tr)
+
             try:
                 message = EmailMessage(subject="Peers' Most Recent Updates", body=html_content, 
                                         to=[customer], bcc=cc_addresses_tuple)
                 message.content_subtype = 'html'
                 message.send()
-
-                
-                
+        
                 temp_report_mapping = NonDegreeReportCustomerMapping.objects.filter(customer__email = customer).update(is_sent = True, send_fail = False, email_content=html_content)
- 
             except(BadHeaderError, SMTPServerDisconnected, SMTPSenderRefused, SMTPRecipientsRefused, SMTPDataError,
                 SMTPConnectError, SMTPHeloError, SMTPAuthenticationError) as e:
                 
@@ -165,7 +161,6 @@ class SendNotification(APIView):
         date_email_sent = time.strftime("%x")
 
         return Response({"success": ("email have been sent succussful."),"date_email_sent": date_email_sent}, status=HTTP_202_ACCEPTED)
-
 
 class PreviewNotification(APIView):
     def get(self, request, *args, **kwargs):
@@ -232,7 +227,6 @@ class PreviewNotification(APIView):
         #generate the course and category changes and display as table rows
         for (customer, content) in send_list.items():
             html_tr = ''        
-            #print(content['report'])
             email = str(customer)
             clientname = send_list[email]["customer"]["clientname"]
             firstname = clientname.split(' ',1)[0]
@@ -278,23 +272,23 @@ class PreviewNotification(APIView):
                 coa = str(diff_data['course_added'])
                 up = str(diff_update['updated'])
                 if cr == '0':
-                    cr = '-'
+                    cr = '<span style="color:gray">-</span>'
                 elif cr != '0':
                     cr = '-' + cr
                 if ca == '0':
-                    ca = '-'
+                    ca = '<span style="color:gray">-</span>'
                 elif ca != '0':
                     ca = '+' + ca
                 if cor == '0':
-                    cor = '-'
+                    cor = '<span style="color:gray">-</span>'
                 elif cor != '0':
                     cor = '-' + cor
                 if coa == '0':
-                    coa = '-'
+                    coa = '<span style="color:gray">-</span>'
                 elif coa != '0':
                     coa = '+' + coa
                 if up == '0':
-                    up = '-'
+                    up = '<span style="color:gray">-</span>'
                 elif up != '0':
                     up = '+' + up
                 html_tr = tableRow.format(report['school_name']+"<br />\n"+report['university_name'], report['date_modified'].date(), ca, cr,  coa, cor, up) + html_tr
@@ -305,10 +299,7 @@ class PreviewNotification(APIView):
             html_content = html.format(firstname, html_tr)
 
             preview_data[customer]['email_content'] = html_content
-        #print('==========')    
-        #print(preview_data)
         return HttpResponse(json.dumps(preview_data), status=HTTP_200_OK)
-
 
 class SendEmailHistory(ListAPIView):
     serializer_class = NonDegreeReportCustomerMappingSerializer
@@ -316,10 +307,7 @@ class SendEmailHistory(ListAPIView):
     def get_queryset(self, *args, **kwargs):
         query_set = NonDegreeReportCustomerMapping.objects.filter(send_fail = False, is_sent = True).order_by('-date_modified','report').distinct('date_modified','report')
         
-        return query_set
-
-
-        
+        return query_set      
 
 html = '<div style="margin: 30px auto;max-width: 80%;">\
       <div style="margin-bottom: 20px">\
@@ -366,7 +354,6 @@ html = '<div style="margin: 30px auto;max-width: 80%;">\
         </div>\
       </div>\
     </div>' 
-
 
 tableRow = '<tr>\
                   <td style="border:1px solid;word-break:break-all">{}</td>\
