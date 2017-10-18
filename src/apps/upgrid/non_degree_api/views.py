@@ -30,6 +30,7 @@ from .filter import UniversitySchoolFilter, ReportFilter, CourseFilter, CourseUR
     UniversitySchoolCategoryFilter, NonDegreeWhoopsReportFilter, MultipleSearchFilter
 from ..models import UniversityCustomer, UpgridAccountManager, NonDegreeReport, NonDegreeSharedReport, \
     NonDegreeWhoopsReport, NonDegreeReportCustomerMapping
+import time, datetime
 
 class PermissionMixin(object):
     def is_manager(self):
@@ -294,7 +295,7 @@ class ReportOverviewMixin(object):
         old_report_category = {}
         old_report_course = {}
         updated = 0
-        #print(old_report)
+
         for category in old_report['categories']:
             old_report_category[category['object_id']] = {}
             old_report_category[category['object_id']]['name'] = category['name']
@@ -302,7 +303,6 @@ class ReportOverviewMixin(object):
                 old_report_course[course['object_id']] = {}
                 old_report_course[course['object_id']]['name'] = course['name']
                 old_report_course[course['object_id']]['type'] = course['type']
-                old_report_course[course['object_id']]['currency_symbol'] = course['currency_symbol']
                 old_report_course[course['object_id']]['tuition'] = course['tuition_number']
                 old_report_course[course['object_id']]['url'] = course['url']
                 old_report_course[course['object_id']]['course_dates'] = course['course_dates']
@@ -318,8 +318,6 @@ class ReportOverviewMixin(object):
                         if course['name'] != old_report_course[course['object_id']]['name']:
                             updated += 1
                         if course['type'] != old_report_course[course['object_id']]['type']:
-                            updated += 1
-                        if course['currency_symbol'] != old_report_course[course['object_id']]['currency_symbol']:
                             updated += 1
                         if course['tuition_number'] != old_report_course[course['object_id']]['tuition']:
                             updated += 1
