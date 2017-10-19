@@ -219,7 +219,8 @@ angular.module('myApp')
               }
 
               //updated tuition
-              if(course_data_copy[j].tuition_number !== old_course_copy.tuition_number){
+              //if(course_data_copy[j].tuition_number !== old_course_copy.tuition_number){
+              if(parseInt(course_data_copy[j].tuition_number) !== parseInt(old_course_copy.tuition_number)){
                 course_data_copy[j]["tuition_number_old"] = old_course_copy.tuition_number ? old_course_copy.tuition_number : 'N/A';
                 
                 //history time
