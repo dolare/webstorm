@@ -1,7 +1,7 @@
 var loginPage = function(){
 
     this.getUrl = function(){
-        return "http:127.0.0.1:8000/#/login";
+        return "/#/login";
     }
 
     this.getUsernameField = function(){

@@ -1,11 +1,13 @@
 var fs = require('fs');
 var path = require('path');
-var loginPage = require('./pages/login')
+var rootUrl = require('./config/settings').getRootUrl();
+var loginPage = require('./pages/login');
+
 
 describe('login page', function(){
     //get credential info of users
 
-    var file = path.resolve(__dirname,'../tmp/users.json')
+    var file = path.resolve(__dirname,'../tmp/users.json');
 
     try{
         var obj = JSON.parse(fs.readFileSync(file,'utf8'));
@@ -18,7 +20,7 @@ describe('login page', function(){
 
     //testing start
     beforeEach(function(){
-        browser.get(loginPage.getUrl());
+        browser.get(rootUrl + loginPage.getUrl());
         browser.waitForAngular();
     })
 
