@@ -1,4 +1,5 @@
 from django.conf.urls import url, include
+from django.views.generic import TemplateView
 from .apis import *
 from .api_enhancement import *
 from .api_whoops import *
@@ -6,7 +7,7 @@ from .api_report_history import (whoopsReportHistoryList,enhancementReportHistor
 
 urlpatterns=[
     ##############################################
-    url(r'^$', index, name='index'),
+    url(r'^$', TemplateView.as_view(template_name="index.html"), name='index'),
     ##############################################
     # --------------------------New Designed Upgrid API------------------------
 
